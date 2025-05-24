@@ -110,12 +110,11 @@ compare les différentes tailles de blocs, de haut en bas.
 
 
 ```{figure} images/Chap1/Support.png
-:label: Chap1.Support
-:alt: Sunset at the beach
-:align: center
-
+:label: Support.png
+:align: center 
 Effet de support. La variabilité d'un gisement change selon la taille du support, mais aussi à cause de sa structure spatiale.
-```
+``` 
+
 
 ## Effet d'information
 
