@@ -78,7 +78,7 @@ bloc, soit un grand support. Il est donc crucial de prendre en compte le
 support lors des estimations et procéder correctement au changement de
 support. Cela sera traité dans un autre leçon.
 
-La Fig.{numref}`Chap1.Support` présente deux gisements miniers ayant une
+La Fig.[](#Chap1_Support.png) présente deux gisements miniers ayant une
 distribution statistique des teneurs des forages (petit support)
 identique, c'est-à-dire que leur histogramme est identique (ou que leur
 fonction de densité ou de répartition est similaire). Par conséquent, le
@@ -110,7 +110,7 @@ compare les différentes tailles de blocs, de haut en bas.
 
 
 ```{figure} images/Chap1_Support.png
-:label: Support.png
+:label: Chap1_Support.png
 :align: center 
 Effet de support. La variabilité d'un gisement change selon la taille du support, mais aussi à cause de sa structure spatiale.
 ``` 
@@ -149,7 +149,7 @@ imparfaites, tandis que l'exploitation repose sur la réalité géologique.
 Ce principe peut être relié aux notions de faux positifs et faux
 négatifs.
 
-La Fig.@fig:information illustre de façon simplifiée les
+La Fig.[](#Chap1_Information.png) illustre de façon simplifiée les
 différences entre les teneurs estimées et les teneurs réelles, mesurées
 après exploitation. Nous prenons nos décisions en fonction des
 estimations : tout le matériel situé à droite de la ligne verticale sera
@@ -158,15 +158,12 @@ certaine quantité de stérile (section brune) sera également traitée, en
 raison des erreurs d'estimation.
 
 
-```{figure} image/Information.png
----
-width: 70%
-align: center
-name: fig:information
----
+
+```{figure} images/Chap1_Information.png
+:label: Chap1_Information.png
+:align: center 
 Effet d'information. Il faut garder en tête que les décisions sont prises à partir d’estimations des teneurs. Ces estimations comportent des erreurs dues au manque d’information, donc la teneur réelle extraite peut être plus élevée ou plus faible que l’estimation.
 ```
-
 
 
 
@@ -401,14 +398,14 @@ linéaire entre $X$ et $Y$, c'est-à-dire qu'ils sont indépendants. Enfin,
 une valeur de corrélation de -1 signifie que la relation entre $X$ et
 $Y$ est inverse, c'est-à-dire que lorsque $X$ augmente, $Y$ diminue de
 manière parfaitement linéaire. La
-Fig.{numref}`Chap1.Corr` montre différent scénario de corrélation
+Fig.[](#Chap1_Correlation.png) montre différent scénario de corrélation
 entre deux variables.
 
-``` {figure} images/Chap1/Correlation.png
-label: Chap1.Corr
-align: center
+```{figure} images/Chap1_Correlation.png
+:label: Chap1_Correlation.png
+:align: center 
 Différentes corrélations entre deux variables aléatoires X et Y.
-```
+``` 
 
 Il est également important de noter que si $X$ et $Y$ sont
 indépendantes, alors la covariance entre $X$ et $Y$ est nulle,
