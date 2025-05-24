@@ -1,20 +1,23 @@
-::: center
-**Résumé pédagogique : Introduction**\
-**Rappels statistiques et géostatistique** \
-*Rédigé par Dany Lauzon, Ph.D --- Polytechnique Montréal*
-:::
+<div align="center">
 
-::: tcolorbox
--   Pouvoir expliquer l'utilité de la géostatistique dans le domaine des
-    géosciences et spécialement en mine;
+# <span style="color: #3c803c; font-weight: bold;">Résumé pédagogique : Introduction</span>
 
--   Introduire les notions fondamentales de probabilités et
-    statistiques;
+## Rappels statistiques et géostatistique
 
--   Comprendre les principes de base des modèles spatiaux et leur
-    application à l'estimation et la simulation des variables
-    géoscientifiques;
-:::
+*Rédigé par Dany Lauzon, Ph.D — Polytechnique Montréal*
+
+</div>
+
+```{admonition} Objectifs d'apprentissage
+:class: tip
+
+- Pouvoir expliquer l'utilité de la géostatistique dans le domaine des géosciences et spécialement en mine;
+
+- Introduire les notions fondamentales de probabilités et statistiques;
+
+- Comprendre les principes de base des modèles spatiaux et leur application à l’estimation et la simulation des variables géoscientifiques;
+
+
 
 # Introduction
 
