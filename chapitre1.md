@@ -108,9 +108,12 @@ que la teneur d'un bloc augmente, mais en moyenne, celle-ci tend à
 diminuer. Ce phénomène est observable dans les histogrammes lorsque l'on
 compare les différentes tailles de blocs, de haut en bas.
 
-``` {figure} images/Chap1/Support.png
-label: Chap1.Support
-align: center
+
+```{figure} images/Chap1/Support.png
+:label: Chap1.Support
+:alt: Sunset at the beach
+:align: center
+
 Effet de support. La variabilité d'un gisement change selon la taille du support, mais aussi à cause de sa structure spatiale.
 ```
 
@@ -156,13 +159,16 @@ certaine quantité de stérile (section brune) sera également traitée, en
 raison des erreurs d'estimation.
 
 
-```{figure} images/Information.png
+```{figure} image/Information.png
 ---
 width: 70%
 align: center
 name: fig:information
 ---
 Effet d'information. Il faut garder en tête que les décisions sont prises à partir d’estimations des teneurs. Ces estimations comportent des erreurs dues au manque d’information, donc la teneur réelle extraite peut être plus élevée ou plus faible que l’estimation.
+```
+
+
 
 
 Cette illustration ne tient pas compte des biais conditionnels et des
