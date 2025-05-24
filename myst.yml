@@ -19,6 +19,8 @@ project:
     - file: chapitre2.md
     - file: chapitre3.md
     - file: chapitre4.md
+      children:
+        - file: test.ipynb 
     - file: chapitre5.md
     - file: chapitre6.md
     - file: chapitre7.md
