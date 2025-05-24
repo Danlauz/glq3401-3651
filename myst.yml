@@ -4,7 +4,7 @@ project:
   authors:
     - name: Dany Lauzon
       roles:
-        - Auteur (Contenu, Programmation, Exemples interactifs)
+        - Rédigé par Dany Lauzon, Ph.D — Polytechnique Montréal (Contenu, Programmation, Exemples interactifs)
   license:
     content:
       id: CC-BY-4.0
