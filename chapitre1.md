@@ -14,10 +14,10 @@ Rédigé par Dany Lauzon, Ph.D — Polytechnique Montréal
 :::{important} Objectifs d'apprentissage
 * Pouvoir expliquer l'utilité de la géostatistique dans le domaine des géosciences et spécialement en mine;
 * Introduire les notions fondamentales de probabilités et statistiques;
-* Comprendre les principes de base des modèles spatiaux et leur application à l’estimation et la simulation des variables géoscientifiques;
+* Comprendre les principes de base des modèles spatiaux et leur application à l’estimation et la simulation des variables régionalisées;
 :::
 
-# Introduction à la géostatistique
+# Introduction
 
 La géostatistique est une branche des statistiques qui s'intéresse à
 l'analyse et à la modélisation des phénomènes spatiaux (et parfois
