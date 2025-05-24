@@ -147,11 +147,11 @@ certaine quantité de stérile (section brune) sera également traitée, en
 raison des erreurs d'estimation.
 
 
-``` {figure} images/Chap1/Information.png
-label: Chap1.Information
-align: center
-Effet d'information. Il faut garder en tête que les décisions sont prises à partir d’estimations des teneurs. Ces estimations comportent des erreurs dues au manque d’information, donc la teneur réelle extraite peut être plus élevée ou plus faible que l’estimation. 
-```
+```{figure} images/Chap1/Information.png
+:label: Chap1.Information
+:align: center
+**Effet d'information** — Les décisions sont prises à partir d’estimations des teneurs, lesquelles comportent des erreurs liées au manque d’information. La teneur réelle extraite peut donc être supérieure ou inférieure à l’estimation.
+
 
 Cette illustration ne tient pas compte des biais conditionnels et des
 biais systématiques présents dans les estimations. Nous aborderons ces
