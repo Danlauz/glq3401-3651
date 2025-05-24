@@ -162,7 +162,7 @@ width: 70%
 align: center
 name: fig:information
 ---
-Effet d'information : les décisions sont prises à partir d’estimations avec erreurs...
+Effet d'information. Il faut garder en tête que les décisions sont prises à partir d’estimations des teneurs. Ces estimations comportent des erreurs dues au manque d’information, donc la teneur réelle extraite peut être plus élevée ou plus faible que l’estimation.
 
 
 Cette illustration ne tient pas compte des biais conditionnels et des
