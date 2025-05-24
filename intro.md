@@ -1,7 +1,5 @@
 # Plan de cours
 
-
-
 **Département :** des génies civil, géologique et des mines
 
 **Préalables:** MTH2302C 
@@ -31,7 +29,7 @@ Informations sur le cours disponibles sur le site:  https://moodle.polymtl.ca/co
 3.  **Théorie de Gy et contrôle qualité** (3 heures)
 
 
-4.  ** Traitement et analyse statistique des données de forage** (3 heures) 
+4.  **Traitement et analyse statistique des données de forage** (3 heures) 
 
 
 5.  **Méthodes conventionnelles du calcul des ressources** (3 heures)  
