@@ -78,7 +78,7 @@ bloc, soit un grand support. Il est donc crucial de prendre en compte le
 support lors des estimations et procéder correctement au changement de
 support. Cela sera traité dans un autre leçon.
 
-La Fig.[](#Chap1_Support.png) présente deux gisements miniers ayant une
+La [Fig. %s](#Chap1_Support.png) présente deux gisements miniers ayant une
 distribution statistique des teneurs des forages (petit support)
 identique, c'est-à-dire que leur histogramme est identique (ou que leur
 fonction de densité ou de répartition est similaire). Par conséquent, le
@@ -149,7 +149,7 @@ imparfaites, tandis que l'exploitation repose sur la réalité géologique.
 Ce principe peut être relié aux notions de faux positifs et faux
 négatifs.
 
-La Fig.[](#Chap1_Information.png) illustre de façon simplifiée les
+La [Fig. %s](#Chap1_Information.png) illustre de façon simplifiée les
 différences entre les teneurs estimées et les teneurs réelles, mesurées
 après exploitation. Nous prenons nos décisions en fonction des
 estimations : tout le matériel situé à droite de la ligne verticale sera
@@ -394,8 +394,7 @@ direction. Une valeur de 0 indique qu'il n'y a aucune dépendance
 linéaire entre $X$ et $Y$, c'est-à-dire qu'ils sont indépendants. Enfin,
 une valeur de corrélation de -1 signifie que la relation entre $X$ et
 $Y$ est inverse, c'est-à-dire que lorsque $X$ augmente, $Y$ diminue de
-manière parfaitement linéaire. La
-Fig.[](#Chap1_Correlation.png) montre différent scénario de corrélation
+manière parfaitement linéaire. La [Fig. %s](#Chap1_Correlation.png) montre différent scénario de corrélation
 entre deux variables.
 
 ```{figure} images/Chap1_Correlation.png
