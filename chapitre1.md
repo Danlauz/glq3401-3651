@@ -1,15 +1,4 @@
-<div align="center" style="margin-top: 2em; margin-bottom: 2em;">
-
-<h1 style="color: #3c803c; font-weight: 700; font-size: 2.2em; margin-bottom: 0.3em;">
-Introduction à la géostatistique
-</h1>
-
-
-<p style="font-style: italic; font-size: 1em; color: #555;">
-Rédigé par Dany Lauzon, Ph.D — Polytechnique Montréal
-</p>
-
-</div>
+# Introduction à la géostatistique
 
 :::{important} Objectifs d'apprentissage
 * Pouvoir expliquer l'utilité de la géostatistique dans le domaine des géosciences et spécialement en mine;
