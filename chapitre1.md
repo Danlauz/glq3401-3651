@@ -1,8 +1,12 @@
 ---
 exports:
   - format: pdf
-    template: plain_latex
     output: ./exports/Introduction.pdf
+    template: article           # ← Le template LaTeX
+    documentclass: article      # ← Spécifie la classe LaTeX
+    classoption: [10pt, oneside, twocolumn]  # ← Tes options ici
+    geometry: margin=1in
+    mainfont: "Palatino"
 downloads:
   - file: ./exports/Introduction.pdf
     title: PDF
