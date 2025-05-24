@@ -1,23 +1,24 @@
-<div align="center">
+<div align="center" style="margin-top: 2em; margin-bottom: 2em;">
 
-# <span style="color: #3c803c; font-weight: bold;">Résumé pédagogique : Introduction</span>
+<h1 style="color: #3c803c; font-weight: 700; font-size: 2.2em; margin-bottom: 0.3em;">
+Résumé pédagogique : Introduction
+</h1>
 
-## Rappels statistiques et géostatistique
+<h2 style="font-size: 1.6em; font-weight: 600; margin-top: 0.2em;">
+Introduction à la géostatistique
+</h2>
 
-*Rédigé par Dany Lauzon, Ph.D — Polytechnique Montréal*
+<p style="font-style: italic; font-size: 1em; color: #555;">
+Rédigé par Dany Lauzon, Ph.D — Polytechnique Montréal
+</p>
 
 </div>
 
-```{admonition} Objectifs d'apprentissage
-:class: tip
-
-- Pouvoir expliquer l'utilité de la géostatistique dans le domaine des géosciences et spécialement en mine;
-
-- Introduire les notions fondamentales de probabilités et statistiques;
-
-- Comprendre les principes de base des modèles spatiaux et leur application à l’estimation et la simulation des variables géoscientifiques;
-
-
+:::{important} Objectifs d'apprentissage
+* Pouvoir expliquer l'utilité de la géostatistique dans le domaine des géosciences et spécialement en mine;
+* Introduire les notions fondamentales de probabilités et statistiques;
+* Comprendre les principes de base des modèles spatiaux et leur application à l’estimation et la simulation des variables géoscientifiques;
+:::
 
 # Introduction
 
@@ -67,8 +68,7 @@ bloc, soit un grand support. Il est donc crucial de prendre en compte le
 support lors des estimations et procéder correctement au changement de
 support. Cela sera traité dans un autre leçon.
 
-La Fig.[\[fig:support\]](#fig:support){reference-type="ref"
-reference="fig:support"} présente deux gisements miniers ayant une
+La Fig.{numref}`Chap1.Support` présente deux gisements miniers ayant une
 distribution statistique des teneurs des forages (petit support)
 identique, c'est-à-dire que leur histogramme est identique (ou que leur
 fonction de densité ou de répartition est similaire). Par conséquent, le
@@ -98,9 +98,11 @@ que la teneur d'un bloc augmente, mais en moyenne, celle-ci tend à
 diminuer. Ce phénomène est observable dans les histogrammes lorsque l'on
 compare les différentes tailles de blocs, de haut en bas.
 
-::: figure*
-![image](Support.png){width="100%"}
-:::
+``` {figure} images/Chap1/Support.png
+name: Chap1.Support
+align: center
+Effet de support. La variabilité d'un gisement change selon la taille du support, mais aussi à cause de sa structure spatiale.
+```
 
 ## Effet d'information
 
@@ -135,8 +137,7 @@ imparfaites, tandis que l'exploitation repose sur la réalité géologique.
 Ce principe peut être relié aux notions de faux positifs et faux
 négatifs.
 
-La Figure [\[fig:Information\]](#fig:Information){reference-type="ref"
-reference="fig:Information"} illustre de façon simplifiée les
+La Fig.{numref}`Chap1.Information` illustre de façon simplifiée les
 différences entre les teneurs estimées et les teneurs réelles, mesurées
 après exploitation. Nous prenons nos décisions en fonction des
 estimations : tout le matériel situé à droite de la ligne verticale sera
@@ -144,9 +145,12 @@ donc traité. Mais, puisque nos estimations ne sont pas parfaites, une
 certaine quantité de stérile (section brune) sera également traitée, en
 raison des erreurs d'estimation.
 
-::: figure*
-![image](Information.png){width="75%"}
-:::
+
+``` {figure} images/Chap1/Information.png
+name: Chap1.Information
+align: center
+Effet d'information. Il faut garder en tête que les décisions sont prises à partir d’estimations des teneurs. Ces estimations comportent des erreurs dues au manque d’information, donc la teneur réelle extraite peut être plus élevée ou plus faible que l’estimation. 
+```
 
 Cette illustration ne tient pas compte des biais conditionnels et des
 biais systématiques présents dans les estimations. Nous aborderons ces
@@ -379,13 +383,14 @@ linéaire entre $X$ et $Y$, c'est-à-dire qu'ils sont indépendants. Enfin,
 une valeur de corrélation de -1 signifie que la relation entre $X$ et
 $Y$ est inverse, c'est-à-dire que lorsque $X$ augmente, $Y$ diminue de
 manière parfaitement linéaire. La
-Fig.[\[fig:Correlation\]](#fig:Correlation){reference-type="ref"
-reference="fig:Correlation"} montre différent scénario de corrélation
+Fig.{numref}`Chap1.Corr` montre différent scénario de corrélation
 entre deux variables.
 
-::: figure*
-![image](Correlation.png){width="100%"}
-:::
+``` {figure} images/Chap1/Correlation.png
+name: Chap1.Corr
+align: center
+Différentes corrélations entre deux variables aléatoires X et Y.
+```
 
 Il est également important de noter que si $X$ et $Y$ sont
 indépendantes, alors la covariance entre $X$ et $Y$ est nulle,
