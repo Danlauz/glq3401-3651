@@ -109,7 +109,7 @@ diminuer. Ce phénomène est observable dans les histogrammes lorsque l'on
 compare les différentes tailles de blocs, de haut en bas.
 
 
-```{figure} images/Chap1/Support.png
+```{figure} images/Chap1_Support.png
 :label: Support.png
 :align: center 
 Effet de support. La variabilité d'un gisement change selon la taille du support, mais aussi à cause de sa structure spatiale.
