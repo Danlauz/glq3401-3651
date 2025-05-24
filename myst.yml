@@ -4,7 +4,7 @@ project:
   authors:
     - name: Dany Lauzon
       roles:
-        - Auteur
+        - Auteur (Contenu Programmation, Exemples interactifs)
   license:
     content:
       id: CC-BY-4.0
