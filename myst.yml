@@ -39,3 +39,8 @@ site:
     - title: GLQ3401/GLQ3651
     - url: https://github.com/Danlauz/glq3401-3651
 
+  execute:
+    execute_notebooks: auto
+    hide_code: true
+
+
