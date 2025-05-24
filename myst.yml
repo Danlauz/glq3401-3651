@@ -11,7 +11,7 @@ project:
     code:
       id: MIT
   
-  jupyter: false  # Pas d'interactivité, pas de Thebe
+  jupyter: true 
 
   toc:
     - file: intro.md
