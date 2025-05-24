@@ -1,25 +1,34 @@
 ---
-exports:
-  - format: pdf
-    output: ./exports/Introduction.pdf
-    template: article           # ← Le template LaTeX
-    documentclass: article      # ← Spécifie la classe LaTeX
-    classoption: [10pt, oneside, twocolumn]  # ← Tes options ici
-    geometry: margin=1in
-    mainfont: "Palatino"
-downloads:
-  - file: ./exports/Introduction.pdf
-    title: PDF
-title: Introduction à la géostatistique
+title: "Introduction à la géostatistique"
 abstract: |
   Cette section présente les concepts fondamentaux de la géostatistique à travers une lecture et des ateliers interactifs conçus dans des Jupyter Notebooks. Elle introduit les notions de base, les grandes questions auxquelles la géostatistique cherche à répondre, ainsi qu’un bref rappel des principes de probabilité et de statistique.
+
+project:
+  output-dir: exports  # <-- dossier de sortie pour tous les formats
+
+format:
+  pdf:
+    documentclass: article
+    classoption: [10pt, oneside, twocolumn]
+    geometry: margin=1in
+    markdown_extensions: ["+fenced_divs"]
+
+downloads:
+  - file: chapitre1.pdf    # simple nom de fichier, pas de chemin
+    title: PDF
 ---
 
-:::{important} Objectifs d'apprentissage
-* Pouvoir expliquer l'utilité de la géostatistique dans le domaine des géosciences et spécialement en mine;
-* Introduire les notions fondamentales de probabilités et statistiques;
-* Comprendre les principes de base des modèles spatiaux et leur application à l’estimation et la simulation des variables régionalisées;
+
+
+:::{important}
+### Objectifs d'apprentissage
+
+- Pouvoir expliquer l'utilité de la géostatistique dans le domaine des géosciences et spécialement en mine;
+- Introduire les notions fondamentales de probabilités et statistiques;
+- Comprendre les principes de base des modèles spatiaux et leur application à l’estimation et la simulation des variables géoscientifiques;
 :::
+
+
 
 # Introduction
 
@@ -138,7 +147,7 @@ imparfaites, tandis que l'exploitation repose sur la réalité géologique.
 Ce principe peut être relié aux notions de faux positifs et faux
 négatifs.
 
-La Fig.{numref}`Chap1.Information` illustre de façon simplifiée les
+La Fig.@fig:information illustre de façon simplifiée les
 différences entre les teneurs estimées et les teneurs réelles, mesurées
 après exploitation. Nous prenons nos décisions en fonction des
 estimations : tout le matériel situé à droite de la ligne verticale sera
@@ -147,10 +156,13 @@ certaine quantité de stérile (section brune) sera également traitée, en
 raison des erreurs d'estimation.
 
 
-```{figure} images/Chap1/Information.png
-:label: Chap1.Information
-:align: center
-**Effet d'information** — Les décisions sont prises à partir d’estimations des teneurs, lesquelles comportent des erreurs liées au manque d’information. La teneur réelle extraite peut donc être supérieure ou inférieure à l’estimation.
+```{figure} images/Information.png
+---
+width: 70%
+align: center
+name: fig:information
+---
+Effet d'information : les décisions sont prises à partir d’estimations avec erreurs...
 
 
 Cette illustration ne tient pas compte des biais conditionnels et des
