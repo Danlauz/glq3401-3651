@@ -1,25 +1,39 @@
-# myst.yml
+version: 1
 project:
-  title: "GLQ3401 / GLQ3651"
-  authors: ["Dany Lauzon"]
-  license: "CC-BY-4.0"
-  description: "Cours de GLQ3401 et GLQ3651"
-  keywords: ["géologie", "cours", "glq"]
-  github:
-    url: https://github.com/Danlauz/glq3401-3651
-    branch: main
+  id: 95504c80-1bcd-40df-b447-739fa9214655
+  authors:
+    - name: Dany Lauzon
+      roles:
+        - Auteur
+  license:
+    content:
+      id: CC-BY-4.0
+    code:
+      id: MIT
+  
+  jupyter: false  # Pas d'interactivité, pas de Thebe
+
+  toc:
+    - file: intro.md
+    - file: chapitre1.md
+    - file: chapitre2.md
+    - file: chapitre3.md
+    - file: chapitre4.md
+    - file: chapitre5.md
+    - file: chapitre6.md
+    - file: chapitre7.md
+    - file: chapitre8.md
+    - file: chapitre9.md
 
 site:
   template: book-theme
-  title: "GLQ3401 / GLQ3651"
-  logo: images/logo.png
-  nav: 
-    - index.md
-    - intro.md
-    - chapitre1.md
-    - chapitre2.md
 
-html:
-  favicon: images/favicon.ico
-  baseurl: "/glq3401-3651"
+  options:
+    logo: images/logo_polymtl.png
+    logo_dark: images/logo_polymtl_dark.png
+    logo_text: GLQ3401 / GLQ3651
+
+  nav:
+    - title: GLQ3401/GLQ3651
+    - url: https://github.com/Danlauz/glq3401-3651
 
