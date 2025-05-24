@@ -1,12 +1,9 @@
 <div align="center" style="margin-top: 2em; margin-bottom: 2em;">
 
 <h1 style="color: #3c803c; font-weight: 700; font-size: 2.2em; margin-bottom: 0.3em;">
-Résumé pédagogique : Introduction
+Introduction à la géostatistique
 </h1>
 
-<h2 style="font-size: 1.6em; font-weight: 600; margin-top: 0.2em;">
-Introduction à la géostatistique
-</h2>
 
 <p style="font-style: italic; font-size: 1em; color: #555;">
 Rédigé par Dany Lauzon, Ph.D — Polytechnique Montréal
@@ -20,7 +17,7 @@ Rédigé par Dany Lauzon, Ph.D — Polytechnique Montréal
 * Comprendre les principes de base des modèles spatiaux et leur application à l’estimation et la simulation des variables géoscientifiques;
 :::
 
-# Introduction
+# Introduction à la géostatistique
 
 La géostatistique est une branche des statistiques qui s'intéresse à
 l'analyse et à la modélisation des phénomènes spatiaux (et parfois
