@@ -1,0 +1,34 @@
+version: 1
+
+project:
+  title: Cours GLQ3401/GLQ3651
+  authors:
+    - name: Dan Lauzon
+      roles: [Contenu, Supervision]
+  license:
+    content:
+      id: CC-BY-4.0
+    code:
+      id: MIT
+
+jupyter: true
+
+toc:
+  - file: intro.md
+  - file: chapitre1.md
+  - file: chapitre2.md
+  - file: chapitre3.md
+  - file: chapitre4.md
+  - file: chapitre5.md
+  - file: chapitre6.md
+  - file: chapitre7.md
+  - file: chapitre8.md
+  - file: chapitre9.md
+
+site:
+  template: book-theme
+  options:
+    logo_text: GLQ3401/GLQ3651
+  nav:
+    - title: Code source
+      url: https://github.com/Danlauz/glq3401-3651
