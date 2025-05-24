@@ -2,126 +2,104 @@
 
 
 
-**Département :** Génie électrique
+**Département :** des génies civil, géologique et des mines
 
-**Préalables:** ELE2700 ou PHS2223, MTH2303 
+**Préalables:** MTH2302C 
 
-Ce livre en ligne contient les notes de cours pour ELE3701A,  Éléments de télécommunications, de Polytechnique Montréal. 
+Ce livre en ligne contient les notes de cours pour GLQ3401 - Géologie minière et géostatistique ainsi que GLQ3651 - Géologie minière, de Polytechnique Montréal. 
 
 **Préparé par :**
 
-- **Contenu :** Gunes Karabulut Kurt
+- **Contenu :** Dany Lauzon
 
-- **Programmation :** Adam Osmani 
+- **Programmation :** Dany Lauzon 
 
-- **Exemples interactifs :** Adam Osmani, Mohamed Anis  Mekkaoui 
+- **Exemples interactifs :** Dany Lauzon
 
-Pour toute question/recommandation, veuillez contacter :  ELE3701Apolymtl@gmail.com  
+Pour toute question/recommandation, veuillez contacter :  dany.lauzon@polymtl.ca  
 
-Informations sur le cours disponibles sur le site:  https://moodle.polymtl.ca/course/view.php?id=311  
+Informations sur le cours disponibles sur le site:  https://moodle.polymtl.ca/course/view.php?id=1112  
 
 ## Contenu du Cours
 
-1.  **Introduction** (1 heure)
-
-2.  **Notions fondamentales**  (7 heures)
-
-    2.1.  Signaux
-
-    2.2.  Analyse de Fourier
-
-    2.3.  Systèmes 
-
-    2.4.  Signaux aléatoires
-
-3.  **Numérisation** (4 heures)
-
-    3.1.  Échantillonnage
-
-    3.2.  Modulation par impulsions codées
-
-    3.3.  Multiplexage temporel
-
-4.  **Procédures de transmission** (13 heures) 
-
-    4.1.  Modulation d’amplitude (analogique)
-
-    4.2.  Modulation d'angle (analogique)
-
-    4.3.  Modulation numérique
-
-5.  **Supports de transmission** (4 heures)  
-
-    5.1.  Distorsion
-
-    5.2.  Canal de transmission
-
-    5.3.  Modèle statistique du canal
-
-6.  **Contrôle des erreurs** (5 heures)
-
-    6.1.  Introduction
-
-    6.2.  Codage de blocs
-
-    6.3.  Codage convolutionnel
-
-7.  **Codage de source** (3 heures)
-
-    7.1.  Introduction  
-    
-    7.2. Entropie de Shannon
-
-    7.3.  Codage de Huffman
+1.  **Introduction - Rapport technique NI-43-101** (3 heure)
 
 
-:::{warning} Contrôle : 2 heures
-Le contrôle périodique est planifié pour la **huitième semaine** et la durée de l'examen est de **deux heures**. C'est un examen à livre fermé et un aide-mémoire sera fourni.
+2.  **Aspect économique - Théorie de Lane et Taylor**  (3 heures)
+
+
+3.  **Théorie de Gy et contrôle qualité** (3 heures)
+
+
+4.  ** Traitement et analyse statistique des données de forage** (3 heures) 
+
+
+5.  **Méthodes conventionnelles du calcul des ressources** (3 heures)  
+
+
+6.  **Variogramme : théorie, estimation et modélisation** (5 heures)
+
+
+7.  **Variance de blocs, de dispersion et d'estimation** (3 heures)
+
+
+8.  **Krigeage : théorie, calcul et pratique** (3 heures)
+
+
+9.  **Cokrigeage : domaine multivariable** (3 heures)
+
+
+10.  **Krigeage d'indicatrices** (3 heures)
+
+
+11.  **Simulations géostatistiques** (3 heures)
+
+
+12.  **Simulations de faciès** (3 heures)
+
+
+:::{warning} Contrôle 1 : 3 heures
+Le contrôle périodique 1 est planifié la semaine après le **cinquième cours** et la durée de l'examen est de **trois heures**. **Documentation aux examens** : Deux feuilles 8.5 x 11 pouces, recto-verso, tout contenu admissible, **manuscrite**
+:::
+
+:::{warning} Contrôle 2 : 3 heures
+Le contrôle périodique 2 est planifié la semaine après le **huitième cours** et la durée de l'examen est de **trois heures**. **Documentation aux examens** : Deux feuilles 8.5 x 11 pouces, recto-verso, tout contenu admissible, **manuscrite**
 :::
 
 
- 
 
 ## Objectifs d'apprentisage
 
-L'objectif global d'un système de communication est de transmettre les
-informations efficacement tout en minimisant l'utilisation des
-ressources telles que la largeur de bande, la puissance et le coût. Ce
-cours se concentre sur :
+Ce cours a pour but d’initier les étudiants aux fondements théoriques, pratiques et réglementaires de l’estimation des ressources minières, en mettant un accent particulier sur les méthodes géostatistiques, tant linéaires que non linéaires. À la fin du cours, les étudiants seront en mesure de :
 
-**O1.**  Identification des éléments fondamentaux d'un lien de communication
-    point à point **(Section-1)**
+**O1.**  Comprendre le cadre réglementaire et économique de l’estimation des ressources minières, incluant la Loi sur les mines, la classification des ressources et réserves (selon les normes en vigueur), ainsi que les concepts de teneur de coupure et d’optimisation économique (méthodes de Taylor et Lane)  **(Chap.1)** 
 
-**O2.**  Application des outils d'analyse spectrale pour résoudre des
-    problèmes liés aux procédures de transmission **(Section-2)**
+**O2.**  Maîtriser les techniques d’échantillonnage minier, en particulier celles liées au forage au diamant (arpentage, déviations, mise en plan), et intégrer les principes de la théorie de l’échantillonnage de Pierre Gy pour assurer la représentativité des données.  **(Chap.2)**
 
-**O3.**   Numérisation des signaux. Comprendre l'échantillonnage, la
-    quantification, et les conversions analogique-numérique
-    **(Section-3)**
+**O3.**  Effectuer une analyse statistique descriptive en appliquant des techniques de traitement statistique, notamment le déclustering et le dé-biaisage, afin de corriger les effets de sur-échantillonnage spatial et de garantir une estimation non biaisée des ressources.  **(Chap.3-4)**
 
-**O4.**  Proposition des techniques de modulation appropriées en fonction des
-    caractéristiques du canal et du type d'information **(Section-4)**
+**O4.**   Construire, analyser et modéliser les variogrammes expérimentaux, afin de caractériser la variabilité spatiale des teneurs et de poser les bases d’une estimation géostatistique rigoureuse. **(Chap.5-6)**
 
-**O5.**  Modélisation d'un canal de transmission et explication des
-    imperfections associées **(Section-5)**
+**O5.**  Appliquer les méthodes d’estimation linéaires telles que le krigeage simple et le krigeage ordinaire, en évaluant la variance d’estimation, la variance de bloc et les effets liés au support. **(Chap.7-8)**
 
-**O6.**  Utilisation des techniques de contrôle des erreurs pour garantir la
-    fiabilité des transmissions **(Section-6)**
+**O6.**  Explorer les méthodes non linéaires d’estimation et de simulation, incluant le krigeage d’indicatrices, les simulations géostatistiques continues (gaussiennes) et catégorielles (de faciès), en vue de modéliser l’incertitude et de prédire les ressources récupérables et d'autres applications en génie géologiue. **(Chap.9-10-11-12)**
 
-**O7.**  Choix des techniques de codage de source adaptées à la compression
-    des informations **(Section-7)**
+**O7.**  Développer un esprit critique face aux choix méthodologiques, en tenant compte des effets d’information, des problèmes d’homogénéisation et des implications pratiques pour la prise de décision en contexte minier. **(En continue)**
 
-**O8.**  Conception de systèmes de communication complets, intégrant ces
-    concepts de manière pratique. **Toutes les sections**
 
 
 ## Travaux pratiques
-Ce cours vise l'apprentissage par la pratique avec cinq **travaux pratiques** (TPs). Leur programme est affiché sur moodle. Une vue d'ensemble des TPs est listée ci-dessous. 
+Ce cours vise l'apprentissage par la pratique avec onze **travaux pratiques** (TPs). Leur programme est affiché sur moodle. Une vue d'ensemble des TPs est listée ci-dessous. 
 
 |   TP | Titres    | Objectifs d’apprentissage    |
 |:--- | :--- | ---: |
-|TP1 | Signaux	    | appliquer le fonctionnement des principaux appareils utilisés au laboratoire.   |
-|TP2 | Numérisation d'un signal	    | appliquer les trois sujets reliés à la notion de numérisation : les conversions analogique-numérique et numérique-analogique, ainsi que la quantification  |
-|TP3 |  Analyse spectrale avec la radio définie par logiciel	    |  analyser le spectre fréquentiel mesurable au laboratoire.  |
-|TP4 | Modulation d’amplitude	    | intégrer et tester les principaux paramètres associés à la modulation AM (la fréquence porteuse, l’amplitude de la porteuse et l’indice de modulation) pour que le système fonctionne.   |
-|TP5 | Analyse en bande de base avec la radio définie par logiciel	    | configurer un récepteur pour un signal BPSK à partir des outils qui auront été présentés.   |
+|TP1 | 	À déterminer    |      |
+|TP3 | 	À déterminer   |      |
+|TP4 | 	À déterminer    |      |
+|TP5 | 	À déterminer    |      |
+|TP6 | 	À déterminer    |      |
+|TP7 | 	À déterminer    |      |
+|TP8 | 	À déterminer    |      |
+|TP9 | 	À déterminer    |      |
+|TP10 | À déterminer	    |      |
+|TP11 | À déterminer	    |      |
