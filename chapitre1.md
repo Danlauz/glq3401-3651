@@ -99,7 +99,7 @@ diminuer. Ce phénomène est observable dans les histogrammes lorsque l'on
 compare les différentes tailles de blocs, de haut en bas.
 
 ``` {figure} images/Chap1/Support.png
-name: Chap1.Support
+label: Chap1.Support
 align: center
 Effet de support. La variabilité d'un gisement change selon la taille du support, mais aussi à cause de sa structure spatiale.
 ```
@@ -147,7 +147,7 @@ raison des erreurs d'estimation.
 
 
 ``` {figure} images/Chap1/Information.png
-name: Chap1.Information
+label: Chap1.Information
 align: center
 Effet d'information. Il faut garder en tête que les décisions sont prises à partir d’estimations des teneurs. Ces estimations comportent des erreurs dues au manque d’information, donc la teneur réelle extraite peut être plus élevée ou plus faible que l’estimation. 
 ```
@@ -387,7 +387,7 @@ Fig.{numref}`Chap1.Corr` montre différent scénario de corrélation
 entre deux variables.
 
 ``` {figure} images/Chap1/Correlation.png
-name: Chap1.Corr
+label: Chap1.Corr
 align: center
 Différentes corrélations entre deux variables aléatoires X et Y.
 ```
