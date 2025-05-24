@@ -18,8 +18,6 @@ downloads:
     title: PDF
 ---
 
-
-
 :::{important}
 ### Objectifs d'apprentissage
 
