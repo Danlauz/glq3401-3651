@@ -8,13 +8,14 @@ project:
 
 format:
   pdf:
+    output-file: ./exports/Chapitre1.pdf
     documentclass: article
     classoption: [10pt, oneside, twocolumn]
     geometry: margin=1in
     markdown_extensions: ["+fenced_divs"]
 
 downloads:
-  - file: chapitre1.pdf    # simple nom de fichier, pas de chemin
+  - file: Chapitre1.pdf    # simple nom de fichier, pas de chemin
     title: PDF
 ---
 
