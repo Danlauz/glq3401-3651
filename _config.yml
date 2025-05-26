@@ -1,7 +1,15 @@
 launch_buttons:
   binderhub_url: "https://mybinder.org"
-  thebe: true
   notebook_interface: "jupyterlab"
+  thebe: true
+
+html:
+  show_toggle_button: true
+
+execution:
+  show_input: false
+
+
 
 
 
