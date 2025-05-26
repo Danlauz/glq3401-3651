@@ -1,0 +1,15 @@
+name: myst-env
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - numpy
+  - scipy
+  - ipywidgets
+  - plotly
+  - jupyterlab
+  - pip
+  - pip:
+    - jupyter-book
+
+
