@@ -142,8 +142,7 @@ teneur ($t$) supérieure ou égale à la teneur de coupure $c$ (i.e., $t \geq c$
 Évolution de la teneur de coupure selon la méthode utilisée.
 ```
 
-```markdown
-:::{admonition} 🔍 Comprendre $x_c$ et $g_c$
+```{admonition} 🔍 Comprendre $x_c$ et $g_c$
 :class: tip
 
 - $x_c$ correspond à la **proportion volumique des blocs jaunes** (minerai) par rapport au volume total.  
@@ -154,7 +153,9 @@ Quand la teneur de coupure $c$ augmente, seuls les blocs les plus riches restent
 - La teneur moyenne $g_c$ **augmente**.
 
 C’est pourquoi $g_c$ dépend de $c$ — d’où l’indice $c$ pour s’en souvenir.
-:::
+
+👉 On peut aussi écrire $x_c = x(c)$ et $g_c = g(c)$ pour souligner leur dépendance fonctionnelle à la teneur de coupure $c$.
+
 ```
 
 # Teneur de coupure
