@@ -41,8 +41,17 @@ site:
     - title: GLQ3401/GLQ3651
     - url: https://github.com/Danlauz/glq3401-3651
 
-  execute:
-    execute_notebooks: auto
-    hide_code: true
+    launch_buttons:
+    binderhub_url: "https://mybinder.org"
+    thebe: true
+    notebook_interface: "jupyterlab"
+
+  html:
+    show_toggle_button: true
+
+  execution:
+    show_input: false
+    timeout: 120
+
 
 
