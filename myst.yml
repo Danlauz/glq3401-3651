@@ -17,7 +17,9 @@ project:
     - file: intro.md
     - file: chapitre1.md
       children:
-        - file: Chap1.ipynb 
+        - file: Chap1_EffetSupport.ipynb 
+        - file: Chap1_EffetInformation.ipynb 
+        - file: Chap1_Gisement.ipynb 
     - file: chapitre2.md
     - file: chapitre3.md
     - file: chapitre4.md
