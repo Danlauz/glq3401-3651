@@ -1,5 +1,4 @@
 version: 1
-
 project:
   id: 95504c80-1bcd-40df-b447-739fa9214655
   authors:
@@ -11,22 +10,24 @@ project:
       id: CC-BY-4.0
     code:
       id: MIT
+  
+  jupyter: true 
 
-  jupyter: true
-
-toc:
-  - file: intro.md
-  - file: chapitre1.md
-    children:
-      - file: Chap1.ipynb
-  - file: chapitre2.md
-  - file: chapitre3.md
-  - file: chapitre4.md
-  - file: chapitre5.md
-  - file: chapitre6.md
-  - file: chapitre7.md
-  - file: chapitre8.md
-  - file: chapitre9.md
+  toc:
+    - file: intro.md
+    - file: chapitre1.md
+      children:
+        - file: Chap1.ipynb 
+    - file: chapitre2.md
+    - file: chapitre3.md
+    - file: chapitre4.md
+    #  children:
+    #    - file: test.ipynb 
+    - file: chapitre5.md
+    - file: chapitre6.md
+    - file: chapitre7.md
+    - file: chapitre8.md
+    - file: chapitre9.md
 
 site:
   template: book-theme
@@ -38,24 +39,10 @@ site:
 
   nav:
     - title: GLQ3401/GLQ3651
-      url: https://github.com/Danlauz/glq3401-3651
+    - url: https://github.com/Danlauz/glq3401-3651
 
-  launch_buttons:
-    binderhub_url: "https://mybinder.org"
-    thebe: true
-    notebook_interface: "jupyterlab"
-
-  html:
-    show_toggle_button: true
-
-execution:
-  show_input: false
-  timeout: 120
-
-
-  execution:
-    show_input: false
-    timeout: 120
-
+  execute:
+    execute_notebooks: auto
+    hide_code: true
 
 
