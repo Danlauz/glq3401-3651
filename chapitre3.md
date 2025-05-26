@@ -155,6 +155,7 @@ Quand la teneur de coupure $c$ augmente, seuls les blocs les plus riches restent
 
 C’est pourquoi $g_c$ dépend de $c$ — d’où l’indice $c$ pour s’en souvenir.
 :::
+```
 
 # Teneur de coupure
 
