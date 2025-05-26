@@ -16,7 +16,7 @@ project:
   toc:
   - file: intro.md
   - file: chapitre1.md
-    sections:
+    children:
       - file: Chap1_EffetInformation.ipynb
       - file: Chap1_Gisement.ipynb
       - file: Chap1_EffetSupport.ipynb
@@ -24,13 +24,11 @@ project:
   - file: chapitre2.md
   - file: chapitre3.md
   - file: chapitre4.md
-  # - file: test.ipynb  # <-- commentaire laissé volontairement
   - file: chapitre5.md
   - file: chapitre6.md
   - file: chapitre7.md
   - file: chapitre8.md
   - file: chapitre9.md
-
 
 site:
   template: book-theme
