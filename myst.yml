@@ -1,4 +1,5 @@
 version: 1
+
 project:
   id: 95504c80-1bcd-40df-b447-739fa9214656
   authors:
@@ -10,10 +11,9 @@ project:
       id: CC-BY-4.0
     code:
       id: MIT
-  
-  jupyter: true 
+  jupyter: true
 
-  toc:
+toc:
   - file: intro.md
   - file: chapitre1.md
     children:
@@ -32,16 +32,13 @@ project:
 
 site:
   template: book-theme
-
   options:
     logo: images/logo_polymtl.png
     logo_dark: images/logo_polymtl_dark.png
     logo_text: GLQ3401 / GLQ3651
-
   nav:
     - title: GLQ3401/GLQ3651
-    - url: https://github.com/Danlauz/glq3401-3651
-
+      url: https://github.com/Danlauz/glq3401-3651
   execute:
     execute_notebooks: auto
     hide_code: true
@@ -49,4 +46,5 @@ site:
 html:
   show_input: false  # cache tout le code d’entrée
   show_output: true  # affiche les résultats
+
 
