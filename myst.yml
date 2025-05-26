@@ -33,23 +33,14 @@ project:
 
 site:
   template: book-theme
-  logo: images/logo_polymtl.png
-  logo_dark: images/logo_polymtl_dark.png
-  logo_text: GLQ3401 / GLQ3651
+
+  options:
+    logo: images/logo_polymtl.png
+    logo_dark: images/logo_polymtl_dark.png
+    logo_text: GLQ3401 / GLQ3651
   nav:
     - title: GLQ3401/GLQ3651
       url: https://github.com/Danlauz/glq3401-3651
-
-  execute:
-    execute_notebooks: auto
-    timeout: 60
-    allow_errors: false
-    stderr_output: remove
-    stdout_output: show
-
-  html:
-    show_input: false
-    show_output: true
 
 
 
