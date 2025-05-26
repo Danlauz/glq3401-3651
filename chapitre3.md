@@ -1,5 +1,5 @@
 ---
-title: "Aspect économique"
+title: "Chapitre 2 - Aspect économique"
 abstract: |
   Cette section présente la théorie afin de déterminer la teneur de coupure optimale pour les opérations minières. La définitions des parametres est présenteé, ainsi que des ateliers interractif afin d'étudier l'impact des patametres d'opération et économiue sur les opérations minieres.
 
@@ -43,6 +43,8 @@ davantage pendant l'année de déclaration.
 
 ```{dropdown} **Matériau minéralisé**
 Volume de roche susceptible de contenir du minerai.
+```
+
 
 ```{dropdown} **Minerai**
 Portion économiquement rentable du matériau minéralisé.
@@ -76,13 +78,7 @@ maximiser le profit net par tonne de matériau minéralisé.
 ```{dropdown} **Teneur de coupure limite**
  Teneur de coupure permettant de maximiser
 le profit net par tonne de matériau minéralisé pour une composante
-spécifique des opérations minières. Par exemple, la teneur de coupure
-limite peut représenter la teneur qui maximise les profits lorsque les
-opérations minières fonctionnent à pleine capacité. Cela ne signifie pas
-nécessairement que l'ensemble du matériau minéralisé pourra être traité
-ni que la totalité du métal produit pourra être vendue sur le marché. La
-teneur de coupure limite maximise les profits en fonction d'une seule
-composante d'un système plus large.
+spécifique des opérations minières.
 ```
 
 
@@ -90,13 +86,7 @@ composante d'un système plus large.
 Teneur de coupure permettant de
 maximiser le profit net par tonne de matériau minéralisé pour une
 maximisation simultanée de deux composantes spécifiques des opérations
-minières. Par exemple, la teneur de coupure d'équilibre peut représenter
-la teneur qui maximise les profits lorsque les opérations minières
-fonctionnent à pleine capacité et que nous sommes en mesure de traiter
-tout le matériau minéralisé au concentrateur pour extraire le métal.
-Cela ne signifie pas nécessairement que la totalité du métal produit
-pourra être vendue sur le marché. La teneur de coupure d'équilibre
-maximise les profits en fonction de deux composantes du système[^1].
+minières[^1].
 ```
 
 
@@ -104,7 +94,7 @@ maximise les profits en fonction de deux composantes du système[^1].
 
 La plupart des opérations minières comportent trois étapes principales :  
 l'extraction, la concentration et la mise en marché — chacune ayant ses  
-propres coûts associés ainsi qu'une capacité limitée.
+propres coûts associés ainsi qu'une capacité maximale, voir limite.
 
 La théorie de *Lane et Taylor* repose sur plusieurs variables économiques,  
 permettant d'estimer les revenus d'une minière ainsi que les coûts liés  
@@ -115,20 +105,20 @@ permettant d'estimer les revenus d'une minière ainsi que les coûts liés
 
 | Symbole | Définition |
 |--------:|:-----------|
-| $c$     | Teneur de coupure |
-| $x_c$   | Proportion du minerai sélectionné (fonction de $c$) |
-| $g_c$   | Teneur moyenne du minerai sélectionné (fonction de $c$) |
-| $y$     | Taux de récupération du concentrateur |
-| $p$     | Prix d'une tonne de métal |
-| $k$     | Coût de mise en marché d'une tonne de métal (fonderie, transport, etc.) |
-| $m$     | Coûts variables de minage (par tonne de matériau minéralisé) |
-| $h$     | Coûts variables de traitement (par tonne de minerai) |
-| $f$     | Frais fixes (administration, ingénierie, capital) |
-| $F$     | Coût d'opportunité (Lane, 1988) |
-| $M$     | Capacité de minage (matériau minéralisé) |
-| $H$     | Capacité de traitement (minerai sélectionné) |
-| $K$     | Capacité du marché (métal) |
-| $v$     | Profit net généré par une unité de matériau minéralisé |
+| <a id="var-c"></a> $c$     | Teneur de coupure |
+| <a id="var-xc"></a> $x_c$   | Proportion du minerai sélectionné (fonction de $c$) |
+| <a id="var-gc"></a> $g_c$   | Teneur moyenne du minerai sélectionné (fonction de $c$) |
+| <a id="var-y"></a>  $y$     | Taux de récupération du concentrateur |
+| <a id="var-p"></a>  $p$     | Prix d'une tonne de métal |
+| <a id="var-k"></a>  $k$     | Coût de mise en marché d'une tonne de métal (fonderie, transport, etc.) |
+| <a id="var-m"></a>  $m$     | Coûts variables de minage (par tonne de matériau minéralisé) |
+| <a id="var-h"></a>  $h$     | Coûts variables de traitement (par tonne de minerai) |
+| <a id="var-f"></a>  $f$     | Frais fixes (administration, ingénierie, capital) |
+| <a id="var-F"></a>  $F$     | Coût d'opportunité (Lane, 1988) |
+| <a id="var-M"></a>  $M$     | Capacité de minage (matériau minéralisé) |
+| <a id="var-H"></a>  $H$     | Capacité de traitement (minerai sélectionné) |
+| <a id="var-K"></a>  $K$     | Capacité du marché (métal) |
+| <a id="var-v"></a>  $v$     | Profit net généré par une unité de matériau minéralisé |
 :::
 
 ::::{note}
@@ -139,16 +129,12 @@ Enfin, la capacité du marché ($K$) reflète la quantité de métal que le marc
 ::::
 
 
-
 # Mise en contexte des variables
 
-Supposons une tonne de matériau minéralisé illustrée à la
-[Fig. %s](#Chap3_BlocMineraliseMetal.png). Les blocs de couleur jaune ont une
-teneur ($t)$ supérieure ou égale à la teneur de coupure $c$ (i.e.,
-$t \geq c$), tandis que les blocs bleus ont une teneur inférieure à la
-teneur de coupure (i.e., $t < c$). Ainsi, l'ensemble des blocs jaunes
-constitue notre minerai, la portion économiquement rentable du matériau
-minéralisé.
+Supposons une tonne de matériau minéralisé illustrée à la  
+[Fig. %s](#Chap3_BlocMineraliseMetal.png). Les blocs de couleur **jaune** ont une  
+teneur ($t$) supérieure ou égale à la teneur de coupure $c$ (i.e., $t \geq c$), tandis que les blocs **bleus** ont une teneur inférieure à $c$ (i.e., $t < c$). Ainsi, l'ensemble des blocs jaunes constitue notre **minerai**, la portion économiquement rentable du matériau minéralisé.
+
 
 ```{figure} images/Chap3_BlocMineraliseMetal.png
 :label: Chap3_BlocMineraliseMetal.png
@@ -156,18 +142,19 @@ minéralisé.
 Évolution de la teneur de coupure selon la méthode utilisée.
 ```
 
-À partir de cette représentation, on observe que $x_c$ est le volume des
-blocs jaunes divisé par le volume total, soit la proportion de minerai
-dans le matériau minéralisé, tandis que $g_c$ représente la teneur
-moyenne des blocs jaunes sélectionnés. Ainsi, une relation triviale
-s'affiche : la teneur moyenne du minerai, $g_c$, sera toujours
-supérieure à la teneur moyenne du gisement. Pourquoi ? Parce que, si la
-teneur de coupure $c$ augmente, alors il y aura moins de blocs jaunes.
-La proportion $x_c$ diminuera, et seulement les sections les plus riches
-seront retenues, augmentant ainsi la teneur moyenne des blocs
-sélectionnés. Ainsi, $g_c$ augmentera. Il est à noter que les paramètres
-$x_c$ et $g_c$ dépendent de la teneur de coupure, d'où l'indice $c$ afin
-de se souvenir de cette dépendance.
+```markdown
+:::{admonition} 🔍 Comprendre $x_c$ et $g_c$
+:class: tip
+
+- $x_c$ correspond à la **proportion volumique des blocs jaunes** (minerai) par rapport au volume total.  
+- $g_c$ est la **teneur moyenne** des blocs jaunes sélectionnés.
+
+Quand la teneur de coupure $c$ augmente, seuls les blocs les plus riches restent jaunes :  
+- La proportion $x_c$ **diminue**.  
+- La teneur moyenne $g_c$ **augmente**.
+
+C’est pourquoi $g_c$ dépend de $c$ — d’où l’indice $c$ pour s’en souvenir.
+:::
 
 # Teneur de coupure
 
@@ -219,7 +206,7 @@ des profits nets par tonne de matériaux minéralisé. Cela veut dire que
 nous devons calculer nos revenues et soustraire nos coûts d'exploitation
 afin d'obtenir les profits nets.
 
-$$\text{Profits} = \text{Revenus} - \text{Coûts}.$$
+$$\text{Profits} = \text{Revenus} - \text{Coûts}$$
 
 Dans l'**approche de Taylor** seuls les coûts d'exploitation sont pris
 en compte. À pleine capacité du concentrateur, les coûts fixes et
@@ -234,7 +221,7 @@ d'exploitation. Le coût d'opportunité représente le rendement attendu
 sur la partie non encore exploitée du gisement. Ce coût diminue avec
 l'avancement de l'exploitation, entraînant une baisse progressive de la
 teneur de coupure
-([Fig. %s](#Chap3_EvolutionTemps.png). À pleine capacité, tous les coûts sont
+([Fig. %s](#Chap3_EvolutionTemps.png)). À pleine capacité, tous les coûts sont
 considérés. Sinon, les coûts fixes et d'opportunité peuvent être
 négligés.
 
@@ -242,7 +229,7 @@ En règle générale, la teneur de coupure obtenue par la méthode de Lane
 est supérieure ou égale à celle obtenue par la méthode de Taylor, qui
 néglige les coûts d'opportunité (variables $F$). Ainsi, Taylor pose
 $F = 0$. Nous verrons l'impact des coûts d'opportunité dans les
-exemples.
+exemples interactifs.
 
 ```{figure} images/Chap3_EvolutionTemps.png
 :label: Chap3_EvolutionTemps.png
@@ -260,16 +247,14 @@ D'autres facteurs peuvent influencer la teneur de coupure. Une baisse
 des prix des métaux pousse à augmenter la teneur de coupure[^2], car
 nous allons concentrer nos efforts sur les teneurs riches de notre
 gisement. Par la suite, il existe le concept de récupération ultérieure,
-c'est-à-dire que si la mine a la capacité de stocker des minerais
+c'est-à-dire que si la mine à la capacité de stocker des minerais
 légèrement en dessous de la teneur de coupure optimale, il est probable
 qu'à long terme ces minerais deviennent rentables. Ainsi, nous pourrions
 laisser sur place une certaine quantité de minerai à être traitée
 ultérieurement, et ainsi augmenter la teneur de coupure.
 
-Les coûts variables (variable $m$ - frais variables de minage d'une
-tonne de matériau minéralisé et variable $h$ - frais variables de
-traitement d'une tonne de minerai) et le coût d'opportunité (variable
-$F$) sont, par définition, variables dans le temps, c'est-à-dire qu'ils
+Les coûts variables (variable $m$ - [coûts variables de minage](#var-m) et variable $h$ - [coûts variables de traitement](#var-h)) et le coût d'opportunité (variable
+$F$ -  [coût d'opportunité](#var-F)) sont, par définition, variables dans le temps, c'est-à-dire qu'ils
 sont recalculés en fonction de l'évolution du système minier
 (agrandissement de la mine, découvertes de nouvelles zones exploitables,
 dysfonctionnement des équipements, évolution de la demande du marché,

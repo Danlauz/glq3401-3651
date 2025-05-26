@@ -1,5 +1,5 @@
 ---
-title: "Rapport Technique - Norme canadienne 43-101 sur l'information"
+title: "Chapitre 1 - Rapport Technique - NI-43-101"
 abstract: |
   Cette section présente la norme canadienne sur les rapports techniques en mine : le rapport NI 43-101. Il s'agit d'une véritable mine d’or d’informations sur les projets miniers, de la phase d’exploration à celle de l’exploitation. Nous découvrirons cela ensemble au fil de cette lecture, accompagnée de quelques concepts interactifs.
 
@@ -99,8 +99,7 @@ des rapports techniques.
 
 Afin d'opérer adéquatement une mine, il nous faut absolument construire
 un modèle de bloc contenant la teneur du bloc
-(Fig.[\[fig:blocmodele\]](#fig:blocmodele){reference-type="ref"
-reference="fig:blocmodele"}). La géostatistique permet de réaliser une
+([Fig. %s](#Chap2_BlocModele.png)). La géostatistique permet de réaliser une
 estimation de ces teneurs pour tout élément de volume ou de surface à
 partir d'un échantillonnage limité de ces teneurs, c'est-à-dire nos
 données de forage exploratoire. Par la suite, on peut appliquer des
@@ -200,9 +199,10 @@ niveau de confiance de chaque catégorie sont généralement qualitatives.
 Voici un exemple de classification que l'on retrouve dans le guide de la
 SME (*Society for Mining, Metallurgy and Exploration*) :
 
-::: description
-\
-Partie d'une ressource minérale dont la quantité et la teneur sont
+
+(def-RInf)=
+Définition: Ressources Inférées 
+: Partie d'une ressource minérale dont la quantité et la teneur sont
 estimées sur la base de **preuves géologiques et d'un échantillonnage
 limité**. Ces preuves sont suffisantes pour **inférer**, mais non pour
 démontrer de façon fiable, la continuité géologique et celle des
@@ -212,8 +212,9 @@ développement ou de forages. La confiance dans ces estimations n'est pas
 suffisante pour permettre une analyse économique --- **aucune réserve
 minérale ne peut être définie à partir de cette catégorie**.
 
-\
-Partie d'une ressource minérale pour laquelle la quantité, la teneur, la
+(def-RInd)=
+Définition: Ressources Indiquées 
+: Partie d'une ressource minérale pour laquelle la quantité, la teneur, la
 densité, la forme et les caractéristiques physiques sont **estimées avec
 un niveau de confiance raisonnable**. Les données sont suffisamment
 abondantes et bien réparties pour **supposer la continuité géologique
@@ -221,15 +222,16 @@ et/ou minéralisée**, sans toutefois pouvoir la démontrer entièrement. Ce
 niveau de confiance permet généralement une première **analyse
 économique** et la **planification préliminaire** du projet minier.
 
-\
-Partie d'une ressource minérale pour laquelle les paramètres géologiques
+(def-RMes)=
+Définition: Ressources Mesurées 
+: Partie d'une ressource minérale pour laquelle les paramètres géologiques
 (quantité, teneur, densité, forme, propriétés physiques) sont **estimés
 avec un haut niveau de confiance**. Les données disponibles sont
 **suffisamment abondantes et rapprochées** pour démontrer clairement la
 continuité géologique et/ou de la minéralisation. Ce niveau de certitude
 permet une **planification minière détaillée** ainsi qu'une **évaluation
 économique fiable** du gisement.
-:::
+
 
 À partir de ces notions, la distinction entre ressources et réserves
 dépend d'une multitude de facteurs que nous ne couvrirons pas dans ce
@@ -241,8 +243,8 @@ minérale mesurée et/ou indiquée. Cela doit être démontré par une étude
 de préfaisabilité ou de faisabilité, laquelle doit prouver qu'au moment
 de la déclaration, l'extraction peut être raisonnablement justifiée.
 
-```{figure} images/Chap2_ReservesRessources.png.png
-:label: Chap2_ReservesRessources.png.png
+```{figure} images/Chap2_ReservesRessources.png
+:label: Chap2_ReservesRessources.png
 :align: center 
 Définitions illustrative des réserves et ressources minières.
 ``` 
@@ -293,7 +295,7 @@ blocs, incluant sans s'y limiter :
 
 -   les paramètres d'interpolation (i.e., volet géostatistique).
 
-## Classification géostatistique des ressources à la mine Canadian Malartic {#classification-géostatistique-des-ressources-à-la-mine-canadian-malartic .unnumbered}
+## Classification géostatistique des ressources à la mine Canadian Malartic - 2024
 
 Pour la mine Canadian Malartic (CMM), plusieurs des critères de
 classification des ressources sont quantifiables à l'aide des outils
@@ -804,8 +806,6 @@ francais :
 -   **Rubrique 20 -- Études environnementales, permis et conséquences
     sociales ou sur la collectivité**\
 
-    # Permis et facteurs environnementaux et sociaux {#permis-et-facteurs-environnementaux-et-sociaux .unnumbered}
-
     Décrire les renseignements disponibles concernant les permis et les
     facteurs environnementaux, sociaux ou liés à la collectivité se
     rapportant au projet. Les éléments suivants peuvent être inclus :
@@ -896,11 +896,7 @@ francais :
     Cette section fourni la liste détaillée de toutes les sources citées
     dans le rapport technique.
 
-Les sections 1 à 14 et de 23 à 27 sont obligatoires à tous les rapport
-techniques. Les section 15 à 22, il s'agit d'obligation supplémentaires
-portant sur des terrains à un stade avancé. Par exemple, la minière
-commence à évaluer l'ouverture du mine avec des études de éconimiques et
-géométalurgique.
+Les sections 1 à 14 et 23 à 27 sont obligatoires dans tous les rapports techniques, car elles contiennent des informations disponibles quel que soit le stade du projet (exploration, préfaisabilité, exploitation). Les sections 15 à 22, quant à elles, dépendent de l’avancement du projet. En phase exploratoire, il est possible qu’aucune information ne soit encore disponible concernant les études économiques ou géométallurgiques. Il est donc normal que ces informations ne soient pas divulguées, puisqu’elles n’existent tout simplement pas à ce stade.
 
 [^1]: J'ai quelques réserves sur ce point. En réalité, les définitions
     sont encadrées par la réglementation et le langage est standardisé.
