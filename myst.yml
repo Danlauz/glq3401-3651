@@ -16,6 +16,11 @@ project:
 toc:
   - file: intro.md
   - file: chapitre1.md
+    sections:
+      - file: Chap1_EffetInformation.ipynb
+      - file: Chap1_Gisement.ipynb
+      - file: Chap1_EffetSupport.ipynb
+      - file: Chap1.ipynb
   - file: chapitre2.md
   - file: chapitre3.md
   - file: chapitre4.md
@@ -34,9 +39,9 @@ site:
   nav:
     - title: GLQ3401/GLQ3651
       url: https://github.com/Danlauz/glq3401-3651
-  execute:
-    execute_notebooks: auto
-    hide_code: true
+execute:
+  execute_notebooks: auto
+  hide_code: true
 
 html:
   show_input: false  # cache tout le code d’entrée
