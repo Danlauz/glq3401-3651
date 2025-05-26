@@ -1,22 +1,21 @@
 version: 1
 
 project:
-  id: 95504c80-1bcd-40df-b447-739fa9214656
+  title: GLQ3401 / GLQ3651
+  id: 95504c80-1bcd-40df-b447-739fa9214655
   authors:
     - name: Dany Lauzon
       roles:
         - Rédigé par Dany Lauzon, Ph.D — Polytechnique Montréal (Contenu, Programmation, Exemples interactifs)
   license:
-    content:
-      id: CC-BY-4.0
-    code:
-      id: MIT
+    content: CC-BY-4.0
+    code: MIT
   jupyter: true
 
 toc:
   - file: intro.md
   - file: chapitre1.md
-    sections:
+    children:  # ⚠️ doit être 'children' et non 'sections'
       - file: Chap1_EffetInformation.ipynb
       - file: Chap1_Gisement.ipynb
       - file: Chap1_EffetSupport.ipynb
@@ -32,19 +31,23 @@ toc:
 
 site:
   template: book-theme
-  options:
-    logo: images/logo_polymtl.png
-    logo_dark: images/logo_polymtl_dark.png
-    logo_text: GLQ3401 / GLQ3651
+  logo: images/logo_polymtl.png
+  logo_dark: images/logo_polymtl_dark.png
+  logo_text: GLQ3401 / GLQ3651
   nav:
     - title: GLQ3401/GLQ3651
       url: https://github.com/Danlauz/glq3401-3651
+
 execute:
   execute_notebooks: auto
-  hide_code: true
+  timeout: 60
+  allow_errors: false
+  stderr_output: remove
+  stdout_output: show
 
 html:
-  show_input: false  # cache tout le code d’entrée
-  show_output: true  # affiche les résultats
+  show_input: false
+  show_output: true
+
 
 
