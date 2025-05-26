@@ -246,10 +246,10 @@ celle de cuivre. Il faut donc convertir la teneur en cuivre en teneur
 équivalente en chalcopyrite, en utilisant les masses molaires.
 
 La masse molaire de la chalcopyrite est donnée par :
-$$M = M_{\ce{Cu}} + M_{\ce{Fe}} + 2M_{\ce{S}} = 63.5 + 55.8 + 2 \times 32.1 = 183.5~\text{g/mol}.$$
+$$M = M_{Cu} + M_{Fe} + 2M_{S} = 63.5 + 55.8 + 2 \times 32.1 = 183.5~\text{g/mol}.$$
 
 Le rapport massique du cuivre dans la chalcopyrite est donc :
-$$\frac{M_{\ce{Cu}}}{M_{\ce{CuFeS2}}} = \frac{63.5}{183.5} \approx 0.35.$$
+$$\frac{M_{Cu}}{M_{CuFeS2}} = \frac{63.5}{183.5} \approx 0.35.$$
 
 Ainsi, une teneur de 5 % en cuivre correspond à une teneur de :
 $$a_L = \frac{5~\%}{0.35} \approx 14~\% \quad \text{de chalcopyrite}.$$
