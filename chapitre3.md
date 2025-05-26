@@ -34,7 +34,8 @@ downloads:
 
 # Terminologie
 
-**Stérile** : Roche qui est retirée au cours de l'exploitation minière
+```{dropdown} **Stérile**
+Roche qui est retirée au cours de l'exploitation minière
 pour pouvoir accéder aux matériaux minéralisés et qui n'est pas traitée
 davantage pendant l'année de déclaration.
 
@@ -136,15 +137,15 @@ est en mesure d'absorber.
 # Mise en contexte des variables
 
 Supposons une tonne de matériau minéralisé illustrée à la
-[Fig. %s](#Chap3_BlocMineraliséMétal.png). Les blocs de couleur jaune ont une
+[Fig. %s](#Chap3_BlocMineraliseMetal.png). Les blocs de couleur jaune ont une
 teneur ($t)$ supérieure ou égale à la teneur de coupure $c$ (i.e.,
 $t \geq c$), tandis que les blocs bleus ont une teneur inférieure à la
 teneur de coupure (i.e., $t < c$). Ainsi, l'ensemble des blocs jaunes
 constitue notre minerai, la portion économiquement rentable du matériau
 minéralisé.
 
-```{figure} images/Chap3_BlocMineraliséMétal.png
-:label: Chap3_BlocMineraliséMétal.png
+```{figure} images/Chap3_BlocMineraliseMetal.png
+:label: Chap3_BlocMineraliseMetal.png
 :align: center 
 Évolution de la teneur de coupure selon la méthode utilisée.
 ```
@@ -220,14 +221,14 @@ variables sont inclus dans le calcul des profits. Si le concentrateur
 est sous-utilisé, seuls les coûts variables sont considérés. Ainsi, la
 teneur de coupure est constante sauf si l'on actualise les revenus,
 auquel cas elle décroît dans le temps
-([Fig. %s](#Chap3_ÉvolutionTemps.png)).
+([Fig. %s](#Chap3_EvolutionTemps.png)).
 
 L'**approche de Lane** inclut un coût d'opportunité en plus des coûts
 d'exploitation. Le coût d'opportunité représente le rendement attendu
 sur la partie non encore exploitée du gisement. Ce coût diminue avec
 l'avancement de l'exploitation, entraînant une baisse progressive de la
 teneur de coupure
-([Fig. %s](#Chap3_ÉvolutionTemps.png). À pleine capacité, tous les coûts sont
+([Fig. %s](#Chap3_EvolutionTemps.png). À pleine capacité, tous les coûts sont
 considérés. Sinon, les coûts fixes et d'opportunité peuvent être
 négligés.
 
@@ -237,8 +238,8 @@ néglige les coûts d'opportunité (variables $F$). Ainsi, Taylor pose
 $F = 0$. Nous verrons l'impact des coûts d'opportunité dans les
 exemples.
 
-```{figure} images/Chap3_ÉvolutionTemps.png
-:label: Chap3_ÉvolutionTemps.png
+```{figure} images/Chap3_EvolutionTemps.png
+:label: Chap3_EvolutionTemps.png
 :align: center 
 Évolution de la teneur de coupure selon la méthode utilisée.
 ```
@@ -349,8 +350,10 @@ générés par la vente de ces $M$ tonnes de matériau minéralisé ainsi que
 des frais nécessaires pour extraire ces $M$ tonnes. Ainsi, le profit net
 $v$ à maximiser lorsque la mine est le facteur limitant est défini par :
 
-$$v = (p - k) x_c g_c y - x_c h - m - \frac{f + F}{M}
-\label{eq.LimiteMine}$$
+$$
+v = (p - k) x_c g_c y - x_c h - m - \frac{f + F}{M} \label{eq:LimiteMine}
+$$
+
 
 Le terme $x_c g_c y$ représente la quantité de métal produite pour une
 tonne de matériau minéralisé. Le terme $(p - k) x_c g_c y$ représente le
@@ -371,8 +374,7 @@ minéralisé dû aux frais fixes et aux coûts d'opportunité.
 Pour déterminer la teneur de coupure de la mine, il faut maximiser le
 profit en fonction de la teneur de coupure. Il faut donc résoudre :
 $\frac{dv}{dc} = 0$. Dans
-l'Eq.[\[eq.LimiteMine\]](#eq.LimiteMine){reference-type="ref"
-reference="eq.LimiteMine"}, les termes $m$ et $\frac{f + F}{M}$ ne
+l'Eq.\eqref{eq:LimiteMine}, les termes $m$ et $\frac{f + F}{M}$ ne
 dépendent pas de la teneur de coupure adoptée, leur dérivée étant
 automatiquement nulle. Il reste donc à dériver les deux termes
 $(p - k) x_c g_c y$ et $x_c h$ par rapport à $c$. Notons que $x_c$ et
@@ -724,7 +726,7 @@ la probabilité correspondante. Par exemple, si $z = 1.23$, on peut lire
 directement $F(1.23) \approx 0.8907$. Pour $z = -1.23$, on utilise la
 relation $F(-1.23) = 1 - F(1.23) = 1 - 0.8907 = 0.1093$.
 
-La table de la loi normale est fournie en [Sec. %s](#Chap3_xc_gc).
+La table de la loi normale est fournie en Section {ref}`table-normale`.
 
 ## Exemple du calcul des teneurs d'équilibre
 
@@ -788,10 +790,13 @@ moins variable que les blocs qu'il cherche à estimer. Les teneurs
 réelles des blocs sont elles-mêmes moins variables que les teneurs des
 carottes prélevées dans le gisement (effet support).
 
-# Table de la Loi Normale centré-réduite
+# Table de la Loi Normale centré-réduite  ## {#table-normale}
 
-::: table*
-::: center
+```{table} Valeurs de la fonction de répartition normale standard Φ(z)
+:align: center
+:widths: auto
+:label: Tab.LoiNormale
+
             0.00     0.01     0.02     0.03     0.04     0.05     0.06     0.07     0.08     0.09
   ----- -------- -------- -------- -------- -------- -------- -------- -------- -------- --------
     0.0   0.5000   0.5040   0.5080   0.5120   0.5160   0.5199   0.5239   0.5279   0.5319   0.5359
@@ -824,8 +829,8 @@ carottes prélevées dans le gisement (effet support).
     2.7   0.9965   0.9966   0.9967   0.9968   0.9969   0.9970   0.9971   0.9972   0.9973   0.9974
     2.8   0.9974   0.9975   0.9976   0.9977   0.9977   0.9978   0.9979   0.9979   0.9980   0.9981
     2.9   0.9981   0.9982   0.9982   0.9983   0.9984   0.9984   0.9985   0.9985   0.9986   0.9986
-:::
-:::
+
+
 
 [^1]: Nous pourrions optimiser en fonction de plus de deux composantes,
     mais cela rend la démarche beaucoup plus complexe et n'ajoute pas
