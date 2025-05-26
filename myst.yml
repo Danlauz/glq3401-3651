@@ -45,4 +45,7 @@ site:
     execute_notebooks: auto
     hide_code: true
 
+html:
+  show_input: false  # cache tout le code d’entrée
+  show_output: true  # affiche les résultats
 
