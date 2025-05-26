@@ -38,27 +38,43 @@ downloads:
 Roche qui est retirée au cours de l'exploitation minière
 pour pouvoir accéder aux matériaux minéralisés et qui n'est pas traitée
 davantage pendant l'année de déclaration.
+```
 
-**Matériau minéralisé** : Volume de roche susceptible de contenir du
-minerai.
 
-**Minerai** : Portion économiquement rentable du matériau minéralisé.
+```{dropdown} **Matériau minéralisé**
+Volume de roche susceptible de contenir du minerai.
 
-**Concentrateur (ou usine de traintement)** : Une installation
-industrielle utilisée dans le processus de traitement des minerais pour
+```{dropdown} **Minerai**
+Portion économiquement rentable du matériau minéralisé.
+```
+
+
+```{dropdown} **Concentrateur (ou usine de traintement)**
+Une installation industrielle utilisée dans le processus de traitement des minerais pour
 séparer les minéraux de valeur des autres composants du minerai.
+```
 
-**Teneur** : Quantité d'un élément contenu dans un mélange, exprimée en
-pourcentage.
 
-**Teneur de coupure** : La teneur minimale d'un élément contenu dans un
+```{dropdown} **Teneur**
+Quantité d'un élément contenu dans un mélange, exprimée en pourcentage.
+```
+
+
+```{dropdown} **Teneur de coupure**
+ La teneur minimale d'un élément contenu dans un
 mélange qui justifie son extraction et son traitement de manière
 économiquement viable.
+```
 
-**Teneur de coupure optimale** : Teneur de coupure permettant de
+
+```{dropdown} **Teneur de coupure optimale**
+ Teneur de coupure permettant de
 maximiser le profit net par tonne de matériau minéralisé.
+```
 
-**Teneur de coupure limite** : Teneur de coupure permettant de maximiser
+
+```{dropdown} **Teneur de coupure limite**
+ Teneur de coupure permettant de maximiser
 le profit net par tonne de matériau minéralisé pour une composante
 spécifique des opérations minières. Par exemple, la teneur de coupure
 limite peut représenter la teneur qui maximise les profits lorsque les
@@ -67,8 +83,11 @@ nécessairement que l'ensemble du matériau minéralisé pourra être traité
 ni que la totalité du métal produit pourra être vendue sur le marché. La
 teneur de coupure limite maximise les profits en fonction d'une seule
 composante d'un système plus large.
+```
 
-**Teneur de coupure d'équilibre** : Teneur de coupure permettant de
+
+```{dropdown} **Teneur de coupure d'équilibre**
+Teneur de coupure permettant de
 maximiser le profit net par tonne de matériau minéralisé pour une
 maximisation simultanée de deux composantes spécifiques des opérations
 minières. Par exemple, la teneur de coupure d'équilibre peut représenter
@@ -78,61 +97,48 @@ tout le matériau minéralisé au concentrateur pour extraire le métal.
 Cela ne signifie pas nécessairement que la totalité du métal produit
 pourra être vendue sur le marché. La teneur de coupure d'équilibre
 maximise les profits en fonction de deux composantes du système[^1].
+```
+
 
 # Définitions des variables
 
-La plupart des opérations minières comportent trois étapes principales :
-l'extraction, la concentration et la mise en marché, chacune ayant ses
+La plupart des opérations minières comportent trois étapes principales :  
+l'extraction, la concentration et la mise en marché — chacune ayant ses  
 propres coûts associés ainsi qu'une capacité limitée.
 
-La théorie de Lane et Taylor repose sur plusieurs définitions de
-variables permettant de calculer les revenus d'une minière ainsi que les
-dépenses associées à son ouverture, son exploitation et sa fermeture .
-Nous présentons ci-dessous, en un seul endroit, une définition succincte
-de ces variables, à laquelle le lecteur pourra se référer en tout temps.
-Les définitions sont les suivantes :
+La théorie de *Lane et Taylor* repose sur plusieurs variables économiques,  
+permettant d'estimer les revenus d'une minière ainsi que les coûts liés  
+à son ouverture, son exploitation et sa fermeture.
 
--   $c$ : teneur de coupure,
+:::{admonition} ✏️ Variables clés à retenir
+:class: tip
 
--   $x_c$ : proportion du minerai sélectionné (fonction de la teneur de
-    coupure),
+| Symbole | Définition |
+|--------:|:-----------|
+| $c$     | Teneur de coupure |
+| $x_c$   | Proportion du minerai sélectionné (fonction de $c$) |
+| $g_c$   | Teneur moyenne du minerai sélectionné (fonction de $c$) |
+| $y$     | Taux de récupération du concentrateur |
+| $p$     | Prix d'une tonne de métal |
+| $k$     | Coût de mise en marché d'une tonne de métal (fonderie, transport, etc.) |
+| $m$     | Coûts variables de minage (par tonne de matériau minéralisé) |
+| $h$     | Coûts variables de traitement (par tonne de minerai) |
+| $f$     | Frais fixes (administration, ingénierie, capital) |
+| $F$     | Coût d'opportunité (Lane, 1988) |
+| $M$     | Capacité de minage (matériau minéralisé) |
+| $H$     | Capacité de traitement (minerai sélectionné) |
+| $K$     | Capacité du marché (métal) |
+| $v$     | Profit net généré par une unité de matériau minéralisé |
+:::
 
--   $g_c$ : teneur moyenne du minerai sélectionné ( fonction de la
-    teneur de coupure),
+::::{note}
+📌 **Remarque** :  
+La capacité de la mine ($M$) désigne la quantité maximale de matériau minéralisé pouvant être extraite.  
+La capacité du concentrateur ($H$) correspond à la quantité maximale de minerai pouvant être traitée.  
+Enfin, la capacité du marché ($K$) reflète la quantité de métal que le marché peut absorber.
+::::
 
--   $y$ : taux de récupération du concentrateur,
 
--   $p$ : prix d'une tonne de métal,
-
--   $k$ : coût de mise en marché d'une tonne de métal (fonderie,
-    raffinage, transport, assurance, etc.),
-
--   $m$ : frais variables de minage d'une tonne de matériau minéralisé
-    (développement),
-
--   $h$ : frais variables de traitement d'une tonne de minerai (forage,
-    sautage, concassage, remontée, et concentration du minerai),
-
--   $f$ : frais fixes (administration, ingénierie, frais de capital),
-
--   $F$ : coûts d'opportunité. Lane (1988) définit ce terme comme étant
-    le revenu que rapporterait un montant égal à la valeur présente du
-    gisement placé à un taux d'intérêt spécifié,
-
--   $M$ : capacité de minage (matériau minéralisé),
-
--   $H$ : capacité de traitement (minerai sélectionné),
-
--   $K$ : capacité du marché (métal),
-
--   $v$ : profit net généré par une unité de matériau minéralisé.
-
-La capacité de la mine, notée $M$, correspond à la quantité maximale de
-matériau minéralisé pouvant être extraite. La capacité du concentrateur,
-notée $H$, représente la quantité maximale de matériau minéralisé
-pouvant être traitée pour en extraire le minerai. Enfin, la capacité du
-marché, notée $K$, désigne la quantité maximale de métal que le marché
-est en mesure d'absorber.
 
 # Mise en contexte des variables
 
