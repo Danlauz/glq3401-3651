@@ -22,6 +22,8 @@ project:
         - file: Chap1.ipynb
     - file: chapitre2.md
     - file: chapitre3.md
+      children:
+        - file: Chap3.ipynb
     - file: chapitre4.md
     - file: chapitre5.md
     - file: chapitre6.md
