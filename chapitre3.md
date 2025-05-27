@@ -1,7 +1,7 @@
 ---
 title: "Chapitre 2 - Aspect économique"
 abstract: |
-  Cette section présente la théorie afin de déterminer la teneur de coupure optimale pour les opérations minières. La définitions des parametres est présenteé, ainsi que des ateliers interractif afin d'étudier l'impact des patametres d'opération et économiue sur les opérations minieres.
+  Cette section présente la théorie permettant de déterminer la teneur de coupure optimale pour les opérations minières. La définition des paramètres y est exposée, ainsi que des ateliers interactifs permettant d’étudier l’impact des paramètres opérationnels et économiques sur la rentabilité des projets miniers.
 
 project:
   output-dir: exports  # <-- dossier de sortie pour tous les formats
@@ -783,7 +783,7 @@ moins variable que les blocs qu'il cherche à estimer. Les teneurs
 réelles des blocs sont elles-mêmes moins variables que les teneurs des
 carottes prélevées dans le gisement (effet support).
 
-# Table de la Loi Normale centré-réduite  ## {#table-normale}
+# Table de la Loi Normale centré-réduite
 
 ```{table} Valeurs de la fonction de répartition normale standard Φ(z)
 :align: center

@@ -302,7 +302,7 @@ classification des ressources sont quantifiables à l'aide des outils
 géostatistiques qui seront abordés dans les prochaines lectures. Ces
 critères permettent de construire un modèle de blocs, similaire à la
 [Fig. %s](#Chap2_BlocModele.png), mais propre à la géologie de la mine CMM.
-Les ressources mesurées, indiquées et présumées sont alors définies à
+Les ressources mesurées, indiquées et inférées sont alors définies à
 partir de ce modèle.
 
 Dans cet exemple, la méthode des passes d'estimation a été utilisée.
@@ -315,7 +315,7 @@ repose sur une quantité suffisante de données pour justifier un certain
 niveau de confiance. En général, trois passes d'estimation sont définies
 à partir des paramètres géostatistiques. Ces passes agissent comme des
 seuils qui permettent de délimiter les zones contenant des ressources
-mesurées, indiquées, présumées, ou aucun type de ressource.
+mesurées, indiquées, inférées, ou aucun type de ressource.
 
 -   **Ressources mesurées :** Blocs estimés lors des premières passes
     d'interpolation et utilisant plus de 65 % de forages récents
@@ -327,7 +327,7 @@ mesurées, indiquées, présumées, ou aucun type de ressource.
     qui ne satisfont pas aux critères des ressources mesurées, ainsi que
     les blocs estimés lors de la deuxième passe.
 
--   **Ressources présumées :** Blocs estimés durant les dernières passes
+-   **Ressources inférées :** Blocs estimés durant les dernières passes
     d'interpolation. La CMM souligne qu'une compréhension géologique
     plus approfondie et une validation plus poussée du modèle sont
     nécessaires pour reclassifier ces ressources en catégories indiquée
@@ -423,7 +423,7 @@ La PQ responsable principale du rapport technique doit effectuer une
 visite du site. Si plusieurs PQ sont impliquées, celle dont l'expertise
 est directement liée à une problématique spécifique (ex. métallurgie)
 doit effectuer la visite. Il est ainsi possible d'avoir plusieurs PQ
-rédigeant le rapport NI-43-101. Il de la responsabilité du PQ d'abauser
+rédigeant le rapport NI-43-101. Il est de la responsabilité du PQ d'apposer
 sa signature seulement pour les sections qu'il a participé à la
 rédaction (voir le rapport NI-43-101 daté de 2024 de la Canadian
 Malartic Mine).
@@ -483,11 +483,11 @@ Comme tous rapport, une table des matières énumérant notamment les
 sections, les figures et les tableaux doit être présent.
 
 La norme impose une structure assez rigide sur le format, comportant un
-total dde 27 rubrique (pour un rapport en francais, an anglais celle-ci
+total de 27 rubrique (pour un rapport en français, an anglais celle-ci
 est de 24). Ces rubriques ne sont pas tous obligatoires, dans le sens,
 qu'il doit y avoir des données disponibles en lien avec la section pour
 la rédiger. Voici un bref descriptif des 27 sections d'un rapport en
-francais :
+français :
 
 -   **Rubrique 1 -- Résumé**\
     Cette section résume les informations clés du rapport technique: la

@@ -70,7 +70,7 @@ minières courantes. Les forages exploratoires et d'exploitation ont des
 diamètres très petits (quelques centimètres) par rapport à la taille des
 blocs (quelques mètres) qui sont exploité par la minière. On exploite
 donc une ressource sur des blocs, mais leurs estimations reposent sur
-des carottes. On appel la taille étudiée est le support. Ainsi, le
+des carottes. On appel la taille étudiée le support. Ainsi, le
 support de nos observations est celui des forages, soit un petit
 support, tandis que le support de nos estimations doit être celui du
 bloc, soit un grand support. Il est donc crucial de prendre en compte le
@@ -243,7 +243,7 @@ particulièrement utile pour visualiser la distribution cumulative des
 probabilités et pour déterminer des quantiles, comme la médiane (valeur
 pour laquelle $F_X(x) = 0{,}5$).
 
-## Mise en contexte {#mise-en-contexte .unnumbered}
+## Mise en contexte
 
 Soit $Z(x)$ une variable aléatoire représentant la valeur de la variable
 d'intérêt à une position $x$. Cette valeur est inconnue (par exemple :
@@ -406,7 +406,7 @@ Il est également important de noter que si $X$ et $Y$ sont
 indépendantes, alors la covariance entre $X$ et $Y$ est nulle,
 c'est-à-dire : $$\text{Cov}(X, Y) = 0$$
 
-## Propriétés {#propriétés .unnumbered}
+## Propriétés
 
 La variance de la somme de deux variables aléatoires $X$ et $Y$ est
 donnée par :
@@ -441,7 +441,7 @@ Cette dépendance spatiale est fondamentale en géostatistique, car elle
 permet de modéliser et de prédire des valeurs à des positions non
 mesurées en fonction des données disponibles à d'autres positions.
 
-## Supports {#supports .unnumbered}
+## Supports
 
 Le support fait référence à la zone ou à la région sur laquelle les
 mesures sont effectuées. En fonction de la taille et de la nature du
@@ -455,17 +455,11 @@ varier.
     aléatoire à la position $x$. Le support ponctuel est généralement la
     taille de la carotte.
 
--   **Petits blocs :** Si les mesures sont effectuées sur un petit bloc
-    de données, la moyenne de $Z(x)$ est définie par :
-    $$\bar{Z}_G = \frac{1}{N} \sum_{i=1}^{N} Z(x_i)$$ où $N$ est le
+-   **Blocs :** Si les mesures sont effectuées sur un petit bloc $G$
+    , la teneur du bloc, ${Z}_G$, est définie par :
+    $${Z}_G = \frac{1}{N} \sum_{i=1}^{N} Z(x_i)$$ où $N$ est le
     nombre d'observations dans le petit bloc $G$, et $x_i$ représente
-    les positions de chaque observation.
-
--   **Gros blocs :** Pour de plus grandes régions, la moyenne
-    $\bar{Z}_G$ est définie par :
-    $$\bar{Z}_G = \frac{1}{M} \sum_{i=1}^{M} Z(x_i)$$ où $M$ représente
-    le nombre de mesures dans un gros bloc, et $x_i$ les positions de
-    ces mesures.
+    les positions de chaque observation à l'intérieur du bloc $G$.
 
 Les statistiques calculées sur la variable aléatoire $Z(x)$ dépendent
 directement du support de mesure. En particulier, la variance de la
@@ -542,7 +536,7 @@ stériles et des parcs à résidus dans la restauration des sites miniers.
 Il s'agit d'un jeune domaine de recherche dont les applications sont
 très prometteuse. Il s'agit de travaux de recherche en cours à
 Polytechnique Montréal à travers l'Institut de la recherche en mines et
-environnement.
+environnement (IRME).
 
 # Autres domaines d'application
 
@@ -553,8 +547,7 @@ génie. Par exemple :
 Dans le domaine de la **géotechnique**, la géostatistique est utilisée
 pour modéliser en 2D ou en 3D la géologie du sous-sol et estimer, par la
 suite, les propriétés associées à chacune des unités. Elle cherche à
-répondre à une double question : où se trouvent les unités argileuses ou
-sableuses, et comment estimer spatialement leurs propriétés mécaniques
+répondre à une double question : où se trouvent les unités lithologiques, et comment estimer spatialement leurs propriétés mécaniques
 et hydrogéologiques ? On appelle cette approche la modélisation de
 faciès. Ainsi, la géostatistique permet d'obtenir un modèle du sous-sol
 cohérent avec les données disponibles, offrant ainsi une approche plus
