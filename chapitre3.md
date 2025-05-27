@@ -92,13 +92,9 @@ minières[^1].
 
 # Définitions des variables
 
-La plupart des opérations minières comportent trois étapes principales :  
-l'extraction, la concentration et la mise en marché — chacune ayant ses  
-propres coûts associés ainsi qu'une capacité maximale, voir limite.
+La plupart des opérations minières comportent trois étapes principales : l'extraction, la concentration et la mise en marché — chacune ayant ses propres coûts associés ainsi qu'une capacité maximale, voir limite.
 
-La théorie de *Lane et Taylor* repose sur plusieurs variables économiques,  
-permettant d'estimer les revenus d'une minière ainsi que les coûts liés  
-à son ouverture, son exploitation et sa fermeture.
+La théorie de *Lane et Taylor* repose sur plusieurs variables économiques, permettant d'estimer les revenus d'une minière ainsi que les coûts liés à son ouverture, son exploitation et sa fermeture.
 
 :::{admonition} ✏️ Variables clés à retenir
 :class: tip
@@ -114,7 +110,7 @@ permettant d'estimer les revenus d'une minière ainsi que les coûts liés
 | <a id="var-m"></a>  $m$     | Coûts variables de minage (par tonne de matériau minéralisé) |
 | <a id="var-h"></a>  $h$     | Coûts variables de traitement (par tonne de minerai) |
 | <a id="var-f"></a>  $f$     | Frais fixes (administration, ingénierie, capital) |
-| <a id="var-F"></a>  $F$     | Coût d'opportunité (Lane, 1988) |
+| <a id="var-F"></a>  $F$     | Coût d'opportunité |
 | <a id="var-M"></a>  $M$     | Capacité de minage (matériau minéralisé) |
 | <a id="var-H"></a>  $H$     | Capacité de traitement (minerai sélectionné) |
 | <a id="var-K"></a>  $K$     | Capacité du marché (métal) |
@@ -131,9 +127,7 @@ Enfin, la capacité du marché ($K$) reflète la quantité de métal que le marc
 
 # Mise en contexte des variables
 
-Supposons une tonne de matériau minéralisé illustrée à la  
-[Fig. %s](#Chap3_BlocMineraliseMetal.png). Les blocs de couleur **jaune** ont une  
-teneur ($t$) supérieure ou égale à la teneur de coupure $c$ (i.e., $t \geq c$), tandis que les blocs **bleus** ont une teneur inférieure à $c$ (i.e., $t < c$). Ainsi, l'ensemble des blocs jaunes constitue notre **minerai**, la portion économiquement rentable du matériau minéralisé.
+Supposons une tonne de matériau minéralisé illustrée à la [Fig. %s](#Chap3_BlocMineraliseMetal.png). Les blocs de couleur **jaune** ont une teneur ($t$) supérieure ou égale à la teneur de coupure $c$ (i.e., $t \geq c$), tandis que les blocs **bleus** ont une teneur inférieure à $c$ (i.e., $t < c$). Ainsi, l'ensemble des blocs jaunes constitue notre **minerai**, la portion économiquement rentable du matériau minéralisé.
 
 
 ```{figure} images/Chap3_BlocMineraliseMetal.png
@@ -146,13 +140,13 @@ teneur ($t$) supérieure ou égale à la teneur de coupure $c$ (i.e., $t \geq c$
 :class: tip
 
 - $x_c$ correspond à la **proportion volumique des blocs jaunes** (minerai) par rapport au volume total.  
-- $g_c$ est la **teneur moyenne** des blocs jaunes sélectionnés.
+- $g_c$ est la teneur moyenne des blocs jaunes sélectionnés. Inévitablement, $g_c$ sera toujours supérieure ou égale à la moyenne des teneurs du gisement complet. 
 
-Quand la teneur de coupure $c$ augmente, seuls les blocs les plus riches restent jaunes :  
+Quand la teneur de coupure $c$ **augmente**, seuls les blocs les plus riches restent jaunes :  
 - La proportion $x_c$ **diminue**.  
 - La teneur moyenne $g_c$ **augmente**.
 
-C’est pourquoi $g_c$ dépend de $c$ — d’où l’indice $c$ pour s’en souvenir.
+C’est pourquoi $x_c$ et $g_c$ dépendent de $c$ — d’où l’indice $c$ pour s’en souvenir.
 
 👉 On peut aussi écrire $x_c = x(c)$ et $g_c = g(c)$ pour souligner leur dépendance fonctionnelle à la teneur de coupure $c$.
 
@@ -164,32 +158,28 @@ La teneur de coupure joue un rôle fondamental dans l'évaluation
 économique et la planification des projets miniers. Elle permet
 notamment de :
 
--   **Distinguer le minerai du stérile** : Elle sert de seuil
-    décisionnel pour déterminer si un bloc de matériau minéralisé est
-    suffisamment riche en minerai pour être traité ou s'il doit être
-    rejeté.
+```{dropdown} **Distinguer le minerai du stérile**
+Elle sert de seuil décisionnel pour déterminer si un bloc de matériau minéralisé est suffisamment riche en minerai pour être traité ou s'il doit être rejeté.
+```
 
--   **Maximiser la valeur économique du gisement** : En ajustant la
-    teneur de coupure, on peut optimiser le profit net global, en tenant
-    compte des contraintes économiques, techniques, sociétales,
-    législatives et environnementales.
+```{dropdown} **Maximiser la valeur économique du gisement**
+En ajustant la teneur de coupure, on peut optimiser le profit net global, en tenant compte des contraintes économiques, techniques, sociétales, législatives et environnementales.
+```
 
--   **Planifier l'exploitation minière** : Elle guide les choix relatifs
-    à l'ordre d'extraction, à la durée de vie de la mine et à
-    l'adaptation du plan minier selon les fluctuations de ces même
-    contraites.
+```{dropdown} **Planifier l'exploitation minière**
+ Elle guide les choix relatifs à l'ordre d'extraction, à la durée de vie de la mine et à l'adaptation du plan minier selon les fluctuations de ces même contraites.
+```
 
--   **Évaluer les ressources et réserves** : Elle permet de classifier
-    les ressources minérales en ressources exploitables (réserves) ou
-    non économiques, selon les critères définis par les standards
-    internationaux (ex. : CIM, JORC).
+```{dropdown} **Évaluer les ressources et réserves**
+Elle permet de classifier les ressources minérales en ressources exploitables (réserves) ou non économiques, selon les critères définis par les standards internationaux (ex. : CIM, JORC).
+```
 
--   **Prendre des décisions stratégiques** : Elle peut être ajustée
-    dynamiquement selon les capacités de traitement, les contraintes de
-    marché ou les politiques internes de l'entreprise.
+```{dropdown} **Prendre des décisions stratégiques**
+Elle peut être ajustée dynamiquement selon les capacités de traitement, les contraintes de marché ou les politiques internes de l'entreprise.
+```
 
-Ainsi, la teneur de coupure n'est pas une valeur fixe, mais un paramètre
-stratégique qui influence directement la rentabilité, la durabilité et
+Ainsi, la teneur de coupure n'est pas une valeur fixe, mais un **paramètre
+stratégique dynamique** qui influence directement la rentabilité, la durabilité et
 la gestion des opérations minières. La théorie entourant la teneur de
 coupure est complexe et vaste. En étudier tous les détails requiert un
 cours à part entière. Ici, nous nous concentrerons sur l'impact des
@@ -199,14 +189,14 @@ aborderons notamment la **théorie de Lane** (ou théorie de Taylor).
 
 # Théorie de Lane et Taylor
 
-La teneur de coupure est le seuil à partir duquel un minerai devient
-rentable. Elle doit permettre de couvrir les coûts jugés pertinents, qui
-varient selon la mine et l'approche retenue.
+(def-t.c.)=
+Définition – Teneur de coupure
+: La **teneur de coupure** est le seuil au-dessus duquel une tonne de matériaux minéralisés est considérée comme économiquement exploitable. Elle doit au minimum couvrir les **coûts jugés pertinents**, lesquels peuvent varier selon le type de mine, les méthodes d'exploitation et l'approche économique retenue.
 
-La théorie de Lane et Taylor se base sur le concept de la maximisation
-des profits nets par tonne de matériaux minéralisé. Cela veut dire que
-nous devons calculer nos revenues et soustraire nos coûts d'exploitation
-afin d'obtenir les profits nets.
+
+La théorie de Lane et Taylor repose sur le principe de la maximisation du profit net par tonne de matériau minéralisé, ou de la valeur actuelle nette (VAN).
+Autrement dit, il s’agit de calculer les revenus générés par l’exploitation, puis d’en soustraire les coûts afin d’obtenir le profit net.
+La dimension temporelle est également prise en compte, puisque le système est dynamique et évolue au fil du temps.
 
 $$\text{Profits} = \text{Revenus} - \text{Coûts}$$
 
@@ -238,12 +228,6 @@ exemples interactifs.
 :align: center 
 Évolution de la teneur de coupure selon la méthode utilisée.
 ```
-
-En règle générale, la teneur de coupure obtenue par la méthode de Lane
-est supérieure ou égale à celle obtenue par la méthode de Taylor, qui
-néglige les coûts d'opportunité (variables $F$), car Taylor pose
-$F = 0$. Nous verrons l'impact des coûts d'opportunité dans les
-exemples.
 
 D'autres facteurs peuvent influencer la teneur de coupure. Une baisse
 des prix des métaux pousse à augmenter la teneur de coupure[^2], car
@@ -279,61 +263,73 @@ impacts des mauvaises estimations.
 
 # Teneurs de coupure limite
 
-Le détermination de la teneur de coupure optimale nécessite au préalable
-la définition de trois teneurs de coupure limite et de trois teneurs de
-coupure d'équilibre. Taylor (1972) démontre que la teneur de coupure
-optimale est nécessairement une de ces six teneurs de coupure.
+La détermination de la **teneur de coupure optimale** nécessite d'abord l'identification de **trois teneurs de coupure limite** et de **trois teneurs d'équilibre**.
 
-La teneur de coupure optimale ne peut pas être définie arbitrairement :
-elle dépend des capacités des installations (mine, concentrateur) et des
-conditions du marché. La théorie de Lane et Taylor identifient ainsi
-trois facteurs limitatifs majeurs, chacun associé à une teneur de
-coupure limite :
+::::{note}
+📘 *Selon Taylor (1972)*, la teneur de coupure optimale appartient nécessairement à cet ensemble restreint de six teneurs de coupure.
+::::
 
--   **Limite de la mine** : Nous sommes limités par la capacité de la
-    mine à exploiter le gisement. Extirper les stériles pour atteindre
-    les matériaux minéralisés est limité par les équipements disponibles
-    et les infrastructures (e.g., capacité de la halle à stériles). Nous
-    sommes limités par les opérations minières.
+La teneur optimale **ne peut pas être choisie arbitrairement** :  
+Elle dépend des **capacités des installations** (mine, concentrateur) et des **conditions du marché**.
 
--   **Limite du concentrateur** : Nous sommes limités par la capacité du
-    concentrateur à traiter le minerai. Bien que nous puissions produire
-    une grande quantité de matériaux minéralisés, le concentrateur ne
-    peut extraire le minerai du matériau minéralisé ni extraire le métal
-    du minerai. Nous sommes limités par les étapes liées au
-    concentrateur.
+La théorie de **Lane et Taylor** identifie ainsi **trois facteurs limitatifs majeurs**, chacun associé à une teneur de coupure limite.
 
--   **Limite du marché** : Nous sommes limités par la capacité de vendre
-    le métal produit sur le marché. Il ne sert à rien de produire plus
-    que la demande. Nous sommes donc limités par le marché.
+:::{dropdown} ⚙️ Limites techniques et économiques
 
-Ces limites peuvent engendrer des déséquilibres. Si la mine n'est pas
-assez développée, l'approvisionnement du concentrateur est insuffisant.
-Si le concentrateur est sous-dimensionné par rapport à l'extraction, du
-minerai est perdu. Si la production dépasse la demande du marché, les
-prix chutent ou les ventes diminuent. On ne rappellera pas assez
-suffisamment que la teneur de coupure est dynamique, évoluant avec les
-conditions techniques et économiques.
+- **⛏️ Limite de la mine**  
+  La capacité d’exploitation est restreinte par les équipements miniers et les infrastructures (par exemple, la capacité de la halle à stériles).  
+  → **Limitation au niveau des opérations minières.**
 
-Rappelons que la teneur de coupure doit être déterminée pour maximiser
-le profit net par tonne de matériau minéralisé, selon la relation :
-$$\text{Profit} = \text{Revenus} - \text{Coûts}.$$
+- **🏭 Limite du concentrateur**  
+  Même si l’on peut extraire une grande quantité de matériau minéralisé, le concentrateur ne peut pas tout traiter.  
+  → **Limitation au niveau du traitement du minerai.**
 
-Pour comparer équitablement les trois teneurs limites, toutes les
-grandeurs sont donc ramenées à des **tonnes de matériau minéralisé**.
-Ainsi :
+- **📉 Limite du marché**  
+  Produire plus que la demande peut nuire aux revenus (chute des prix, invendus).  
+  → **Limitation imposée par la capacité d’absorption du marché.**
 
--   La mine a une capacité maximale de $M$ tonnes de matériau
-    minéralisé.
+:::
 
--   Le concentrateur traite $H$ tonnes de minerai, soit $H/x_c$ tonnes
-    de matériau minéralisé.
+:::{admonition} ⚠️ Déséquilibres possibles
+Si l’un de ces maillons est sous-dimensionné, des pertes économiques peuvent survenir :
 
--   Le marché peut absorber $K$ tonnes de métal, soit $K/(g_cy)$ tonnes
-    de minerai, donc $K/(x_cg_cy)$ tonnes de matériau minéralisé.
+- Si la **mine** est trop lente → le concentrateur est sous-alimenté.
+- Si le **concentrateur** est saturé → du minerai est gaspillé.
+- Si le **marché** est dépassé → les ventes chutent ou le prix s’effondre.
 
-Ces relations sont très importantes afin de s'assurer que tous les
-calculs sont réalisés avec des tonnes de matériaux minéralisés.
+On ne rappellera jamais assez que la **teneur de coupure est une variable dynamique**, qui évolue avec les conditions techniques et économiques.
+:::
+
+## 💰 Objectif économique
+
+La teneur de coupure doit être choisie de façon à **maximiser le profit net** par tonne de matériau minéralisé :
+
+$$
+\text{Profit} = \text{Revenus} - \text{Coûts}.
+$$
+
+Pour comparer équitablement les trois teneurs limites, toutes les grandeurs doivent être exprimées **en tonnes de matériau minéralisé**.
+
+:::{dropdown} 🧮 Conversion des capacités
+
+- La mine peut extraire au plus **$M$ tonnes** de matériau minéralisé.  
+- Le concentrateur peut traiter **$H$ tonnes** de minerai, soit **$H / x_c$ tonnes** de matériau minéralisé, où $x_c$ est la proportion de minerai.  
+- Le marché peut absorber **$K$ tonnes** de métal, soit :
+
+  $$
+  \frac{K}{g_c y} \text{ tonnes de minerai} \quad \Rightarrow \quad \frac{K}{x_c g_c y} \text{ tonnes de matériau minéralisé},
+  $$
+
+  où $g_c$ est la teneur moyenne des blocs sélectionnés, et $y$ est le taux de récupération métallurgique.
+
+:::
+
+::::{tip}
+✅ **Ces conversions sont essentielles** pour garantir la cohérence des comparaisons entre les différentes limites.  
+Travailler en tonnes de matériau minéralisé évite les erreurs d'interprétation.
+::::
+
+
 
 ## Teneur de coupure : Mine
 
