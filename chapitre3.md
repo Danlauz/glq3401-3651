@@ -290,16 +290,6 @@ La théorie de **Lane et Taylor** identifie ainsi **trois facteurs limitatifs ma
 
 :::
 
-:::{admonition} ⚠️ Déséquilibres possibles
-Si l’un de ces maillons est sous-dimensionné, des pertes économiques peuvent survenir :
-
-- Si la **mine** est trop lente → le concentrateur est sous-alimenté.
-- Si le **concentrateur** est saturé → du minerai est gaspillé.
-- Si le **marché** est dépassé → les ventes chutent ou le prix s’effondre.
-
-On ne rappellera jamais assez que la **teneur de coupure est une variable dynamique**, qui évolue avec les conditions techniques et économiques.
-:::
-
 ## 💰 Objectif économique
 
 La teneur de coupure doit être choisie de façon à **maximiser le profit net** par tonne de matériau minéralisé :
@@ -363,7 +353,7 @@ minéralisé dû aux frais fixes et aux coûts d'opportunité.
 Pour déterminer la teneur de coupure de la mine, il faut maximiser le
 profit en fonction de la teneur de coupure. Il faut donc résoudre :
 $\frac{dv}{dc} = 0$. Dans
-l'Eq.\eqref{eq:LimiteMine}, les termes $m$ et $\frac{f + F}{M}$ ne
+l'Eq.(\eqref{eq:LimiteMine}), les termes $m$ et $\frac{f + F}{M}$ ne
 dépendent pas de la teneur de coupure adoptée, leur dérivée étant
 automatiquement nulle. Il reste donc à dériver les deux termes
 $(p - k) x_c g_c y$ et $x_c h$ par rapport à $c$. Notons que $x_c$ et

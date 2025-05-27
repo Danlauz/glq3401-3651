@@ -53,11 +53,9 @@ site:
     show_input: false
     show_output: true
 
-mathjax_config:
-  TeX:
-    macros:
-      ce: ["\\ce{#1}", 1]
-    packages: ["mhchem"]
+sphinx:
+  extra_extensions:
+    - sphinx.ext.mathjax
 
 
 
