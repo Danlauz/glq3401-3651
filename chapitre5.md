@@ -205,7 +205,7 @@ densité est de 3.2 t/m³.
 
 Bien que la teneur en cuivre soit constante à 3%, la quantité de cuivre
 dans 1 m³ de minerai varie en fonction de la densité. Plus la densité
-est faible (3.2 t/m³ par rapport à 3.5 t/m³), moins il y a de cuivre
+est faible (3.2 t/m³ par rapport à 3.5 t/m³), moins il y a de métal
 dans un volume donné de minerai.
 
 Il est alors très important de tenir compte de la densité dans
@@ -295,9 +295,7 @@ de 6 m et avec les hypothèses suivantes :
 
 ## Exemples de calcul de composites {#exemples-de-calcul-de-composites .unnumbered}
 
-La
-Fig.[\[fig.RegularisationLarge\]](#fig.RegularisationLarge){reference-type="ref"
-reference="fig.RegularisationLarge"} présente les résultats de la
+La [Fig. %s](#Chap5_RegularisationLarge.png) présente les résultats de la
 régularisation pour la distance de 60m a 90. Il y a ainsi 5 composites
 qui doivent etre formé (30/6=5). Nous expliquetons le calcul pour le
 composite 2 et 4.
@@ -329,9 +327,11 @@ Ce traitement garantit que seuls les composites avec une couverture
 suffisante de données analytiques sont conservés pour les analyses et
 estimations géostatistiques.
 
-::: figure*
-![image](RegularisationLarge.png){width="100%"}
-:::
+```{figure} images/Chap5_RegularisationLarge.png
+:label: Chap5_RegularisationLarge.png
+:align: center 
+Exemple complet d'une régularisaion.
+```
 
 ## Choix de la longueur de compositage {#choix-de-la-longueur-de-compositage .unnumbered}
 
@@ -340,8 +340,7 @@ conformément à une pratique courante en géostatistique minière visant à
 réduire la variabilité locale tout en conservant une sélectivité
 géologique suffisante. Ce choix est justifié ici par l'analyse de la
 distribution des longueurs des carottes d'échantillonnage
-(Figure [\[fig.histocarottes\]](#fig.histocarottes){reference-type="ref"
-reference="fig.histocarottes"}), qui montre une concentration importante
+([Fig. %s](#Chap5_DistributionCarotte.png)), qui montre une concentration importante
 autour de 6 m. En effet, l'histogramme indique que la majorité des
 échantillons bruts ont une longueur comprise entre 5.5 m et 6.5 m, ce
 qui suggère une homogénéité naturelle autour de cette valeur.
@@ -354,9 +353,11 @@ ultérieures de modélisation par blocs ou de simulation géostatistique,
 en conservant un échantillonnage régulier aligné sur des multiples de
 6 m.
 
-::: figure*
-![image](DistributionCarotte.png){width="75%"}
-:::
+```{figure} images/Chap5_DistributionCarotte.png
+:label: Chap5_DistributionCarotte.png
+:align: center 
+Histogramme des longueurs de carottes
+```
 
 # Déviation
 
@@ -375,17 +376,16 @@ traversées, de la technique de forage utilisée, ainsi que de la
 profondeur et de l'inclinaison initiale du trou. Si le trou est foré
 parallèlement à la schistosité ou à la structure naturelle de la roche,
 il tendra à suivre les plans de faiblesse (e.g., d'une roche dure vers
-une roche molle,
-Fig.[\[fig.deviation\]](#fig.deviation){reference-type="ref"
-reference="fig.deviation"}a)). En revanche, s'il est foré avec un angle
+une roche molle, [Fig. %s](#Chap5_ImgDeviation.png)a). En revanche, s'il est foré avec un angle
 plus élevé, il aura tendance à se dévier perpendiculairement à ces plans
 de faiblesse (e.g., d'une roche molle vers une roche dure,
-Fig.[\[fig.deviation\]](#fig.deviation){reference-type="ref"
-reference="fig.deviation"}b)).
+[Fig. %s](#Chap5_ImgDeviation.png)b).
 
-::: figure*
-![image](ImgDeviation.png){width="50%"}
-:::
+```{figure} images/Chap5_ImgDeviation.png
+:label: Chap5_ImgDeviation.png
+:align: center 
+Exemple de déviation typique, mais simplifié
+```
 
 Un exemple célèbre illustrant l'importance de la mesure des déviations
 est celui de la mine Louvicourt. Les forages ont dévié de manière
@@ -397,8 +397,7 @@ réalité était tout autre. Les réserves se sont avérées être d'environ 15
 Mt (une diminution de 25 Mt), avec une durée de vie réduite à seulement
 10 ans.
 
-La Fig. [\[fig.impdeviation\]](#fig.impdeviation){reference-type="ref"
-reference="fig.impdeviation"} illustre cette problématique. Les
+La [Fig. %s](#Chap5_ImpactDev.png) illustre cette problématique. Les
 ingénieurs croyaient avoir affaire à une veine dont la longueur
 correspond à la ligne rose, avec des forages supposés non déviés (lignes
 bleues). Cependant, les forages ont en réalité subi des déviations
@@ -406,10 +405,11 @@ importantes (lignes noires), et la longueur réelle de la minéralisation
 est beaucoup plus courte (ligne rouge). On observe clairement la
 surestimation de la longueur de la veine minéralisée.
 
-::: figure*
-![image](ImpactDev.png){width="50%"}
-:::
-
+```{figure} images/Chap5_ImpactDev.png
+:label: Chap5_ImpactDev.png
+:align: center 
+Impact des déviations lorsque non considéré
+```
 ## Suivi des déviations
 
 Les outils géostatistiques utilisés pour estimer les tonnages et les
@@ -546,8 +546,7 @@ qu'elles soient représentatives de l'ensemble du volume d'intérêt.
 
 ## Mise en contexte
 
-La Fig.[\[fig.Gisement\]](#fig.Gisement){reference-type="ref"
-reference="fig.Gisement"} présente les teneurs en cuivre d'un gisement
+La [Fig. %s](#Chap5_Gisement.png) présente les teneurs en cuivre d'un gisement
 synthétique suivant une distribution log-normale, de moyenne 2% et de
 variance unitaire. Les cercles en surbrillance indiquent la position des
 140 forages. Deux zones apparaissent comme suréchantillonnées : l'une au
@@ -555,9 +554,11 @@ centre de l'image, où 30 forages se concentrent dans une zone riche du
 gisement (cercles rouges), et une autre dans le coin inférieur gauche,
 où 10 forages représentent une zone de faible teneur (cercles bleus).
 
-::: figure*
-![image](Gisement.png){width="50%"}
-:::
+```{figure} images/Chap5_Gisement.png
+:label: Chap5_Gisement.png
+:align: center 
+Teneurs en cuivre d'un gisement synthétique suivant une distribution log-normale, de moyenne 2% et de variance unitaire.
+```
 
 La présence de zones de suréchantillonnage biaise le calcul de nos
 statistiques descriptives (par exemple, moyenne, écart-type, quantiles).
