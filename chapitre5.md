@@ -169,12 +169,14 @@ non pondérée. Cette différence illustre l'impact de la régularisation :
 en tenant compte des longueurs réelles des échantillons, on obtient une
 estimation plus représentative de la teneur présente dans le gisement.
 
-La Fig.[\[fig.Composite\]](#fig.Composite){reference-type="ref"
-reference="fig.Composite"} illustre le calcul effectué ci-haut.
+La [Fig. %s](#Chap5_Composite.png) illustre le calcul effectué ci-haut.
 
-::: figure*
-![image](Composite.png){width="100%"}
-:::
+```{figure} images/Chap5_Composite.png
+:label: Chap5_Composite.png
+:align: center 
+Exemple d'un composite.
+```
+
 
 ## Exemple simplifié : densité
 
