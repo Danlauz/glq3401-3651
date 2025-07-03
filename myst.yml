@@ -25,10 +25,18 @@ project:
       children:
         - file: Chap3.ipynb
     - file: chapitre4.md
+      children:
+        - file: Chap4.ipynb
     - file: chapitre5.md
+      children:
+        - file: Chap5.ipynb
     - file: chapitre6.md
     - file: chapitre7.md
+      children:
+        - file: Chap7.ipynb
     - file: chapitre8.md
+      children:
+        - file: Chap8.ipynb
     - file: chapitre9.md
 
 site:
