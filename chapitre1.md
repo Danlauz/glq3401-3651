@@ -24,7 +24,7 @@ downloads:
 
 - Pouvoir expliquer l'utilité de la géostatistique dans le domaine des géosciences et spécialement en mine;
 - Introduire les notions fondamentales de probabilités et statistiques;
-- Comprendre les principes de base des modèles spatiaux et leur application à l’estimation et la simulation des variables géoscientifiques;
+- Comprendre les principes de base des modèles spatiaux et leur application à l’estimation et la simulation des variables régionalisées;
 :::
 
 
@@ -52,60 +52,34 @@ du Sud, Daniel Krige, à observer deux grand phénomènes qui lui ont
 permis de postuler deux questions :
 
 -   Pourquoi récupère-t-on toujours moins de métal lorsque l'on exploite
-    des grands volume qu'avec des petits volumes (effet support) ?
+    des grands volume qu'avec des petits volumes ? (effet support)
 
 -   Pourquoi récupère-t-on toujours moins de ressources (i.e., métal)
-    avec des estimations qu'avec les valeur réelles du gisement connue
-    après sont exploitation (effet information) ?
+    avec des estimations qu'avec les valeur réelles connue
+    après l'exploitation du gisement ? (effet information)
 
 La discipline a été développer autour de ces deux grandes questions et
 le krigeage, développé en 1960 par George Matheron, fut nommé en
 l'honneur de Daniel Krige, le père fondateur de la géostatistique.
 
-## Effet de support
+## 🔍➡️🧊 Effet de support
 
-Un paradigme important doit être pris en considération lors de la
-réalisation d'estimations et de leur utilisation dans les opérations
-minières courantes. Les forages exploratoires et d'exploitation ont des
-diamètres très petits (quelques centimètres) par rapport à la taille des
-blocs (quelques mètres) qui sont exploité par la minière. On exploite
-donc une ressource sur des blocs, mais leurs estimations reposent sur
-des carottes. On appel la taille étudiée le support. Ainsi, le
-support de nos observations est celui des forages, soit un petit
-support, tandis que le support de nos estimations doit être celui du
-bloc, soit un grand support. Il est donc crucial de prendre en compte le
-support lors des estimations et procéder correctement au changement de
-support. Cela sera traité dans un autre leçon.
+En géostatistique minière, le support désigne la taille de la zone sur laquelle une teneur en minerai est mesurée ou estimée. On peut le comparer à une loupe à travers laquelle on observe le gisement. 
 
-La [Fig. %s](#Chap1_Support.png) présente deux gisements miniers ayant une
-distribution statistique des teneurs des forages (petit support)
-identique, c'est-à-dire que leur histogramme est identique (ou que leur
-fonction de densité ou de répartition est similaire). Par conséquent, le
-calcul des ressources est identique lorsque l'on considère le forage
-comme support. Cependant, il est impossible d'opérer sur un support de
-quelques centimètres ; il suffit de regarder la taille des équipements
-miniers pour comprendre que l'on opère sur des blocs de taille de
-l'ordre des mètres. Ainsi, lorsque l'on augmente la taille du support,
-en passant du forage à un bloc de taille plus importante, on modifie les
-statistiques de nos teneurs, et la nature du gisement influencera ces
-statistiques. On constate que l'histogramme des teneurs des blocs des
-gisements A et B est complètement différent lorsque l'on augmente la
-taille du bloc. Cela montre que la teneur des carottes de forage ne
-permet pas d'expliquer toute la complexité du gisement et que d'autres
-phénomènes interviennent, tels que la continuité spatiale du gisement et
-la structure minéralogique.
+Une petite loupe représente une carotte de forage : on voit très localement, avec précision, exactement ce qui a été extrait à cet endroit. En revanche, une grande loupe correspond à la taille d’un bloc minier : on observe une zone plus large, mais les détails sont moins visibles. À cette échelle, on ne mesure plus directement les teneurs ; on les estime en moyennant les données issues des forages. Ce changement d’échelle — du forage au bloc — a un impact majeur : plus le support est grand, plus les valeurs sont lissées, ce qui peut modifier la perception de la richesse du gisement. Comprendre cet effet est essentiel pour une estimation fiable et réaliste des ressources minières.
 
-En règle générale, on récupère toujours moins de métal avec de gros
-blocs qu'avec de petits blocs. Ce phénomène est connu sous le nom
-d'effet de support. Pourquoi ? Parce que la minéralisation est un
-phénomène sporadique. Plus on augmente la taille du bloc, plus on
-introduit des concentrations faibles, car on a moins de chances d'avoir
-plusieurs zones riches dans un même bloc. Par conséquent, en raison de
-l'effet de moyenne, la teneur des grands blocs sera toujours inférieure
-à celle des blocs plus petits, bien entendu en moyenne. Il est possible
-que la teneur d'un bloc augmente, mais en moyenne, celle-ci tend à
-diminuer. Ce phénomène est observable dans les histogrammes lorsque l'on
-compare les différentes tailles de blocs, de haut en bas.
+Imaginons deux gisements qui, à l’échelle des forages, présentent les mêmes statistiques : même teneur moyenne, même variabilité. On pourrait croire qu’ils seront exploités de manière similaire. On pourrait croire qu’ils seront exploités de manière similaire. Mais une fois passés à l’échelle des blocs, les différences apparaissent. Les teneurs sont lissées différemment selon la répartition spatiale du minerai ([Fig. %s](#Chap1_Support.png), flèches rouges) — c’est ce qu’on appelle la continuité spatiale.
+
+👉 Pour mieux visualiser ce phénomène, consultez l’atelier interactif en lien avec la [Fig. %s](#Chap1_Support.png).
+
+
+En général, plus un bloc est grand, plus il contient de zones pauvres en minerai, car des teneurs élevé sont des évènements rares. Cela signifie qu’on récupère souvent moins de métal avec de gros blocs qu’avec de petits, car les zones riches sont diluées avec des zones stériles.
+
+🎨 Petite analogie : imagine que tu mélanges une cuillère de peinture rouge dans un petit pot de peinture blanche — le rouge reste visible. Fais la même chose dans un grand seau, et tu obtiens un rose pâle presque blanc. Même principe pour les teneurs : plus le bloc est gros, plus les fortes teneurs sont diluées.
+
+Bien sûr, il serait tentant d’exploiter de petits blocs pour réduire l'impact des dilutions. Mais cela n’est pas viable d’un point de vue opérationnel. Il faut tenir compte des capacités des machines, des exigences de sécurité, ainsi que de la stabilité des excavations. On ne va pas creuser des blocs minuscules juste pour optimiser la sélection. Personne n’extrait du minerai à la pelle manuelle ! C’est pourquoi la taille des blocs est avant tout déterminée par les contraintes techniques et opérationnelles de la mine.
+
+En tant que futurs ingénieurs, il est essentiel de bien comprendre l’effet de support. Cela permet de mieux adapter les plans d’exploitation aux réalités du terrain et de choisir, parmi les scénarios possibles, celui qui maximise la rentabilité en tenant compte des contraintes opérationnelles. C’est là que la géostatistique devient un véritable outil d’aide à la décision.
 
 
 ```{figure} images/Chap1_Support.png
@@ -113,7 +87,6 @@ compare les différentes tailles de blocs, de haut en bas.
 :align: center 
 Effet de support. La variabilité d'un gisement change selon la taille du support, mais aussi à cause de sa structure spatiale.
 ``` 
-
 
 ## Effet d'information
 
@@ -144,7 +117,7 @@ la teneur réelle.
 
 Ainsi, on récupère toujours moins de métal avec des estimations qu'avec
 les vraies valeurs, car les décisions sont prises à partir d'estimations
-imparfaites, tandis que l'exploitation repose sur la réalité géologique.
+imparfaites, tandis que l'exploitation repose sur la réalité géologique non-connue.
 Ce principe peut être relié aux notions de faux positifs et faux
 négatifs.
 
