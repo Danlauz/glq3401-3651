@@ -45,9 +45,9 @@ project:
         - file: Chap4.ipynb
     - file: Chapitres/Chap4/C4_main.md
       children:
-        - file: Chapitres/Chap4/C4_Régularisation.md
-        - file: Chapitres/Chap4/C4_Déviation.md
-        - file: Chapitres/Chap4/C4_Dégroupement.md
+        - file: Chapitres/Chap4/C4_Regularisation.md
+        - file: Chapitres/Chap4/C4_Deviation.md
+        - file: Chapitres/Chap4/C4_Degroupement.md
         - file: Chap5.ipynb
     - file: chapitre6.md
     - file: chapitre7.md
