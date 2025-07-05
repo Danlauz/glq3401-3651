@@ -33,9 +33,7 @@ project:
     - file: Chapitres/Chap2/C2_main.md
       children:
         - file: Chapitres/Chap2/C2_Lane.md
-        - file: Chapitres/Chap2/C2_Equilibre.md
-	- file: Chapitres/Chap2/C2_Influence.md
-	- file: Chapitres/Chap2/C2_Table.md
+        - file: Chapitres/Chap2/C2_Limite.md
         - file: Chap3.ipynb
     - file: Chapitres/Chap3/C3_main.md
       children:
