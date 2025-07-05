@@ -22,7 +22,7 @@ Bien qu'il soit tentant d'exploiter des blocs plus petits pour limiter cette dil
 
 En tant que futurs ingénieurs, maîtriser l'effet de support est fondamental. Cette compréhension permet d'adapter les plans d'exploitation aux réalités du terrain et de choisir le scénario qui maximise la rentabilité du projet, tout en respectant l'ensemble des contraintes. La géostatistique se révèle alors un outil puissant : elle permet de quantifier ces effets, devenant ainsi une aide précieuse à la décision pour optimiser la valeur des ressources minières.
 
-```{figure} Chapitres/Chap01/images/C01_Support.png
+```{figure} images/C01_Support.png
 :label: C01_Support.png
 :align: center 
 Effet de support : Influence combinée de la taille du support et de la structure spatiale sur la variabilité des teneurs dans un gisement. 
