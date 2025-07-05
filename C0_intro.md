@@ -2,18 +2,19 @@
 
 Ce cours couvre les principaux aspects théoriques et pratiques de la géostatistique appliquée à la géologie minière. Chaque module a été conçu pour fournir un équilibre entre concepts fondamentaux, méthodes quantitatives et applications concrètes, afin de préparer les étudiants à la résolution de problèmes en exploration et exploitation minière.
 
-1. **Introduction – Rapport technique NI-43-101** (3 heures)  
-2. **Aspects économiques – Théorie de Lane et Taylor** (3 heures)  
-3. **Théorie de Gy et contrôle qualité** (3 heures)  
-4. **Traitement et analyse statistique des données de forage** (3 heures)  
-5. **Méthodes conventionnelles de calcul des ressources** (3 heures)  
-6. **Variogramme : théorie, estimation et modélisation** (5 heures)  
-7. **Variance de blocs, de dispersion et d’estimation** (3 heures)  
-8. **Krigeage : théorie, calcul et pratique** (3 heures)  
-9. **Cokrigeage : domaine multivariable** (3 heures)  
-10. **Krigeage d’indicatrices** (3 heures)  
-11. **Simulations géostatistiques** (3 heures)  
-12. **Simulations de faciès** (3 heures)  
+1. **Introduction à la géostatistique** (3 heures)
+2. **Rapport technique NI-43-101** (3 heures)  
+3. **Aspects économiques – Théorie de Lane et Taylor** (3 heures)  
+4. **Théorie de Gy et contrôle qualité** (3 heures)  
+5. **Traitement et analyse statistique des données de forage** (3 heures)  
+6. **Méthodes conventionnelles de calcul des ressources** (3 heures)  
+7. **Variogramme : théorie, estimation et modélisation** (5 heures)  
+8. **Variance de blocs, de dispersion et d’estimation** (3 heures)  
+9. **Krigeage : théorie, calcul et pratique** (3 heures)  
+10. **Cokrigeage : domaine multivariable** (3 heures)  
+11. **Krigeage d’indicatrices** (3 heures)  
+12. **Simulations géostatistiques** (3 heures)  
+13. **Simulations de faciès** (3 heures)  
 
 ---
 

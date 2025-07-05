@@ -17,9 +17,10 @@ project:
 
   toc:
     - file: C0_acceuil.md
-    - file: C0_intro.md
-    - file: chapitre1.md
       children:  # ⚠️ doit être 'children' et non 'sections'
+        - file: C0_intro.md
+    - file: chapitre1.md
+      children:
         - file: chapitre1_RappelProbStats.md
         - file: Chap1.ipynb
     - file: chapitre2.md
