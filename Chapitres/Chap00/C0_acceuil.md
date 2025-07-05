@@ -8,6 +8,7 @@ Ce site propose les notes de cours des enseignements **GLQ3401 – Géostatistiq
 ```{note}
 Préparé par Dany Lauzon, Ph.D — Polytechnique Montréal  
 (Contenu, programmation, exemples interactifs)
+```
 
 📧 Pour toute question ou suggestion : [dany.lauzon@polymtl.ca](mailto:dany.lauzon@polymtl.ca)  
 📚 Informations officielles sur Moodle : [https://moodle.polymtl.ca/course/view.php?id=1112](https://moodle.polymtl.ca/course/view.php?id=1112)
