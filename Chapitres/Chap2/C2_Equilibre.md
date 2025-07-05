@@ -201,7 +201,7 @@ la probabilité correspondante. Par exemple, si $z = 1.23$, on peut lire
 directement $F(1.23) \approx 0.8907$. Pour $z = -1.23$, on utilise la
 relation $F(-1.23) = 1 - F(1.23) = 1 - 0.8907 = 0.1093$.
 
-La table de la loi normale est fournie en section {ref}`Tab.LoiNormale`.
+La table de la loi normale est fournie en fin de section.
 
 ## Exemple du calcul des teneurs d'équilibre
 
