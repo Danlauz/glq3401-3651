@@ -30,14 +30,24 @@ project:
         - file: Chapitres/Chap1/C1_Ressources.md
         - file: Chapitres/Chap1/C1_PQ.md
         - file: Chapitres/Chap1/C1_Contenue.md
-    - file: chapitre3.md
+    - file: Chapitres/Chap2/C2_main.md
       children:
+        - file: Chapitres/Chap2/C2_Lane.md
+        - file: Chapitres/Chap2/C2_Limite.md
+        - file: Chapitres/Chap2/C2_Equilibre.md
+	- file: Chapitres/Chap2/C2_Influence.md
+	- file: Chapitres/Chap2/C2_Table.md
         - file: Chap3.ipynb
-    - file: chapitre4.md
+    - file: Chapitres/Chap3/C3_main.md
       children:
+        - file: Chapitres/Chap3/C3_Gy.md
+        - file: Chapitres/Chap3/C3_QAQC.md
         - file: Chap4.ipynb
-    - file: chapitre5.md
+    - file: Chapitres/Chap4/C4_main.md
       children:
+        - file: Chapitres/Chap4/C4_Régularisation.md
+        - file: Chapitres/Chap4/C4_Déviation.md
+        - file: Chapitres/Chap4/C4_Dégroupement.md
         - file: Chap5.ipynb
     - file: chapitre6.md
     - file: chapitre7.md
