@@ -5,9 +5,12 @@ project:
   id: 95504c80-1bcd-40df-b447-739fa9214655
 
   authors:
-    - name: Dany Lauzon
-      roles:
-        - Rédigé par Dany Lauzon, Ph.D — Polytechnique Montréal (Contenu, Programmation, Exemples interactifs)
+  - name: Dany Lauzon
+    roles:
+      - Contenu
+      - Programmation
+      - Exemples interactifs
+
 
   license:
     content: CC-BY-NC-4.0
