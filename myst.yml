@@ -16,7 +16,8 @@ project:
   jupyter: true
 
   toc:
-    - file: intro.md
+    - file: C0_acceuil.md
+    - file: C0_intro.md
     - file: chapitre1.md
       children:  # ⚠️ doit être 'children' et non 'sections'
         - file: chapitre1_RappelProbStats.md
