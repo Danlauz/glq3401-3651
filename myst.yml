@@ -15,6 +15,31 @@ project:
 
   jupyter: true
 
+  toc:
+    - file: intro.md
+    - file: chapitre1.md
+      children:  # ⚠️ doit être 'children' et non 'sections'
+        - file: chapitre1_RappelProbStats.md
+        - file: Chap1.ipynb
+    - file: chapitre2.md
+    - file: chapitre3.md
+      children:
+        - file: Chap3.ipynb
+    - file: chapitre4.md
+      children:
+        - file: Chap4.ipynb
+    - file: chapitre5.md
+      children:
+        - file: Chap5.ipynb
+    - file: chapitre6.md
+    - file: chapitre7.md
+      children:
+        - file: Chap7.ipynb
+    - file: chapitre8.md
+      children:
+        - file: Chap8.ipynb
+    - file: chapitre9.md
+
 site:
   template: book-theme
 
@@ -22,7 +47,6 @@ site:
     logo: images/logo_polymtl.png
     logo_dark: images/logo_polymtl_dark.png
     logo_text: GLQ3401 / GLQ3651
-
   nav:
     - title: GLQ3401/GLQ3651
       url: https://github.com/Danlauz/glq3401-3651
@@ -41,7 +65,6 @@ site:
 sphinx:
   extra_extensions:
     - sphinx.ext.mathjax
-
 
 
 
