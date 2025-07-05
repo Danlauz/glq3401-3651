@@ -5,11 +5,9 @@
 
 Ce site propose les notes de cours des enseignements **GLQ3401 – Géostatistique et géologie minières** et **GLQ3651 – Géologie minière**, offerts à **Polytechnique Montréal**, dans les programmes de **génie géologique** et **génie minier**.
 
-### Préparé par :
-
-- **Contenu :** Dany Lauzon  
-- **Programmation :** Dany Lauzon  
-- **Exemples interactifs :** Dany Lauzon  
+```{note}
+Préparé par Dany Lauzon, Ph.D — Polytechnique Montréal  
+(Contenu, programmation, exemples interactifs)
 
 📧 Pour toute question ou suggestion : [dany.lauzon@polymtl.ca](mailto:dany.lauzon@polymtl.ca)  
 📚 Informations officielles sur Moodle : [https://moodle.polymtl.ca/course/view.php?id=1112](https://moodle.polymtl.ca/course/view.php?id=1112)

@@ -1,4 +1,4 @@
-# 0.3 - Applications de la géostatistique 🌍
+# 0.3 - Applications de la géostatistique
 
 Dans le secteur minier, la géostatistique est une discipline omniprésente, intervenant dès les premières étapes d'un projet pour l'estimation des ressources et l'évaluation de la faisabilité économique. Mais son rôle ne s'arrête pas là ! En phase d'exploitation, elle guide le tri quotidien du minerai ⛏️, aidant à décider quels matériaux doivent être envoyés à l'usine de traitement et lesquels sont considérés comme des stériles, le tout basé sur les données les plus récentes.
 

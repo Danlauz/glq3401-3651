@@ -1,4 +1,4 @@
-# 0.2 - 💡📊 Effet d'information
+# 0.2 - Effet d'information
 
 ## Mieux comprendre nos données 
 

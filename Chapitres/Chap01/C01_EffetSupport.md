@@ -1,4 +1,4 @@
-# 0.1 - 🔍➡️🧊 Effet de support
+# 0.1 - Effet de support
 
 En géostatistique minière, le support désigne la taille du volume sur lequel une teneur en minerai est mesurée ou estimée. Imaginez-le comme l'objectif d'une caméra : la taille de cet objectif influence directement ce que vous voyez et comment vous le percevez. 
 

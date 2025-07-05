@@ -191,7 +191,7 @@ mesurées, indiquées, inférées, ou aucun type de ressource.
     nécessaires pour reclassifier ces ressources en catégories indiquée
     ou mesurée.
 
-## Exemple 2 : Rapport NI-43-101 - Propriété Grevet - Mountain - 2007
+### Exemple 2 : Rapport NI-43-101 - Propriété Grevet - Mountain - 2007
 
 Le rapport NI-43-101 de la propriété Gevet-Mountain soulève un point
 intéressant concernant la quantification des ressources minières. En
