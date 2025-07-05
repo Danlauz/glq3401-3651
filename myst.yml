@@ -11,7 +11,7 @@ project:
 
   license:
     content: CC-BY-NC-4.0
-    code: MIT
+    code: CC-BY-NC-4.0
 
   jupyter: true
 
