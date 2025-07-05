@@ -10,34 +10,45 @@ project:
         - Rédigé par Dany Lauzon, Ph.D — Polytechnique Montréal (Contenu, Programmation, Exemples interactifs)
 
   license:
-    content: CC-BY-4.0
-    code: MIT
+    content: CC-BY-NC-4.0
+    code: CC-BY-NC-4.0
 
   jupyter: true
 
   toc:
-    - file: intro.md
-    - file: chapitre1.md
+    - file: C0_acceuil.md 
       children:  # ⚠️ doit être 'children' et non 'sections'
+        - file: C0_intro.md
+
+    - file: chapitre1.md
+      children:
         - file: chapitre1_RappelProbStats.md
         - file: Chap1.ipynb
+
     - file: chapitre2.md
+
     - file: chapitre3.md
       children:
         - file: Chap3.ipynb
+
     - file: chapitre4.md
       children:
         - file: Chap4.ipynb
+
     - file: chapitre5.md
       children:
         - file: Chap5.ipynb
+
     - file: chapitre6.md
+
     - file: chapitre7.md
       children:
         - file: Chap7.ipynb
+
     - file: chapitre8.md
       children:
         - file: Chap8.ipynb
+
     - file: chapitre9.md
 
 site:
