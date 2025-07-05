@@ -18,13 +18,13 @@ project:
   toc:
     - file: Chapitres/Chap00/C0_acceuil.md
     - file: Chapitres/Chap00/C0_intro.md
-    - file: chapitre1.md
+    - file: Chapitres/Chap01/C01_IntroGeostats.md
       children:
-        - file: Chapitres/Chap00/C01_EffetSupport.md
+        - file: Chapitres/Chap01/C01_EffetSupport.md
         - file: Chap1.ipynb
-        - file: Chapitres/Chap00/C01_EffetInformation.md
-        - file: Chapitres/Chap00/C01_Applications.md
-        - file: Chapitres/Chap00/C01_RappelProbStats.md
+        - file: Chapitres/Chap01/C01_EffetInformation.md
+        - file: Chapitres/Chap01/C01_Applications.md
+        - file: Chapitres/Chap01/C01_RappelProbStats.md
     - file: chapitre2.md
     - file: chapitre3.md
       children:
