@@ -20,7 +20,6 @@ project:
     - caption: Accueil
     chapters:
       - file: C0_accueil.md
-      - file: C0_intro.md
 
     - caption: Aspect Économique
     chapters:
@@ -34,28 +33,6 @@ project:
     - caption: Géostatistique Non-linéaire et Multivariables
     chapters:
 
-    - file: chapitre1.md
-      children:  # ⚠️ doit être 'children' et non 'sections'
-        - file: chapitre1_RappelProbStats.md
-        - file: Chap1.ipynb
-    - file: chapitre2.md
-    - file: chapitre3.md
-      children:
-        - file: Chap3.ipynb
-    - file: chapitre4.md
-      children:
-        - file: Chap4.ipynb
-    - file: chapitre5.md
-      children:
-        - file: Chap5.ipynb
-    - file: chapitre6.md
-    - file: chapitre7.md
-      children:
-        - file: Chap7.ipynb
-    - file: chapitre8.md
-      children:
-        - file: Chap8.ipynb
-    - file: chapitre9.md
 
 site:
   template: book-theme
