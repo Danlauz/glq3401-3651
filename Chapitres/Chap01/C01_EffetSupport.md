@@ -10,7 +10,7 @@ Une petite carotte de forage, par exemple, représente un support très fin. Ell
 
 Ce changement d'échelle – du forage au bloc – a un impact fondamental : c'est ce qu'on appelle l'effet de support. Plus le support est grand, plus les valeurs de teneur sont lissées ou moyennées. Cela signifie que les teneurs extrêmes (très hautes ou très basses) sont diluées par les valeurs avoisinantes. Comprendre et quantifier cet effet est absolument essentiel pour obtenir une estimation fiable et réaliste des ressources minières.
 
-La [Fig. %s](#Chap1_Support.png) (flèches rouges) met parfaitement en évidence un aspect essentiel de l'effet de support. Elle démontre comment deux gisements, bien que présentant une teneur moyenne et une variabilité comparables à l'échelle des forages, peuvent afficher des résultats très différents une fois leurs teneurs estimées à l'échelle des blocs. Ces écarts proviennent directement de la continuité spatiale du minerai. Par exemple, si un gisement contient des zones riches très discontinues, un grand bloc aura pour effet de diluer davantage ces fortes teneurs que dans un gisement où le minerai est distribué de manière plus continue.
+La [Fig. %s](#C01_Support.png) (flèches rouges) met parfaitement en évidence un aspect essentiel de l'effet de support. Elle démontre comment deux gisements, bien que présentant une teneur moyenne et une variabilité comparables à l'échelle des forages, peuvent afficher des résultats très différents une fois leurs teneurs estimées à l'échelle des blocs. Ces écarts proviennent directement de la continuité spatiale du minerai. Par exemple, si un gisement contient des zones riches très discontinues, un grand bloc aura pour effet de diluer davantage ces fortes teneurs que dans un gisement où le minerai est distribué de manière plus continue.
 
 👉 Pour visualiser concrètement cet effet, explorez l'atelier interactif sur l'effet de support. En faisant varier la taille des blocs, vous pourrez observer par vous-même comment les statistiques du gisement évoluent et comprendre l'impact sur l'estimation des réserves.
 
@@ -22,8 +22,8 @@ Bien qu'il soit tentant d'exploiter des blocs plus petits pour limiter cette dil
 
 En tant que futurs ingénieurs, maîtriser l'effet de support est fondamental. Cette compréhension permet d'adapter les plans d'exploitation aux réalités du terrain et de choisir le scénario qui maximise la rentabilité du projet, tout en respectant l'ensemble des contraintes. La géostatistique se révèle alors un outil puissant : elle permet de quantifier ces effets, devenant ainsi une aide précieuse à la décision pour optimiser la valeur des ressources minières.
 
-```{figure} images/Chap1_Support.png
-:label: Chap1_Support.png
+```{figure} Chapitres/Chap01/images/C01_Support.png
+:label: C01_Support.png
 :align: center 
 Effet de support : Influence combinée de la taille du support et de la structure spatiale sur la variabilité des teneurs dans un gisement. 
 ``` 

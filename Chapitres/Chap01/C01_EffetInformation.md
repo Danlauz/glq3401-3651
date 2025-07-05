@@ -14,11 +14,11 @@ De plus, les informations issues de nos forages sont souvent imparfaites. Elles 
 
 Ainsi, on récupérera toujours moins de métal avec des estimations qu'avec les vraies valeurs. Pourquoi ? Parce que nos décisions d'exploitation sont prises à partir d'estimations imparfaites, alors que l'exploitation elle-même se confronte à une réalité géologique que nous ne connaissons pas parfaitement. Ce principe est directement lié aux notions de faux positifs (traiter du stérile) et de faux négatifs (laisser du minerai précieux sur place).
 
-Comme le montre la [Fig. %s](#Chap1_Information.png), il existe une différence cruciale entre les teneurs que nous estimons et celles réellement mesurées après l'exploitation. Nos décisions, comme l'envoi du matériel situé à droite de la ligne verticale vers l'usine de traitement, sont basées sur ces estimations. Mais l'imperfection inhérente à ces dernières signifie qu'une portion de stérile (visible dans la section brune du graphique) sera traitée par erreur. Cette situation a un coût direct : nous investissons des ressources et de l'argent dans le traitement de blocs dont la teneur réelle est nulle ou bien inférieure à ce qui avait été estimé.
+Comme le montre la [Fig. %s](#C01_Information.png), il existe une différence cruciale entre les teneurs que nous estimons et celles réellement mesurées après l'exploitation. Nos décisions, comme l'envoi du matériel situé à droite de la ligne verticale vers l'usine de traitement, sont basées sur ces estimations. Mais l'imperfection inhérente à ces dernières signifie qu'une portion de stérile (visible dans la section brune du graphique) sera traitée par erreur. Cette situation a un coût direct : nous investissons des ressources et de l'argent dans le traitement de blocs dont la teneur réelle est nulle ou bien inférieure à ce qui avait été estimé.
 
 
-```{figure} images/Chap1_Information.png
-:label: Chap1_Information.png
+```{figure} Chapitres/Chap01/images/C01_Information.png
+:label: C01_Information.png
 :align: center 
 Effet d'information. Il faut garder en tête que les décisions sont prises à partir d’estimations des teneurs. Ces estimations comportent des erreurs dues au manque d’information, donc la teneur réelle extraite peut être plus élevée ou plus faible que l’estimation.
 ```

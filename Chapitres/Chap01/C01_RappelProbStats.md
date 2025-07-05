@@ -206,11 +206,11 @@ direction. Une valeur de 0 indique qu'il n'y a aucune dépendance
 linéaire entre $X$ et $Y$, c'est-à-dire qu'ils sont indépendants. Enfin,
 une valeur de corrélation de -1 signifie que la relation entre $X$ et
 $Y$ est inverse, c'est-à-dire que lorsque $X$ augmente, $Y$ diminue de
-manière parfaitement linéaire. La [Fig. %s](#Chap1_Correlation.png) montre différent scénario de corrélation
+manière parfaitement linéaire. La [Fig. %s](#C01_Correlation.png) montre différent scénario de corrélation
 entre deux variables.
 
-```{figure} images/Chap1_Correlation.png
-:label: Chap1_Correlation.png
+```{figure} Chapitres/Chap01/images/C01_Correlation.png
+:label: C01_Correlation.png
 :align: center 
 Différentes corrélations entre deux variables aléatoires X et Y.
 ``` 
