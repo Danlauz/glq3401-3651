@@ -1,0 +1,42 @@
+format: jb-book
+root: intro.md
+
+toc:
+  - caption: Accueil
+    chapters:
+      - file: intro.md
+
+  - caption: Aspect économique
+    chapters:
+      - file: chapitre1.md
+        children:
+          - file: chapitre1_RappelProbStats.md
+          - file: Chap1.ipynb
+      - file: chapitre2.md
+
+  - caption: Traitement des données
+    chapters:
+      - file: chapitre3.md
+        children:
+          - file: Chap3.ipynb
+
+  - caption: Géostatistique linéaire
+    chapters:
+      - file: chapitre4.md
+        children:
+          - file: Chap4.ipynb
+      - file: chapitre5.md
+        children:
+          - file: Chap5.ipynb
+
+  - caption: Géostatistique non-linéaire et multivariée
+    chapters:
+      - file: chapitre6.md
+      - file: chapitre7.md
+        children:
+          - file: Chap7.ipynb
+      - file: chapitre8.md
+        children:
+          - file: Chap8.ipynb
+      - file: chapitre9.md
+

@@ -15,25 +15,6 @@ project:
 
   jupyter: true
 
-
-  toc:
-    - caption: Accueil
-    chapters:
-      - file: C0_accueil.md
-
-    - caption: Aspect Économique
-    chapters:
-
-    - caption: Traitement des données
-    chapters:
-
-    - caption: Géostatistique Linéaire 
-    chapters:
-
-    - caption: Géostatistique Non-linéaire et Multivariables
-    chapters:
-
-
 site:
   template: book-theme
 
@@ -41,6 +22,7 @@ site:
     logo: images/logo_polymtl.png
     logo_dark: images/logo_polymtl_dark.png
     logo_text: GLQ3401 / GLQ3651
+
   nav:
     - title: GLQ3401/GLQ3651
       url: https://github.com/Danlauz/glq3401-3651
@@ -59,6 +41,7 @@ site:
 sphinx:
   extra_extensions:
     - sphinx.ext.mathjax
+
 
 
 
