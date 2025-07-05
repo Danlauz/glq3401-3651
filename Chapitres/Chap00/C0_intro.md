@@ -1,6 +1,6 @@
 # Contenu du cours
 
-Ce cours couvre les principaux aspects théoriques et pratiques de la géostatistique appliquée à la géologie minière. Chaque module a été conçu pour fournir un équilibre entre concepts fondamentaux, méthodes quantitatives et applications concrètes, afin de préparer les étudiants à la résolution de problèmes en exploration et exploitation minière.
+Ce cours couvre les principaux aspects théoriques et pratiques de la géostatistique appliquée à la géologie minière. Chaque module est conçu pour offrir un équilibre entre les concepts fondamentaux, les méthodes quantitatives et les applications concrètes, afin de préparer les étudiants à résoudre des problèmes liés à l’estimation des ressources et des réserves minérales.
 
 1. **Introduction à la géostatistique** (3 heures)
 2. **Rapport technique NI-43-101** (3 heures)  
@@ -22,19 +22,21 @@ Ce cours couvre les principaux aspects théoriques et pratiques de la géostatis
 
 Ce cours vise à initier les étudiants aux bases théoriques, pratiques et réglementaires de l’estimation des ressources minières, en mettant un accent particulier sur les méthodes géostatistiques linéaires et non linéaires. À l’issue du cours, les étudiants seront capables de :
 
-- **O1.** Comprendre le cadre réglementaire et économique de l’estimation des ressources minières, incluant la Loi sur les mines, la classification des ressources et réserves selon les normes en vigueur, ainsi que les concepts de teneur de coupure et d’optimisation économique (méthodes de Taylor et Lane). *(Chapitre 1-2)*  
+- **O1.** Identifier le cadre réglementaire et économique de l’estimation des ressources minières, incluant la Loi sur les mines, la classification des ressources et réserves selon la norme canadienne 43-101, ainsi que les concepts de teneur de coupure et d’optimisation économique (méthodes de Taylor et Lane). *(Chapitres 1 et 2)*  
 
-- **O2.** Comprendre les principes liés à l’échantillonnage minier, notamment le forage au diamant (arpentage, déviation, mise en plan), ainsi que les bases de l’assurance qualité et du contrôle qualité (QA-QC). Appliquer la théorie de l’échantillonnage de Pierre Gy pour assurer la représentativité et la fiabilité des données. *(Chapitre 3)*
+- **O2.** Appliquer la théorie de l’échantillonnage de Pierre Gy afin de garantir la représentativité et la fiabilité des données, tout en intégrant les principes fondamentaux de l’assurance qualité et du contrôle qualité (QA/QC). *(Chapitre 3)*
 
-- **O3.** Réaliser une analyse statistique descriptive en utilisant des techniques telles que le **déclustering** et le **débiaisement**, afin de corriger les effets de sur-échantillonnage spatial et garantir une estimation non biaisée des ressources. Apprendre également les méthodes classiques d’estimation des ressources. *(Chapitres 4 et 5)*
+- **O3.** Réaliser des analyses statistiques descriptives à l’aide de techniques telles que le débiaisement et le dégroupement, afin de corriger les effets de sur-échantillonnage spatial et garantir une estimation non biaisée. Approfondir également les méthodes classiques d’estimation des ressources et les notions liées au forage au diamant (arpentage, déviation, mise en plan). *(Chapitres 4 et 5)*
 
-- **O4.** Construire, analyser et modéliser les variogrammes expérimentaux pour caractériser la variabilité spatiale des teneurs et poser les bases d’une estimation géostatistique. *(Chapitres 5 et 6)*  
+- **O4.** Estimer, analyser et modéliser les variogrammes expérimentaux afin de caractériser la variabilité spatiale des teneurs et poser les bases d’une estimation par méthode géostatistique. *(Chapitre 6)*
 
-- **O5.** Appliquer les méthodes linéaires d’estimation, telles que le krigeage simple et ordinaire, en évaluant la variance d’estimation, la variance de bloc et les effets liés au support. *(Chapitres 7 et 8)*  
+- **O5.** Mobiliser les concepts de variance de bloc, de dispersion et d’estimation dans la mise en œuvre des méthodes linéaires d’estimation, notamment le krigeage simple et ordinaire. *(Chapitres 7 et 8)*
 
-- **O6.** Explorer les méthodes non linéaires, incluant le krigeage d’indicatrices, les simulations géostatistiques continues (gaussiennes) et catégorielles (de faciès), afin de modéliser l’incertitude et prédire les ressources récupérables, ainsi que d’autres applications en génie géologique. *(Chapitres 9 à 12)*  
+- **O6.** Être en mesure d’étendre le krigeage au cas multivarié, en maîtrisant la modélisation des covariances directes et croisées pour le développement du cokrigeage. *(Chapitre 9)*
 
-- **O7.** Développer un esprit critique face aux choix méthodologiques, en tenant compte des effets d’information, des problèmes d’homogénéisation, ainsi que des avancées méthodologiques récentes, pour éclairer la prise de décision en contexte minier. *(Tout au long du cours)*  
+- **O7.** Explorer les méthodes non linéaires telles que le krigeage d’indicatrices et les simulations géostatistiques (gaussiennes ou catégorielles), afin de modéliser l’incertitude et prédire les ressources récupérables ainsi que d’autres applications en génie géologique. *(Chapitres 10 à 12)*  
+
+- **O8.** Développer un esprit critique vis-à-vis des choix méthodologiques, en considérant les effets d’information, les enjeux d’homogénéisation et les implications pratiques pour la prise de décision en contexte minier. *(Tout au long du cours)*
 
 
 ---

@@ -1,4 +1,4 @@
-# Rappel de probabilités et statistiques
+# 0.4 - Rappel de probabilités et statistiques
 
 La géostatistique est une branche de la statistique qui se concentre sur
 les ensembles de données spatiales ou spatio-temporelles. Elle permet,

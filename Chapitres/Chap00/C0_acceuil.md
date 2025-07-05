@@ -22,11 +22,12 @@ Le matériel pédagogique couvre l’ensemble des notions vues en session : thé
 
 Bien que les notes soient principalement théoriques, la présence en classe demeure essentielle pour approfondir la matière à travers des études de cas et des applications concrètes, notamment pour la résolution de problèmes. La notation mathématique suit les conventions habituelles en ingénierie.
 
-🛠️ Si vous repérez une erreur ou un lien brisé, n’hésitez pas à me le signaler.
+🛠️ Si vous repérez une erreur ou un lien brisé, n’hésitez pas à me le signaler en cliquant [ici](mailto:dany.lauzon@polymtl.ca).
+
 
 ---
 
 ## Licence
 
 Tout le contenu de ce site — textes, illustrations, activités interactives et code source — est distribué sous la licence **Creative Commons CC BY-NC 4.0**.  
-Sauf indication contraire, les éléments sans mention explicite de source sont des créations originales de l’auteur.
+Sauf indication contraire, les éléments sans mention explicite de référence sont des créations originales de l’auteur.
