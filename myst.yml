@@ -15,8 +15,25 @@ project:
 
   jupyter: true
 
+
   toc:
-    - file: intro.md
+    - caption: Accueil
+    chapters:
+      - file: C0_accueil.md
+      - file: C0_intro.md
+
+    - caption: Aspect Économique
+    chapters:
+
+    - caption: Traitement des données
+    chapters:
+
+    - caption: Géostatistique Linéaire 
+    chapters:
+
+    - caption: Géostatistique Non-linéaire et Multivariables
+    chapters:
+
     - file: chapitre1.md
       children:  # ⚠️ doit être 'children' et non 'sections'
         - file: chapitre1_RappelProbStats.md
