@@ -33,6 +33,17 @@ project:
     - file: Chapitres/Chap2/C2_main.md
       children:
         - file: Chap3.ipynb
+    - file: Chapitres/Chap3/C3_main.md
+      children:
+        - file: Chapitres/Chap3/C3_Gy.md
+        - file: Chapitres/Chap3/C3_QAQC.md
+        - file: Chap4.ipynb
+    - file: Chapitres/Chap4/C4_main.md
+      children:
+        - file: Chapitres/Chap4/C4_Regularisation.md
+        - file: Chapitres/Chap4/C4_Deviation.md
+        - file: Chapitres/Chap4/C4_Degroupement.md
+        - file: Chap5.ipynb
     - file: chapitre6.md
     - file: chapitre7.md
       children:
