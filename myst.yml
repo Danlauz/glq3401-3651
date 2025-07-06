@@ -21,12 +21,13 @@ project:
     - file: Chapitres/Chap01/C01_IntroGeostats.md
       children:
         - file: Chapitres/Chap01/C01_EffetSupport.md
-        - file: Chap1_EffetSupport.ipynb
         - file: Chapitres/Chap01/C01_EffetInformation.md
-        - file: Chap1_EffetInformation.ipynb
         - file: Chapitres/Chap01/C01_Applications.md
-        - file: Chap1_Gisement.ipynb
         - file: Chapitres/Chap01/C01_RappelProbStats.md
+        - file: Chap01.ipynb
+        - file: Chap01_EffetSupport.ipynb
+        - file: Chap01_EffetInformation.ipynb
+        - file: Chap01_Gisement.ipynb
     - file: Chapitres/Chap1/C1_NI_43_101.md
       children:
         - file: Chapitres/Chap1/C1_Ressources.md
