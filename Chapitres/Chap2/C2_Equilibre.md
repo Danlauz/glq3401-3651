@@ -207,11 +207,11 @@ La table de la loi normale est fournie en fin de section.
 
 Pour calculer les teneurs d'équilibre, on vous fournira généralement les
 courbes $x_c$, $g_c$ et $x_c g_c$ en fonction de $c$, comme illustré à
-la [Fig. %s](#Chap3_xc_gc.png), ou bien il faudra les calculer comme présenté
+la [Fig. %s](#C2_xc_gc.png), ou bien il faudra les calculer comme présenté
 dans la section précédente.
 
-```{figure} images/Chap3_xc_gc.png
-:label: Chap3_xc_gc.png
+```{figure} images/C2_xc_gc.png
+:label: C2_xc_gc.png
 :align: center 
 Impact de la variance sur le teneur de coupure.
 ``` 

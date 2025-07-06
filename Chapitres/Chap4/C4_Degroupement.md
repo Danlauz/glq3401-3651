@@ -12,7 +12,7 @@ qu'elles soient représentatives de l'ensemble du volume d'intérêt.
 
 ## Mise en contexte
 
-La [Fig. %s](#Chap5_Gisement.png) présente les teneurs en cuivre d'un gisement
+La [Fig. %s](#C4_Gisement.png) présente les teneurs en cuivre d'un gisement
 synthétique suivant une distribution log-normale, de moyenne 2% et de
 variance unitaire. Les cercles en surbrillance indiquent la position des
 140 forages. Deux zones apparaissent comme suréchantillonnées : l'une au
@@ -20,8 +20,8 @@ centre de l'image, où 30 forages se concentrent dans une zone riche du
 gisement (cercles rouges), et une autre dans le coin inférieur gauche,
 où 10 forages représentent une zone de faible teneur (cercles bleus).
 
-```{figure} images/Chap5_Gisement.png
-:label: Chap5_Gisement.png
+```{figure} images/C4_Gisement.png
+:label: C4_Gisement.png
 :align: center 
 Teneurs en cuivre d'un gisement synthétique suivant une distribution log-normale, de moyenne 2% et de variance unitaire.
 ```
@@ -34,16 +34,12 @@ moyenne non représentative de la teneur moyenne réelle du gisement. Dans
 cette situation, il est nécessaire de procéder au débiaisement des
 observations par le dégroupement de celles-ci.
 
-La Fig.[\[fig.Histogramme\]](#fig.Histogramme){reference-type="ref"
-reference="fig.Histogramme"} présente les histogrammes normalisés
+La [Fig. %s](#C4_Histogramme.png) présente les histogrammes normalisés
 (c'est-à-dire, afin de permettre une comparaison équitable entre les
 différentes distributions) des teneurs réelles du gisement
-(Fig.[1](#fig.HistogrammeA){reference-type="ref"
-reference="fig.HistogrammeA"}), des teneurs non-dégroupées
-(Fig.[2](#fig.HistogrammeB){reference-type="ref"
-reference="fig.HistogrammeB"}) et des teneurs dégroupées
-(Fig.[3](#fig.HistogrammeC){reference-type="ref"
-reference="fig.HistogrammeC"}). Les statistiques descriptives sont
+([Fig. %s](#C4_HistogrammeA.png)), des teneurs non-dégroupées
+([Fig. %s](#C4_HistogrammeB.png)) et des teneurs dégroupées
+([Fig. %s](#C4_HistogrammeC.png)). Les statistiques descriptives sont
 présentées sur chaque histogramme. Une comparaison des statistiques
 descriptives permet d'observer que l'histogramme des données brutes
 (figure du centre) est fortement biaisé par la quantité supplémentaire
@@ -57,18 +53,22 @@ sureprésente certaines zones, notamment les zones les plus riches. Sans
 correction, dans cette exemple, on pourrait à tort penser que notre
 gisement est beaucoup plus riche que prévu.
 
-::: figure*
+::: {figure}
+:label: C4_Histogramme.png
+:align: center
+
+(C4_HistogrammeA)=
 ![Histogramme des valeurs réelles du
-gisement.](Hist_Gisement.png){#fig.HistogrammeA width="\\textwidth"}
+gisement.](images/C4_Hist_Gisement.png)
 
+(C4_HistogrammeB)=
 ![Histogramme des teneurs analysées sans
-dégroupement.](Hist_Sample.png){#fig.HistogrammeB width="\\textwidth"}
+dégroupement.](images/C4_Hist_Sample.png)
 
+(C4_HistogrammeC)=
 ![Histrogramme des teneurs analysées avec
-dégroupement.](Hist_Sample_Degroupe.png){#fig.HistogrammeC
-width="\\textwidth"}
+dégroupement.](images/C4_Hist_Sample_Degroupe.png)
 
-[]{#fig.Histogramme label="fig.Histogramme"}
 :::
 
 ## Méthode de dégroupement
@@ -96,9 +96,12 @@ La technique repose sur la construction de \*\*polygones d'influence\*\*
 autour de chaque point d'échantillonnage. Ces polygones sont définis par
 les médiatrices entre chaque paire de points voisins (Diagramme de
 Voronoï). Un exemple simple de jeu de données avec polygones d'influence
-est illustré à la
-Figure [\[fig:polygones\]](#fig:polygones){reference-type="ref"
-reference="fig:polygones"}.
+est illustré à la [Fig. %s](#C4_Polygone.png)
+
+```{figure} images/C4_Polygone.png
+:label: C4_Polygone.png
+:align: center 
+```
 
 Les polygones sont obtenues par la méthode de Voronoi, un algorithme
 implémenté dans la grande majorité des logiciels. Nous verrons sa
@@ -113,16 +116,16 @@ où $w_j$ est le poids associé à l'échantillon $j$, $\text{aire}_j$ est
 l'aire de son polygone d'influence, et $N$ est le nombre total
 d'échantillons.
 
-La Fig.[\[fig.PolygoneDeclus\]](#fig.PolygoneDeclus){reference-type="ref"
-reference="fig.PolygoneDeclus"} présente 27 données de forages et les
+La [Fig. %s](#C4_PolygoneDeclus.png) présente 27 données de forages et les
 poids leurs étant associée par la méthode des polygone d'influence. On
 peut constater que les poids sont les plus faible au centre ou plus de
 données sont présente que sur les frontières ou les volumes sont plus
 importants.
 
-::: figure*
-![image](PolygoneDeclus.png){width="50%"}
-:::
+```{figure} images/C4_PolygoneDeclus.png
+:label: C4_PolygoneDeclus.png
+:align: center 
+```
 
 Cela constitue une grande limitation de la méthode des polygones. L'aire
 associée aux échantillons périphériques est en effet très sensible à la
@@ -152,8 +155,7 @@ attribué. Comme elle s'applique directement sur les mêmes blocs utilisés
 pour estimer les ressources, cette méthode est plus pratique dans le
 cadre de l'estimation des ressources.
 
-La Fig.[\[fig.PlusProcheDeclus\]](#fig.PlusProcheDeclus){reference-type="ref"
-reference="fig.PlusProcheDeclus"} présente les mêmes 27 données de
+La [Fig. %s](#C4_PlusProcheDeclus.png) présente les mêmes 27 données de
 forage que dans l'exemple précédent. Cette fois-ci, nous assignons
 directement à chaque bloc le point de forage (cercles noirs) le plus
 proche du centre du bloc (cercles rouges). Avec une densité de forages
@@ -163,9 +165,10 @@ L'avantage de cette approche réside dans le fait que les données sont
 directement associées au même support que celui utilisé pour les
 opérations minières et le calcul des ressources.
 
-::: figure*
-![image](PlusProcheDeclus.png){width="50%"}
-:::
+```{figure} images/C4_PlusProcheDeclus.png
+:label: C4_PlusProcheDeclus.png
+:align: center 
+```
 
 ### Dégroupement par cellules
 
@@ -188,8 +191,7 @@ dégroupement par cellules fonctionne comme suit :
     cellule occupée se voit attribuer le même poids. Une cellule non
     occupée ne reçoit aucun poids.
 
-La Fig. [\[fig.CelluleDeclus\]](#fig.CelluleDeclus){reference-type="ref"
-reference="fig.CelluleDeclus"} présente les mêmes 27 données de forage
+La [Fig. %s](#C4_CellulesDeclus.png) présente les mêmes 27 données de forage
 que dans les deux exemples précédents. Cette fois-ci, nous
 comptabilisons le nombre de données situées à l'intérieur de chaque
 cellule (délimitées par des encadrés noirs). Pour chaque cellule, un
@@ -208,9 +210,10 @@ On observe également que certaines cellules ne contiennent aucune
 donnée : dans ce cas, aucun poids n'est attribué, ce qui est représenté
 visuellement par un cercle rouge vide ((0,0.5) circle (2pt);).
 
-::: figure*
-![image](CellulesDeclus.png){width="50%"}
-:::
+```{figure} images/C4_CellulesDeclus.png
+:label: C4_CellulesDeclus.png
+:align: center 
+```
 
 Les poids de dégroupement attribués aux données dépendent de la taille
 des cellules et de l'origine de la grille. Il est important de noter que
@@ -240,8 +243,7 @@ maximiser la moyenne dégroupée, selon que le sur-échantillonnage se
 produit dans des zones à forte ou faible teneur. On peut alors tracer
 l'évolution de la moyenne dégroupée en fonction de la taille des
 cellules pour guider le choix optimal (voir
-Fig.[\[fig.CellvsMean\]](#fig.CellvsMean){reference-type="ref"
-reference="fig.CellvsMean"}).
+[Fig. %s](#C4_CellSizeVsMean.png)).
 
 Enfin, la forme des cellules doit s'adapter à la géométrie des données.
 Par exemple, si les données sont plus denses dans une direction (par
@@ -249,9 +251,10 @@ exemple $X$), la taille des cellules dans cette direction doit être
 réduite. On appelle ce concept l'anisotropie, et il s'applique à toute
 méthode de déviation et de regroupement.
 
-::: figure*
-![image](CellSizeVsMean.png){width="50%"}
-:::
+```{figure} images/C4_CellSizeVsMean.png
+:label: C4_CellSizeVsMean.png
+:align: center 
+```
 
 
 

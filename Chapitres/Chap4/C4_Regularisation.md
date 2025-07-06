@@ -86,10 +86,10 @@ non pondérée. Cette différence illustre l'impact de la régularisation :
 en tenant compte des longueurs réelles des échantillons, on obtient une
 estimation plus représentative de la teneur présente dans le gisement.
 
-La [Fig. %s](#Chap5_Composite.png) illustre le calcul effectué ci-haut.
+La [Fig. %s](#C4_Composite.png) illustre le calcul effectué ci-haut.
 
-```{figure} images/Chap5_Composite.png
-:label: Chap5_Composite.png
+```{figure} images/C4_Composite.png
+:label: C4_Composite.png
 :align: center 
 Exemple d'un composite.
 ```
@@ -212,7 +212,7 @@ de 6 m et avec les hypothèses suivantes :
 
 ## Exemples de calcul de composites
 
-La [Fig. %s](#Chap5_RegularisationLarge.png) présente les résultats de la
+La [Fig. %s](#C4_RegularisationLarge.png) présente les résultats de la
 régularisation pour la distance de 60m a 90. Il y a ainsi 5 composites
 qui doivent etre formé (30/6=5). Nous expliquetons le calcul pour le
 composite 2 et 4.
@@ -244,8 +244,8 @@ Ce traitement garantit que seuls les composites avec une couverture
 suffisante de données analytiques sont conservés pour les analyses et
 estimations géostatistiques.
 
-```{figure} images/Chap5_RegularisationLarge.png
-:label: Chap5_RegularisationLarge.png
+```{figure} images/C4_RegularisationLarge.png
+:label: C4_RegularisationLarge.png
 :align: center 
 Exemple complet d'une régularisaion.
 ```
@@ -257,7 +257,7 @@ conformément à une pratique courante en géostatistique minière visant à
 réduire la variabilité locale tout en conservant une sélectivité
 géologique suffisante. Ce choix est justifié ici par l'analyse de la
 distribution des longueurs des carottes d'échantillonnage
-([Fig. %s](#Chap5_DistributionCarotte.png)), qui montre une concentration importante
+([Fig. %s](#C4_DistributionCarotte.png)), qui montre une concentration importante
 autour de 6 m. En effet, l'histogramme indique que la majorité des
 échantillons bruts ont une longueur comprise entre 5.5 m et 6.5 m, ce
 qui suggère une homogénéité naturelle autour de cette valeur.
@@ -270,8 +270,8 @@ ultérieures de modélisation par blocs ou de simulation géostatistique,
 en conservant un échantillonnage régulier aligné sur des multiples de
 6 m.
 
-```{figure} images/Chap5_DistributionCarotte.png
-:label: Chap5_DistributionCarotte.png
+```{figure} images/C4_DistributionCarotte.png
+:label: C4_DistributionCarotte.png
 :align: center 
 Histogramme des longueurs de carottes
 ```

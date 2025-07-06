@@ -19,10 +19,10 @@ un **échantillon probabiliste**.
 d'être sélectionné. L'échantillon est sans biais si chaque fragment a
 une probabilité égale d'être sélectionné.
 
-La [Fig. %s](#Chap4_Echantillon.png) présente une illustration comparant un
+La [Fig. %s](#C3_Echantillon.png) présente une illustration comparant un
 échantillonnage déterministe
-([Fig. %s](#Chap4_Echantillon.png)A) à un échantillonnage probabiliste
-([Fig. %s](#Chap4_Echantillon.png)B). Pour qu'un échantillonnage soit
+([Fig. %s](#C3_Echantillon.png)A) à un échantillonnage probabiliste
+([Fig. %s](#C3_Echantillon.png)B). Pour qu'un échantillonnage soit
 considéré comme probabiliste, chaque particule de la carotte doit avoir
 une chance égale d'être sélectionnée pour l'analyse finale. Ainsi,
 sélectionner uniquement une zone spécifique de la carotte
@@ -41,8 +41,8 @@ tandis que la section restante est entreposée dans une carothèque, afin
 d'assurer un suivi et de permettre son étude géologique, minéralogique,
 géomécanique, et autres.
 
-```{figure} images/Chap4_Echantillon.png
-:label: Chap4_Echantillon.png
+```{figure} images/C3_Echantillon.png
+:label: C3_Echantillon.png
 :align: center 
 Exemple d'un échantillon déterministe et d'un échantillon probabiliste.
 ```
@@ -473,13 +473,13 @@ une pente de 3 lorsque $d < d_0$, et une pente de 2.5 lorsque $d > d_0$,
 ces droites représentant des configurations assurant une variance
 d'échantillonnage constante à chaque étape d'un sous-échantillonnage.
 
-La [Fig. %s](#Chap4_AbaqueGy.png) présente des isocontours (i.e., des plages de
+La [Fig. %s](#C3_AbaqueGy.png) présente des isocontours (i.e., des plages de
 valeur pour $M_e$ et $d$ qui fournisseent la même écart-type relative
 $s_r$ pour les paramètres suivants :
 $M_L = 10 000g, d_0=0.04 cm, \delta_g=2.8, \delta_a=5, f=0.5, g=0.5, a_L=0.03$.
 
-```{figure} images/Chap4_AbaqueGy.png
-:label: Chap4_AbaqueGy.png
+```{figure} images/C3_AbaqueGy.png
+:label: C3_AbaqueGy.png
 :align: center 
 Exemple d’un abaque de Gy pour une procédure multistage.
 ```
@@ -493,7 +493,7 @@ Par exemple, nous procédons à l'analyse d'une carotte de 10 000g
 de passer à des tailles de grains de $d=0.5cm$, $d=0.02cm$, et
 $d=0.007cm$. On prélève 5300g à la première échantillon, 100g au second
 et 25g sont prélevé pour l'analyse. La
-[Fig. %s](#Chap4_AbaqueGyEx.png) présente cette procédure. Nous partons du
+[Fig. %s](#C3_AbaqueGyEx.png) présente cette procédure. Nous partons du
 point A avec une carotte de 10 000g broyé à unee taille de 0.5cm. Nous
 échantillonons 5300g de celle-ci. On se déplace alors au point B à la
 verticale. On procède au broyage de ces 100g vers une taille de 0.02cm
@@ -502,7 +502,7 @@ amène, cette-foisci au point D. De ce 100g, on doit l'anmeer à la taille
 d'analyse, soit 0.007cm qui nous amène au point E. La dernière étape est
 d'échantillonner le 25g requit pour l'analyse.
 
-```{figure} images/Chap4_AbaqueGyEx.png
+```{figure} images/C3_AbaqueGyEx.png
 :label: Chap4_AbaqueGyEx.png
 :align: center 
 Exemple d’application de l’abaque de Gy pour une procédure multistage.
@@ -518,8 +518,7 @@ $$s^2_r = s^2_{r,1} + s^2_{r,3} +s^2_{r,3}$$
 
 Exemple : Supposons que l'on veuille une écart-type relative inférieur à
 0.01 (ligne rouge sur la
-Fig.[\[fig.AbaqueEx\]](#fig.AbaqueEx){reference-type="ref"
-reference="fig.AbaqueEx"}). Pour identifier rapidement si la procédure
+[Fig. %s](#C3_AbaqueGyEx.png)). Pour identifier rapidement si la procédure
 est adéquate, sans procéder au calcul précéddent, il faut s'assurer que
 parmis les points B, D et F (les points associé à l'échantillonnage),
 ils soit tous au-dessus de la courbe rouge et que seulement un seul

@@ -17,14 +17,14 @@ variables sont inclus dans le calcul des profits. Si le concentrateur
 est sous-utilisé, seuls les coûts variables sont considérés. Ainsi, la
 teneur de coupure est constante sauf si l'on actualise les revenus,
 auquel cas elle décroît dans le temps
-([Fig. %s](#Chap3_EvolutionTemps.png)).
+([Fig. %s](#C2_EvolutionTemps.png)).
 
 L'**approche de Lane** inclut un coût d'opportunité en plus des coûts
 d'exploitation. Le coût d'opportunité représente le rendement attendu
 sur la partie non encore exploitée du gisement. Ce coût diminue avec
 l'avancement de l'exploitation, entraînant une baisse progressive de la
 teneur de coupure
-([Fig. %s](#Chap3_EvolutionTemps.png)). À pleine capacité, tous les coûts sont
+([Fig. %s](#C2_EvolutionTemps.png)). À pleine capacité, tous les coûts sont
 considérés. Sinon, les coûts fixes et d'opportunité peuvent être
 négligés.
 
@@ -34,8 +34,8 @@ néglige les coûts d'opportunité (variables $F$). Ainsi, Taylor pose
 $F = 0$. Nous verrons l'impact des coûts d'opportunité dans les
 exemples interactifs.
 
-```{figure} images/Chap3_EvolutionTemps.png
-:label: Chap3_EvolutionTemps.png
+```{figure} images/C2_EvolutionTemps.png
+:label: C2_EvolutionTemps.png
 :align: center 
 Évolution de la teneur de coupure selon la méthode utilisée.
 ```

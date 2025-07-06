@@ -18,10 +18,10 @@ il tendra à suivre les plans de faiblesse (e.g., d'une roche dure vers
 une roche molle, [Fig. %s](#Chap5_ImgDeviation.png)a). En revanche, s'il est foré avec un angle
 plus élevé, il aura tendance à se dévier perpendiculairement à ces plans
 de faiblesse (e.g., d'une roche molle vers une roche dure,
-[Fig. %s](#Chap5_ImgDeviation.png)b).
+[Fig. %s](#C4_ImgDeviation.png)b).
 
-```{figure} images/Chap5_ImgDeviation.png
-:label: Chap5_ImgDeviation.png
+```{figure} images/C4_ImgDeviation.png
+:label: C4_ImgDeviation.png
 :align: center 
 Exemple de déviation typique, mais simplifié
 ```
@@ -36,7 +36,7 @@ réalité était tout autre. Les réserves se sont avérées être d'environ 15
 Mt (une diminution de 25 Mt), avec une durée de vie réduite à seulement
 10 ans.
 
-La [Fig. %s](#Chap5_ImpactDev.png) illustre cette problématique. Les
+La [Fig. %s](#C4_ImpactDev.png) illustre cette problématique. Les
 ingénieurs croyaient avoir affaire à une veine dont la longueur
 correspond à la ligne rose, avec des forages supposés non déviés (lignes
 bleues). Cependant, les forages ont en réalité subi des déviations
@@ -44,8 +44,8 @@ importantes (lignes noires), et la longueur réelle de la minéralisation
 est beaucoup plus courte (ligne rouge). On observe clairement la
 surestimation de la longueur de la veine minéralisée.
 
-```{figure} images/Chap5_ImpactDev.png
-:label: Chap5_ImpactDev.png
+```{figure} images/C4_ImpactDev.png
+:label: C4_ImpactDev.png
 :align: center 
 Impact des déviations lorsque non considéré
 ```

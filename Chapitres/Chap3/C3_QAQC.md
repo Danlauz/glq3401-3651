@@ -89,34 +89,34 @@ NI-43-101 du Projet Windfall - Osiko daté de 2022.
 
 ### Blancs
 
-La [Fig. %s](#Chap4_Blanc_Osiko.png) présente les résultats d'analyse des blancs
+La [Fig. %s](#C3_Blanc_Osiko.png) présente les résultats d'analyse des blancs
 du projet Windfall. On constate que les teneurs analysées sont, dans
 90 % des cas, inférieures à dix fois la limite de détection (DL). La
 personne qualifiée a jugé acceptable que 10 % des analyses dépassent ce
 seuil.
 
-```{figure} images/Chap4_Blanc_Osiko.png
-:label: Chap4_Blanc_Osiko.png
+```{figure} images/C3_Blanc_Osiko.png
+:label: C3_Blanc_Osiko.png
 :align: center 
 ```
 
 ### Duplicatas
 
-La [Fig. %s](#Chap4_Duplicata_Osiko.png) présente les résultats d'analyse des
+La [Fig. %s](#C3_Duplicata_Osiko.png) présente les résultats d'analyse des
 duplicatas. Aucun élément anormal n'a été observé. On ne note pas de
 biais apparent (les données sont centrées autour de la ligne noire), et
 la corrélation entre les deux séries d'analyses est forte
 ($r^2 = 0.9596$). Quelques écarts importants apparaissent, mais ils sont
 attendus dans ce type d'analyse en échelle log-log.
 
-```{figure} images/Chap4_Duplicata_Osiko.png
-:label: Chap4_Duplicata_Osiko.png
+```{figure} images/C3_Duplicata_Osiko.png
+:label: C3_Duplicata_Osiko.png
 :align: center 
 ```
 
 ### Échantillons de référence à teneur connue
 
-La [Fig. %s](#Chap4_Standard_Osiko.png) présente les résultats d'analyse des
+La [Fig. %s](#C3_Standard_Osiko.png) présente les résultats d'analyse des
 standards. Ceux-ci sont jugés très satisfaisants. Les résultats
 d'analyse suivent bien les valeurs de référence. La moyenne de la
 population des standards est de 3.55, et le laboratoire a retourné une
@@ -126,8 +126,8 @@ pour les standards, et de 2.47 % pour les résultats retournés. Il n'y a
 rien à signaler.
 
 
-```{figure} images/Chap4_Standard_Osiko.png
-:label: Chap4_Standard_Osiko.png
+```{figure} images/C3_Standard_Osiko.png
+:label: C3_Standard_Osiko.png
 :align: center 
 ```
 
@@ -168,7 +168,7 @@ NI-43-101 de la propriété Royal Nickel- Mine Dumont daté de 2013.
 
 ### Blancs
 
-La [Fig. %s](#Chap4_Blanc_MineDumont2.png) présente les résultats d'analyse des
+La [Fig. %s](#C3_Blanc_MineDumont2.png) présente les résultats d'analyse des
 blancs. On constate que les teneur analysés sont majoritairement tous
 inférieur à 0.02%. Il n'y a rien d'anormal à signaler. Aucune
 contamination n'est observé. À noter que les blancs sont des
@@ -176,14 +176,14 @@ contamination n'est observé. À noter que les blancs sont des
 repéré au laboratoire, indiquant qu'il s'agit d'un blanc.
 
 
-```{figure} images/Chap4_Blanc_MineDumont2.png
-:label: Chap4_Blanc_MineDumont2.png
+```{figure} images/C3_Blanc_MineDumont2.png
+:label: C3_Blanc_MineDumont2.png
 :align: center 
 ```
 
 ### Duplicatas
 
-La [Fig. %s](#Chap4_Duplicata_MineDumont2.png) présente les résultats d'analyse des
+La [Fig. %s](#C3_Duplicata_MineDumont2.png) présente les résultats d'analyse des
 duplicatats. Il n'y a rien d'anormal à signaler, sauf que l'on a 2.3%
 des points de la figure de gauche qui sont en dehors du 10% relatif pour
 le demi-écart. La figure de droite indique exactement 2.3% (i.e., 100-
@@ -192,14 +192,14 @@ de gauche qui ne coïncident pas avec le 10% indiqué en ordonné à droite.
 Il y a un problème d'affiche des résultats, mais rien d'alarment niveau
 précision.
 
-```{figure} images/Chap4_Duplicata_MineDumont2.png
+```{figure} images/C3_Duplicata_MineDumont2.png
 :label: Chap4_Duplicata_MineDumont2.png
 :align: center 
 ```
 
 ### Échantillons de référence à teneur connue
 
-La [Fig. %s](#Chap4_Standard_MineDumont.png) et la [Fig. %s](#Chap4_Standard_MineDumont2.png) présentent les analyses de deux laboratoires
+La [Fig. %s](#C3_Standard_MineDumont.png) et la [Fig. %s](#C3_Standard_MineDumont2.png) présentent les analyses de deux laboratoires
 différents réaliser sur deux périodes de temps différentes pour quatre
 échantillons de matériel de référence certifié (EMRC ou « standard »)
 différents. On constate que les analyses (points rouges) sont en grande
@@ -208,13 +208,13 @@ importe le standars utilisé ou le laboratoire. Il y a alors un problème
 de biais important pour les deux laboratoires. Les deux laboratoires
 sous-estime les teneurs réele de nickel dans les standards.
 
-```{figure} images/Chap4_Standard_MineDumont.png
-:label: Chap4_Standard_MineDumont.png
+```{figure} images/C3_Standard_MineDumont.png
+:label: C3_Standard_MineDumont.png
 :align: center 
 ```
 
-```{figure} images/Chap4_Standard_MineDumont2.png
-:label: Chap4_Standard_MineDumont2.png
+```{figure} images/C3_Standard_MineDumont2.png
+:label: C3_Standard_MineDumont2.png
 :align: center 
 ```
 
