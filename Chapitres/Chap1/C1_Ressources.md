@@ -9,7 +9,7 @@ dont le rapport NI 43-101 fait usage.
 Lors de l'exploitation minière, le sous-sol est subdivisé en blocs de
 dimensions données --- supposons ici des blocs de
 15 m $\times$ 15 m $\times$ 15 m (voir
-[Fig. %s](#Chap2_BlocModele.png). Cette subdivision constitue ce que l'on
+[Fig. %s](#C1_BlocModele.png). Cette subdivision constitue ce que l'on
 appelle un modèle de blocs de la mine. L'objectif est d'estimer, à
 partir des données disponibles, la quantité de métal (ou la teneur)
 présente dans chacun de ces blocs. Il va de soi que, lors des
@@ -17,8 +17,8 @@ opérations, on accorde une plus grande importance aux blocs ayant les
 teneurs les plus élevées : ils seront inévitablement plus rentables,
 d'un point de vue économique.
 
-```{figure} images/Chap2_BlocModele.png
-:label: Chap2_BlocModele.png
+```{figure} images/C1_BlocModele.png
+:label: C1_BlocModele.png
 :align: center 
 Modèle de blocs 3D d'une mine de cuivre. On peut y observer des forages déviés (lignes non rectilignes) ainsi qu'une structure spatiale du gisement, où les teneurs élevées en cuivre sont regroupées selon une forme circulaire.
 ```
@@ -95,14 +95,14 @@ permet une **planification minière détaillée** ainsi qu'une **évaluation
 dépend d'une multitude de facteurs que nous ne couvrirons pas dans ce
 cours. Une illustration de ces facteurs influençant la classification
 des ressources en réserves minérales est donnée à la
-[Fig. %s](#Chap2_ReservesRessources.png). Il est à noter qu'une **réserve
+[Fig. %s](#C1_ReservesRessources.png). Il est à noter qu'une **réserve
 minérale** est la partie économiquement exploitable d'une ressource
 minérale mesurée et/ou indiquée. Cela doit être démontré par une étude
 de préfaisabilité ou de faisabilité, laquelle doit prouver qu'au moment
 de la déclaration, l'extraction peut être raisonnablement justifiée.
 
-```{figure} images/Chap2_ReservesRessources.png
-:label: Chap2_ReservesRessources.png
+```{figure} images/C1_ReservesRessources.png
+:label: C1_ReservesRessources.png
 :align: center 
 Définitions illustrative des réserves et ressources minières.
 ``` 
