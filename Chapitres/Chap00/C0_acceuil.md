@@ -17,7 +17,7 @@ Préparé par Dany Lauzon, Ph.D — Polytechnique Montréal
 
 Le matériel pédagogique couvre l’ensemble des notions vues en session : théorie, illustrations, et activités interactives conçues pour faciliter l’apprentissage des concepts fondamentaux.
 
-Bien que les notes soient principalement théoriques, la présence en classe demeure essentielle pour approfondir la matière à travers des études de cas et des applications concrètes, notamment pour la résolution de problèmes. La notation mathématique suit les conventions habituelles en ingénierie.
+Bien que les notes soient principalement théoriques, la présence en classe demeure essentielle pour approfondir la matière à travers la résolution de problèmes. La notation mathématique suit les conventions habituelles en ingénierie.
 
 🛠️ Si vous repérez une erreur ou un lien brisé, n’hésitez pas à me le signaler en cliquant [ici](mailto:dany.lauzon@polymtl.ca).
 

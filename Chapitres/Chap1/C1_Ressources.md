@@ -119,8 +119,8 @@ d'évaluer un niveau de confiance sur les ressources et réserves pourrait
 ## Exemple 1 : Rapport NI-43-101 - Canadian Malartic Mine - 2024
 
 Les rapports NI-43-101 sont publiques, il est alors possibles d'aller
-les consulter librement. Notre premier exemple conserne les méthodes
-d'évaluation des ressources et des réserces minières de la mine Canadien
+les consulter librement. Notre premier exemple concerne les méthodes
+d'évaluation des ressources et des réserves minières de la mine Canadien
 Malartic Mine (CMM).
 
 La CMM est l'une des plus grandes mines d'or à ciel ouvert au Canada.
@@ -152,8 +152,6 @@ blocs, incluant sans s'y limiter :
     recherche (i.e., volet géostatistique);
 
 -   les paramètres d'interpolation (i.e., volet géostatistique).
-
-## Classification géostatistique des ressources à la mine Canadian Malartic - 2024
 
 Pour la mine Canadian Malartic (CMM), plusieurs des critères de
 classification des ressources sont quantifiables à l'aide des outils
@@ -193,7 +191,7 @@ mesurées, indiquées, inférées, ou aucun type de ressource.
 
 ### Exemple 2 : Rapport NI-43-101 - Propriété Grevet - Mountain - 2007
 
-Le rapport NI-43-101 de la propriété Gevet-Mountain soulève un point
+Le rapport NI-43-101 de la propriété Grevet-Mountain soulève un point
 intéressant concernant la quantification des ressources minières. En
 2007, la propriété est devenue la propriété de Ressources Metco, sans
 qu'aucun nouveau calcul de ressources n'ait été réalisé. Toutefois, en

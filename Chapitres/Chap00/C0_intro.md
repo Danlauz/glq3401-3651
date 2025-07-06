@@ -8,7 +8,7 @@ Ce cours couvre les principaux aspects théoriques et pratiques de la géostatis
 4. **Théorie de Gy et contrôle qualité** (3 heures)  
 5. **Traitement et analyse statistique des données de forage** (3 heures)  
 6. **Méthodes conventionnelles de calcul des ressources** (3 heures)  
-7. **Variogramme : théorie, estimation et modélisation** (5 heures)  
+7. **Variogramme : théorie, estimation et modélisation** (3 heures)  
 8. **Variance de blocs, de dispersion et d’estimation** (3 heures)  
 9. **Krigeage : théorie, calcul et pratique** (3 heures)  
 10. **Cokrigeage : domaine multivariable** (3 heures)  

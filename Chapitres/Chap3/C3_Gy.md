@@ -332,7 +332,7 @@ suivants :
 2.  échantillonnage après le concassage, sur le convoyeur menant au
     concentrateur.
 
-#### Solution {#solution .unnumbered}
+#### Solution
 
 #### a) Échantillonnage avant le concassage
 
@@ -526,7 +526,7 @@ ils soit tous au-dessus de la courbe rouge et que seulement un seul
 point sy approche. Cela est le cas dans l'exemple et on peut valider la
 prodécude.
 
-## Calcul de l'erreur d'échantillonnage global ($s_r$) de l'exemple {#calcul-de-lerreur-déchantillonnage-global-s_r-de-lexemple .unnumbered}
+## Calcul de l'erreur d'échantillonnage global ($s_r$) de l'exemple
 
 Données : $$\begin{aligned}
 a_L &= 0.03 \\

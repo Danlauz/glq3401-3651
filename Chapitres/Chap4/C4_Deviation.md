@@ -144,7 +144,7 @@ où :
 -   $I_2$, $Az_2$ sont l'inclinaison et l'azimut du point inférieur (en
     degrés).
 
-### Exemple numérique avec vos données {#exemple-numérique-avec-vos-données .unnumbered}
+### Exemple numérique
 
 Considérons les mesures aux profondeurs 0 m ($I_1 = 53^\circ$,
 $Az_1 = 103^\circ$) et 40 m ($I_2 = 58^\circ$, $Az_2 = 107^\circ$). La
