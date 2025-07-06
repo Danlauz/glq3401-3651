@@ -24,9 +24,10 @@ project:
         - file: Chapitres/Chap01/C01_EffetInformation.md
         - file: Chapitres/Chap01/C01_Applications.md
         - file: Chapitres/Chap01/C01_RappelProbStats.md
-        - file: Chap01_EffetSupport.ipynb
-        - file: Chap01_EffetInformation.ipynb
-        - file: Chap01_Gisement.ipynb
+        - file: JupyterNoteBook/Chap01.ipynb
+        - file: JupyterNoteBook/Chap01_EffetSupport.ipynb
+        - file: JupyterNoteBook/Chap01_EffetInformation.ipynb
+        - file: JupyterNoteBook/Chap01_Gisement.ipynb
     - file: Chapitres/Chap1/C1_NI_43_101.md
       children:
         - file: Chapitres/Chap1/C1_Ressources.md
