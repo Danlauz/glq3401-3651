@@ -51,13 +51,16 @@ project:
         - file: Chapitres/Chap4/C4_Degroupement.md
         - file: JupyterNoteBook/Chap4.ipynb
     - file: chapitre6.md
+      children:
+        - file: Chap6.ipynb
     - file: chapitre7.md
       children:
         - file: Chap7.ipynb
     - file: chapitre8.md
-      children:
-        - file: Chap8.ipynb
     - file: chapitre9.md
+    - file: chapitre10.md
+    - file: chapitre11.md
+    - file: chapitre12.md
 
 site:
   template: book-theme
