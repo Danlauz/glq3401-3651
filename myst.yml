@@ -39,24 +39,44 @@ project:
         - file: Chapitres/Chap2/C2_Limite.md
         - file: Chapitres/Chap2/C2_Equilibre.md	#- file: Chapitres/Chap2/C2_Influence.md #- file: Chapitres/Chap2/C2_Table.md
         - file: JupyterNoteBook/Chap2.ipynb
+        - file: JupyterNoteBook/Chap2_Lane.ipynb
+        - file: JupyterNoteBook/Chap2_RessourcesLogNormal.ipynb
+        - file: JupyterNoteBook/Chap2_Sensibilité.ipynb
     - file: Chapitres/Chap3/C3_main.md
       children:
         - file: Chapitres/Chap3/C3_Gy.md
         - file: Chapitres/Chap3/C3_QAQC.md
         - file: JupyterNoteBook/Chap3.ipynb
+        - file: JupyterNoteBook/Chap3_Gy.ipynb
+        - file: JupyterNoteBook/Chap3_Blancs.ipynb
+        - file: JupyterNoteBook/Chap3_Standards.ipynb
+        - file: JupyterNoteBook/Chap3_Duplicatas.ipynb
     - file: Chapitres/Chap4/C4_main.md
       children:
         - file: Chapitres/Chap4/C4_Regularisation.md
         - file: Chapitres/Chap4/C4_Deviation.md
         - file: Chapitres/Chap4/C4_Degroupement.md
         - file: JupyterNoteBook/Chap4.ipynb
+        - file: JupyterNoteBook/Chap4_Composite.ipynb
+        - file: JupyterNoteBook/Chap4_Degroupement.ipynb
+        - file: JupyterNoteBook/Chap4_Déviations.ipynb
     #- file: chapitre5.md
-    #- file: chapitre6.md
-    #  children:
-    #    - file: Chap6.ipynb
-    #- file: chapitre7.md
-    #  children:
-    #    - file: Chap7.ipynb
+    - file: chapitre6.md
+      children:
+        - file: JupyterNoteBook/Chap6.ipynb
+        - file: JupyterNoteBook/Chap6_Definition.ipynb
+        - file: JupyterNoteBook/Chap6_NueeVariographique.ipynb
+        - file: JupyterNoteBook/Chap6_Ajust1D.ipynb
+        - file: JupyterNoteBook/Chap6_QuantitesDonnees.ipynb
+        - file: JupyterNoteBook/Chap6_Ajust2D.ipynb
+        - file: JupyterNoteBook/Chap6_Calculateur.ipynb
+        - file: JupyterNoteBook/Chap6_ErreurEffet.ipynb
+    - file: chapitre7.md
+      children:
+        - file: JupyterNoteBook/Chap7.ipynb
+        - file: JupyterNoteBook/Chap7_VarianceBloc.ipynb
+        - file: JupyterNoteBook/Chap7_DiscretisationVarBloc.ipynb
+        - file: JupyterNoteBook/Chap7_Calculateur.ipynb
     #- file: chapitre8.md
     #- file: chapitre9.md
     #- file: chapitre10.md
