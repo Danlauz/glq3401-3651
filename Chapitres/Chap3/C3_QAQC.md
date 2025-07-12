@@ -1,4 +1,4 @@
-# Contrôle de qualité et assurance de qualité (QA/QC)
+# 3.2 Contrôle de qualité et assurance de qualité (QA/QC)
 
 Dans la foulée du scandale [Bre-X]{.smallcaps}, la plupart des pays
 importants sur le plan minier ont adopté des règles plus strictes

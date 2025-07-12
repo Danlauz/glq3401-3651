@@ -1,4 +1,4 @@
-# Débiaisement (*debiaising*) et dégroupement (*declustering*)
+# 4.3 Débiaisement (*debiaising*) et dégroupement (*declustering*)
 
 La dernière étapes afin d'assurer une représentativité adéquantes des
 teneurs est le débiaisement et le dégroupement des données. Les données

@@ -1,4 +1,4 @@
-# Théorie de l'échantillonnage des matières morcelées - Théorie de Gy
+# 3.1 Théorie de l'échantillonnage des matières morcelées - Théorie de Gy
 
 **Référence :** P.M. Gy, 1992. *Sampling of heterogeneous and dynamic
 material systems, theories of heterogeneity, sampling and homogenizing*.

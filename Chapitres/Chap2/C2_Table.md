@@ -1,4 +1,4 @@
-# Table de la Loi Normale centré-réduite
+# 2.5 Table de la Loi Normale centré-réduite
 
 ```{table} Valeurs de la fonction de répartition normale standard Φ(z)
 :align: center

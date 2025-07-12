@@ -1,4 +1,4 @@
-# Régularisation (*Compositing* ou *regularization*)
+# 4.1 Régularisation (*Compositing* ou *regularization*)
 
 Une étape importante avant de procéder au calcul des ressources et
 réserves minérales est la régularisation des données. Il s'agit d'une

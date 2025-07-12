@@ -1,4 +1,4 @@
-# Teneur de coupure d'équilibre
+# 2.3 Teneur de coupure d'équilibre
 
 Les teneurs de coupure précédentes ont été déterminées en fonction des
 caractéristiques économiques et des limites de capacité de chaque

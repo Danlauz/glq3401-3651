@@ -1,4 +1,4 @@
-# Théorie de Lane et Taylor
+# 2.1 Théorie de Lane et Taylor
 
 (def-t.c.)=
 Définition – Teneur de coupure

@@ -1,4 +1,4 @@
-# Déviation
+# 4.2 Déviation
 
 Lors de l'estimation des ressources et des réserves minérales, on doit
 connaître la localisation exact (X, Y, Z) des teneurs afin de procéder à

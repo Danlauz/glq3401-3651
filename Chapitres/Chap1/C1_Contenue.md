@@ -1,4 +1,4 @@
-# Contenu du rapport NI 43-101
+# 1.3 Contenu du rapport NI 43-101
 
 Le rapport technique vise à fournir un résumé des renseignements scientifiques et techniques importants concernant les activités d'exploration, de développement et de production sur un terrain minier qui est important pour l'émetteur.
 
