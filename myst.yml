@@ -60,8 +60,8 @@ project:
         - file: JupyterNoteBook/Chap4_Composite.ipynb
         - file: JupyterNoteBook/Chap4_Degroupement.ipynb
         - file: JupyterNoteBook/Chap4_Déviations.ipynb
-    #- file: chapitre5.md
-    - file: chapitre6.md
+    #- file: Chapitres/Chap5/C5.md
+    - file: Chapitres/Chap6/C6.md
       children:
         - file: JupyterNoteBook/Chap6.ipynb
         - file: JupyterNoteBook/Chap6_Definition.ipynb
@@ -71,7 +71,7 @@ project:
         - file: JupyterNoteBook/Chap6_Ajust2D.ipynb
         - file: JupyterNoteBook/Chap6_Calculateur.ipynb
         - file: JupyterNoteBook/Chap6_ErreurEffet.ipynb
-    - file: chapitre7.md
+    - file: Chapitres/Chap7/C7.md
       children:
         - file: JupyterNoteBook/Chap7.ipynb
         - file: JupyterNoteBook/Chap7_VarianceBloc.ipynb
