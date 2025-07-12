@@ -60,7 +60,7 @@ project:
         - file: JupyterNoteBook/Chap4_Composite.ipynb
         - file: JupyterNoteBook/Chap4_Degroupement.ipynb
         - file: JupyterNoteBook/Chap4_Déviations.ipynb
-    #- file: Chapitres/Chap5/C5.md
+    - file: Chapitres/Chap5/C5.md
     - file: Chapitres/Chap6/C6.md
       children:
         - file: JupyterNoteBook/Chap6.ipynb
