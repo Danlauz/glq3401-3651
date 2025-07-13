@@ -77,7 +77,12 @@ project:
         - file: JupyterNoteBook/Chap7_VarianceBloc.ipynb
         - file: JupyterNoteBook/Chap7_DiscretisationVarBloc.ipynb
         - file: JupyterNoteBook/Chap7_Calculateur.ipynb
-    #- file: chapitre8.md
+        - file: JupyterNoteBook/Chap7_Influence.ipynb
+    - file: Chapitres/Chap8/C8.md
+      children:
+	- file: JupyterNoteBook/Chap8_Calculateur.ipynb
+	- file: JupyterNoteBook/Chap8_Krigeage1D.ipynb
+	- file: JupyterNoteBook/Chap8_Ecran.ipynb
     #- file: chapitre9.md
     #- file: chapitre10.md
     #- file: chapitre11.md
