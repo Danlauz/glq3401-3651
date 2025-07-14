@@ -82,14 +82,17 @@ project:
         - file: Chapitres/Chap7/C7_VarianceEstimation.md
         - file: Chapitres/Chap7/C7_CombinaisonErreurs.md
         - file: Chapitres/Chap7/C7_Calcul.md
-
         - file: JupyterNoteBook/Chap7.ipynb
         - file: JupyterNoteBook/Chap7_VarianceBloc.ipynb
         - file: JupyterNoteBook/Chap7_DiscretisationVarBloc.ipynb
         - file: JupyterNoteBook/Chap7_Calculateur.ipynb
         - file: JupyterNoteBook/Chap7_Influence.ipynb
-    - file: Chapitres/Chap8/C8.md
+    - file: Chapitres/Chap8/C8_main.md
       children:
+        - file: Chapitres/Chap8/C8_Definition.md
+        - file: Chapitres/Chap8/C8_Exemple.md
+        - file: Chapitres/Chap8/C8_Pratiques.md
+        - file: Chapitres/Chap8/C8_Proprietes.md
     #- file: chapitre9.md
     #- file: chapitre10.md
     #- file: chapitre11.md
