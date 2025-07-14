@@ -94,6 +94,8 @@ project:
         - file: Chapitres/Chap8/C8_Pratiques.md
         - file: Chapitres/Chap8/C8_Proprietes.md
         - file: JupyterNoteBook/Chap8.ipynb
+        - file: JupyterNoteBook/Chap8_Calculateur.ipynb
+        - file: JupyterNoteBook/Chap8_Krigeage1D.ipynb
         - file: JupyterNoteBook/Chap8_Ecran.ipynb
     #- file: chapitre9.md
     #- file: chapitre10.md
