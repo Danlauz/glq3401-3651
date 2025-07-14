@@ -60,9 +60,13 @@ project:
         - file: JupyterNoteBook/Chap4_Composite.ipynb
         - file: JupyterNoteBook/Chap4_Degroupement.ipynb
         - file: JupyterNoteBook/Chap4_Déviations.ipynb    #- file: Chapitres/Chap5/C5.md
-    - file: Chapitres/Chap6/C6.md
+    - file: Chapitres/Chap6/C6_main.md
       children:
-        - file: Chapitres/Chap6/C6.md
+        - file: Chapitres/Chap6/C6_DefinitionsHypotheses.md
+        - file: Chapitres/Chap6/C6_EstimationVariogramme.md
+        - file: Chapitres/Chap6/C6_Modélisation.md
+        - file: Chapitres/Chap6/C6_Remarques.md
+        - file: Chapitres/Chap6/C6_Problemes.md
         - file: JupyterNoteBook/Chap6.ipynb
         - file: JupyterNoteBook/Chap6_Definition.ipynb
         - file: JupyterNoteBook/Chap6_NueeVariographique.ipynb
@@ -80,7 +84,6 @@ project:
         - file: JupyterNoteBook/Chap7_Influence.ipynb
     - file: Chapitres/Chap8/C8.md
       children:
-	- file: JupyterNoteBook/Chap8_Ecran.ipynb
     #- file: chapitre9.md
     #- file: chapitre10.md
     #- file: chapitre11.md
