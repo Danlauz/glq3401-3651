@@ -1,83 +1,64 @@
 ---
-title: "Chapitre 4 - Traitement et analyse statistique des données de forage"
+title: "Chapitre 4 - Théorie de Gy et contrôle qualité"
 abstract: |
-  Cette section présente les principes clés du traitement statistique des données de forage, en insistant sur l’importance d’un échantillonnage spatialement représentatif et moyennable. Elle explique pourquoi, en raison de l’autocorrélation spatiale des teneurs, il faut éviter les biais liés à une surreprésentation locale. Enfin, elle introduit trois étapes essentielles du prétraitement : la régularisation, le suivi des déviations et le débiaisement des données.
+  Cette section présente la théorie de l'échantillonnage ainsi que les contrôles de qualité (QA/QC). La théorie de Gy y est expliquée, et deux exemples concrets de QA/QC provenant de compagnies minières sont présentés et analysés. Les illustrations sont tirées des rapports techniques NI 43-101 de ces entreprises.
 
 project:
   output-dir: exports  # <-- dossier de sortie pour tous les formats
 
 format:
   pdf:
-    output-file: ./exports/Chapitre5.pdf
+    output-file: ./exports/Chapitre4.pdf
     documentclass: article
     classoption: [10pt, oneside, twocolumn]
     geometry: margin=1in
     markdown_extensions: ["+fenced_divs"]
 
 downloads:
-  - file: Chapitre5.pdf    # simple nom de fichier, pas de chemin
+  - file: Chapitre4.pdf    # simple nom de fichier, pas de chemin
     title: PDF
 ---
 
 :::{important}
 ### Objectifs d'apprentissage
--   Être en mesure de traiter les données de forage en vue d'une analyse
-    statistique spatiale ;
+-   Pouvoir prédire la précision relative d'un échantillon pour
+    représenter la teneur d'un lot donné par la théorie de Gy;
 
--   Effectuer la régularisation des teneurs et en comprendre les
-    objectifs et les implications ;
+-   Proposer une stratégie d'analyse en laboratoire adéquate selon les
+    équipements disponibles afin de prédire la précision relative
+    associée à un lot donné;
 
--   Identifier et interpréter les problèmes liés à la déviation des
-    forages ;
+-   Reconnaître une stratégie d'analyse inadéquate;
 
--   Comprendre l'importance du débiaisement (*debiaising*) et du
-    dégroupement (*declustering*) des données dans le cadre d'analyses
-    spatiales ;
+-   Comprendre les notions de biais, de précision et de justesse;
 
--   Calculer les intersections entre les forages et les zones
-    minéralisées ;
+-   Maîtriser les trois outils principaux de contrôles de qualité;
 
--   Convertir les mesures de déviation en coordonnées cartésiennes pour
-    les forages.
+-   Identifier les biais à partir des résultats de contrôles de qualité
+    et de duplicata.
 :::
 
-# Introduction
+# Notions de biais, de précisions et de justesse
 
-Le traitement et l'analyse statistique des données de forage visent
-essentiellement à fournir une base de données unifiée, dont les
-statistiques sont représentatives du phénomène étudié. En
-géostatistique, il est essentiel que les données soient moyennables, ce
-qui implique l'utilisation d'un support d'échantillonnage uniforme, et
-qu'elles représentent adéquatement le phénomène géologique analysé.
+En mine, un échantillon est une petite quantité de matière censée
+représenter un ensemble (un « lot ») plus grand de matière. Par exemple,
+on peut échantillonner la face d'une galerie, les « cuttings » d'un
+forage de production, le minerai d'un wagonnet ou une carotte de forage.
 
-En géologie, contrairement à plusieurs autres disciplines, les teneurs
-sont généralement mesurées en un point précis de l'espace. Ces teneurs
-présentent une autocorrélation spatiale : autrement dit, deux forages
-proches l'un de l'autre ont plus de chances d'afficher des teneurs
-similaires que deux forages éloignés. Par conséquent, les échantillons
-ne peuvent être considérés comme des observations indépendantes issues
-d'une population homogène. Les teneurs appartiennent souvent à une
-population structurée spatialement.
+Une fois les échantillons obtenus, il faut en analyser le contenu en
+laboratoire afin d'identifier leur teneur. Par la suite, on peut vouloir
+extrapoler les teneurs obtenues pour les échantillons à un volume
+beaucoup plus grand de roche. Cela constitue un problème d'estimation.
 
-Cette réalité impose la nécessité de prendre des précautions
-supplémentaires lors du prélèvement des échantillons. En effet, pour que
-les statistiques descriptives de l'échantillon (par exemple : moyenne,
-écart-type, quantiles) soient pertinentes par rapport à la population,
-il est essentiel d'obtenir un échantillon aussi homogène que possible
-sur le plan spatial, i.e., qu'il convient, en particulier, d'éviter la
-surreprésentation de certaines zones géologiques, afin de ne pas
-introduire de biais dans l'analyse. Par exemple, réalisé 100 forages
-dans une zone très riche sur une très petit section du gisement
-viendrait biaisé les statistiques globales du gisement (i.e., une
-moyenne des teneurs à la hausse).
-
-Plusieurs étapes clés doivent être respectées lors de l'analyse
-statistique des données de forage. Cette liste n'est pas exhaustive :
-d'autres traitements peuvent être nécessaires selon le type de gisement,
-la méthode d'exploitation (à ciel ouvert ou souterraine), et divers
-paramètres techniques. Dans cette section, nous aborderons trois étapes
-importantes du prétraitement des données, avant de procéder à
-l'estimation des ressources et des réserves minières : la régularisation
-des données de forages; le suivi et le calcul des déviations des
-forages; le débiaisement et le dégroupement des données.
+Prenons l'exemple d'une carotte de forage de 3 m de longueur et de
+diamètre 48 mm (taille NQ) obtenue par forage au diamant. Nous sommes
+intéressés à connaître la teneur en or de cette carotte, afin de
+procéder à l'estimation de nos ressources minérales. Pour y arriver, le
+laboratoire a généralement besoin d'un échantillon représentatif de la
+carotte sous forme de poudre, équivalant à seulement quelques grammes.
+Il faut donc, à partir d'une carotte de quelques kg, échantillonner
+correctement quelques grammes de celle-ci afin que la mesure de
+laboratoire soit représentative de la teneur réelle de la carotte. Il
+s'agit donc d'un vrai défi qui a mené à la théorie de l'échantillonnage
+des matières morcelée.
 

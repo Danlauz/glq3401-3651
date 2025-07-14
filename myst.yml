@@ -16,50 +16,50 @@ project:
   jupyter: true
 
   toc:
-    - file: Chapitres/Chap00/C0_acceuil.md
-    - file: Chapitres/Chap00/C0_intro.md
-    - file: Chapitres/Chap01/C01_IntroGeostats.md
+    - file: Chapitres/Chap0/C0_acceuil.md
+    - file: Chapitres/Chap0/C0_intro.md
+    - file: Chapitres/Chap1/C1_main.md
       children:
-        - file: Chapitres/Chap01/C01_EffetSupport.md
-        - file: Chapitres/Chap01/C01_EffetInformation.md
-        - file: Chapitres/Chap01/C01_Applications.md
-        - file: Chapitres/Chap01/C01_RappelProbStats.md
-        - file: JupyterNoteBook/Chap01.ipynb
-        - file: JupyterNoteBook/Chap01_EffetSupport.ipynb
-        - file: JupyterNoteBook/Chap01_EffetInformation.ipynb
-        - file: JupyterNoteBook/Chap01_Gisement.ipynb
-    - file: Chapitres/Chap1/C1_NI_43_101.md
-      children:
-        - file: Chapitres/Chap1/C1_Ressources.md
-        - file: Chapitres/Chap1/C1_PQ.md
-        - file: Chapitres/Chap1/C1_Contenue.md
+        - file: Chapitres/Chap1/C1_EffetSupport.md
+        - file: Chapitres/Chap1/C1_EffetInformation.md
+        - file: Chapitres/Chap1/C1_Applications.md
+        - file: Chapitres/Chap1/C1_RappelProbStats.md
+        - file: JupyterNoteBook/Chap1.ipynb
+        - file: JupyterNoteBook/Chap1_EffetSupport.ipynb
+        - file: JupyterNoteBook/Chap1_EffetInformation.ipynb
+        - file: JupyterNoteBook/Chap1_Gisement.ipynb
     - file: Chapitres/Chap2/C2_main.md
       children:
-        - file: Chapitres/Chap2/C2_Lane.md
-        - file: Chapitres/Chap2/C2_Limite.md
-        - file: Chapitres/Chap2/C2_Equilibre.md	#- file: Chapitres/Chap2/C2_Influence.md #- file: Chapitres/Chap2/C2_Table.md
-        - file: JupyterNoteBook/Chap2.ipynb
-        - file: JupyterNoteBook/Chap2_Lane.ipynb
-        - file: JupyterNoteBook/Chap2_RessourcesLogNormal.ipynb
-        - file: JupyterNoteBook/Chap2_Sensibilité.ipynb
+        - file: Chapitres/Chap2/C2_Ressources.md
+        - file: Chapitres/Chap2/C2_PQ.md
+        - file: Chapitres/Chap2/C2_Contenue.md
     - file: Chapitres/Chap3/C3_main.md
       children:
-        - file: Chapitres/Chap3/C3_Gy.md
-        - file: Chapitres/Chap3/C3_QAQC.md
+        - file: Chapitres/Chap3/C3_Lane.md
+        - file: Chapitres/Chap3/C3_Limite.md
+        - file: Chapitres/Chap3/C3_Equilibre.md	#- file: Chapitres/Chap3/C3_Influence.md #- file: Chapitres/Chap3/C3_Table.md
         - file: JupyterNoteBook/Chap3.ipynb
-        - file: JupyterNoteBook/Chap3_Gy.ipynb
-        - file: JupyterNoteBook/Chap3_Blancs.ipynb
-        - file: JupyterNoteBook/Chap3_Standards.ipynb
-        - file: JupyterNoteBook/Chap3_Duplicatas.ipynb
+        - file: JupyterNoteBook/Chap3_Lane.ipynb
+        - file: JupyterNoteBook/Chap3_RessourcesLogNormal.ipynb
+        - file: JupyterNoteBook/Chap3_Sensibilité.ipynb
     - file: Chapitres/Chap4/C4_main.md
       children:
-        - file: Chapitres/Chap4/C4_Regularisation.md
-        - file: Chapitres/Chap4/C4_Deviation.md
-        - file: Chapitres/Chap4/C4_Degroupement.md
+        - file: Chapitres/Chap4/C4_Gy.md
+        - file: Chapitres/Chap4/C4_QAQC.md
         - file: JupyterNoteBook/Chap4.ipynb
-        - file: JupyterNoteBook/Chap4_Composite.ipynb
-        - file: JupyterNoteBook/Chap4_Degroupement.ipynb
-        - file: JupyterNoteBook/Chap4_Déviations.ipynb    #- file: Chapitres/Chap5/C5.md
+        - file: JupyterNoteBook/Chap4_Gy.ipynb
+        - file: JupyterNoteBook/Chap4_Blancs.ipynb
+        - file: JupyterNoteBook/Chap4_Standards.ipynb
+        - file: JupyterNoteBook/Chap4_Duplicatas.ipynb
+    - file: Chapitres/Chap5/C5_main.md
+      children:
+        - file: Chapitres/Chap5/C5_Regularisation.md
+        - file: Chapitres/Chap5/C5_Deviation.md
+        - file: Chapitres/Chap5/C5_Degroupement.md
+        - file: JupyterNoteBook/Chap5.ipynb
+        - file: JupyterNoteBook/Chap5_Composite.ipynb
+        - file: JupyterNoteBook/Chap5_Degroupement.ipynb
+        - file: JupyterNoteBook/Chap5_Déviations.ipynb
     - file: Chapitres/Chap6/C6_main.md
       children:
         - file: Chapitres/Chap6/C6_DefinitionsHypotheses.md
