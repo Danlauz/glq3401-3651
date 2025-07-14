@@ -117,7 +117,7 @@ project:
         - file: Chapitres/Chap11/C11_PostConditionnement.md
     - file: Chapitres/Chap12/C12_main.md
       children:
-        - file: Chapitres/Chap12/C12_SISn.md
+        - file: Chapitres/Chap12/C12_SIS.md
         - file: Chapitres/Chap12/C12_PGS.md
         - file: Chapitres/Chap12/C12_Multipoint.md
 
