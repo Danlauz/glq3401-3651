@@ -64,7 +64,7 @@ project:
       children:
         - file: Chapitres/Chap6/C6_DefinitionsHypotheses.md
         - file: Chapitres/Chap6/C6_EstimationVariogramme.md
-        - file: Chapitres/Chap6/C6_Modélisation.md
+        - file: Chapitres/Chap6/C6_Modelisation.md
         - file: Chapitres/Chap6/C6_Remarques.md
         - file: Chapitres/Chap6/C6_Problemes.md
         - file: JupyterNoteBook/Chap6.ipynb
