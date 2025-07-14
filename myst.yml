@@ -75,8 +75,14 @@ project:
         - file: JupyterNoteBook/Chap6_Ajust2D.ipynb
         - file: JupyterNoteBook/Chap6_Calculateur.ipynb
         - file: JupyterNoteBook/Chap6_ErreurEffet.ipynb
-    - file: Chapitres/Chap7/C7.md
+    - file: Chapitres/Chap7/C7_main.md
       children:
+        - file: Chapitres/Chap7/C7_VarianceBloc.md
+        - file: Chapitres/Chap7/C7_VarianceDispersion.md
+        - file: Chapitres/Chap7/C7_VarianceEstimation.md
+        - file: Chapitres/Chap7/C7_CombinaisonErreurs.md
+        - file: Chapitres/Chap7/C7_Calcul.md
+
         - file: JupyterNoteBook/Chap7.ipynb
         - file: JupyterNoteBook/Chap7_VarianceBloc.ipynb
         - file: JupyterNoteBook/Chap7_DiscretisationVarBloc.ipynb
