@@ -1,4 +1,4 @@
-# 1.2 Personnes qualifiées
+# 2.2 Personnes qualifiées
 
 La participation d'une personne qualifiée (PQ) est un élément central de la norme canadienne NI 43-101 sur l'information scientifique et technique relative aux projets miniers.
 

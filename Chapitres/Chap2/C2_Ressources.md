@@ -1,4 +1,4 @@
-# 1.1 Classification des ressources et des réserves minières
+# 2.1 Classification des ressources et des réserves minières
 
 Afin de pouvoir exploiter un gisement minier, il est important de
 catégoriser les ressources afin de parler le même langage avec tous les
