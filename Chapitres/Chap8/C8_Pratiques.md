@@ -1,4 +1,4 @@
-# 5.3 Pratique du krigeage
+# 8.3 Pratique du krigeage
 
 ## Grille de krigeage
 

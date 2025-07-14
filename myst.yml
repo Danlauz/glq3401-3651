@@ -97,10 +97,29 @@ project:
         - file: JupyterNoteBook/Chap8_Calculateur.ipynb
         - file: JupyterNoteBook/Chap8_Krigeage1D.ipynb
         - file: JupyterNoteBook/Chap8_Ecran.ipynb
-    #- file: chapitre9.md
-    #- file: chapitre10.md
-    #- file: chapitre11.md
-    #- file: chapitre12.md
+    - file: Chapitres/Chap9/C9_main.md
+      children:
+        - file: Chapitres/Chap9/C9_Definition.md
+        - file: Chapitres/Chap9/C9_Modele.md
+        - file: Chapitres/Chap9/C9_Proprietes.md
+    - file: Chapitres/Chap10/C10_main.md
+      children:
+        - file: Chapitres/Chap10/C10_Definition.md
+        - file: Chapitres/Chap10/C10_Exemple.md
+        - file: Chapitres/Chap10/C10_RelationDordre.md
+        - file: Chapitres/Chap10/C10_Support.md
+        - file: Chapitres/Chap10/C10_KrigeageSoft.md
+    - file: Chapitres/Chap11/C11_main.md
+      children:
+        - file: Chapitres/Chap11/C11_Objectifs.md
+        - file: Chapitres/Chap11/C11_Methodes.md
+        - file: Chapitres/Chap11/C11_ExemplesApplication.md
+        - file: Chapitres/Chap11/C11_PostConditionnement.md
+    - file: Chapitres/Chap12/C12_main.md
+      children:
+        - file: Chapitres/Chap12/C12_SISn.md
+        - file: Chapitres/Chap12/C12_PGS.md
+        - file: Chapitres/Chap12/C12_Multipoint.md
 
 site:
   template: book-theme

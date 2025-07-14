@@ -1,4 +1,4 @@
-# 6.4 Combinaison d’erreurs élémentaires
+# 7.4 Combinaison d’erreurs élémentaires
 
 Quand on dispose de nombreuses observations et que l’on souhaite estimer une moyenne sur un grand volume, le calcul direct de la variance d’estimation peut devenir lourd. Une approche simplifiée consiste à utiliser le **principe des extensions élémentaires**, qui décompose l’estimation globale en une série d’estimations locales approximativement indépendantes.
 
