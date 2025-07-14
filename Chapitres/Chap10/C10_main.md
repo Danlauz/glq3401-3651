@@ -1,5 +1,5 @@
 ---
-title: "Chapitre 8 - Krigeage d’indicatrices"
+title: "Chapitre 10 - Krigeage d’indicatrices"
 abstract: |
   Ce chapitre présente la méthode du krigeage d’indicatrices (KI), une approche non linéaire permettant de modéliser des variables aléatoires en tenant compte de leur distribution non normale. Nous comparons le KI aux méthodes linéaires classiques de krigeage ordinaire (KO) et krigeage simple (KS), en mettant en lumière ses hypothèses, ses avantages et ses limites. Le krigeage d’indicatrices offre des outils puissants pour estimer des probabilités de dépassement de seuils et calculer des écarts-types conditionnels, particulièrement utiles en contexte minier et environnemental. Ce chapitre vise à donner au lecteur les connaissances nécessaires pour appliquer efficacement le KI et interpréter ses résultats dans diverses situations pratiques. 
 

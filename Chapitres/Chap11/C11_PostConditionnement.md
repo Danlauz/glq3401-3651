@@ -1,4 +1,4 @@
-# 8.4 Post-conditionnement
+# 11.4 Post-conditionnement
 
 Certaines méthodes de simulation ne permettent pas de générer directement des **simulations conditionnelles**, c’est-à-dire des réalisations qui respectent exactement les données observées aux points échantillons. Pour pallier cela, on utilise une technique appelée **post-conditionnement**.
 

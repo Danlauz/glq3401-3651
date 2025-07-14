@@ -1,4 +1,4 @@
-# 9.3 Fonctions de covariance admissibles
+# 9.2 Fonctions de covariance admissibles
 
 On a vu précédemment que l'on devait connaître $\mathrm{Cov}(Z_i,Z_j)$, $\mathrm{Cov}(Y_i,Y_j)$, et $\mathrm{Cov}(Z_i,Y_j)$. Les deux premières covariances sont dites *directs*, la dernière est dite *croisée*.  
 

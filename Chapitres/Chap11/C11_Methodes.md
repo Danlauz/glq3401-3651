@@ -1,4 +1,4 @@
-# 8.2 Méthodes de simulation
+# 11.2 Méthodes de simulation
 
 Il existe une grande variété de méthodes de simulation géostatistique. Pour les regrouper, on peut proposer la subdivision suivante :
 

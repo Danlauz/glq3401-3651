@@ -1,4 +1,4 @@
-# 8.4 Krigeage mou (« soft kriging ») ou krigeage avec données incertaines
+# 10.5 Krigeage mou (« soft kriging ») ou krigeage avec données incertaines
 
 Le krigeage d’indicatrices permet une extension immédiate pour inclure des données imprécises ou incertaines.
 
