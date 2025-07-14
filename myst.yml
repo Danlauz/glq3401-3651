@@ -80,7 +80,7 @@ project:
         - file: JupyterNoteBook/Chap7_Influence.ipynb
     - file: Chapitres/Chap8/C8.md
       children:
-	- file: JupyterNoteBook/Chap8_Calculateur.ipynb
+	- file: JupyterNoteBook/Chap8_Ecran.ipynb
     #- file: chapitre9.md
     #- file: chapitre10.md
     #- file: chapitre11.md
