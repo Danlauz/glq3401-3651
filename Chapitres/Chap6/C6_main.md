@@ -1,7 +1,7 @@
 ---
-title: "Chapitre 6 - Introduction à la géostatistique et aux variogrammes"
+title: "Chapitre 6 - Variogramme"
 abstract: |
-  Ce chapitre présente le variogramme, outil central en géostatistique, permettant de mesurer la continuité spatiale des teneurs minérales à partir des données de forage. Il distingue le variogramme expérimental du modèle théorique et souligne l’importance d’ajuster ce dernier pour interpréter correctement la structure spatiale. Le chapitre détaille les méthodes de calcul du variogramme expérimental, l’ajustement de modèles théoriques, la prise en compte de l’anisotropie, ainsi que le calcul de la covariance à partir du variogramme. Ces notions constituent la base indispensable pour les méthodes d’estimation spatiale telles que le krigeage.
+  Ce chapitre présente le variogramme, un outil central de la géostatistique, utilisé pour quantifier la continuité spatiale des variables régionalisées à partir de données observées. Nous y distinguons le variogramme expérimental du modèle théorique, en insistant sur l’importance de l’ajustement de ce dernier. Le chapitre détaille les méthodes de calcul du variogramme expérimental, l’ajustement des modèles théoriques, la prise en compte de l’anisotropie, ainsi que le calcul de la covariance à partir du variogramme. Ces notions constituent une base essentielle pour les méthodes d’estimation spatiale, notamment le krigeage.
 
 project:
   output-dir: exports  # <-- dossier de sortie pour tous les formats
@@ -21,96 +21,63 @@ downloads:
 
 :::{important}
 ### Objectifs d'apprentissage
--   Expliquer ce que représente le variogramme et en quoi il permet de mesurer la
-continuité spatiale des teneurs ;
+-   Définir ce qu’est un variogramme et expliquer son rôle dans la mesure de la continuité spatiale d’une variable régionalisée ;
 
--   Expliquer la différence entre variogramme expérimental et théorique et
-comprendre la nécessité d'un modèle théorique ;
+-   Distinguer le variogramme expérimental du modèle théorique et justifier l’utilisation d’un modèle ajusté ;
 
--   Calculer un variogramme expérimental ;
+-   Calculer un variogramme expérimental à partir de données spatiales ;
 
 -   Ajuster un modèle théorique à un variogramme expérimental ;
 
--   Calculer la covariance entre deux points à partir d'un modèle de variogramme ;
+-   Intégrer les effets d’anisotropie dans le calcul du variogramme et de la covariance ;
 
--   Tenir compte dans le calcul du variogramme ou de la covariance d'anisotropies ;
+-   Utiliser un modèle de variogramme pour calculer la covariance entre deux points ;
 
--   Connaître les principales caractéristiques des modèles de variogramme
-courants.
+-   Identifier et décrire les principales familles de modèles de variogrammes utilisés en pratique.
 :::
 
 # Introduction
 
-# 2. LE VARIOGRAMME
+La géostatistique s’inspire directement de la première loi de la géographie, formulée par Waldo Tobler :
 
-**Idée fondamentale :**  
-La nature n'est pas entièrement "imprévisible". Deux observations situées l'une près de l'autre devraient, en moyenne, se ressembler davantage que deux observations éloignées.
+> **« Tout interagit avec tout, mais deux choses proches ont plus de chances d’interagir que deux choses éloignées. »**
+
+Pour illustrer ce principe, imaginez-vous au milieu d’une vaste plaine. Autour de vous, le relief est relativement uniforme, avec peu de variations topographiques à courte distance. À l’inverse, si vous vous trouvez au sommet d’une montagne dans la région de Charlevoix, vous êtes plongé dans un paysage accidenté, composé de montées, de descentes et de changements rapides de terrain.
+
+Ces deux environnements illustrent des configurations spatiales très différentes : l’un est faiblement variable, avec de larges structures continues, tandis que l’autre est fortement variable, avec des structures plus petites et plus hétérogènes.
+
+Prenez le temps d’observer la carte topographique du Québec ([Fig. %s](#C6_topographie)). Que constatez-vous ? On y distingue clairement les plaines, les régions montagneuses, et même certains grands événements géologiques comme des cratères d’impact. En observant la distribution spatiale de l’altitude, il devient possible de déduire la structure du relief à partir des données disponibles.
+
+Dans un gisement, l’objectif est similaire : on aimerait pouvoir interpréter la structure spatiale des teneurs comme on interprète la topographie, c’est-à-dire déterminer si le gisement est homogène ou hétérogène, peu ou fortement variable, et comment cette variabilité est organisée dans l’espace.
+
+En géologie, chaque phénomène possède en effet sa propre organisation spatiale et son propre degré de variabilité. Il est donc essentiel de caractériser cette structure dès les premières étapes d’un projet. Autrement dit, on cherche à comprendre la forme, l’étendue et l’orientation des structures présentes dans le gisement.
+
+Le **variogramme** est l’outil fondamental qui permet de quantifier cette continuité spatiale. Il mesure dans quelle mesure les valeurs observées à proximité sont similaires, et comment cette similarité diminue avec la distance. C’est une étape incontournable pour toute modélisation ou estimation géostatistique.
+
+```{figure} images/C6_topographie.png
+:label: C6_topographie
+:align: center
+Carte d'altitude du Québec.
+```
 
 **Exemple :**  
-Soit trois localisations **x₀**, **x₁** et **x₂**, que l'on promène dans le gisement. On mesure la teneur en chacun de ces points.
+Considérons quatre localisations $x_0$, $x_1$, $x_2$ et $x_3$ représentées sur la [Fig. %s](#C6_gisement). Nous avons mesuré la teneur en chacun de ces points, sauf en $x_0$. La question se pose alors : quelle serait la teneur au point $x_0$, notée $Z(x_0)$ ?
 
-La teneur au point **x₁** devrait ressembler plus (en moyenne) à celle observée en **x₀** qu'à celle en **x₂**.  
-On a peut-être intérêt à utiliser l'information contenue en **x₁** et **x₂** pour fournir un meilleur estimé de **x₀** que si l'on n'utilisait que **x₁**.
+On s’attend naturellement à ce que la teneur en $x_2$ soit la plus proche, en moyenne, de celle en $x_0$, car $x_2$ est le point le plus proche spatialement. Par conséquent, on serait porté à accorder plus de poids à la donnée en $x_2$ qu’aux données en $x_1$ ou $x_3$.
 
-> Notion de "continuité" de la minéralisation.  
-> Implicitement, toutes les méthodes d'estimation reposent sur ce concept plus ou moins défini.
+Cependant, que se passe-t-il si le gisement est tabulaire et orienté verticalement, de haut en bas ? Dans ce cas, il pourrait être plus pertinent d’accorder davantage de poids à la donnée en $x_1$, qui se trouve sur le même axe que $x_0$, plutôt qu’à $x_2$, même si ce dernier est plus proche en distance. 
 
-En géostatistique, on cherche à **quantifier cette continuité** préalablement à tout calcul effectué sur le gisement.
+Ces considérations montrent que les poids accordés aux données doivent dépendre de la structure spatiale de la minéralisation, c’est-à-dire de la notion de continuité spatiale.
 
----
+En géostatistique, on cherche justement à quantifier cette continuité avant toute estimation ou modélisation du gisement.
 
-Soit deux points **x** et **x + h** séparés d'une distance **h** :
-
-- La teneur en **x** est une variable aléatoire **Z(x)**.  
-- La teneur en **x + h** aussi, **Z(x + h)**.  
-- La différence entre les valeurs prises par ces deux v.a. est **Z(x) - Z(x + h)**.  
-- C'est également une v.a. dont on peut calculer la variance.
-
-Cette variance devrait :
-
-- être **plus petite** lorsque les points sont rapprochés (les valeurs se ressemblent plus en moyenne),
-- être **plus grande** lorsque les points sont éloignés.
-
-On appelle **variogramme** la **demi-variance** de cette différence, c’est-à-dire :
-
-$$
-\gamma(x, x + h) = \frac{1}{2} \text{Var}(Z(x) - Z(x + h))
-$$
+```{figure} images/C6_gisement.png
+:label: C6_gisement
+:align: center
+Illustration des localisations considérées dans l’exemple.
+```
 
 ---
 
-Si l’on considère **n localisations différentes** \\( x₁, x₂, ..., xₙ \\), la meilleure description que l'on puisse faire des **n variables aléatoires** \\( Z(x₁), Z(x₂), ..., Z(xₙ) \\) est d'établir la **fonction de distribution conjointe (multivariable)**.
-
-Mais cela est **impossible** en pratique, car on ne dispose généralement que d'une **seule observation** à chacun de ces **n points**.
-
-On pourrait formuler une hypothèse très forte, par exemple :  
-> Le vecteur des v.a. suit une loi multinormale de moyennes et variances-covariances spécifiées.
-
-Mais cela serait **trop restrictif**.
-
----
-
-La géostatistique a des visées **plus modestes** :  
-On veut **estimer des paramètres statistiques à partir des données**, et non **imposer un modèle a priori**.
-
-Les paramètres que l'on cherche à estimer ne sont **ni** :
-
-- la fonction de distribution conjointe,
-- **ni même** la fonction de distribution bivariable (i.e. les v.a. considérées deux à deux),
-
-mais **simplement** :
-
-- les **deux premiers moments** (moyenne, variance, covariance) des v.a. prises deux à deux.
-
-Même réduit à cela, on ne dispose toujours que d'une **seule paire d'observations** situées précisément aux points **x** et **x + h**.
-
----
-
-On ne peut donc estimer les paramètres statistiques **sans formuler certaines hypothèses**.  
-Ces hypothèses ont uniquement pour but de permettre l'estimation des paramètres statistiques de notre modèle à partir des données.
-
-On les appelle **hypothèses de stationnarité du second ordre**.  
-Elles visent essentiellement à **"détacher" les deux premiers moments de localisations précises** en permettant des translations des emplacements **x** et **x + h**.
-
-> La covariance (et le variogramme) deviennent donc des fonctions dépendant **uniquement de la distance** séparant les points d'observation, et non plus de leur localisation exacte.
+À travers ce chapitre, vous apprendrez à estimer et modéliser la continuité spatiale à l’aide de l’outil fondamental qu’est le variogramme
 
