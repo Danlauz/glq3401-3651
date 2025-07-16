@@ -45,21 +45,21 @@ Pour un jeu de données de la variable $Z$ aux emplacements $x_1, \ldots, x_n$, 
 
 Cette représentation graphique illustre toutes les contributions individuelles au calcul du variogramme expérimental. Lorsqu’on choisit une tolérance sur la distance, on forme des classes (ou *bins*) d’une certaine largeur. On sélectionne alors tous les points du nuage appartenant à cette classe, et en calculant leur moyenne, on obtient la valeur du variogramme expérimental pour cette classe. La distance représentative de la classe correspond au centre de gravité du nuage des points pour cette classe.
 
-On peut visualiser la nuée variographique sous forme de nuage de points. La [Fig. %s](#C6_nuee.png) présente plusieurs nuée variographique en fonction de la largeur de la tolérence sur la distance. On peut identifier notre variogramme expérimentale (courbe noir), le modèele théorique (courbe rouge) et la nuée de point. 
+On peut visualiser la nuée variographique sous forme de nuage de points. La [Fig. %s](#C6_nuee) présente plusieurs nuée variographique en fonction de la largeur de la tolérence sur la distance. On peut identifier notre variogramme expérimentale (courbe noir), le modèele théorique (courbe rouge) et la nuée de point. 
 
 
 ::: {figure}
-:label: C6_nuee.png
+:label: C6_nuee
 :align: center
 
 (C6_nueeA)=
-![Nuée variographique pour des bin de 5 m](images/C6_nuee_bin5.png)
+![Nuée variographique pour des bin de 5 m](images/C6_nuee_bin5.PNG)
 
 (C6_nueeB)=
-![Nuée variographique pour des bin de 10 m](images/C6_nuee_bin10.png)
+![Nuée variographique pour des bin de 10 m](images/C6_nuee_bin10.PNG)
 
 (C6_nueeC)=
-![Nuée variographique pour des bin de 50 m](images/C6__nuee_bin50.png)
+![Nuée variographique pour des bin de 50 m](images/C6__nuee_bin50.PNG)
 
 :::
 

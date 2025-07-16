@@ -88,13 +88,13 @@ La présente [Fig. %s](#C6_modeles) montre la forme de ces modèles théoriques
 3. Le modèle de puissance permet de modéliser des variogrammes dont on n’a pas observé le palier ; d'ailleurs on constate qu’il n’atteint jamais le palier.
 
 
-```{figure} images/C6_modeles.png
+```{figure} images/C6_modeles.PNG
 :label: C6_modeles
 :align: center
 Illustration des paramètres du variogramme : effet de pépite, palier et portée.
 ```
 
-```{figure} images/C6_simulations.png
+```{figure} images/C6_simulations.PNG
 :label: C6_simulations
 :align: center
 Illustration des paramètres du variogramme : effet de pépite, palier et portée.
@@ -144,7 +144,7 @@ L’anisotropie géométrique est typiquement observée dans les milieux où la 
 
 La [Fig. %s](#C6_anisotropie) illustre une ellipse représentant les paramètres utilisés pour calculer la portée en fonction de la direction.
 
-```{figure} images/C6_anisotropie.png
+```{figure} images/C6_anisotropie.PNG
 :label: C6_anisotropie
 :align: center
 Illustration d’une anisotropie géométrique.
@@ -219,7 +219,7 @@ La [Fig. %s](#C6_RapportApparentDirection) suivante montre le rapport d’aniso
 
 Autrement dit, si l’une de nos directions de calcul coïncide avec celle de la grande portée, nous allons très probablement estimer correctement le rapport réel (correspondant à la droite $x = y$, soit la courbe $0^\circ$). En revanche, si notre direction d’analyse est à $45^\circ$ alors que $a_g$ est à $35^\circ$ (soit une différence de $10^\circ$, correspondant à la courbe $10^\circ$), nous n’observerons qu’un rapport apparent d’anisotropie, sous-estimé par rapport à la valeur réelle. Ce phénomène s’accentue d’autant plus que la différence entre la direction réelle et la direction utilisée dans les calculs s’amplifie.
 
-```{figure} images/C6_RapportApparentDirection.png
+```{figure} images/C6_RapportApparentDirection.PNG
 :label: C6_RapportApparentDirection
 :align: center
 Rapport apparent en fonction de la direction ($\theta$ : angle avec $a_g$) et du rapport d'anisotropie.
@@ -227,7 +227,7 @@ Rapport apparent en fonction de la direction ($\theta$ : angle avec $a_g$) et du
 
 La [Fig. %s](#C6_RapportApparent) suivante montre le rapport d’anisotropie apparent que l’on devrait observer en fonction de l’angle de tolérance (fenêtre angulaire) adopté dans le calcul du variogramme. On constate que plus la fenêtre augmente, plus l’anisotropie observée diminue. Autrement dit, plus la tolérance angulaire est large, plus notre capacité à détecter correctement l’anisotropie se réduit. À noter que, parfois, on est contraint d’augmenter la fenêtre par manque de données. Il vaut mieux détecter une anisotropie même légère que de ne pas la détecter du tout.
 
-```{figure} images/C6_RapportApparent.png
+```{figure} images/C6_RapportApparent.PNG
 :label: C6_RapportApparent
 :align: center
 Rapport apparent en fonction de la tolérance et du rapport d'anisotropie.

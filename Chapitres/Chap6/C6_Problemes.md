@@ -1,3 +1,4 @@
+
 # 6.5 Problèmes courants avec les variogrammes et solutions possibles
 
 ---
@@ -8,7 +9,7 @@ Le variogramme étant une moyenne de différences au carré, il est clair que la
 
 La [Fig. %s](#C6_Extreme) montre trois scénarios ayant la même variance, mais dont un scénario n'a pas de valeur extreme (bleu), une données extreme aucentre (orange) et une donnes extreme sur les bord du domaine (vert). Si la donnee extreme est située en périphérie du domaine, elle introduira une tendance croissante sur le variogramme, la courbe verte ne cesse d'augmenter. Si elle est située au centre, elle introduira plutôt une tendance décroissante, a un certain distance, la données n'est plus pris en compte dans le calcul et la variabilité chute significativement. Comme on le voit, la position de la valeur extrême dans le champ a une influence prépondérante sur la forme du variogramme.
 
-```{figure} images/C6_Extreme.png
+```{figure} images/C6_Extreme.PNG
 :label: C6_Extreme
 :align: center
 Impact des données extrêmes sur le variogramme expérimental.
@@ -45,7 +46,7 @@ Pour atténuer ce problème, on recommande :
 > Ce problème est particulièrement critique avec des données de forages (3D), où les trajectoires peuvent dévier de manière significative.  
 > Les mesures de déviation sont parfois imprécises, ce qui accroît l’effet de pépite apparent et rend les variogrammes plus erratiques.
 
-```{figure} images/C6_EreurLocBruit.png
+```{figure} images/C6_EreurLocBruit.PNG
 :label: C6_EreurLocBruit
 :align: center
 Effet d'erreur de localisation sur le variogramme expérimental.
@@ -57,7 +58,7 @@ Effet d'erreur de localisation sur le variogramme expérimental.
 
 Supposons que nous avons deux zones de notre gisement échantillonné avec des pas différent. Les deux profils sont superposé sur la meme [Fig. %s](#C6_pas). En bleu, la Zone A, échantillonnée tous les 2 mètres, présente des valeurs peu variables. En orange, la Zone B, échantillonnée tous les 1 mètre, présente des valeurs plus variables. Le variogramme expérimental de la Zone A est plus bas, car la variabilité spatiale y est plus faible. À l’inverse, celui de la Zone B est plus élevé, car la variabilité y est plus forte. Le variogramme combiné A+B est un mélange des deux comportements. Cependant, comme la Zone A n’apporte aucune information aux distances impaires (1 m, 3 m, 5 m, etc.), le variogramme A+B est identique à celui de la Zone B pour ces distances. Cela peut conduire à une surestimation de la variabilité si l’on ne tient pas compte de cette hétérogénéité dans l’échantillonnage.
 
-```{figure} images/C6_Pas.png
+```{figure} images/C6_Pas.PNG
 :label: C6_Pas
 :align: center
 Impact du pas d'échantillonnage sur le variogramme expérimental.
@@ -78,7 +79,7 @@ La [Fig. %s](#C6_Domaines) illustre un gisement composé de deux domaines ayant
 
 Cela démontre qu’un beau variogramme peut en réalité cacher une hétérogénéité géologique importante. Il est donc essentiel d’utiliser des techniques de validation croisée pour détecter ce phénomène. Nous verrons ces techniques en détail lors de l’introduction au krigeage. 
 
-```{figure} images/C6_Domaines.png
+```{figure} images/C6_Domaines.PNG
 :label: C6_Domaines
 :align: center
 Impact de deux domaines géologiques distincts côte à côte sur le variogramme expérimental.
@@ -100,7 +101,7 @@ Par exemple, la [Fig. %s](#C6_Doublons) est calculé èa partir d'une simulatio
 
 On constate l’impact du rééchantillonnage uniquement des valeurs fortes. Un important effet de pépite en paraît. Seriez-vous capable de l’expliquer ? Sinon, lorsque l’on rééchantillonne systématiquement tous les forages, l’effet est moindre, voire inexistant.
 
-```{figure} images/C6_Doublons.png
+```{figure} images/C6_Doublons.PNG
 :label: C6_Doublons
 :align: center
 Impact de deux domaines géologiques distincts côte à côte sur le variogramme expérimental.
@@ -124,7 +125,7 @@ Il existe plusieurs exemples géologiques où un changement de système de coord
 **Remarque** :
 La transformation des coordonnées nécessite une très bonne compréhension de la géologie locale.
 
-```{figure} images/C6_Plissement.png
+```{figure} images/C6_Plissement.PNG
 :label: C6_Plissement
 :align: center
 Impact du pas d'échantillonnage sur le variogramme expérimental.

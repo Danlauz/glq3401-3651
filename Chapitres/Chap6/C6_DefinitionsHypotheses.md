@@ -98,7 +98,7 @@ Cette fonction, généralement croissante avec la distance $h$, décrit la **dé
 
 Dans cet exemple, la courbe bleue correspond au modèle théorique du variogramme, tandis que les croix noires représentent les points du variogramme expérimental, obtenus à partir des données. Ces deux notions seront approfondies dans les prochaines sections.
 
-```{figure} images/C6_Variogramme.png
+```{figure} images/C6_Variogramme.PNG
 :label: C6_Variogramme
 :align: center
 Illustration des paramètres du variogramme : effet de pépite, palier et portée.
