@@ -101,7 +101,7 @@ Dans cet exemple, la courbe bleue correspond au modèle théorique du variogramm
 ```{figure} images/C6_Variogramme.PNG
 :label: C6_Variogramme
 :align: center
-Illustration des paramètres du variogramme : effet de pépite, palier et portée.
+Illustration des paramètres du variogramme - effet de pépite, palier et portée.
 ```
 
 ## Notes techniques

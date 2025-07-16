@@ -101,7 +101,7 @@ Par exemple, la [Fig. %s](#C6_Doublons) est calculé èa partir d'une simulatio
 
 On constate l’impact du rééchantillonnage uniquement des valeurs fortes. Un important effet de pépite en paraît. Seriez-vous capable de l’expliquer ? Sinon, lorsque l’on rééchantillonne systématiquement tous les forages, l’effet est moindre, voire inexistant.
 
-```{figure} images/C6_Doublons.PNG
+```{figure} images/C6_doublons.PNG
 :label: C6_Doublons
 :align: center
 Impact de deux domaines géologiques distincts côte à côte sur le variogramme expérimental.

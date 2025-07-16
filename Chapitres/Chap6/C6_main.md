@@ -54,7 +54,7 @@ En géologie, chaque phénomène possède en effet sa propre organisation spatia
 
 Le **variogramme** est l’outil fondamental qui permet de quantifier cette continuité spatiale. Il mesure dans quelle mesure les valeurs observées à proximité sont similaires, et comment cette similarité diminue avec la distance. C’est une étape incontournable pour toute modélisation ou estimation géostatistique.
 
-```{figure} images/C6_topographie.PNG
+```{figure} images/C6_TopographieQuebec.PNG
 :label: C6_topographie
 :align: center
 Carte d'altitude du Québec.
@@ -71,7 +71,7 @@ Ces considérations montrent que les poids accordés aux données doivent dépen
 
 En géostatistique, on cherche justement à quantifier cette continuité avant toute estimation ou modélisation du gisement.
 
-```{figure} images/C6_gisement.PNG
+```{figure} images/C6_Gisement.PNG
 :label: C6_gisement
 :align: center
 Illustration des localisations considérées dans l’exemple.
