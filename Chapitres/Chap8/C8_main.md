@@ -1,7 +1,7 @@
 ---
 title: "Chapitre 8 - Krigeage"
 abstract: |
-  Ce chapitre présente le krigeage, une méthode d’estimation linéaire optimale largement utilisée en géostatistique. Après avoir introduit les principes fondamentaux, nous détaillons les différences entre krigeage simple et ordinaire, ainsi que la dérivation des équations associées. Nous expliquons comment construire et résoudre les systèmes de krigeage, calculer les estimations et leurs variances, et analyser les propriétés mathématiques et pratiques du krigeage. Enfin, nous abordons l’utilisation de la validation croisée pour évaluer la qualité des modèles de variogramme et affiner les estimations.
+  Ce chapitre présente le krigeage, une méthode d’estimation linéaire largement utilisée en géostatistique. Après avoir introduit les principes fondamentaux, nous détaillons les différences entre krigeage simple et ordinaire, ainsi que la dérivation des équations associées. Nous expliquons comment construire et résoudre les systèmes de krigeage, calculer les estimations et leurs variances, et analyser les propriétés mathématiques et pratiques du krigeage. Enfin, nous abordons l’utilisation de la validation croisée pour évaluer la qualité des modèles de variogramme et affiner les estimations.
  
 
 project:
@@ -36,15 +36,19 @@ downloads:
 
 # Introduction
 
-Puisqu’il est possible de calculer la variance d’estimation associée à tout estimateur linéaire, pourquoi ne pas privilégier celui qui la minimise ? C’est précisément l’objectif du krigeage.
+Le krigeage n’est pas une méthode comme les autres : c’est l’estimateur optimal parmi tous les estimateurs linéaires, au sens où il minimise la variance d’estimation. Si l’on peut mesurer l’erreur associée à chaque estimation, pourquoi ne pas choisir la combinaison qui la rend la plus petite ? C’est exactement ce que fait le krigeage.
 
-## Qu'est-ce que le krigeage ?
+## Pourquoi utiliser le krigeage ?
 
-Le krigeage est une technique statistique d’interpolation spatiale permettant d’estimer des valeurs inconnues à des emplacements précis à partir d’observations connues dans leur voisinage.
+Le krigeage est une méthode d’interpolation spatiale fondée sur une idée simple mais puissante : des points proches dans l’espace ont tendance à avoir des valeurs similaires. En modélisant cette relation à l’aide d’un variogramme, on peut estimer une valeur à un endroit non échantillonné en tenant compte à la fois de la distance aux données et de leur redondance.
 
-Son principe fondamental repose sur l’hypothèse que la corrélation spatiale entre les données peut être modélisée à l’aide d’un variogramme. Grâce à l’analyse de la structure spatiale des données, il devient possible d’ajuster un modèle théorique à partir du variogramme expérimental, une compétence que nous avons déjà abordée dans les lectures précédentes.
+Contrairement à des méthodes comme l’inverse de la distance ou la moyenne locale, le krigeage offre deux avantages essentiels :
 
-Le krigeage vise à minimiser la variance d’estimation, ce qui le distingue des autres méthodes d’interpolation. Il permet ainsi non seulement de prédire des valeurs en des points non échantillonnés, mais aussi de quantifier l’incertitude associée à ces estimations. Cette capacité à fournir une valeur prédite et une mesure de fiabilité constitue l’un de ses atouts majeurs en géostatistique.
+Il fournit l’estimation la plus précise possible (au sens linéaire),
+
+Et surtout, il donne une mesure de l’incertitude de cette estimation.
+
+Autrement dit, le krigeage ne se contente pas de prédire une valeur, il dit aussi à quel point on peut lui faire confiance. C’est cette capacité à combiner précision et fiabilité qui en fait un outil central de la géostatistique.
 
 ## Les grands types de krigeage
 
@@ -56,7 +60,7 @@ Basé sur l’hypothèse de **stationnarité d’ordre 2** (moyenne constante, c
 
 - **Krigeage simple** : la moyenne est connue et constante.
 - **Krigeage ordinaire** : la moyenne est inconnue mais supposée constante localement.
-- **Krigeage universel (ou avec dérive)** : la moyenne varie dans l’espace selon une tendance modélisée (ex. polynôme). La dérive, la moyenne, est déterministe.
+- **Krigeage universel (ou avec dérive)** : la moyenne varie dans l’espace selon une tendance modélisée (ex. polynôme) nommée dérive. La dérive est déterministe.
 
 ### Krigeage non stationnaire ou avancé
 
@@ -79,7 +83,7 @@ Dans ce cours, nous travaillerons sous l’**hypothèse de stationnarité d’or
 - Le **krigeage simple** (moyenne connue)
 - Le **krigeage ordinaire** (moyenne inconnue)
 
-Le **krigeage ordinaire** est de loin le plus utilisé dans la pratique. Il offre un bon compromis entre simplicité et robustesse, sans exiger de connaissance préalable de la moyenne régionale.
+Le krigeage ordinaire est de loin le plus utilisé dans la pratique. Il offre un bon compromis entre simplicité et robustesse, sans exiger de connaissance préalable de la moyenne régionale.
 
 Les étudiants en **génie géologique** seront également exposés, dans des lectures ultérieures, au krigeage d’indicatrices, une méthode particulièrement adaptée aux problématiques de classification géologique ou d’estimation de probabilités d’excéder un seuil, comme c’est souvent le cas en environnement.
 
@@ -92,5 +96,5 @@ Le processus de krigeage se déroule en plusieurs étapes successives :
 3. Résolution du système de krigeage* afin de déterminer les poids d’interpolation associés à chaque donnée.
 4. Estimation des valeurs inconnues aux emplacements ciblés, ainsi que de leur variance d’estimation, qui mesure l’incertitude associée.
 
-Nous sommes déjà en mesure de réaliser les étapes **1** et **2**, à la suite de nos lectures précédentes. Nous nous concentrerons donc ici sur les étapes **3** et **4**, qui seront développées en détail dans la suite du cours.
+Nous sommes déjà en mesure de réaliser les étapes **1** et **2**, à la suite de nos lectures précédentes. Nous nous concentrerons donc ici sur les étapes **3** et **4**, qui seront développées en détail dans les prochaines lectures.
 

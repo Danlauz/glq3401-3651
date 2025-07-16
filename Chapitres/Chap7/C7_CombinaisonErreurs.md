@@ -1,6 +1,6 @@
 # 7.4 Combinaison d’erreurs élémentaires
 
-Quand on dispose de nombreuses observations et que l’on souhaite estimer une moyenne sur un grand volume, le calcul direct de la variance d’estimation peut devenir lourd. Une approche simplifiée consiste à utiliser le **principe des extensions élémentaires**, qui décompose l’estimation globale en une série d’estimations locales approximativement indépendantes.
+Quand on dispose de nombreuses observations et que l’on souhaite estimer une moyenne sur un grand volume, le calcul direct de la variance d’estimation peut devenir lourd. Une approche simplifiée consiste à utiliser le principe de combinaison des erreurs élémentaires, qui décompose l’estimation globale en une série d’estimations locales approximativement indépendantes.
 
 ---
 
@@ -12,7 +12,7 @@ $$
 Z^* = \frac{1}{n} \sum_{i=1}^n Z_i
 $$
 
-Chaque point est supposé représenter un bloc de taille égale. Si la variance d’erreur pour chaque bloc est \( \sigma_e^2 \), la variance d’estimation globale est :
+Chaque point est supposé représenter un bloc de taille égale. Si la variance d’erreur pour chaque bloc est $\sigma_e^2$, la variance d’estimation globale est :
 
 $$
 \sigma_e^2(\text{globale}) = \frac{\sigma_e^2}{n}
@@ -24,7 +24,7 @@ Les erreurs sont approximativement indépendantes, car chaque bloc est estimé a
 
 ## ii. Échantillonnage aléatoire uniforme (stratifié)
 
-Chaque point représente un bloc positionné aléatoirement dans le domaine. Pour un bloc \( v_i \), la variance d’estimation est :
+Chaque point représente un bloc positionné aléatoirement dans le domaine. Pour un bloc $v_i$, la variance d’estimation est :
 
 $$
 \sigma_{e_i}^2 = \mathbb{E}[(Z(x) - \bar{Z})^2] = \frac{1}{v} \int_v (Z(x) - \bar{Z})^2 \, dx = D^2(\cdot \mid v)
@@ -40,60 +40,41 @@ $$
 
 ## iii. Échantillonnage quelconque
 
-On divise le domaine en sous-domaines \( g_i \) et on applique les règles précédentes localement. Si :
+Supposons que nous somme en mesure de calculer la variance d'estimation sur un sous domaine $v_i$. Ainsi, pour l'ensemble du domaine $V$, l'estimé est obtenu en combinant, selon des poids proportionnels aux volumes des sous-domaines, les différents estimés obtenus. On aura donc :
 
 $$
-Z^* = \sum_{i=1}^n \frac{v_i}{V} Z_i^*
+Z = \sum_{i=1}^n \frac{v_i}{V} Z_i^*
 $$
 
-Alors :
+et la variance d'estimation sera, puisque chaque erreur est considérée indépendante :
 
 $$
-\sigma_e^2 = \sum_{i=1}^n \left(\frac{v_i}{V}\right)^2 \sigma_{e_i}^2
+\sigma_e^2 = \sum_{i=1}^n \left( \frac{v_i}{V} \right)^2 \sigma_{e_i}^2
 $$
+
+où les variances d'estimation élémentaires sont celles correspondant aux différents sous-domaines que l'on a pu reconnaître.
+
 
 ---
 
 ## Remarques
 
-- Le type d’estimateur utilisé localement (krigeage, IDW, polygonal) **n’influence pas** significativement la variance globale tant que les estimés sont similaires (moyennes pondérées).
+- L'estimateur particulier utilisé pour obtenir l'estimé pour la moyenne du champ n'intervient pas dans le calcul de la variance d'estimation globale par la méthode des erreurs élémentaires. L'estimation aurait pu être obtenu par krigeage, par inverse de la distance, par méthode polygonale, etc.. La raison de cette apparente anomalie est que les estimés globaux obtenus par ces méthodes sont très similaires. Ils consistent plus ou moins en une moyenne, pondérée par la zone d'influence de chaque observation, des valeurs observées. Puisque les estimations sont similaires, il n'est pas surprenant qu'elles aient toutes à peu près la même précision. Ce raisonnement n'est pas vrai si l'on cherche à prédire les variances d'estimation pour une estimation locale, i.e. pour une petite portion du champ. Alors, la technique d’estimation utilisée a une forte influence sur la précision obtenue
 
-- En estimation **locale**, le choix de la méthode a un **impact majeur** sur la précision.
-
-- Cette méthode nécessite que les blocs n’aient **aucune donnée en commun** pour garantir l’indépendance des erreurs.
+- Si l'on dispose d'un programme permettant d'effectuer le krigeage et de calculer les variances de krigeage (variance d'estimation), alors on peut les combiner suivant le principe précédent, i.e. il suffit de segmenter le domaine en blocs et d'estimer chaque bloc en n'utilisant que les données qui s'y trouvent, puis de combiner les variances de krigeage en fonction de la taille des blocs comme l'indique la formule précédente. Il est important de ne pas avoir des données communes pour l'estimation de deux blocs car alors les erreurs d'estimation ne pourraient plus être considérées comme indépendantes. 
 
 ---
 
 ## Exemple
 
-Une zone est estimée par krigeage direct (\( \sigma^2 = 0.36 \)) et par subdivision en 4 parcelles selon 2 scénarios.
+Une zone a été estimée directement par krigeage (variance d'estimation 0.36) puis par combinaison de 4 parcelles selon 2 scénarios différents ([Fig. %s](#C7_VarEstimation)). Pour l'estimation de chaque parcelle, on n'utilise que les points s'y retrouvant. On calcule les variances d'estimation pour chaque parcelle et on combine le tout suivant le carré des surfaces de chaque parcelle. Les résultats obtenus par subdivision, dans les deux cas, sont quasi-identiques au résultat direct.
 
-#### Scénario 1 :
-
-| Bloc | \( \sigma^2 \) |
-|------|----------------|
-| z1   | 1.6            |
-| z2   | 1.4            |
-| z3   | 1.4            |
-| z4   | 1.3            |
-| **Combiné** | **0.35** |
-
-#### Scénario 2 :
-
-| Bloc | \( \sigma^2 \) |
-|------|----------------|
-| z1   | 7.8            |
-| z2   | 1.7            |
-| z3   | 1.9            |
-| z4   | 0.63           |
-| **Combiné** | **0.36** |
+```{figure} images/C7_VarEstimation.PNG
+:label: C7_VarEstimation
+:align: center
+Illustration des paramètres du variogramme - effet de pépite, palier et portée.
+```
 
 ---
 
-## Résumé
 
-1. **Variances de bloc, de dispersion et d’estimation** peuvent être calculées à partir du variogramme ponctuel.
-
-2. L’effet de pépite **n’intervient pas** si les données sont quasi-ponctuelles. Il intervient pour les petits blocs avec des supports non ponctuels.
-
-3. La **méthode des erreurs élémentaires** simplifie les calculs pour les grandes surfaces avec de bons résultats.
