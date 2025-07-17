@@ -30,7 +30,7 @@ prise bloc par bloc. Ainsi, la simple connaissance de la teneur et du
 tonnage du gisement ne suffit pas à déterminer la rentabilité de la
 mine. En effet, deux mines de cuivre ayant une teneur moyenne de 0,4 %
 pourraient présenter une rentabilité très différente, selon la
-variabilité des teneurs à l'échelle des blocs (unités de sélection) et
+variabilité des teneurs à l'échelle des blocs (unités de sélection), selon leur localisation et
 selon leur mode d'exploitation.
 
 Ainsi, on distingue deux facteurs : la teneur des blocs, et leur
@@ -118,10 +118,9 @@ d'évaluer un niveau de confiance sur les ressources et réserves pourrait
 
 ## Exemple 1 : Rapport NI-43-101 - Canadian Malartic Mine - 2024
 
-Les rapports NI-43-101 sont publiques, il est alors possibles d'aller
-les consulter librement. Notre premier exemple concerne les méthodes
-d'évaluation des ressources et des réserves minières de la mine Canadien
-Malartic Mine (CMM).
+Les rapports NI 43-101 sont publics et peuvent être consultés librement, notamment sur le site SEDAR+ (le portail de Dépôt, de Déclaration et de Recherche d’information sur les marchés des capitaux du Canada).
+
+Notre premier exemple porte sur les méthodes d’évaluation des ressources et des réserves minières de la mine Canadian Malartic (CMM).
 
 La CMM est l'une des plus grandes mines d'or à ciel ouvert au Canada.
 Située à Malartic, en Abitibi-Témiscamingue (Québec), elle est exploitée
@@ -145,7 +144,7 @@ blocs, incluant sans s'y limiter :
 
 -   la confiance dans l'interprétation géologique;
 
--   la continuité géologique et celle des teneurs des structures (i.e.,
+-   la continuité géologique des teneurs (i.e.,
     volet géostatistique);
 
 -   les modèles de variogrammes et les critères des ellipses de
@@ -156,8 +155,7 @@ blocs, incluant sans s'y limiter :
 Pour la mine Canadian Malartic (CMM), plusieurs des critères de
 classification des ressources sont quantifiables à l'aide des outils
 géostatistiques qui seront abordés dans les prochaines lectures. Ces
-critères permettent de construire un modèle de blocs, similaire à la
-[Fig. %s](#Chap2_BlocModele.png), mais propre à la géologie de la mine CMM.
+critères permettent de construire un modèle de blocs propre à la géologie de la mine CMM.
 Les ressources mesurées, indiquées et inférées sont alors définies à
 partir de ce modèle.
 

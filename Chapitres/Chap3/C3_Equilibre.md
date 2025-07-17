@@ -6,8 +6,7 @@ composante, considérées séparément. On peut également définir trois
 autres teneurs de coupure, qui feront intervenir la distribution des
 teneurs des blocs sélectionnés. Ces teneurs, dites d'équilibre, sont
 définies de manière à ce que les éléments pris deux à deux soient en
-équilibre en termes de quantités traitées (mine-concentrateur,
-concentrateur-marché, mine-marché).
+équilibre en termes de quantités traitées.
 
 Autrement dit, on cherche à déterminer la teneur de coupure de sorte
 que, par exemple, la mine et le concentrateur opèrent tous deux à pleine
@@ -52,7 +51,7 @@ $\frac{K}{x_c g_c y}$ tonnes de matériau minéralisé pour répondre à la
 demande du marché. Cette teneur de coupure est appelée teneur de coupure
 d'équilibre mine-marché, notée $c_{13}$.
 
-## Teneur de coupure d'équilibre : Concentrateur--Marché
+## Teneur de coupure d'équilibre : Concentrateur-Marché
 
 Enfin, la teneur de coupure d'équilibre entre le concentrateur et le
 marché est déterminée afin d'assurer que la totalité des tonnes de
@@ -68,7 +67,7 @@ teneur de coupure d'équilibre concentrateur-marché, notée $c_{23}$.
 Pour être en mesure de déterminer les teneurs de coupure d'équilibre, il
 est impératif de connaître la distribution des teneurs du gisement. À
 partir de cette distribution, il est possible de tracer les courbes de
-$x_c$ en fonction de $c$, et de $g_c$ en fonction de $c$, afin de
+$x_c$ en fonction de $c$ et de $g_c$ en fonction de $c$, afin de
 déterminer les trois teneurs de coupure qui satisfont les relations
 d'équilibre présentées précédemment.
 
@@ -182,7 +181,7 @@ répartition $F(z)$ pour des valeurs de $z$ qui suivent une loi normale
 $N(0, 1)$, c'est-à-dire une loi normale de moyenne 0 et de variance 1.
 
 Cependant, la table est généralement construite pour des valeurs de $z$
-positives, car la fonction de répartition $F(z)$ est symétrique par
+positives, car la fonction de répartition $F(z)$ d'une loi normale est symétrique par
 rapport à 0. En effet, si $Z$ suit une loi normale de moyenne 0 et de
 variance 1, et si $z$ est négatif, on peut exploiter cette symétrie pour
 déterminer $F(z)$. Ainsi, pour un $z$ négatif, il suffit d'utiliser la
@@ -210,18 +209,18 @@ courbes $x_c$, $g_c$ et $x_c g_c$ en fonction de $c$, comme illustré à
 la [Fig. %s](#C3_xc_gc.png), ou bien il faudra les calculer comme présenté
 dans la section précédente.
 
-```{figure} images/C3_xc_gc.png
+```{figure} images/C3_xc_gc.PNG
 :label: C3_xc_gc.png
 :align: center 
 Impact de la variance sur le teneur de coupure.
 ``` 
 
-Par exemple, pour la teneur de coupure d'équilibre mine-concentrateur,
-$c_{12}$, si la capacité de minage $M$ est de 10 et que la capacité de
-traitement $H$ est de 5, on doit obtenir :
-$$x_c = \frac{H}{M} = \frac{5}{10} = 0.5.$$ Par lecture graphique, on
-obtient que la teneur de coupure est de $0.78\%$.
+Par exemple, pour la teneur de coupure d'équilibre mine–concentrateur $c_{12}$, si la capacité de minage $M$ est de 10 et que la capacité de traitement $H$ est de 2{,}2, on doit obtenir :
 
-On peut déduire la teneur de coupure d'équilibre mine-marché et
-concentrateur-marché de la même manière, à partir de la lecture
-graphique.
+$$
+x_c = \frac{H}{M} = \frac{2{,}2}{10} = 0{,}22.
+$$
+
+Si la moyenne ($m$) et la variance ($s^2$) de la distribution log-normal sont respectivement de $1{,}5\%$ et $(2\%)^2$, on peut alors construire les courbes de la [Fig. %s](#C3_xc_gc.png). Par **lecture graphique**, on obtient que la teneur de coupure correspondante est d’environ $2{,}00\%$.
+
+On peut déduire la teneur de coupure d'équilibre mine-marché et concentrateur-marché de la même manière, à partir de la lecture graphique.

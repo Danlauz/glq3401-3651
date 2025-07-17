@@ -94,7 +94,7 @@ L'estimation à partir d'un échantillon consiste à inférer les caractéristiq
 
 ## Fonction de densité conjointe
 
-Lorsqu'on considère plusieurs variables aléatoires, comme deux variables $X$ et $Y$, , leur dépendance peut être représentée par une fonction de densité conjointe, notée $f_{XY}(x,y)$.
+Lorsqu'on considère plusieurs variables aléatoires, comme deux variables $X$ et $Y$, leur dépendance peut être représentée par une fonction de densité conjointe, notée $f_{XY}(x,y)$.
 Cette fonction décrit la probabilité conjointe que $X$ prenne la valeur $x$ et $Y$ prenne la valeur $y$ simultanément.
 
 La condition de normalisation de cette fonction est la suivante :

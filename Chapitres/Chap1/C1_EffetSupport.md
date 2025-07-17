@@ -25,5 +25,5 @@ En tant que futurs ingénieurs, maîtriser l'effet de support est fondamental. C
 ```{figure} images/C1_Support.png
 :label: C1_Support.png
 :align: center 
-Effet de support : Influence combinée de la taille du support et de la structure spatiale sur la variabilité des teneurs dans un gisement. 
+Effet de support : Influence combinée de la taille du support et de la structure spatiale sur la variabilité des teneurs dans un gisement. Le gisement A possède une grande continuité spatiale, tandis que le gisement B a une continuité plus faible. Ainsi, le gisement B est plus sensible au changement de support que le gisement A.
 ``` 

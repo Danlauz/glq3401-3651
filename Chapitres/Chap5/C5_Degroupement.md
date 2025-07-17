@@ -23,7 +23,7 @@ où 10 forages représentent une zone de faible teneur (cercles bleus).
 ```{figure} images/C5_Gisement.png
 :label: C5_Gisement.png
 :align: center 
-Teneurs en cuivre d'un gisement synthétique suivant une distribution log-normale, de moyenne 2% et de variance unitaire.
+Teneurs en cuivre d'un gisement synthétique suivant une distribution log-normale, de moyenne 2% et de variance unitaire avec un échantillonnage ciblé.
 ```
 
 La présence de zones de suréchantillonnage biaise le calcul de nos
@@ -34,41 +34,24 @@ moyenne non représentative de la teneur moyenne réelle du gisement. Dans
 cette situation, il est nécessaire de procéder au débiaisement des
 observations par le dégroupement de celles-ci.
 
-La [Fig. %s](#C5_Histogramme.png) présente les histogrammes normalisés
-(c'est-à-dire, afin de permettre une comparaison équitable entre les
-différentes distributions) des teneurs réelles du gisement
-([Fig. %s](#C5_HistogrammeA.png)), des teneurs non-dégroupées
-([Fig. %s](#C5_HistogrammeB.png)) et des teneurs dégroupées
-([Fig. %s](#C5_HistogrammeC.png)). Les statistiques descriptives sont
-présentées sur chaque histogramme. Une comparaison des statistiques
-descriptives permet d'observer que l'histogramme des données brutes
-(figure du centre) est fortement biaisé par la quantité supplémentaire
-de teneur élevée due au biais d'échantillonnage. Lorsque le dégroupement
-est réalisé, les statistiques descriptives deviennent plus similaires à
-celles du gisement initial. La moyenne des échantillons passe de 2,60% à
-1,9% après débiaisement. Celle du gisement est de 2,09%. Ce constat est
-observable pour toutes les statistiques descriptives et indique
-l'importance de procéder au débiaisement lorsque l'échantillonnage
-sureprésente certaines zones, notamment les zones les plus riches. Sans
-correction, dans cette exemple, on pourrait à tort penser que notre
-gisement est beaucoup plus riche que prévu.
+La [Fig. %s](#C5_Histogramme) présente les histogrammes normalisés — c’est-à-dire ajustés pour permettre une comparaison équitable entre les distributions — des teneurs réelles du gisement ([Fig. %s](#C5_HistogrammeA)), des teneurs échantillonnées sans dégroupement ([Fig. %s](#C5_HistogrammeB)) et des teneurs après dégroupement ([Fig. %s](#C5_HistogrammeC)). Les statistiques descriptives sont affichées sur chaque histogramme.
+
+La comparaison de ces statistiques permet de constater que les données brutes (figure centrale) sont fortement biaisées, en raison d'une surreprésentation des zones à haute teneur, causée par le biais d’échantillonnage. Après dégroupement, les statistiques descriptives se rapprochent nettement de celles du gisement réel : la moyenne passe de 2,60 % à 1,90 %, alors que celle du gisement est de 2,09 %. Ce rapprochement est observable pour l’ensemble des indicateurs descriptifs.
+
+Cela illustre l’importance de corriger les biais d’échantillonnage, notamment lorsque les zones riches sont surexplorées. Dans cet exemple, l'absence de correction pourrait conduire à surestimer significativement la richesse du gisement.
 
 ::: {figure}
-:label: C5_Histogramme.png
+:label: C5_Histogramme
 :align: center
 
 (C5_HistogrammeA)=
-![Histogramme des valeurs réelles du
-gisement.](images/C5_Hist_Gisement.png)
+![Histogramme des valeurs réelles du gisement.](images/C5_Hist_Gisement.png)
 
 (C5_HistogrammeB)=
-![Histogramme des teneurs analysées sans
-dégroupement.](images/C5_Hist_Sample.png)
+![Histogramme des teneurs analysées sans dégroupement.](images/C5_Hist_Sample.png)
 
 (C5_HistogrammeC)=
-![Histrogramme des teneurs analysées avec
-dégroupement.](images/C5_Hist_Sample_Degroupe.png)
-
+![Histogramme des teneurs analysées avec dégroupement.](images/C5_Hist_Sample_Degroupe.png)
 :::
 
 ## Méthode de dégroupement
@@ -92,7 +75,7 @@ fonctionne bien lorsque les limites de la zone d'intérêt sont bien
 définies et que le rapport entre le plus grand et le plus petit poids
 est inférieur à 10 pour 1 [@Rossi2014].
 
-La technique repose sur la construction de \*\*polygones d'influence\*\*
+La technique repose sur la construction de polygones d'influence
 autour de chaque point d'échantillonnage. Ces polygones sont définis par
 les médiatrices entre chaque paire de points voisins (Diagramme de
 Voronoï). Un exemple simple de jeu de données avec polygones d'influence
@@ -110,9 +93,9 @@ l'aire, puis on assigne à chaque échantillon un poids proportionnel à
 l'aire de son polygone par rapport à la somme totale des aires de tous
 les polygones, soit :
 
-$$w_j = \frac{\text{aire}_j}{\sum_{n=1}^{N} \text{aire}_n}$$
+$$w_j = \frac{\text{A}_j}{\sum_{n=1}^{N} \text{A}_n}$$
 
-où $w_j$ est le poids associé à l'échantillon $j$, $\text{aire}_j$ est
+où $w_j$ est le poids associé à l'échantillon $j$, $\text{A}_j$ est
 l'aire de son polygone d'influence, et $N$ est le nombre total
 d'échantillons.
 
@@ -203,12 +186,11 @@ reçoit un poids provisoire de $1/n$.
 
 Une fois ces poids provisoires calculés pour l'ensemble des données, ils
 sont normalisés de manière à ce que leur somme soit égale à 1, en
-divisant chaque poids par le nombre total de cellules occupées ((0,0)
-circle (2pt);).
+divisant chaque poids par le nombre total de cellules occupées.
 
 On observe également que certaines cellules ne contiennent aucune
 donnée : dans ce cas, aucun poids n'est attribué, ce qui est représenté
-visuellement par un cercle rouge vide ((0,0.5) circle (2pt);).
+visuellement par un cercle rouge vide.
 
 ```{figure} images/C5_CellulesDeclus.png
 :label: C5_CellulesDeclus.png
@@ -249,7 +231,7 @@ Enfin, la forme des cellules doit s'adapter à la géométrie des données.
 Par exemple, si les données sont plus denses dans une direction (par
 exemple $X$), la taille des cellules dans cette direction doit être
 réduite. On appelle ce concept l'anisotropie, et il s'applique à toute
-méthode de déviation et de regroupement.
+méthode de déviation et de regroupement. Nous verrons en détail la notion d'anisotropie lorsque nous discuterons du variogramme.
 
 ```{figure} images/C5_CellSizeVsMean.png
 :label: C5_CellSizeVsMean.png

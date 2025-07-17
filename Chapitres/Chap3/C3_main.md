@@ -23,7 +23,7 @@ downloads:
 ### Objectifs d'apprentissage
 
 -   Expliquer le concept de matériau minéralisé et la différence avec le
-    minerai;
+    minerai ;
 -   Expliquer les concepts de teneur de coupure (t.c.) limite,
     d'équilibre et optimale ;
 -   Déterminer les t.c. limites et d'équilibre et en déduire la t.c.
@@ -111,9 +111,9 @@ La théorie de *Lane et Taylor* repose sur plusieurs variables économiques, per
 | <a id="var-h"></a>  $h$     | Coûts variables de traitement (par tonne de minerai) |
 | <a id="var-f"></a>  $f$     | Frais fixes (administration, ingénierie, capital) |
 | <a id="var-F"></a>  $F$     | Coût d'opportunité |
-| <a id="var-M"></a>  $M$     | Capacité de minage (matériau minéralisé) |
-| <a id="var-H"></a>  $H$     | Capacité de traitement (minerai sélectionné) |
-| <a id="var-K"></a>  $K$     | Capacité du marché (métal) |
+| <a id="var-M"></a>  $M$     | Capacité de minage (tonne de matériau minéralisé) |
+| <a id="var-H"></a>  $H$     | Capacité de traitement (tonne de minerai sélectionné) |
+| <a id="var-K"></a>  $K$     | Capacité du marché (tonne de métal) |
 | <a id="var-v"></a>  $v$     | Profit net généré par une unité de matériau minéralisé |
 :::
 
@@ -122,16 +122,18 @@ La théorie de *Lane et Taylor* repose sur plusieurs variables économiques, per
 La capacité de la mine ($M$) désigne la quantité maximale de matériau minéralisé pouvant être extraite.  
 La capacité du concentrateur ($H$) correspond à la quantité maximale de minerai pouvant être traitée.  
 Enfin, la capacité du marché ($K$) reflète la quantité de métal que le marché peut absorber.
+
+Il s’agit des limites associées aux trois opérations clés d’une mine : l’extraction, la concentration et la mise en marché.
 ::::
 
 
 # Mise en contexte des variables
 
-Supposons une tonne de matériau minéralisé illustrée à la [Fig. %s](#Chap3_BlocMineraliseMetal.png). Les blocs de couleur **jaune** ont une teneur ($t$) supérieure ou égale à la teneur de coupure $c$ (i.e., $t \geq c$), tandis que les blocs **bleus** ont une teneur inférieure à $c$ (i.e., $t < c$). Ainsi, l'ensemble des blocs jaunes constitue notre **minerai**, la portion économiquement rentable du matériau minéralisé.
+Supposons une tonne de matériau minéralisé illustrée à la [Fig. %s](#C3_BlocMineraliseMetal.png). Les blocs de couleur **jaune** ont une teneur ($t$) supérieure ou égale à la teneur de coupure $c$ (i.e., $t \geq c$), tandis que les blocs **bleus** ont une teneur inférieure à $c$ (i.e., $t < c$). Ainsi, l'ensemble des blocs jaunes constitue notre **minerai**, la portion économiquement rentable du matériau minéralisé.
 
 
-```{figure} images/Chap3_BlocMineraliseMetal.png
-:label: Chap3_BlocMineraliseMetal.png
+```{figure} images/C3_BlocMineraliseMetal.png
+:label: C3_BlocMineraliseMetal.png
 :align: center 
 Évolution de la teneur de coupure selon la méthode utilisée.
 ```
@@ -192,7 +194,4 @@ aborderons notamment la **théorie de Lane** (ou théorie de Taylor).
     nécessairement plus de précision en raison des hypothèses qui
     doivent être posées.
 
-[^2]: Sauf si une hausse est attendue à court terme. Nous ne changerons
-    pas nos stratégies pour une variation à court terme, sauf si des
-    coûts d'opportunité sont identifiés
 

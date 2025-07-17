@@ -22,20 +22,20 @@ downloads:
 :::{important}
 ### Objectifs d'apprentissage
 
-- Pouvoir expliquer l'utilité de la géostatistique dans le domaine des géosciences et spécialement en mine;
-- Comprendre les principes de base des modèles spatiaux et leur application à l’estimation et la simulation des variables régionalisées;
+- Pouvoir expliquer l'utilité de la géostatistique dans le domaine des géosciences et spécialement en mine ;
+- Comprendre les principes de base des modèles spatiaux et leur application à l’estimation et la simulation des variables régionalisées ;
 - Introduire les notions fondamentales de probabilités et statistiques.
 :::
 
 # Qu’est-ce que la géostatistique ?
 
-La **géostatistique** est une branche des statistiques qui se concentre sur l'analyse, la modélisation et l'estimation de phénomènes naturels à partir de données localisées dans l'espace (et parfois dans le temps) [^1]. Contrairement aux méthodes statistiques classiques qui supposent l'indépendance des observations, la géostatistique exploite la corrélation spatiale. Cette corrélation décrit la dépendance spatiale entre les valeurs d'une même variable en différents endroits, signifiant que plus deux points sont proches, plus leurs valeurs ont tendance à être semblables.
+La **géostatistique** est une branche des statistiques qui se concentre sur l'analyse, la modélisation et l'estimation de phénomènes naturels à partir de données localisées dans l'espace (et parfois dans le temps) [^1]. Contrairement aux méthodes statistiques classiques qui supposent l'indépendance des observations, la géostatistique exploite la corrélation spatiale. Cette corrélation décrit la dépendance spatiale entre les valeurs d'une même variable en différents endroits, signifiant que plus deux points sont proches, plus leurs valeurs ont tendance, en moyenne, à être semblables.
 
 ```{dropdown} **Corrélation spatiale)**
 Décrit la dépendance spatiale entre les valeurs d’une même variable en différents endroits de l’espace
 ```
 
-Ainsi, la géostatistique part du principe que les valeurs mesurées dans un espace géographique ne sont pas réparties de manière aléatoire et indépendante, mais de manière structurée. Ce type de phénomène est modélisé à l'aide d'une **variable régionalisée**
+Ainsi, la géostatistique part du principe que les valeurs mesurées dans un espace géographique ne sont pas réparties de manière aléatoire et indépendante, mais de manière structurée. Ce type de phénomène est modélisé à l'aide d'une **variable aléatoire régionalisée**
 
 ```{dropdown} **Variable régionalisée)**
 Une variable est dite « régionalisée » lorsque les valeurs qu'elle prend dépendent de sa position dans l'espace et/ou le temps.

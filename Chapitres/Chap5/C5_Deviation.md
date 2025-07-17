@@ -2,8 +2,8 @@
 
 Lors de l'estimation des ressources et des réserves minérales, on doit
 connaître la localisation exact (X, Y, Z) des teneurs afin de procéder à
-l'interpolation des données non-observées. Cepandant, il n'est pas rare
-que les forages dévient modifiant les coordonées originalement prévues.
+l'interpolation des données non-observées. Cependant, il n'est pas rare
+que les forages dévient modifiant les coordonnées originalement prévues.
 Il faut alors procéder au suivi des déviations, de mesurer l'orientation
 et la direction de ceux-ci (i.e., azimut et plongée) afin de corriger
 les coordonnées.
@@ -15,7 +15,7 @@ traversées, de la technique de forage utilisée, ainsi que de la
 profondeur et de l'inclinaison initiale du trou. Si le trou est foré
 parallèlement à la schistosité ou à la structure naturelle de la roche,
 il tendra à suivre les plans de faiblesse (e.g., d'une roche dure vers
-une roche molle, [Fig. %s](#Chap5_ImgDeviation.png)a). En revanche, s'il est foré avec un angle
+une roche molle, [Fig. %s](#C5_ImgDeviation.png)a). En revanche, s'il est foré avec un angle
 plus élevé, il aura tendance à se dévier perpendiculairement à ces plans
 de faiblesse (e.g., d'une roche molle vers une roche dure,
 [Fig. %s](#C5_ImgDeviation.png)b).
@@ -23,7 +23,7 @@ de faiblesse (e.g., d'une roche molle vers une roche dure,
 ```{figure} images/C5_ImgDeviation.png
 :label: C5_ImgDeviation.png
 :align: center 
-Exemple de déviation typique, mais simplifié
+Exemple de déviation typique, mais simplifié.
 ```
 
 Un exemple célèbre illustrant l'importance de la mesure des déviations
@@ -47,7 +47,7 @@ surestimation de la longueur de la veine minéralisée.
 ```{figure} images/C5_ImpactDev.png
 :label: C5_ImpactDev.png
 :align: center 
-Impact des déviations lorsque non considéré
+Impact des déviations lorsqu'elles ne sont pas prises en compte.
 ```
 ## Suivi des déviations
 
@@ -98,23 +98,23 @@ trou. Les déviations du forage sont décrites par des mesures d'azimut et
 de pendage (ou inclinaison). Par exemple, on peut résumer la position
 d'un composite à l'aide des données suivantes :
 
-::: center
-   **Point de mesure**   **Azimut**    **Inclinaison**
-  --------------------- ------------- -----------------
-         Collet          $103^\circ$     $53^\circ$
-          40 m           $107^\circ$     $58^\circ$
-          100 m          $120^\circ$     $65^\circ$
-          120 m          $135^\circ$     $72^\circ$
-:::
+**Tableau des points de mesure**
+| Point de mesure | Azimut         | Inclinaison     |
+|-----------------|----------------|-----------------|
+| Collet          | $103^\circ$    | $53^\circ$      |
+| 40 m            | $107^\circ$    | $58^\circ$      |
+| 100 m           | $120^\circ$    | $65^\circ$      |
+| 120 m           | $135^\circ$    | $72^\circ$      |
+
 
 Dans cet exemple, le centre du composite se situe à 150 m de profondeur.
 Trois mesures de déviation ont été effectuées le long du forage, à 40 m,
 100 m et 120 m. On connaît également l'azimut et l'inclinaison initiale
 au collet du forage.
 
-## Méthode tangentielle équilibrée (Balanced Tangential Method)
+## Méthode d'équilibre tangentielle (Balanced Tangential Method)
 
-La méthode tangentielle équilibrée est utilisée pour calculer les
+La méthode d'équilibre tangentielle est utilisée pour calculer les
 coordonnées 3D d'un forage à partir des mesures de déviation. Elle
 suppose que la moitié de la distance mesurée (*Measured Depth*, ou
 $MD/2$) suit l'orientation du point supérieur (*azimut*, *inclinaison*),
@@ -165,8 +165,11 @@ $$\begin{aligned}
 **Résultat :** Le déplacement du forage entre les profondeurs 0 m et 40
 m est approximativement :
 
-$$\Delta X = \SI{31.78}{m}, \quad \Delta Y = \SI{-8.5}{m}, \quad \Delta Z = \SI{22.6}{m}$$
+$$\Delta X = 31.78 m, \quad \Delta Y = \-8.5 m, \quad \Delta Z = 22.6 m$$
 
 En répétant ce processus jusqu'à 120 m à partir de mesures successives,
 le profil 3D du sondage sera construit et les coordonnées des points de
 mesure seront déterminées.
+
+L'atelier interactif 5.3 — Déviation des forages est un calculateur basée sur la méthode d'équilibre tangentielle vous permettant d’introduire manuellement le nombre de points de mesure (Longueur, Azimut, Inclinaison) et d’obtenir la localisation de n’importe quel composite le long du forage $(X, Y, Z)$. Il s’agit d’un outil particulièrement utile pour valider les réponses des exercices portant sur l’interpolation des trajectoires de forage.
+

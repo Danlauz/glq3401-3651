@@ -1,7 +1,7 @@
 ---
 title: "Chapitre 5 - Traitement et analyse statistique des données de forage"
 abstract: |
-  Cette section présente les principes clés du traitement statistique des données de forage, en insistant sur l’importance d’un échantillonnage spatialement représentatif et moyennable. Elle explique pourquoi, en raison de l’autocorrélation spatiale des teneurs, il faut éviter les biais liés à une surreprésentation locale. Enfin, elle introduit trois étapes essentielles du prétraitement : la régularisation, le suivi des déviations et le débiaisement des données.
+  Cette section présente les principes clés du traitement statistique des données de forage, en insistant sur l’importance d’un échantillonnage spatialement représentatif et moyennable. Elle explique pourquoi, en raison de la corrélation spatiale des teneurs, il faut éviter les biais liés à une surreprésentation locale. Enfin, elle introduit trois étapes essentielles du prétraitement : la régularisation, le suivi des déviations et le débiaisement des données. On introduit également les calculs de base d'algèbre linéaire pour positionner les forages de manière à intersecter un horizon marqueur.
 
 project:
   output-dir: exports  # <-- dossier de sortie pour tous les formats
@@ -38,7 +38,9 @@ downloads:
     minéralisées ;
 
 -   Convertir les mesures de déviation en coordonnées cartésiennes pour
-    les forages.
+    les forages ;
+
+-   Trouver la distance entre le collet d’un forage et un plan connu.
 :::
 
 # Introduction

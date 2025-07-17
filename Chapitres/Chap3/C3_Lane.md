@@ -41,7 +41,7 @@ exemples interactifs.
 ```
 
 D'autres facteurs peuvent influencer la teneur de coupure. Une baisse
-des prix des métaux pousse à augmenter la teneur de coupure[^2], car
+des prix des métaux pousse à augmenter la teneur de coupure[^1], car
 nous allons concentrer nos efforts sur les teneurs riches de notre
 gisement. Par la suite, il existe le concept de récupération ultérieure,
 c'est-à-dire que si la mine à la capacité de stocker des minerais
@@ -50,8 +50,8 @@ qu'à long terme ces minerais deviennent rentables. Ainsi, nous pourrions
 laisser sur place une certaine quantité de minerai à être traitée
 ultérieurement, et ainsi augmenter la teneur de coupure.
 
-Les coûts variables (variable $m$ - [coûts variables de minage](#var-m) et variable $h$ - [coûts variables de traitement](#var-h)) et le coût d'opportunité (variable
-$F$ -  [coût d'opportunité](#var-F)) sont, par définition, variables dans le temps, c'est-à-dire qu'ils
+Les coûts variables (variable $m$ - [coûts variables de minage] et variable $h$ - [coûts variables de traitement]) et le coût d'opportunité (variable
+$F$ -  [coût d'opportunité]) sont, par définition, variables dans le temps, c'est-à-dire qu'ils
 sont recalculés en fonction de l'évolution du système minier
 (agrandissement de la mine, découvertes de nouvelles zones exploitables,
 dysfonctionnement des équipements, évolution de la demande du marché,
@@ -71,3 +71,7 @@ cette lecture, nous supposerons que nous sommes toujours en mesure
 d'obtenir des estimations de nos ressources dans les règles de l'art.
 Dans le cas contraire, cela sera mentionné et nous étudierons les
 impacts des mauvaises estimations.
+
+[^1]: Sauf si une hausse est attendue à court terme. Nous ne changerons
+    pas nos stratégies pour une variation à court terme, sauf si des
+    coûts d'opportunité sont identifiés

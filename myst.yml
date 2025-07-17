@@ -46,6 +46,7 @@ project:
       children:
         - file: Chapitres/Chap4/C4_Gy.md
         - file: Chapitres/Chap4/C4_QAQC.md
+        - file: Chapitres/Chap4/C4_Densite.md
         - file: JupyterNoteBook/Chap4.ipynb
         - file: JupyterNoteBook/Chap4_Gy.ipynb
         - file: JupyterNoteBook/Chap4_Blancs.ipynb

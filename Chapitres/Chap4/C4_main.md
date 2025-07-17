@@ -1,7 +1,8 @@
 ---
 title: "Chapitre 4 - Théorie de Gy et contrôle qualité"
 abstract: |
-  Cette section présente la théorie de l'échantillonnage ainsi que les contrôles de qualité (QA/QC). La théorie de Gy y est expliquée, et deux exemples concrets de QA/QC provenant de compagnies minières sont présentés et analysés. Les illustrations sont tirées des rapports techniques NI 43-101 de ces entreprises.
+  Cette section présente la théorie de l'échantillonnage ainsi que les contrôles de qualité (QA/QC). La théorie de Gy y est expliquée en détail, accompagnée de deux exemples concrets de QA/QC provenant de compagnies minières. Ces exemples sont analysés à partir d’illustrations tirées des rapports techniques NI 43-101 de ces entreprises. Nous présenterons aussi un moyen de calculer la densité théorique à partir d'une analyse chimique. Des ateliers interactifs vous permettent de vous familiariser avec une analyse selon la méthode de Gy (vous pouvez y ajouter autant d’analyses que souhaité), et également de générer vos propres résultats de QA/QC selon des scénarios synthétiques. Il est aussi possible de calculer la densité théorique à partir d'une analyse chimique.
+ 
 
 project:
   output-dir: exports  # <-- dossier de sortie pour tous les formats
@@ -22,20 +23,21 @@ downloads:
 :::{important}
 ### Objectifs d'apprentissage
 -   Pouvoir prédire la précision relative d'un échantillon pour
-    représenter la teneur d'un lot donné par la théorie de Gy;
+    représenter la teneur d'un lot donné par la théorie de Gy ;
 
 -   Proposer une stratégie d'analyse en laboratoire adéquate selon les
     équipements disponibles afin de prédire la précision relative
-    associée à un lot donné;
+    associée à un lot donné ;
 
--   Reconnaître une stratégie d'analyse inadéquate;
+-   Reconnaître une stratégie d'analyse inadéquate ;
 
--   Comprendre les notions de biais, de précision et de justesse;
+-   Comprendre les notions de biais, de précision et de justesse ;
 
--   Maîtriser les trois outils principaux de contrôles de qualité;
+-   Maîtriser les trois principaux outils de contrôle de qualité : blancs, standards et duplicatas ;
 
--   Identifier les biais à partir des résultats de contrôles de qualité
-    et de duplicata.
+-   Identifier les biais à partir des résultats de contrôles de qualité ;
+
+-   Calculer la densité théorique à partir d'une analyse chimique.
 :::
 
 # Notions de biais, de précisions et de justesse

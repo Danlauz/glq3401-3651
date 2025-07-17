@@ -14,10 +14,10 @@ ainsi que de différents paramètres minéralogiques et granulométriques.
 Cette formule est toutefois valide à la condition que l'échantillon soit
 un **échantillon probabiliste**.
 
-**Définition :** un échantillon probabiliste d'un lot donné est un
-échantillon tel que chaque fragment du lot a une probabilité non nulle
-d'être sélectionné. L'échantillon est sans biais si chaque fragment a
-une probabilité égale d'être sélectionné.
+```{dropdown} Échantillon probabiliste
+Un échantillon probabiliste, pour un lot donné, est un échantillon dans lequel chaque fragment du lot possède une probabilité non nulle d’être sélectionné. L’échantillon est considéré comme sans biais lorsque tous les fragments ont une probabilité égale d’être sélectionnés.
+
+```
 
 La [Fig. %s](#C4_Echantillon.png) présente une illustration comparant un
 échantillonnage déterministe
@@ -34,12 +34,13 @@ fidèlement la teneur réelle de la carotte ? Il se peut que l'on soit
 extrêmement chanceux et que l'on prélève l'unique section de la carotte
 contenant de l'or, ce qui biaiserait fortement l'estimation de sa teneur
 globale. Il est donc essentiel d'assurer une représentation probabiliste
-de la carotte, comme illustré en bas de la figure (B).
+de la carotte, comme illustré en bas de la [Fig. %s](#C4_Echantillon.png)B.
 
-À noter que, généralement, une demi-carotte est envoyée pour analyse
-tandis que la section restante est entreposée dans une carothèque, afin
-d'assurer un suivi et de permettre son étude géologique, minéralogique,
-géomécanique, et autres.
+À noter que, généralement, une demi-carotte est envoyée pour analyse, tandis que l’autre moitié est entreposée dans une carothèque. Cela permet un suivi rigoureux et la réalisation d’études complémentaires (géologiques, minéralogiques, géomécaniques, etc.).
+
+Plusieurs compagnies explorent aujourd’hui la possibilité de numériser les carottes (photographies haute résolution, imagerie géophysique) afin de se départir des échantillons physiques. L’idée est que l’intelligence artificielle pourrait, à terme, extraire toute l’information pertinente à partir de ces données numériques.
+
+Si cette approche présente des avantages indéniables — notamment la libération d’espace — elle soulève également des questions. À mon avis, rien ne remplace encore l’observation directe d’une carotte à la loupe par un œil humain entraîné. Reste à voir où cette évolution technologique nous mènera dans le futur !
 
 ```{figure} images/C4_Echantillon.png
 :label: C4_Echantillon.png
@@ -52,22 +53,28 @@ Exemple d'un échantillon déterministe et d'un échantillon probabiliste.
 Soit un certain lot de minerai, par exemple, une demi-carotte de forage
 de longueur de 3m. Supposons que l'on concasse cette carotte jusqu'à ce
 que la taille des plus gros fragments soit $d$ (en cm). On définit
-$d = d_{5\%}$, soit la taille du tamis ne retenant que 5 % du poids
-total des fragments.
+$d = d_{5\%}$ comme la taille du tamis qui retient uniquement les 5 % des fragments les plus gros, c’est-à-dire ceux qui représentent 5 % du poids total du lot.
 
 Si l'on prélève un échantillon de masse $M_e$ (habituellement faible en
 rapport avec la masse $M_L$ du lot qu'il représente), alors la
 **variance relative (sans unité)** de l'erreur d'échantillonnage,
 $s^2_r$, peut s'écrire comme suit :
 
-$$s^2_r = \frac{s^2}{a_L^2} = Kl\frac{d^3}{M_e} \Big(1-\frac{M_e}{M_L}\Big) \approx Kl\frac{d^3}{M_e}$$
+\begin{equation}
+s^2_r = \frac{s^2}{a_L^2} = Kl\frac{d^3}{M_e} \left(1 - \frac{M_e}{M_L} \right) \approx Kl\frac{d^3}{M_e}
+\label{eq:gy}
+\end{equation}
+
 
 où $M_e$ est la masse de l'échantillon, en grammes. $M_L$ est la masse
 du lot échantillonné, généralement beaucoup plus grande que $M_e$, aussi
 en grammes. $l$ est le facteur de libération, sans unité. $K$ est une
-constante dont les unités sont des $g/cm^3$.
+constante dont les unités sont des $g/cm^3$. $a_L$ est la concentration du constituant d'intérêt (exprimée en fraction)
+
 
 L'approximation est valable seulement lorsque $M_e \ll M_L$.
+
+### Détermination du facteur de libération $l$
 
 La valeur du facteur de libération $l$ est donnée par :
 
@@ -83,6 +90,8 @@ que l'or disséminé dans la pyrite devient natif. L'or est alors
 entièrement libéré de la pyrite. Remarque, le facteur $l$ est sans
 unité.
 
+### Détermination de la constante $K$
+
 La constante $K$ regroupe plusieurs facteurs et peut s'écrire comme :
 
 $$K = f \cdot g \cdot (\mu\delta)$$
@@ -92,10 +101,10 @@ fragment sur celui du plus petit cube le contenant entièrement. $f$ est
 sans dimension. $g$ un facteur de distribution, décrivant l'uniformité
 de la taille des fragments et donc relié à la courbe granulométrique.
 $g$ est sans unité. $(\mu\delta)$ est un paramètre combinant les effets
-de la teneur et des masses spécifiques du minéral. $\mu_\delta$ possède
+de la teneur et des masses spécifiques du minéral. $\mu\delta$ possède
 les unités d'une masse spécifique (g/cm^3^).
 
-### Détermination du facteur de forme
+#### Détermination du facteur de forme
 
 Le facteur de forme $f$ représente le rapport entre le volume d'un
 fragment et celui du plus petit cube pouvant entièrement le contenir.
@@ -103,20 +112,24 @@ Par exemple, pour un fragment de forme sphérique de diamètre 1 cm, le
 plus petit cube pouvant contenir cette sphère est un cube dont les côtés
 mesurent 1 cm. Le volume de la sphère est alors
 $\frac{4\pi r^3}{3} = \frac{4\pi \cdot 0.5^3}{3} \approx 0.5236 \,\text{cm}^3$,
-alors que le volume du cube est de 1 cm^3^, ce qui donne
+alors que le volume du cube est de 1 $\text{cm}^3$, ce qui donne
 $f \approx 0.524$.
 
 Pour un minéral fibreux (comme l'amiante) ou tabulaire (par exemple le
 mica), le facteur de forme est beaucoup plus faible, généralement
-compris entre $f = 0.1$ et $f = 0.2$. Après de nombreuses analyses en
-laboratoire sur divers minéraux, une valeur recommandée pour la plupart
+compris entre $f = 0.1$ et $f = 0.2$. 
+
+Après de nombreuses analyses en laboratoire sur divers minéraux, une valeur recommandée pour la plupart
 des minerais est $f = 0.5$. Il convient toutefois de noter que ce n'est
 pas une règle universelle, et qu'il est préférable de consulter la
-littérature pour identifier le facteur approprié au matériau étudié. Par
-souci de simplicité, nous utiliserons ici systématiquement la valeur
-$f = 0.5$.
+littérature pour identifier le facteur approprié au matériau étudié. 
 
-### Détermination du facteur de distribution
+Par souci de simplicité, nous utiliserons ici systématiquement la valeur :
+$$
+f = 0.5
+$$
+
+#### Détermination du facteur de distribution
 
 Le facteur de distribution $g$ décrit l'uniformité de la courbe
 granulométrique. Il peut être estimé à partir des diamètres
@@ -142,41 +155,49 @@ règle générale, la réponse est non.
 D'ailleurs, l'utilisation du $d_{5\%}$ dans la formule de Gy n'est pas
 anodine. De nombreuses analyses expérimentales ont été menées en
 laboratoire pour établir une corrélation entre la distribution
-granulométrique et le facteur de distribution. Il a été observé que,
+granulométrique et le facteur de distribution ([Fig. %s](#C4_FacteurG)). Il a été observé que,
 pour un grand nombre d'échantillons, la valeur du facteur $g$ tend à se
 rapprocher de 0.25 lorsqu'on utilise $d_{5\%}$ dans les calculs. Ainsi,
 pour des raisons de simplicité et d'efficacité, nous adopterons
-systématiquement la valeur $g = 0.25$ dans nos calculs.
+systématiquement, dans nos calculs, la valeur :
+$$
+g = 0.5
+$$ 
 
-### Détermination du facteur $(\mu\delta)$
+```{figure} images/C4_FacteurG.PNG
+:label: C4_FacteurG
+:align: center 
+```
 
-Le facteur $\mu_\delta$ est un paramètre combinant les effets de la
+#### Détermination du facteur $(\mu\delta)$
+
+Le facteur $\mu\delta$ est un paramètre combinant les effets de la
 teneur et des masses spécifiques. Il est défini comme :
 $$\mu\delta = \frac{1-a_L}{a_L}  \Big[(1-a_L)\delta_A - a_L\delta_G \Big]$$
 où :
 
 -   $\delta_A$ est la masse spécifique du constituant d'intérêt (en
-    g/cm^3^),
+    $g/cm**3$),
 
--   $\delta_G$ est la masse spécifique de la gangue (en g/cm^3^),
+-   $\delta_G$ est la masse spécifique de la gangue (en $g/cm**3$),
 
 -   $a_L$ est la concentration du constituant d'intérêt (exprimée en
     fraction : 10 % = 0.10, 10 ppm = 0.000010).
 
 ::: rem
-**Remarque 1**. *La gangue est constituée de toute la matière qui n'est
-pas le constituant d'intérêt.*
+Remarque 1. La gangue est constituée de toute la matière qui n'est
+pas le constituant d'intérêt.
 :::
 
 ::: rem
-**Remarque 2**. *Le constituant d'intérêt est souvent le minéral qui
+Remarque 2. Le constituant d'intérêt est souvent le minéral qui
 contient le métal recherché. Par exemple : Pour le cuivre : la
-chalcopyrite (), Pour le zinc : la sphalérite (), Pour l'or : la pyrite
-(), ou parfois l'or natif.*
+chalcopyrite (CuFeS2), Pour le zinc : la sphalérite (ZnS), Pour l'or : la pyrite
+(FeS2), ou parfois l'or natif.
 :::
 
 **Exemple :** Soit une analyse indiquant une teneur de 5 % en cuivre
-(Cu). Le cuivre provient de la chalcopyrite, de formule . La valeur de
+(Cu). Le cuivre provient de la chalcopyrite, de formule CuFeS2. La valeur de
 $a_L$ doit donc représenter la fraction massique de chalcopyrite, et non
 celle de cuivre. Il faut donc convertir la teneur en cuivre en teneur
 équivalente en chalcopyrite, en utilisant les masses molaires.
@@ -190,7 +211,7 @@ $$\frac{M_{Cu}}{M_{CuFeS2}} = \frac{63.5}{183.5} \approx 0.35.$$
 Ainsi, une teneur de 5 % en cuivre correspond à une teneur de :
 $$a_L = \frac{5~\%}{0.35} \approx 14~\% \quad \text{de chalcopyrite}.$$
 
-Cette valeur est utilisée pour le calcul du facteur $\mu_\delta$.
+Cette valeur est utilisée pour le calcul du facteur $\mu\delta$.
 
 ## Interprétation de la formule de Gy
 
@@ -214,9 +235,11 @@ relativement à la teneur, est influencée par plusieurs facteurs :
     (facteur $l$) ;
 
 -   elle diminue avec la concentration du constituant d'intérêt (facteur
-    $\mu_\delta$).
+    $\mu\delta$).
 
-Plus la variance de l'erreur est grande, moins l'échantillon est
+Toutes ces remarques peuvent être tirées de l’analyse de l’équation \eqref{eq:gy}.
+
+Au finale, plus la variance de l'erreur est grande, moins l'échantillon est
 représentatif du lot qu'il est censé représenter.
 
 Cette formule est applicable dans le cas où tout le métal est contenu
@@ -226,7 +249,7 @@ de l'échantillon et inversement proportionnelle au cube de la taille des
 fragments les plus gros --- ou à $d^{2.5}$ lorsque la taille des
 fragments est supérieure à la taille de libération. En effet, dans ce
 dernier cas, $l = \left( \frac{d_0}{d} \right)^{0.5}$, et donc la
-variance relative $s_r^2 \propto \mu_\delta \cdot d^3 \cdot d^{-0.5}$.
+variance relative $s_r^2 \propto \mu\delta \cdot d^3 \cdot d^{-0.5}$.
 
 ## Facteur pris en compte dans la théorie
 
@@ -257,8 +280,8 @@ d'échantillon, plus la densité est élevée, moins il y aura de
 fragments). Tous ces éléments se retrouvent dans la formule de Gy. Il a
 aussi réussi à incorporer dans sa formule l'influence du fait que les
 fragments peuvent être composés de gangue et du minéral d'intérêt
-(facteur de libération \"l\") et le fait que les fragments ne sont pas
-tous de la même grosseur (facteur granulométrique \"g\").
+(facteur de libération $l$) et le fait que les fragments ne sont pas
+tous de la même grosseur (facteur granulométrique $g$).
 
 Examinons ces facteurs à tour de rôle :
 
@@ -274,18 +297,18 @@ Examinons ces facteurs à tour de rôle :
 -   **Diamètre des fragments :** Plus les fragments sont gros, moins il
     y en a dans l'échantillon et plus la variance relative augmente.
 
--   **Forme des fragments (facteur « f ») :** Pour une même distribution
+-   **Forme des fragments (facteur « $f$ ») :** Pour une même distribution
     granulométrique, des fragments plats ou allongés montreront un
     volume plus faible. À densité égale, une masse donnée d'échantillon
     comprendra donc plus de fragments s'ils sont plats ou allongés que
     s'ils sont sphérique.
 
--   **Taille des fragments homogène vs hétérogène (facteur « g ») :**
+-   **Taille des fragments homogène vs hétérogène (facteur « $g$ ») :**
     Les calculs de la formule de Gy sont faits en considérant les plus
     gros fragments. Si la courbe granulométrique est très étalée, il y
     aura plus de fragments au total que si elle est très resserrée.
 
--   **Taille de libération du minéral d'intérêt (facteur « l ») :** Si
+-   **Taille de libération du minéral d'intérêt (facteur « $l$ ») :** Si
     le minéral d'intérêt est entièrement libéré, l'hétérogénéité entre
     chaque grain est maximale (minéral d'intérêt ou gangue). S'il n'est
     pas entièrement libéré, les grains sont plus homogènes entre eux et
@@ -295,7 +318,7 @@ Examinons ces facteurs à tour de rôle :
     maximale est un facteur défavorable toutes autres choses étant
     égales.
 
--   **Concentration du constituant d'intérêt (facteur $\mu_d$) :** À
+-   **Concentration du constituant d'intérêt (facteur $\mu\delta$) :** À
     densité constante, si la concentration du minéral d'intérêt augmente
     ($a_L$), il y a plus de fragments du minéral d'intérêt et l'écart
     relatif entre la vraie proportion et la proportion dans
@@ -342,17 +365,17 @@ $$f = 0.5, \quad g = 0.25, \quad d = 0.5\,\text{m}, \quad l = \left( \frac{1\,\t
 La teneur en chalcopyrite est estimée entre :
 $$a_L = \frac{1\,\%}{0.35} \approx 2.86\,\%, \quad \text{et} \quad a_L = \frac{5\,\%}{0.35} \approx 14.3\,\%$$
 
-En substituant dans l'expression du facteur $\mu_\delta$, on trouve :
-$$\mu_\delta \in [24.1, \, 141.5]$$
+En substituant dans l'expression du facteur $\mu\delta$, on trouve :
+$$\mu\delta \in [24.1, \, 141.5]$$
 
 On impose une précision relative
 $s_r = 0.2 \Rightarrow s_r^2 = 0.2^2 = 0.04$. En remplaçant dans la
 formule de variance :
 
-$$0.04 = \mu_\delta \cdot l \cdot f \cdot g \cdot \frac{d^3}{M_e}$$
+$$0.04 = \mu\delta \cdot l \cdot f \cdot g \cdot \frac{d^3}{M_e}$$
 
-$$M_e = \mu_\delta \cdot l \cdot f \cdot g \cdot \frac{d^3}{0.04}
-= \mu_\delta \cdot 0.0447 \cdot 0.5 \cdot 0.25 \cdot \frac{0.5^3}{0.04}
+$$M_e = \mu\delta \cdot l \cdot f \cdot g \cdot \frac{d^3}{0.04}
+= \mu\delta \cdot 0.0447 \cdot 0.5 \cdot 0.25 \cdot \frac{0.5^3}{0.04}
 \Rightarrow M_e \in [421\,\text{kg},\,2470\,\text{kg}]$$
 
 #### b) Échantillonnage après le concassage
@@ -361,7 +384,7 @@ Seuls $d$ et $l$ changent :
 
 $$d = 0.1\,\text{m}, \quad l = \left( \frac{1\,\text{mm}}{100\,\text{mm}} \right)^{0.5} = 0.1$$
 
-$$M_e = \mu_\delta \cdot 0.1 \cdot 0.5 \cdot 0.25 \cdot \frac{0.1^3}{0.04}
+$$M_e = \mu\delta \cdot 0.1 \cdot 0.5 \cdot 0.25 \cdot \frac{0.1^3}{0.04}
 \Rightarrow M_e \in [7.5\,\text{kg},\,44\,\text{kg}]$$
 
 On constate donc qu'il est beaucoup plus économique d'échantillonner sur
@@ -394,8 +417,11 @@ $$\quad l = (0.1/2.5)^{0.5} = 0.2, \quad f = 0.5, \quad g = 0.75.$$
 
 En utilisant la formule de la précision relative ($s_r^2$) :
 $$s_r^2 = \frac{43.2 \times 0.2 \times 0.5 \times 0.75 \times 0.25^3}{100} = 0.0005$$
-Ce qui donne : $$s_r = 0.02$$ La procédure est excellente, elle
-permettra une précision de l'ordre de 2%.
+Ce qui donne : 
+
+$$s_r = \sqrt(s_r**2) = \sqrt(0.0005) = 0.02$$ 
+
+La procédure est excellente, elle permettra une précision de l'ordre de 2%.
 
 ### Exemple 3 - Gisement d'or natif
 
@@ -415,12 +441,16 @@ forme de paillettes, et le facteur de distribution est maintenue à 0.75.
 
 En utilisant la formule de la précision relative $s_r^2$ :
 $$s_r^2 = \frac{3.8 \cdot 10^6 \times 0.063 \times 0.2 \times 0.75 \times 0.25^3}{100} = 28.05$$
-Ce qui donne : $$s_r = 5.3$$ La procédure est inadéquate. La teneur
+Ce qui donne : 
+
+$$s_r = \sqrt(s_r**2) = \sqrt(28.05) = 5.3$$
+
+La procédure est inadéquate. La teneur
 obtenue à l'analyse se situera entre 0 ppm et 50 ppm dans 95% des cas,
 alors que la vraie teneur est 5 ppm. Pour avoir une précision
 acceptable, il faudrait analyser toute la demi-carotte ou broyer
 beaucoup plus finement que 2.5 mm avant de prélever 100 g pour former
-l'échantillon.
+l'échantillon. Nous verrons graphiquement comment poser ces diagnostics.
 
 ## Procédures multistages
 
@@ -437,11 +467,7 @@ sous-échantillonnage introduit une erreur d'échantillonnage, dont on
 peut calculer la variance relative à l'aide des équations précédemment
 présentées. Ces sous-échantillonnages étant réalisés de manière
 indépendante, les erreurs associées sont également indépendantes. Par
-conséquent, les **variances relatives s'additionnent**. Il n'est pas
-anodain the la phrase précédente soit mentionné en gras. En statistique,
-ses les variaces qui s'additionnent et non les écart-type. La formule de
-Gy fournit une écart-type relative, il ne faut donc pas oublier de
-réaliser de calculer les variances à partir des écart-type obtenue.
+conséquent, les **variances relatives s'additionnent**. Il n’est pas anodin que la phrase précédente soit mise en gras. En statistique, ce sont les variances qui s’additionnent, et non les écarts-types. Or, la formule de Gy fournit un écart-type relatif. Il ne faut donc pas oublier de convertir les écarts-types en variances avant de les additionner.
 
 Dans une procédure d'échantillonnage, c'est donc le maillon faible ---
 c'est-à-dire l'étape de sous-échantillonnage générant la plus grande
@@ -451,7 +477,7 @@ d'apporter les ajustements nécessaires et améliorer la représentativité
 de l'échantillon.
 
 Sur un graphique où l'on porte en abscisse (*x*) la taille des plus gros
-fragments, et en ordonnée (*y*) la masse de l'échantillon, on peut
+fragments ($d$), et en ordonnée (*y*) la masse de l'échantillon ($M_e$), on peut
 représenter chaque étape de concassage ou broyage par un segment
 horizontal, et chaque étape de sous-échantillonnage par un segment
 vertical. Il est possible de superposer à ce graphique les courbes de
@@ -463,8 +489,8 @@ les étapes critiques qui nécessitent des améliorations pour obtenir un
 ## Représentation graphique
 
 Les facteurs ayant le plus d'influence sur la variance d'échantillonnage
-sont nettement la taille des plus gros fragments et la masse de
-l'échantillon. Sur des échelles log-log, la variance d'échantillonnage
+sont nettement la taille des plus gros fragments ($d$) et la masse de
+l'échantillon ($M_e$). Sur des échelles log-log, la variance d'échantillonnage
 varie de façon linéaire en fonction de la taille des fragments et de la
 masse de l'échantillon.
 
@@ -484,23 +510,11 @@ $M_L = 10 000g, d_0=0.04 cm, \delta_g=2.8, \delta_a=5, f=0.5, g=0.5, a_L=0.03$.
 Exemple d’un abaque de Gy pour une procédure multistage.
 ```
 
-à partir de cete représentation graphique, il est facile, lorsque l'on
-connait la procédure multistage de la représenter et d'observer
-facilement, sans calcul, si la procédure est bonne.
+À partir de cette représentation graphique, il est facile, lorsqu'on connaît la procédure d’échantillonnage en plusieurs étapes (*multistage*), de la représenter et d’observer visuellement, sans calcul, si la procédure est adéquate.
 
-Par exemple, nous procédons à l'analyse d'une carotte de 10 000g
-($M_L = 10000$). Nous prédons à trois séries de concassage/broyage afin
-de passer à des tailles de grains de $d=0.5cm$, $d=0.02cm$, et
-$d=0.007cm$. On prélève 5300g à la première échantillon, 100g au second
-et 25g sont prélevé pour l'analyse. La
-[Fig. %s](#C4_AbaqueGyEx.png) présente cette procédure. Nous partons du
-point A avec une carotte de 10 000g broyé à unee taille de 0.5cm. Nous
-échantillonons 5300g de celle-ci. On se déplace alors au point B à la
-verticale. On procède au broyage de ces 100g vers une taille de 0.02cm
-ce qui nous mème au point C. On prélève 100g du lot de 5300g ce qui nous
-amène, cette-foisci au point D. De ce 100g, on doit l'anmeer à la taille
-d'analyse, soit 0.007cm qui nous amène au point E. La dernière étape est
-d'échantillonner le 25g requit pour l'analyse.
+Par exemple, considérons l’analyse d’une carotte de 10 000 g ($M_L = 10\ 000$). Trois étapes successives de concassage et de broyage sont réalisées pour réduire la taille des fragments à $d = 0{,}5$ cm, puis à $d = 0{,}02$ cm, et finalement à $d = 0{,}007$ cm. À chaque étape, une fraction du lot est prélevée : 5300 g lors de la première étape, 100 g à la deuxième, et enfin 25 g sont prélevés pour l’analyse finale. 
+
+La [Fig. %s](#C4_AbaqueGyEx.png) illustre cette procédure. On part du point A avec une carotte de 10 000 g broyée à une taille de 0{,}5 cm. On prélève alors 5300 g, ce qui nous amène verticalement au point B. Ce lot est ensuite broyé à une taille de 0{,}02 cm, nous plaçant au point C. À partir de là, 100 g sont échantillonnés, ce qui nous mène au point D. Ces 100 g sont alors broyés à une taille de 0{,}007 cm (point E), puis un échantillon final de 25 g est prélevé pour l’analyse (point F).
 
 ```{figure} images/C4_AbaqueGyEx.png
 :label: Chap4_AbaqueGyEx.png
@@ -508,22 +522,11 @@ d'échantillonner le 25g requit pour l'analyse.
 Exemple d’application de l’abaque de Gy pour une procédure multistage.
 ```
 
-On note que l'on performe trois étapes d'échantillonnage. Seulement ces
-étapes produissent une erreur d'échantillonage. Nous assumons que lors
-du concassage ou du broyage, aucune perte de matériel est réalisé.
-Ainsi, le calcul de variance relative est obtenue par l'addition des
-trois variance relative associée à chaque échantillonagge :
+On note que trois étapes d’échantillonnage sont effectuées. Ce sont uniquement ces étapes d’échantillonnage qui génèrent une erreur d’échantillonnage. Nous supposons qu’aucune perte de matériau n’a lieu lors des étapes de concassage ou de broyage. Ainsi, la variance relative totale peut être obtenue en additionnant les variances relatives associées à chacune des trois étapes d’échantillonnage :
 
-$$s^2_r = s^2_{r,1} + s^2_{r,3} +s^2_{r,3}$$
+$$s^2_r = s^2_{r,1} + s^2_{r,2} +s^2_{r,3}$$
 
-Exemple : Supposons que l'on veuille une écart-type relative inférieur à
-0.01 (ligne rouge sur la
-[Fig. %s](#C4_AbaqueGyEx.png)). Pour identifier rapidement si la procédure
-est adéquate, sans procéder au calcul précéddent, il faut s'assurer que
-parmis les points B, D et F (les points associé à l'échantillonnage),
-ils soit tous au-dessus de la courbe rouge et que seulement un seul
-point sy approche. Cela est le cas dans l'exemple et on peut valider la
-prodécude.
+Exemple : Supposons que l’on souhaite une écart-type relative inférieure à 0,008 (ligne rouge sur la [Fig. %s](#C4_AbaqueGyEx.png)). Pour vérifier rapidement si la procédure est adéquate, sans effectuer le calcul complet, il suffit de s’assurer que les points B, D et F (correspondant aux étapes d’échantillonnage) se situent tous au-dessus de la courbe rouge, et qu’au plus un seul point s’en approche. C’est le cas dans cet exemple, ce qui permet de valider la procédure.
 
 ## Calcul de l'erreur d'échantillonnage global ($s_r$) de l'exemple
 
@@ -540,7 +543,7 @@ $$\mu\delta = \frac{1 - a_L}{a_L} \cdot \left[ (1 - a_L) \cdot \delta_a + a_L \c
 = \frac{1 - 0.03}{0.03} \cdot \left[ (1 - 0.03) \cdot 5 + 0.03 \cdot 2.8 \right]
 = 159.5$$
 
-Calcul de $K$ : $$K = \mu_\delta \cdot f \cdot g 
+Calcul de $K$ : $$K = \mu\delta \cdot f \cdot g 
 = 159.5 \cdot 0.5 \cdot 0.25 
 = 19.94 \ \text{g/cm}^3$$
 

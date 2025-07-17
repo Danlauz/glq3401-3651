@@ -12,7 +12,7 @@ Elle dépend des capacités des installations (mine, concentrateur) et des condi
 
 La théorie de Lane et Taylor identifie ainsi trois facteurs limitatifs majeurs, chacun associé à une teneur de coupure limite.
 
-:::{dropdown} ⚙️ Limites techniques et économiques
+⚙️ Limites techniques et économiques
 
 - ⛏️ **Limite de la mine**  
   La capacité d’exploitation est restreinte par les équipements miniers et les infrastructures (par exemple, la capacité de la halle à stériles).  
@@ -26,7 +26,6 @@ La théorie de Lane et Taylor identifie ainsi trois facteurs limitatifs majeurs,
   Produire plus que la demande peut nuire aux revenus (chute des prix, invendus).  
   → Limitation imposée par la capacité d’absorption du marché.
 
-:::
 
 ## 💰 Objectif économique
 
@@ -38,7 +37,7 @@ $$
 
 Pour comparer équitablement les trois teneurs limites, toutes les grandeurs doivent être exprimées en tonnes de matériau minéralisé.
 
-:::{dropdown} 🧮 Conversion des capacités
+🧮 Conversion des capacités
 
 - La mine peut extraire au plus $M$ tonnes de matériau minéralisé.
 
@@ -52,11 +51,8 @@ $$
 
 où $g_c$ est la teneur moyenne des blocs sélectionnés, et $y$ est le taux de récupération métallurgique.
 
-:::
-
 ::::{tip}
-✅ Ces conversions sont essentielles pour garantir la cohérence des comparaisons entre les différentes limites.  
-Travailler en tonnes de matériau minéralisé évite les erreurs d'interprétation.
+✅ Ces conversions sont essentielles pour garantir la cohérence des comparaisons entre les différentes limites. Travailler en tonnes de matériau minéralisé évite les erreurs d'interprétation.
 ::::
 
 ---
@@ -66,7 +62,7 @@ Travailler en tonnes de matériau minéralisé évite les erreurs d'interprétat
 Supposons que la mine ait la capacité de miner $M$ tonnes de matériau minéralisé. Le profit net $v$ à maximiser est :
 
 $$
-v = (p - k) x_c g_c y - x_c h - m - \frac{f + F}{M}
+v = (p - k) x_c g_c y - m - x_c h - \frac{f + F}{M}
 $$
 
 Le terme $x_c g_c y$ représente la quantité de métal produite par tonne de matériau minéralisé.  
@@ -102,7 +98,7 @@ $$
 Ici, les frais fixes sont répartis sur $H / x_c$ tonnes de matériau minéralisé :
 
 $$
-v = (p - k) x_c g_c y - x_c h - m - \frac{(f + F) x_c}{H}
+v = (p - k) x_c g_c y - m - x_c h  - \frac{(f + F) x_c}{H}
 $$
 
 Après dérivation, on obtient :
@@ -124,7 +120,7 @@ $$
 On définit le profit :
 
 $$
-v = (p - k) x_c g_c y - x_c h - m - \frac{(f + F) x_c g_c y}{K}
+v = (p - k) x_c g_c y - m - x_c h  - \frac{(f + F) x_c g_c y}{K}
 $$
 
 Et la teneur limite du marché est :
@@ -139,7 +135,7 @@ $$
 c_1 < \min(c_2, c_3)
 $$
 
-Ces trois teneurs ne dépendent pas de la distribution des teneurs dans le gisement. Elles sont donc **structurelles** et liées uniquement aux capacités.
+Ces trois teneurs ne dépendent pas de la distribution des teneurs dans le gisement. Elles sont donc **structurelles** et liées uniquement aux capacités des infrastructures et du marché.
 
 ---
 
@@ -155,7 +151,7 @@ Soit les données suivantes (Lane, 1988, p. 116) pour un gisement d'uranium :
 - $F = 15.2$ M\$  
 - $M = 12$ M tonnes  
 - $H = 3.9$ M tonnes  
-- $K = 0.9$ K tonnes (900 000 kg)  
+- $K = 0.9$ M tonnes  
 
 > Les unités s'annulent naturellement pour obtenir la teneur en **kg uranium par tonne de matériau minéralisé**.
 
@@ -179,4 +175,4 @@ $$
 
 ---
 
-Les unités finales sont des **kg d’uranium par tonne de matériau minéralisé**.
+
