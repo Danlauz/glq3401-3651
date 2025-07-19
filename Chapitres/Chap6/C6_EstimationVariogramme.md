@@ -40,7 +40,7 @@ La [Fig. %s](#C6_tolerance) illustre ce concept en montrant, pour différentes 
 
 Une fois que le variogramme expérimental a été calculé pour chaque classe de tolérance, un modèle théorique est ajusté pour représenter la covariance entre les points. Ce modèle permet ensuite de prédire les relations spatiales pour des distances et directions non mesurées directement, facilitant les analyses géostatistiques à une échelle plus large. Ainsi, l'image sert à visualiser le rôle essentiel des tolérances dans la construction du variogramme expérimental, illustrant visuellement la manière dont elles influencent la sélection des points et, par conséquent, les résultats finaux de l'analyse géostatistique.
 
-```{figure} images/C6_tolerance.PNG
+```{figure} images/C6_tolerance.png
 :label: C6_tolerance
 :align: center
 Illustration de la tolérance angulaire en 2D.
