@@ -2,7 +2,7 @@
 
 Une fois le variogramme expérimental calculé, la prochaine étape consiste à lui ajuster un modèle théorique.  
 
-Les modèles théoriques sont des expressions analytiques paramétriques que l’on cherche à adapter au mieux aux points du variogramme expérimental. Nous en avons déjèa vue plusieurs dans les figures précédentes. Leur rôle est de fournir une fonction continue et régulière permettant de décrire la dépendance spatiale sur toutes les distances, même celles non observées directement.  
+Les modèles théoriques sont des expressions analytiques paramétriques que l’on cherche à adapter au mieux aux points du variogramme expérimental. Leur rôle est de fournir une fonction continue permettant de décrire la dépendance spatiale sur toutes les distances, même celles non observées directement.  
 
 Ce modèle sert ensuite à estimer la covariance entre n’importe quels points du champ, et devient la base de toutes les opérations géostatistiques suivantes, comme l’interpolation, la simulation ou l’évaluation d’incertitude.
 

@@ -42,17 +42,11 @@ La géostatistique s’inspire directement de la première loi de la géographie
 
 > **« Tout interagit avec tout, mais deux choses proches ont plus de chances d’interagir que deux choses éloignées. »**
 
-Pour illustrer ce principe, imaginez-vous au milieu d’une vaste plaine. Autour de vous, le relief est relativement uniforme, avec peu de variations topographiques à courte distance. À l’inverse, si vous vous trouvez au sommet d’une montagne dans la région de Charlevoix, vous êtes plongé dans un paysage accidenté, composé de montées, de descentes et de changements rapides de terrain.
+Pour illustrer ce principe, imaginez-vous au milieu d’une vaste plaine. Autour de vous, le relief est relativement uniforme, avec peu de variations topographiques à courte distance. À l’inverse, si vous vous trouvez dans un paysage montagneux, vous êtes plongé dans un paysage accidenté, composé de montées, de descentes et de changements rapides de terrain.
 
-Ces deux environnements illustrent des configurations spatiales très différentes : l’un est faiblement variable, avec de larges structures continues, tandis que l’autre est fortement variable, avec des structures plus petites et plus hétérogènes.
+Ces deux environnements illustrent des configurations spatiales très différentes : l’un est faiblement variable, avec de larges structures planes continues, tandis que l’autre est fortement variable, avec des structures plus hétérogènes et erratiques.
 
 Prenez le temps d’observer la carte topographique du Québec ([Fig. %s](#C6_topographie)). Que constatez-vous ? On y distingue clairement les plaines, les régions montagneuses, et même certains grands événements géologiques comme des cratères d’impact. En observant la distribution spatiale de l’altitude, il devient possible de déduire la structure du relief à partir des données disponibles.
-
-Dans un gisement, l’objectif est similaire : on aimerait pouvoir interpréter la structure spatiale des teneurs comme on interprète la topographie, c’est-à-dire déterminer si le gisement est homogène ou hétérogène, peu ou fortement variable, et comment cette variabilité est organisée dans l’espace.
-
-En géologie, chaque phénomène possède en effet sa propre organisation spatiale et son propre degré de variabilité. Il est donc essentiel de caractériser cette structure dès les premières étapes d’un projet. Autrement dit, on cherche à comprendre la forme, l’étendue et l’orientation des structures présentes dans le gisement.
-
-Le **variogramme** est l’outil fondamental qui permet de quantifier cette continuité spatiale. Il mesure dans quelle mesure les valeurs observées à proximité sont similaires, et comment cette similarité diminue avec la distance. C’est une étape incontournable pour toute modélisation ou estimation géostatistique.
 
 ```{figure} images/C6_TopographieQuebec.PNG
 :label: C6_topographie
@@ -60,8 +54,15 @@ Le **variogramme** est l’outil fondamental qui permet de quantifier cette cont
 Carte d'altitude du Québec.
 ```
 
+Dans un gisement, l’objectif est similaire : on aimerait pouvoir interpréter la structure spatiale des teneurs comme on interprète la topographie, c’est-à-dire déterminer si le gisement est homogène ou hétérogène, peu ou fortement variable, et comment cette variabilité est organisée dans l’espace.
+
+En géologie, chaque phénomène possède sa propre organisation spatiale et son propre degré de variabilité. Il est donc essentiel de caractériser cette structure dès les premières étapes d’un projet. Autrement dit, on cherche à comprendre la forme, l’étendue et l’orientation des structures présentes dans le gisement.
+
+Le **variogramme** est l’outil fondamental qui permet de quantifier cette continuité spatiale. Il mesure dans quelle mesure les valeurs observées à proximité sont similaires, et comment cette similarité diminue avec la distance. C’est une étape incontournable pour toute modélisation ou estimation géostatistique.
+
+
 **Exemple :**  
-Considérons quatre localisations $x_0$, $x_1$, $x_2$ et $x_3$ représentées sur la [Fig. %s](#C6_gisement). Nous avons mesuré la teneur en chacun de ces points, sauf en $x_0$. La question se pose alors : quelle serait la teneur au point $x_0$, notée $Z(x_0)$ ?
+Considérons quatre localisations $x_0$, $x_1$, $x_2$ et $x_3$ représentées sur la [Fig. %s](#C6_gisement). Nous avons mesuré la teneur en chacun de ces points, sauf en $x_0$. La question se pose alors : quelle serait la teneur au point $x_0$, notée $Z(x_0)$, sachant les teneurs aux localisations $Z(x_1)$, $Z(x_2)$ et $Z(x_3)$?
 
 On s’attend naturellement à ce que la teneur en $x_2$ soit la plus proche, en moyenne, de celle en $x_0$, car $x_2$ est le point le plus proche spatialement. Par conséquent, on serait porté à accorder plus de poids à la donnée en $x_2$ qu’aux données en $x_1$ ou $x_3$.
 

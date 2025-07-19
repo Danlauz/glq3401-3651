@@ -29,23 +29,35 @@ $$
 
 où :
 
-- **N(h, θ)** est le nombre de paires séparées de $h$ dans la direction $\theta$.
+- $N(h, θ)$ est le nombre de paires séparées de $h$ dans la direction $\theta$.
 
-En pratique, on s'accorde une tolérance sur $h$ et sur $\theta$ afin d'avoir suffisamment de paires pour chaque $h$ et chaque $\theta$. Pour chacune des classes ainsi formées, on calcule la distance moyenne séparant les extrémités des paires (abscisse) et on évalue le variogramme expérimental pour chaque classe. On obtient donc une série de points expérimentaux auxquels on cherche à ajuster un modèle (i.e. expression analytique) permettant de déduire la covariance entre deux points quelconque en fonction de leur espacement géographique (et, éventuellement, de la direction qu'ils définissent). Une fois le modèle adopté, toute la suite des calculs se fait avec les valeurs obtenues du modèle et non avec les valeurs expérimentales.
 
+
+
+En pratique, le choix de la tolérance sur $h$ et $\theta$ est crucial, car il permet de garantir que les paires de points sélectionnées sont suffisamment représentatives pour chaque classe de distance et direction. Cela permet de maintenir un équilibre entre la précision de l'estimation et la quantité de données disponibles. Une tolérance trop stricte peut réduire le nombre de paires, rendant l'estimation du variogramme moins fiable, tandis qu'une tolérance trop large peut inclure des points trop éloignés, faussant ainsi la modélisation des relations spatiales. 
+
+La [Fig. %s](#C6_tolerance) illustre ce concept en montrant, pour différentes tolérances de distance ($h$) et d'angle ($\theta$), la sélection des points dans un cône de tolérance centré sur un point de référence. Chaque figure représente une variation des tolérances $h$ et $\theta$, visualisant l'impact de ces paramètres sur les points retenus pour le calcul du variogramme. Plus la tolérance est large, plus les points sélectionnés s'étendent dans l'espace, et inversement.
+
+Une fois que le variogramme expérimental a été calculé pour chaque classe de tolérance, un modèle théorique est ajusté pour représenter la covariance entre les points. Ce modèle permet ensuite de prédire les relations spatiales pour des distances et directions non mesurées directement, facilitant les analyses géostatistiques à une échelle plus large. Ainsi, l'image sert à visualiser le rôle essentiel des tolérances dans la construction du variogramme expérimental, illustrant visuellement la manière dont elles influencent la sélection des points et, par conséquent, les résultats finaux de l'analyse géostatistique.
+
+```{figure} images/C6_tolerance.PNG
+:label: C6_tolerance
+:align: center
+Illustration de la tolérance angulaire en 2D.
+```
 
 ## Nuée variographique
 
-En géostatistique intrinsèque, la nuée variographique est un nuage de points représentant la variabilité des données en fonction de leur distance $h$. Il s'agit d'un autre moyen de représenter nos données pour le calcul du variogramme expérimental. 
+En géostatistique, la nuée variographique est un nuage de points représentant la variabilité des données en fonction de leur distance $h$. Il s'agit d'un autre moyen de représenter nos données pour le calcul du variogramme expérimental. 
 
-Pour un jeu de données de la variable $Z$ aux emplacements $x_1, \ldots, x_n$, la nuée variographique est constituée des points dont :
+Pour un jeu de données de la variable aléatoire $Z$ aux emplacements $x_1, \ldots, x_n$, la nuée variographique est constituée des points dont :
 
 - l’abscisse correspond à la distance entre deux points, c’est-à-dire $|x_i - x_j|$, ou simplement la distance $h$ entre ces deux points
 - l’ordonnée correspond au carré de la différence des valeurs mesurées, soit $\frac{1}{2} \left[ Z(x_i) - Z(x_j) \right]^2$.
 
 Cette représentation graphique illustre toutes les contributions individuelles au calcul du variogramme expérimental. Lorsqu’on choisit une tolérance sur la distance, on forme des classes (ou *bins*) d’une certaine largeur. On sélectionne alors tous les points du nuage appartenant à cette classe, et en calculant leur moyenne, on obtient la valeur du variogramme expérimental pour cette classe. La distance représentative de la classe correspond au centre de gravité du nuage des points pour cette classe.
 
-On peut visualiser la nuée variographique sous forme de nuage de points. La [Fig. %s](#C6_nuee) présente plusieurs nuée variographique en fonction de la largeur de la tolérence sur la distance. On peut identifier notre variogramme expérimentale (courbe noir), le modèele théorique (courbe rouge) et la nuée de point. 
+On peut visualiser la nuée variographique sous forme de nuage de points. La [Fig. %s](#C6_nuee) présente plusieurs nuée variographique en fonction de la largeur de la tolérence sur la distance. On peut identifier notre variogramme expérimentale (courbe noir), le modèele théorique (courbe rouge) et la nuée de point. Ici, le variogramme est dit omnidirectional, car il ne dépend pas de l'angle $\theta$, mais seulement de la distance. 
 
 
 ::: {figure}
@@ -63,7 +75,7 @@ On peut visualiser la nuée variographique sous forme de nuage de points. La [Fi
 
 :::
 
-## Exemple numérique
+## Exemple numérique du calcul du variogramme expérimental
 
 ### Exemple directionnel simple 2D 
 Soit une matrice de données $3 \times 3$ :
@@ -78,55 +90,55 @@ $$
 
 La distance entre deux éléments consécutifs, horizontalement ou verticalement, est de 1 m. La valeur `NaN` indique une donnée manquante.
 
-Nous cherchons à calculer le variogramme expérimental dans la direction horizontale pour une distance de 1 m. La première étape revient à identifier les paires de points respectant ces contraintes. Ainsi, on considère les paires de points alignés horizontalement : $(3, 6)$, $(6, 5)$, $(7, 2)$, $(2, 2)$ pour un nombre de paires : $N(h_h = 1) = 4$. Le variogramme expérimental est alors :
+Nous cherchons à calculer le variogramme expérimental dans la direction horizontale pour une distance de 1 m. La première étape revient à identifier les paires de points respectant ces contraintes. Ainsi, on considère les paires de points alignés horizontalement : $(3, 6)$, $(6, 5)$, $(7, 2)$, $(2, 2)$ pour un nombre de paires : $N(h_h=1) = 4$. Le variogramme expérimental est alors :
 
 $$
-\gamma(1) = \frac{1}{2 N(1)} \sum [Z(x + h) - Z(x)]^2 = \frac{1}{8}[(3 - 6)^2 + (6 - 5)^2 + (7 - 2)^2 + (2 - 2)^2] = \frac{1}{8}[9 + 1 + 25 + 0] = 4.375
+\gamma(h_h=1) = \frac{1}{2 N(h_h=1)} \sum [Z(x + h) - Z(x)]^2 = \frac{1}{8}[(3 - 6)^2 + (6 - 5)^2 + (7 - 2)^2 + (2 - 2)^2] = \frac{1}{8}[9 + 1 + 25 + 0] = 4.375
 $$
 
-Pour $h = 2$, nous avons les paires de points suivantes : $(3, 5)$, $(7, 2)$ et $(4, 0)$, pour un total de nombre de paires : $N(h = 2) = 3$. Le variogramme expérimental est alors :
+Pour $h = 2$, nous avons les paires de points suivantes : $(3, 5)$, $(7, 2)$ et $(4, 0)$, pour un total de nombre de paires : $N(h_h = 2) = 3$. Le variogramme expérimental est alors :
 
 $$
-\gamma(2) = \frac{1}{6}[(3 - 5)^2 + (7 - 2)^2 + (4 - 0)^2] = \frac{1}{6}[4 + 25 + 16] = 7.5
+\gamma(h_h = 2) = \frac{1}{6}[(3 - 5)^2 + (7 - 2)^2 + (4 - 0)^2] = \frac{1}{6}[4 + 25 + 16] = 7.5
 $$
 
-| $h$ | $\gamma(h)$ | $N(h)$ |
+| $h$ | $\gamma(h_h)$ | $N(h_h)$ |
 |------|-------------|--------|
 | 1    | 4.375       | 4      |
 | 2    | 7.5         | 3      |
 
 ---
 
-Pour la direction verticale avec $h = 1$, nous avons les paires suivantes : $(3, 7)$, $(6, 2)$, $(5, 2)$, $(7, 4)$ et $(2, 0)$ pour $N(h=1) = 5$. Le variogramme expérimental pour cette classe est alors :
+Pour la direction verticale avec $h_v = 1$, nous avons les paires suivantes : $(3, 7)$, $(6, 2)$, $(5, 2)$, $(7, 4)$ et $(2, 0)$ pour $N(h_v=1) = 5$. Le variogramme expérimental pour cette classe est alors :
 
 $$
-\gamma(1) = \frac{1}{10}[(3 - 7)^2 + (6 - 2)^2 + (5 - 2)^2 + (7 - 4)^2 + (2 - 0)^2] = \frac{1}{10}[16 + 16 + 9 + 9 + 4] = 5.4
+\gamma(h_v=1) = \frac{1}{10}[(3 - 7)^2 + (6 - 2)^2 + (5 - 2)^2 + (7 - 4)^2 + (2 - 0)^2] = \frac{1}{10}[16 + 16 + 9 + 9 + 4] = 5.4
 $$
 
-De même, pour $h=2$, nous avons les paires : $(3, 4)$ et $(5, 0)$ pour $N(h=2) = 2$ et la valeur suivante pour le variogramme expérimental :
+De même, pour $h_v=2$, nous avons les paires : $(3, 4)$ et $(5, 0)$ pour $N(h_v=2) = 2$ et la valeur suivante pour le variogramme expérimental :
 
 $$
-\gamma(2) = \frac{1}{4}[(3 - 4)^2 + (5 - 0)^2] = \frac{1}{4}[1 + 25] = 6.5
+\gamma(h_v=2) = \frac{1}{4}[(3 - 4)^2 + (5 - 0)^2] = \frac{1}{4}[1 + 25] = 6.5
 $$
 
-| $h$ | $\gamma(h)$ | $N(h)$ |
+| $h$ | $\gamma(h_v)$ | $N(h_v)$ |
 |------|-------------|--------|
 | 1    | 5.4         | 5      |
 | 2    | 6.5         | 2      |
 
-Il est aussi possible de calculer le variogramme pour une direction diagonale à 45°, ce qui donne les paires diagonales (distance $\sqrt{2} \approx 1.41$) suivantes : $(3, 2)$, $(6, 2)$ et $(2, 0)$ pour $N(h \approx 1.41) = 3$ et la valeur de variogramme expérimentale suivante :
+Il est aussi possible de calculer le variogramme pour une direction diagonale à 45°, ce qui donne les paires diagonales (distance $\sqrt{2} \approx 1.41$) suivantes : $(3, 2)$, $(6, 2)$ et $(2, 0)$ pour $N(h_{45°} \approx 1.41) = 3$ et la valeur de variogramme expérimentale suivante :
 
 $$
-\gamma(1.41) = \frac{1}{6}[(3 - 2)^2 + (6 - 2)^2 + (2 - 0)^2] = \frac{1}{6}[1 + 16 + 4] = 3.5
+\gamma(h_{45°} \approx 1.41) = \frac{1}{6}[(3 - 2)^2 + (6 - 2)^2 + (2 - 0)^2] = \frac{1}{6}[1 + 16 + 4] = 3.5
 $$
 
-Pour $h \approx 2.82$ (deux pas diagonaux), nous avons une paire : $(3, 0)$ pour la valeur de variogramme expérimentale suivante :
+Pour $h_{45°} \approx 2.82$ (deux pas diagonaux), nous avons une paire : $(3, 0)$ pour la valeur de variogramme expérimentale suivante :
 
 $$
-\gamma(2.82) = \frac{1}{2}(3 - 0)^2 = \frac{1}{2}(9) = 4.5
+\gamma(h_{45°} \approx 2.82) = \frac{1}{2}(3 - 0)^2 = \frac{1}{2}(9) = 4.5
 $$
 
-| $h$   | $\gamma(h)$ | $N(h)$ |
+| $h$   | $\gamma(h_{45°})$ | $N(h_{45°})$ |
 |-------|-------------|--------|
 | 1.41  | 3.5         | 3      |
 | 2.82  | 4.5         | 1      |
