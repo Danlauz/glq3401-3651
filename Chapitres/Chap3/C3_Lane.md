@@ -1,10 +1,5 @@
 # 3.1 Théorie de Lane et Taylor
 
-(def-t.c.)=
-Définition – Teneur de coupure
-: La **teneur de coupure** est le seuil au-dessus duquel une tonne de matériaux minéralisés est considérée comme économiquement exploitable. Elle doit au minimum couvrir les **coûts jugés pertinents**, lesquels peuvent varier selon le type de mine, les méthodes d'exploitation et l'approche économique retenue.
-
-
 La théorie de Lane et Taylor repose sur le principe de la maximisation du profit net par tonne de matériau minéralisé, ou de la valeur actuelle nette (VAN).
 Autrement dit, il s’agit de calculer les revenus générés par l’exploitation, puis d’en soustraire les coûts afin d’obtenir le profit net.
 La dimension temporelle est également prise en compte, puisque le système est dynamique et évolue au fil du temps.

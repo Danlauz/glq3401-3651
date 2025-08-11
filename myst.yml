@@ -20,20 +20,20 @@ project:
     - file: Chapitres/Chap0/C0_intro.md
     - file: Chapitres/Chap1/C1_main.md
       children:
-        - file: Chapitres/Chap1/C1_EffetSupport.md
-        - file: Chapitres/Chap1/C1_EffetInformation.md
-        - file: Chapitres/Chap1/C1_Applications.md
-        - file: Chapitres/Chap1/C1_RappelProbStats.md
+        #- file: Chapitres/Chap1/C1_EffetSupport.md
+        #- file: Chapitres/Chap1/C1_EffetInformation.md
+        #- file: Chapitres/Chap1/C1_Applications.md
+        #- file: Chapitres/Chap1/C1_RappelProbStats.md
         - file: JupyterNoteBook/Chap1.ipynb
         - file: JupyterNoteBook/Chap1_EffetSupport.ipynb
         - file: JupyterNoteBook/Chap1_EffetInformation.ipynb
         - file: JupyterNoteBook/Chap1_Gisement.ipynb
     - file: Chapitres/Chap2/C2_main.md
       children:
-        - file: Chapitres/Chap2/C2_Ressources.md
-        - file: Chapitres/Chap2/C2_PQ.md
-        - file: Chapitres/Chap2/C2_Contenue.md
-        - file: Chapitres/Chap2/C2_LoiDesMines.md
+        #- file: Chapitres/Chap2/C2_Ressources.md
+        #- file: Chapitres/Chap2/C2_PQ.md
+        #- file: Chapitres/Chap2/C2_Contenue.md
+        #- file: Chapitres/Chap2/C2_LoiDesMines.md
     - file: Chapitres/Chap3/C3_main.md
       children:
         - file: Chapitres/Chap3/C3_Lane.md

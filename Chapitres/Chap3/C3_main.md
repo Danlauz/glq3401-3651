@@ -121,9 +121,9 @@ La théorie de *Lane et Taylor* repose sur plusieurs variables économiques, per
 📌 **Remarque** :  
 La capacité de la mine ($M$) désigne la quantité maximale de matériau minéralisé pouvant être extraite.  
 La capacité du concentrateur ($H$) correspond à la quantité maximale de minerai pouvant être traitée.  
-Enfin, la capacité du marché ($K$) reflète la quantité de métal que le marché peut absorber.
+La capacité du marché ($K$) reflète la quantité de métal que le marché peut absorber.
 
-Il s’agit des limites associées aux trois opérations clés d’une mine : l’extraction, la concentration et la mise en marché.
+Il s’agit des limites associées aux trois opérations clés d’une mine : l’extraction ($M$), la concentration ($H$) et la mise en marché ($K$).
 ::::
 
 
@@ -187,7 +187,7 @@ coupure est complexe et vaste. En étudier tous les détails requiert un
 cours à part entière. Ici, nous nous concentrerons sur l'impact des
 opérations minières sur la teneur de coupure et comment nos décisions en
 tant qu'ingénieurs peuvent influencer ou modifier cette teneur. Nous
-aborderons notamment la **théorie de Lane** (ou théorie de Taylor).
+aborderons que la **théorie de Lane** (ou théorie de Taylor) dans le cadre de ce cours.
 
 [^1]: Nous pourrions optimiser en fonction de plus de deux composantes,
     mais cela rend la démarche beaucoup plus complexe et n'ajoute pas

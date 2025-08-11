@@ -3,8 +3,7 @@
 Les teneurs de coupure précédentes ont été déterminées en fonction des
 caractéristiques économiques et des limites de capacité de chaque
 composante, considérées séparément. On peut également définir trois
-autres teneurs de coupure, qui feront intervenir la distribution des
-teneurs des blocs sélectionnés. Ces teneurs, dites d'équilibre, sont
+autres teneurs de coupure, qui feront intervenir la dépendance entre les différentes capacités de la minière. Ces teneurs, dites d'équilibre, sont
 définies de manière à ce que les éléments pris deux à deux soient en
 équilibre en termes de quantités traitées.
 
@@ -57,7 +56,7 @@ Enfin, la teneur de coupure d'équilibre entre le concentrateur et le
 marché est déterminée afin d'assurer que la totalité des tonnes de
 minerai traitées $H$ soient transformées en métal pouvant être vendues
 sur le marché de capacité $K$. On cherche ainsi la teneur de coupure $c$
-qui satisfait l'équation suivante : $$g_c \, y \, H = K$$ Cette relation
+qui satisfait l'équation suivante : $$g_c \, y \, H = K$$. Cette relation
 montre qu'il faut avoir $\frac{K}{g_c y}$ tonnes de minerai pour
 répondre à la demande du marché. Cette teneur de coupure est appelée
 teneur de coupure d'équilibre concentrateur-marché, notée $c_{23}$.
@@ -209,13 +208,13 @@ courbes $x_c$, $g_c$ et $x_c g_c$ en fonction de $c$, comme illustré à
 la [Fig. %s](#C3_xc_gc.png), ou bien il faudra les calculer comme présenté
 dans la section précédente.
 
-```{figure} images/C3_xc_gc.PNG
+```{figure} images/C3_xc_gc.png
 :label: C3_xc_gc.png
 :align: center 
-Impact de la variance sur le teneur de coupure.
+Courbes $x_c$, $g_c$ et $x_c g_c$ calculées numériquement.
 ``` 
 
-Par exemple, pour la teneur de coupure d'équilibre mine–concentrateur $c_{12}$, si la capacité de minage $M$ est de 10 et que la capacité de traitement $H$ est de 2{,}2, on doit obtenir :
+Par exemple, pour la teneur de coupure d'équilibre mine–concentrateur $c_{12}$, si la capacité de minage $M$ est de 10 et que la capacité de traitement $H$ est de 2,2, on doit obtenir :
 
 $$
 x_c = \frac{H}{M} = \frac{2{,}2}{10} = 0{,}22.
