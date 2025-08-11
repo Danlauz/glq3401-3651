@@ -26,62 +26,63 @@ $$
 
 > 💡 **Variance de dispersion — Démonstration complète**
 >
-> Soit un bloc \( V_j \) composé de \( n \) sous-blocs \( v_i \). La variance échantillonnale est définie> \[
-> s^2_{v|V_j} = \frac{1}{n} \sum_{i=1}^n \left( Z(v_i) - Z(V_j) \right)^2
-> \]
->
-> où \( Z(V_j) = \frac{1}{n} \sum_{i=1}^n Z(v_i) \) est la moyenne des teneurs dans le bloc.
->
-> Développons le carré :
->
-> \[
-> \left( Z(v_i) - Z(V_j) \right)^2 = Z(v_i)^2 - 2Z(v_i)Z(V_j) + Z(V_j)^2
-> \]
->
-> En remplaçant dans la somme :
->
-> \[
-> s^2_{v|V_j} = \frac{1}{n} \sum_{i=1}^n Z(v_i)^2 - Z(V_j)^2
-> \]
->
-> On rappel, la variance de dispersion est l’espérance de cette variance sur tous les blocs \( V_j \) :
->
-> \[
-> \mathbb{E}_{V_j} \left[ s^2_{v|V_j} \right] = \frac{1}{n} \sum_{i=1}^n \mathbb{E}[Z(v_i)^2] - \mathbb{E}[Z(V_j)^2]
-> \]
->
-> En utilisant l'identité \( \mathbb{E}[X^2] = \text{Var}(X) + \left( \mathbb{E}[X] \right)^2 \), on obtient :
->
-> \[
-> \mathbb{E}_{V_j} \left[ s^2_{v|V_j} \right] = \frac{1}{n} \sum_{i=1}^n \left( \text{Var}(Z(v_i)) + m^2 \right) - \left( \text{Var}(Z(V_j)) + m^2 \right)
-> \]
->
-> En simplifiant :
->
-> \[
-> \mathbb{E}_{V_j} \left[ s^2_{v|V_j} \right] = \frac{1}{n} \sum_{i=1}^n \text{Var}(Z(v_i)) - \text{Var}(Z(V_j))
-> \]
->
-> Si les sous-blocs sont identiquement distribués :
->
-> \[
-> \text{Var}(Z(v_i)) = \text{Var}(Z(v)) \quad \text{et} \quad Z(V_j) = \frac{1}{n} \sum_{i=1}^n Z(v_i)
-> \]
->
-> Alors :
->
-> \[
-> \text{Var}(Z(V_j)) = \frac{1}{n^2} \sum_{i=1}^n \sum_{k=1}^n \text{Cov}(Z(v_i), Z(v_k))
-> \]
->
-> Finalement, la variance de dispersion devient :
->
-> \[
-> \mathbb{E}_{V_j} \left[ s^2_{v|V_j} \right] = \text{Var}(Z(v)) - \frac{1}{n^2} \sum_{i=1}^n \sum_{k=1}^n \text{Cov}(Z(v_i), Z(v_k))
-> \]
->
+ Soit un bloc \( V_j \) composé de \( n \) sous-blocs \( v_i \). La variance échantillonnale est définie
+ \[ 
+   s^2_{v|V_j} = \frac{1}{n} \sum_{i=1}^n \left( Z(v_i) - Z(V_j) \right)^2
+ \]
+
+ où \( Z(V_j) = \frac{1}{n} \sum_{i=1}^n Z(v_i) \) est la moyenne des teneurs dans le bloc.
+
+ Développons le carré :
+
+ \[
+ \left( Z(v_i) - Z(V_j) \right)^2 = Z(v_i)^2 - 2Z(v_i)Z(V_j) + Z(V_j)^2
+ \]
+
+ En remplaçant dans la somme :
+
+ \[
+ s^2_{v|V_j} = \frac{1}{n} \sum_{i=1}^n Z(v_i)^2 - Z(V_j)^2
+ \]
+
+ On rappel, la variance de dispersion est l’espérance de cette variance sur tous les blocs \( V_j \) :
+
+ \[
+ \mathbb{E}_{V_j} \left[ s^2_{v|V_j} \right] = \frac{1}{n} \sum_{i=1}^n \mathbb{E}[Z(v_i)^2] - \mathbb{E}[Z(V_j)^2]
+ \]
+
+ En utilisant l'identité \( \mathbb{E}[X^2] = \text{Var}(X) + \left( \mathbb{E}[X] \right)^2 \), on obtient :
+
+ \[
+ \mathbb{E}_{V_j} \left[ s^2_{v|V_j} \right] = \frac{1}{n} \sum_{i=1}^n \left( \text{Var}(Z(v_i)) + m^2 \right) - \left( \text{Var}(Z(V_j)) + m^2 \right)
+ \]
+
+ En simplifiant :
+
+ \[
+ \mathbb{E}_{V_j} \left[ s^2_{v|V_j} \right] = \frac{1}{n} \sum_{i=1}^n \text{Var}(Z(v_i)) - \text{Var}(Z(V_j))
+ \]
+
+ Si les sous-blocs sont identiquement distribués :
+
+ \[
+ \text{Var}(Z(v_i)) = \text{Var}(Z(v)) \quad \text{et} \quad Z(V_j) = \frac{1}{n} \sum_{i=1}^n Z(v_i)
+ \]
+
+ Alors :
+
+ \[
+ \text{Var}(Z(V_j)) = \frac{1}{n^2} \sum_{i=1}^n \sum_{k=1}^n \text{Cov}(Z(v_i), Z(v_k))
+ \]
+
+ Finalement, la variance de dispersion devient :
+
+ \[
+ \mathbb{E}_{V_j} \left[ s^2_{v|V_j} \right] = \text{Var}(Z(v)) - \frac{1}{n^2} \sum_{i=1}^n \sum_{k=1}^n \text{Cov}(Z(v_i), Z(v_k))
+ \]
+
 > ✅ **Conclusion** : La variance de dispersion est égale à la variance des sous-blocs moins la variance des blocs moyens.
-> 
+ 
 
 Ainsi, la variance de dispersion s’exprime alors comme suit :
 

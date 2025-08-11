@@ -165,7 +165,7 @@ $$\begin{aligned}
 **Résultat :** Le déplacement du forage entre les profondeurs 0 m et 40
 m est approximativement :
 
-$$\Delta X = 31.78 m, \quad \Delta Y = \-8.5 m, \quad \Delta Z = 22.6 m$$
+$$\Delta X = 31.78 m, \quad \Delta Y = -8.5 m, \quad \Delta Z = 22.6 m$$
 
 En répétant ce processus jusqu'à 120 m à partir de mesures successives,
 le profil 3D du sondage sera construit et les coordonnées des points de

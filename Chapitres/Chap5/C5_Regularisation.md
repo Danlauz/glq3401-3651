@@ -178,7 +178,7 @@ géologique global.
 Nous répondrons à ces questions à l'aide d'un exemple numérique. Dans
 cette lecture, nous privilégierons la méthode de régularisation par trou
 de forage (*downhole compositing*). Il est important de noter qu'il
-existe d'autres approches, notamment le régularisation par bancs ou par
+existe d'autres approches, notamment la régularisation par bancs ou par
 domaine géologique. Ces méthodes tiennent compte de critères de
 sélectivité liés aux opérations minières ou à la géologie du gisement.
 Cela dit, bien maîtriser la méthode par trou de forage suffit

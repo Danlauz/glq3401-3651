@@ -99,11 +99,11 @@ On constate que les teneurs analysées sont, dans
 
 ### Duplicatas
 
-La [Fig. %s](#C4_Duplicata_Osiko.png) présente les résultats d’analyse des duplicatas. Une manière courante de présenter les duplicatas est sous la forme d’un nuage de points où l’abscisse correspond à la première valeur et l’ordonnée à la seconde valeur échantillonnée. Ici, l’échantillon 1 provient du laboratoire ALS, tandis que l’échantillon 2 provient du laboratoire BV. Une régression linéaire est réalisée sur ce nuage de points afin d’identifier la droite de corrélation et le coefficient de détermination $R**2$.
+La [Fig. %s](#C4_Duplicata_Osiko.png) présente les résultats d’analyse des duplicatas. Une manière courante de présenter les duplicatas est sous la forme d’un nuage de points où l’abscisse correspond à la première valeur et l’ordonnée à la seconde valeur échantillonnée. Ici, l’échantillon 1 provient du laboratoire ALS, tandis que l’échantillon 2 provient du laboratoire BV. Une régression linéaire est réalisée sur ce nuage de points afin d’identifier la droite de corrélation et le coefficient de détermination $R^2$.
 
 Aucun élément anormal n'a été observé. On ne note pas de
 biais apparent et la corrélation entre les deux séries d'analyses est forte
-($r^2 = 0.9596$). Quelques écarts importants apparaissent, mais ils sont
+($R^2 = 0.9596$). Quelques écarts importants apparaissent, mais ils sont
 attendus dans ce type d'analyse en échelle log-log.
 
 ```{figure} images/C4_Duplicata_Osiko.png
@@ -170,14 +170,12 @@ La [Fig. %s](#C4_Blanc_MineDumont2.png) présente les résultats d’analyse des
 
 La [Fig. %s](#C4_Duplicata_MineDumont2.png) présente les résultats d'analyse des duplicatas. Une seconde méthode d'analyse est également présentée : le graphique HARD (*Half Absolute Relative Difference* - demi-différence relative absolue). L'atelier interactif propose sa construction et son interprétation. À savoir, la courbe noire doit rester sous la coordonnée (0.9 ; 0.1), ce qui est bien le cas ici.  
 
-Ainsi, rien d'anormal à signaler, excepté que 2,3 % des points sur la figure de gauche dépassent la limite de ±10 % relative pour le demi-écart.  
-La figure de droite confirme cette proportion exacte de 2,3 % (soit 100 % - 97,7 %).  
+Ainsi, rien d'anormal à signaler, excepté que 2,3 % des points sur la figure de gauche devraient dépasser la limite de ±10 % relative pour le demi-écart. Difficilement observable. La figure de droite confirme cette proportion exacte de 2,3 % (soit 100 % - 97,7 %).  
 
-Le problème provient du tracé des lignes ±10 % sur la figure de gauche, qui ne correspondent pas exactement à la limite indiquée à droite.  
-Il s'agit donc d'un problème d'affichage des résultats, sans impact sur la précision des analyses.
+Le problème provient du tracé des lignes ±10 % sur la figure de gauche, qui ne correspondent pas exactement à la limite indiquée à droite. Il s'agit donc d'un problème d'affichage des résultats, sans impact sur la précision des analyses.
 
 ```{figure} images/C4_Duplicata_MineDumont2.png
-:label: Chap4_Duplicata_MineDumont2.png
+:label: C4_Duplicata_MineDumont2.png
 :align: center 
 ```
 
@@ -235,6 +233,7 @@ sont les plus représentatifs possibles. Il doit également tenir compte
 des contraintes budgétaires et de production, puisque l'échantillonnage
 ne doit pas ralentir l'exploitation.
 
+---
 
 ### Remarque 1  
 L’échantillon le plus proche de l’échantillon parfait est la carotte obtenue par forage au diamant. L’ingénieur géologue utilise ces échantillons lors des phases d’exploration, de définition et de mise en valeur pour prédire les ressources et réserves du gisement. Les estimations ainsi produites peuvent, dans certains cas, être comparées aux teneurs réellement obtenues lors de la production.
@@ -243,6 +242,8 @@ L’échantillon le plus proche de l’échantillon parfait est la carotte obten
 
 ### Remarque 2  
 Puisque chaque échantillon est extrapolé pour représenter un ensemble plus vaste, il doit conserver une certaine homogénéité. Si un échantillon s’écarte trop de l’ensemble des teneurs, cela peut indiquer un événement fortuit, comme la présence d’une pépite d’or significative.
+
+---
 
 Dans l’industrie minière, il est courant de modifier ces teneurs anormalement élevées. Les pratiques habituelles incluent notamment :
 

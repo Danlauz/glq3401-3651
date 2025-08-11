@@ -89,14 +89,12 @@ Les configurations seront introduites dans la section calcul.
 En utilisant la relation qui relie la covariance et le variogramme :
 
 $$
-\mathrm{Cov}(Z_i, Z_j) = \sigma^2 - \gamma(x_i - x_j)$
+\mathrm{Cov}(Z_i, Z_j) = \sigma^2 - \gamma(x_i - x_j)
 $$
 
 Il est possible d'écrire la variance d'estimation en termes du variogramme comme suit :
 $$
-\sigma_e^2 = \sum_{i,j} \lambda_i \lambda_j \gamma(x_i, x_j)
-- 2 \sum_i \lambda_i \gamma(x_i, x_v)
-+ \gamma(v, v)
+\sigma_e^2 = \sum_{i,j} \lambda_i \lambda_j \gamma(x_i, x_j) - 2 \sum_i \lambda_i \gamma(x_i, x_v) + \gamma(v, v)
 $$
 
 ---

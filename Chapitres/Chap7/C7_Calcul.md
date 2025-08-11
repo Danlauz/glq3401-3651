@@ -1,4 +1,4 @@
-# 7.5 Calcul des quantités $\bar{\gamma}(v,v)$ ou $\bar{\gamma}(x,v)_i$
+# 7.5 Calcul des quantités \(\bar{\gamma}(v,v)\) ou \(\bar{\gamma}(x,v)_i\)
 
 Les termes $\bar{\gamma}(v,v)$ ou $\bar{\gamma}(x,v)_i$ sont requis pour obtenir les variances de blocs, de dispersion et d'estimation. Ils peuvent être calculés de plusieurs façons :
 

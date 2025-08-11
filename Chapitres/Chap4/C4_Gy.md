@@ -102,7 +102,7 @@ sans dimension. $g$ un facteur de distribution, décrivant l'uniformité
 de la taille des fragments et donc relié à la courbe granulométrique.
 $g$ est sans unité. $(\mu\delta)$ est un paramètre combinant les effets
 de la teneur et des masses spécifiques du minéral. $\mu\delta$ possède
-les unités d'une masse spécifique (g/cm^3^).
+les unités d'une masse spécifique ($g/cm^3$).
 
 #### Détermination du facteur de forme
 
@@ -111,7 +111,7 @@ fragment et celui du plus petit cube pouvant entièrement le contenir.
 Par exemple, pour un fragment de forme sphérique de diamètre 1 cm, le
 plus petit cube pouvant contenir cette sphère est un cube dont les côtés
 mesurent 1 cm. Le volume de la sphère est alors
-$\frac{4\pi r^3}{3} = \frac{4\pi \cdot 0.5^3}{3} \approx 0.5236 \,\text{cm}^3$,
+$\frac{4\pi r^3}{3} = \frac{4\pi \cdot 0.5^3}{3} \approx 0.524 \,\text{cm}^3$,
 alors que le volume du cube est de 1 $\text{cm}^3$, ce qui donne
 $f \approx 0.524$.
 
@@ -177,12 +177,12 @@ $$\mu\delta = \frac{1-a_L}{a_L}  \Big[(1-a_L)\delta_A - a_L\delta_G \Big]$$
 où :
 
 -   $\delta_A$ est la masse spécifique du constituant d'intérêt (en
-    $g/cm**3$),
+    $g/cm^3$),
 
--   $\delta_G$ est la masse spécifique de la gangue (en $g/cm**3$),
+-   $\delta_G$ est la masse spécifique de la gangue (en $g/cm^3$),
 
 -   $a_L$ est la concentration du constituant d'intérêt (exprimée en
-    fraction : 10 % = 0.10, 10 ppm = 0.000010).
+    fraction : 10 % = 0.10, 10 ppm = 0.00001).
 
 ::: rem
 Remarque 1. La gangue est constituée de toute la matière qui n'est
@@ -213,6 +213,8 @@ $$a_L = \frac{5~\%}{0.35} \approx 14~\% \quad \text{de chalcopyrite}.$$
 
 Cette valeur est utilisée pour le calcul du facteur $\mu\delta$.
 
+À noter que cette relation est vraie si le cuivre est uniquement présent dans la chalcopyrite.
+
 ## Interprétation de la formule de Gy
 
 La formule précédente est valide uniquement pour un échantillon
@@ -237,7 +239,7 @@ relativement à la teneur, est influencée par plusieurs facteurs :
 -   elle diminue avec la concentration du constituant d'intérêt (facteur
     $\mu\delta$).
 
-Toutes ces remarques peuvent être tirées de l’analyse de l’équation \eqref{eq:gy}.
+Toutes ces remarques peuvent être tirées de l’analyse de l’équation \ref{eq:gy}.
 
 Au finale, plus la variance de l'erreur est grande, moins l'échantillon est
 représentatif du lot qu'il est censé représenter.
@@ -249,7 +251,7 @@ de l'échantillon et inversement proportionnelle au cube de la taille des
 fragments les plus gros --- ou à $d^{2.5}$ lorsque la taille des
 fragments est supérieure à la taille de libération. En effet, dans ce
 dernier cas, $l = \left( \frac{d_0}{d} \right)^{0.5}$, et donc la
-variance relative $s_r^2 \propto \mu\delta \cdot d^3 \cdot d^{-0.5}$.
+variance relative $s_r^2 \propto \mu\delta \cdot d^3 \cdot d^{-0.5} = \mu\delta \cdot d^{2.5}$.
 
 ## Facteur pris en compte dans la théorie
 
@@ -264,7 +266,7 @@ Cela revient à dire , dans notre contexte, la probabilité de tiré $N_1$
 Cette loi hypergéométrique, quand $N$ est grand, peut être approchée par
 une loi binomiale. Ainsi, la moyenne et la variance de $x/n$
 (concentration mesurée) sont alors $N_1/N$ (concentration réelle) et
-$\frac{N_1}{N} \left( 1 - \frac{N_1}{N} \right) / n$. La variance
+$\frac{N_1}{N} \left( 1 - \frac{N_1}{N} \right) / n$, respectivement. La variance
 relative sera $\frac{1 - N_1/N}{n \cdot N_1/N}$.
 
 Cette formule indique que la concentration du lot ($N_1/N$) et le nombre
@@ -325,7 +327,7 @@ Examinons ces facteurs à tour de rôle :
     l'échantillon tend à diminuer (voir loi binomiale). De plus, pour
     une même concentration, si la densité de la gangue et du minéral
     d'intérêt augmentent alors il y aura moins de fragments. De même, si
-    seule la densité du minéral d'intérêt ($d_A$) augmente, ceci
+    seule la densité du minéral d'intérêt ($\delta_A$) augmente, ceci
     implique une moins grande proportion volumique de fragments du
     minéral d'intérêt et donc une plus grande variance relative
     d'échantillonnage (loi binomiale).
@@ -410,7 +412,7 @@ concentration moyenne de l'or dans la pyrite est d'environ 50 ppm.
 
 Supposons que si la carotte renferme 5 ppm d'or, elle renferme 10% de
 pyrite. On calcule :
-$$\mu\delta = 43.2, \quad  avec \quad a_L = 0.1, \delta_a = 5, \delta_g = 3$$
+$$\mu\delta = 43.2, \quad  \text{avec} \quad a_L = 0.1, \delta_a = 5, \delta_g = 3$$
 
 On a aussi que :
 $$\quad l = (0.1/2.5)^{0.5} = 0.2, \quad f = 0.5, \quad g = 0.75.$$
@@ -419,7 +421,7 @@ En utilisant la formule de la précision relative ($s_r^2$) :
 $$s_r^2 = \frac{43.2 \times 0.2 \times 0.5 \times 0.75 \times 0.25^3}{100} = 0.0005$$
 Ce qui donne : 
 
-$$s_r = \sqrt(s_r**2) = \sqrt(0.0005) = 0.02$$ 
+$$s_r = \sqrt{s_r^2} = \sqrt{0.0005} = 0.02$$ 
 
 La procédure est excellente, elle permettra une précision de l'ordre de 2%.
 
@@ -443,7 +445,7 @@ En utilisant la formule de la précision relative $s_r^2$ :
 $$s_r^2 = \frac{3.8 \cdot 10^6 \times 0.063 \times 0.2 \times 0.75 \times 0.25^3}{100} = 28.05$$
 Ce qui donne : 
 
-$$s_r = \sqrt(s_r**2) = \sqrt(28.05) = 5.3$$
+$$s_r = \sqrt{s_r^2} = \sqrt{28.05} = 5.3$$ 
 
 La procédure est inadéquate. La teneur
 obtenue à l'analyse se situera entre 0 ppm et 50 ppm dans 95% des cas,
@@ -512,12 +514,12 @@ Exemple d’un abaque de Gy pour une procédure multistage.
 
 À partir de cette représentation graphique, il est facile, lorsqu'on connaît la procédure d’échantillonnage en plusieurs étapes (*multistage*), de la représenter et d’observer visuellement, sans calcul, si la procédure est adéquate.
 
-Par exemple, considérons l’analyse d’une carotte de 10 000 g ($M_L = 10\ 000$). Trois étapes successives de concassage et de broyage sont réalisées pour réduire la taille des fragments à $d = 0{,}5$ cm, puis à $d = 0{,}02$ cm, et finalement à $d = 0{,}007$ cm. À chaque étape, une fraction du lot est prélevée : 5300 g lors de la première étape, 100 g à la deuxième, et enfin 25 g sont prélevés pour l’analyse finale. 
+Par exemple, considérons l’analyse d’une carotte de 10 000 g ($M_L = 10\ 000$). Trois étapes successives de concassage et de broyage sont réalisées pour réduire la taille des fragments à $d = 0{,}5$ cm, puis à $d = 0,02$ cm, et finalement à $d = 0{,}007$ cm. À chaque étape, une fraction du lot est prélevée : 5300 g lors de la première étape, 100 g à la deuxième, et enfin 25 g sont prélevés pour l’analyse finale. 
 
-La [Fig. %s](#C4_AbaqueGyEx.png) illustre cette procédure. On part du point A avec une carotte de 10 000 g broyée à une taille de 0{,}5 cm. On prélève alors 5300 g, ce qui nous amène verticalement au point B. Ce lot est ensuite broyé à une taille de 0{,}02 cm, nous plaçant au point C. À partir de là, 100 g sont échantillonnés, ce qui nous mène au point D. Ces 100 g sont alors broyés à une taille de 0{,}007 cm (point E), puis un échantillon final de 25 g est prélevé pour l’analyse (point F).
+La [Fig. %s](#C4_AbaqueGyEx.png) illustre cette procédure. On part du point A avec une carotte de 10 000 g broyée à une taille de 0,5 cm. On prélève alors 5300 g, ce qui nous amène verticalement au point B. Ce lot est ensuite broyé à une taille de 0,02 cm, nous plaçant au point C. À partir de là, 100 g sont échantillonnés, ce qui nous mène au point D. Ces 100 g sont alors broyés à une taille de 0,007 cm (point E), puis un échantillon final de 25 g est prélevé pour l’analyse (point F).
 
 ```{figure} images/C4_AbaqueGyEx.png
-:label: Chap4_AbaqueGyEx.png
+:label: C4_AbaqueGyEx.png
 :align: center 
 Exemple d’application de l’abaque de Gy pour une procédure multistage.
 ```
