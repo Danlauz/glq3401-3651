@@ -118,7 +118,7 @@ d'évaluer un niveau de confiance sur les ressources et réserves pourrait
 
 ## Exemple 1 : Rapport NI-43-101 - Canadian Malartic Mine - 2024
 
-Les rapports NI 43-101 sont publics et peuvent être consultés librement, notamment sur le site SEDAR+ (le portail de Dépôt, de Déclaration et de Recherche d’information sur les marchés des capitaux du Canada).
+Les rapports NI 43-101 sont publics et peuvent être consultés librement, notamment sur le site SEDAR+ (le portail de Dépôt, de Déclaration et de Recherche d’information sur les marchés des capitaux du Canada accessible [ici](https://www.sedarplus.ca/accueil/)).
 
 Notre premier exemple porte sur les méthodes d’évaluation des ressources et des réserves minières de la mine Canadian Malartic (CMM).
 
@@ -152,7 +152,7 @@ blocs, incluant sans s'y limiter :
 
 -   les paramètres d'interpolation (i.e., volet géostatistique).
 
-Pour la mine Canadian Malartic (CMM), plusieurs des critères de
+Pour la CMM, plusieurs des critères de
 classification des ressources sont quantifiables à l'aide des outils
 géostatistiques qui seront abordés dans les prochaines lectures. Ces
 critères permettent de construire un modèle de blocs propre à la géologie de la mine CMM.

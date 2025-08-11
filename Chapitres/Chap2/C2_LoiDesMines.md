@@ -17,31 +17,6 @@ Face à une forte augmentation du nombre de claims ces cinq dernières années, 
 
 Parmi les changements significatifs apportés en 2024, on relève une évolution terminologique majeure : le mot « claim » est désormais remplacé par « droit exclusif d’exploration » (DEE). Ces deux termes désignent la même notion. Toutefois, afin de préserver la cohérence avec le contexte historique, le terme « claim » sera employé dans la majorité de ce chapitre.
 
-Avant d’aborder les changements, faisons un bref retour historique.
-
-
-## Historique et origine du claim ou du droit exclusif d’exploration
-
-L’origine de la notion de claim remonte à des traditions minières étrangères. Dès le Xe siècle, en Saxe, les mineurs établissaient leurs propres règles afin de se protéger mutuellement. En 1849, lors de la ruée vers l’or en Californie, et en l’absence de toute législation minière, les prospecteurs créèrent leurs propres règles pour encadrer l’exploitation des terrains aurifères. En 1848, la Californie venait d’être conquise au Mexique par les États-Unis, et aucune législation spécifique n’encadrait alors l’exploitation minière lorsque, en 1849, près de 40 000 chercheurs d’or se lancèrent à la conquête du métal précieux. Pour protéger leurs familles et structurer leurs activités, ces pionniers créèrent des districts miniers et mirent en place des règles définissant le nombre de claims autorisés, leur superficie, les conditions d’abandon ou de perte des droits, ainsi que les procédures de règlement des conflits. Le principe clé reposait sur l’appropriation par le premier occupant, la propriété étant maintenue tant que des travaux étaient régulièrement effectués sur le terrain.
-
-En 1855, l’Australie adopta à son tour l’idée du claim, inspirée par l’expérience californienne. En 1859, la Gold Fields Act californienne reconnut le certificat de mineur libre (free miner’s certificate) et imposa l’enregistrement des claims auprès du commissaire de l’or. La même année, les découvertes aurifères en Nouvelle-Écosse entraînèrent l’adoption du claim comme mode d’appropriation des droits miniers relevant de la Couronne. En 1863 et 1864, la Beauce connut des découvertes de placers[^1] d’or, marquant un jalon important pour le Québec.
-
-Aux États-Unis, la loi fédérale de 1866 reconnut officiellement les règles établies par les mineurs de Californie et codifia le mode de jalonnement. La prise de possession se matérialisait par la pose d’un piquet à l’endroit de la découverte, indiquant le nom du jalonneur, et par la délimitation des limites au moyen de piquets. La superficie des claims pouvait varier selon les camps miniers. Cette législation visait avant tout à régler les conflits entre jalonneurs concurrents plutôt qu’à encadrer les relations entre les prospecteurs et l’État. Le claim impliquait alors la découverte d’un gisement et la réalisation de travaux de mise en valeur, sans obligation d’enregistrer formellement un titre.
-
-## Jalons historiques au Québec
-
-Avant 1763, sous le régime français, la propriété des mines était réservée au roi, sauf mention explicite dans le titre de concession. Après la Conquête britannique, seules les mines d’or et d’argent restèrent la propriété de la Couronne, les autres substances appartenant au propriétaire de surface. Entre 1792 et 1797, les autorités anglaises élargirent la réserve à plusieurs métaux, dont le charbon, l’étain, le cuivre, le fer et le plomb. En 1797, cette disposition fut modifiée et seuls l’or et l’argent furent conservés comme ressources réservées à la Couronne, règle qui demeura en vigueur jusqu’en 1880.
-
-En 1863, des placers d’or furent découverts le long de l’embranchement nord de la rivière Gilbert, dans la Beauce. L’année suivante, en réponse à ces découvertes, l’Assemblée législative adopta l’Acte concernant les mines d’or, première mention de la notion de claim dans les lois du Bas-Canada, défini comme une parcelle de terre prise en possession en vue d’y réaliser une exploitation.
-
-En 1867, l’Acte de l’Amérique du Nord britannique conféra aux provinces la propriété des terres, minéraux et réserves royales, incluant l’or et l’argent. Le 24 juillet 1880, l’Acte général des mines du Québec abrogea la loi précédente et consacra le principe selon lequel les droits miniers constituaient une propriété distincte de celle de la surface. Dès lors, tous les droits miniers appartenaient à l’État, qui pouvait les attribuer conformément à la Loi des mines.
-
-De 1890 à 1909, le claim disparut au profit du permis de recherche, avant d’être réintroduit en 1909 pour toutes les substances appartenant à la Couronne. Le claim fut alors défini comme une étendue de terrain délimitée par un piquetage autour d’une découverte, son acquisition nécessitant un certificat de mineur.
-
-En 1921, une loi établit que tous les minéraux appartenaient à la Couronne dans le tréfonds des terres non encore concédées au 24 juillet 1880, sauf si l’acquéreur démontrait avoir rempli toutes les conditions de son titre avant cette date. Cette loi avait un effet rétroactif remontant avant 1880. En 1966, la définition du claim fut modifiée pour éliminer la notion de découverte et le présenter comme une simple prise de possession réalisée par un prospecteur détenteur d’un permis. À la même époque, le certificat de mineur fut remplacé par le permis de prospecteur, et la concession minière par le bail minier pour les nouvelles exploitations.
-
-En 1982, la loi 59 révoqua les droits miniers privés non intégrés au domaine public, tout en permettant leur conservation dans certaines conditions. Ces droits, situés principalement dans les Cantons de l’Est, mais aussi dans l’Outaouais, la Gaspésie, le lac Saint-Jean, les Basses Terres du Saint-Laurent et la Basse Côte-Nord, couvraient environ 71 000 km². Dans les seigneuries, les droits miniers étaient restés à la Couronne, sauf concession expresse, ce qui était rare. En 1998, le claim devint l’unique titre d’exploration, acquis principalement par désignation sur carte. La réforme de 2013 imposa aux titulaires de droits miniers des obligations accrues, notamment la fourniture d’une garantie financière couvrant 100 % des coûts prévus pour le réaménagement et la restauration, à verser en trois paiements sur deux ans suivant l’approbation du plan. La réforme de 2024 transformera la définition de claim pour le droit exclusif d’exploration, le DEE. 
-
 ## Droit minier québécois actuel
 
 Le régime minier québécois repose sur le principe du free mining, qui garantit un accès ouvert à tous pour la recherche de substances minérales faisant partie du domaine public, à l’exception du pétrole, du gaz naturel, de la saumure et des matériaux meubles utilisés à des fins de construction. Le premier arrivé bénéficie d’un droit exclusif de recherche et, en cas de découverte, il a l’assurance d’obtenir l’autorisation d’exploiter la ressource identifiée.
@@ -81,7 +56,7 @@ Coût minimum des travaux - Au sud du 52e degré de latitude selon la superficie
 
 ---
 
-En plus des coûts liés aux travaux, des droits d’inscription et de renouvellement sont exigés. Leur montant dépend de la localisation, de la superficie du terrain et du nombre de droits exclusifs d’exploration (DEE) inscrits le même jour par une même personne sur un même feuillet cartographique. Par exemple, au nord du 52e parallèle, l’inscription d’un claim de 25 à 45 hectares coûte 146 \$ , tandis qu’au sud du 52e parallèle, un claim de 25 à 100 hectares revient à 79,25 \$. Les frais de renouvellement augmentent avec la superficie et peuvent doubler si la demande est effectuée dans les soixante jours précédant l’expiration du DEE. Il est également important de noter que les montants diffèrent selon que la transaction concerne de 1 à 150 DEE ou plus de 150 DEE. Le tableau suivant présente les différents coûts d’acquisition des DEE selon le contexte de la tarification et indexation des droits, loyers, redevances et frais du 1er janvier 2025 en vertu de l’article 83.3 de la Loi sur l’administration financière [^2] : 
+En plus des coûts liés aux travaux, des droits d’inscription et de renouvellement sont exigés. Leur montant dépend de la localisation, de la superficie du terrain et du nombre de DEE inscrits le même jour par une même personne sur un même feuillet cartographique. Par exemple, au nord du 52e parallèle, l’inscription d’un claim de 25 à 45 hectares coûte 146 \$ , tandis qu’au sud du 52e parallèle, un claim de 25 à 100 hectares revient à 79,25 \$. Les frais de renouvellement augmentent avec la superficie et peuvent doubler si la demande est effectuée dans les soixante jours précédant l’expiration du DEE. Il est également important de noter que les montants diffèrent selon que la transaction concerne de 1 à $X$ DEE ou plus de $X$ DEE. Le tableau suivant présente les différents coûts d’acquisition des DEE selon le contexte de la tarification et indexation des droits, loyers, redevances et frais du 1er janvier 2025 en vertu de l’article 83.3 de la Loi sur l’administration financière [^2] : 
   
 | Article du règlement       | Description                                      | Spécification                                   | Tarif (au 1er janvier 2025)                                  |
 |----------------------------|--------------------------------------------------|-------------------------------------------------|--------------------------------------------------------------|
@@ -120,7 +95,9 @@ En plus des coûts liés aux travaux, des droits d’inscription et de renouvell
 
 ## Permis et baux d’exploitation
 
-Depuis le 1er janvier 2014, les loyers annuels des baux miniers sont calculés par hectare et varient selon que les terres soient concédées ou fassent partie du domaine de l’État. Par exemple, sur des terres concédées, le loyer annuel est de 21,70 \$/ha, alors que sur les terres de l’État, il s’élève à 45,50 \$/ha. Un montant supplémentaire est exigé lorsque la demande de renouvellement est faite dans les soixante jours précédant l’expiration. Les concessionnaires doivent également réaliser annuellement des travaux dont le coût minimal est fixé à 35 \$/ha.
+Depuis le 1er janvier 2014, les loyers annuels des baux miniers sont calculés par hectare et varient selon que les terres soient concédées ou fassent partie du domaine de l’État. Par exemple, le montant du loyer annuel pour un bail minier est de 58,00 \$/ha si le terrain est situé sur les terres du domaine de l’État ou de \$27,75 $/ha si le terrain est situé sur des terres concédées ou aliénées par l’État à des fins autres que minières.
+
+Le bail minier, qui peut être obtenu par le titulaire d’un DEE, exige la démonstration, au moyen d’un rapport signé par un ingénieur ou un géologue, que le gisement contient des réserves exploitables. Sa superficie ne doit pas dépasser 100 hectares, sauf autorisation spéciale du ministère. La durée initiale est de vingt ans, renouvelable trois fois pour dix ans, avec possibilité de prolongations de cinq ans supplémentaires après le troisième renouvellement.
 
 Pour les substances minérales de surface (SMS), il existe deux types de baux : exclusif et non exclusif. Les loyers dépendent de la durée du bail et de la nature de la ressource. Le montant du loyer que doit acquitter le demandeur de bail exclusif pour l’exploitation de substances minérales de surface autres que la tourbe est fixé selon la durée du bail, conformément au tableau suivant :
 
@@ -151,8 +128,6 @@ Sauf exemption prévue au troisième alinéa de l’article 155 de la Loi, la re
 m³ = mètre cube  
 t.m. = tonne métrique  
 
-
-Le bail minier, qui peut être obtenu par le titulaire d’un DEE, exige la démonstration, au moyen d’un rapport signé par un ingénieur ou un géologue, que le gisement contient des réserves exploitables. Sa superficie ne doit pas dépasser 100 hectares, sauf autorisation spéciale du ministère. La durée initiale est de vingt ans, renouvelable trois fois pour dix ans, avec possibilité de prolongations de cinq ans supplémentaires après le troisième renouvellement.
 
 ## Modifications législatives de 2013
 
@@ -276,6 +251,35 @@ Carte des mines actives et en maintenance au Québec. Voici les minéraux métal
 :align: center 
 Carte des projets miniers au Québec. Voici les subsances : Cuivre (orange), Fer (bleu), Graphite (gris foncé), Lithium (vert pâle), Nickel (brun), Niobium (vert foncé), Or (jaune), Phosphate (vert fluo), Scandium (bourgogne), Terre rares (rose), Titate (vert fotêt), Zinc (rouge). 
 ```
+
+## Contexte historique.
+
+
+### Historique et origine du claim ou du droit exclusif d’exploration
+
+L’origine de la notion de claim remonte à des traditions minières étrangères. Dès le Xe siècle, en Saxe, les mineurs établissaient leurs propres règles afin de se protéger mutuellement. 
+
+En 1849, lors de la ruée vers l’or en Californie, et en l’absence de toute législation minière, les prospecteurs créèrent leurs propres règles pour encadrer l’exploitation des terrains aurifères. En 1848, la Californie venait d’être conquise au Mexique par les États-Unis, et aucune législation spécifique n’encadrait alors l’exploitation minière lorsque, en 1849, près de 40 000 chercheurs d’or se lancèrent à la conquête du métal précieux. Pour protéger leurs familles et structurer leurs activités, ces pionniers créèrent des districts miniers et mirent en place des règles définissant le nombre de claims autorisés, leur superficie, les conditions d’abandon ou de perte des droits, ainsi que les procédures de règlement des conflits. Le principe clé reposait sur l’appropriation par le premier occupant, la propriété étant maintenue tant que des travaux étaient régulièrement effectués sur le terrain.
+
+En 1855, l’Australie adopta à son tour l’idée du claim, inspirée par l’expérience californienne. En 1859, la Gold Fields Act californienne reconnut le certificat de mineur libre (free miner’s certificate) et imposa l’enregistrement des claims auprès du commissaire de l’or. 
+
+La même année, les découvertes aurifères en Nouvelle-Écosse entraînèrent l’adoption du claim comme mode d’appropriation des droits miniers relevant de la Couronne. En 1863 et 1864, la Beauce connut des découvertes de placers[^1] d’or, marquant un jalon important pour le Québec.
+
+Aux États-Unis, la loi fédérale de 1866 reconnut officiellement les règles établies par les mineurs de Californie et codifia le mode de jalonnement. La prise de possession se matérialisait par la pose d’un piquet à l’endroit de la découverte, indiquant le nom du jalonneur, et par la délimitation des limites au moyen de piquets. La superficie des claims pouvait varier selon les camps miniers. Cette législation visait avant tout à régler les conflits entre jalonneurs concurrents plutôt qu’à encadrer les relations entre les prospecteurs et l’État. Le claim impliquait alors la découverte d’un gisement et la réalisation de travaux de mise en valeur, sans obligation d’enregistrer formellement un titre.
+
+### Jalons historiques au Québec
+
+Avant 1763, sous le régime français, la propriété des mines était réservée au roi, sauf mention explicite dans le titre de concession. Après la Conquête britannique, seules les mines d’or et d’argent restèrent la propriété de la Couronne, les autres substances appartenant au propriétaire de surface. Entre 1792 et 1797, les autorités anglaises élargirent la réserve à plusieurs métaux, dont le charbon, l’étain, le cuivre, le fer et le plomb. En 1797, cette disposition fut modifiée et seuls l’or et l’argent furent conservés comme ressources réservées à la Couronne, règle qui demeura en vigueur jusqu’en 1880.
+
+En 1863, des placers d’or furent découverts le long de l’embranchement nord de la rivière Gilbert, dans la Beauce. L’année suivante, en réponse à ces découvertes, l’Assemblée législative adopta l’Acte concernant les mines d’or, première mention de la notion de claim dans les lois du Bas-Canada, défini comme une parcelle de terre prise en possession en vue d’y réaliser une exploitation.
+
+En 1867, l’Acte de l’Amérique du Nord britannique conféra aux provinces la propriété des terres, minéraux et réserves royales, incluant l’or et l’argent. Le 24 juillet 1880, l’Acte général des mines du Québec abrogea la loi précédente et consacra le principe selon lequel les droits miniers constituaient une propriété distincte de celle de la surface. Dès lors, tous les droits miniers appartenaient à l’État, qui pouvait les attribuer conformément à la Loi des mines.
+
+De 1890 à 1909, le claim disparut au profit du permis de recherche, avant d’être réintroduit en 1909 pour toutes les substances appartenant à la Couronne. Le claim fut alors défini comme une étendue de terrain délimitée par un piquetage autour d’une découverte, son acquisition nécessitant un certificat de mineur.
+
+En 1921, une loi établit que tous les minéraux appartenaient à la Couronne dans le tréfonds des terres non encore concédées au 24 juillet 1880, sauf si l’acquéreur démontrait avoir rempli toutes les conditions de son titre avant cette date. Cette loi avait un effet rétroactif remontant avant 1880. En 1966, la définition du claim fut modifiée pour éliminer la notion de découverte et le présenter comme une simple prise de possession réalisée par un prospecteur détenteur d’un permis. À la même époque, le certificat de mineur fut remplacé par le permis de prospecteur, et la concession minière par le bail minier pour les nouvelles exploitations.
+
+En 1982, la loi 59 révoqua les droits miniers privés non intégrés au domaine public, tout en permettant leur conservation dans certaines conditions. Ces droits, situés principalement dans les Cantons de l’Est, mais aussi dans l’Outaouais, la Gaspésie, le lac Saint-Jean, les Basses Terres du Saint-Laurent et la Basse Côte-Nord, couvraient environ 71 000 km². Dans les seigneuries, les droits miniers étaient restés à la Couronne, sauf concession expresse, ce qui était rare. En 1998, le claim devint l’unique titre d’exploration, acquis principalement par désignation sur carte. La réforme de 2013 imposa aux titulaires de droits miniers des obligations accrues, notamment la fourniture d’une garantie financière couvrant 100 % des coûts prévus pour le réaménagement et la restauration, à verser en trois paiements sur deux ans suivant l’approbation du plan. La réforme de 2024 transformera la définition de claim pour le droit exclusif d’exploration, le DEE. 
 
 [^1]: Un placer est une accumulation de la fraction dense d'un sédiment détritique, séparée par densité au cours de son transport pendant un processus sédimentaire. Le terme « placer » vient du mot espagnol placer qui signifie « sable alluvial ». L'exploitation minière des placers est une source importante d'or et de minéraux précieux et a été la principale technique utilisée dans les premières années de nombreuses ruées vers l'or, y compris en Californie.
 [^2]: https://www.mern.gouv.qc.ca/mines/titres-miniers/exploration/tarification-indexation-droits-loyers-redevances-frais/

@@ -77,7 +77,7 @@ Les mesures de dispersion décrivent la variabilité ou l'étendue des valeurs d
 -   **Aplatissement :** Mesure le degré de "pic" ou de "plat" de la distribution par rapport à une distribution normale. Une valeur élevée indique une distribution plus pointue avec des queues plus épaisses :
     $$\frac{E[(X - \mu)^4]}{\sigma_X^4}$$
 
-La [Fig. %s](#C1_Dispersion.png) présente ces mesures de dispersion sur une loi normale et pour une loi log-normale.
+La [Fig. %s](#C1_MesureDispersion.png) présente ces mesures de dispersion sur une loi normale et pour une loi log-normale.
 
 ```{figure} images/C1_MesureDispersion.png
 :label: C1_MesureDispersion.png
