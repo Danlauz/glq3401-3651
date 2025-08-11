@@ -10,8 +10,9 @@ Préparé par Dany Lauzon, Ph.D — Polytechnique Montréal
 (Contenu, programmation, exemples interactifs)
 
 📧 Pour toute question ou suggestion : [dany.lauzon@polymtl.ca](mailto:dany.lauzon@polymtl.ca)  
-📚 Informations officielles sur Moodle : [https://moodle.polymtl.ca/course/view.php?id=1112](https://moodle.polymtl.ca/course/view.php?id=1112)
-
+📚 Informations officielles sur Moodle - 
+GLQ3401 : [https://moodle.polymtl.ca/course/view.php?id=3825](https://moodle.polymtl.ca/course/view.php?id=3825)
+GLQ3651 : [https://moodle.polymtl.ca/course/view.php?id=4109](https://moodle.polymtl.ca/course/view.php?id=4109)
 ---
 
 ## Contenu
@@ -27,5 +28,5 @@ Bien que les notes soient principalement théoriques, la présence en classe dem
 
 ## Licence
 
-Tout le contenu de ce site — textes, figures, activités interactives et code source — est distribué sous la licence **Creative Commons CC BY-NC 4.0**.  
+Tout le contenu de ce site (textes, figures, activités interactives et code source) est distribué sous la licence **Creative Commons CC BY-NC 4.0**.  
 Sauf indication contraire, les éléments sans mention explicite de référence sont des créations originales de l’auteur.

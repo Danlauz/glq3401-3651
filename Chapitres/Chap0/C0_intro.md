@@ -3,7 +3,7 @@
 Ce cours couvre les principaux aspects théoriques et pratiques de la géostatistique appliquée à la géologie minière. Chaque module est conçu pour offrir un équilibre entre les concepts fondamentaux, les méthodes quantitatives et les applications concrètes, afin de préparer les étudiants à résoudre des problèmes liés à l’estimation des ressources et des réserves minérales.
 
 1. **Introduction à la géostatistique** (3 heures)
-2. **Rapport technique NI-43-101** (3 heures)  
+2. **Rapport technique NI-43-101 et Loi sur les mines** (3 heures)  
 3. **Aspects économiques – Théorie de Lane et Taylor** (3 heures)  
 4. **Théorie de Gy et contrôle qualité** (3 heures)  
 5. **Traitement et analyse statistique des données de forage** (3 heures)   

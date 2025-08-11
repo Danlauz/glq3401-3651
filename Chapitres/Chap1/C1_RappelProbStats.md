@@ -6,9 +6,9 @@ La géostatistique est une branche des statistiques dédiée à l'analyse des do
 
 Une variable aléatoire (v.a.) est une fonction mathématique qui associe un résultat numérique à chaque issue possible d'une expérience aléatoire. Bien que les valeurs possibles de la v.a. soient connues, sa réalisation précise ne peut être déterminée *a priori* sans observation directe. Par exemple : la teneur en cuivre d'une carotte de forage de 1 mètre, l'épaisseur d'une veine minéralisée, la concentration d'un polluant dans une nappe phréatique ou le pH de l'eau de pluie.
 
-Même si la valeur exacte que prendra une variable aléatoire n'est pas connue, il est possible d'estimer la probabilité qu'elle prenne certaines valeurs.
+Même si la valeur exacte que prendra une v.a. n'est pas connue, il est possible d'estimer la probabilité qu'elle prenne certaines valeurs.
 
-Cette information est décrite à l'aide de la **fonction de masse** $p_X(x)$ pour les v.a. **discrètes** et de la **fonction de densité** $f_X(x)$, pour les v.a. **continues**. Dans ce contexte, nous nous concentrerons sur les variables aléatoires continues.
+Cette information est décrite à l'aide de la **fonction de masse** $p_X(x)$ pour les v.a. **discrètes** et de la **fonction de densité** $f_X(x)$, pour les v.a. **continues**. Dans le cadre du cours, nous nous concentrerons sur les v.a. continues.
 
 La fonction de densité $f_X(x)$ vérifie deux propriétés essentielles :
 
@@ -18,19 +18,19 @@ La fonction de densité $f_X(x)$ vérifie deux propriétés essentielles :
 2.  L'**aire sous la courbe** est égale à 1 (probabilité totale) :
     $$\int_{-\infty}^{\infty} f_X(x) \, dx = 1$$
 
-La probabilité que la variable aléatoire prenne une valeur comprise
+La probabilité que la v.a. prenne une valeur comprise
 entre deux bornes $a$ et $b$, soit $P(a \leq X \leq b)$, est donnée par
 l'intégrale de la fonction de densité entre ces deux bornes :
 $$P(a \leq X \leq b) = \int_a^b f_X(x) \, dx$$
 
-Cela mène à la définition de la fonction de répartition, notée $F_X(x)$, qui représente la probabilité que la variable aléatoire $X$ prenne une valeur inférieure ou égale à $x$ :
+Cela mène à la définition de la fonction de répartition, notée $F_X(x)$, qui représente la probabilité que la v.a. $X$ prenne une valeur inférieure ou égale à $x$ :
 $$F_X(x) = P(X \leq x) = \int_{-\infty}^{x} f_X(t) \, dt$$
 
 La fonction de répartition est une fonction croissante, bornée entre 0 et 1, et continue pour les variables continues. Elle est particulièrement utile pour visualiser la distribution cumulative des probabilités et pour déterminer des quantiles, comme la médiane (valeur pour laquelle $F_X(x) = 0{,}5$).
 
-## Mise en contexte
+## Lien avec la géostatistique
 
-Soit $Z(x)$ une variable aléatoire représentant la valeur d'intérêt (comme une teneur, une température, ou un niveau piézométrique) à une position spatiale $x$. Bien qu'une valeur réelle existe à ce point, la géostatistique considère cette valeur comme aléatoire tant qu'elle n'a pas été mesurée. Ainsi, à partir des informations disponibles, on définit la probabilité que cette valeur prenne une certaine plage de valeurs, via la fonction de répartition conditionnelle :
+Soit $Z(x)$ une v.a. représentant la valeur d'intérêt (comme une teneur, une température, ou un niveau piézométrique) à une position spatiale $x$. Bien qu'une valeur réelle existe à ce point, la géostatistique considère cette valeur comme aléatoire tant qu'elle n'a pas été mesurée. Ainsi, à partir des informations disponibles, on définit la probabilité que cette valeur prenne une certaine plage de valeurs, via la fonction de répartition conditionnelle :
 
 $$F(z, x) = \text{Prob} \left\{ Z(x) \leq z \mid \text{informations} \right\}$$
 
@@ -53,7 +53,13 @@ Les mesures de tendance centrale résument une distribution de probabilité par 
     aléatoire, notée $\mu$ :
     $$\mu = E[X] = \int_{-\infty}^{\infty} x f_X(x) \, dx$$
 
-Ces mesures peuvent différer selon la forme de la distribution. Par exemple, pour une distribution symétrique comme la loi normale, la moyenne, la médiane et le mode coïncident. Pour des distributions asymétriques (ex. : loi log-normale), ces mesures seront différentes.
+Ces mesures peuvent différer selon la forme de la distribution. Par exemple, pour une distribution symétrique comme la loi normale, la moyenne, la médiane et le mode coïncident. Pour des distributions asymétriques (ex. : loi log-normale), ces mesures seront différentes. La [Fig. %s](#C1_MesureTendanceCentrale.png) présente ce phénomène.
+
+```{figure} images/C1_MesureTendanceCentrale.png
+:label: C1_MesureTendanceCentrale.png
+:align: center 
+Illustration des principales mesures de tendance centrale (mode, médiane et moyenne) sur deux distributions de probabilité : une loi normale symétrique (gauche) où ces mesures coïncident, et une loi log-normale asymétrique (droite) où elles diffèrent. Les zones en couleur représentent les aires cumulées correspondant à la médiane.
+``` 
 
 ## Mesures de dispersion
 
@@ -70,6 +76,14 @@ Les mesures de dispersion décrivent la variabilité ou l'étendue des valeurs d
 
 -   **Aplatissement :** Mesure le degré de "pic" ou de "plat" de la distribution par rapport à une distribution normale. Une valeur élevée indique une distribution plus pointue avec des queues plus épaisses :
     $$\frac{E[(X - \mu)^4]}{\sigma_X^4}$$
+
+La [Fig. %s](#C1_Dispersion.png) présente ces mesures de dispersion sur une loi normale et pour une loi log-normale.
+
+```{figure} images/C1_MesureDispersion.png
+:label: C1_MesureDispersion.png
+:align: center 
+Comparaison des mesures de dispersion pour deux distributions de probabilité. La distribution normale (gauche) est symétrique avec une faible asymétrie et un aplatissement proche de 3 (valeur normale). La distribution log-normale (droite) est asymétrique avec une forte queue à droite, illustrant une asymétrie positive et un aplatissement plus élevé, indiquant une distribution plus pointue et avec des queues épaisses.
+``` 
 
 ## Estimation à partir d'un échantillon
 
