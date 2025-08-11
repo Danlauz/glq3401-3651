@@ -50,7 +50,7 @@ L’accès à des terrains privés nécessite l’accord du propriétaire, et de
 
 Le claim, maintenant DEE, constitue aujourd’hui le seul titre d’exploration pour la recherche de substances minérales. Son mode d’acquisition principal est la désignation sur carte, qui tend à devenir exclusif, bien que le jalonnement reste permis dans certaines zones pendant une période transitoire. En territoire arpenté, les DEE coïncident avec les lots et rangs; en territoire non arpenté, ils couvrent une superficie de 30 secondes de latitude (environ 926 mètres) sur 30 secondes de longitude (environ 655 mètres à la latitude 45°), ce qui correspond à une superficie variant de 40 à 61 hectares selon la latitude. Aucun DEE ne peut être obtenu sur un terrain déjà visé par un autre DEE ou un bail minier.
 
-Les titulaires d’un DEE doivent réaliser des travaux statutaires, dont le coût minimal varie selon la superficie, la durée de possession (périodes de validité de deux ans) et la localisation du DEE, qu’il soit situé au sud ou au nord du 52e parallèle. Par exemple, pour un DEE de 40 hectares situé au sud du 52e, un montant de 1 200 $ doit être dépensé pour chacune des trois premières périodes de validité. Ces travaux peuvent comprendre des études techniques par un professionnel, la prospection géologique, géophysique ou géochimique, le levé de lignes, le décapage ou l’excavation de roches, l’échantillonnage, le forage et l’analyse de carottes, ainsi que les études de faisabilité ou les travaux de restauration. Les dépenses excédentaires peuvent être reportées sur les périodes futures ou appliquées à d’autres DEE. Les tableaux suivant montrent les dépenses minimales à réaliser :
+Les titulaires d’un DEE doivent réaliser des travaux statutaires, dont le coût minimal varie selon la superficie, la durée de possession (périodes de validité de deux ans) et la localisation du DEE, qu’il soit situé au sud ou au nord du 52e parallèle. Par exemple, pour un DEE de 40 hectares situé au sud du 52e, un montant de 1 200 \$ doit être dépensé pour chacune des trois premières périodes de validité. Ces travaux peuvent comprendre des études techniques par un professionnel, la prospection géologique, géophysique ou géochimique, le levé de lignes, le décapage ou l’excavation de roches, l’échantillonnage, le forage et l’analyse de carottes, ainsi que les études de faisabilité ou les travaux de restauration. Les dépenses excédentaires peuvent être reportées sur les périodes futures ou appliquées à d’autres DEE. Les tableaux suivant montrent les dépenses minimales à réaliser :
 
 ---
 Coût minimum des travaux - Au nord du 52e degré de latitude selon la superficie du terrain faisant l’objet du DEE
@@ -81,7 +81,7 @@ Coût minimum des travaux - Au sud du 52e degré de latitude selon la superficie
 
 ---
 
-En plus des coûts liés aux travaux, des droits d’inscription et de renouvellement sont exigés. Leur montant dépend de la localisation, de la superficie du terrain et du nombre de droits exclusifs d’exploration (DEE) inscrits le même jour par une même personne sur un même feuillet cartographique. Par exemple, au nord du 52e parallèle, l’inscription d’un claim de 25 à 45 hectares coûte 146 $ , tandis qu’au sud du 52e parallèle, un claim de 25 à 100 hectares revient à 79,25 $. Les frais de renouvellement augmentent avec la superficie et peuvent doubler si la demande est effectuée dans les soixante jours précédant l’expiration du DEE. Il est également important de noter que les montants diffèrent selon que la transaction concerne de 1 à 150 DEE ou plus de 150 DEE. Le tableau suivant présente les différents coûts d’acquisition des DEE selon le contexte de la tarification et indexation des droits, loyers, redevances et frais du 1er janvier 2025 en vertu de l’article 83.3 de la Loi sur l’administration financière [^2] : 
+En plus des coûts liés aux travaux, des droits d’inscription et de renouvellement sont exigés. Leur montant dépend de la localisation, de la superficie du terrain et du nombre de droits exclusifs d’exploration (DEE) inscrits le même jour par une même personne sur un même feuillet cartographique. Par exemple, au nord du 52e parallèle, l’inscription d’un claim de 25 à 45 hectares coûte 146 \$ , tandis qu’au sud du 52e parallèle, un claim de 25 à 100 hectares revient à 79,25 \$. Les frais de renouvellement augmentent avec la superficie et peuvent doubler si la demande est effectuée dans les soixante jours précédant l’expiration du DEE. Il est également important de noter que les montants diffèrent selon que la transaction concerne de 1 à 150 DEE ou plus de 150 DEE. Le tableau suivant présente les différents coûts d’acquisition des DEE selon le contexte de la tarification et indexation des droits, loyers, redevances et frais du 1er janvier 2025 en vertu de l’article 83.3 de la Loi sur l’administration financière [^2] : 
 
 | Article du règlement        | Description                                        | Spécification                                    | Tarif (au 1er janvier 2025)                                  |
 |----------------------------|--------------------------------------------------|-------------------------------------------------|--------------------------------------------------------------|
@@ -119,7 +119,7 @@ En plus des coûts liés aux travaux, des droits d’inscription et de renouvell
 
 ## Permis et baux d’exploitation
 
-Depuis le 1er janvier 2014, les loyers annuels des baux miniers sont calculés par hectare et varient selon que les terres soient concédées ou fassent partie du domaine de l’État. Par exemple, sur des terres concédées, le loyer annuel est de 21,70 $/ha, alors que sur les terres de l’État, il s’élève à 45,50 $/ha. Un montant supplémentaire est exigé lorsque la demande de renouvellement est faite dans les soixante jours précédant l’expiration. Les concessionnaires doivent également réaliser annuellement des travaux dont le coût minimal est fixé à 35 $/ha.
+Depuis le 1er janvier 2014, les loyers annuels des baux miniers sont calculés par hectare et varient selon que les terres soient concédées ou fassent partie du domaine de l’État. Par exemple, sur des terres concédées, le loyer annuel est de 21,70 \$/ha, alors que sur les terres de l’État, il s’élève à 45,50 \$/ha. Un montant supplémentaire est exigé lorsque la demande de renouvellement est faite dans les soixante jours précédant l’expiration. Les concessionnaires doivent également réaliser annuellement des travaux dont le coût minimal est fixé à 35 \$/ha.
 
 Pour les substances minérales de surface (SMS), il existe deux types de baux : exclusif et non exclusif. Les loyers dépendent de la durée du bail et de la nature de la ressource. Le montant du loyer que doit acquitter le demandeur de bail exclusif pour l’exploitation de substances minérales de surface autres que la tourbe est fixé selon la durée du bail, conformément au tableau suivant :
 
@@ -132,7 +132,7 @@ Pour les substances minérales de surface (SMS), il existe deux types de baux : 
 | Plus de 8 ans à 9 ans| 7 008 $          |
 | Plus de 9 ans à 10 ans| 7 786 $          |
  
-Le montant du loyer pour l’exploitation de la tourbe est de 11 680 $. Les frais qui doivent être acquittés pour une demande d’augmentation de la superficie d’un territoire faisant l’objet d’un bail exclusif d’exploitation de substances minérales de surface, faite conformément à l’article 146 de la Loi, sont de 178 $.
+Le montant du loyer pour l’exploitation de la tourbe est de 11 680 \$. Les frais qui doivent être acquittés pour une demande d’augmentation de la superficie d’un territoire faisant l’objet d’un bail exclusif d’exploitation de substances minérales de surface, faite conformément à l’article 146 de la Loi, sont de 178 \$.
 
 
 Sauf exemption prévue au troisième alinéa de l’article 155 de la Loi, la redevance due par le titulaire d’un bail d’exploitation de substances minérales de surface, ou par l’exploitant ou la personne visée à l’article 223.1, est fixée selon la quantité extraite ou aliénée, comme indiqué dans le tableau ci-dessous :
@@ -140,8 +140,8 @@ Sauf exemption prévue au troisième alinéa de l’article 155 de la Loi, la re
 | Substances minérales de surface                                                                                   | Montant de la redevance                    |
 |------------------------------------------------------------------------------------------------------------------|--------------------------------------------|
 | Tourbe                                                                                                           | 0,05 $ par ballot standard de tourbe extraite  |
-| Sable, gravier, argile et autres dépôts meubles                                                                  | 0,95 $ / m³ de substances extraites (0,36 $ / t.m.) |
-| Pierre de taille                                                                                                  | 5,90 $ / m³ de substances aliénées          |
+| Sable, gravier, argile et autres dépôts meubles                                                                  | 0,95 $ / $m^3$ de substances extraites (0,36 $ / t.m.) |
+| Pierre de taille                                                                                                  | 5,90 $ / $m^3$ de substances aliénées          |
 | Pierre concassée et toute pierre utilisée à des fins de construction                                              | 0,30 $ / t.m. de substances extraites       |
 | Pierre et sable utilisés comme minerai de silice et toute pierre utilisée pour la fabrication du ciment (calcaire, calcite, dolomie) | 0,50 $ / t.m. de substances extraites       |
 | Résidus miniers inertes issus du traitement de minerai ou des opérations de pyrométallurgie et autres substances minérales de surface non mentionnées ci-dessus | 0,25 $ / t.m. de substances extraites       |
@@ -166,7 +166,7 @@ Les récentes modifications à la Loi sur les mines imposent de nouvelles exigen
 3. Constituer, dans les trente jours suivant la délivrance du bail minier, un comité de suivi visant à favoriser l’implication de la communauté locale.  
 4. Fournir une garantie financière couvrant 100 % des coûts anticipés pour le réaménagement et la restauration, comparativement à 70 % auparavant.  
 5. Commencer les travaux de réaménagement et de restauration dans les trois ans suivant la cessation des activités, sauf prolongation accordée par le ministère.  
-6. Se conformer aux nouvelles sanctions en cas d’infraction, dont les amendes varient désormais de 1 000 $ à 1 000 000 $ pour une personne physique et de 3 000 $ à 6 000 000 $ pour une personne morale.  
+6. Se conformer aux nouvelles sanctions en cas d’infraction, dont les amendes varient désormais de 1 000 \$ à 1 000 000 \$ pour une personne physique et de 3 000 \$ à 6 000 000 \$ pour une personne morale.  
 
 ### 2. Transparence accrue
 
