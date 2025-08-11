@@ -2,7 +2,7 @@
 
 La [Fig. %s](#C3_Variance) illustre l'effet d'utiliser la mauvaise distribution pour déterminer la teneur de coupure optimale pour un même gisement. Supposons que les calculs ont été faits pour un ensemble de paramètres identiques sauf que l'on a considéré deux lois lognormales de variances différentes. (Paramètres utilisés : $m=1.32\$/t$ minéral ; $y=0{,}87$ ; $p=600\$/t$ métal ; $k=0$ ; $h=3.41\$/t$ minerai ; $f=11.9$M\$ ; $F=0$M\$ ; $M=12$Mt ; $H=3.9$Mt ; $K=0.085$Mt). Sur la figure gauche, l'optimum est atteint à l'équilibre mine-concentrateur ($c=0.93\%$) et rapporte un profit de $0.36\$/t$ minéral. Sur celle de droite, l'optimum est atteint à la teneur de coupure $0.80\%$ et un profit de $0.0.72\$/t$ minéral en résulte.
 
-```{figure} images/C3_Variance.PNG
+```{figure} images/C3_Variance.png
 :label: C3_Variance
 :align: center 
 Impact de la variance sur le teneur de coupure.

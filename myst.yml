@@ -31,7 +31,7 @@ project:
     - file: Chapitres/Chap2/C2_main.md
       children:
         - file: Chapitres/Chap2/C2_Ressources.md
-        #- file: Chapitres/Chap2/C2_PQ.md
+        - file: Chapitres/Chap2/C2_PQ.md
         #- file: Chapitres/Chap2/C2_Contenue.md
         #- file: Chapitres/Chap2/C2_LoiDesMines.md
     - file: Chapitres/Chap3/C3_main.md
