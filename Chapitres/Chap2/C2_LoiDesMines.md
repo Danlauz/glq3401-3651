@@ -103,7 +103,6 @@ En plus des coûts liés aux travaux, des droits d’inscription et de renouvell
 |                            |                                                  | < 25 ha                                         | 203.75 $                                                      |
 |                            |                                                  | 25 à 100 ha                                     | 396.25 $                                                      |
 |                            |                                                  | > 100 ha                                        | 600.00 $                                                     |
-
 | **Droits pour le renouvellement par droit exclusif d’exploration** | **Nord du 52e degré de latitude**                 | < 25 ha                                         | 40,75 $                                                      |
 |                            |                                                  | 25 à 45 ha                                      | 146,00 $                                                     |
 |                            |                                                  | > 45 à 50 ha                                   | 165,00 $                                                     |
@@ -140,8 +139,8 @@ Sauf exemption prévue au troisième alinéa de l’article 155 de la Loi, la re
 | Substances minérales de surface                                                                                   | Montant de la redevance                    |
 |------------------------------------------------------------------------------------------------------------------|--------------------------------------------|
 | Tourbe                                                                                                           | 0,05 $ par ballot standard de tourbe extraite  |
-| Sable, gravier, argile et autres dépôts meubles                                                                  | 0,95 $ / $m^3$ de substances extraites (0,36 $ / t.m.) |
-| Pierre de taille                                                                                                  | 5,90 $ / $m^3$ de substances aliénées          |
+| Sable, gravier, argile et autres dépôts meubles                                                                  | 0,95 \$ / $m^3$ de substances extraites (0,36 $ / t.m.) |
+| Pierre de taille                                                                                                  | 5,90 \$ / $m^3$ de substances aliénées          |
 | Pierre concassée et toute pierre utilisée à des fins de construction                                              | 0,30 $ / t.m. de substances extraites       |
 | Pierre et sable utilisés comme minerai de silice et toute pierre utilisée pour la fabrication du ciment (calcaire, calcite, dolomie) | 0,50 $ / t.m. de substances extraites       |
 | Résidus miniers inertes issus du traitement de minerai ou des opérations de pyrométallurgie et autres substances minérales de surface non mentionnées ci-dessus | 0,25 $ / t.m. de substances extraites       |
