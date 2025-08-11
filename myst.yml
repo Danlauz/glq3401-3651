@@ -40,6 +40,7 @@ project:
         - file: Chapitres/Chap3/C3_Limite.md
         - file: Chapitres/Chap3/C3_Equilibre.md
         - file: Chapitres/Chap3/C3_Influence.md 
+        - file: Chapitres/Chap3/C3_Biais.md 
         - file: Chapitres/Chap3/C3_Table.md
         - file: JupyterNoteBook/Chap3.ipynb
         - file: JupyterNoteBook/Chap3_Lane.ipynb
