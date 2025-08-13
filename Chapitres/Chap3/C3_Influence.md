@@ -35,10 +35,12 @@ Lorsque l’on étudie les formules permettant d’obtenir ces trois teneurs de 
 
 ### Cas où $c_1$ est la teneur de coupure optimale
 
-Si $c_1$ est la *t.c. optimale, alors :  
-\[
+Si $c_1$ est la *t.c. optimale, alors : 
+ 
+$$
 c_{12} < c_1 < c_2 \quad \text{et} \quad c_1 < c_2
-\]  
+$$ 
+ 
 - Tout facteur augmentant $c_1$ maintiendra $c_1$ comme t.c. optimale.  
 - Tout facteur diminuant $c_1$ pourra amener $c_{12}$ à devenir la t.c. optimale.  
 - Tout facteur diminuant $c_{12}$ ne change rien.  
@@ -47,10 +49,12 @@ c_{12} < c_1 < c_2 \quad \text{et} \quad c_1 < c_2
 
 ### Cas où $c_{12}$ est la teneur de coupure optimale
 
-Si $c_{12}$ est la t.c. optimale, alors :  
-\[
+Si $c_{12}$ est la t.c. optimale, alors :
+  
+$$
 c_1 < c_{12} < c_2 \quad \text{et} \quad c_1 < c_2
-\]  
+$$ 
+ 
 - Tout facteur augmentant $c_1$ pourra faire de $c_1$ la t.c. optimale.  
 - Tout facteur diminuant $c_{12}$ pourra faire de $c_1$ la t.c. optimale.  
 
@@ -59,9 +63,11 @@ c_1 < c_{12} < c_2 \quad \text{et} \quad c_1 < c_2
 ### Cas où $c_2$ est la teneur de coupure optimale
 
 Si $c_2$ est la t.c. optimale, alors :  
-\[
+
+$$
 c_1 < c_2 < c_{12} \quad \text{et} \quad c_1 < c_2
-\]  
+$$  
+
 - Tout facteur diminuant $c_2$ ne change rien.
 
 ---

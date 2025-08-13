@@ -9,15 +9,15 @@ Selon Taylor (1972), la teneur de coupure optimale appartient nécessairement à
 La teneur optimale ne peut être fixée arbitrairement. Elle résulte d’un équilibre entre les capacités techniques des installations (mine et concentrateur) et les conditions économiques du marché. La théorie de Lane et Taylor met en évidence trois facteurs limitatifs majeurs, chacun correspondant à une teneur de coupure limite.
 
 
-- ⛏️ **Limite de la mine**  
+- **Limite de la mine**  
   La capacité d’exploitation est contrainte par les équipements miniers et les infrastructures, comme la capacité de la halde à stériles.
   → Limitation au niveau des opérations minières.
 
-- 🏭 **Limite du concentrateur**  
+- **Limite du concentrateur**  
   Même si l’extraction peut fournir de grandes quantités de matériau minéralisé, le concentrateur ne peut pas tout traiter simultanément.  
   → Limitation au niveau du traitement du minerai.
 
-- 📉 **Limite du marché**  
+- **Limite du marché**  
   Une production excédentaire par rapport à la demande peut entraîner une baisse des prix ou des invendus.  
   → Limitation imposée par la capacité d’absorption du marché.
 
