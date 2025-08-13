@@ -70,7 +70,7 @@ Lorsque l’hypothèse de stationnarité n’est plus valable, ou que les besoin
 - **Co-krigeage** : exploite simultanément plusieurs variables corrélées pour améliorer l’estimation de la variable cible.
 - **Krigeage bayésien** : introduit une incertitude sur les paramètres du modèle (variogramme, moyenne), modélisée via des distributions a priori.
 - **Krigeage disjonctif** et **krigeage d’indicatrices** : adaptés aux données discrètes ou catégorielles, ils permettent d’estimer des probabilités d’appartenance à une classe ou de dépassement de seuil.
-- **Krigeage d'**inégalités** ou avec **présence de bruit** : permet d’imposer des conditions sur les résultats (non-négativité, bornes physiques), ou de tenir compte du bruit sur les données dans le modèle.
+- **Krigeage d'inégalités** ou avec **présence de bruit** : permet d’imposer des conditions sur les résultats (non-négativité, bornes physiques), ou de tenir compte du bruit sur les données dans le modèle.
 - **Krigeage avec contraintes** (constrained kriging) : permet d’éviter l'effet de lissage classique du krigeage en imposant une variance cible à la variable interpolée.
 - **Krigeage compositionnel** : utilisé pour les données compositionnelles, c’est-à-dire des vecteurs dont les composantes sont non négatives et soumises à une contrainte de somme constante (généralement 1 ou 100 %) comme les proportions minéralogiques, les analyses chimiques ou les concentrations exprimées en pourcentage.
 
@@ -93,7 +93,7 @@ Le processus de krigeage se déroule en plusieurs étapes successives :
 
 1. Calcul du variogramme expérimental à partir des données mesurées.
 2. Ajustement d’un modèle théorique (ex. sphérique, exponentiel, gaussien, avec ou sans effet de pépite).
-3. Résolution du système de krigeage* afin de déterminer les poids d’interpolation associés à chaque donnée.
+3. Résolution du système de krigeage afin de déterminer les poids d’interpolation associés à chaque donnée.
 4. Estimation des valeurs inconnues aux emplacements ciblés, ainsi que de leur variance d’estimation, qui mesure l’incertitude associée.
 
 Nous sommes déjà en mesure de réaliser les étapes **1** et **2**, à la suite de nos lectures précédentes. Nous nous concentrerons donc ici sur les étapes **3** et **4**, qui seront développées en détail dans les prochaines lectures.

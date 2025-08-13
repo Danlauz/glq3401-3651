@@ -23,7 +23,7 @@ $$
 La variance de cette erreur, appelée **variance d’estimation**, est obtenue par ce développement :
 
 $$
-\sigma_e^2 = \mathrm{Var}(e) = \mathrm{Var}(Z_v^*) + \mathrm{Var}(Z_v) - 2\,\mathrm{Cov}(Z_v^*, Z_v)
+\sigma_e^2 = \mathrm{Var}(e)  = \mathrm{Var}(Z_v^* - Z_v) = \mathrm{Var}(Z_v^*) + \mathrm{Var}(Z_v) - 2\,\mathrm{Cov}(Z_v^*, Z_v)
 $$
 
 :::{dropdown} Rappel : Propriété de la variance sur une combinaison linéaire
@@ -53,13 +53,13 @@ $$
 
 La variance d'estimation est donc composée de trois termes. Leur interprétation est foncièrement logique et nous allons en explorer les bases ici.
 
-a) $\mathrm{Var}(Z_v)$ : Le phénomène que l'on cherche à estimer est-il intrinsèquement variable ou non ?
-   Plus le phénomène que l'on étudie est variable, plus les erreurs de nos estimations seront également variables. Imaginons estimer une teneur à partir d'un champ constant. C'est assez simple : l'estimation sera la valeur constante et il n'y a aucune variabilité, donc l'estimation est facile. Si le champ est un bruit pur, la variabilité est grande, l'estimation devient complexe car la variance est élevée.
+a) $\mathrm{Var}(Z_v)$ : **Le phénomène que l'on cherche à estimer est-il intrinsèquement variable ou non ?**
+   Plus le phénomène que l'on étudie est variable, plus les erreurs de nos estimations seront également variables. Imaginons estimer une teneur à partir d'un champ constant. C'est assez simple : l'estimation sera la valeur constante et il n'y a aucune variabilité, donc l'estimation est facile. Si le champ est un bruit pur de grande variabilité, l'estimation devient complexe car la variance est élevée.
 
-b) $\sum_{i=1}^n \sum_{j=1}^n \lambda_i \lambda_j \mathrm{Cov}(Z_i, Z_j)$ : Quel est le degré de redondance entre les observations ?
+b) $\sum_{i=1}^n \sum_{j=1}^n \lambda_i \lambda_j \mathrm{Cov}(Z_i, Z_j)$ : **Quel est le degré de redondance entre les observations ?**
    Ce terme cherche à prendre en compte la redondance des données. L'estimation sera meilleure si les données sont éloignées les unes des autres (ce qui induit une covariance faible), et donc une variance d'estimation réduite. En revanche, si les données sont trop proches les unes des autres, $\mathrm{Cov}(Z_i, Z_j)$ sera élevée et notre estimation sera moins fiable. Ce terme calcule donc la redondance entre les données, et l'objectif est de minimiser cet effet. Il est inutile d’avoir 100 données toutes situées dans la même zone ; au contraire, il est préférable de bien les répartir sur la grille, en tenant compte de l'anisotropie du phénomène étudié, bien sûr.
 
-c) $\sum_{i=1}^n \lambda_i \mathrm{Cov}(Z_i, Z_v)$ : Les observations sont-elles bien placées par rapport à ce que l'on veut estimer ?
+c) $\sum_{i=1}^n \lambda_i \mathrm{Cov}(Z_i, Z_v)$ : **Les observations sont-elles bien placées par rapport à ce que l'on veut estimer ?**
    Ce terme tient compte de la position des données par rapport à ce que l'on veut estimer. Il est évident que si les données sont très proches du point à estimer, l'estimation sera meilleure. Si $\mathrm{Cov}(Z_i, Z_v)$ est élevé et que ce terme est précédé d'un signe négatif, la variance d'estimation sera réduite. Inversement, si les données sont très éloignées, $\mathrm{Cov}(Z_i, Z_v)$ tendra vers 0 et n'aura pas d'effet sur la réduction de la variance d'estimation. Au final, il est très difficile d'estimer un point précisément lorsque les données sont à des années-lumière de ce que l'on cherche à estimer.
 
 ## Remarques importantes
@@ -98,3 +98,83 @@ $$
 $$
 
 ---
+
+## Combinaison d’erreurs élémentaires
+
+Quand on dispose de nombreuses observations et que l’on souhaite estimer une moyenne sur un grand volume, le calcul direct de la variance d’estimation peut devenir lourd. Une approche simplifiée consiste à utiliser le principe de combinaison des erreurs élémentaires, qui décompose l’estimation globale en une série d’estimations locales approximativement indépendantes.
+
+---
+
+### i. Grille régulière
+
+Pour une grille régulière, l’estimé global est simplement :
+
+$$
+Z^* = \frac{1}{n} \sum_{i=1}^n Z_i
+$$
+
+Chaque point est supposé représenter un bloc de taille égale. Si la variance d’erreur pour chaque bloc est $\sigma_e^2$, la variance d’estimation globale est :
+
+$$
+\sigma_e^2(\text{globale}) = \frac{\sigma_e^2}{n}
+$$
+
+Les erreurs sont approximativement indépendantes, car chaque bloc est estimé avec un seul point.
+
+---
+
+### ii. Échantillonnage aléatoire uniforme (stratifié)
+
+Chaque point représente un bloc positionné aléatoirement dans le domaine. Pour un bloc $v_i$, la variance d’estimation est :
+
+$$
+\sigma_{e_i}^2 = \mathbb{E}[(Z(x) - \bar{Z})^2] = \frac{1}{v} \int_v (Z(x) - \bar{Z})^2 \, dx = D^2(\cdot \mid v)
+$$
+
+Donc la variance d’estimation globale est encore :
+
+$$
+\sigma_e^2 = \frac{D^2(\cdot \mid v)}{n}
+$$
+
+---
+
+### iii. Échantillonnage quelconque
+
+Supposons que nous somme en mesure de calculer la variance d'estimation sur un sous domaine $v_i$. Ainsi, pour l'ensemble du domaine $V$, l'estimé est obtenu en combinant, selon des poids proportionnels aux volumes des sous-domaines, les différents estimés obtenus. On aura donc :
+
+$$
+Z = \sum_{i=1}^n \frac{v_i}{V} Z_i^*
+$$
+
+et la variance d'estimation sera, puisque chaque erreur est considérée indépendante :
+
+$$
+\sigma_e^2 = \sum_{i=1}^n \left( \frac{v_i}{V} \right)^2 \sigma_{e_i}^2
+$$
+
+où les variances d'estimation élémentaires sont celles correspondant aux différents sous-domaines que l'on a pu reconnaître.
+
+
+---
+
+### Remarques
+
+- L'estimateur particulier utilisé pour obtenir l'estimé pour la moyenne du champ n'intervient pas dans le calcul de la variance d'estimation globale par la méthode des erreurs élémentaires. L'estimation aurait pu être obtenu par krigeage, par inverse de la distance, par méthode polygonale, etc.. La raison de cette apparente anomalie est que les estimés globaux obtenus par ces méthodes sont très similaires. Ils consistent plus ou moins en une moyenne, pondérée par la zone d'influence de chaque observation, des valeurs observées. Puisque les estimations sont similaires, il n'est pas surprenant qu'elles aient toutes à peu près la même précision. Ce raisonnement n'est pas vrai si l'on cherche à prédire les variances d'estimation pour une estimation locale, i.e. pour une petite portion du champ. Alors, la technique d’estimation utilisée a une forte influence sur la précision obtenue
+
+- Si l'on dispose d'un programme permettant d'effectuer le krigeage et de calculer les variances de krigeage (variance d'estimation), alors on peut les combiner suivant le principe précédent, i.e. il suffit de segmenter le domaine en blocs et d'estimer chaque bloc en n'utilisant que les données qui s'y trouvent, puis de combiner les variances de krigeage en fonction de la taille des blocs comme l'indique la formule précédente. Il est important de ne pas avoir des données communes pour l'estimation de deux blocs car alors les erreurs d'estimation ne pourraient plus être considérées comme indépendantes. 
+
+---
+
+### Exemple
+
+Une zone a été estimée directement par krigeage (variance d'estimation 0.36) puis par combinaison de 4 parcelles selon 2 scénarios différents ([Fig. %s](#C7_VarEstimation)). Pour l'estimation de chaque parcelle, on n'utilise que les points s'y retrouvant. On calcule les variances d'estimation pour chaque parcelle et on combine le tout suivant le carré des surfaces de chaque parcelle. Les résultats obtenus par subdivision, dans les deux cas, sont quasi-identiques au résultat direct.
+
+```{figure} images/C7_VarEstimation.PNG
+:label: C7_VarEstimation
+:align: center
+Illustration des paramètres du variogramme - effet de pépite, palier et portée.
+```
+
+---
+

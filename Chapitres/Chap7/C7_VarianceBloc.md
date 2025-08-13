@@ -64,7 +64,7 @@ Ainsi, si le variogramme ponctuel est connu et atteint un palier, il est alors p
 
 ### Exemple 1 – Gisement synthétique avec modèle sphérique
 
-La [Fig. \ref{C7_Bloc}](#C7_Bloc) présente l'évolution de la variance de blocs expérimentale d'un grand gisement, comparée à celle déduite théoriquement à partir du variogramme ponctuel. On observe une bonne adéquation entre les deux courbes. Les légères fluctuations observées sont dues à la méthode de discrétisation, qui manque de robustesse pour converger parfaitement vers la valeur théorique.
+La [Fig. %s}](#C7_Bloc) présente l'évolution de la variance de blocs expérimentale d'un grand gisement, comparée à celle déduite théoriquement à partir du variogramme ponctuel. On observe une bonne adéquation entre les deux courbes. Les légères fluctuations observées sont dues à la méthode de discrétisation, qui manque de robustesse pour converger parfaitement vers la valeur théorique.
 
 Le variogramme ponctuel utilisé correspond à un modèle sphérique isotrope de portée 15 pixels et de palier unitaire.
 
@@ -76,7 +76,7 @@ Le variogramme ponctuel utilisé correspond à un modèle sphérique isotrope de
 
 ### Exemple 2 - Gisement synthétique modèle exponentiel avec effet de pépite
 
-La [Fig. \ref{C7_BlocBruit}](#C7_BlocBruit) montre l'évolution de la variance de blocs expérimentale d'un grand gisement, comparée à celle calculée théoriquement à partir du variogramme ponctuel. Là encore, on observe une bonne concordance entre les deux courbes. Les fluctuations sont attribuables à la méthode de discrétisation, qui n’est pas suffisamment robuste pour atteindre la valeur théorique avec précision. On remarque également que l'effet de pépite est correctement pris en compte.
+La [Fig. %s](#C7_BlocBruit) montre l'évolution de la variance de blocs expérimentale d'un grand gisement, comparée à celle calculée théoriquement à partir du variogramme ponctuel. Là encore, on observe une bonne concordance entre les deux courbes. Les fluctuations sont attribuables à la méthode de discrétisation, qui n’est pas suffisamment robuste pour atteindre la valeur théorique avec précision. On remarque également que l'effet de pépite est correctement pris en compte.
 
 Le variogramme ponctuel utilisé correspond à un modèle exponentiel isotrope de portée 50 pixels, de palier unitaire, avec un effet de pépite de 0.5.
 
@@ -119,7 +119,7 @@ $$
 \gamma_v(h) = \frac{1}{v^2} \iint_v \left[ \gamma(0) + \gamma(0) - 2C(y_1 - y_2 + h) \right] \, dy_1 \, dy_2
 $$
 
-où $\gamma(v, v; h)$ est la valeur moyenne du variogramme ponctuel entre toutes les paires de points ayant un point dans le bloc $v(x)$ et l’autre dans le bloc $v(x + h)$.
+où $\gamma_v(h)$ est la valeur moyenne du variogramme ponctuel entre toutes les paires de points ayant un point dans le bloc $v(x)$ et l’autre dans le bloc $v(x + h)$.
 
 Cette formulation permet de relier directement les propriétés spatiales des blocs à celles du champ ponctuel, et peut être utilisée pour modéliser la continuité spatiale à différentes échelles.
 

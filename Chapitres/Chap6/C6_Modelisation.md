@@ -36,7 +36,7 @@ $$
 \text{Var}\left(\sum \lambda_i Z_i\right) = \sum_i \sum_j \lambda_i \lambda_j C(h_{ij}) \geq 0
 $$
 
-Dans le cas intrinsèque (variogramme sans palier), sous la condition \( \sum \lambda_i = 0 \), on a :
+Dans le cas intrinsèque (variogramme sans palier), sous la condition $\sum \lambda_i = 0$, on a :
 
 $$
 \text{Var}\left(\sum \lambda_i Z_i\right) = \sum_i \sum_j \lambda_i \lambda_j \gamma(h_{ij}) \geq 0
@@ -56,32 +56,52 @@ IMPORTANT : Un modèle peut être admissible en 1D et non-admissible en 2D, 3D,�
 
 ## Modèles classiques de variogrammes
 
-En géologie, les modèles les plus courants sont :
+En géologie, les modèles de variogrammes les plus courants sont :
 
 - **Effet de pépite** :
 
-  \( \gamma(h) = 0 \) si \( h = 0 \), \( C_0 \) si \( h > 0 \)
+\[
+\gamma(h) =
+\begin{cases}
+0 & \text{si } h = 0\\[2mm]
+C_0 & \text{si } h > 0
+\end{cases}
+\]
 
 - **Sphérique** :
 
-  \( \gamma(h) = C \left[ 1.5 \frac{h}{a} - 0.5 \left(\frac{h}{a}\right)^3 \right] \) pour \( 0 < h < a \),  
-  \( \gamma(h) = C \) si \( h \geq a \)
+\[
+\gamma(h) =
+\begin{cases}
+C \left[ 1.5 \frac{h}{a} - 0.5 \left(\frac{h}{a}\right)^3 \right] & \text{pour } 0 < h < a\\[1mm]
+C & \text{si } h \geq a
+\end{cases}
+\]
 
 - **Gaussien** :
 
-  \( \gamma(h) = C \left[ 1 - \exp\left(-3\left(\frac{h}{a}\right)^2\right) \right] \)
+\[
+\gamma(h) = C \left[ 1 - \exp\left(-3\left(\frac{h}{a}\right)^2\right) \right]
+\]
 
 - **Exponentiel** :
 
-  \( \gamma(h) = C \left[ 1 - \exp\left(-3\frac{h}{a}\right) \right] \)
+\[
+\gamma(h) = C \left[ 1 - \exp\left(-3\frac{h}{a}\right) \right]
+\]
 
 - **Puissance** :
 
-  \( \gamma(h) = C h^b \), avec \( 0 < b < 2 \) (cas particulier : modèle linéaire si \( b = 1 \))
+\[
+\gamma(h) = C \, h^b, \quad 0 < b < 2
+\]
+
+> Cas particulier : modèle **linéaire** si \(b = 1\).
+
 
 La présente [Fig. %s](#C6_modeles) montre la forme de ces modèles théoriques admissibles, tandis que la [Fig. %s](#C6_simulations) suivante présente une simulation 1D correspondant à ces modèles, c’est-à-dire un champ de données ayant la continuité spatiale du modèle théorique. Plusieurs phénomènes peuvent être observés :
 
-1. Les modèles exponentiel (courbe bleue) et gaussien (courbe verte) sont des modèles asymptotiques. Ils n’atteignent jamais exactement le palier, mais tendent progressivement vers celui-ci. Ainsi, on définit la portée effective comme étant *95 %* du palier. Pour obtenir une portée effective de 20 m, comme dans la [Fig. %s](#C6_modeles), il faut que la valeur du variogramme soit de *0,95*, car le palier est unitaire.
+1. Les modèles exponentiel (courbe bleue) et gaussien (courbe verte) sont des modèles asymptotiques. Ils n’atteignent jamais exactement le palier, mais tendent progressivement vers celui-ci. Ainsi, on définit la portée effective comme étant *95 %* du palier. Pour obtenir une portée effective de 20 m, comme dans la [Fig. %s](#C6_modeles), il faut que la valeur du variogramme soit de *0,95* à une distance de 20 m, car le palier est unitaire.
 
 2. Le modèle gaussien (ainsi que le modèle de puissance avec $b = 1.5$) présente un comportement parabolique à l’origine. Cela se traduit par des champs de réalisation beaucoup plus lisses. Ainsi, si l’on considère que notre phénomène géologique sera continu et lisse (par exemple, la topographie), ces modèles sont mieux adaptés.
 

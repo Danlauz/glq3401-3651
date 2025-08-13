@@ -85,7 +85,6 @@ project:
         - file: Chapitres/Chap7/C7_VarianceBloc.md
         - file: Chapitres/Chap7/C7_VarianceDispersion.md
         - file: Chapitres/Chap7/C7_VarianceEstimation.md
-        - file: Chapitres/Chap7/C7_CombinaisonErreurs.md
         - file: Chapitres/Chap7/C7_Calcul.md
         - file: JupyterNoteBook/Chap7.ipynb
         - file: JupyterNoteBook/Chap7_VarianceBloc.ipynb
@@ -98,7 +97,6 @@ project:
         - file: Chapitres/Chap8/C8_Exemple.md
         - file: Chapitres/Chap8/C8_Pratiques.md
         - file: Chapitres/Chap8/C8_Proprietes.md
-        - file: JupyterNoteBook/Chap8.ipynb
         - file: JupyterNoteBook/Chap8_Calculateur.ipynb
         - file: JupyterNoteBook/Chap8_Krigeage1D.ipynb
         - file: JupyterNoteBook/Chap8_Ecran.ipynb

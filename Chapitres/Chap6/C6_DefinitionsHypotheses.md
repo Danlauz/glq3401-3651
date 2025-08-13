@@ -35,7 +35,7 @@ La géostatistique adopte donc une approche plus modeste : estimer uniquement le
 
 ## Hypothèses fondamentales
 
-Pour pouvoir estimer ces paramètres, on formule deux hypothèses statistiques **valables pour toute localisation** \( x \in \mathbb{R}^d \) dans l’espace :
+Pour pouvoir estimer ces paramètres, on formule deux hypothèses statistiques **valables pour toute localisation** $x \in \mathbb{R}^d$ dans l’espace :
 
 1. **Stationnarité de l’espérance** :  
    L’espérance mathématique da la variable aléatoire $Z(x)$ est constante dans l’espace 
@@ -55,7 +55,7 @@ Pour pouvoir estimer ces paramètres, on formule deux hypothèses statistiques *
    \forall x, h \in \mathbb{R}^d, \quad \text{Cov}(Z(x), Z(x + h)) = C(h)
    $$
 
-Sous ces hypothèses, appelées **stationnarité du second ordre**, la fonction $C(h)$ est appelée covariogramme (ou fonction de covariace), et le variogramme peut être exprimé comme :
+Sous ces deux hypothèses, appelées **stationnarité du second ordre**, la fonction $C(h)$ est appelée covariogramme (ou fonction de covariace), et le variogramme peut être exprimé comme :
 
 $$
 \gamma(h) = \frac{1}{2} E[(Z(x + h) - Z(x))^2] = \sigma^2 - C(h)
@@ -63,7 +63,7 @@ $$
 
 Ces hypothèses supposent une certaine homogénéité spatiale du phénomène étudié. Si des domaines géologiques très différents sont identifiables, ils doivent être modélisés séparément, chacun avec ses propres paramètres statistiques.
 
-> 💡 **Note** : Cette relation \( \gamma(h) = \sigma^2 - C(h) \) est très importante en géostatistique, mais elle suppose que le variogramme atteint une variance finie $\sigma^2$, ce qui n’est pas toujours le cas. Cette hypothèse est donc à vérifier selon le contexte géologique. Le variogramme expérimental permet d'estimer $\sigma^2$.
+> 💡 **Note** : Cette relation $\gamma(h) = \sigma^2 - C(h)$ est très importante en géostatistique, mais elle suppose que le variogramme atteint une variance finie $\sigma^2$, ce qui n’est pas toujours le cas. Cette hypothèse est donc à vérifier selon le contexte géologique. Le variogramme expérimental permet d'estimer $\sigma^2$.
 
 ---
 
@@ -129,4 +129,4 @@ Chaque type de gisement a un comportement spatial qui se reflète dans son vario
 - **Topographie** : très grande continuité, variogramme parabolique à l’origine, effet de pépite quasi nulle.
 
 ---
-[^1]C'est généralement le cas, mais il existe des modèles où ce principe de continuité simple ne s'applique pas, notamment avec des phénomènes périodiques. Un excellent exemple est la variation journalière de la température. La température mesurée à un instant donné est fortement corrélée à celle mesurée 24 heures plus tard, même si elle est très différente de celle mesurée 12 heures plus tard. Dans ce contexte, la corrélation ne diminue pas de façon continue avec le temps (la "distance"). Elle augmente et diminue de manière cyclique, créant ce qu'on appelle un effet de trou ou une périodicité dans le variogramme.
+[^1]: C'est généralement le cas, mais il existe des modèles où ce principe de continuité simple ne s'applique pas, notamment avec des phénomènes périodiques. Un excellent exemple est la variation journalière de la température. La température mesurée à un instant donné est fortement corrélée à celle mesurée 24 heures plus tard, même si elle est très différente de celle mesurée 12 heures plus tard. Dans ce contexte, la corrélation ne diminue pas de façon continue avec le temps (la "distance"). Elle augmente et diminue de manière cyclique, créant ce qu'on appelle un effet de trou ou une périodicité dans le variogramme.

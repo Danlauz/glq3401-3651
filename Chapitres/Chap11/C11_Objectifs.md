@@ -1,4 +1,4 @@
-# 8.1 Objectifs des simulations géostatistiques
+# 11.1 Objectifs des simulations géostatistiques
 
 Une méthode de simulation **non-conditionnelle** vise à produire des champs présentant la même structure spatiale (variogramme) et le même histogramme que ceux inférés à partir des données observées. Lorsqu’on applique l’algorithme de simulation correspondant à une méthode donnée, on obtient une **réalisation**. On peut appliquer l’algorithme autant de fois que l’on souhaite, générant ainsi plusieurs réalisations indépendantes les unes des autres.
 

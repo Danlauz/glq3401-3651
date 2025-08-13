@@ -13,6 +13,8 @@ On suppose un variogramme sphérique avec effet de pépite = 1, palier = 11 et p
 
 ## Étape 1 : Distances entre les points
 
+Cette étape consiste à calculer les distances entre tous les points connus, ce qui servira pour le calcul du variogramme et des covariances.
+
 |     | $x_0$ | $x_1$ | $x_2$ | $x_3$ |
 |-----|-------|-------|-------|-------|
 | $x_0$ | 0.0 | 1.4 | 1.0 | 2.0 |
@@ -23,6 +25,8 @@ On suppose un variogramme sphérique avec effet de pépite = 1, palier = 11 et p
 ---
 
 ## Étape 2 : Variogramme sphérique
+
+On applique le modèle de variogramme sphérique aux distances calculées pour obtenir la structure de dépendance spatiale entre les points.
 
 $$
 \gamma(h) =
@@ -44,6 +48,8 @@ $$
 
 ## Étape 3 : Matrice de covariances
 
+Cette étape convertit le variogramme en covariances, qui sont nécessaires pour résoudre le système de krigeage.
+
 $$
 C(h) = 11 - \gamma(h)
 $$
@@ -58,6 +64,8 @@ $$
 ---
 
 ## Étape 4 : Système de krigeage
+
+On construit le système linéaire de krigeage ordinaire pour déterminer les poids ($\lambda_i$) et le multiplicateur de Lagrange ($\mu$).
 
 $$
 \begin{bmatrix}
@@ -85,6 +93,8 @@ $$
 
 ## Étape 5 : Solution
 
+On résout le système pour obtenir les poids optimaux attribués à chaque point connu.
+
 $$
 \lambda_1 = 0.21, \quad \lambda_2 = 0.51, \quad \lambda_3 = 0.28, \quad \mu = -1.5
 $$
@@ -93,6 +103,8 @@ $$
 
 ## Étape 6 : Estimation
 
+On calcule l’estimation krigée au point cible $x_0$ en appliquant les poids déterminés précédemment.
+
 $$
 Z^*(x_0) = 0.21 \times 9 + 0.51 \times 3 + 0.28 \times 4 = 4.54
 $$
@@ -100,6 +112,8 @@ $$
 ---
 
 ## Étape 7 : Variance de krigeage
+
+Cette étape fournit l’incertitude associée à l’estimation, appelée variance de krigeage, qui mesure la précision de la prédiction.
 
 $$
 \sigma^2_{KO} = k - \lambda^\top \cdot k_0 = 11 - 3.32 = 7.68

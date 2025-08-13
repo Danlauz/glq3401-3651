@@ -142,23 +142,20 @@ $$
 ### Forme matricielle du krigeage simple
 
 $$
-\mathbf{C} \boldsymbol{\lambda} = \mathbf{c}_0
-$$
-
-où :
-
-- $\mathbf{C}$ est la matrice de covariances $C(\mathbf{x}_i - \mathbf{x}_j)$
-- $\boldsymbol{\lambda}$ est le vecteur des poids
-- $\mathbf{c}_0$ est le vecteur des covariances $C(\mathbf{x}_i - \mathbf{x}_0)$
-
-L’estimation s’écrit :
-
-$$
-Z_v^* = m + \boldsymbol{\lambda}^\top ( \mathbf{Z} - m \mathbf{1} )
-$$
-
-et la variance :
-
-$$
-\sigma_K^2 = \sigma^2 - \boldsymbol{\lambda}^\top \mathbf{c}_0
+\begin{bmatrix}
+C(\mathbf{x}_1, \mathbf{x}_1) & \cdots & C(\mathbf{x}_1, \mathbf{x}_n) \\
+\vdots & \ddots & \vdots & \vdots \\
+C(\mathbf{x}_n, \mathbf{x}_1) & \cdots & C(\mathbf{x}_n, \mathbf{x}_n)
+\end{bmatrix}
+\begin{bmatrix}
+\lambda_1 \\
+\vdots \\
+\lambda_n 
+\end{bmatrix}
+=
+\begin{bmatrix}
+C(\mathbf{x}_1, \mathbf{x}_0) \\
+\vdots \\
+C(\mathbf{x}_n, \mathbf{x}_0)
+\end{bmatrix}
 $$

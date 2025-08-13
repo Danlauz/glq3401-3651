@@ -1,6 +1,8 @@
 # 6.2 Estimation du variogramme
 
-Le variogramme se calcule à partir des données observées grâce à la formule suivante :
+Le variogramme expérimental (ou variogramme empirique) est un estimateur du variogramme théorique basé sur les données disponibles.
+
+Il se calcule à partir des observations en utilisant la formule suivante :
 
 $$
 \gamma(h) = \frac{1}{2 N(h)} \sum_{i=1}^{N(h)} [Z(x_i + h) - Z(x_i)]^2
@@ -12,16 +14,12 @@ où :
 
 Cette formule est la version discrète de la définition théorique du variogramme présentée précédemment. Pour estimer le variogramme, il est donc essentiel d’identifier toutes les paires de points dont la distance correspond (ou est proche) à $h$.
 
-Le variogramme ainsi calculé est appelé **variogramme expérimental**.
-
-
-
 ## Variogramme expérimental directionnel
 
 
 Pour un champ donné, rien n'assure que la continuité soit identique dans toutes les directions. Par exemple, il se pourrait que des teneurs montrent une meilleure continuité parallèlement à la stratigraphie que perpendiculairement à celle-ci. De même, pour la contamination par des hydrocarbures, on pourrait observer une meilleure continuité horizontalement que verticalement en raison de la gravité. Si le nombre d'observations le permet (typiquement au moins 50, préférablement 100), on peut chercher à vérifier ce point en calculant le variogramme expérimental dans différentes directions.
 
-On peut ainsi calculer le variogramme selon certaines directions spécifiques :
+On peut ainsi calculer le variogramme expérimental selon certaines directions spécifiques :
 
 $$
 \gamma(h, \theta) = \frac{1}{2N(h, \theta)} \sum_{i=1}^{N(h, \theta)} [Z(x_i + h) - Z(x_i)]^2
@@ -71,7 +69,7 @@ On peut visualiser la nuée variographique sous forme de nuage de points. La [Fi
 ![Nuée variographique pour des bin de 10 m](images/C6_nuee_bin10.PNG)
 
 (C6_nueeC)=
-![Nuée variographique pour des bin de 50 m](images/C6__nuee_bin50.PNG)
+![Nuée variographique pour des bin de 50 m](images/C6_nuee_bin50.PNG)
 
 :::
 
