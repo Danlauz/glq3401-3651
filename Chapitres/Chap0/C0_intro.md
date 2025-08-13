@@ -40,23 +40,26 @@ Ce cours vise à initier les étudiants aux bases théoriques, pratiques et rég
 
 ---
 
-## Travaux pratiques
+## Travaux pratiques  
 
-Ce cours met l’accent sur l’apprentissage par la pratique à travers onze **travaux pratiques** (TP). Le programme détaillé est disponible sur Moodle.
+Ce cours met l’accent sur l’apprentissage par la pratique à travers onze travaux pratiques (TP).  
+Le programme détaillé est disponible sur *Moodle*.  
 
-### Vue d’ensemble des TPs
+### Vue d’ensemble des TPs  
 
-| TP    | Titre           | Objectifs d’apprentissage |
-|:------|:----------------|:--------------------------|
-| TP1   | À déterminer    |                           |
-| TP3   | À déterminer    |                           |
-| TP4   | À déterminer    |                           |
-| TP5   | À déterminer    |                           |
-| TP6   | À déterminer    |                           |
-| TP7   | À déterminer    |                           |
-| TP8   | À déterminer    |                           |
-| TP9   | À déterminer    |                           |
-| TP10  | À déterminer    |                           |
-| TP11  | À déterminer    |                           |
+| **TP** | **Titre**                                          | **Objectifs d’apprentissage** |
+|:------:|:---------------------------------------------------|:-------------------------------|
+| **TP1**  | Lecture de rapport technique – NI 43-101           | Comprendre la structure et le contenu d’un rapport conforme à la norme NI 43-101. Identifier les sections clés et leur rôle dans la divulgation publique. |
+| **TP2**  | Théorie de Lane et Taylor                          | Appliquer la théorie de Lane et de Taylor à l’optimisation de la coupure. Comprendre les hypothèses et limites de ces approches. |
+| **TP3**  | Procédure d’analyse en laboratoire et QA/QC        | Connaître les étapes de préparation et d’analyse des échantillons. Évaluer la qualité des données à l’aide de procédures QA/QC. |
+| **TP4**  | Régularisation des teneurs, Déviation, Débiaisement | Effectuer la régularisation des teneurs à un support commun. Mesurer la déviation et appliquer des techniques de débiaisement. |
+| **TP5**  | Variogramme expérimental et modélisation           | Construire un variogramme expérimental. Ajuster et interpréter un modèle en fonction de la structure spatiale des données. |
+| **TP6**  | Problèmes d’homogénéisation des teneurs            | Identifier les causes de l’hétérogénéité et ses effets sur l’estimation. Proposer des solutions d’homogénéisation adaptées. |
+| **TP7**  | Estimation par krigeage                            | Mettre en œuvre le krigeage ordinaire pour estimer les valeurs sur une grille. Interpréter les cartes d’estimation et de variance. |
+| **TP8**  | Cokrigeage *(informatique)*                        | Appliquer le cokrigeage pour intégrer des variables secondaires. Évaluer l’apport de l’information auxiliaire sur l’estimation. |
+| **TP9**  | Krigeage d’indicatrices *(informatique)*           | Réaliser un krigeage d’indicatrices pour estimer la probabilité de dépasser une coupure donnée. Interpréter les cartes de probabilité. |
+| **TP10** | Simulations *(informatique)*                       | Effectuer des simulations conditionnelles pour représenter l’incertitude spatiale. Comparer simulation et estimation. |
+| **TP11** | Simulation de faciès *(informatique)*              | Simuler la distribution spatiale de catégories/faciès à l’aide de méthodes indicatrices ou multipoints. Évaluer les résultats en fonction des données. |
+
 
 
