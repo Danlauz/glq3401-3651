@@ -10,9 +10,12 @@ Préparé par Dany Lauzon, Ph.D — Polytechnique Montréal
 (Contenu, programmation, exemples interactifs)
 
 📧 Pour toute question ou suggestion : [dany.lauzon@polymtl.ca](mailto:dany.lauzon@polymtl.ca)  
+
 📚 Informations officielles sur Moodle - 
+
 GLQ3401 : [https://moodle.polymtl.ca/course/view.php?id=3825](https://moodle.polymtl.ca/course/view.php?id=3825)
 GLQ3651 : [https://moodle.polymtl.ca/course/view.php?id=4109](https://moodle.polymtl.ca/course/view.php?id=4109)
+
 ---
 
 ## Contenu
