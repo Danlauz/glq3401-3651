@@ -12,6 +12,7 @@ Préparé par Dany Lauzon, Ph.D — Polytechnique Montréal
 📧 Pour toute question ou suggestion visant à améliorer le cours, n’hésitez pas à me contacter : [dany.lauzon@polymtl.ca](mailto:dany.lauzon@polymtl.ca)  
 
 📚 Informations officielles sur Moodle - 
+
 GLQ3401 : [https://moodle.polymtl.ca/course/view.php?id=3825](https://moodle.polymtl.ca/course/view.php?id=3825)
 
 GLQ3651 : [https://moodle.polymtl.ca/course/view.php?id=4109](https://moodle.polymtl.ca/course/view.php?id=4109)
