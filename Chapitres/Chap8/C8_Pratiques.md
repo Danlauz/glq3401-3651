@@ -33,26 +33,26 @@ La **validation croisée** est une méthode puissante pour vérifier la qualité
 
 On **élimine** chaque observation à tour de rôle et on l'estime à partir de ses voisins. On obtient alors pour chaque point :
 
-- Une **valeur vraie** $$ Z_i $$
-- Une **valeur estimée** $$ Z_i^* $$
-- Une **variance de krigeage** $$ \sigma_i^2 $$
+- Une **valeur vraie** $Z_i$
+- Une **valeur estimée** $Z_i^*$
+- Une **variance de krigeage** $\sigma_i^2$
 
 ## Indicateurs
 
 On peut alors définir :
 
-- Le **résidu brut** : $$ e_i = Z_i - Z_i^* $$
-- Le **résidu normalisé** : $$ n_i = \frac{Z_i - Z_i^*}{\sigma_i} $$
+- Le **résidu brut** : $e_i = Z_i - Z_i^*$
+- Le **résidu normalisé** : $n_i = \frac{Z_i - Z_i^*}{\sigma_i}$
 
 Un bon modèle devrait vérifier :
 
-1. $$ \sum e_i \approx 0 $$ et $$ \sum n_i \approx 0 $$
+1. $\sum e_i \approx 0$ et $\sum n_i \approx 0$
 
-2. $$ \sum |e_i| $$ ou $$ \sum e_i^2 $$ minimum
+2. $\sum |e_i|$ ou $\sum e_i^2$ minimum
 
-3. $$ \frac{1}{n} \sum n_i^2 \approx 1 $$
+3. $\frac{1}{n} \sum n_i^2 \approx 1$
 
-4. Analyse des **histogrammes** et **distributions spatiales** des $$ e_i $$ et $$ n_i $$ pour détecter des biais ou hétérogénéités spatiales.
+4. Analyse des **histogrammes** et **distributions spatiales** des $e_i$ et $n_i$ pour détecter des biais ou hétérogénéités spatiales.
 
 ## Recommandations
 
