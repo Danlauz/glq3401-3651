@@ -10,8 +10,8 @@ project:
         - Rédigé par Dany Lauzon, Ph.D — Polytechnique Montréal (Contenu, Programmation, Exemples interactifs)
 
   license:
-    content: CC-BY-NC-4.0
-    code: CC-BY-NC-4.0
+    content: CC-BY-4.0
+    code: MIT
 
   jupyter: true
 
