@@ -74,7 +74,7 @@ $$
 Ce qui donne la teneur limite de la mine :
 
 $$
-c_1 = \frac{h}{p - k}
+c_1 = \frac{h}{y(p - k)}
 $$
 
 ---

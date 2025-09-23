@@ -173,7 +173,7 @@ $$
 
 Le facteur $\mu\delta$ est un paramètre combinant les effets de la
 teneur et des masses spécifiques. Il est défini comme :
-$$\mu\delta = \frac{1-a_L}{a_L}  \Big[(1-a_L)\delta_A - a_L\delta_G \Big]$$
+$$\mu\delta = \frac{1-a_L}{a_L}  \Big[(1-a_L)\delta_A + a_L\delta_G \Big]$$
 où :
 
 -   $\delta_A$ est la masse spécifique du constituant d'intérêt (en

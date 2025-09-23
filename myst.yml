@@ -146,6 +146,9 @@ site:
     show_input: false
     show_output: true
 
+  launch_buttons:     # 👈 add this block
+    colab_url: "https://colab.research.google.com"
+
 sphinx:
   extra_extensions:
     - sphinx.ext.mathjax
