@@ -55,7 +55,7 @@ Pour pouvoir estimer ces paramètres, on formule deux hypothèses statistiques *
    \forall x, h \in \mathbb{R}^d, \quad \text{Cov}(Z(x), Z(x + h)) = C(h)
    $$
 
-Sous ces deux hypothèses, appelées **stationnarité du second ordre**, la fonction $C(h)$ est appelée covariogramme (ou fonction de covariace), et le variogramme peut être exprimé comme :
+Sous ces deux hypothèses, appelées **stationnarité du second ordre**, la fonction $C(h)$ est appelée covariogramme (ou fonction de covariance), et le variogramme peut être exprimé comme :
 
 $$
 \gamma(h) = \frac{1}{2} E[(Z(x + h) - Z(x))^2] = \sigma^2 - C(h)
@@ -63,7 +63,7 @@ $$
 
 Ces hypothèses supposent une certaine homogénéité spatiale du phénomène étudié. Si des domaines géologiques très différents sont identifiables, ils doivent être modélisés séparément, chacun avec ses propres paramètres statistiques.
 
-> 💡 **Note** : Cette relation $\gamma(h) = \sigma^2 - C(h)$ est très importante en géostatistique, mais elle suppose que le variogramme atteint une variance finie $\sigma^2$, ce qui n’est pas toujours le cas. Cette hypothèse est donc à vérifier selon le contexte géologique. Le variogramme expérimental permet d'estimer $\sigma^2$.
+> 💡 **Note** : Cette relation $\gamma(h) = \sigma^2 - C(h)$ est très importante en géostatistique, mais elle suppose que le variogramme atteint une variance finie $\sigma^2$, ce qui n’est pas toujours le cas. Cette hypothèse est donc à vérifier selon le contexte géologique. Le variogramme expérimental permet d'observer et d'estimer $\sigma^2$.
 
 ---
 
@@ -72,7 +72,7 @@ Ces hypothèses supposent une certaine homogénéité spatiale du phénomène é
 Le **variogramme** est défini par la formule :
 
 $$
-\gamma(h) = \frac{1}{2} \, \mathrm{Var}\bigl(Z(x) - Z(x + h)\bigr) = \frac{1}{2} \, \mathbb{E}\bigl[(Z(x) - Z(x + h))^2\bigr]
+\gamma(h) = \frac{1}{2} \, \mathrm{Var}\bigl[Z(x) - Z(x + h)\bigr] = \frac{1}{2} \, \mathbb{E}\bigl[(Z(x) - Z(x + h))^2\bigr]
 $$
 
 où $x$ et $h$ sont des vecteurs de position dans l’espace (en 1D, 2D ou 3D).

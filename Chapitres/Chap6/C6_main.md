@@ -62,7 +62,7 @@ Le **variogramme** est l’outil fondamental qui permet de quantifier cette cont
 
 
 **Exemple :**  
-Considérons quatre localisations $x_0$, $x_1$, $x_2$ et $x_3$ représentées sur la [Fig. %s](#C6_gisement). Nous avons mesuré la teneur en chacun de ces points, sauf en $x_0$. La question se pose alors : quelle serait la teneur au point $x_0$, notée $Z(x_0)$, sachant les teneurs aux localisations $Z(x_1)$, $Z(x_2)$ et $Z(x_3)$?
+Considérons quatre localisations $x_0$, $x_1$, $x_2$ et $x_3$ représentées sur la [Fig. %s](#C6_gisement). Nous avons mesuré la teneur en chacun de ces points, sauf en $x_0$. La question se pose alors : quelle serait la teneur au point $x_0$, notée $Z(x_0)$, sachant les teneurs aux localisations $x_1$, $x_2$, $x_3$, notées respectivement $Z(x_1)$, $Z(x_2)$ et $Z(x_3)$?
 
 On s’attend naturellement à ce que la teneur en $x_2$ soit la plus proche, en moyenne, de celle en $x_0$, car $x_2$ est le point le plus proche spatialement. Par conséquent, on serait porté à accorder plus de poids à la donnée en $x_2$ qu’aux données en $x_1$ ou $x_3$.
 

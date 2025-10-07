@@ -60,41 +60,41 @@ En géologie, les modèles de variogrammes les plus courants sont :
 
 - **Effet de pépite** :
 
-\[
+$$
 \gamma(h) =
 \begin{cases}
 0 & \text{si } h = 0\\[2mm]
 C_0 & \text{si } h > 0
 \end{cases}
-\]
+$$
 
 - **Sphérique** :
 
-\[
+$$
 \gamma(h) =
 \begin{cases}
 C \left[ 1.5 \frac{h}{a} - 0.5 \left(\frac{h}{a}\right)^3 \right] & \text{pour } 0 < h < a\\[1mm]
 C & \text{si } h \geq a
 \end{cases}
-\]
+$$
 
 - **Gaussien** :
 
-\[
+$$
 \gamma(h) = C \left[ 1 - \exp\left(-3\left(\frac{h}{a}\right)^2\right) \right]
-\]
+$$
 
 - **Exponentiel** :
 
-\[
+$$
 \gamma(h) = C \left[ 1 - \exp\left(-3\frac{h}{a}\right) \right]
-\]
+$$
 
 - **Puissance** :
 
-\[
+$$
 \gamma(h) = C \, h^b, \quad 0 < b < 2
-\]
+$$
 
 > Cas particulier : modèle **linéaire** si \(b = 1\).
 
