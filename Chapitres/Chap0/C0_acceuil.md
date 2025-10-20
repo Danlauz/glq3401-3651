@@ -32,5 +32,4 @@ Bien que les notes soient principalement théoriques, la présence en classe dem
 
 ## Licence
 
-Tout le contenu de ce site (textes, figures, activités interactives et code source) est distribué sous la licence **Creative Commons CC BY-NC 4.0**.  
-Sauf indication contraire, les éléments sans mention explicite de référence sont des créations originales de l’auteur.
+Tout le contenu de ce site est disponible sous des licences ouvertes et adaptables. Les textes, figures et activités interactives sont distribués sous licence CC BY ; le code utilisé dans les activités ainsi que le code source est disponible sous licence MIT. Vous pourriez accéder au code source déposé sur GitHub dans ce lien : [Ici](https://github.com/Danlauz/glq3401-3651?tab=readme-ov-file) 
