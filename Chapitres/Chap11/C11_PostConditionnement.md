@@ -18,9 +18,9 @@ On suppose que la variable aléatoire $Z(x)$ est gaussienne de moyenne nulle. La
 
 3. **Calcul de la simulation conditionnelle post-conditionnée**  
    On combine les résultats pour obtenir la simulation conditionnelle corrigée :  
-   \[
+   $$
    Z_{sc} = Z_{gs} + (Z_g^* - Z_{gs}^*)
-   \]
+   $$
    
    Cette formule ajuste la simulation non-conditionnelle pour qu’elle respecte les données observées.
 
@@ -30,17 +30,17 @@ On suppose que la variable aléatoire $Z(x)$ est gaussienne de moyenne nulle. La
 
 - **Exactitude aux points échantillons** :  
   Si un point à simuler coïncide avec un point échantillon, alors :  
-  \[
+  $$
   Z_{gs}^* = Z_{gs} = Z_{is}, \quad Z_g^* = Z_g = Z_i, \quad \Rightarrow Z_{sc} = Z_g = Z_i
-  \]  
+  $$  
   La simulation post-conditionnée reproduit parfaitement la valeur observée.  
   Très loin des points échantillons, on a $Z_{gs}^* \approx Z_g^* \approx 0$, donc $Z_{sc} \approx Z_{gs}$ : la simulation post-conditionnée tend vers la simulation non-conditionnelle.
 
 - **Précision** :  
   Il peut être démontré que  
-  \[
+  $$
   \operatorname{Var}(Z_{sc} - Z_g) = 2\sigma_k^2,
-  \]  
+  $$  
   où $\sigma_k^2$ est la variance du krigeage simple.  
   Cela signifie qu’une simulation conditionnelle unique issue du post-conditionnement est en moyenne **deux fois moins précise** qu’une estimation par krigeage simple.  
   Il ne faut donc pas utiliser une seule réalisation post-conditionnée comme estimateur.

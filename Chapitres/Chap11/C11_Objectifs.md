@@ -6,12 +6,12 @@ Une méthode de simulation **conditionnelle** vise les mêmes objectifs que la s
 
 ### Exemples de simulations en 1D
 
-\[
+$$
 \begin{array}{c}
 \text{Simulations non-conditionnelles en 1D} \\
 \text{Coordonnée} \quad \quad \text{Valeur simulée}
 \end{array}
-\]
+$$
 
 ---
 

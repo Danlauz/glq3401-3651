@@ -130,7 +130,7 @@ Supposons les observations suivantes :
 On compare l'estimation de $Z_0$ (au point $x_0=5$) par krigeage simple et cokrigeage simple. On suppose les deux variables de moyenne nulle.
 
 Configuration :  
-```plaintext
+
 x: 0    5    10
 Z1, Y1  Y0   Z2
 Z0 ?
@@ -141,7 +141,7 @@ Z0 ?
 
 Le système s’écrit :
 
-\[
+$$
 \begin{bmatrix}
 \lambda_1 \\
 \lambda_2
@@ -155,13 +155,13 @@ C_{ZZ}(10) & C_{ZZ}(0)
 C_{ZZ}(5) \\
 C_{ZZ}(5)
 \end{bmatrix}^T,
-\]
+$$
 
 avec les résultats numériques :
 
-\[
+$$
 \lambda = \begin{bmatrix} 0.46 \\ 0.37 \end{bmatrix}, \quad \sigma^2 = 0.87.
-\]
+$$
 
 ---
 
@@ -169,7 +169,7 @@ avec les résultats numériques :
 
 On forme la matrice croisée et les poids $\lambda_i$ correspondants, par exemple :
 
-\[
+$$
 \begin{bmatrix}
 \lambda_{Y0} \\
 \lambda_{Y1} \\
@@ -187,7 +187,7 @@ C_{YY} & C_{YZ} & \cdots & \cdots \\
 C_{ZY}(5) \\
 \vdots
 \end{bmatrix}^T,
-\]
+$$
 
 avec une réduction significative de la variance d’estimation.  
 La variable auxiliaire $Y_0$ reçoit un poids important, ce qui illustre le bénéfice du cokrigeage.

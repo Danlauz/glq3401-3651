@@ -8,23 +8,23 @@ Considérons le problème de cartographier la profondeur du toit d’un réservo
 Avec le krigeage ordinaire, il est difficile d’inclure ce type de données partielles. Avec le krigeage d’indicatrices (KI), le traitement est immédiat.
 
 On a l’information suivante :  
-\[
+$$
 Z(x_i) > 500 \text{ m}
-\]
+$$
 
 On définit la variable indicatrice par :  
-\[
+$$
 I(x,c) = 
 \begin{cases}
 1 & \text{si } Z(x) \leq c, \\
 0 & \text{sinon}.
 \end{cases}
-\]
+$$
 
-Pour tous les seuils \( c \) inférieurs à 500 m, on peut coder  
-\[
+Pour tous les seuils $c$ inférieurs à 500 m, on peut coder  
+$$
 I(x_i, c) = 0,
-\]
+$$
 car on sait que la profondeur dépasse 500 m.
 
 Pour les seuils supérieurs à 500 m, la donnée est manquante, donc on ne peut rien coder.

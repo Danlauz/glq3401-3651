@@ -150,7 +150,7 @@ $$
 et la variance d'estimation sera, puisque chaque erreur est considérée indépendante :
 
 $$
-\sigma_e^2 = \sum_{i=1}^n \left( \frac{v_i}{V} \right)^2 \sigma_{e_i}^2
+\sigma_e^2 =  \frac{1}{V^2} \sum_{i=1}^n v_i^2 \sigma_{e_i}^2
 $$
 
 où les variances d'estimation élémentaires sont celles correspondant aux différents sous-domaines que l'on a pu reconnaître.
