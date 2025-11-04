@@ -1,11 +1,11 @@
 # 9.3 Propriétés du cokrigeage
 
-Toutes les propriétés du krigeage sont valides pour le cokrigeage. En plus, on observe les propriétés spécifiques suivantes :
+Toutes les propriétés du krigeage s'appliquent également au cokrigeage. En plus, on observe les propriétés spécifiques suivantes :
 
 1. **Linéarité des combinaisons estimées**  
    Si l'on estime directement par cokrigeage une combinaison linéaire des variables, la valeur cokrigée sera égale à la même combinaison linéaire appliquée aux valeurs cokrigées de chaque variable.  
    
-   > Cette propriété n’est pas vérifiée par le krigeage classique.  
+   > Cette propriété n’est pas vérifiée par le krigeage.  
    
    **Exemple d’application :**  
    - Pour tracer le haut et la base d’une formation géologique, on pourrait estimer directement le haut, le bas, et l’épaisseur par krigeage.  

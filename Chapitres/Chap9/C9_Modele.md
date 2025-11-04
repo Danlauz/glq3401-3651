@@ -1,26 +1,56 @@
 # 9.2 Fonctions de covariance admissibles
 
-On a vu précédemment que l'on devait connaître $\mathrm{Cov}(Z_i,Z_j)$, $\mathrm{Cov}(Y_i,Y_j)$, et $\mathrm{Cov}(Z_i,Y_j)$. Les deux premières covariances sont dites *directs*, la dernière est dite *croisée*.  
+On a vu précédemment que le cokrigeage nécessite la connaissance des covariances $\mathrm{Cov}(Z_i, Z_j)$, $\mathrm{Cov}(Y_i, Y_j)$ et $\mathrm{Cov}(Z_i, Y_j)$. Les deux premières sont appelées covariances directes, car elles concernent la même variable, tandis que la dernière est une covariance croisée, puisqu’elle met en relation les deux variables simultanément (on croise les données).
 
-Comme pour le cas univariable, on utilisera généralement pour les covariances directes des modèles connus admissibles. Toutefois, pour la covariance croisée, les coefficients d'effet de pépite et les paliers peuvent être négatifs (cas d'une corrélation négative entre les variables $Z$ et $Y$). De plus, $\mathrm{Cov}(Z_i,Y_j)$ n'est pas nécessairement une fonction symétrique.
+La covariance croisée joue un rôle essentiel : elle permet de transférer l’information d’une variable à l’autre lorsqu’elles sont corrélées spatialement. Autrement dit, même si la variable principale $Z$ est peu échantillonnée, les observations de la variable secondaire $Y$ peuvent contribuer à améliorer l’estimation de $Z$ grâce à la relation statistique entre les deux champs.
 
-La vérification que le modèle multivariable (i.e. globalement les covariances simples et croisées) est admissible est donc plus complexe que pour le cas univariable. De façon générale, on doit évaluer les transformées de Fourier (analytique) de chaque modèle (covariances simples et croisées), former à chaque fréquence la matrice de densité spectrale et vérifier que celle-ci est positive semi-définie pour chaque fréquence. Un jolie bordel mathématique.
+Comme dans le cas univariable, on utilise généralement des modèles de covariance connus et admissibles pour modéliser les covariances directes. En revanche, la covariance croisée présente certaines particularités : 1) les coefficients d’effet de pépite et les paliers peuvent être négatifs, notamment lorsqu’il existe une corrélation négative entre les variables $Z$ et $Y$, et 2) Il n’est pas toujours vrai que les fonctions de covariance croisées soient symétriques ; autrement dit, $\mathrm{Cov}_{ZY}(h)$ n’est pas nécessairement égal à $\mathrm{Cov}_{ZY}(-h)$. Les covariances croisées peuvent être asymétriques. Ainsi, le comportement statistique entre la variable principale et la variable secondaire peut s'avérer relativement complexe.
 
-Il existe, cependant, des situations où l'admissibilité d'un modèle est plus simple à vérifier, et nous en étudierons trois. 
+Ainsi, la vérification de l’admissibilité d’un modèle multivariable (c’est-à-dire l’ensemble des covariances directes et croisées) est plus délicate que dans le cas univariable. En principe, il faut : 1) calculer les transformées de Fourier (analytiques) de chaque modèle de covariance ; 2) former, pour chaque fréquence, la matrice de densité spectrale associée ; 3) vérifier que cette matrice est positive semi-définie pour toutes les fréquences. Un processus… disons, mathématiquement exigeant.
+
+Heureusement, il existe des cas particuliers où l’admissibilité est plus facile à garantir. Nous en étudierons trois exemples dans la suite.
 
 ## Cas où la vérification est plus aisée
 
 ### 1. Relations déterministes entre $Z$ et $Y$
 
-S'il est possible de lier mathématiquement la variable secondaire $Y$ à la variable principale $Z$, il devient possible de déduire la covariance croisée $\mathrm{Cov}(Z,Y)$ et la covariance $\mathrm{Cov}(Y,Y)$ à partir de la covariance $\mathrm{Cov}(Z,Z)$. 
+S'il est possible de lier mathématiquement la variable secondaire $Y$ à la variable principale $Z$, il est possible de déduire la covariance croisée $\mathrm{Cov}(Z,Y)$ et la covariance $\mathrm{Cov}(Y,Y)$ à partir de la covariance $\mathrm{Cov}(Z,Z)$. 
 
-Par exemple, si $Y$ est la dérivée de $Z$, alors il existe une relation directe entre les covariances simples et croisées des deux variables, ce qui garantit l’admissibilité du modèle ainsi formé.
+Par exemple, si $Y$ est la dérivée de $Z$, alors il existe une relation directe entre les covariances simples et croisées des deux variables, ce qui garantit l’admissibilité. Il suffit d'avoir un modèle admissible pour la variable $Z$, et les covariances directs et croisées déduites à partir de ce modèle seront admissibles.
 
-Plus généralement, si l’on considère une transformation linéaire $L(Z)$ appliquée à $Z$ (par exemple une dérivée, une intégrale, ou une combinaison linéaire), alors :
+Plus généralement, si l’on considère une transformation linéaire $L(Z)$ appliquée à $Z$ (par exemple une dérivée, une intégrale ou une combinaison linéaire), alors :
 
 $$
 \mathrm{Cov}(Z(x),L(Z)(x+h)) = L\big(\mathrm{Cov}(Z(x),Z(x+h))\big).
 $$
+
+#### Exemple 1D — $Y(x)$ est la dérivée de $Z(x)$
+
+On suppose que la variable secondaire $Y(x)$ correspond à la dérivée spatiale de la variable principale $Z(x)$ :  
+
+$$
+Y(x) = \frac{dZ(x)}{dx}.
+$$
+
+Dans ce cas, les covariances croisées et directes peuvent être dérivées analytiquement à partir de la covariance de $Z(x)$ :  
+
+$$
+C_{ZY}(h) = \mathrm{Cov}(Z(x), Y(x+h)) 
+       = \frac{d}{dh}\big[\mathrm{Cov}(Z(x), Z(x+h))\big]
+       = \frac{dC_{ZZ}(h)}{dh},
+$$  
+
+$$
+C_{YY}(h) = \mathrm{Cov}(Y(x), Y(x+h)) 
+       = -\frac{d^2}{dh^2}\big[\mathrm{Cov}(Z(x), Z(x+h))\big]
+       = -\frac{d^2C_{ZZ}(h)}{dh^2}.
+$$  
+
+Enfin, on remarque que :  
+
+$$
+C_{YZ}(h) = -C_{ZY}(h).
+$$  
 
 
 ### 2. *Covariances proportionnelles 
@@ -30,8 +60,8 @@ Dans ce cas, toutes les fonctions de covariance (simples et croisées) sont prop
 $$
 \mathbf{C}(h) = 
 \begin{bmatrix}
-C_{yy}(h) & C_{yz}(h) \\
-C_{zy}(h) & C_{zz}(h)
+C_{ZZ}(h) & C_{ZY}(h) \\
+C_{YZ}(h) & C_{ZZ}(h)
 \end{bmatrix}
 = \mathbf{B} \, C(h),
 $$
@@ -56,43 +86,41 @@ $$
 
 où :
 
-- chaque $C_k(h)$ est une fonction de covariance **admissible** (ex. : sphérique, exponentielle, gaussienne, etc.) ;
-- chaque $\mathbf{B}_k$ est une matrice de coefficients **symétrique** et **positive semi-définie**.
+- Chaque $C_k(h)$ est une fonction de covariance admissible (ex. : sphérique, exponentielle, gaussienne, etc.) de palier unitaire ;
+- Chaque $\mathbf{B}_k$ est une matrice de coefficients symétrique et positive semi-définie représentant les paliers des modèles directs et croisés de la composante $k$.
 
-Ces matrices traduisent la structure de corrélation inter-variables pour chaque structure élémentaire $C_k(h)$.
+Ces matrices représentent la matrice de corrélation inter-variables pour chaque structure élémentaire $C_k(h)$.
 
 Si l’une des matrices $\mathbf{B}_k$ n’est **pas** positive semi-définie, alors le modèle n’est pas un modèle linéaire de corégionalisation valide, et il faut procéder à une vérification spectrale (par exemple via la densité spectrale) pour s’assurer de son admissibilité.
 
 > **Remarque :**  
-> Le MLC permet une grande flexibilité : plusieurs structures peuvent modéliser différents effets (pépite, structures à courte et longue portée, etc.), chacune avec des relations inter-variables spécifiques.
-
-
+Le MLC offre une grande flexibilité : plusieurs structures peuvent modéliser différents effets (pépite, structures à courte et à longue portée, etc.), chacune avec des relations directes et croisées spécifiques.
 
 ### Exemple
 
 On considère deux variables $Z$ et $Y$.  
-- $Z$ présente un effet de pépite de 1 et une covariance sphérique de portée 30 m et de palier 2.  
-- $Y$ présente un effet de pépite de 1 et une covariance sphérique de portée 30 m et de palier 4.  
+- $Z$ présente un effet de pépite de 1 et une covariance sphérique de portée de 30 m, avec un palier 2.  
+- $Y$ présente un effet de pépite de 1 et une covariance sphérique de portée de 30 m, avec un palier 4.  
 - La covariance entre $Z$ et $Y$ est symétrique, avec effet de pépite nul et covariance sphérique de portée 30 m et de palier 2.4.
 
 On peut écrire :  
 $$
 \mathbf{C}(h) =
 \begin{bmatrix}
-C_{yy}(h) & C_{yz}(h) \\
-C_{zy}(h) & C_{zz}(h)
+C_{ZZ}(h) & C_{ZY}(h) \\
+C_{YZ}(h) & C_{YY}(h)
 \end{bmatrix}
 = 
-\begin{bmatrix}
-4 & 2.4 \\
-2.4 & 2
-\end{bmatrix}
-C_{\text{Sph}}(h; 30) + 
 \begin{bmatrix}
 1 & 0 \\
 0 & 1
 \end{bmatrix}
-\delta(h),
+\delta(h) +
+\begin{bmatrix}
+2 & 2.4 \\
+2.4 & 4
+\end{bmatrix}
+C_{\text{Sph}}(h; 30)
 $$
 où $\delta(h) = 1$ si $h=0$ et $0$ sinon (effet de pépite).
 
@@ -100,9 +128,10 @@ La forme du modèle est celle d’un modèle linéaire de corégionalisation.
 Le déterminant de la première matrice est $1$, celui de la seconde est $2.24$, donc le modèle est admissible.
 
 ---
+## Exemple de calcul avec le MLC
 
 Supposons que l'on cherche à évaluer $\mathrm{Cov}(Z(x), Y(x+10))$.  
-Avec ce modèle, on obtient :  
+Avec le modèle ci-haut, on obtient :  
 $$
 \mathrm{Cov}(Z(x), Y(x+10)) = 0 + 2.4 \times \left[ 1 - \left(1.5 \times \frac{10}{30} - 0.5 \times \left(\frac{10}{30}\right)^3 \right) \right] = 1.244.
 $$
@@ -127,7 +156,7 @@ Supposons les observations suivantes :
 - $Z_2$ en $x_2=10$,  
 - $Y_0$ en $x_0=5$.  
 
-On compare l'estimation de $Z_0$ (au point $x_0=5$) par krigeage simple et cokrigeage simple. On suppose les deux variables de moyenne nulle.
+On compare l'estimation de $Z_0$ (au point $x_0=5$) par krigeage simple et par cokrigeage simple. On suppose que les deux variables ont une moyenne nulle.
 
 Configuration :  
 
@@ -202,12 +231,11 @@ $$
 \gamma_{ZY}(h) = \frac{1}{2} \, \mathbb{E} \left[ \left(Z(x+h) - Z(x)\right)\left(Y(x+h) - Y(x)\right) \right]
 $$
 
-
 Cette fonction est symétrique et ne peut être estimée que sur les points où les deux variables sont connues.
 
 Malgré cette contrainte, le variogramme croisé présente deux avantages :
 
-Il n’est pas nécessaire d’estimer les moyennes de $Z$ et $Y$.
+Il n’est pas nécessaire d’estimer les moyennes de $Z$ et de $Y$.
 
 Les modèles n’ont pas nécessairement de palier.
 

@@ -92,25 +92,25 @@ Impact de deux domaines géologiques distincts côte à côte sur le variogramme
 Un problème semblable survient lorsqu'on échantillonne préférentiellement à proximité des valeurs fortes (pour "confirmer" certaines valeurs).  
 Comme les distributions des teneurs des gisements typiques sont fortement asymétriques avec peu de valeurs fortes, les chances sont grandes qu'une valeur forte ne soit pas "confirmée". On aura donc plusieurs valeurs fortes accompagnées de valeurs nettement plus faibles à proximité. 
  
-Les seules paires de données à petite distance peuvent provenir précisément de ces ré-échantillonnages. Conséquemment, cela aura pour effet de faire paraître la continuité spatiale beaucoup moins forte qu'elle ne l'est réellement.
+Les seules paires de données à petite distance peuvent provenir précisément de ces rééchantillonnages. Conséquemment, cela aura pour effet de faire paraître la continuité spatiale beaucoup moins forte qu'elle ne l'est réellement.
 
-Par exemple, la [Fig. %s](#C6_Doublons) est calculé èa partir d'une simulation de 225 valeurs sur une grille régulière de pas 1 (15×15). On décide d'échantillonner les 10 valeurs les plus fortes en se plaçant à 0.1 (en x) du point. Les 3 variogrammes obtenus correspondent à :
+Par exemple, la [Fig. %s](#C6_Doublons) est calculé à partir d'une simulation de 225 valeurs sur une grille régulière de pas 1 (15×15). On décide d'échantillonner les 10 valeurs les plus fortes en se plaçant à 0,1 (en x) du point. Les 3 variogrammes obtenus correspondent à :
 1. Les 225 points  (bleu)
 2. Les 225 points + les 10 "doublons"  (orange)
-3. Les 225 points + les 225 "doublons" (chaque point est ré-échantillonné à 0.1 de façon systématique) (vert)
+3. Les 225 points + les 225 "doublons" (chaque point est rééchantillonné à 0,1 de façon systématique) (vert)
 
-On constate l’impact du rééchantillonnage uniquement des valeurs fortes. Un important effet de pépite en paraît. Seriez-vous capable de l’expliquer ? Sinon, lorsque l’on rééchantillonne systématiquement tous les forages, l’effet est moindre, voire inexistant.
+On constate que le rééchantillonnage n’a d’impact que sur les valeurs fortes. Un important effet de pépite en paraît. Seriez-vous capable de l’expliquer ? Sinon, lorsque l’on rééchantillonne systématiquement tous les forages, l’effet est moindre, voire inexistant.
 
 ```{figure} images/C6_doublons.PNG
 :label: C6_Doublons
 :align: center
-Impact de deux domaines géologiques distincts côte à côte sur le variogramme expérimental.
+Impact de deux domaines géologiques distincts, côte à côte, sur le variogramme expérimental.
 ```
 
 Les deux solutions possibles sont :
 
-1. Éviter les stratégies d'échantillonnage biaisées vers les valeurs fortes.  
-2. Décimer l'échantillon pour assurer une couverture uniforme partout.
+1. Éviter les stratégies d'échantillonnage biaisées en faveur des valeurs élevées.  
+2. Décimer l'échantillon afin d'assurer une couverture uniforme partout.
 
 ---
 

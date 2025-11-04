@@ -137,30 +137,27 @@ Bien que la nature présente une grande diversité d’anisotropies complexes, l
 
 ## Anisotropie géométrique
 
-L’anisotropie géométrique correspond à une situation où les propriétés spatiales d’un phénomène varient selon la direction. Plus précisément, cela signifie que les variogrammes directionnels présentent le **même palier** dans toutes les directions, mais des **portées différentes**. Autrement dit, la distance à laquelle la corrélation spatiale décroît jusqu’à atteindre le palier dépend de la direction considérée.
+L’anisotropie géométrique correspond à une situation où les propriétés spatiales d’un phénomène varient selon la direction. Plus précisément, cela signifie que les variogrammes directionnels présentent le *même palier dans toutes les directions, mais des portées différentes. Autrement dit, la distance à laquelle la corrélation spatiale décroît jusqu’au palier dépend de la direction considérée.
 
-Ce type d’anisotropie est généralement modélisé à l’aide d’un **ellipsoïde** (ou d’une **ellipse** en 2D), d’où le terme *géométrique*. On y observe un **effet de pépite constant**, un **palier constant**, mais des **portées directionnelles variables**. En deux dimensions, l’anisotropie est représentée par une ellipse définie par une portée maximale ($a_g$) et une portée minimale ($a_p$), situées dans deux directions orthogonales. Ainsi, les portées décrivent une ellipse dont l’axe majeur est orienté selon la direction de $a_g$.
+Ce type d’anisotropie est généralement modélisé à l’aide d’un ellipsoïde (ou d’une ellipse en 2D), d’où le terme « géométrique ». On y observe un effet de pépite constant, un palier constant, mais des portées directionnelles variables. En deux dimensions, l’anisotropie est représentée par une ellipse définie par une portée maximale ($a_g$) et une portée minimale ($a_p$), situées dans deux directions orthogonales. Ainsi, les portées forment une ellipse dont l’axe majeur est orienté selon la direction de $a_g$. Les indices « p » et « g » correspondent à la petite et à la grande portée, respectivement.
 
 La portée effective en fonction de l’angle $\theta$ (mesuré à partir de la direction de $a_g$) est donnée par :
 
 $$
-a_\theta = \sqrt{a_g^2 \cos^2(\theta) + a_p^2 \sin^2(\theta)}
+a_\theta = \frac{a_g*a_p}{\sqrt{a_p^2 \cos^2(\theta) + a_g^2 \sin^2(\theta)}} 
 $$
 
-On peut alors estimer le variogramme directionnel $\gamma(h, \theta)$ soit en utilisant directement $a_\theta$, soit en corrigeant la distance $h$ pour tenir compte de l’anisotropie, selon :
+On peut alors estimer le variogramme directionnel $\gamma(h, \theta)$ à partir de $a_\theta$. C'est-à-dire que la portée dans la direction reliant les deux points est $a_\theta$.
 
-$$
-\gamma(h_{\theta},\theta) = \gamma(h_g)
-$$
-
-où la distance corrigée $h_g$ est donnée par :
+Il est également possible de transformer l'ellipse en un cercle de rayon égal à la grande portée. Ainsi, on transforme notre système anisotrope en un système isotrope dont les distances entre les points sont corrigées afin de tenir compte de ce changement. Ainsi, la distance corrigée $h_g$ pour tenir compte du changement de l’anisotropie vers un cas isotrope est :
 
 $$
 h_g = \sqrt{ \left( h_{\theta} \cos(\theta) \right)^2 + \left( \frac{a_g}{a_p} \, h_{\theta} \sin(\theta) \right)^2 }
 $$
 
+Une fois $h_g$ calculé, on obtient la valeur du variogramme en utilisant la distance corrigée $h_g$ et la grande portée $a_g$.
 
-L’anisotropie géométrique est typiquement observée dans les milieux où la géologie montre un **allongement préférentiel**, comme dans le cas des lentilles minéralisées, des paléochenaux ou des gisements stratiformes.
+L’anisotropie géométrique est typiquement observée dans les milieux où la géologie présente un allongement préférentiel, comme dans les lentilles minéralisées, les paléochenaux ou les gisements stratiformes.
 
 La [Fig. %s](#C6_anisotropie) illustre une ellipse représentant les paramètres utilisés pour calculer la portée en fonction de la direction.
 
@@ -197,7 +194,7 @@ Cette direction forme un angle de $48{,}4^\circ$ avec la direction de plus grand
 Par la suite, on calcule la portée dans cette direction en utilisant la formule présentée plus haut :
 
 $$
-a_{\theta} = \sqrt{100^2 \times \cos^2(48.4^\circ) + 60^2 \times \sin^2(48.4^\circ)} = 70.81\, m
+a_{\theta} = = \frac{100*60}{\sqrt{60^2 \cos^2(48.4^\circ) + 100^2 \sin^2(48.4^\circ)}} = 70.81\, m
 $$
 
 La dernière étape consiste à calculer la valeur du variogramme en utilisant l’équation du modèle sphérique, pour une distance de $h = 31{,}62,\text{m}$ et une portée directionnelle de $a_\theta = 70{,}81,\text{m}$ :
