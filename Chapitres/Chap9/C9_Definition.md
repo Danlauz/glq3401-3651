@@ -8,7 +8,7 @@ Ce chapitre présente les principes fondamentaux du cokrigeage, les formulations
 
 ## Variance d’estimation
 
-Dans le cadre du cokrigeage, l’estimateur linéaire de la variable principale $Z$, souvent appelée variable d’intérêt, est construit à partir des observations de $Z$ et de celles d’une variable secondaire $Y$. La variance de l’erreur d’estimation, ou variance d’estimation, quantifie l’incertitude associée à cette estimation en tenant compte de toutes les sources d’information disponibles. Ainsi, la valeur estimée à un point d’intérêt dépend à la fois des observations de la variable principale et de celles de la variable secondaire, pondérées en fonction de leur corrélation spatiale et croisée.
+Dans le cadre du cokrigeage, l’estimateur linéaire de la variable principale $Z$ est construit à partir des observations de $Z$ et de celles d’une variable secondaire $Y$. La variance de l’erreur, ou variance d’estimation, quantifie l’incertitude associée à cette estimation en tenant compte de toutes les sources d’information disponibles. Ainsi, la valeur estimée à un point d’intérêt dépend à la fois des observations de la variable principale et de celles de la variable secondaire, pondérées en fonction de leurs corrélations spatiales directes et croisées.
 
 Soit $\hat{Z}(x_0)$ l’estimation de $Z$ au point $x_0$, donnée par :
 
@@ -16,9 +16,9 @@ $$
 \hat{Z}(x_0) = \sum_{i=1}^{n_Z} \lambda_i Z(x_i) + \sum_{j=1}^{n_Y} \alpha_j Y(x_j),
 $$
 
-Où $\lambda_i$ et $\alpha_j$ représentent respectivement les poids appliqués aux observations de la variable principale $Z_i$ et de celles de la variable secondaire $Y_j$. 
+où $\lambda_i$ et $\alpha_j$ représentent respectivement les poids appliqués aux observations de la variable principale $Z(x_i)$ et de celles de la variable secondaire $Y(x_j)$. 
 
-> **Remarque — Types de configuration des données :**  
+> **Remarque :**  
 > Nous utilisons deux indices distincts pour souligner que les coordonnées des observations de $Z$ et de $Y$ peuvent différer.  
 > Autrement dit, les données peuvent être :
 >
@@ -26,7 +26,7 @@ Où $\lambda_i$ et $\alpha_j$ représentent respectivement les poids appliqués 
 > - **Non colocalisées** : aucune observation des deux variables n’est disponible au même emplacement ;  
 > - **Partiellement colocalisées** : certaines positions présentent les deux variables, tandis que d’autres n’en présentent qu’une seule.
 
-La [Fig. %s](#C9_DataPos) présente une illustration de ces trois cas de figure. Par simplification, nous adopterons une nomenclature unifiée pour représenter l’ensemble des cas. Ainsi, $Z_i$ désignera la $i^{\text{e}}$ observation de la variable principale $Z$, et $Y_i$ la $i^{\text{e}}$ observation de la variable secondaire $Y$, chacune étant associée à ses propres coordonnées spatiales. Pour alléger la notation, nous omettrons explicitement les indices de position et écrirons simplement $Z_i$ au lieu de $Z(\mathbf{x}_i)$, et de même $Y_i$ au lieu de $Y(\mathbf{v}_i)$.
+La [Fig. %s](#C9_DataPos) illustre ces trois cas de figure. Par simplification, nous adopterons une nomenclature unifiée pour représenter l’ensemble des cas. Ainsi, $Z_i$ désignera la $i^{\text{e}}$ observation de la variable principale $Z$, et $Y_i$ la $i^{\text{e}}$ observation de la variable secondaire $Y$. Il est important de noter que les ensembles d’observations de $Z$ et de $Y$ peuvent différer, tant en nombre qu’en position spatiale. Ainsi, l’indice $i$ fait référence à la position de l’observation dans l’ensemble des données de chaque variable, et non à une position commune dans l’espace. Autrement dit, la localisation associée à $Z_i$ n’est pas nécessairement la même que celle de $Y_i$. Pour alléger la notation, nous omettrons explicitement les indices de position et écrirons simplement $Z_i$ au lieu de $Z(\mathbf{x}_i)$, et de même $Y_i$ au lieu de $Y(\mathbf{x}_i)$.
 
 ```{figure} images/C9_DataPos.png
 :label: C9_DataPos
@@ -43,14 +43,14 @@ $$
 - 2 \sum_{i=1}^{n_Z} \lambda_i \mathrm{Cov}(Z_i, Z_0) 
 - 2 \sum_{i=1}^{n_Y} \alpha_i \mathrm{Cov}(Y_i, Z_0) \\
 &\quad + \sum_{i=1}^{n_Z} \sum_{j=1}^{n_Z} \lambda_i \lambda_j \mathrm{Cov}(Z_i, Z_j) 
-+ 2 \sum_{i=1}^{n_Z} \sum_{j=1}^{n_Y} \lambda_i \alpha_j \mathrm{Cov}(Z_i, Y_j) \\
-&\quad + \sum_{i=1}^{n_Y} \sum_{j=1}^{n_Y} \alpha_i \alpha_j \mathrm{Cov}(Y_i, Y_j).
++ \sum_{i=1}^{n_Z} \sum_{j=1}^{n_Y} \lambda_i \alpha_j \mathrm{Cov}(Z_i, Y_j) \\
+&\quad + \sum_{i=1}^{n_Z} \sum_{j=1}^{n_Y} \lambda_j \alpha_i \mathrm{Cov}(Y_i, Z_j) + \sum_{i=1}^{n_Y} \sum_{j=1}^{n_Y} \alpha_i \alpha_j \mathrm{Cov}(Y_i, Y_j).
 \end{aligned}
 $$
 
-Cette expression met en évidence le rôle des covariances croisées entre les variables (c.-à-d., $\mathrm{Cov}(Z_i, Y_j)$), ainsi que des covariances directes entre les variables (c.-à-d., $\mathrm{Cov}(Z_i, Z_j)$ et $\mathrm{Cov}(Y_i, Y_j)$, dans la précision de l’estimation.
+Cette expression met en évidence le rôle des covariances croisées entre les variables (c.-à-d., $\mathrm{Cov}(Z_i, Y_j)$ et $\mathrm{Cov}(Y_i, Z_j)$), ainsi que des covariances directes entre les variables (c.-à-d., $\mathrm{Cov}(Z_i, Z_j)$ et $\mathrm{Cov}(Y_i, Y_j)$, dans la précision de l’estimation.
 
-L’optimisation des vecteurs de poids $\boldsymbol{\lambda}=[\lambda_1, \ldots, \lambda_{n_Z}]$ et $\boldsymbol{\alpha}=[\alpha_1, \ldots, \alpha_{n_Y}]$ sous les contraintes de non-biais conduit au système de cokrigeage ordinaire (CO) et au système de cokrigeage simple (CS).
+L’optimisation des vecteurs de poids $\boldsymbol{\lambda}=[\lambda_1, \ldots, \lambda_{n_Z}]$ et $\boldsymbol{\alpha}=[\alpha_1, \ldots, \alpha_{n_Y}]$ sous les contraintes de non-biais conduit au système de cokrigeage ordinaire (CO) et au système de cokrigeage simple (CS) lorsque ne tient pas compte des contraintes.
 
 
 ## Cokrigeage ordinaire (CO)
@@ -67,7 +67,7 @@ $$
 \sum_{i=1}^{n_z} \lambda_i = 1 \quad \text{et} \quad \sum_{i=1}^{n_y} \alpha_i = 0
 $$
 
-Par rapport au krigeage ordinaire, on constate l'ajout d'une contrainte supplémentaire liée à la variable secondaire. Cette contrainte indique que la somme des poids des variables secondaires doit être nulle. Cela tient au fait que l'espérance de l'estimateur doit être égale à la moyenne du processus aléatoire $Z$. Ainsi, on doit avoir $E[\hat{Z}_0] = E[\sum_{i=1}^{n_z} \lambda_i Z_i + \sum_{i=1}^{n_y} \alpha_i Y_i] = \sum_{i=1}^{n_z} \lambda_i E[Z_i] + \sum_{i=1}^{n_z} \alpha_i E[Y_i] = \sum_{i=1}^{n_z} \lambda_i m_Z + \sum_{i=1}^{n_z} \alpha_i m_Y = m_Z $. Cela est vrai uniquement si $\sum_{i=1}^{n_z} \lambda_i = 1$ et si $\sum_{i=1}^{n_y} \alpha_i = 0$.
+Par rapport au krigeage ordinaire, on constate l'ajout d'une contrainte supplémentaire liée à la variable secondaire. Cette contrainte indique que la somme des poids des variables secondaires doit être nulle. Cela tient au fait que l'espérance de l'estimateur doit être égale à la moyenne du processus aléatoire $Z$. Ainsi, on doit avoir $E[\hat{Z}_0] = E[\sum_{i=1}^{n_z} \lambda_i Z_i + \sum_{i=1}^{n_y} \alpha_i Y_i] = \sum_{i=1}^{n_z} \lambda_i E[Z_i] + \sum_{i=1}^{n_z} \alpha_i E[Y_i] = \sum_{i=1}^{n_z} \lambda_i m_Z + \sum_{i=1}^{n_z} \alpha_i m_Y = m_Z ( \sum_{i=1}^{n_z} \lambda_i ) + m_Y (\sum_{i=1}^{n_z} \alpha_i) = m_Z $. Cela est vrai uniquement si $\sum_{i=1}^{n_z} \lambda_i = 1$ et si $\sum_{i=1}^{n_y} \alpha_i = 0$.
 
 Tout comme dans le krigeage ordinaire, nous allons devoir former un Lagrangien afin de tenir compte de nos deux contraintes de non-biais. On forme le Lagrangien en introduisant deux multiplicateurs de Lagrange, $\mu_Z$ et $\mu_Y$, et la fonction à minimiser s'écrit alors :
 
@@ -79,8 +79,8 @@ On dérive en fonction des poids $\lambda_i$ et $\alpha_i$ ainsi que des multipl
 
 $$
 \begin{cases}
-\sum_{j=1}^{n_z} \lambda_i \mathrm{Cov}(Z_i, Z_j) + \sum_{j=1}^{n_y} \gamma_l \mathrm{Cov}(Z_i, Y_j) + \mu_Z = \mathrm{Cov}(Z_i, Z_0), & i = 1, \dots, n_z \\
-\sum_{j=1}^{n_z} \lambda_i \mathrm{Cov}(Y_i, Z_j) + \sum_{j=1}^{n_y} \gamma_l \mathrm{Cov}(Y_i, Y_j) + \mu_Y = \mathrm{Cov}(Y_i, Z_0), & i = 1, \dots, n_y \\
+\sum_{j=1}^{n_z} \lambda_i \mathrm{Cov}(Z_i, Z_j) + \sum_{j=1}^{n_y} \alpha_j \mathrm{Cov}(Z_i, Y_j) + \mu_Z = \mathrm{Cov}(Z_i, Z_0), & i = 1, \dots, n_z \\
+\sum_{j=1}^{n_z} \lambda_i \mathrm{Cov}(Y_i, Z_j) + \sum_{j=1}^{n_y} \alpha_j \mathrm{Cov}(Y_i, Y_j) + \mu_Y = \mathrm{Cov}(Y_i, Z_0), & i = 1, \dots, n_y \\
 \sum_{i=1}^{n_z} \lambda_i = 1 \\
 \sum_{i=1}^{n_y} \gamma_j = 0
 \end{cases}
@@ -89,7 +89,7 @@ $$
 La variance d’estimation associée est :
 
 $$
-\sigma^2_{CO} = \mathrm{Var}(Z_0) - \sum_{i=1}^{n_z} \lambda_i \mathrm{Cov}(Z_i, Z_0) - \sum_{i=1}^{n_y} \alpha_i \mathrm{Cov}(Y_i, Z_0) - \mu_Z - \mu_Y
+\sigma^2_{CO} = \mathrm{Var}(Z_0) - \sum_{i=1}^{n_z} \lambda_i \mathrm{Cov}(Z_i, Z_0) - \sum_{i=1}^{n_y} \alpha_i \mathrm{Cov}(Y_i, Z_0) - \mu_Z
 $$
 
 Ce système s’écrit de façon compacte en forme matricielle :
@@ -97,7 +97,7 @@ Ce système s’écrit de façon compacte en forme matricielle :
 $$
 \begin{bmatrix}
 K_{ZZ}& K_{ZY} & 1 & 0 \\
-K_{YZ}& K_{YY} & 0 & 1
+K_{YZ}& K_{YY} & 0 & 1 \\
 1^T & 0 & 0 & 0 \\
 0 & 1^T & 0 & 0
 \end{bmatrix}
@@ -116,21 +116,20 @@ K_{YZ}& K_{YY} & 0 & 1
 \end{bmatrix}
 $$
 
-Où $K_{ZZ}$ désigne la matrice des covariances entre toutes les observations de la variable principale, $K_{ZY}$ la matrice des covariances croisées entre les observations de la variable principale et celles de la variable secondaire, et $K_{YY}$ la matrice des covariances entre les observations de la variable secondaire.
+Où $K_{ZZ}$ désigne la matrice des covariances entre toutes les observations de la variable principale, $K_{ZY}$ la matrice des covariances croisées entre les observations de la variable principale et celles de la variable secondaire, et $K_{YY}$ la matrice des covariances entre les observations de la variable secondaire. On note que la matrice de cokrigeage reste symétrique ; on a ainsi que $K_{ZY} = K_{ZY}^T$, où $^T$ est l'opérateur de transposition.
 
 Les vecteurs $\boldsymbol{\lambda}$ et $\boldsymbol{\alpha}$ représentent, respectivement, les poids associés aux observations de la variable principale et de la variable secondaire, tandis que $\mathbf{k}{ZZ}$ et $\mathbf{k}{ZY}$ sont les vecteurs de covariances entre le point à estimer et les observations de la variable principale et de la variable secondaire, respectivement.
 
 > **Note :** Pour effectuer un cokrigeage ordinaire, il faut disposer d’au moins une observation de la variable principale et deux observations de la variable secondaire. La raison est la suivante : il est nécessaire d’attribuer un poids à au moins une coordonnée associée à la variable principale $Z$ afin de satisfaire la contrainte de somme des poids égale à 1.
-De plus, il faut au moins deux observations de la variable secondaire $Y$ pour satisfaire à la contrainte de somme des poids égale à 0 imposée aux variables secondaires. S’il n’y avait qu’une seule observation secondaire, son poids serait nul pour respecter cette contrainte, et le système se réduirait alors à celui du krigeage ordinaire.
+De plus, il faut au moins deux observations de la variable secondaire $Y$ pour satisfaire à la contrainte de somme des poids nulle imposée aux variables secondaires. S’il n’y avait qu’une seule observation secondaire, son poids serait nul pour respecter cette contrainte, et le système se réduirait alors à celui du krigeage ordinaire.
 
 ---
 
-## Cokrigeage simple
+## Cokrigeage simple (CS)
 
-Si les moyennes des variables $m_Z$ et $m_Y$ sont connues, il est possible de centrer les données et de travailler directement sur les résidus. 
-Les résidus correspondent à la partie décentrée des variables, c’est-à-dire à la différence entre chaque observation et sa moyenne :
+Si les moyennes des variables $Z$ et $Y$, notées respectivement $m_Z$ et $m_Y$, sont connues, il est possible de centrer les données et de travailler directement sur les résidus. Les résidus correspondent à la partie décentrée des variables, c’est-à-dire à la différence entre chaque observation et sa moyenne :
 $$
-Z'_i = Z_i - m_Z \quad \text{et} \quad Y'_j = Y_j - m_Y.
+Z'_i = Z_i - m_Z \quad \text{et} \quad Y'_i = Y_i - m_Y.
 $$
 On estime alors le résidu $Z'_0$, puis on lui ajoute la moyenne $m_Z$ pour obtenir l’estimation finale :
 $$
@@ -141,15 +140,15 @@ De cette manière, on peut omettre les contraintes de non-biais du cokrigeage or
 
 Ainsi, l’estimateur devient :
 $$
-\hat{Z}_0 = m_Z + \sum_{i=1}^{n_z} \lambda_i (Z_i - m_Z) + \sum_{i=1}^{n_y} \alpha_j (Y_i - m_Y)
+\hat{Z}_0 = m_Z + \sum_{i=1}^{n_z} \lambda_i (Z_i - m_Z) + \sum_{i=1}^{n_y} \alpha_i (Y_i - m_Y)
 $$
 
-avec les poids obtenus par résolution du système :
+avec les poids obtenus par résolution du système suivant :
 
 $$
 \begin{cases}
-\sum_{j=1}^{n_z} \lambda_i \mathrm{Cov}(Z_i, Z_j) + \sum_{j=1}^{n_y} \gamma_l \mathrm{Cov}(Z_i, Y_j) = \mathrm{Cov}(Z_i, Z_0), & i = 1, \dots, n_z \\
-\sum_{j=1}^{n_z} \lambda_i \mathrm{Cov}(Y_i, Z_j) + \sum_{j=1}^{n_y} \gamma_l \mathrm{Cov}(Y_i, Y_j) = \mathrm{Cov}(Y_i, Z_0), & i = 1, \dots, n_y 
+\sum_{j=1}^{n_z} \lambda_i \mathrm{Cov}(Z_i, Z_j) + \sum_{j=1}^{n_y} \alpha_j \mathrm{Cov}(Z_i, Y_j) = \mathrm{Cov}(Z_i, Z_0), & i = 1, \dots, n_z \\
+\sum_{j=1}^{n_z} \lambda_i \mathrm{Cov}(Y_i, Z_j) + \sum_{j=1}^{n_y} \alpha_j \mathrm{Cov}(Y_i, Y_j) = \mathrm{Cov}(Y_i, Z_0), & i = 1, \dots, n_y 
 \end{cases}
 $$
 
@@ -159,13 +158,31 @@ $$
 \sigma^2_{CS} = \mathrm{Var}(Z_0) - \sum_{i=1}^{n_z} \lambda_i \mathrm{Cov}(Z_i, Z_0) - \sum_{i=1}^{n_y} \alpha_i \mathrm{Cov}(Y_i, Z_0)
 $$
 
+Le systèmede cokrigeage simple s’écrit de façon compacte en forme matricielle de la manière suivante:
+
+$$
+\begin{bmatrix}
+K_{ZZ}& K_{ZY}  \\
+K_{YZ}& K_{YY}
+\end{bmatrix}
+\begin{bmatrix}
+\boldsymbol{\lambda} \\
+\boldsymbol{\alpha}
+\end{bmatrix}
+=
+\begin{bmatrix}
+\mathbf{k_{ZZ}} \\
+\mathbf{k_{YZ}}
+\end{bmatrix}
+$$
+
 > **Note :** Contrairement au cokrigeage ordinaire, on peut ici réaliser une estimation même sans observations de la variable principale, à condition d’avoir au moins une observation de la variable secondaire. Si aucune observation de la variable secondaire n’est disponible, il ne s’agit plus d’un cokrigeage, mais simplement d’un krigeage.
 
 ---
 
 ## Cas particulier
 
-Si l’une des deux variables possède une moyenne connue, par exemple lorsque la moyenne de la variable principale $m_Z$ est inconnue mais celle de la variable secondaire $m_Y$ est connue, on peut construire un système d’équations qui respecte cette contrainte.  
+Si l’une des deux variables possède une moyenne connue, par exemple lorsque la moyenne de la variable principale $m_Z$ est inconnue mais celle de la variable secondaire $m_Y$ est connue, on peut construire un système d’équations qui satisfaite cette contrainte.  
 
 Dans ce cas, seules les observations de la variable principale sont soumises à la contrainte de non-biais. Tandis qu'aucune contrainte n'est imposée aux poids de la variable $Y$, car les résidus ont une moyenne nulle. Ainsi, on obtient une seule contrainte :  
 
@@ -184,15 +201,15 @@ où seule la moyenne de $Y$ est soustraite, puisque celle de $Z$ demeure inconnu
 On forme le Lagrangien en introduisant un seul multiplicateur de Lagrange sur la variable $Z$, soit $\mu_Z$, et la fonction à minimiser s'écrit alors :
 
 $$
-L(\boldsymbol{\lambda},\boldsymbol{\alpha},\mu_Z) = \mathrm{Var}(e) - 2 \mu_Z (\sum_{i=1}^{n_z} \lambda_i -1 )
+L(\boldsymbol{\lambda},\boldsymbol{\alpha},\mu_Z) = \mathrm{Var}(e) - 2 \mu_Z (\sum_{i=1}^{n_z} \lambda_i - 1 )
 $$
 
 On dérive en fonction des poids $\lambda_i$ et $\alpha_i$, ainsi que du multiplicateur de Lagrange. Cela donne le système de cokrigeage suivant :
 
 $$
 \begin{cases}
-\sum_{j=1}^{n_z} \lambda_i \mathrm{Cov}(Z_i, Z_j) + \sum_{j=1}^{n_y} \gamma_l \mathrm{Cov}(Z_i, Y_j) + \mu_Z = \mathrm{Cov}(Z_i, Z_0), & i = 1, \dots, n_z \\
-\sum_{j=1}^{n_z} \lambda_i \mathrm{Cov}(Y_i, Z_j) + \sum_{j=1}^{n_y} \gamma_l \mathrm{Cov}(Y_i, Y_j) = \mathrm{Cov}(Y_i, Z_0), & i = 1, \dots, n_y \\
+\sum_{j=1}^{n_z} \lambda_i \mathrm{Cov}(Z_i, Z_j) + \sum_{j=1}^{n_y} \alpha_i \mathrm{Cov}(Z_i, Y_j) + \mu_Z = \mathrm{Cov}(Z_i, Z_0), & i = 1, \dots, n_z \\
+\sum_{j=1}^{n_z} \lambda_i \mathrm{Cov}(Y_i, Z_j) + \sum_{j=1}^{n_y} \alpha_i \mathrm{Cov}(Y_i, Y_j) = \mathrm{Cov}(Y_i, Z_0), & i = 1, \dots, n_y \\
 \sum_{i=1}^{n_z} \lambda_i = 1
 \end{cases}
 $$ 
@@ -210,13 +227,13 @@ Ce système s’écrit de façon compacte en forme matricielle :
 $$
 \begin{bmatrix}
 K_{ZZ}& K_{ZY} & 1  \\
-K_{YZ}& K_{YY} & 0
+K_{YZ}& K_{YY} & 0  \\
 1^T & 0 & 0 \\
 \end{bmatrix}
 \begin{bmatrix}
 \boldsymbol{\lambda} \\
 \boldsymbol{\alpha} \\
-\mu_Z
+\mu_Z   
 \end{bmatrix}
 =
 \begin{bmatrix}
@@ -226,8 +243,18 @@ K_{YZ}& K_{YY} & 0
 \end{bmatrix}
 $$ 
 
-Remarquez qu'il n'y a pas une grande différence entre le système de cokrigeage simple, ordinaire, ou celui-ci. Il faut simplement adapter les lignes de 1 et de 0, pour tenir compte de la contrainte de biais de manière adéquate selon la connaissance ou non des moyennes des processus aléatoire $Z$ et $Y$.
+Remarquez qu'il n'y a pas de grande différence entre le système de cokrigeage simple, ordinaire et celui-ci. Il faut simplement adapter les lignes de 1 et de 0, pour tenir compte de la contrainte de biais de manière adéquate selon la connaissance ou non des moyennes des processus aléatoires $Z$ et $Y$.
 
 > **Remarque :**  
 > Ce cas est courant lorsque la variable secondaire provient d’un modèle ou d’une mesure exhaustive déjà centrée, tandis que la variable principale repose sur un échantillonnage partiel.
 
+## Changement de paradigme
+
+Dans la majorité des applications pratiques du krigeage, on préfère le krigeage ordinaire. Pourquoi ? Parce qu’il permet de relâcher l’hypothèse stricte de stationnarité en supposant une quasi-stationnarité, c’est-à-dire une moyenne qui varie localement (lentement) dans l’espace, avec une structure de covariance constante à l’intérieur du voisinage d’estimation.
+Cette approche rend le krigeage ordinaire robuste face à des écarts modérés à la stationnarité, car la moyenne est considérée comme localement constante dans chaque voisinage de recherche.
+À l’inverse, le krigeage simple exige une stationnarité d’ordre deux complète, où la moyenne et la covariance doivent être constantes sur l’ensemble du domaine. Ainsi, nous avons tendance à utiliser le KO.
+De plus, l’outil de base est le variogramme, car il nous est possible de modéliser des scénarios où l’on ne connaît pas le palier, sans avoir besoin de la moyenne de la variable principale.
+
+En revanche, dans le cas du cokrigeage, la situation est légèrement différente. On utilise le plus souvent le cokrigeage simple, notamment dans les contextes où la variable principale n’est pas observée à certains endroits, mais où des variables secondaires corrélées sont disponibles.
+Un exemple classique est l’estimation de la densité des roches (souvent non observée) à partir de levés gravimétriques (données échantillonnées de manière très exhaustive).
+Dans le cokrigeage, la covariance — et non le variogramme — devient l’outil fondamental, puisqu’elle permet de décrire les relations conjointes et potentiellement asymétriques entre les variables principales et secondaires, ce que le variogramme ne permet pas. De plus, la covariance croisée permet de tenir compte de données colocalisé, ce que le variogramme croisée ne permet pas. Nous allons voir cela à la section suivante.

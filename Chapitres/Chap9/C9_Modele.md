@@ -1,8 +1,8 @@
-# 9.2 Fonctions de covariance admissibles
+# 9.3 Fonctions de covariance admissibles
 
 On a vu précédemment que le cokrigeage nécessite la connaissance des covariances $\mathrm{Cov}(Z_i, Z_j)$, $\mathrm{Cov}(Y_i, Y_j)$ et $\mathrm{Cov}(Z_i, Y_j)$. Les deux premières sont appelées covariances directes, car elles concernent la même variable, tandis que la dernière est une covariance croisée, puisqu’elle met en relation les deux variables simultanément (on croise les données).
 
-La covariance croisée joue un rôle essentiel : elle permet de transférer l’information d’une variable à l’autre lorsqu’elles sont corrélées spatialement. Autrement dit, même si la variable principale $Z$ est peu échantillonnée, les observations de la variable secondaire $Y$ peuvent contribuer à améliorer l’estimation de $Z$ grâce à la relation statistique entre les deux champs.
+La covariance croisée joue un rôle essentiel : elle permet de transférer l’information d’une variable à l’autre lorsqu’elles sont corrélées spatialement. Autrement dit, même si la variable principale $Z$ est peu échantillonnée, les observations de la variable secondaire $Y$ peuvent contribuer à améliorer l’estimation de $Z$ grâce à la relation statistique entre les deux variables.
 
 Comme dans le cas univariable, on utilise généralement des modèles de covariance connus et admissibles pour modéliser les covariances directes. En revanche, la covariance croisée présente certaines particularités : 1) les coefficients d’effet de pépite et les paliers peuvent être négatifs, notamment lorsqu’il existe une corrélation négative entre les variables $Z$ et $Y$, et 2) Il n’est pas toujours vrai que les fonctions de covariance croisées soient symétriques ; autrement dit, $\mathrm{Cov}_{ZY}(h)$ n’est pas nécessairement égal à $\mathrm{Cov}_{ZY}(-h)$. Les covariances croisées peuvent être asymétriques. Ainsi, le comportement statistique entre la variable principale et la variable secondaire peut s'avérer relativement complexe.
 
@@ -14,9 +14,9 @@ Heureusement, il existe des cas particuliers où l’admissibilité est plus fac
 
 ### 1. Relations déterministes entre $Z$ et $Y$
 
-S'il est possible de lier mathématiquement la variable secondaire $Y$ à la variable principale $Z$, il est possible de déduire la covariance croisée $\mathrm{Cov}(Z,Y)$ et la covariance $\mathrm{Cov}(Y,Y)$ à partir de la covariance $\mathrm{Cov}(Z,Z)$. 
+S'il est possible de lier mathématiquement la variable secondaire $Y$ à la variable principale $Z$, il est possible de déduire, à partir de la covariance $\mathrm{Cov}(Z,Z)$, les covariances croisées $\mathrm{Cov}(Z,Y)$ et $\mathrm{Cov}(Y,Y)$. 
 
-Par exemple, si $Y$ est la dérivée de $Z$, alors il existe une relation directe entre les covariances simples et croisées des deux variables, ce qui garantit l’admissibilité. Il suffit d'avoir un modèle admissible pour la variable $Z$, et les covariances directs et croisées déduites à partir de ce modèle seront admissibles.
+Par exemple, si $Y$ est la dérivée de $Z$, alors il existe une relation directe entre les covariances simples et croisées des deux variables, ce qui garantit l’admissibilité. Il suffit d'avoir un modèle admissible pour la variable $Z$, et les covariances directs et croisées déduites à partir de ce modèle seront elles-mêmes admissibles.
 
 Plus généralement, si l’on considère une transformation linéaire $L(Z)$ appliquée à $Z$ (par exemple une dérivée, une intégrale ou une combinaison linéaire), alors :
 

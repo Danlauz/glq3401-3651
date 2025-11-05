@@ -1,4 +1,4 @@
-# 9.3 Propriétés du cokrigeage
+# 9.4 Propriétés du cokrigeage
 
 Toutes les propriétés du krigeage s'appliquent également au cokrigeage. En plus, on observe les propriétés spécifiques suivantes :
 
