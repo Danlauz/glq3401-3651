@@ -1,6 +1,6 @@
 # 9.3 Fonctions de covariance admissibles
 
-On a vu précédemment que le cokrigeage nécessite la connaissance des covariances $\mathrm{Cov}(Z_i, Z_j)$, $\mathrm{Cov}(Y_i, Y_j)$ et $\mathrm{Cov}(Z_i, Y_j)$. Les deux premières sont appelées covariances directes, car elles concernent la même variable, tandis que la dernière est une covariance croisée, puisqu’elle met en relation les deux variables simultanément (on croise les données).
+On a vu précédemment que le cokrigeage nécessite la connaissance des covariances $\mathrm{Cov}(Z_i, Z_j)$, $\mathrm{Cov}(Y_i, Y_j)$ , $\mathrm{Cov}(Z_i, Y_j)$ et $\mathrm{Cov}(Y_i, Z_j). Les deux premières sont appelées covariances directes, car elles concernent la même variable, tandis que les dernières sont des covariances croisées, puisqu’elles mettent en relation les deux variables simultanément (on croise les données).
 
 La covariance croisée joue un rôle essentiel : elle permet de transférer l’information d’une variable à l’autre lorsqu’elles sont corrélées spatialement. Autrement dit, même si la variable principale $Z$ est peu échantillonnée, les observations de la variable secondaire $Y$ peuvent contribuer à améliorer l’estimation de $Z$ grâce à la relation statistique entre les deux variables.
 
@@ -21,7 +21,7 @@ Par exemple, si $Y$ est la dérivée de $Z$, alors il existe une relation direct
 Plus généralement, si l’on considère une transformation linéaire $L(Z)$ appliquée à $Z$ (par exemple une dérivée, une intégrale ou une combinaison linéaire), alors :
 
 $$
-\mathrm{Cov}(Z(x),L(Z)(x+h)) = L\big(\mathrm{Cov}(Z(x),Z(x+h))\big).
+\mathrm{Cov}(Z(x),L(Z(x+h))) = L\big(\mathrm{Cov}(Z(x),Z(x+h))\big).
 $$
 
 #### Exemple 1D — $Y(x)$ est la dérivée de $Z(x)$
@@ -46,14 +46,12 @@ C_{YY}(h) = \mathrm{Cov}(Y(x), Y(x+h))
        = -\frac{d^2C_{ZZ}(h)}{dh^2}.
 $$  
 
-Enfin, on remarque que :  
-
 $$
 C_{YZ}(h) = -C_{ZY}(h).
 $$  
 
 
-### 2. *Covariances proportionnelles 
+### 2. Covariances proportionnelles 
 
 Dans ce cas, toutes les fonctions de covariance (simples et croisées) sont proportionnelles à une même fonction de base $C(h)$, à des constantes multiplicatives près. La matrice de covariance s’écrit alors :
 
@@ -105,27 +103,30 @@ On considère deux variables $Z$ et $Y$.
 
 On peut écrire :  
 $$
-\mathbf{C}(h) =
+\mathbf{C}(h)
+=
 \begin{bmatrix}
-C_{ZZ}(h) & C_{ZY}(h) \\
+C_{ZZ}(h) & C_{ZY}(h) \\[4pt]
 C_{YZ}(h) & C_{YY}(h)
 \end{bmatrix}
-= 
+=
 \begin{bmatrix}
-1 & 0 \\
+1 & 0 \\[4pt]
 0 & 1
 \end{bmatrix}
-\delta(h) +
+\,\delta(h)
+\;+\;
 \begin{bmatrix}
-2 & 2.4 \\
+2 & 2.4 \\[4pt]
 2.4 & 4
 \end{bmatrix}
-C_{\text{Sph}}(h; 30)
+\,C_{\mathrm{Sph}}(h; 30)
 $$
+
 où $\delta(h) = 1$ si $h=0$ et $0$ sinon (effet de pépite).
 
 La forme du modèle est celle d’un modèle linéaire de corégionalisation.  
-Le déterminant de la première matrice est $1$, celui de la seconde est $2.24$, donc le modèle est admissible.
+Le déterminant de la première matrice est $1$, celui de la seconde est $2.24$. Donc, le modèle est admissible.
 
 ---
 ## Exemple de calcul avec le MLC
@@ -136,16 +137,16 @@ $$
 \mathrm{Cov}(Z(x), Y(x+10)) = 0 + 2.4 \times \left[ 1 - \left(1.5 \times \frac{10}{30} - 0.5 \times \left(\frac{10}{30}\right)^3 \right) \right] = 1.244.
 $$
 
-> Note : ce modèle procure une corrélation à la distance 0 de :  
-> $$
-> \sqrt{\frac{2.4^2}{3 \times 5}} = 0.62,
-> $$
-> qui est assez faible.  
-> Toutefois, si on interprète l'effet de pépite comme un bruit blanc, la corrélation entre les variables *non bruitées* serait :  
-> $$
-> \frac{2.4}{\sqrt{2 \times 4}} = 0.85,
-> $$
-> beaucoup plus élevée.
+Note : ce modèle procure une corrélation à la distance 0 de :  
+$$
+\sqrt{\frac{2.4^2}{3 \times 5}} = 0.62,
+$$
+qui est faible.  
+Toutefois, si on interprète l'effet de pépite comme un bruit blanc, la corrélation entre les variables *non bruitées* serait :  
+$$
+\frac{2.4}{\sqrt{2 \times 4}} = 0.85,
+$$
+beaucoup plus élevée.
 
 ---
 
@@ -171,25 +172,44 @@ Z0 ?
 Le système s’écrit :
 
 $$
+
+\begin{bmatrix}
+C_{Z_1,Z_1} & C_{Z_2,Z_1} \\
+C_{Z_1,Z_2} & C_{Z_2,Z_2}
+\end{bmatrix}
 \begin{bmatrix}
 \lambda_1 \\
 \lambda_2
-\end{bmatrix}^T
-\begin{bmatrix}
-C_{ZZ}(0) & C_{ZZ}(10) \\
-C_{ZZ}(10) & C_{ZZ}(0)
 \end{bmatrix}
 =
 \begin{bmatrix}
-C_{ZZ}(5) \\
-C_{ZZ}(5)
-\end{bmatrix}^T,
+C_{Z_1,Z_0} \\
+C_{Z_2,Z_0}
+\end{bmatrix},
 $$
 
-avec les résultats numériques :
+et l,aplication numérique donne les valeurs suivantes : 
+
+\begin{bmatrix}
+3 & 1.037 \\
+1.037 & 3
+\end{bmatrix}
+\begin{bmatrix}
+\lambda_1 \\
+\lambda_2
+\end{bmatrix}
+=
+\begin{bmatrix}
+1.5046 \\
+1.5046
+\end{bmatrix},
+$$
+
+
+La résolution du système donne :
 
 $$
-\lambda = \begin{bmatrix} 0.46 \\ 0.37 \end{bmatrix}, \quad \sigma^2 = 0.87.
+\lambda = \begin{bmatrix} 0.3727 \\ 0.3727 \end{bmatrix}, \quad \sigma_{KS}^2 = 1.8784.
 $$
 
 ---
@@ -200,26 +220,70 @@ On forme la matrice croisée et les poids $\lambda_i$ correspondants, par exempl
 
 $$
 \begin{bmatrix}
-\lambda_{Y0} \\
-\lambda_{Y1} \\
-\lambda_{Z1} \\
-\lambda_{Z2}
-\end{bmatrix}^T
+C_{Z_1,Z_1} & C_{Z_1,Z_2} & C_{Z_1,Y_1} & C_{Z_1,Y_0} \\
+C_{Z_2,Z_1} & C_{Z_2,Z_2} & C_{Z_2,Y_1} & C_{Z_2,Y_0} \\
+C_{Y_1,Z_1} & C_{Y_1,Z_2} & C_{Y_1,Y_1} & C_{Y_1,Y_0} \\
+C_{Y_0,Z_1} & C_{Y_0,Z_2} & C_{Y_0,Y_1} & C_{Y_0,Y_0}
+\end{bmatrix}
 \begin{bmatrix}
-C_{YY} & C_{YZ} & \cdots & \cdots \\
-\vdots & \vdots & \ddots & \vdots \\
-\vdots & \vdots & \ddots & \cdots \\
-\cdots & \cdots & \cdots & C_{ZZ}
+\lambda_{Z1} \\
+\lambda_{Z2} \\
+\lambda_{Y1} \\
+\lambda_{Y0}
 \end{bmatrix}
 =
 \begin{bmatrix}
-C_{ZY}(5) \\
-\vdots
-\end{bmatrix}^T,
+C_{Z_1,Z_0} \\
+C_{Z_2,Z_0} \\
+C_{Y_1,Z_0} \\
+C_{Y_0,Z_0}
+\end{bmatrix}
 $$
 
-avec une réduction significative de la variance d’estimation.  
-La variable auxiliaire $Y_0$ reçoit un poids important, ce qui illustre le bénéfice du cokrigeage.
+Il est désormais important de lire attentivement la matrice de corégionalisation linéaire pour effectuer les calculs. Il faut sélectioner adéquation les paliers respectant les paires de point en jeu. Une fois réaliser, on obtient la matrice complète suivante : 
+
+$$
+\begin{bmatrix}
+3      & 1.037  & 2.4    & 1.8056 \\
+1.037  & 3      & 1.2444 & 1.8056 \\
+2.4    & 1.2444 & 5      & 3.0093 \\
+1.8056 & 1.8056 & 3.0093 & 5
+\end{bmatrix}
+\begin{bmatrix}
+\lambda_{Z1} \\
+\lambda_{Z2} \\
+\lambda_{Y1} \\
+\lambda_{Y0}
+\end{bmatrix}
+=
+\begin{bmatrix}
+1.5046 \\
+1.5046 \\
+1.8056 \\
+2.4
+\end{bmatrix}
+$$
+
+La résolution du système de cokrigeage simple donne : 
+$$
+\lambda_{Z1} = 0.2294 \quad \lambda_{Z1} = 0.2336  \quad \lambda_{Z1} = 0.0072  \quad \lambda_{Y0} = 0.3085  \quad \sigma_{CS}^2 = 1.5500.
+$$
+
+Notons que 1) la variable secondaire $Y_0$ a reçu un poids important, car la propriété de l'effet d'écran du krigeage s'applique aussi au cokrigeage, 2) la symétrie des poids des 2 observations en $Z$ n'est pas préservée, car, à un de ces points, on connaît aussi la variable secondaire $Y$, et 3) la réduction de la variance d'estimation procurée par le cokrigeage est assez importante.
+
+Si nous réalsons les calculs pour le krigeage ordinaire et le cokrigeage ordinaire nous aurions les résultat suivants : 
+
+Krigeage ordinaire:
+$$
+\lambda = \begin{bmatrix} 0.5 \\ 0.5 \end{bmatrix}, \quad \sigma_{KS}^2 = 2.0093.
+$$
+
+Cokrigeage ordinaire:
+$$
+\lambda_{Z1} = 0.5494 \quad \lambda_{Z1} = 0.4506  \quad \lambda_{Z1} = -0.1678  \quad \lambda_{Y0} = 0.1678  \quad \sigma_{CS}^2 = 1.9067.
+$$
+
+Noter que la somme des poids de la variable principale $Z$ donne 1, et celle de la variable secondaire $Y$ donne 0, comme prévu. Cette dernière contrainte empêche ici le cokrigeage ordinaire d'améliorer substantiellement la prédiction du krigeage ordinaire comme l'indique les variance d'estimation.
 
 ---
 
@@ -244,11 +308,11 @@ Dans la plupart des cas, il est toutefois préférable d’utiliser la covarianc
 Une relation utile relie la covariance croisée et le variogramme croisé :
 
 $$
-\gamma_{ZY}(h) = C_{ZY}(0) - C_{ZY}(h)
+\gamma_{ZY}(h) = C_{ZY}(0) - 0.5 (C_{ZY}(h)+C_{ZY}(-h))
 $$
 
 
-Si $Y = Z$, on retrouve alors la formule du variogramme univarié classique.
+Si $Y = Z$, on obtient alors la formule du variogramme univarié classique.
 
 ## Exemple d'application (inspiré de Gloaguen, M.Sc.A., 2000)
 
