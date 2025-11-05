@@ -211,7 +211,7 @@ Noter que $\hat{C}_{ZY,e}(-1,0)$ est positive tandis que $\hat{C}_{ZY,e}(1,0)$ e
 Dans le cas du variogramme croisé expérimental, aucun changement se produit. On constate que les couples pour $h$ et $h'=-h$ sont identiques. C'est normal, car le variogramme croisé est symétrique par définition.
 
 
-```{figure} images/C9_Corr.png
+```{figure} images/C9_CovExp.png
 :label: C9_CovExp
 :align: center
 Exemple de données multivariables. Nuage de points des données observées et de leur corrélation.

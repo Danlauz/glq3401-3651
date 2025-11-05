@@ -172,7 +172,6 @@ Z0 ?
 Le système s’écrit :
 
 $$
-
 \begin{bmatrix}
 C_{Z_1,Z_1} & C_{Z_2,Z_1} \\
 C_{Z_1,Z_2} & C_{Z_2,Z_2}
@@ -188,8 +187,9 @@ C_{Z_2,Z_0}
 \end{bmatrix},
 $$
 
-et l,aplication numérique donne les valeurs suivantes : 
+et l'application numérique donne les valeurs suivantes : 
 
+$$
 \begin{bmatrix}
 3 & 1.037 \\
 1.037 & 3
