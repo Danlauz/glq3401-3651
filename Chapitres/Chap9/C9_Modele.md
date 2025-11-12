@@ -89,7 +89,7 @@ où :
 
 Ces matrices représentent la matrice de corrélation inter-variables pour chaque structure élémentaire $C_k(h)$.
 
-Si l’une des matrices $\mathbf{B}_k$ n’est **pas** positive semi-définie, alors le modèle n’est pas un modèle linéaire de corégionalisation valide, et il faut procéder à une vérification spectrale (par exemple via la densité spectrale) pour s’assurer de son admissibilité.
+Si l’une des matrices $\mathbf{B}_k$ n’est pas positive semi-définie, alors le modèle n’est pas un modèle linéaire de corégionalisation valide, et il faut procéder à une vérification spectrale (par exemple via la densité spectrale) pour s’assurer de son admissibilité. Si la matrice $\mathbf{B}_k$ associée à la l'effet de pépite n’est pas positive semi-définie, alors nous somme certains que le modèle n'est pas admissible.
 
 > **Remarque :**  
 Le MLC offre une grande flexibilité : plusieurs structures peuvent modéliser différents effets (pépite, structures à courte et à longue portée, etc.), chacune avec des relations directes et croisées spécifiques.
@@ -101,17 +101,18 @@ On considère deux variables $Z$ et $Y$.
 - $Y$ présente un effet de pépite de 1 et une covariance sphérique de portée de 30 m, avec un palier 4.  
 - La covariance entre $Z$ et $Y$ est symétrique, avec effet de pépite nul et covariance sphérique de portée 30 m et de palier 2.4.
 
-On peut écrire :  
+On peut écrire : 
+ 
 $$
 \mathbf{C}(h)
 =
 \begin{bmatrix}
-C_{ZZ}(h) & C_{ZY}(h) \\[4pt]
+C_{ZZ}(h) & C_{ZY}(h) \\
 C_{YZ}(h) & C_{YY}(h)
 \end{bmatrix}
 =
 \begin{bmatrix}
-1 & 0 \\[4pt]
+1 & 0 \\
 0 & 1
 \end{bmatrix}
 \,\delta(h)
@@ -122,6 +123,7 @@ C_{YZ}(h) & C_{YY}(h)
 \end{bmatrix}
 \,C_{\mathrm{Sph}}(h; 30)
 $$
+
 
 où $\delta(h) = 1$ si $h=0$ et $0$ sinon (effet de pépite).
 
