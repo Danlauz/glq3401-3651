@@ -15,46 +15,51 @@ Il existe une grande variété de méthodes de simulation géostatistique. Pour 
   - Recuit simulé
   - Simulation séquentielle d’indicatrices
   - Méthodes utilisant des champs de probabilité (« p-fields »)
+  - Méthode multipoints (« Multiple-point statistics (MPS) »)
   - Etc.
 
 Dans la suite, nous examinerons quelques-unes de ces méthodes.
 
-## 8.3 Méthode de simulation matricielle (LU, décomposition de Cholesky)
+## Méthode de simulation matricielle (LU, décomposition de Cholesky)
 
 Cette méthode est simple à programmer et efficace pour simuler de petits champs. Elle permet de réaliser facilement des simulations conditionnelles comme non-conditionnelles.
 
 ---
 
-### 8.3.1 Simulations non-conditionnelles
+### Simulations non-conditionnelles
 
-Soit $n$ points à simuler avec une covariance $C(h)$. On construit la matrice de covariance $K$ de taille $n \times n$ (identique à celle utilisée pour le krigeage simple).
+Soit $n$ points à simuler, pour lesquels on souhaite générer une réalisation d’un champ aléatoire dont la covariance est $C(h)$. On commence par construire la matrice de covariance $K$ de taille $n \times n$ en évaluant la covariance entre chaque point de simulation. Cette matrice est donc similaire à celle utilisée pour le krigeage simple, mais elle est ici construite à partir des points à simuler plutôt que des points observés.
 
-On effectue la décomposition de Cholesky :  
+Une fois la matrice $K$ obtenue, on procède à sa décomposition de Cholesky : 
 $$
-K = L U, \quad \text{où } L = U^{T}
+K = L U, \quad \text{où} L = U^{T}
 $$
 
-On tire ensuite $n$ valeurs indépendantes $y_i \sim \mathcal{N}(0,1)$ pour $i=1,\dots,n$, formant le vecteur $\mathbf{y}$.
+où $L$ est une matrice triangulaire inférieure.
 
-La réalisation simulée est alors :  
+On génère ensuite $n$ valeurs indépendantes $y_i \sim \mathcal{N}(0,1)$ pour $i=1,\dots,n$, qui forment le vecteur gaussien centré réduit $\mathbf{y}$.
+
+La réalisation simulée est alors donnée par : 
 $$
 \mathbf{z} = L \mathbf{y}
 $$
 
-Cette réalisation $\mathbf{z}$ a la covariance correcte, car :  
+Cette réalisation possède bien la covariance souhaitée, puisque : 
 $$
 \operatorname{Cov}[\mathbf{z}] = \operatorname{Cov}[L \mathbf{y}] = L \operatorname{Cov}[\mathbf{y}] L^T = L I L^T = L L^T = K
 $$
 
+Ainsi, le vecteur simulé $\mathbf{z}$ est une réalisation non conditionnelle du champ gaussien de covariance $C(h)$.
+
 ---
 
-### 8.3.2 Simulations conditionnelles
+### Simulations conditionnelles
 
-Le principe est similaire, mais on distingue deux ensembles de points :  
-- $N$ points conditionnants (observés),  
-- $n$ points à simuler.
+Le principe de la simulation conditionnelle est similaire à celui de la simulation non conditionnelle, mais l’on distingue cette fois deux ensembles de points :  
+- les $N$ points conditionnants, pour lesquels les valeurs sont observées ;  
+- les $n$ points à simuler, dont on souhaite générer une réalisation conforme aux observations.
 
-On construit la matrice de covariance $K$ de taille $(N + n) \times (N + n)$, et on la décompose en blocs via Cholesky :  
+On commence par construire la matrice de covariance globale $K$ de taille $(N + n) \times (N + n)$, en plaçant d’abord les $N$ points conditionnants, puis les $n$ points à simuler. Sur cette matrice, on effectue la décomposition de Cholesky :
 $$
 K = L L^T = 
 \begin{bmatrix}
@@ -67,13 +72,21 @@ L_{11}^T & L_{21}^T \\
 \end{bmatrix}
 $$
 
-- $L_{11}$ correspond aux points conditionnants,  
-- $L_{22}$ aux points à simuler,  
-- $L_{21}$ relie les deux groupes.
+Ici, on divise la matrice triangulaire $L$ issue de la décomposition de Cholesky en trois blocs destinés au conditionnement. Le bloc $L_{11}$ correspond aux points conditionnants, le bloc $L_{22}$ aux points à simuler, et le bloc $L_{21}$ décrit la liaison entre ces deux groupes. Cette structure permet de séparer clairement la contribution des observations de celle de la variabilité aléatoire.
 
-On génère un vecteur aléatoire $\mathbf{y} = \begin{bmatrix} \mathbf{y}_1 \\ \mathbf{y}_2 \end{bmatrix}$, où $\mathbf{y}_1 \in \mathbb{R}^N$ et $\mathbf{y}_2 \in \mathbb{R}^n$ sont des vecteurs de variables indépendantes $\mathcal{N}(0,1)$.
+Pour imposer un conditionnement exact, on doit déterminer le vecteur $\mathbf{y}_1$ tel que :
+$$ 
+\mathbf{z}_1)$ = L_{11} \mathbf{y}_1
+$$ 
+où $\mathbf{z}_1$ est le vecteur des $N$ observations. On obtient directement :
 
-La simulation s’écrit :  
+$$
+\mathbf{y}_1 = L_{11}^{-1}\mathbf{z}_1)
+$$
+
+On génère ensuite un vecteur aléatoire $\mathbf{y}_2 \in \mathbb{R}^n$ composé de variables indépendantes suivant $\mathcal{N}(0,1)$.
+
+La simulation complète s’écrit alors :  
 $$
 \begin{bmatrix}
 \mathbf{z}_1 \\
@@ -87,52 +100,34 @@ L_{21} \mathbf{y}_1 + L_{22} \mathbf{y}_2
 \end{bmatrix}
 $$
 
-Comme les valeurs $\mathbf{z}_1 = \mathbf{z}_\text{obs}$ sont connues, on impose :  
-$$
-\mathbf{y}_1 = L_{11}^{-1} \mathbf{z}_1
-$$
+Comme les valeurs observées $\mathbf{z}_1$ sont connues, et que l'on peut déduire $\mathbf{y}_1$, seule la partie simulée varie d’une réalisation à l’autre :
 
-On tire ensuite aléatoirement $\mathbf{y}_2 \sim \mathcal{N}(0, I)$, et on calcule  
 $$
 \mathbf{z}_2 = L_{21} \mathbf{y}_1 + L_{22} \mathbf{y}_2
 $$
 
-Notez que $L_{21} \mathbf{y}_1$ est constant pour toutes les réalisations conditionnelles et ne nécessite pas d’être recalculé.
+Enfin, remarquez que le terme $L_{21}\mathbf{y}_1$ est constant pour toutes les réalisations conditionnelles : il n’a donc à être calculé qu’une seule fois, ce qui accélère considérablement la génération de simulations conditionnelles.
+
+Cette méthode est particulièrement efficace, car elle ne requiert qu’une seule inversion de matrice — celle de $L_{11}$ — pour traiter l’ensemble des réalisations. Une fois cette étape effectuée, les simulations additionnelles sont produites très rapidement et à faible coût computationnel. Sa principale limitation est la mémoire : la taille totale $(N + n)$ reste limitée à quelques milliers de points, faute de quoi la matrice $K$ devient trop volumineuse pour être stockée ou factorisée. De plus, $K$ doit être non singulière pour permettre la décomposition de Cholesky, ce qui signifie notamment que les points à simuler ne doivent pas coïncider exactement avec les points observés.
+
+D’autres décompositions sont possibles pour générer les simulations, notamment celles fondées sur les valeurs propres et les vecteurs propres de $K$, mais la décomposition de Cholesky demeure l’approche la plus efficace dans les cas où elle est applicable.
+
 
 ---
 
-### Notes importantes
 
-- Cette méthode est très efficace car une seule inversion de matrice (celle de $L_{11}$) est nécessaire. Les simulations additionnelles se génèrent rapidement à faible coût.  
-- La principale limitation est la mémoire, car $(N + n)$ ne peut excéder quelques milliers sans que la matrice $K$ devienne trop volumineuse pour être stockée.  
-- La matrice $K$ doit être non-singulière pour permettre la décomposition de Cholesky. Cela implique que les points à simuler ne doivent pas coïncider avec les points observés.  
-- D’autres décompositions sont possibles, par exemple via la décomposition en valeurs propres et vecteurs propres de $K$. 
+## Méthode de simulation séquentielle gaussienne (SGS)
 
-## 8.4 Méthode de simulation séquentielle gaussienne (SGS)
+La méthode SGS est une méthode de simulation conditionnelle, le cas non conditionnel n’étant qu’une situation particulière où aucune donnée n’est imposée. Le principe général consiste à simuler les valeurs séquentiellement, point par point, en utilisant à chaque étape une distribution conditionnelle dérivée du krigeage simple (KS). Cette distribution, gaussienne, sert alors à tirer aléatoirement une valeur au point considéré.
 
-La méthode SGS est une méthode de simulation conditionnelle (le cas non-conditionnel est un cas particulier).
+Supposons que l’on dispose de $N$ points conditionnants, décrits par une covariance $C(h)$, et que l’on souhaite simuler $n$ points inconnus dans un domaine. L’algorithme commence par :
 
----
+1. **Générer un ordre aléatoire** (souvent appelé chemin de simulation) pour visiter successivement les $n$ points à simuler.
+Cet ordre importe, car chaque valeur simulée devient immédiatement une nouvelle donnée conditionnante pour les étapes suivantes.
 
-### Principe général
+2. **À partir de cet ordre aléatoire, parcourir les points un par un** et, pour chaque point $x_i$, considérer comme données conditionnantes l’ensemble des valeurs déjà disponibles soit les $N$ observations initiales, ainsi que les valeurs simulées aux points ${x_1, \dots, x_{i-1}}$.
 
-- On dispose de $N$ points conditionnants, avec covariance $C(h)$.
-- On souhaite simuler $n$ points inconnus.
-- On génère un **ordre aléatoire** (un chemin) pour visiter successivement les $n$ points à simuler.
-
----
-
-### Workflow de la méthode SGS
-
-1. **Initialisation**  
-   - Ensemble des points connus : les $N$ points conditionnants.  
-   - Points à simuler : $\{x_1, x_2, \dots, x_n\}$ dans un ordre aléatoire.
-
-2. **Pour chaque point $x_i$ dans l’ordre aléatoire :**
-
-   a. **Calcul du krigeage simple** sur $x_i$ en utilisant :  
-   - Tous les points conditionnants $N$,  
-   - Tous les points déjà simulés $\{x_1, \dots, x_{i-1}\}$.
+3. **Effectuer un krigeage simple au point $x_i$**, à l’aide du modèle de covariance (ou variogramme) spécifié.
 
    Le krigeage simple fournit :  
    - La valeur krigée (espérance conditionnelle) :  
@@ -143,65 +138,35 @@ La méthode SGS est une méthode de simulation conditionnelle (le cas non-condit
    $$
    \sigma_k^2 = \operatorname{Var}[Z(x_i) \mid \text{données connues}]
    $$
+   Ces deux quantités définissent la distribution gaussienne locale à partir de laquelle sera tirée la valeur simulée.
 
-   b. **Simulation de la valeur au point $x_i$ :**  
-   On tire aléatoirement une valeur suivant la loi normale conditionnelle :  
+4. **Simuler la valeur au point $x_i$ ** en tirant un nombre aléatoire selon la loi normale conditionnelle obtenue : 
    $$
    Z(x_i) \sim \mathcal{N}(Z_i^*, \sigma_k^2)
    $$
 
-   c. **Ajout du point simulé $x_i$ avec sa valeur $Z(x_i)$ à l’ensemble des points connus.**
+5. **Ajouter immédiatement la valeur simulée $Z(x_i)$** à l’ensemble des données conditionnantes. Elle influencera donc le krigeage simple des points suivants, ce qui confère à la méthode son caractère pleinement conditionnel et séquentiel.
 
-3. **Répéter** jusqu’à ce que tous les $n$ points soient simulés.
-
----
+6. **Répéter les étapes 2 à 5** jusqu’à ce que tous les points du chemin de simulation aient été visités, ce qui fournit une réalisation complète compatible avec les valeurs observées, le modèle spatial (variogramme) et la distribution gaussienne imposée.
 
 ### Remarques importantes
 
-- La taille des systèmes de krigeage augmente avec le nombre total de points connus (points conditionnants + points simulés).  
-- En pratique, pour limiter la complexité, on utilise une **fenêtre locale** pour ne prendre en compte que les voisins proches (effet d’écran).  
-- Pour un **effet de pépite** dans le modèle :  
-  - En non-conditionnel, il est préférable d’ajouter cet effet après simulation sous forme d’une erreur indépendante de variance $C_0$.  
-  - En conditionnel, ce n’est pas possible car les observations incluent déjà cet effet.  
-- Certaines covariances (ex. sphérique, gaussien) peuvent être plus difficiles à reproduire fidèlement.  
-- L’ordre de visite des points peut influencer les résultats :  
-  - Éviter un parcours systématique selon une direction.  
-  - Recommandation : une visite en deux étapes,  
-    1. Première visite aléatoire sur une maille large pour capturer la grande échelle,  
-    2. Deuxième visite aléatoire sur une maille plus fine pour affiner la grille.  
-  - Cette stratégie peut être étendue à plusieurs passes successives.
+Il est important de rappeler que, dans la méthode SGS, la taille des systèmes de krigeage augmente progressivement, car le nombre de points connus — comprenant à la fois les points conditionnants initiaux et les points déjà simulés — s’accroît à chaque étape du processus. Pour éviter que les calculs ne deviennent trop lourds, on restreint généralement le krigeage à une fenêtre locale de voisinage, tirant parti de l’effet d’écran : les points éloignés ont peu d’influence sur l’estimation et peuvent être ignorés sans perte significative de précision.
 
----
+Lorsque le modèle de covariance inclut un effet de pépite, un traitement particulier s’impose. Dans le cas non conditionnel, il est préférable d’ajouter cet effet après la simulation, sous forme d’un bruit indépendant de variance $C_0$, afin de ne pas perturber la structure spatiale simulée. En revanche, dans le cas conditionnel, une telle correction n’est pas possible, car les observations incluent déjà l’effet de pépite et doivent être reproduites exactement. Certains modèles de covariance, comme les modèles sphériques ou gaussiens, peuvent d’ailleurs être plus difficiles à reproduire fidèlement dans un cadre séquentiel.
 
-### Schéma simplifié du workflow
-
-```mermaid
-flowchart TD
-    A[Points conditionnants N connus] --> B[Définir ordre aléatoire des points à simuler n]
-    B --> C[Pour chaque point $x_i$ à simuler]
-    C --> D[Krigeage simple sur $x_i$ avec points connus]
-    D --> E[Calcul $Z_i^*, \sigma_k^2$]
-    E --> F[Tirer $Z(x_i) \sim \mathcal{N}(Z_i^*, \sigma_k^2)$]
-    F --> G[Ajouter $x_i$ simulé à l'ensemble des points connus]
-    G --> C
-    C --> H[Tous les points simulés ?]
-    H -- Oui --> I[Fin : Ensemble complet simulé]
+L’ordre de visite des points joue également un rôle non négligeable. Un parcours systématique, par exemple selon une direction fixe, peut créer des artefacts ou induire une anisotropie artificielle dans la réalisation. C’est pourquoi il est recommandé d’utiliser un ordre aléatoire, et même, pour améliorer la qualité des simulations, de procéder en plusieurs passes : une première passe aléatoire sur une maille plus grossière permettant de capturer les grandes structures, suivie d’une ou de plusieurs passes aléatoires sur des mailles plus fines pour affiner progressivement la réalisation. Cette stratégie multi-échelle permet souvent d’obtenir des simulations plus réalistes et exemptes d’effets directionnels artificiels.
 
 ### Démonstration que la méthode SGS fournit les bons variogrammes (ou covariogrammes)
 
 On utilise un argument inductif : supposons que $n$ points ont été simulés par la méthode SGS et qu'ils possèdent la bonne structure spatiale (covariogramme). Nous montrons que cela implique que, à l’étape $n+1$, les $n+1$ points simulés auront aussi la bonne structure.
 
----
-
-#### Hypothèse inductive
 
 Soit $Z_{ns}$ un vecteur $n \times 1$ contenant les $n$ variables aléatoires simulées aux $n$ points déjà simulés. On suppose que leur covariance est la bonne, c’est-à-dire :
 
 $$
 \operatorname{Cov}[Z_{ns}, Z_{ns}'] = K_{nn}
 $$
-
----
 
 #### Étape $n+1$ : krigeage et simulation
 
@@ -226,8 +191,6 @@ Z_{n+1} = Z_{n+1}^* + e
 $$
 
 où $e$ est un bruit d’erreur indépendant, de moyenne nulle et de variance $\sigma_k^2$.
-
----
 
 #### Calcul des covariances
 
@@ -256,38 +219,36 @@ $$
 \end{aligned}
 $$
 
-ce qui correspond aussi à la variance du covariogramme à simuler.
+ce qui correspond aussi à la variance de la fonction de covariance à simuler.
 
----
 
 ### Notes importantes
 
-- L’algorithme est basé sur les distributions conditionnelles, donc idéalement $Z$ est gaussien pour que le krigeage corresponde aux paramètres conditionnels exacts. Cependant, la preuve par induction ci-dessus ne nécessite pas que la distribution soit gaussienne. En effet, l’argument repose uniquement sur les propriétés du krigeage simple, sans utiliser que celui-ci coïncide avec une loi conditionnelle.
+L’algorithme SGS repose sur l’utilisation de distributions conditionnelles, ce qui rend l’hypothèse de normalité particulièrement commode : si la variable $Z$ est gaussienne, alors le krigeage simple fournit exactement les paramètres (moyenne et variance) de la loi conditionnelle de $Z(x_i)$ donnée l’information disponible. Toutefois, la démonstration par induction présentée précédemment ne dépend pas de la normalité de $Z$. Elle utilise uniquement les propriétés linéaires du krigeage simple, et non le fait que celui-ci corresponde à une loi conditionnelle gaussienne exacte. L’algorithme reste donc valide même si la variable n’est pas strictement gaussienne.
 
-- Ainsi, on peut simuler un bruit $e$ de moyenne 0 et variance $\sigma_k^2$ sans qu’il soit forcément normal, et le bon variogramme sera reproduit. En revanche, l’histogramme des valeurs simulées tendra vers une distribution plus normale que celle des données initiales, car la valeur krigée est une combinaison linéaire des observations (c’est une conséquence intuitive du théorème central limite).
+Dans ce cadre, il est tout à fait possible de simuler un bruit $e$ de moyenne nulle et de variance $\sigma_k^2$ sans imposer qu’il soit normal. Le variogramme cible sera alors correctement reproduit. En revanche, l’histogramme des valeurs simulées aura tendance à devenir plus « normal » que celui des données initiales. Cela s'explique par le fait que la valeur krigée est une combinaison linéaire de nombreuses observations, ce qui, par un argument proche du théorème central limite, tire naturellement les distributions vers une forme plus gaussienne.
 
-- Il est facile de combiner cet algorithme SGS avec la méthode matricielle LU vue précédemment, par exemple pour simuler simultanément plusieurs variables en plusieurs points.
+Enfin, il est très simple de combiner l’algorithme SGS avec la méthode matricielle LU présentée dans la section précédente. Cette combinaison permet notamment de simuler simultanément plusieurs variables corrélées en de multiples points, tout en respectant les relations de covariance entre variables. Cela ouvre la voie à des simulations multivariées plus complexes et plus réalistes.
 
+---
 
-## 8.5 Méthode de recuit simulé
+## Méthode de recuit simulé
 
-La méthode de recuit simulé ("simulated annealing") est une technique d’optimisation très flexible appliquée à la simulation géostatistique.
+La méthode du recuit simulé (simulated annealing) est une technique d’optimisation extrêmement flexible, largement utilisée en simulation géostatistique lorsqu’il faut reproduire non seulement les moments d’ordre 1 ou 2 (histogramme, variogramme), mais également des caractéristiques plus complexes du phénomène.
 
 ### Principe général
 
-- On définit une **fonction objectif** à minimiser, par exemple la différence entre :
+Le principe consiste à définir une fonction objectif que l’on cherche à minimiser. Cette fonction mesure l’écart entre la réalisation simulée et les propriétés que l’on souhaite lui imposer. Un exemple classique consiste à minimiser la différence entre :
   - le variogramme expérimental des données simulées,
   - le variogramme théorique souhaité.
 
-- Cette fonction peut aussi inclure d’autres contraintes, telles que :
-  - respect d’une courbe tonnage-teneur,
-  - intégration de relations déterministes,
-  - contraintes géologiques,
-  - etc.
+La fonction objectif peut être enrichie pour intégrer d’autres contraintes, par exemple :
+  - le respect d’une courbe tonnage–teneur en contexte minier,
+  - l’intégration de relations déterministes entre variables,
+  - des contraintes géologiques imposant des structures ou des contacts,
+  - ou encore des statistiques d’ordre supérieur (connectivité, proportion de phases, asymétries spatiales).
 
-- Plusieurs variantes existent selon la formulation de la fonction objectif et les contraintes.
-
----
+Il existe de nombreuses variantes de la méthode, qui diffèrent selon la manière dont la fonction objectif est formulée, les contraintes qu’elle inclut et la stratégie utilisée pour explorer l’espace des solutions. Cette grande flexibilité fait du recuit simulé une approche particulièrement adaptée lorsqu’aucune méthode géostatistique classique (telle que SGS ou les simulations matricielles) ne permet de satisfaire simultanément toutes les contraintes imposées.
 
 ### Algorithme de recuit simulé
 
@@ -295,7 +256,7 @@ La méthode de recuit simulé ("simulated annealing") est une technique d’opti
    On tire aléatoirement une valeur pour chaque point à simuler en respectant l’histogramme désiré.  
    On place ensuite les valeurs conditionnantes (points observés) dans le champ.  
    On calcule le variogramme expérimental avec toutes ces valeurs.  
-   On évalue la fonction objectif $O$ qui combine la distance entre le variogramme expérimental et le modèle théorique ainsi que la différence entre l’histogramme simulé et celui attendu.
+   On évalue la fonction objectif $O$ qui combine la distance entre le variogramme expérimental et le modèle théorique, ainsi que la différence entre l’histogramme simulé et l’histogramme attendu.
 
 2. **Itération :**  
    i) On tire au hasard un point du champ.  
@@ -319,15 +280,9 @@ La méthode de recuit simulé ("simulated annealing") est une technique d’opti
 4. **Critère d’arrêt :**  
    On arrête l’algorithme lorsque la fonction objectif atteint un certain seuil ou après un nombre maximal d’itérations.
 
----
-
 ### Remarques
 
-- On peut amorcer le recuit simulé avec une réalisation provenant d’une autre méthode (plutôt qu’un tirage aléatoire), pour accélérer la convergence.
-
-- La fonction objectif peut être enrichie pour intégrer des contraintes spécifiques au problème étudié.
-
-- Cette méthode est puissante mais souvent coûteuse en temps de calcul comparée aux méthodes matricielles ou séquentielles.
+Il est souvent avantageux d’amorcer le recuit simulé avec une réalisation obtenue par une autre méthode de simulation — par exemple une réalisation SGS ou matricielle — plutôt qu’avec un champ initial entièrement aléatoire. Ce choix permet de réduire le nombre d’itérations nécessaires et d’accélérer la convergence vers une solution satisfaisant les contraintes imposées. La fonction objectif du recuit simulé peut d’ailleurs être enrichie très facilement pour intégrer des contraintes spécifiques au problème étudié, qu’il s’agisse de contraintes géologiques, de relations déterministes, d’exigences sur les proportions, la connectivité ou la variabilité. Cette grande flexibilité constitue l’un des atouts majeurs de la méthode. En contrepartie, le recuit simulé est généralement plus coûteux en temps de calcul que les méthodes matricielles ou séquentielles classiques, car l’algorithme explore un grand nombre de configurations avant d’en accepter une qui minimise suffisamment la fonction objectif.
 
 
 

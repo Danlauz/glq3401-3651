@@ -37,83 +37,31 @@ downloads:
 
 # Introduction aux simulations géostatistiques
 
-Au cours des 20 dernières années, les simulations géostatistiques sont devenues un domaine clé en géostatistique. Elles sont essentielles pour traiter des problèmes impliquant des transformations non-linéaires des variables mesurées.
+Au cours des vingt dernières années, les simulations géostatistiques ont pris une place centrale dans la pratique moderne de la géostatistique. Leur importance s’explique par le fait que de nombreux problèmes d’ingénierie, d’environnement et de ressources naturelles impliquent des relations non linéaires entre les variables ou des transformations non linéaires des données. Dans de tels contextes, une estimation ponctuelle ou même un modèle spatial moyen n’est pas suffisant : il devient essentiel de reproduire la variabilité spatiale complète du phénomène étudié, ce que permettent précisément les simulations géostatistiques.
 
-## Principaux types d'applications
+Les simulations deviennent particulièrement indispensables lorsque les propriétés recherchées changent avec l’échelle d’observation. C’est le cas, par exemple, de la transmissivité ou de la conductivité hydraulique, dont l’estimation dépend à la fois de la taille du bloc considéré, du type de test réalisé ou des conditions aux limites utilisées dans un modèle d’écoulement. De même, lorsque deux variables entretiennent une relation non linéaire — comme la charge hydraulique et la transmissivité, ou encore le champ gravimétrique et la densité — la préservation de la structure spatiale devient fondamentale pour produire des prédictions fiables. Les simulations sont également essentielles lorsque les processus physiques sont décrits par des fonctions de transfert complexes, comme c’est le cas en conception de piles d’homogénéisation, en simulation de la variabilité des teneurs en usine, ou en modélisation du temps de transport d’un contaminant.
 
-1. **Changement d’échelle non-linéaire**  
-   Exemple : conductivité hydraulique ou transmissivité.  
-   Ici, l’échelle varie selon les tests utilisés, la taille des éléments ou cellules, et les conditions aux limites dans les simulateurs d’écoulement.
+Un point clé à retenir est que la connaissance de la moyenne locale n’est pas toujours suffisante pour représenter correctement un phénomène. Dans certains cas, comme l’évaluation du profit d’un bloc minier, seule la teneur moyenne est nécessaire : le rendement dépend essentiellement de cette moyenne et des coûts d’exploitation. En revanche, d’autres phénomènes sont extrêmement sensibles à la structure spatiale interne du bloc. C’est le cas, par exemple, de la conductivité hydraulique dans un milieu hétérogène composé de sable et d’argile : la conductivité effective dépend certes de la proportion relative de ces matériaux, mais surtout de la manière dont ils sont spatialement organisés. Deux blocs ayant les mêmes proportions peuvent présenter des conductivités radicalement différentes si les matériaux sont disposés de manière plus ou moins connectée, orientée ou anisotrope. 
 
-2. **Relations non-linéaires entre variables**  
-   Exemple : relation entre charge hydraulique et transmissivité, ou entre champ gravimétrique et densité.
+La [Fig. %s](#C11_transmissivite) illustre ce principe. On y observe deux blocs présentant une même proportion de sable et d’argile, mais des architectures internes très différentes. Si l’on prenait naïvement la moyenne arithmétique des transmissivités (par exemple $1 \times 10^{-3}$ pour le sable et $1 \times 10^{-7}$ pour l’argile), on obtiendrait une transmissivité moyenne équivalente à $5 \times 10^{-4}$. Cependant, cette valeur est incorrecte, car la transmissivité effective d’un bloc dépend du mode de connexion des matériaux :
+	- lorsque les matériaux alternent verticalement, la transmissivité effective s’obtient par la moyenne harmonique, typique d’un écoulement en série ;
+	- lorsque les matériaux alternent horizontalement, la transmissivité effective correspond plutôt à la moyenne arithmétique, typique d’un écoulement en parallèle ;
+	- lorsqu’ils sont mélangés finement, c’est la moyenne géométrique qui s’impose.
+Ces trois situations conduisent à des résultats extrêmement différents, malgré un histogramme identique : 50% de faciès bleus et 50% de faciès rouges.
 
-3. **Fonctions de transfert complexes**  
-   Exemple :  
-   - Design de piles d’homogénéisation,  
-   - Variabilité des teneurs dans un concentrateur minier,  
-   - Temps de transport d’un contaminant.
+```{figure} images/C11_transmissivite.png
+:label: C11_transmissivite
+:align: center
+Impact de la structure spatiale sur la transmissivité effective.
+``` 
 
----
+Cet exemple met en évidence un point fondamental : deux blocs peuvent présenter exactement les mêmes proportions de matériaux, et donc le même histogramme global, tout en ayant des propriétés effectives radicalement différentes en raison de leur agencement interne. Ce n’est pas la proportion seule qui importe, mais la manière dont les matériaux sont organisés et connectés dans l’espace. Selon que les phases sont disposées verticalement, horizontalement ou de manière mélangée, la transmissivité effective d’un bloc peut varier de plusieurs ordres de grandeur.
 
-## Importance de la distribution spatiale locale
+Ce constat illustre pourquoi les simulations géostatistiques sont essentielles : elles permettent de représenter explicitement les structures spatiales — continuités, connexions, orientations — qui contrôlent les propriétés hydrauliques ou physiques d’un milieu. Même lorsque deux domaines possèdent la même distribution globale de valeurs, leurs comportements peuvent être complètement différents si leurs structures internes ne sont pas les mêmes. C’est précisément cette dimension spatiale que les méthodes de simulation permettent de capturer.
 
-Pour certains problèmes, la connaissance de la concentration moyenne dans un domaine ne suffit pas. La distribution spatiale exacte à l’intérieur du domaine est également cruciale.
+En somme, les simulations géostatistiques constituent la seule approche capable de préserver simultanément les proportions globales, la variabilité locale et les connexions spatiales entre les matériaux. Elles offrent une représentation beaucoup plus fidèle de la réalité physique, en particulier pour les phénomènes régis par des relations non linéaires ou fortement influencés par la géométrie interne des blocs. Leur utilisation est donc indispensable dès que la structure spatiale joue un rôle déterminant dans le comportement du système.
 
-### Exemple 1 : Profit d’un bloc minier
-
-- Il suffit de connaître la teneur moyenne et les coûts d’exploitation.  
-- La distribution spatiale précise n’a pas d’importance.
-
-### Exemple 2 : Conductivité hydraulique d’un bloc hétérogène
-
-- Bloc constitué de deux phases : sable et argile.  
-- La conductivité hydraulique dépend non seulement de la proportion de sable, mais aussi de sa distribution spatiale.
-
----
-
-## Illustration simplifiée
-
-Imaginons 3 blocs ayant la même proportion de sable et d’argile mais des distributions différentes :
-
-| Bloc 1           | Bloc 2           | Bloc 3           |
-|------------------|------------------|------------------|
-| Sable + Argile   | Sable - Argile   | Argile  | Sable  |
-| Sable  | Argile  | Sable  | Sable   | Sable   | Argile |
-| Argile | Sable   | Sable  | Sable   | Argile  | Sable  |
-| Sable  | Argile  | Argile | Argile  | Sable   | Argile |
-| Argile | Argile  | Argile | Argile  | Argile  | Sable  |
-
----
-
-## Conductivité hydraulique (en cm/s)
-
-- Conductivité sable : $1 \times 10^{-3}$  
-- Conductivité argile : $1 \times 10^{-7}$  
-
-### Résultats pour chaque bloc
-
-| Bloc  | Conductivité horizontale $k_{hor}$ | Conductivité verticale $k_{vert}$ | Commentaire                         |
-|-------|-----------------------------------|----------------------------------|-----------------------------------|
-| 1     | $1 \times 10^{-5}$                 | $1 \times 10^{-5}$                | Moyenne géométrique $\left(\sqrt[k]{\prod k_i}\right)$ |
-| 2     | $5 \times 10^{-4}$                 | $2 \times 10^{-7}$                | Moyenne arithmétique & harmonique |
-| 3     | $2 \times 10^{-7}$                 | $2 \times 10^{-7}$                | Connexion possible aux sommets, anisotropie probable |
-
----
-
-## Analyse
-
-- **Même proportion de sable et d’argile** pour les 3 blocs.  
-- **Conductivités très différentes** selon la distribution spatiale des phases.  
-- Apparition d’**anisotropies** dans le tenseur de conductivité selon la structure spatiale.  
-- Le variogramme de chaque bloc sera différent :  
-  - Bloc 1 : peu structuré  
-  - Bloc 2 : anisotrope  
-  - Bloc 3 : structure isotrope  
-
----
-
-Ce simple exemple illustre pourquoi il est indispensable d’utiliser des simulations géostatistiques qui tiennent compte non seulement des proportions moyennes, mais aussi de la distribution spatiale des variables à l’intérieur des blocs.
+Dans ce chapitre, nous nous concentrerons sur les simulations géostatistiques de processus continus et gaussiens. Le chapitre suivant abordera quant à lui la modélisation des faciès, qui fait intervenir des variables discrètes et des structures catégorielles plus complexes.
 
 
 
