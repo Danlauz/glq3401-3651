@@ -1,7 +1,7 @@
 ---
 title: "Chapitre 10 - Krigeage d’indicatrices"
 abstract: |
-  Ce chapitre présente la méthode du krigeage d’indicatrices (KI), une approche non linéaire permettant de modéliser des variables aléatoires en tenant compte de leur distribution non normale. Nous comparons le KI aux méthodes linéaires classiques de krigeage ordinaire (KO) et krigeage simple (KS), en mettant en lumière ses hypothèses, ses avantages et ses limites. Le krigeage d’indicatrices offre des outils puissants pour estimer des probabilités de dépassement de seuils et calculer des écarts-types conditionnels, particulièrement utiles en contexte minier et environnemental. Ce chapitre vise à donner au lecteur les connaissances nécessaires pour appliquer efficacement le KI et interpréter ses résultats dans diverses situations pratiques. 
+  Ce chapitre présente en détail la méthode du krigeage d’indicatrices (KI), une approche géostatistique résolument non linéaire, conçue pour (1) gérer des phénomènes naturels hautement variables sans exclure les valeurs extrêmes ni recourir à des transformations non linéaires susceptibles de déformer la structure statistique, et (2) estimer directement la distribution locale à chaque emplacement non échantillonné afin d’obtenir simultanément une estimation de la variable d’intérêt et de sa variance conditionnelle pour la gestion du risque. Grâce à cette non-linéarité, le KI permet de modéliser efficacement des phénomènes présentant une structure non gaussienne, une forte asymétrie ou une continuité spatiale différente entre les valeurs extrêmes, alors que les méthodes linéaires traditionnelles comme le krigeage ordinaire (KO) et le krigeage simple (KS) montrent leurs limites. Le chapitre compare ainsi le KI à ces approches linéaires afin de mettre en évidence leurs hypothèses, leurs forces et leurs limites. Particulièrement adapté à l’estimation de probabilités de dépassement de seuils, à la caractérisation de l’incertitude locale et au calcul d’écarts-types conditionnels, le KI constitue un outil puissant en géologie minière, en hydrogéologie et en ingénierie environnementale. L’objectif est de donner au lecteur une compréhension claire et opérationnelle de cette méthode non linéaire ainsi que de ses usages pratiques.
 
 project:
   output-dir: exports  # <-- dossier de sortie pour tous les formats
@@ -33,21 +33,23 @@ downloads:
 
 # Introduction
 
-On a vu précédemment que le krigeage de $Z(x)$ fournissait la meilleure estimation linéaire possible (meilleure au sens de variance d'estimation minimale). Le krigeage fournit également une variance d'estimation qui est fonction de la continuité spatiale, telle qu'exprimée par le variogramme, et de la configuration (et de la quantité) de l'information disponible.
+On a vu précédemment, dans le chapitre 8, que le krigeage de $Z(x)$ fournit la meilleure estimation linéaire possible, c’est-à-dire l’estimation à variance minimale parmi toutes les combinaisons linéaires admissibles. Il fournit également une variance d’estimation qui dépend à la fois de la continuité spatiale — décrite par le variogramme — et de la configuration ainsi que de la quantité d’information disponible.
 
-Parfois, on veut connaître plus qu'un estimé et qu'une variance d'estimation. Exemples :
+Cependant, dans de nombreuses situations pratiques, une simple estimation ponctuelle, accompagnée de sa variance, ne suffit pas. Par exemple :
 
-- Dans une mine avec exploitation sélective, on veut connaître localement le tonnage et la teneur du gisement en fonction de diverses teneurs de coupure. Il faut connaître la proportion des blocs excédant la teneur de coupure et la distribution des teneurs.
-- En environnement, on veut connaître en tout point la probabilité qu'un seuil ou qu'une norme soit excédée.
-- Dans une excavation dans un massif rocheux, on veut connaître la probabilité que la densité de fractures d'une certaine famille excède un seuil donné.
+- **Exploitation minière sélective** : on souhaite évaluer, pour différentes teneurs de coupure, le tonnage et la teneur récupérable du gisement. Cela requiert de connaître, localement, la proportion de blocs dépassant la teneur de coupure, ainsi que la distribution des teneurs.
+- **Contexte environnemental** : il est essentiel d’estimer, à tout moment dans le domaine, la probabilité qu’une concentration dépasse un seuil réglementaire ou une norme.
+- **Mécanique des roches** : on peut déterminer la probabilité que la densité de fractures d’une certaine famille dépasse un seuil critique afin d’évaluer la stabilité d’une excavation.
 
-Dans le cas d'une distribution normale des $Z(x)$, les paramètres obtenus par krigeage correspondent à la moyenne et la variance d'une loi normale conditionnée par les valeurs prises par les observations ayant servi au krigeage. On peut donc utiliser les tables de la loi normale pour calculer les probabilités requises pour répondre aux questions précédentes.
+Dans ces cas, l’intérêt porte non seulement sur l’estimation moyenne, mais aussi — et surtout — sur la distribution locale de la variable et sur les probabilités de dépassement, ce qui dépasse le cadre strictement linéaire du krigeage classique.
 
-Lorsque les $Z(x)$ ne suivent pas une distribution normale, il est de pratique courante d'effectuer une transformation qui permette d'obtenir une loi normale et d'effectuer le krigeage des variables transformées. Ces transformations peuvent être des fonctions simples (ex. $\log(Z)$) ou ne pas même avoir une forme analytique (i.e. transformation dite graphique qui associe à chaque valeur originale une valeur normale selon son rang dans la séquence ordonnée des $Z$).
+Dans le cas où les valeurs $Z(x)$ suivent une distribution normale, les résultats du krigeage correspondent directement aux paramètres d’une loi normale conditionnelle définie par les observations utilisées pour l’estimation. Autrement dit, l’estimation obtenue représente la moyenne conditionnelle, tandis que la variance de krigeage correspond à la variance conditionnelle de cette loi normale. Il devient alors possible d’utiliser les tables de la loi normale (ou sa fonction de répartition) pour calculer toutes les probabilités nécessaires afin de répondre aux questions posées précédemment.
 
-Cette approche fonctionne généralement assez bien sous deux réserves toutefois :
+Lorsque les $Z(x)$ ne suivent pas une distribution normale, il est courant d’appliquer une transformation afin de les rendre gaussiennes avant d’effectuer le krigeage sur les valeurs transformées. Ces transformations peuvent être simples (par exemple, $\log(Z)$) ou entièrement empiriques, comme les transformations graphiques qui attribuent à chaque valeur originale une valeur normale en fonction de son rang dans la distribution ordonnée de $Z$.
 
-1. La transformation assure, par construction, la loi normale. Elle n'assure toutefois pas que les couples, les triplets, etc. suivent une loi binormale, trinormale, ... multinormale. Pour pouvoir calculer les probabilités à partir des krigeages, la distribution multinormale doit être respectée.
-2. Même dans le cas normal, le fait de devoir fournir des énoncés de nature probabiliste pour des variables aléatoires définies sur des supports différents de ceux des observations pose problème. Différents modèles ont été proposés pour effectuer ces changements de support. Avec le krigeage d'indicatrices, on utilise souvent la correction affine vue précédemment.
+Cette approche donne généralement de bons résultats, mais présente deux limites importantes :
 
-Journel (1984) a eu l'idée d'attaquer le problème précédent par une méthode la moins paramétrique possible. On a donné le nom de **krigeage d'indicatrices** à la méthode qu'il a développée.
+1. La transformation garantit, par construction, une distribution marginale normale, mais elle n’assure pas que les couples, triplets ou ensembles multivariés suivent une loi binormale, trinormale ou multinormale. Or, le calcul de probabilités à partir des résultats du krigeage suppose justement que la distribution multivariée soit effectivement multinormale.
+2. Même dans le cas strictement normal, la formulation d’énoncés probabilistes pour des variables aléatoires définies sur des supports différents de ceux des observations pose problème. 
+
+Pour contourner ces difficultés, Journel (1984) a proposé d’aborder le problème de manière aussi peu paramétrique que possible. La méthode qu’il a développée est désormais connue sous le nom de krigeage d’indicatrices.

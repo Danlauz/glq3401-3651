@@ -1,15 +1,23 @@
 # 10.3 Problèmes de relation d'ordre
 
-Comme mentionné précédemment, rien ne garantit que le résultat du krigeage d’indicatrices sera une fonction respectant les propriétés d’une fonction de distribution :
+Comme mentionné précédemment, rien ne garantit que le résultat du krigeage d’indicatrices sera une fonction respectant les propriétés d’une fonction de répartititon :
 
 - $0 \leq F(z) \leq 1$
 - $F(z) \leq F(z')$ si $z \leq z'$
 
-Il faut donc, avant tout calcul, s'assurer que la fonction estimée $F_{KI}(x_0, z)$ respecte ces propriétés, sans quoi des résultats aberrants, comme des probabilités négatives, pourraient apparaître. Pour cela, on effectue des corrections dites "ad hoc". Voici une méthode simple :
+Il faut donc, avant tout calcul, s'assurer que la fonction estimée $F_{KI}(x_0, z)$ respecte ces propriétés, sans quoi des résultats aberrants, comme des probabilités négatives, pourraient apparaître. Pour cela, on effectue des corrections dites "ad hoc".
+
+La [Fig. %s](#C10_RelationOrdre) illustre, de manière exagérée, la violation des propriétés attendues d’une fonction de répartition.
+
+```{figure} images/C10_RelationOrdre.png
+:label: C10_RelationOrdre
+:align: center
+Violation des propriétés d'une fonction de répartition.
+```
 
 ---
 
-### Correction « ad hoc » de la fonction de distribution estimée
+### Correction « ad hoc » de la fonction de répartition estimée
 
 1. **Troncature des bornes :**  
    Mettre les valeurs négatives de $F_{KI}(x, c)$ égales à 0, et celles supérieures à 1 égales à 1.
@@ -62,21 +70,12 @@ Le tableau suivant illustre la correction appliquée à une fonction $F_{KI}$ pr
 
 ---
 
-### Remarque complémentaire
+### Exemple visuel
 
-Dans un cadre plus large, on calcule les poids de krigeage $\lambda_i$ en résolvant le système classique (ici en notation indicatrice) :
+La [Fig. %s](#C10_RelationOrdre_Correction) illustre l’application des corrections des relations d’ordre présentées dans le tableau précédent. On y observe l’effet de la correction avant et de la correction arrière. Visuellement, la correction préalable consiste à remplacer chaque valeur par le maximum entre celle-ci et la valeur précédente, ce qui garantit une fonction strictement croissante. À l’inverse, la correction arrière part du seuil le plus élevé et remplace chaque valeur par le minimum entre celle-ci et la valeur du seuil situé à un rang supérieur, ce qui produit une fonction strictement décroissante. Les deux corrections définissent une enveloppe dont on prend généralement la moyenne pour obtenir une fonction de répartition corrigée et conforme aux relations d’ordre.
 
-$$
-I^*(x, c) = \sum_{i=1}^n \lambda_i I(x_i, c) + \left(1 - \sum_{i=1}^n \lambda_i \right) F_Z(c),
-$$
-
-avec la contrainte sur les covariances :
-
-$$
-\sum_{i=1}^n \lambda_i \, \mathrm{Cov}\big(I(x_i,c), I(x_j,c)\big) = \mathrm{Cov}\big(I(x_0,c), I(x_j,c)\big) \quad \forall j,
-$$
-
-où $F_Z(c)$ est la fonction de distribution cumulative globale évaluée au seuil $c$.
-
-Ce processus est répété pour chaque seuil $c$. Si le variogramme est un simple effet de pépite, les poids sont nuls et la fonction locale estimée est égale à la fonction globale.
-
+```{figure} images/C10_RelationOrdre_Correction.png
+:label: C10_RelationOrdre_Correction
+:align: center
+Correction des relations d'ordre de l'exemple du tableau ci-haut.
+```
