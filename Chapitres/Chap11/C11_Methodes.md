@@ -87,7 +87,6 @@ On génère ensuite un vecteur aléatoire $\mathbf{y}_2 \in \mathbb{R}^n$ compos
 
 La simulation complète s’écrit alors :  
 $$
-\begin{aligned}
 \begin{bmatrix}
 \mathbf{z}_1 \\
 \mathbf{z}_2
@@ -100,14 +99,12 @@ L_{21} & L_{22}
 \begin{bmatrix}
 \mathbf{y}_1 \\
 \mathbf{y}_2
-\end{bmatrix}
-\\[0.4em]
+\end{bmatrix} \\
 &=
 \begin{bmatrix}
 L_{11}\,\mathbf{y}_1 \\
 L_{21}\,\mathbf{y}_1 + L_{22}\,\mathbf{y}_2
 \end{bmatrix}
-\end{aligned}
 $$
 
 
