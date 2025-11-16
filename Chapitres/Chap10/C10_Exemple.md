@@ -219,9 +219,9 @@ $$
 
 ---
 
-### 5. Supposons que l'on connaisse une fonction de coût associée aux valeurs de $Z(x)$ (par exemple un coût de décontamination qui augmente en fonction du niveau de contamination). Quelle est l'espérance du coût si $C(Z) = Z(x)^2$ ?
+### 5. Quelle est l'espérance associée à un coût $C(Z)$ ?
 
-On a :
+Supposons que l'on connaisse une fonction de coût associée aux valeurs de $Z(x)$ (par exemple un coût de décontamination qui augmente en fonction du niveau de contamination). On aimerait connaitre la valeur de ce coût. Supposon que $C(Z) = Z^2$, alors on a :
 $$
 \mathbb{E}[C(Z_0)] = \sum_{i=0}^{n_c} \left[ I^*(x_0, z_i) - I^*(x_0, z_{i-1}) \right] C(z_i),
 $$
@@ -236,17 +236,26 @@ $$
 
 ---
 
-### Recommandation
+### Krigeage simple d'indicatrice
 
-Pour estimer $I^*(x,c)$, il est recommandé d'effectuer un krigeage simple, c’est-à-dire :
+La formulation simple du krigeage d'indicatrice est la suivante :
 
 $$
 I^*(x,c) = \sum_{i=1}^n \lambda_i I(x_i, c) + (1 - \sum_{i=1}^n \lambda_i) F_Z(c),
 $$
 
-où $F_Z(c)$ est la proportion, parmi l'ensemble des échantillons, inférieure à $c$ (i.e. la fonction de répartition évaluée à "c"). Les poids $\lambda_i$ sont obtenus en résolvant le système de krigeage simple (KS). On doit répéter le processus pour chacun des seuils considérés. Pour chaque seuil, un variogramme d'indicatrices doit être calculé afin de déterminer les covariances dans le système précédent.
+où $F_Z(c)$ est la proportion globale des données telles que $Z \le c$. Les poids $\lambda_i$ sont obtenus en résolvant le système de krigeage simple (KS) basé sur la covariance ou le variogramme des indicatrices pour le seuil considéré.
 
-Dans le cas d’un KI simple, si le variogramme est un effet de pépite pur, les poids seront nuls et la fonction de répartition locale sera estimée à partir de la fonction de répartition globale. Si le variogramme montre une forte continuité spatiale, alors les poids tendront, dans l'exemple, vers 0.25, et les 2 krigeages d'indicatrices fourniront des résultats semblables.
+Le krigeage simple d’indicatrices est particulièrement intéressant lorsque la distribution globale est bien connue ou lorsque l’on dispose d’un grand volume de données fournissant une estimation fiable de $F_Z(c)$. Dans ces situations, la moyenne globale des indicatrices constitue une information précieuse : elle représente la probabilité globale d’être sous le seuil $c$ et sert d’ancre probabiliste. Le krigeage simple permet d’intégrer cette information directement dans l’estimation locale, tout en pondérant correctement la contribution des données voisines via les poids issus du variogramme.
+
+En comparaison avec le krigeage ordinaire d’indicatrices, le KSI offre une solution plus stable lorsque les données sont peu nombreuses ou très dispersées, car le terme $(1-\sum \lambda_i)F_Z(c)$ évite que l’estimation locale dérive en l’absence de support spatial suffisant. Autrement dit, si les données voisines sont rares, éloignées ou peu corrélées, l’estimation locale se rapproche naturellement de la distribution globale, ce qui est cohérent d’un point de vue probabiliste.
+
+Lorsque le variogramme est un effet de pépite pur, les poids $\lambda_i$ sont nuls et l’estimation se réduit à la distribution globale :
+$$
+I^*(x,c) = F_Z(c)
+$$
+
+Cela signifie que l’espace n’apporte aucune information supplémentaire — seule la probabilité globale a du sens. À l’inverse, si le variogramme montre une forte continuité spatiale, les poids deviennent significatifs (typiquement $\lambda_i \approx 0.25$ dans l’exemple ci-haut), et l’estimation locale s’appuie alors davantage sur les données voisines.
 
 ---
 

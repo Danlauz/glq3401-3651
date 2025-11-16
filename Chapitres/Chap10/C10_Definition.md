@@ -24,12 +24,8 @@ La méthode s'effectue ainsi :
 2. **Krigage des indicatrices.** On effectue ensuite, au point $x_0$, le krigeage de $I(x_0, c)$ à partir des indicatrices observées $I(x_i, c)$. Comme le krigeage fournit une approximation de l’espérance conditionnelle, la valeur obtenue peut s’interpréter comme une estimation de $P(Z(x_0) \leq c \mid Z(x_1), \ldots, Z(x_n)) \approx \hat{I}(x_0, c)$. Cette étape nécessite de calculer et de modéliser au préalable le variogramme des indicatrices $I(x_i, c)$, qui dépend du seuil considéré.
 3. **Répétition pour plusieurs seuils.** Le procédé est répété pour une série de seuils $c_2, c_3, \ldots$. Pour chaque seuil, on recode les observations, on calcule et on modélise le variogramme spécifique, puis on réalise un nouveau krigeage, ce qui permet de reconstruire progressivement la distribution locale de $Z(x_0)$.
 
+En combinant les résultats des krigeages réalisés pour les différents seuils, on reconstruit une version discrétisée de la fonction de répartition conditionnelle $F^*_Z(x_0, z \mid Z_1, \ldots, Z_n)$ que nous noterons désormais par $F_{KI}(x_0, z)$. Cette fonction représente une approximation complète de la distribution locale conditionnelle de $Z(x_0)$ et permet d’en déduire directement l’estimée conditionnelle (par intégration), la variance conditionnelle, ainsi qu’un large éventail de quantités dérivées — probabilités de dépassement, quantiles, médiane, fonctions de coût, etc. — c’est-à-dire toutes les statistiques qui s’obtiennent à partir d’une fonction de répartition.
 
-En combinant les résultats des krigeages réalisés pour les différents seuils, on reconstruit une version discrétisée de la fonction de répartition conditionnelle 
-$$
-F^*_Z(x_0, z \mid Z_1, \ldots, Z_n),
-$$
-que nous noterons désormais par $F_{KI}(x_0, z)$. Cette fonction représente une approximation complète de la distribution locale conditionnelle de $Z(x_0)$ et permet d’en déduire directement l’estimée conditionnelle (par intégration), la variance conditionnelle, ainsi qu’un large éventail de quantités dérivées — probabilités de dépassement, quantiles, médiane, fonctions de coût, etc. — c’est-à-dire toutes les statistiques qui s’obtiennent à partir d’une fonction de répartition.
 ---
 
 ### Notes importantes :
