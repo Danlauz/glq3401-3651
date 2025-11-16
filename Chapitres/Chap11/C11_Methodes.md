@@ -85,7 +85,24 @@ $$
 
 On génère ensuite un vecteur aléatoire $\mathbf{y}_2 \in \mathbb{R}^n$ composé de variables indépendantes suivant $\mathcal{N}(0,1)$.
 
-La simulation complète s’écrit alors :  
+La simulation complète s’écrit alors :
+
+$$
+\begin{bmatrix}
+\mathbf{z}_1 \\
+\mathbf{z}_2
+\end{bmatrix}
+=
+\begin{bmatrix}
+L_{11} & 0 \\
+L_{21} & L_{22}
+\end{bmatrix} 
+\begin{bmatrix}
+\mathbf{y}_1 \\
+\mathbf{y}_2
+\end{bmatrix}
+$$
+
 $$
 \begin{bmatrix}
 \mathbf{z}_1 \\
@@ -99,6 +116,11 @@ L_{21} & L_{22}
 \begin{bmatrix}
 \mathbf{y}_1 \\
 \mathbf{y}_2
+\end{bmatrix} \\
+&=
+\begin{bmatrix}
+L_{11}\,\mathbf{y}_1 \\
+L_{21}\,\mathbf{y}_1 + L_{22}\,\mathbf{y}_2
 \end{bmatrix}
 $$
 
