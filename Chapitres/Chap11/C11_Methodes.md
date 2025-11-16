@@ -92,7 +92,7 @@ $$
 \mathbf{z}_2
 \end{bmatrix}
 =
-L\mathbf{y}
+L \mathbf{y}
 =
 \begin{bmatrix}
 L_{11} & 0 \\
