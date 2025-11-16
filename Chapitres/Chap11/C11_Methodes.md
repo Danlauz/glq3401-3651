@@ -51,8 +51,6 @@ $$
 
 Ainsi, le vecteur simulé $\mathbf{z}$ est une réalisation non conditionnelle du champ gaussien de covariance $C(h)$.
 
----
-
 ### Simulations conditionnelles
 
 Le principe de la simulation conditionnelle est similaire à celui de la simulation non conditionnelle, mais l’on distingue cette fois deux ensembles de points :  
@@ -60,28 +58,29 @@ Le principe de la simulation conditionnelle est similaire à celui de la simulat
 - les $n$ points à simuler, dont on souhaite générer une réalisation conforme aux observations.
 
 On commence par construire la matrice de covariance globale $K$ de taille $(N + n) \times (N + n)$, en plaçant d’abord les $N$ points conditionnants, puis les $n$ points à simuler. Sur cette matrice, on effectue la décomposition de Cholesky :
+
 $$
-K = L L^T = 
+K = L L^{T} =
 \begin{bmatrix}
 L_{11} & 0 \\
 L_{21} & L_{22}
 \end{bmatrix}
 \begin{bmatrix}
-L_{11}^T & L_{21}^T \\
-0 & L_{22}^T
-\end{bmatrix}
+L_{11}^{T} & L_{21}^{T} \\
+0 & L_{22}^{T}
+\end{bmatrix}.
 $$
 
 Ici, on divise la matrice triangulaire $L$ issue de la décomposition de Cholesky en trois blocs destinés au conditionnement. Le bloc $L_{11}$ correspond aux points conditionnants, le bloc $L_{22}$ aux points à simuler, et le bloc $L_{21}$ décrit la liaison entre ces deux groupes. Cette structure permet de séparer clairement la contribution des observations de celle de la variabilité aléatoire.
 
 Pour imposer un conditionnement exact, on doit déterminer le vecteur $\mathbf{y}_1$ tel que :
 $$ 
-\mathbf{z}_1)$ = L_{11} \mathbf{y}_1
+\mathbf{z}_1 = L_{11} \mathbf{y}_1
 $$ 
 où $\mathbf{z}_1$ est le vecteur des $N$ observations. On obtient directement :
 
 $$
-\mathbf{y}_1 = L_{11}^{-1}\mathbf{z}_1)
+\mathbf{y}_1 = L_{11}^{-1}\mathbf{z}_1
 $$
 
 On génère ensuite un vecteur aléatoire $\mathbf{y}_2 \in \mathbb{R}^n$ composé de variables indépendantes suivant $\mathcal{N}(0,1)$.
@@ -92,12 +91,22 @@ $$
 \mathbf{z}_1 \\
 \mathbf{z}_2
 \end{bmatrix}
-= 
-L \mathbf{y} = 
+=
+L\,\mathbf{y}
+=
 \begin{bmatrix}
-L_{11} \mathbf{y}_1 \\
-L_{21} \mathbf{y}_1 + L_{22} \mathbf{y}_2
+L_{11} & 0 \\
+L_{21} & L_{22}
 \end{bmatrix}
+\begin{bmatrix}
+\mathbf{y}_1 \\
+\mathbf{y}_2
+\end{bmatrix}
+=
+\begin{bmatrix}
+L_{11}\,\mathbf{y}_1 \\
+L_{21}\,\mathbf{y}_1 + L_{22}\,\mathbf{y}_2
+\end{bmatrix}.
 $$
 
 Comme les valeurs observées $\mathbf{z}_1$ sont connues, et que l'on peut déduire $\mathbf{y}_1$, seule la partie simulée varie d’une réalisation à l’autre :
@@ -283,6 +292,3 @@ Il existe de nombreuses variantes de la méthode, qui diffèrent selon la maniè
 ### Remarques
 
 Il est souvent avantageux d’amorcer le recuit simulé avec une réalisation obtenue par une autre méthode de simulation — par exemple une réalisation SGS ou matricielle — plutôt qu’avec un champ initial entièrement aléatoire. Ce choix permet de réduire le nombre d’itérations nécessaires et d’accélérer la convergence vers une solution satisfaisant les contraintes imposées. La fonction objectif du recuit simulé peut d’ailleurs être enrichie très facilement pour intégrer des contraintes spécifiques au problème étudié, qu’il s’agisse de contraintes géologiques, de relations déterministes, d’exigences sur les proportions, la connectivité ou la variabilité. Cette grande flexibilité constitue l’un des atouts majeurs de la méthode. En contrepartie, le recuit simulé est généralement plus coûteux en temps de calcul que les méthodes matricielles ou séquentielles classiques, car l’algorithme explore un grand nombre de configurations avant d’en accepter une qui minimise suffisamment la fonction objectif.
-
-
-
