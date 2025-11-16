@@ -87,26 +87,23 @@ On génère ensuite un vecteur aléatoire $\mathbf{y}_2 \in \mathbb{R}^n$ compos
 
 La simulation complète s’écrit alors :  
 $$
+\begin{aligned}
 \begin{bmatrix}
 \mathbf{z}_1 \\
 \mathbf{z}_2
 \end{bmatrix}
-=
-L \mathbf{y}
-=
-\begin{bmatrix}
-L_{11} & 0 \\
-L_{21} & L_{22}
-\end{bmatrix}
+&=
+L
 \begin{bmatrix}
 \mathbf{y}_1 \\
 \mathbf{y}_2
 \end{bmatrix}
-=
+\\[0.5em]
+&=
 \begin{bmatrix}
 L_{11}\,\mathbf{y}_1 \\
 L_{21}\,\mathbf{y}_1 + L_{22}\,\mathbf{y}_2
-\end{bmatrix}.
+\end{bmatrix}
 $$
 
 Comme les valeurs observées $\mathbf{z}_1$ sont connues, et que l'on peut déduire $\mathbf{y}_1$, seule la partie simulée varie d’une réalisation à l’autre :
