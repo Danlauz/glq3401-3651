@@ -2,7 +2,7 @@
 
 Les méthodes de simulation multipoints ( *Multiple Point Statistic*, MPS) ont été développées pour surmonter les limites fondamentales des approches géostatistiques classiques fondées uniquement sur le variogramme. En effet, un variogramme ne décrit que des relations bivariées (entre deux points), ce qui est insuffisant pour représenter des structures géologiques complexes telles que les chenaux sinueux, les veines discontinues, les réseaux de fractures, les figures polygonales, ou encore les motifs hiérarchiques présents dans de nombreux environnements sédimentaires et structuraux.
 
-Une image classique et largement utilisée pour illustrer cette idée est celle présentée dans Caers and Zhang (2004). La [Fig. \ref{C12_MPS1}] en montre un exemple. On constate trois contexte géologique bien différent, cependant leur variogramme expérimentales dans les deux directions principales sont très similaires. On constante bien que le variogramme ne permet par de distinguer les structures spatiales entre les images.
+Une image classique et largement utilisée pour illustrer cette idée est celle présentée dans Caers and Zhang (2004). La [Fig. %s](#C12_MPS1) en montre un exemple. On constate trois contexte géologique bien différent, cependant leur variogramme expérimentales dans les deux directions principales sont très similaires. On constante bien que le variogramme ne permet par de distinguer les structures spatiales entre les images.
 
 ```{figure} images/C12_MPS1.png
 :label: C12_MPS1
@@ -55,7 +55,7 @@ Le processus peut être décrit comme suit :
 6. **Répétition séquentielle**  
    Le processus est répété pour tous les points du domaine, selon un chemin de visite (souvent aléatoire), jusqu’à ce que la grille complète soit simulée.
 
-La [Fig. \ref{C12_MPS2}] illustre un exemple simple de la méthode multipoint pixel par pixel. Dans cet exemple, on souhaite simuler le faciès situé dans le carré rouge. Pour ce faire, on recherche dans la TI les occurrences où la même configuration de trois faciès déjà simulés apparaît autour d’un point donné. On observe dans la TI qu’une telle configuration existe et qu’elle correspond à un faciès bleu au centre. En analysant l’ensemble des occurrences similaires dans la TI, on obtient une distribution conditionnelle : 29 % de faciès bleu et 71 % de faciès jaune, et aucune occurrence du faciès vert. Le faciès du point à simuler est alors tiré aléatoirement selon cette distribution conditionnelle, ce qui détermine la catégorie attribuée au pixel encadré en rouge.
+La [Fig. %s](#C12_MPS2) illustre un exemple simple de la méthode multipoint pixel par pixel. Dans cet exemple, on souhaite simuler le faciès situé dans le carré rouge. Pour ce faire, on recherche dans la TI les occurrences où la même configuration de trois faciès déjà simulés apparaît autour d’un point donné. On observe dans la TI qu’une telle configuration existe et qu’elle correspond à un faciès bleu au centre. En analysant l’ensemble des occurrences similaires dans la TI, on obtient une distribution conditionnelle : 29 % de faciès bleu et 71 % de faciès jaune, et aucune occurrence du faciès vert. Le faciès du point à simuler est alors tiré aléatoirement selon cette distribution conditionnelle, ce qui détermine la catégorie attribuée au pixel encadré en rouge.
 
 ```{figure} images/C12_MPS2.png
 :label: C12_MPS2
@@ -80,7 +80,7 @@ La simulation multipoints par morceaux consiste à reproduire des structures spa
    On extrait dans la TI des blocs de taille fixe (par exemple 8×8 ou 16×16 pixels), qui serviront de motifs de référence.
 
 2. **Caractérisation des patchs**
-   Chaque patch est décrit au moyen de mesures spatiales (textures, gradients, statistiques locales), afin de faciliter la comparaison entre patchs ([Fig. \ref{C12_MPS3}]).
+   Chaque patch est décrit au moyen de mesures spatiales (textures, gradients, statistiques locales), afin de faciliter la comparaison entre patchs ([Fig. %s](#C12_MPS3)).
 
 3. **Regroupement des patchs**
    Les patchs similaires sont regroupés (clustering) pour accélérer la recherche de motifs compatibles durant la simulation.
@@ -103,19 +103,21 @@ La simulation multipoints par morceaux consiste à reproduire des structures spa
 Exemple de mesure de la distance entre un patch et la TI.
 ``` 
 
+Les méthodes de simulation par patchs présentent plusieurs avantages importants ([Fig. %s](#C12_MPS4)). Elles permettent d’abord une reproduction très fidèle des motifs structuraux présents dans la TI, ce qui en fait un outil particulièrement efficace pour représenter des géométries géologiques complexes. Elles offrent également une grande robustesse pour modéliser des architectures de grande échelle, où la continuité spatiale des objets joue un rôle essentiel. De plus, ces approches sont bien adaptées à la représentation de textures non stationnaires ou multi-échelles, car les patchs capturent directement les variations locales de structure présentes dans la TI.
+
+Cependant, ces méthodes comportent aussi une limite notable : des discontinuités peuvent apparaître aux jonctions entre patchs si la fusion n’est pas optimale. La qualité de la transition dépend fortement de la taille des patchs, de leur degré de similarité avec le voisinage simulé, ainsi que de la technique de couture employée. Une fusion inadéquate peut ainsi entraîner des “coutures” visibles, réduisant le réalisme de la simulation.
+
 ```{figure} images/C12_MPS4.png
 :label: C12_MPS4
 :align: center
 Exemple de l’application d’un algorithme de simulation par patch.
 ``` 
 
-Les méthodes de simulation par patchs présentent plusieurs avantages importants ([Fig. \ref{C12_MPS3}]). Elles permettent d’abord une reproduction très fidèle des motifs structuraux présents dans la TI, ce qui en fait un outil particulièrement efficace pour représenter des géométries géologiques complexes. Elles offrent également une grande robustesse pour modéliser des architectures de grande échelle, où la continuité spatiale des objets joue un rôle essentiel. De plus, ces approches sont bien adaptées à la représentation de textures non stationnaires ou multi-échelles, car les patchs capturent directement les variations locales de structure présentes dans la TI.
-
-Cependant, ces méthodes comportent aussi une limite notable : des discontinuités peuvent apparaître aux jonctions entre patchs si la fusion n’est pas optimale. La qualité de la transition dépend fortement de la taille des patchs, de leur degré de similarité avec le voisinage simulé, ainsi que de la technique de couture employée. Une fusion inadéquate peut ainsi entraîner des “coutures” visibles, réduisant le réalisme de la simulation.
-
 ---
 
 ## Exemple d'image d'entrainement et de réalisation
+
+Cette section présente une série de TIs et de simulations obtenues par MPS. Constatez la grande versatilité et l’efficacité des méthodes MPS.
 
 ```{figure} images/C12_MPS5.png
 :label: C12_MPS5
@@ -162,7 +164,7 @@ Cependant, ces méthodes comportent aussi une limite notable : des discontinuit�
 :align: center 
 ``` 
 
-```{figure} images/C12_MPS1.png
+```{figure} images/C12_MPS14.png
 :label: C12_MPS14
 :align: center 
 ``` 

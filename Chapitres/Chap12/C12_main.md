@@ -41,9 +41,9 @@ Dans ce cadre, plusieurs approches de simulation de faciès ont été développ�
 
 Une application importante de la modélisation de faciès concerne la représentation de la sous-surface pour des besoins en géotechnique et en hydrogéologie. Supposons que l’on dispose de plusieurs forages géotechniques indiquant les unités stratigraphiques (p. ex. les dépôts du Quaternaire) ainsi que les lithologies associées à chacune de ces unités (p. ex. gravier, sable, silt, argile). Il devient alors possible de générer plusieurs modèles géologiques à partir de ces données de forage.
 
-La [Fig. \ref{C12_Stratigraphie}] présente deux réalisations de la séquence stratigraphique composée de six unités, tandis que la [Fig. \ref{C12_Lithologie}] illustre deux réalisations de la lithologie.
+La [Fig. %s](#C12_Stratigraphie) présente deux réalisations de la séquence stratigraphique composée de six unités, tandis que la [Fig. %s](#C12_Lithologie) illustre deux réalisations de la lithologie.
 
-À partir de ces réalisations, il est ensuite possible de caractériser l’aquifère régional (étude hydrogéologique) ou d’évaluer les risques géotechniques, notamment liés à la présence des argiles de la mer de Champlain. Les applications sont nombreuses et couvrent plusieurs domaines. Ici, les figures ont été tiré de l'article libre-d'accèes du groupe de recherche en hydrogéologie stochastique de l'université de Neuchâtel en Suisse[^1].
+À partir de ces réalisations, il est ensuite possible de caractériser l’aquifère régional (étude hydrogéologique) ou d’évaluer les risques géotechniques, notamment liés à la présence des argiles de la mer de Champlain. Les applications sont nombreuses et couvrent plusieurs domaines. Ici, les figures ont été tiré de l'article de https://doi.org/10.3389/feart.2022.884075 en libre-d'accès du groupe de recherche en hydrogéologie stochastique de l'université de Neuchâtel en Suisse.
 
 
 ```{figure} images/C12_Stratigraphie.png
@@ -77,6 +77,3 @@ La modélisation par objets consiste à simuler des entités géométriques déf
 4. Statistiques multipoints (MPS)
 
 Les méthodes MPS décrivent la continuité spatiale à partir de configurations obtenues d’une image d’entraînement qui représente l'étendu de la complexité de la géologie. Elles permettent ainsi de reproduire des structures géologiques complexes, souvent impossibles à modéliser avec les variogrammes classiques. Le principal défi réside dans la conception d’une image d’entraînement à la fois réaliste, représentative et compatible avec les exigences de stationnarité. Malgré ces contraintes, les méthodes MPS offrent un potentiel considérable pour plusieurs architectures géologiques — il s’agit probablement des approches les plus puissantes lorsqu’une information géométrique riche est disponible.
-
-
-[^1]: Schorpp, L., Straubhaar, J., & Renard, P. (2022). Automated Hierarchical 3D Modeling of Quaternary Aquifers: The ArchPy Approach. Frontiers in Earth Science, 10. https://doi.org/10.3389/feart.2022.884075

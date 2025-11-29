@@ -20,10 +20,10 @@ Le modèle gaussien tronqué simule une variable gaussienne continue, puis appli
 2. **Détermination des seuils gaussiens**  
    À partir des proportions globales des faciès, on calcule les seuils gaussiens correspondants en utilisant les quantiles d’une loi normale standard $N(0,1)$. Ces seuils définissent les intervalles dans lesquels la valeur simulée du champ gaussien sera tronquée pour produire le faciès associé. La champ gaussian, que l'on considère comme latent, est de moyenne nulle et variance unitaire.
 
-3. ** Appliqer les seuils de codage.**
+3. **Appliquer les seuils de codage.**
    Une simulation gaussienne non conditionnelle est générée à l’aide d’une méthode classique (LU, SGS, FFT-MA, bandes tournantes). Une fois le champ continu obtenu, chaque valeur est comparée aux seuils déterminés à l’étape 2 : si elle tombe dans l’intervalle correspondant au faciès $k$, la cellule est codée comme appartenant à ce faciès. Le champ gaussien est ainsi transformé en un champ catégoriel, garantissant les proportions souhaitées et les relations spatiales découlant du modèle.
 
-La [Fig. \ref{C12_TGS1}] présente un exemple d’application avec trois faciès, notés $F_1$, $F_2$ et $F_3$, dont les probabilités respectives sont $p_1 = \frac{1}{3}$, $p_2 = \frac{1}{2}$ et $p_3 = \frac{1}{6}$. Les seuils de codage sont déterminés à partir de la fonction de répartition $F$ de la loi normale standard $N(0,1)$. Le premier seuil, $s_1$, correspondant à la transition entre $F_1$ et $F_2$, est donné par $s_1 = F^{-1}(p_1) = F^{-1}\left(\frac{1}{3}\right) = -0.43073$. Le second seuil, $s_2$, correspondant à la transition entre $F_2$ et $F_3$, est obtenu en cumulant les proportions des deux premiers faciès : $s_2 = F^{-1}(p_1 + p_2) = F^{-1}\left(\frac{5}{6}\right) = 0.96742$. Toute valeur gaussienne inférieure à $s_1$ est alors codée $F_1$, toute valeur comprise entre $s_1$ et $s_2$ est codée $F_2$, et toute valeur supérieure à $s_2$ est codée $F_3$. En utilisant un variogramme gaussien de portée 50 avec ces proportions, on obtient le champ de faciès illustré dans la [Fig. \ref{C12_TGS2}], où l’on observe que la transition entre $F_1$ (bleu) et $F_3$ (rouge) doit obligatoirement passer par $F_2$ (vert); ainsi, $F_1$ et $F_3$ ne peuvent jamais être contigus. 
+La [Fig. %s](#C12_TGS1) présente un exemple d’application avec trois faciès, notés $F_1$, $F_2$ et $F_3$, dont les probabilités respectives sont $p_1 = \frac{1}{3}$, $p_2 = \frac{1}{2}$ et $p_3 = \frac{1}{6}$. Les seuils de codage sont déterminés à partir de la fonction de répartition $F$ de la loi normale standard $N(0,1)$. Le premier seuil, $s_1$, correspondant à la transition entre $F_1$ et $F_2$, est donné par $s_1 = F^{-1}(p_1) = F^{-1}\left(\frac{1}{3}\right) = -0.43073$. Le second seuil, $s_2$, correspondant à la transition entre $F_2$ et $F_3$, est obtenu en cumulant les proportions des deux premiers faciès : $s_2 = F^{-1}(p_1 + p_2) = F^{-1}\left(\frac{5}{6}\right) = 0.96742$. Toute valeur gaussienne inférieure à $s_1$ est alors codée $F_1$, toute valeur comprise entre $s_1$ et $s_2$ est codée $F_2$, et toute valeur supérieure à $s_2$ est codée $F_3$. En utilisant un variogramme gaussien de portée 50 avec ces proportions, on obtient le champ de faciès illustré dans la [Fig. %s](#C12_TGS2), où l’on observe que la transition entre $F_1$ (bleu) et $F_3$ (rouge) doit obligatoirement passer par $F_2$ (vert); ainsi, $F_1$ et $F_3$ ne peuvent jamais être contigus. 
 
 Ainsi, le modèle implique que seuls les faciès successifs peuvent être contigus spatialement. Ainsi la transition $F_1$ − $F_3$ ne peut être observée. Le choix de  l’ordre des faciès doit respecter les relations observées.
 
@@ -77,7 +77,7 @@ peut être calculer théorique par l'intégrale de la densité binormale défini
 
 L’objectif est alors d’identifier la fonction de covariance $C(h)$ qui minimise l’écart entre les probabilités théoriques $p_{ij}(h)$ issues du modèle binormal et leurs estimations empiriques $\hat p_{ij}(h)$ obtenues à partir des données catégorielles.
 
-La [Fig. \ref{C12_TGS3}] présente le calcul théorique issu du modèle binormal. La surface colorée représente la densité de la loi normale bidimensionnelle associée au couple gaussien corrélé $(Z(x), Z(x+h))$. Les lignes rouges indiquent les seuils de troncature $(c_{i-1}, c_i)$ et $(c_{j-1}, c_j)$ définissant respectivement les faciès $i$ et $j$. Le calcul de la probabilité conjointe $p_{ij}(h)$ correspond alors à l’intégrale de cette densité binormale sur le rectangle délimité par ces seuils, c’est-à-dire à la quantité
+La [Fig. %s](#C12_TGS3)  présente le calcul théorique issu du modèle binormal. La surface colorée représente la densité de la loi normale bidimensionnelle associée au couple gaussien corrélé $(Z(x), Z(x+h))$. Les lignes rouges indiquent les seuils de troncature $(c_{i-1}, c_i)$ et $(c_{j-1}, c_j)$ définissant respectivement les faciès $i$ et $j$. Le calcul de la probabilité conjointe $p_{ij}(h)$ correspond alors à l’intégrale de cette densité binormale sur le rectangle délimité par ces seuils, c’est-à-dire à la quantité
 $$
 p_{ij}(h)
 = \iint_{\substack{c_{i-1} < u \le c_i \\[2pt] c_{j-1} < v \le c_j}}
@@ -85,7 +85,19 @@ f_{Z(x),Z(x+h)}(u,v)\,\mathrm{d}u\,\mathrm{d}v,
 $$
 où $f_{Z(x),Z(x+h)}(u,v)$ est la densité normale bidimensionnelle de moyenne nulle, de variance unitaire et de covariance $C(h)$.
 
-La [Fig. \ref{C12_TGS4}] présente les probabilités $p_{ij}(h)=E\!\left[ I_i\, I_j \right]$ associées au modèle TGS considéré (rappel : $p_1 = \tfrac{1}{3}$, $p_2 = \tfrac{1}{2}$ et $p_3 = \tfrac{1}{6}$). On constate que les probabilités situées sur la diagonale sont décroissantes, ce qui s’explique par le fait que plus la distance $h$ augmente, plus la probabilité d’obtenir une paire de points appartenant à des faciès similaires devient rare. L’inverse se produit pour les transitions hors diagonale : il devient plus probable d’observer une transition entre deux faciès distincts lorsque la distance augmente. Il est également important de noter que pour $h = 0$, on observe bien $p_{ij}(h)=p_i$ pour $i=1,\ldots,3$, tandis que les probabilités entre faciès différents sont nulles. Enfin, lorsque $h \to \infty$, les probabilités convergent vers la limite $p_{ij}(h)=p_i\,p_j$.
+La [Fig. %s](#C12_TGS4) présente les probabilités $p_{ij}(h)=E\!\left[ I_i\, I_j \right]$ associées au modèle TGS considéré (rappel : $p_1 = \tfrac{1}{3}$, $p_2 = \tfrac{1}{2}$ et $p_3 = \tfrac{1}{6}$). On constate que les probabilités situées sur la diagonale sont décroissantes, ce qui s’explique par le fait que plus la distance $h$ augmente, plus la probabilité d’obtenir une paire de points appartenant à des faciès similaires devient rare. L’inverse se produit pour les transitions hors diagonale : il devient plus probable d’observer une transition entre deux faciès distincts lorsque la distance augmente. Il est également important de noter que pour $h = 0$, on observe bien $p_{ij}(h)=p_i$ pour $i=1,\ldots,3$, tandis que les probabilités entre faciès différents sont nulles. Enfin, lorsque $h \to \infty$, les probabilités convergent vers la limite $p_{ij}(h)=p_i\,p_j$.
+
+```{figure} images/C12_TGS3.png
+:label: C12_TGS3
+:align: center
+Exemple de calcul théorique issu du modèle binormal.
+```
+
+```{figure} images/C12_TGS4.png
+:label: C12_TGS4
+:align: center
+Probabilité des $p_{ij}(h)$.
+```
 
 
 ### Comment tenir compte des faciès observés aux points échantillons  (quelles valeurs gaussiennes simuler aux points échantillons)?
@@ -167,11 +179,11 @@ Le modèle plurigaussien étend le modèle gaussien tronqué en utilisant plusie
    Réaliser une simulation gaussienne conditionnelle complète pour les champs $Z_1$ et $Z_2$ en utilisant les valeurs obtenues lors du conditionnement.  
    Convertir ensuite le résultat en faciès à l’aide du plan de codage.
 
-La [Fig. \ref{C12_TGS5}] présente un exemple de patron de codage complexe. Par exemple, si l’on observe les valeurs latentes $Z_1 = -1$ et $Z_2 = 1$, le couple $(-1, 1)$ tombe dans le rectangle associé au faciès $F_1$, et celui-ci est donc attribué. La [Fig. \ref{C12_TGS6}] illustre l’application de ce patron de codage à deux champs gaussiens indépendants. Le champ latent $Z_1(x)$ suit un variogramme sphérique isotrope de portée 150 pixels, tandis que le champ latent $Z_2(x)$ suit un variogramme sphérique isotrope de portée 260 pixels. Le domaine simulé couvre une grille de 500 × 500 pixels.
+La [Fig. %s](#C12_TGS5) présente un exemple de patron de codage complexe. Par exemple, si l’on observe les valeurs latentes $Z_1 = -1$ et $Z_2 = 1$, le couple $(-1, 1)$ tombe dans le rectangle associé au faciès $F_1$, et celui-ci est donc attribué. La [Fig. %s](#C12_TGS6) illustre l’application de ce patron de codage à deux champs gaussiens indépendants. Le champ latent $Z_1(x)$ suit un variogramme sphérique isotrope de portée 150 pixels, tandis que le champ latent $Z_2(x)$ suit un variogramme sphérique isotrope de portée 260 pixels. Le domaine simulé couvre une grille de 500 × 500 pixels.
 
 On constate que les relations spatiales entre les faciès générés sont très complexes, mais certaines structures sont clairement imposées par le patron de codage : le faciès $F_4$ est entièrement contenu dans $F_3$, tandis que les faciès $F_1$, $F_2$ et $F_3$ baignent dans $F_0$ et ne peuvent donc jamais entrer en contact direct les uns avec les autres.
 
-La [Fig. \ref{C12_TGS7}] présente quatre images : une image réelle aux rayons X montrant les pores d’un grès, ainsi que trois réalisations PGS générées pour reproduire cette structure. Selon vous, laquelle correspond à l’image réelle ? Il s’agit de celle située en haut à gauche. Les simulations sont suffisamment réalistes pour rendre la distinction non triviale voir impossible.
+La [Fig. %s](#C12_TGS7) présente quatre images : une image réelle aux rayons X montrant les pores d’un grès, ainsi que trois réalisations PGS générées pour reproduire cette structure. Selon vous, laquelle correspond à l’image réelle ? Il s’agit de celle située en haut à gauche. Les simulations sont suffisamment réalistes pour rendre la distinction non triviale voir impossible.
 
 ```{figure} images/C12_TGS5.png
 :label: C12_TGS5
