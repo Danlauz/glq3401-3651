@@ -132,6 +132,7 @@ site:
     logo: images/logo_polymtl.png
     logo_dark: images/logo_polymtl_dark.png
     logo_text: GLQ3401 / GLQ3651
+    analytics_google: G-RX555YHK9M # Measurement ID or Tracking ID
   nav:
     - title: GLQ3401/GLQ3651
       url: https://github.com/Danlauz/glq3401-3651
