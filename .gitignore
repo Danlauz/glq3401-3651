@@ -72,3 +72,14 @@ _A_SUPPRIMER/
 # === HTML rendu qui traîne dans les dossiers SOURCES (vestiges d'un ancien build ;
 #     le vrai site est publié dans docs/, jamais à côté des .qmd) ===
 chapters/*/index.html
+
+# === Archives temporaires (ne jamais publier) ===
+*.tar.gz
+_geostat_lib_tmp.tar.gz
+
+# === Diapositives de cours (259 Mo, hors site ; 1 fichier > limite 100 Mo GitHub) ===
+#     Gardées en local. Pour les diffuser, prévoir Git LFS ou hébergement externe.
+/powerpoint/
+
+# === GIF d'animation non utilisé (59 Mo ; le site sert le .webm) ===
+chapters/C13/images/C13_SIS_animation.gif
