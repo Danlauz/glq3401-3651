@@ -1,0 +1,2112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>12&nbsp; Simulations géostatistiques de variable continue – Géostatistique et géologie minière</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../chapters/C13/index.html" rel="next">
+<link href="../../chapters/C11/index.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-f2c6d6e2b784ddc5de38779acc06f37d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-74c88ba48ad0bebf983f0ffd06dd1671.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f2c6d6e2b784ddc5de38779acc06f37d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents correspondants",
+    "search-copy-link-title": "Copier le lien",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "Rechercher",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles/site-polish.css">
+<link rel="stylesheet" href="../../styles/callouts.css">
+<link rel="stylesheet" href="../../styles/exercice.css">
+<link rel="stylesheet" href="../../styles/chapter-downloads.css">
+<link rel="stylesheet" href="../../scripts/geostat-js/style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/C10/index.html">Partie III: Géostatistique non-linéaire</a></li><li class="breadcrumb-item"><a href="../../chapters/C12/index.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable continue</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Géostatistique et géologie minière</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/Danlauz/glq3401-3651" title="Code source" class="quarto-navigation-tool px-1" aria-label="Code source"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Basculer le mode sombre"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Préface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">À propos de l’auteur</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie I: Géologie minière</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C01/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Rapport Technique NI 43-101 et Loi sur les mines</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C02/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aspect économique</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C03/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Théorie de Gy et contrôle qualité</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C04/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Traitement et analyse statistique des données de forage</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C05/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Méthodes déterministes d’estimation des ressources</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie II: Géostatistique linéaire</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C06/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction à la géostatistique</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C07/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Variogramme</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C08/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Variance de blocs, de dispersion et d’estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C09/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Krigeage</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Partie III: Géostatistique non-linéaire</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C10/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Géostatistique multivariable</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C11/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Krigeage d’indicatrices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C12/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable continue</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C13/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable catégorielle</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie IV: Exercices et examens</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/exercices/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Recueil d’exercices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/examens/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Anciens examens</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Références</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Annexes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Algèbre linéaire : vecteurs et plans</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Probabilités &amp; statistiques</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-c.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Table de la loi normale centrée-réduite</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Abaques - Variances de dispersion</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-e.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Abaques - Variances d’estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Notation mathématique</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#notations-et-hypothèses" id="toc-notations-et-hypothèses" class="nav-link active" data-scroll-target="#notations-et-hypothèses"><span class="header-section-number">12.1</span> Notations et hypothèses</a>
+  <ul class="collapse">
+  <li><a href="#problématique-du-câble-sous-marin-alfaro-1979" id="toc-problématique-du-câble-sous-marin-alfaro-1979" class="nav-link" data-scroll-target="#problématique-du-câble-sous-marin-alfaro-1979">Problématique du câble sous-marin (Alfaro, 1979)</a></li>
+  <li><a href="#estimation-ou-simulation" id="toc-estimation-ou-simulation" class="nav-link" data-scroll-target="#estimation-ou-simulation">Estimation ou simulation</a></li>
+  </ul></li>
+  <li><a href="#simulation-non-conditionnelle-dune-variable-continue" id="toc-simulation-non-conditionnelle-dune-variable-continue" class="nav-link" data-scroll-target="#simulation-non-conditionnelle-dune-variable-continue"><span class="header-section-number">12.2</span> Simulation non conditionnelle d’une variable continue</a>
+  <ul class="collapse">
+  <li><a href="#méthode-de-simulation-matricielle-décomposition-de-cholesky" id="toc-méthode-de-simulation-matricielle-décomposition-de-cholesky" class="nav-link" data-scroll-target="#méthode-de-simulation-matricielle-décomposition-de-cholesky">Méthode de simulation matricielle (décomposition de Cholesky)</a></li>
+  <li><a href="#cas-des-variables-non-gaussiennes-lanamorphose" id="toc-cas-des-variables-non-gaussiennes-lanamorphose" class="nav-link" data-scroll-target="#cas-des-variables-non-gaussiennes-lanamorphose">Cas des variables non gaussiennes : l’anamorphose</a></li>
+  <li><a href="#passage-à-la-simulation-conditionnelle" id="toc-passage-à-la-simulation-conditionnelle" class="nav-link" data-scroll-target="#passage-à-la-simulation-conditionnelle">Passage à la simulation conditionnelle</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-12.1-reproduction-du-variogramme" id="toc-atelier-interactif-12.1-reproduction-du-variogramme" class="nav-link" data-scroll-target="#atelier-interactif-12.1-reproduction-du-variogramme">🧮 Atelier interactif 12.1 — Reproduction du variogramme</a></li>
+  <li><a href="#simulation-conditionnelle-dune-variable-continue" id="toc-simulation-conditionnelle-dune-variable-continue" class="nav-link" data-scroll-target="#simulation-conditionnelle-dune-variable-continue"><span class="header-section-number">12.3</span> Simulation conditionnelle d’une variable continue</a>
+  <ul class="collapse">
+  <li><a href="#méthode-de-simulation-matricielle-conditionnelle-par-décomposition-de-cholesky" id="toc-méthode-de-simulation-matricielle-conditionnelle-par-décomposition-de-cholesky" class="nav-link" data-scroll-target="#méthode-de-simulation-matricielle-conditionnelle-par-décomposition-de-cholesky">Méthode de simulation matricielle conditionnelle par décomposition de Cholesky</a></li>
+  <li><a href="#méthode-de-simulation-séquentielle-gaussienne-sgs" id="toc-méthode-de-simulation-séquentielle-gaussienne-sgs" class="nav-link" data-scroll-target="#méthode-de-simulation-séquentielle-gaussienne-sgs">Méthode de simulation séquentielle gaussienne (SGS)</a></li>
+  <li><a href="#comparaison-des-deux-méthodes" id="toc-comparaison-des-deux-méthodes" class="nav-link" data-scroll-target="#comparaison-des-deux-méthodes">Comparaison des deux méthodes</a></li>
+  <li><a href="#méthode-de-recuit-simulé" id="toc-méthode-de-recuit-simulé" class="nav-link" data-scroll-target="#méthode-de-recuit-simulé">Méthode de recuit simulé</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-12.2-animation-sgs" id="toc-atelier-interactif-12.2-animation-sgs" class="nav-link" data-scroll-target="#atelier-interactif-12.2-animation-sgs">🧮 Atelier interactif 12.2 — Animation SGS</a></li>
+  <li><a href="#post-conditionnement-par-krigeage-simple-ou-ordinaire" id="toc-post-conditionnement-par-krigeage-simple-ou-ordinaire" class="nav-link" data-scroll-target="#post-conditionnement-par-krigeage-simple-ou-ordinaire"><span class="header-section-number">12.4</span> Post-conditionnement par krigeage simple (ou ordinaire)</a>
+  <ul class="collapse">
+  <li><a href="#principe-du-post-conditionnement-par-krigeage" id="toc-principe-du-post-conditionnement-par-krigeage" class="nav-link" data-scroll-target="#principe-du-post-conditionnement-par-krigeage">Principe du post-conditionnement par krigeage</a></li>
+  <li><a href="#propriétés-mathématiques" id="toc-propriétés-mathématiques" class="nav-link" data-scroll-target="#propriétés-mathématiques">Propriétés mathématiques</a></li>
+  </ul></li>
+  <li><a href="#propriétés-des-simulations" id="toc-propriétés-des-simulations" class="nav-link" data-scroll-target="#propriétés-des-simulations"><span class="header-section-number">12.5</span> Propriétés des simulations</a></li>
+  <li><a href="#atelier-interactif-12.3-non-conditionnel-ou-conditionnel" id="toc-atelier-interactif-12.3-non-conditionnel-ou-conditionnel" class="nav-link" data-scroll-target="#atelier-interactif-12.3-non-conditionnel-ou-conditionnel">🧮 Atelier interactif 12.3 — Non conditionnel ou conditionnel</a></li>
+  <li><a href="#atelier-interactif-12.4-site-contaminé-krigeage-ou-simulations" id="toc-atelier-interactif-12.4-site-contaminé-krigeage-ou-simulations" class="nav-link" data-scroll-target="#atelier-interactif-12.4-site-contaminé-krigeage-ou-simulations">🧮 Atelier interactif 12.4 — Site contaminé : krigeage ou simulations</a></li>
+  <li><a href="#atelier-interactif-12.5-ressources-minières-krigeage-ou-simulations" id="toc-atelier-interactif-12.5-ressources-minières-krigeage-ou-simulations" class="nav-link" data-scroll-target="#atelier-interactif-12.5-ressources-minières-krigeage-ou-simulations">🧮 Atelier interactif 12.5 — Ressources minières : krigeage ou simulations</a></li>
+  <li><a href="#méthodes-de-simulation-avancées" id="toc-méthodes-de-simulation-avancées" class="nav-link" data-scroll-target="#méthodes-de-simulation-avancées"><span class="header-section-number">12.6</span> Méthodes de simulation avancées</a>
+  <ul class="collapse">
+  <li><a href="#bandes-tournantes" id="toc-bandes-tournantes" class="nav-link" data-scroll-target="#bandes-tournantes">Bandes tournantes</a></li>
+  <li><a href="#bandes-tournantes-spectrales" id="toc-bandes-tournantes-spectrales" class="nav-link" data-scroll-target="#bandes-tournantes-spectrales">Bandes tournantes spectrales</a></li>
+  <li><a href="#fft-ma" id="toc-fft-ma" class="nav-link" data-scroll-target="#fft-ma">FFT-MA</a></li>
+  <li><a href="#décomposition-de-karhunenloève" id="toc-décomposition-de-karhunenloève" class="nav-link" data-scroll-target="#décomposition-de-karhunenloève">Décomposition de Karhunen–Loève</a></li>
+  <li><a href="#comparaison" id="toc-comparaison" class="nav-link" data-scroll-target="#comparaison">Comparaison</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Danlauz/glq3401-3651/edit/main/chapters/C12/index.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/Danlauz/glq3401-3651/issues/new" class="toc-action"><i class="bi empty"></i>Signaler un problème ou<br>formuler une suggestion</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/C10/index.html">Partie III: Géostatistique non-linéaire</a></li><li class="breadcrumb-item"><a href="../../chapters/C12/index.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable continue</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable continue</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Résumé</div>
+    <p>Ce chapitre présente les principes et les applications des simulations géostatistiques pour la modélisation de variables spatiales continues. Leur principal intérêt réside dans leur capacité à quantifier l’incertitude et à produire des représentations spatiales qui reproduisent la variabilité observée dans les données de terrain. La distinction entre estimation et simulation est d’abord établie, puis les cas conditionnel et non conditionnel sont détaillés. Les principaux algorithmes, notamment la décomposition de Cholesky et la simulation gaussienne séquentielle, sont ensuite présentés. Le chapitre expose également les critères guidant le choix de la méthode la mieux adaptée au contexte étudié et souligne les limites propres à chaque approche.</p>
+  </div>
+</div>
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Objectifs d’apprentissage
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>À la fin de ce chapitre, vous serez en mesure de :</p>
+<ul>
+<li><p>Identifier les problèmes pour lesquels les méthodes de simulation géostatistique sont appropriées;</p></li>
+<li><p>Distinguer les concepts d’estimation et de simulation, ainsi que leurs objectifs respectifs;</p></li>
+<li><p>Expliquer les différences entre les simulations non conditionnelles et conditionnelles;</p></li>
+<li><p>Appliquer les méthodes de simulation de Cholesky et de simulation séquentielle gaussienne (SGS), et en discuter les avantages et les limites;</p></li>
+<li><p>Utiliser et interpréter les résultats de simulations dans le cadre de l’estimation des ressources;</p></li>
+<li><p>Expliquer les principales propriétés statistiques et spatiales des simulations.</p></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Références
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ce chapitre s’appuie principalement sur les ouvrages suivants :</p>
+<p>Lantuéjoul, C. (2002). <em>Geostatistical Simulation: Models and Algorithms</em>. Springer.</p>
+<p>Chilès, J., &amp; Delfiner, P. (2012). <em>Geostatistics: Modeling Spatial Uncertainty</em>. John Wiley &amp; Sons.</p>
+</div>
+</div>
+<section id="notations-et-hypothèses" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="notations-et-hypothèses"><span class="header-section-number">12.1</span> Notations et hypothèses</h2>
+<p>On modélise la variable régionalisée par un champ stochastique <span class="math inline">\({Z(\mathbf{x}) : \mathbf{x}\in\mathcal{D}}\)</span> défini sur un domaine <span class="math inline">\(\mathcal{D}\subset\mathbb{R}^n\)</span>. Le krigeage et la simulation géostatistique reposent sur ce même modèle spatial, mais répondent à des objectifs différents : le krigeage cherche une estimation optimale, tandis que la simulation génère plusieurs configurations possibles du champ conditionnellement aux données.</p>
+<section id="problématique-du-câble-sous-marin-alfaro-1979" class="level3">
+<h3 class="anchored" data-anchor-id="problématique-du-câble-sous-marin-alfaro-1979">Problématique du câble sous-marin (Alfaro, 1979)</h3>
+<p>L’exemple proposé par Alfaro (1979) illustre directement cette distinction. Supposons que l’on cherche à estimer la longueur d’un câble posé sur le fond marin à partir de données bathymétriques mesurées tous les <span class="math inline">\(100,\text{m}\)</span> le long d’un profil.</p>
+<p>Une première approche consiste à kriger la profondeur entre les observations, puis à calculer la longueur de la courbe estimée. On obtient alors :</p>
+<p><span class="math display">\[
+L_{\mathrm{krigeage}}=945,\text{m}.
+\]</span></p>
+<p>Un levé beaucoup plus dense, réalisé tous les <span class="math inline">\(10,\text{m}\)</span>, révèle toutefois une longueur de :</p>
+<p><span class="math display">\[
+L_{\mathrm{réelle}}=1182,\text{m}.
+\]</span></p>
+<p>Cet écart résulte du lissage produit par le krigeage. Les variations de petite échelle et les valeurs extrêmes sont atténuées, de sorte que le profil estimé est plus régulier et, dans ce cas, artificiellement plus court. La longueur étant une fonctionnelle non linéaire du profil, elle ne peut généralement pas être évaluée correctement à partir de la seule estimation krigée.</p>
+<p>La simulation conditionnelle propose une autre approche. Après avoir modélisé la loi marginale et la continuité spatiale de <span class="math inline">\(Z(\mathbf{x})\)</span>, on génère plusieurs profils compatibles avec les observations et avec le modèle géostatistique. Chaque réalisation présente des détails différents entre les points mesurés, tout en demeurant plausible compte tenu des données disponibles.</p>
+<p>La longueur est calculée séparément sur chaque réalisation :</p>
+<p><span class="math display">\[
+L^{(s)}=L\left(Z^{(s)}\right),
+\]</span></p>
+<p>puis son espérance conditionnelle est estimée par la moyenne des résultats :</p>
+<p><span class="math display">\[
+\mathbb{E}[L\mid\mathcal{D}]
+\approx
+\frac{1}{S}\sum_{s=1}^{S}L\left(Z^{(s)}\right),
+\]</span></p>
+<p>où <span class="math inline">\(\mathcal{D}\)</span> représente les données observées. La dispersion des valeurs <span class="math inline">\(L^{(s)}\)</span> permet également de quantifier l’incertitude associée à la longueur du câble.</p>
+<div id="fig-Alfaro" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-Alfaro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C12_Alfaro.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-Alfaro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.1: Problématique du câble sous-marin (Alfaro, 1979). (a) Données bathymétriques et profil réel, (b) profil estimé par krigeage, (c) une réalisation simulée conditionnelle, (d) ensemble de simulations conditionnelles illustrant l’incertitude spatiale.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="estimation-ou-simulation" class="level3">
+<h3 class="anchored" data-anchor-id="estimation-ou-simulation">Estimation ou simulation</h3>
+<p>En estimation, la valeur krigée au point <span class="math inline">\(\mathbf{x}_0\)</span> est une combinaison linéaire des observations :</p>
+<p><span class="math display">\[
+Z^*(\mathbf{x}0)=\sum{i=1}^{n}\lambda_iZ(\mathbf{x}_i).
+\]</span></p>
+<p>Les poids sont déterminés de manière à minimiser la variance de l’erreur sous les contraintes propres au type de krigeage utilisé. Le résultat constitue le meilleur prédicteur linéaire sans biais, ou BLUP. Dans un cadre multigaussien avec moyenne connue, le krigeage simple coïncide avec l’espérance conditionnelle :</p>
+<p><span id="eq-krigeage"><span class="math display">\[
+\mathbb{E}\left[
+Z(\mathbf{x}_0)
+\mid
+Z(\mathbf{x}_1),\ldots,Z(\mathbf{x}_n)
+\right].
+\tag{12.1}\]</span></span></p>
+<p>Cette moyenne conditionnelle fournit une estimation ponctuelle optimale, mais elle ne représente pas toute la distribution conditionnelle. Les valeurs extrêmes sont atténuées et la variabilité spatiale de la carte krigée est inférieure à celle du champ modélisé.</p>
+<p>En simulation conditionnelle, une réalisation est plutôt tirée de la distribution du champ sachant les observations :</p>
+<p><span id="eq-simulation"><span class="math display">\[
+Z^{(s)}(\mathbf{x})
+\sim
+p\left(
+Z(\mathbf{x})
+\mid
+Z(\mathbf{x}_1),\ldots,Z(\mathbf{x}_n)
+\right).
+\tag{12.2}\]</span></span></p>
+<p>Les réalisations ne cherchent pas à minimiser l’erreur en chaque point. Elles représentent différents scénarios possibles entre les observations. Considérées collectivement, elles reproduisent la loi marginale et la structure de dépendance spatiale du modèle (<a href="#fig-c12-krigeage-vs-realisations" class="quarto-xref">Figure&nbsp;<span>12.2</span></a>). En l’absence d’erreur de mesure, elles honorent également les valeurs observées aux points de conditionnement.</p>
+<div id="fig-c12-krigeage-vs-realisations" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c12-krigeage-vs-realisations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c12_01_krigeage_vs_realisations.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c12-krigeage-vs-realisations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.2: Krigeage lissé vs réalisations conditionnelles : les réalisations reproduisent l’histogramme et le variogramme du modèle, contrairement au krigeage qui écrase la variance.
+</figcaption>
+</figure>
+</div>
+<p>Pour un grand nombre de simulations indépendantes, leur moyenne ponctuelle converge vers la moyenne conditionnelle. Dans le cadre multigaussien du krigeage simple :</p>
+<p><span id="eq-convergence"><span class="math display">\[
+\lim_{S \to \infty} \frac{1}{S} \sum_{s=1}^S Z^{(s)}(\mathbf{x}) = Z^*_{\text{SK}}(\mathbf{x})
+\tag{12.3}\]</span></span></p>
+<p>Le krigeage simple est donc la « moyenne » de toutes les réalisations possibles, ce qui explique son caractère lissé. La relation est exacte pour le krigeage simple (moyenne connue), seulement approchée pour le krigeage ordinaire.</p>
+<p>Le tableau suivant résume les propriétés comparées.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Propriété</th>
+<th>Krigeage <span class="math inline">\(Z^*(\mathbf{x})\)</span></th>
+<th>Simulation <span class="math inline">\(Z^{(s)}(\mathbf{x})\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Objectif</td>
+<td>Fournir une estimation ponctuelle optimale</td>
+<td>Générer des scénarios plausibles</td>
+</tr>
+<tr class="even">
+<td>Variance spatiale</td>
+<td><span class="math inline">\(\operatorname{Var}[Z^*] &lt; \operatorname{Var}[Z]\)</span> (sous-estimée)</td>
+<td><span class="math inline">\(\operatorname{Var}[Z^{(s)}] = \operatorname{Var}[Z]\)</span> (préservée)</td>
+</tr>
+<tr class="odd">
+<td>Variogramme</td>
+<td>Partiellement reproduit (lissage)</td>
+<td>Intégralement reproduit</td>
+</tr>
+<tr class="even">
+<td>Conditionnement</td>
+<td>Exact aux observations</td>
+<td>Exact aux observations</td>
+</tr>
+<tr class="odd">
+<td>Valeurs extrêmes</td>
+<td>Atténuées</td>
+<td>Préservées</td>
+</tr>
+<tr class="even">
+<td>Erreur ponctuelle</td>
+<td>Minimale (variance de krigeage)</td>
+<td>Plus élevée qu’une estimation</td>
+</tr>
+<tr class="odd">
+<td>Fonctionnelles non linéaires</td>
+<td>Biaisées (effet de lissage)</td>
+<td>Non biaisées (sur la moyenne des réalisations)</td>
+</tr>
+<tr class="even">
+<td>Quantification d’incertitude</td>
+<td>Variance de krigeage (locale)</td>
+<td>Dispersion des réalisations (globale)</td>
+</tr>
+<tr class="odd">
+<td>Nombre de résultats</td>
+<td>Une seule estimation</td>
+<td>Multiples scénarios équiprobables</td>
+</tr>
+</tbody>
+</table>
+<p>Le choix dépend donc de la quantité recherchée. Le krigeage convient lorsque l’objectif principal est d’obtenir une estimation ponctuelle ou une carte moyenne. La simulation devient nécessaire lorsque l’on cherche à préserver l’hétérogénéité spatiale, à étudier la connectivité, à quantifier un risque ou à évaluer une fonctionnelle non linéaire, comme une longueur, un volume au-delà d’un seuil, un tonnage au-delà d’un seuil ou une réponse calculée par un modèle numérique.</p>
+<p>Dans le cas du câble sous-marin (<a href="#fig-Alfaro" class="quarto-xref">Figure&nbsp;<span>12.1</span></a>), le krigeage produit un profil lissé qui sous-estime la longueur réelle (<span class="math inline">\(L_{\text{krigeage}} = 945\,\text{m}\)</span> contre <span class="math inline">\(L_{\text{réel}} = 1182\,\text{m}\)</span>), tandis que la moyenne sur plusieurs simulations conditionnelles fournit une estimation non biaisée de cette fonctionnelle non linéaire,</p>
+<p><span id="eq-longueur-moyenne"><span class="math display">\[
+\mathbb{E}[L] \approx \frac{1}{S} \sum_{s=1}^S L\big(Z^{(s)}(\mathbf{x})\big),
+\tag{12.4}\]</span></span></p>
+<p>où <span class="math inline">\(L(\cdot)\)</span> désigne la fonctionnelle longueur appliquée à chaque réalisation.</p>
+</section>
+</section>
+<section id="simulation-non-conditionnelle-dune-variable-continue" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="simulation-non-conditionnelle-dune-variable-continue"><span class="header-section-number">12.2</span> Simulation non conditionnelle d’une variable continue</h2>
+<p>La simulation non conditionnelle génère des réalisations d’un champ aléatoire <span class="math inline">\(\{Z(\mathbf{x}) : \mathbf{x} \in \mathcal{D}\}\)</span> sans imposer de contrainte aux points d’observation. Chaque réalisation respecte les propriétés statistiques du modèle soit le variogramme (ou covariance) et la loi marginale, mais ne passe pas forcément par les données mesurées.</p>
+<p>Plusieurs méthodes s’y prêtent : méthodes matricielles (décomposition de Cholesky, LU), moyennes mobiles, bandes tournantes, méthodes autorégressives et méthodes fréquentielles (FFT-MA). Les bandes tournantes ramènent une simulation à <span class="math inline">\(n\)</span> dimensions à des simulations 1D le long de droites, recombinées par projection; elles sont efficaces sur de grands domaines. Les méthodes fréquentielles, dont la FFT-MA (<em>Fast Fourier Transform — Moving Average</em>), simulent dans le domaine spectral et tirent parti de la transformée de Fourier rapide sur grille régulière. Ces méthodes sont détaillées à la section « Méthodes de simulation avancées » (voir plus loin dans ce chapitre); on renvoie aussi à Lantuéjoul (2002) et à Chilès et Delfiner (2012). On présente ici la méthode matricielle de décomposition de Cholesky, l’approche de référence pour les champs de taille modérée.</p>
+<section id="méthode-de-simulation-matricielle-décomposition-de-cholesky" class="level3">
+<h3 class="anchored" data-anchor-id="méthode-de-simulation-matricielle-décomposition-de-cholesky">Méthode de simulation matricielle (décomposition de Cholesky)</h3>
+<p>La méthode de Cholesky permet de simuler les valeurs du champ sur un ensemble fini de positions. On choisit d’abord <span class="math inline">\(N\)</span> points de simulation :</p>
+<p><span class="math display">\[\mathcal{S}={\mathbf{x}_1,\mathbf{x}_2,\ldots,\mathbf{x}_N}\subset\mathcal{D},\]</span></p>
+<p>où <span class="math inline">\(\mathcal{D}\subset\mathbb{R}^d\)</span> est le domaine spatial. Ces positions peuvent correspondre aux nœuds d’une grille régulière, aux centres de cellules d’un modèle ou à un ensemble quelconque de points irrégulièrement répartis.</p>
+<p>La réalisation du champ sur cet ensemble est représentée par le vecteur :</p>
+<p><span class="math display">\[\mathbf{Z}_{\mathcal{S}}=\left[Z(\mathbf{x}_1),Z(\mathbf{x}_2),\ldots,Z(\mathbf{x}_N)\right]^\top.\]</span></p>
+<p>La simulation matricielle ne génère donc pas directement une fonction continue sur tout le domaine. Elle génère les valeurs de cette fonction aux positions de <span class="math inline">\(\mathcal{S}\)</span>. La résolution spatiale de la réalisation dépend ainsi du nombre et de la disposition des points choisis.</p>
+<p>Dans le cas d’un champ gaussien, on suppose :</p>
+<p><span class="math display">\[\mathbf{Z}_{\mathcal{S}}\sim\mathcal{N}(\mathbf{m},\mathbf{K}),\]</span></p>
+<p>où <span class="math inline">\(\mathbf{m}\)</span> est le vecteur des moyennes aux points de simulation :</p>
+<p><span class="math display">\[\mathbf{m}=\left[m(\mathbf{x}_1),m(\mathbf{x}_2),\ldots,m(\mathbf{x}_N)\right]^\top,\]</span></p>
+<p>et <span class="math inline">\(\mathbf{K}\)</span> est leur matrice de covariance.</p>
+<section id="principe" class="level4">
+<h4 class="anchored" data-anchor-id="principe">Principe</h4>
+<p>Soient <span class="math inline">\(n\)</span> points à simuler pour un champ de covariance <span class="math inline">\(C(h)\)</span>. On procède en trois étapes.</p>
+<ol type="1">
+<li><strong>Construction de la matrice de covariance.</strong></li>
+</ol>
+<p>Pour chaque paire de positions <span class="math inline">\(\mathbf{x}_i\)</span> et <span class="math inline">\(\mathbf{x}_j\)</span>, on calcule :</p>
+<p><span class="math display">\[K_{ij}=\operatorname{Cov}\left[Z(\mathbf{x}_i),Z(\mathbf{x}_j)\right].\]</span></p>
+<p>Sous l’hypothèse de stationnarité, cette covariance dépend uniquement du vecteur de séparation :</p>
+<p><span id="eq-matrice-cov"><span class="math display">\[K_{ij}=C(\mathbf{x}_i-\mathbf{x}_j),\qquad i,j=1,\ldots,N. \tag{12.5}\]</span></span></p>
+<p>La matrice obtenue s’écrit :</p>
+<p><span class="math display">\[
+\mathbf{K}=
+\begin{bmatrix}
+C(\mathbf{0}) &amp; C(\mathbf{x}_1-\mathbf{x}_2) &amp; \cdots &amp; C(\mathbf{x}_1-\mathbf{x}_N) \\
+C(\mathbf{x}_2-\mathbf{x}_1) &amp; C(\mathbf{0}) &amp; \cdots &amp; C(\mathbf{x}_2-\mathbf{x}_N) \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+C(\mathbf{x}_N-\mathbf{x}_1) &amp; C(\mathbf{x}_N-\mathbf{x}_2) &amp; \cdots &amp; C(\mathbf{0})
+\end{bmatrix}.
+\]</span></p>
+<p>Elle est symétrique et doit être définie positive pour permettre une décomposition de Cholesky standard.</p>
+<ol start="2" type="1">
+<li><strong>Décomposition de Cholesky.</strong></li>
+</ol>
+<p>On factorise la matrice de covariance sous la forme :</p>
+<p><span id="eq-cholesky"><span class="math display">\[\mathbf{K}=\mathbf{L}\mathbf{L}^\top, \tag{12.6}\]</span></span></p>
+<p>où <span class="math inline">\(\mathbf{L}\)</span> est une matrice triangulaire inférieure.</p>
+<ol start="3" type="1">
+<li><strong>Génération de la réalisation.</strong></li>
+</ol>
+<p>On génère un vecteur de <span class="math inline">\(N\)</span> variables normales indépendantes :</p>
+<p><span class="math display">\[\mathbf{y}\sim\mathcal{N}(\mathbf{0},\mathbf{I}_N),\]</span></p>
+<p>puis on construit la réalisation :</p>
+<p><span id="eq-simulation-nc"><span class="math display">\[\mathbf{z}^{(s)}=\mathbf{m}+\mathbf{L}\mathbf{y}. \tag{12.7}\]</span></span></p>
+<p>Lorsque le champ est supposé centré, <span class="math inline">\(\mathbf{m}=\mathbf{0}\)</span>, cette expression devient simplement :</p>
+<p><span class="math display">\[\mathbf{z}^{(s)}=\mathbf{L}\mathbf{y}.\]</span></p>
+<p>Chaque composante <span class="math inline">\(z_i^{(s)}\)</span> représente la valeur simulée au point <span class="math inline">\(\mathbf{x}_i\)</span> :</p>
+<p><span class="math display">\[z_i^{(s)}=Z^{(s)}(\mathbf{x}_i).\]</span></p>
+</section>
+<section id="validation-de-la-méthode" class="level4">
+<h4 class="anchored" data-anchor-id="validation-de-la-méthode">Validation de la méthode</h4>
+<p>La réalisation a bien la covariance voulue :</p>
+<p><span id="eq-validation-cov"><span class="math display">\[
+\operatorname{Cov}[\mathbf{z}] = \operatorname{Cov}[\mathbf{L} \mathbf{y}] = \mathbf{L} \, \operatorname{Cov}[\mathbf{y}] \, \mathbf{L}^\top = \mathbf{L} \, \mathbf{I} \, \mathbf{L}^\top = \mathbf{L} \mathbf{L}^\top = \mathbf{K}
+\tag{12.8}\]</span></span></p>
+<p>Le vecteur <span class="math inline">\(\mathbf{z}\)</span> est donc une réalisation non conditionnelle du champ gaussien de covariance <span class="math inline">\(C(h)\)</span>.</p>
+</section>
+<section id="limitations" class="level4">
+<h4 class="anchored" data-anchor-id="limitations">Limitations</h4>
+<ul>
+<li><strong>Taille du problème.</strong> Le coût de la décomposition de Cholesky croît en <span class="math inline">\(\mathcal{O}(n^3)\)</span>. En pratique, la méthode tient jusqu’à <span class="math inline">\(n \lesssim 10\,000\)</span> points.</li>
+<li><strong>Matrice non singulière.</strong> <span class="math inline">\(\mathbf{K}\)</span> doit être définie positive, ce qui interdit deux points exactement confondus.</li>
+<li><strong>Effet de pépite.</strong> Un effet de pépite <span class="math inline">\(C_0\)</span> peut être intégré directement à la matrice de covariance en ajoutant <span class="math inline">\(C_0\)</span> à ses termes diagonaux. Si l’on souhaite distinguer explicitement la composante spatialement structurée du bruit non corrélé, on peut aussi simuler d’abord le champ structuré, puis ajouter un bruit blanc indépendant : <span class="math inline">\(\boldsymbol{\varepsilon}\sim\mathcal{N}(\mathbf{0},C_0\mathbf{I})\)</span>. La réalisation finale s’écrit alors : <span class="math inline">\(\mathbf{z}^{(s)}=\mathbf{m}+\mathbf{L}\mathbf{y}+\boldsymbol{\varepsilon}\)</span>.</li>
+</ul>
+</section>
+<section id="extensions" class="level4">
+<h4 class="anchored" data-anchor-id="extensions">Extensions</h4>
+<p>D’autres décompositions existent, notamment celle fondée sur les valeurs et vecteurs propres de <span class="math inline">\(\mathbf{K}\)</span> (décomposition spectrale), mais Cholesky reste la plus efficace quand elle s’applique.</p>
+</section>
+</section>
+<section id="cas-des-variables-non-gaussiennes-lanamorphose" class="level3">
+<h3 class="anchored" data-anchor-id="cas-des-variables-non-gaussiennes-lanamorphose">Cas des variables non gaussiennes : l’anamorphose</h3>
+<p>La décomposition de Cholesky, comme la SGS vue plus loin, suppose la variable gaussienne. Or les teneurs minières le sont rarement : elles sont asymétriques, souvent proches d’une loi log-normale. On contourne la difficulté par une <strong>anamorphose gaussienne</strong>, une fonction monotone <span class="math inline">\(\varphi\)</span> telle que</p>
+<p><span id="eq-anamorphose"><span class="math display">\[
+Z(\mathbf{x}) = \varphi\big(Y(\mathbf{x})\big),
+\tag{12.9}\]</span></span></p>
+<p>où <span class="math inline">\(Y(\mathbf{x})\)</span> est un champ gaussien. On simule <span class="math inline">\(Y\)</span> — toute la théorie du chapitre s’y applique — puis on transforme chaque réalisation par <span class="math inline">\(Z = \varphi(Y)\)</span> pour revenir à la variable d’origine (<a href="#fig-c12-anamorphose" class="quarto-xref">Figure&nbsp;<span>12.3</span></a>). Le cas log-normal correspond à <span class="math inline">\(Z = \exp(Y)\)</span>. En pratique, on estime <span class="math inline">\(\varphi\)</span> à partir de l’histogramme des données, de sorte que les réalisations finales reproduisent la loi marginale observée. C’est cette transformation qui sous-tend le cas log-normal de l’atelier 12.4.</p>
+<div id="fig-c12-anamorphose" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c12-anamorphose-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c12_02_anamorphose_gaussienne.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c12-anamorphose-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.3: Anamorphose gaussienne <span class="math inline">\(z=\varphi(y)\)</span> reliant le champ gaussien <span class="math inline">\(Y\sim N(0,1)\)</span> à la teneur brute <span class="math inline">\(Z\)</span>.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="passage-à-la-simulation-conditionnelle" class="level3">
+<h3 class="anchored" data-anchor-id="passage-à-la-simulation-conditionnelle">Passage à la simulation conditionnelle</h3>
+<p>Une réalisation non conditionnelle devient conditionnelle de deux façons : par post-conditionnement par krigeage (voir plus loin) ou en étendant directement la décomposition matricielle pour intégrer les observations (section suivante).</p>
+</section>
+</section>
+<section id="atelier-interactif-12.1-reproduction-du-variogramme" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-12.1-reproduction-du-variogramme">🧮 Atelier interactif 12.1 — Reproduction du variogramme</h2>
+<p>La propriété fondamentale d’une simulation non conditionnelle : elle reproduit la structure spatiale imposée (le variogramme) en moyenne. Chaque réalisation possède un variogramme expérimental qui, pris isolément, fluctue autour du modèle sans y coller parfaitement. Mais la moyenne des variogrammes expérimentaux converge vers le modèle théorique à mesure qu’on accumule les réalisations — c’est l’illustration du profil de fond marin présenté en introduction (gris : simulations; noir pointillé : moyenne; rouge : modèle).</p>
+<div class="geostat-widget" data-widget="c12_vario_reproduction">
+  <div class="gw-placeholder">Chargement (reproduction du variogramme)…</div>
+</div>
+</section>
+<section id="simulation-conditionnelle-dune-variable-continue" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="simulation-conditionnelle-dune-variable-continue"><span class="header-section-number">12.3</span> Simulation conditionnelle d’une variable continue</h2>
+<p>La simulation conditionnelle génère des réalisations d’un champ aléatoire <span class="math inline">\(\{Z(\mathbf{x}):\mathbf{x}\in\mathcal{D}\}\)</span> qui honorent les valeurs observées aux points d’échantillonnage. Considérées collectivement, les réalisations reproduisent la distribution conditionnelle définie par le modèle géostatistique, notamment sa covariance et sa loi marginale.</p>
+<p>Cette reproduction exacte des observations suppose un conditionnement dur, sans erreur de mesure. Lorsque les données sont incertaines ou bruitées, le conditionnement doit être adapté afin de tenir compte de leur erreur.</p>
+<p>Pour les champs gaussiens, plusieurs méthodes peuvent être utilisées : l’extension conditionnelle des méthodes matricielles, la simulation séquentielle gaussienne ou le post-conditionnement par krigeage d’une simulation non conditionnelle. Cette dernière approche peut notamment s’appliquer aux simulations produites par bandes tournantes, moyennes mobiles, méthodes spectrales ou développement de Karhunen–Loève.</p>
+<p>On présente ici les deux approches fondamentales : la simulation matricielle conditionnelle par décomposition de Cholesky et la simulation séquentielle gaussienne.</p>
+<section id="méthode-de-simulation-matricielle-conditionnelle-par-décomposition-de-cholesky" class="level3">
+<h3 class="anchored" data-anchor-id="méthode-de-simulation-matricielle-conditionnelle-par-décomposition-de-cholesky">Méthode de simulation matricielle conditionnelle par décomposition de Cholesky</h3>
+<p>La méthode prolonge directement la simulation matricielle non conditionnelle. Elle permet de simuler simultanément les valeurs du champ sur un ensemble fini de positions, tout en imposant les valeurs connues aux points de conditionnement.</p>
+<section id="choix-des-points" class="level4">
+<h4 class="anchored" data-anchor-id="choix-des-points">Choix des points</h4>
+<p>On distingue deux ensembles de positions.</p>
+<p>Les <span class="math inline">\(N_d\)</span> points de conditionnement sont regroupés dans :</p>
+<p><span class="math display">\[
+\mathcal{S}_d = \{\mathbf{x}_{d,1},\ldots,\mathbf{x}_{d,N_d}\}.
+\]</span></p>
+<p>Les valeurs du champ y sont observées et regroupées dans le vecteur :</p>
+<p><span class="math display">\[
+\mathbf{z}_d = \left[ Z(\mathbf{x}_{d,1}), \ldots, Z(\mathbf{x}_{d,N_d}) \right]^\top.
+\]</span></p>
+<p>Les <span class="math inline">\(N_s\)</span> points auxquels le champ doit être simulé sont regroupés dans :</p>
+<p><span class="math display">\[
+\mathcal{S}_s = \{\mathbf{x}_{s,1},\ldots,\mathbf{x}_{s,N_s}\}.
+\]</span></p>
+<p>Le vecteur des valeurs inconnues à ces positions est noté :</p>
+<p><span class="math display">\[
+\mathbf{Z}_s = \left[ Z(\mathbf{x}_{s,1}), \ldots, Z(\mathbf{x}_{s,N_s}) \right]^\top.
+\]</span></p>
+<p>Les positions de simulation peuvent correspondre aux nœuds d’une grille régulière, aux centres de cellules d’un modèle ou à un ensemble irrégulier de points.</p>
+</section>
+<section id="principe-1" class="level4">
+<h4 class="anchored" data-anchor-id="principe-1">Principe</h4>
+<p>Le vecteur regroupant les valeurs aux points de conditionnement et de simulation suit une distribution gaussienne jointe :</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+\mathbf{Z}_d \\
+\mathbf{Z}_s
+\end{bmatrix}
+\sim
+\mathcal{N}
+\left(
+\begin{bmatrix}
+\mathbf{m}_d \\
+\mathbf{m}_s
+\end{bmatrix},
+\begin{bmatrix}
+\mathbf{K}_{dd} &amp; \mathbf{K}_{ds} \\
+\mathbf{K}_{sd} &amp; \mathbf{K}_{ss}
+\end{bmatrix}
+\right),
+\]</span></p>
+<p>où <span class="math inline">\(\mathbf{m}_d\)</span> et <span class="math inline">\(\mathbf{m}_s\)</span> sont les vecteurs des moyennes aux deux ensembles de points.</p>
+<p>La simulation se déroule en cinq étapes.</p>
+<ol type="1">
+<li><strong>Construction de la matrice de covariance globale.</strong> Pour chaque paire de positions, on calcule la covariance définie par le modèle spatial. La matrice globale s’écrit :</li>
+</ol>
+<p><span id="eq-matrice-globale"><span class="math display">\[
+\mathbf{K} =
+\begin{bmatrix}
+\mathbf{K}_{dd} &amp; \mathbf{K}_{ds} \\
+\mathbf{K}_{sd} &amp; \mathbf{K}_{ss}
+\end{bmatrix},
+\tag{12.10}\]</span></span></p>
+<p>avec :</p>
+<ul>
+<li><span class="math inline">\(\mathbf{K}_{dd}\)</span>, de taille <span class="math inline">\(N_d\times N_d\)</span>, pour les covariances entre les points de conditionnement;</li>
+<li><span class="math inline">\(\mathbf{K}_{ss}\)</span>, de taille <span class="math inline">\(N_s\times N_s\)</span>, pour les covariances entre les points à simuler;</li>
+<li><span class="math inline">\(\mathbf{K}_{ds}=\mathbf{K}_{sd}^\top\)</span>, pour les covariances croisées.</li>
+</ul>
+<p>Sous l’hypothèse de stationnarité :</p>
+<p><span class="math display">\[
+K_{ij}=C(\mathbf{x}_i-\mathbf{x}_j).
+\]</span></p>
+<ol start="2" type="1">
+<li><strong>Décomposition de Cholesky par blocs.</strong> On factorise la matrice globale sous la forme :</li>
+</ol>
+<p><span class="math display">\[
+\mathbf{K} = \mathbf{L}\mathbf{L}^\top,
+\]</span></p>
+<p>avec :</p>
+<p><span class="math display">\[
+\mathbf{L} =
+\begin{bmatrix}
+\mathbf{L}_{dd} &amp; \mathbf{0} \\
+\mathbf{L}_{sd} &amp; \mathbf{L}_{ss}
+\end{bmatrix}.
+\]</span></p>
+<p>On obtient donc :</p>
+<p><span id="eq-cholesky-blocs"><span class="math display">\[
+\mathbf{K} =
+\begin{bmatrix}
+\mathbf{L}_{dd} &amp; \mathbf{0} \\
+\mathbf{L}_{sd} &amp; \mathbf{L}_{ss}
+\end{bmatrix}
+\begin{bmatrix}
+\mathbf{L}_{dd}^\top &amp; \mathbf{L}_{sd}^\top \\
+\mathbf{0} &amp; \mathbf{L}_{ss}^\top
+\end{bmatrix}.
+\tag{12.11}\]</span></span></p>
+<p>Le bloc <span class="math inline">\(\mathbf{L}_{dd}\)</span> est associé aux points de conditionnement, tandis que <span class="math inline">\(\mathbf{L}_{ss}\)</span> représente la variabilité qui subsiste aux points à simuler après conditionnement.</p>
+<ol start="3" type="1">
+<li><strong>Détermination de la composante associée aux observations.</strong> Dans la simulation non conditionnelle, le vecteur aux points de conditionnement s’écrirait :</li>
+</ol>
+<p><span class="math display">\[
+\mathbf{Z}_d = \mathbf{m}_d+\mathbf{L}_{dd}\mathbf{y}_d.
+\]</span></p>
+<p>Pour imposer les observations <span class="math inline">\(\mathbf{Z}_d=\mathbf{z}_d\)</span>, on résout :</p>
+<p><span class="math display">\[
+\mathbf{z}_d = \mathbf{m}_d+\mathbf{L}_{dd}\mathbf{y}_d.
+\]</span></p>
+<p>On obtient :</p>
+<p><span id="eq-yd-solution"><span class="math display">\[
+\mathbf{y}_d = \mathbf{L}_{dd}^{-1}\left( \mathbf{z}_d-\mathbf{m}_d \right).
+\tag{12.12}\]</span></span></p>
+<p>En pratique, ce système triangulaire est résolu directement, sans calculer explicitement l’inverse de <span class="math inline">\(\mathbf{L}_{dd}\)</span>.</p>
+<ol start="4" type="1">
+<li><strong>Génération de la composante aléatoire.</strong> On génère un vecteur de <span class="math inline">\(N_s\)</span> variables normales indépendantes :</li>
+</ol>
+<p><span class="math display">\[
+\mathbf{y}_s \sim \mathcal{N}\left( \mathbf{0}, \mathbf{I}_{N_s} \right).
+\]</span></p>
+<p>Un nouveau vecteur <span class="math inline">\(\mathbf{y}_s\)</span> est généré pour chaque réalisation.</p>
+<ol start="5" type="1">
+<li><strong>Génération de la réalisation conditionnelle.</strong> La réalisation complète s’écrit :</li>
+</ol>
+<p><span id="eq-simulation-complete"><span class="math display">\[
+\begin{bmatrix}
+\mathbf{z}_d \\
+\mathbf{z}_s^{(r)}
+\end{bmatrix}
+=
+\begin{bmatrix}
+\mathbf{m}_d \\
+\mathbf{m}_s
+\end{bmatrix}
++
+\begin{bmatrix}
+\mathbf{L}_{dd} &amp; \mathbf{0} \\
+\mathbf{L}_{sd} &amp; \mathbf{L}_{ss}
+\end{bmatrix}
+\begin{bmatrix}
+\mathbf{y}_d \\
+\mathbf{y}_s^{(r)}
+\end{bmatrix}.
+\tag{12.13}\]</span></span></p>
+<p>La partie simulée est donc :</p>
+<p><span id="eq-simulation-conditionnelle"><span class="math display">\[
+\mathbf{z}_s^{(r)} = \mathbf{m}_s + \mathbf{L}_{sd}\mathbf{y}_d + \mathbf{L}_{ss}\mathbf{y}_s^{(r)}.
+\tag{12.14}\]</span></span></p>
+<p>En remplaçant <span class="math inline">\(\mathbf{y}_d\)</span> par son expression :</p>
+<p><span class="math display">\[
+\mathbf{z}_s^{(r)} = \mathbf{m}_s + \mathbf{L}_{sd}\mathbf{L}_{dd}^{-1}\left( \mathbf{z}_d-\mathbf{m}_d \right) + \mathbf{L}_{ss}\mathbf{y}_s^{(r)}.
+\]</span></p>
+<p>La réalisation conditionnelle se compose ainsi de deux parties : une moyenne conditionnelle déterminée par les observations et une composante aléatoire représentant l’incertitude résiduelle.</p>
+</section>
+<section id="validation-de-la-méthode-1" class="level4">
+<h4 class="anchored" data-anchor-id="validation-de-la-méthode-1">Validation de la méthode</h4>
+<p>La moyenne conditionnelle des valeurs simulées est :</p>
+<p><span class="math display">\[
+\mathbb{E}\left[ \mathbf{Z}_s \mid \mathbf{Z}_d=\mathbf{z}_d \right]
+= \mathbf{m}_s + \mathbf{L}_{sd}\mathbf{L}_{dd}^{-1}\left( \mathbf{z}_d-\mathbf{m}_d \right).
+\]</span></p>
+<p>Les relations entre les blocs de la décomposition donnent :</p>
+<p><span class="math display">\[
+\mathbf{L}_{sd}\mathbf{L}_{dd}^{-1} = \mathbf{K}_{sd}\mathbf{K}_{dd}^{-1}.
+\]</span></p>
+<p>La moyenne conditionnelle devient donc :</p>
+<p><span id="eq-moyenne-conditionnelle"><span class="math display">\[
+\mathbf{m}_{s\mid d} = \mathbf{m}_s + \mathbf{K}_{sd}\mathbf{K}_{dd}^{-1}\left( \mathbf{z}_d-\mathbf{m}_d \right).
+\tag{12.15}\]</span></span></p>
+<p>Cette expression correspond au krigeage simple simultané des valeurs aux points de simulation.</p>
+<p>La covariance conditionnelle est :</p>
+<p><span id="eq-covariance-conditionnelle"><span class="math display">\[
+\mathbf{K}_{s\mid d} = \mathbf{K}_{ss} - \mathbf{K}_{sd}\mathbf{K}_{dd}^{-1}\mathbf{K}_{ds}.
+\tag{12.16}\]</span></span></p>
+<p>Elle correspond au complément de Schur de <span class="math inline">\(\mathbf{K}_{dd}\)</span> dans la matrice globale. La décomposition par blocs garantit également que :</p>
+<p><span class="math display">\[
+\mathbf{L}_{ss}\mathbf{L}_{ss}^\top = \mathbf{K}_{s\mid d}.
+\]</span></p>
+<p>La simulation conditionnelle peut donc être résumée par :</p>
+<p><span class="math display">\[
+\mathbf{z}_s^{(r)} = \mathbf{m}_{s\mid d} + \mathbf{L}_{ss}\mathbf{y}_s^{(r)}.
+\]</span></p>
+<p>Le premier terme est la moyenne conditionnelle commune à toutes les réalisations. Le second varie d’une réalisation à l’autre et restitue la covariance conditionnelle résiduelle.</p>
+</section>
+<section id="efficacité-computationnelle" class="level4">
+<h4 class="anchored" data-anchor-id="efficacité-computationnelle">Efficacité computationnelle</h4>
+<p>La décomposition de Cholesky et le calcul de la moyenne conditionnelle ne sont effectués qu’une seule fois. Pour générer <span class="math inline">\(M\)</span> réalisations, on calcule d’abord :</p>
+<p><span class="math display">\[
+\mathbf{m}_{s\mid d} = \mathbf{m}_s + \mathbf{L}_{sd}\mathbf{y}_d.
+\]</span></p>
+<p>Pour chaque réalisation <span class="math inline">\(r=1,\ldots,M\)</span>, on génère ensuite un nouveau vecteur <span class="math inline">\(\mathbf{y}_s^{(r)}\)</span> et on calcule :</p>
+<p><span class="math display">\[
+\mathbf{z}_s^{(r)} = \mathbf{m}_{s\mid d} + \mathbf{L}_{ss}\mathbf{y}_s^{(r)}.
+\]</span></p>
+<p>Le coût initial de la factorisation demeure élevé, mais sa réutilisation rend l’approche intéressante lorsqu’un grand nombre de réalisations doit être généré pour un ensemble fixe de points.</p>
+</section>
+<section id="limitations-1" class="level4">
+<h4 class="anchored" data-anchor-id="limitations-1">Limitations</h4>
+<ul>
+<li><strong>Mémoire et temps de calcul.</strong> La matrice globale contient <span class="math inline">\((N_d+N_s)^2\)</span> termes et sa décomposition directe a un coût de l’ordre de <span class="math inline">\(\mathcal{O}((N_d+N_s)^3)\)</span>. La méthode est donc réservée aux champs de taille modérée.</li>
+<li><strong>Matrice définie positive.</strong> La matrice <span class="math inline">\(\mathbf{K}\)</span> doit être définie positive. Des points confondus, des modèles de covariance inadmissibles ou des problèmes de précision numérique peuvent empêcher la décomposition.</li>
+<li><strong>Conditionnement global.</strong> Tous les points de conditionnement sont pris en compte simultanément. Cette propriété est avantageuse pour de petits ensembles, mais devient coûteuse lorsque le nombre de données est élevé.</li>
+<li><strong>Ensemble fixe de positions.</strong> Toute modification des points de conditionnement ou des points de simulation exige généralement de reconstruire et de factoriser la matrice de covariance.</li>
+</ul>
+</section>
+</section>
+<section id="méthode-de-simulation-séquentielle-gaussienne-sgs" class="level3">
+<h3 class="anchored" data-anchor-id="méthode-de-simulation-séquentielle-gaussienne-sgs">Méthode de simulation séquentielle gaussienne (SGS)</h3>
+<p>La SGS construit une réalisation conditionnelle point par point, en tirant chaque valeur de la loi conditionnelle donnée par le krigeage simple.</p>
+<section id="principe-général" class="level4">
+<h4 class="anchored" data-anchor-id="principe-général">Principe général</h4>
+<p>L’algorithme visite chaque point à simuler et tire une valeur de la loi gaussienne conditionnelle à l’information déjà disponible (observations initiales et valeurs déjà simulées). Cette valeur devient aussitôt une nouvelle donnée conditionnante (<a href="#fig-c12-pas-sgs" class="quarto-xref">Figure&nbsp;<span>12.4</span></a>).</p>
+<div id="fig-c12-pas-sgs" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c12-pas-sgs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c12_07_pas_sgs.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c12-pas-sgs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.4: Un pas de simulation séquentielle gaussienne : voisinage (données + valeurs déjà simulées) et loi gaussienne conditionnelle d’où l’on tire.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="algorithme" class="level4">
+<h4 class="anchored" data-anchor-id="algorithme">Algorithme</h4>
+<p>On dispose de <span class="math inline">\(N\)</span> points conditionnants et on veut simuler <span class="math inline">\(n\)</span> points inconnus.</p>
+<ol type="1">
+<li><p><strong>Chemin de simulation aléatoire.</strong> On fixe un ordre de visite <span class="math inline">\(\{\mathbf{x}_{\pi(1)}, \ldots, \mathbf{x}_{\pi(n)}\}\)</span>. Cet ordre compte, car chaque valeur simulée pèse sur les suivantes.</p></li>
+<li><p><strong>Parcours séquentiel.</strong> Pour chaque point <span class="math inline">\(\mathbf{x}_i\)</span> selon le chemin :</p>
+<ol type="a">
+<li><p>Sélectionner les données conditionnantes : les <span class="math inline">\(N\)</span> observations initiales et les valeurs déjà simulées aux points précédents. En pratique, on se restreint à un voisinage mobile (les <span class="math inline">\(k\)</span> points les plus proches) pour limiter le coût.</p></li>
+<li><p>Effectuer un krigeage simple au point <span class="math inline">\(\mathbf{x}_i\)</span> avec le modèle de covariance <span class="math inline">\(C(h)\)</span> (ou variogramme <span class="math inline">\(\gamma(h)\)</span>). On obtient la moyenne conditionnelle <span class="math inline">\(Z_i^* = \mathbb{E}[Z(\mathbf{x}_i) \mid \text{données connues}]\)</span> et la variance conditionnelle <span class="math inline">\(\sigma_{\text{SK}}^2(\mathbf{x}_i) = \operatorname{Var}[Z(\mathbf{x}_i) \mid \text{données connues}]\)</span>.</p></li>
+<li><p>Tirer une valeur de la loi gaussienne conditionnelle :</p></li>
+</ol>
+<p><span id="eq-tirage-sgs"><span class="math display">\[
+Z(\mathbf{x}_i) \sim \mathcal{N}\big(Z_i^*, \sigma_{\text{SK}}^2(\mathbf{x}_i)\big).
+\tag{12.17}\]</span></span></p>
+<ol start="4" type="a">
+<li>Ajouter la valeur simulée aux données conditionnantes pour la suite.</li>
+</ol></li>
+<li><p><strong>Répéter</strong> jusqu’à avoir visité tous les points du chemin.</p></li>
+</ol>
+</section>
+<section id="validation-théorique" class="level4">
+<h4 class="anchored" data-anchor-id="validation-théorique">Validation théorique</h4>
+<p>La SGS reproduit le variogramme cible, ce qu’on démontre par récurrence. Supposons que <span class="math inline">\(n\)</span> points simulés aient la bonne structure spatiale (covariance <span class="math inline">\(\mathbf{K}_{nn}\)</span>). Au point <span class="math inline">\(n+1\)</span>, la valeur krigée est</p>
+<p><span id="eq-krigeage-n1"><span class="math display">\[
+Z_{n+1}^* = \boldsymbol{\lambda}^\top \mathbf{Z}_{ns},
+\tag{12.18}\]</span></span></p>
+<p>où <span class="math inline">\(\boldsymbol{\lambda} = \mathbf{K}_{nn}^{-1} \mathbf{K}_{n1}\)</span> et <span class="math inline">\(\mathbf{K}_{n1}\)</span> est la covariance entre les <span class="math inline">\(n\)</span> points déjà simulés et le point <span class="math inline">\(n+1\)</span>. La valeur simulée est</p>
+<p><span id="eq-simulation-n1"><span class="math display">\[
+Z_{n+1} = Z_{n+1}^* + \varepsilon,
+\tag{12.19}\]</span></span></p>
+<p>où <span class="math inline">\(\varepsilon \sim \mathcal{N}(0, \sigma_{\text{SK}}^2)\)</span> est indépendant de <span class="math inline">\(\mathbf{Z}_{ns}\)</span>. La covariance avec les points précédents vaut</p>
+<p><span id="eq-cov-n1"><span class="math display">\[
+\operatorname{Cov}[Z_{n+1}, \mathbf{Z}_{ns}] = \operatorname{Cov}[\boldsymbol{\lambda}^\top \mathbf{Z}_{ns}, \mathbf{Z}_{ns}] + \operatorname{Cov}[\varepsilon, \mathbf{Z}_{ns}] = \boldsymbol{\lambda}^\top \mathbf{K}_{nn} + \mathbf{0} = \mathbf{K}_{n1}^\top,
+\tag{12.20}\]</span></span></p>
+<p>et la variance au point <span class="math inline">\(n+1\)</span>,</p>
+<p><span id="eq-var-n1"><span class="math display">\[
+\operatorname{Var}[Z_{n+1}] = \operatorname{Var}[\boldsymbol{\lambda}^\top \mathbf{Z}_{ns}] + \operatorname{Var}[\varepsilon] = \boldsymbol{\lambda}^\top \mathbf{K}_{nn} \boldsymbol{\lambda} + \sigma_{\text{SK}}^2 = C(0).
+\tag{12.21}\]</span></span></p>
+<p>Les <span class="math inline">\(n+1\)</span> points ont donc bien la structure de covariance voulue.</p>
+<p>La démonstration suppose un voisinage global : à chaque étape, le krigeage utilise toutes les données et toutes les valeurs déjà simulées, et la reproduction du variogramme est exacte. En pratique, on restreint le krigeage à un voisinage mobile (voir ci-dessous); la reproduction n’est plus qu’approchée. Le palier reste correct, mais le raccord aux distances intermédiaires est légèrement lissé.</p>
+</section>
+<section id="remarques-importantes" class="level4">
+<h4 class="anchored" data-anchor-id="remarques-importantes">Remarques importantes</h4>
+<p><strong>Voisinage mobile.</strong> Pour ne pas alourdir les systèmes de krigeage, on se limite à une fenêtre locale. Les points éloignés pèsent peu (effet d’écran) et s’ignorent sans perte notable.</p>
+<p><strong>Effet de pépite.</strong> En non conditionnel, mieux vaut ajouter l’effet de pépite <span class="math inline">\(C_0\)</span> après la simulation, sous forme de bruit indépendant. En conditionnel, c’est impossible : les observations incluent déjà l’effet de pépite et doivent être reproduites exactement.</p>
+<p><strong>Chemin de simulation.</strong> Un parcours systématique peut créer des artefacts directionnels; on recommande un ordre aléatoire. Pour améliorer la qualité, on procède par passes multi-échelles (grossier vers fin), qui capturent les structures à différentes échelles.</p>
+<p><strong>Généralité de la méthode.</strong> La normalité est commode (le krigeage simple donne exactement la loi conditionnelle), mais la démonstration ne repose que sur la linéarité du krigeage. On peut donc simuler un bruit <span class="math inline">\(\varepsilon\)</span> non gaussien (moyenne nulle, variance <span class="math inline">\(\sigma_{\text{SK}}^2\)</span>) : le variogramme sera respecté, mais l’histogramme tendra vers une forme plus gaussienne par le théorème central limite.</p>
+<p><strong>Extension multivariée.</strong> La SGS se combine facilement à la décomposition matricielle (LU) pour simuler plusieurs variables corrélées en de multiples points.</p>
+</section>
+</section>
+<section id="comparaison-des-deux-méthodes" class="level3">
+<h3 class="anchored" data-anchor-id="comparaison-des-deux-méthodes">Comparaison des deux méthodes</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Critère</th>
+<th>Méthode matricielle</th>
+<th>SGS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Taille maximale</td>
+<td><span class="math inline">\(N+n \lesssim 10\,000\)</span></td>
+<td>Quasi illimitée (voisinage mobile)</td>
+</tr>
+<tr class="even">
+<td>Coût pour 1 réalisation</td>
+<td><span class="math inline">\(\mathcal{O}((N+n)^3)\)</span> (décomposition)</td>
+<td><span class="math inline">\(\mathcal{O}(n \times k^3)\)</span> avec <span class="math inline">\(k\)</span> voisins</td>
+</tr>
+<tr class="odd">
+<td>Coût pour <span class="math inline">\(M\)</span> réalisations</td>
+<td>Décomposition une fois, puis <span class="math inline">\(\mathcal{O}(n)\)</span> par réalisation</td>
+<td><span class="math inline">\(\mathcal{O}(M \times n \times k^3)\)</span></td>
+</tr>
+<tr class="even">
+<td>Voisinage mobile</td>
+<td>Non</td>
+<td>Oui</td>
+</tr>
+<tr class="odd">
+<td>Effet de pépite</td>
+<td>Traitement séparé recommandé</td>
+<td>Inclus naturellement</td>
+</tr>
+<tr class="even">
+<td>Artefacts</td>
+<td>Aucun</td>
+<td>Possibles si chemin mal choisi</td>
+</tr>
+<tr class="odd">
+<td>Flexibilité</td>
+<td>Limitée</td>
+<td>Haute (multi-échelle, multivariée)</td>
+</tr>
+</tbody>
+</table>
+<p>En résumé, on choisit la méthode matricielle pour générer plusieurs réalisations sur des champs de taille modérée, et la SGS pour des grands domaines avec voisinage mobile, ou quand des contraintes complexes doivent être intégrées.</p>
+</section>
+<section id="méthode-de-recuit-simulé" class="level3">
+<h3 class="anchored" data-anchor-id="méthode-de-recuit-simulé">Méthode de recuit simulé</h3>
+<p>Le recuit simulé (<em>simulated annealing</em>) est une technique d’optimisation très souple, utile quand il faut reproduire, au-delà des moments d’ordre un et deux (histogramme, variogramme), des caractéristiques complexes du phénomène.</p>
+<section id="principe-général-1" class="level4">
+<h4 class="anchored" data-anchor-id="principe-général-1">Principe général</h4>
+<p>On définit une fonction objectif <span class="math inline">\(O\)</span> à minimiser, qui mesure l’écart entre la réalisation simulée et les propriétés visées. Exemple classique :</p>
+<p><span id="eq-fonction-objectif"><span class="math display">\[
+O = \sum_{h} \left[\gamma_{\text{sim}}(h) - \gamma_{\text{théo}}(h)\right]^2 + \alpha \sum_{z} \left[f_{\text{sim}}(z) - f_{\text{cible}}(z)\right]^2
+\tag{12.22}\]</span></span></p>
+<p>où <span class="math inline">\(\gamma\)</span> est le variogramme, <span class="math inline">\(f\)</span> l’histogramme, et <span class="math inline">\(\alpha\)</span> un poids. La fonction objectif peut aussi inclure des courbes tonnage–teneur (contexte minier), des relations déterministes entre variables, des contraintes géologiques (structures, contacts) ou des statistiques d’ordre supérieur (connectivité, proportions, asymétries spatiales).</p>
+</section>
+<section id="algorithme-1" class="level4">
+<h4 class="anchored" data-anchor-id="algorithme-1">Algorithme</h4>
+<ol type="1">
+<li><p><strong>Initialisation.</strong> Tirer aléatoirement une valeur pour chaque point à simuler en respectant l’histogramme désiré, placer les valeurs conditionnantes (points observés) dans le champ, calculer le variogramme expérimental et évaluer <span class="math inline">\(O_0\)</span>.</p></li>
+<li><p><strong>Itération</strong> (<span class="math inline">\(i = 1, 2, \ldots\)</span>).</p>
+<ol type="a">
+<li><p>Tirer au hasard un point du champ : si c’est un point conditionnant, ne rien changer; sinon, tirer une nouvelle valeur <span class="math inline">\(z'\)</span> selon la distribution cible.</p></li>
+<li><p>Calculer la nouvelle fonction objectif <span class="math inline">\(O_{i+1}\)</span>.</p></li>
+<li><p>Décider d’accepter ou non selon la règle de Metropolis :</p></li>
+</ol>
+<p><span id="eq-metropolis"><span class="math display">\[
+p_{\text{accept}} = \exp\left(-\frac{O_{i+1} - O_i}{T}\right),
+\tag{12.23}\]</span></span></p>
+<p>où <span class="math inline">\(T\)</span> est la « température » : si <span class="math inline">\(O_{i+1} &lt; O_i\)</span>, on accepte toujours (amélioration); sinon, on accepte avec probabilité <span class="math inline">\(p_{\text{accept}}\)</span>.</p></li>
+<li><p><strong>Refroidissement.</strong> La température <span class="math inline">\(T\)</span> diminue lentement selon un schéma défini (par exemple <span class="math inline">\(T_{i+1} = \alpha T_i\)</span> avec <span class="math inline">\(\alpha \approx 0{,}95\)</span>) : en début de parcours, on explore largement l’espace des solutions (pour échapper aux minima locaux); en fin, on converge vers un optimum global.</p></li>
+<li><p><strong>Critère d’arrêt.</strong> On arrête lorsque <span class="math inline">\(O &lt; O_{\text{seuil}}\)</span> ou après un nombre maximal d’itérations.</p></li>
+</ol>
+</section>
+<section id="remarques" class="level4">
+<h4 class="anchored" data-anchor-id="remarques">Remarques</h4>
+<p><strong>Initialisation.</strong> Mieux vaut amorcer le recuit avec une réalisation SGS ou matricielle plutôt qu’avec un champ purement aléatoire : la convergence est plus rapide.</p>
+<p><strong>Flexibilité.</strong> La fonction objectif s’enrichit très facilement de contraintes spécifiques (géologiques, géométriques, statistiques).</p>
+<p><strong>Coût computationnel.</strong> Le recuit est généralement plus coûteux que les méthodes matricielles ou SGS, car il explore beaucoup de configurations avant d’en accepter une. On le réserve aux cas où les méthodes classiques ne satisfont pas toutes les contraintes à la fois, comme méthode de dernier recours.</p>
+<p>La SGS construit la réalisation conditionnelle progressivement, point par point, chaque valeur simulée devenant donnée conditionnante pour les suivantes. Le post-conditionnement par krigeage (section suivante) procède autrement : il rend conditionnel en une seule fois un champ déjà entièrement simulé.</p>
+</section>
+</section>
+</section>
+<section id="atelier-interactif-12.2-animation-sgs" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-12.2-animation-sgs">🧮 Atelier interactif 12.2 — Animation SGS</h2>
+<p>Lancez l’animation pour visualiser le remplissage séquentiel d’une simulation séquentielle gaussienne : chaque pixel est tiré de sa loi conditionnelle le long d’un chemin aléatoire. L’histogramme partiel reconstruit peu à peu la loi marginale gaussienne cible.</p>
+<div class="geostat-widget" data-widget="c12_SGS_pasapas">
+  <div class="gw-placeholder">Chargement (SGS pas-à-pas)…</div>
+</div>
+</section>
+<section id="post-conditionnement-par-krigeage-simple-ou-ordinaire" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="post-conditionnement-par-krigeage-simple-ou-ordinaire"><span class="header-section-number">12.4</span> Post-conditionnement par krigeage simple (ou ordinaire)</h2>
+<p>Certaines méthodes de simulation ne produisent pas directement des réalisations conditionnelles. Pour combler ce manque, on a recourt au post-conditionnement par krigeage.</p>
+<p>L’idée consiste à transformer une réalisation non conditionnelle en lui ajoutant un terme correctif, obtenu par krigeage de l’écart entre les données observées et les valeurs simulées aux points d’échantillonnage. Le champ ajusté respecte alors exactement les données mesurées, tout en conservant la structure spatiale et statistique de la réalisation initiale.</p>
+<section id="principe-du-post-conditionnement-par-krigeage" class="level3">
+<h3 class="anchored" data-anchor-id="principe-du-post-conditionnement-par-krigeage">Principe du post-conditionnement par krigeage</h3>
+<p>On suppose que <span class="math inline">\(Z(\mathbf{x})\)</span> est gaussienne de moyenne nulle. La démarche se résume à trois étapes.</p>
+<ol type="1">
+<li><strong>Simulation non conditionnelle.</strong></li>
+</ol>
+<p>On génère une réalisation non conditionnelle <span class="math inline">\(Z_{\text{nc}}(\mathbf{x})\)</span> sur l’ensemble du domaine, couvrant les points de prédiction où l’on veut simuler la variable ainsi que les points d’échantillonnage <span class="math inline">\(\mathbf{x}_i\)</span> où des observations existent. On note <span class="math inline">\(Z_{\text{nc}}(\mathbf{x}_i)\)</span> les valeurs simulées aux points d’observation; elles ne coïncident pas avec les données réelles <span class="math inline">\(Z_{\text{obs}}(\mathbf{x}_i)\)</span>.</p>
+<ol start="2" type="1">
+<li><strong>Krigeage des données observées et simulées.</strong></li>
+</ol>
+<p>On fait ensuite un krigeage simple (ou ordinaire) sur tout le domaine, avec deux jeux de données : <span class="math inline">\(Z_{\text{kr,obs}}(\mathbf{x})\)</span>, estimation à partir des données observées <span class="math inline">\(Z_{\text{obs}}(\mathbf{x}_i)\)</span>; et <span class="math inline">\(Z_{\text{kr,nc}}(\mathbf{x})\)</span>, estimation à partir des valeurs simulées non conditionnelles aux points d’observation <span class="math inline">\(Z_{\text{nc}}(\mathbf{x}_i)\)</span>. Ces deux champs krigés mesurent l’écart entre ce qui devrait être observé (données réelles) et ce qui est effectivement simulé.</p>
+<ol start="3" type="1">
+<li><strong>Correction additive.</strong></li>
+</ol>
+<p>La simulation conditionnelle s’obtient en corrigeant la réalisation non conditionnelle :</p>
+<p><span id="eq-postcond"><span class="math display">\[
+Z_{\text{cond}}(\mathbf{x}) = Z_{\text{nc}}(\mathbf{x}) + \left[Z_{\text{kr,obs}}(\mathbf{x}) - Z_{\text{kr,nc}}(\mathbf{x})\right]
+\tag{12.24}\]</span></span></p>
+<p>Le terme correctif <span class="math inline">\([Z_{\text{kr,obs}}(\mathbf{x}) - Z_{\text{kr,nc}}(\mathbf{x})]\)</span> est l’erreur de conditionnement à ajouter pour que la simulation respecte les données. Le résultat <span class="math inline">\(Z_{\text{cond}}(\mathbf{x})\)</span> reproduit alors les valeurs observées tout en préservant la structure de corrélation de la simulation initiale.</p>
+<p>La <a href="#fig-postcond" class="quarto-xref">Figure&nbsp;<span>12.5</span></a> illustre le principe. Pour rendre conditionnelle une simulation qui ne l’était pas, il suffit de lui ajouter l’erreur de krigeage entre les observations et la simulation; la réalisation est alors contrainte de respecter exactement les valeurs échantillonnées.</p>
+<div id="fig-postcond" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-postcond-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C12_postcond.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-postcond-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.5: Principe du post-conditionnement par krigeage.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="propriétés-mathématiques" class="level3">
+<h3 class="anchored" data-anchor-id="propriétés-mathématiques">Propriétés mathématiques</h3>
+<ol type="1">
+<li><strong>Exactitude aux points d’observation.</strong></li>
+</ol>
+<p>Si un point <span class="math inline">\(\mathbf{x}_0\)</span> coïncide avec un point d’observation <span class="math inline">\(\mathbf{x}_i\)</span>, le krigeage interpole exactement les données, donc</p>
+<p><span id="eq-exactitude-kr"><span class="math display">\[
+Z_{\text{kr,obs}}(\mathbf{x}_i) = Z_{\text{obs}}(\mathbf{x}_i) \quad \text{et} \quad Z_{\text{kr,nc}}(\mathbf{x}_i) = Z_{\text{nc}}(\mathbf{x}_i),
+\tag{12.25}\]</span></span></p>
+<p>et par conséquent</p>
+<p><span id="eq-exactitude-cond"><span class="math display">\[
+Z_{\text{cond}}(\mathbf{x}_i) = Z_{\text{nc}}(\mathbf{x}_i) + \left[Z_{\text{obs}}(\mathbf{x}_i) - Z_{\text{nc}}(\mathbf{x}_i)\right] = Z_{\text{obs}}(\mathbf{x}_i).
+\tag{12.26}\]</span></span></p>
+<p>La simulation post-conditionnée reproduit donc parfaitement les valeurs observées. À l’inverse, loin de toute donnée, l’influence du krigeage s’estompe et les deux champs krigés tendent vers la moyenne (nulle ici), de sorte que</p>
+<p><span id="eq-loin-obs"><span class="math display">\[
+Z_{\text{kr,obs}}(\mathbf{x}) \approx Z_{\text{kr,nc}}(\mathbf{x}) \approx 0 \quad \Rightarrow \quad Z_{\text{cond}}(\mathbf{x}) \approx Z_{\text{nc}}(\mathbf{x}).
+\tag{12.27}\]</span></span></p>
+<p>Dans les zones non informées, la simulation conditionnée retrouve alors la simulation non conditionnelle initiale.</p>
+<p><strong>Variance de l’erreur de conditionnement.</strong> On peut montrer que la variance de l’erreur entre la simulation conditionnelle et la vraie valeur (inconnue) vérifie</p>
+<p><span id="eq-var-erreur"><span class="math display">\[
+\operatorname{Var}\left[Z_{\text{cond}}(\mathbf{x}) - Z(\mathbf{x})\right] = 2\sigma_{\text{SK}}^2(\mathbf{x}),
+\tag{12.28}\]</span></span></p>
+<p>où <span class="math inline">\(\sigma_{\text{SK}}^2(\mathbf{x})\)</span> est la variance de krigeage simple au point <span class="math inline">\(\mathbf{x}\)</span>. Autrement dit, une seule réalisation conditionnelle post-conditionnée a une variance d’erreur deux fois plus grande que l’estimateur de krigeage simple. Il ne faut donc jamais utiliser une seule simulation post-conditionnée comme estimateur ponctuel : on sous-estimerait l’incertitude.</p>
+<ol start="2" type="1">
+<li><strong>Convergence de la moyenne des simulations conditionnelles.</strong></li>
+</ol>
+<p>Pour <span class="math inline">\(S\)</span> simulations conditionnelles indépendantes <span class="math inline">\(\{Z_{\text{cond}}^{(s)}(\mathbf{x})\}_{s=1}^S\)</span>, la moyenne</p>
+<p><span id="eq-moyenne-sim"><span class="math display">\[
+\bar{Z}_{\text{cond}}(\mathbf{x}) = \frac{1}{S}\sum_{s=1}^S Z_{\text{cond}}^{(s)}(\mathbf{x})
+\tag{12.29}\]</span></span></p>
+<p>converge, quand <span class="math inline">\(S \to \infty\)</span>, vers l’estimateur de krigeage simple :</p>
+<p><span id="eq-convergence-ks"><span class="math display">\[
+\bar{Z}_{\text{cond}}(\mathbf{x}) \xrightarrow[S \to \infty]{} Z_{\text{SK}}(\mathbf{x}).
+\tag{12.30}\]</span></span></p>
+<p>De plus, la variance d’estimation de cette moyenne converge vers la variance de krigeage simple,</p>
+<p><span id="eq-convergence-var"><span class="math display">\[
+\operatorname{Var}\left[\bar{Z}_{\text{cond}}(\mathbf{x})\right] \xrightarrow[S \to \infty]{} \sigma_{\text{SK}}^2(\mathbf{x}),
+\tag{12.31}\]</span></span></p>
+<p>et la dispersion des réalisations autour de cette moyenne (variance inter-réalisations) vaut elle aussi <span class="math inline">\(\sigma_{\text{SK}}^2(\mathbf{x})\)</span>. Après moyennage d’un nombre suffisant de réalisations, le post-conditionnement reconstitue donc à la fois l’estimation optimale (krigeage simple) et l’incertitude associée (variance de krigeage), tout en fournissant des réalisations qui respectent la variabilité spatiale réelle du phénomène.</p>
+</section>
+</section>
+<section id="propriétés-des-simulations" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="propriétés-des-simulations"><span class="header-section-number">12.5</span> Propriétés des simulations</h2>
+<p>Les propriétés statistiques d’une réalisation dépendent de son caractère conditionnel ou non. La <a href="#fig-proprietes" class="quarto-xref">Figure&nbsp;<span>12.6</span></a> illustre ces différences de comportement et le rapport aux observations.</p>
+<div id="fig-proprietes" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-proprietes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C12_proprietes.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-proprietes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.6: Propriétés des simulations conditionnelles et non conditionnelles.
+</figcaption>
+</figure>
+</div>
+<p>Une simulation non conditionnelle <span class="math inline">\(Z_s(\mathbf{x})\)</span> a une espérance constante, égale à la moyenne globale du modèle <span class="math inline">\(m\)</span> : aucune information spatiale ne la contraint. Une simulation conditionnelle <span class="math inline">\(Z_{sc}(\mathbf{x})\)</span>, elle, voit son espérance converger vers le krigeage simple <span class="math inline">\(Z^*_{\text{SK}}(\mathbf{x})\)</span>. Son espérance varie donc dans l’espace selon la proximité et la configuration des observations, ce qui capte la structure d’information locale. Aux points d’observation, <span class="math inline">\(Z^*_{\text{SK}}\)</span> reproduit exactement les mesures; loin de toute donnée, elle revient vers la moyenne <span class="math inline">\(m\)</span> et rejoint le comportement non conditionnel.</p>
+<p>La variance spatiale est l’autre contraste. Une simulation non conditionnelle conserve toute la variance <em>a priori</em> du phénomène (<span class="math inline">\(\sigma^2\)</span>), sans contraindre la variabilité du champ. Le conditionnement, au contraire, la réduit à <span class="math inline">\(\sigma_{\text{SK}}^2\)</span>, la variance de krigeage simple, qui mesure l’incertitude résiduelle une fois les données prises en compte. La réduction est maximale aux points d’observation (où <span class="math inline">\(\sigma_{\text{SK}}^2 = 0\)</span>) et s’atténue avec la distance, jusqu’à retrouver la variance globale <span class="math inline">\(\sigma^2\)</span> dans les zones non informées. Le rapport <span class="math inline">\(\sigma_{\text{SK}}^2 / \sigma^2\)</span> mesure la part d’incertitude non résolue par les observations : plus il est faible, plus le conditionnement est informatif.</p>
+<p>L’erreur de prédiction, l’écart entre la vraie valeur inconnue <span class="math inline">\(Z(\mathbf{x})\)</span> et la valeur simulée, a elle aussi une structure intéressante. Pour une simulation non conditionnelle, sa variance vaut <span class="math inline">\(2\sigma^2\)</span>, le double de la variance du champ : <span class="math inline">\(Z\)</span> et <span class="math inline">\(Z_s\)</span> sont deux réalisations indépendantes du même processus, donc la variance de leur différence est la somme des variances, <span class="math inline">\(\sigma^2 + \sigma^2 = 2\sigma^2\)</span>. Dans le cas conditionnel, même logique, mais avec la variance réduite : <span class="math inline">\(\operatorname{Var}(Z - Z_{sc}) = 2\sigma_{\text{SK}}^2\)</span>. Une seule réalisation conditionnelle ne doit donc jamais servir d’estimateur ponctuel : son erreur quadratique moyenne est deux fois celle du krigeage simple. En revanche, la moyenne d’un grand nombre de simulations conditionnelles converge vers le krigeage, tout en mesurant l’incertitude globale par la dispersion des réalisations (<a href="#fig-c12-etype" class="quarto-xref">Figure&nbsp;<span>12.7</span></a>).</p>
+<div id="fig-c12-etype" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c12-etype-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c12_03_etype_nombre_realisations.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c12-etype-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.7: Effet du nombre de réalisations : la moyenne (E-type) converge vers l’estimé de krigeage simple et la variance des réalisations vers la variance de krigeage.
+</figcaption>
+</figure>
+</div>
+<p>Le conditionnement modifie donc les propriétés statistiques des simulations en y injectant l’information issue des observations. Là où une simulation non conditionnelle ne reflète que le modèle <em>a priori</em> (moyenne <span class="math inline">\(m\)</span>, variance <span class="math inline">\(\sigma^2\)</span>), une simulation conditionnelle intègre la structure spatiale des données : espérance conditionnelle (le krigeage <span class="math inline">\(Z^*_{\text{SK}}\)</span>) et variance conditionnelle (<span class="math inline">\(\sigma_{\text{SK}}^2 \leq \sigma^2\)</span>). Cette réduction ne permet toutefois pas de réaliser des simulations conditionnelles des estimateurs plus précises qu’une réalisation isolée : leur variance d’erreur reste le double de celle du krigeage. Leur force réside ailleurs : générer de multiples scénarios équiprobables qui, ensemble, chiffrent l’incertitude tout en conservant la variabilité spatiale du phénomène, ce que le krigeage, par son lissage, ne peut pas garantir.</p>
+</section>
+<section id="atelier-interactif-12.3-non-conditionnel-ou-conditionnel" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-12.3-non-conditionnel-ou-conditionnel">🧮 Atelier interactif 12.3 — Non conditionnel ou conditionnel</h2>
+<p>Cet atelier illustre en 1D les propriétés ci-dessus. En haut, des réalisations non conditionnelles : en accumulant les réalisations, la moyenne pixel à pixel converge vers 0 et la variance vers 1 (<span class="math inline">\(\mathbb{E}[Z_s]=m\)</span>, <span class="math inline">\(\operatorname{Var}[Z_s]=\sigma^2\)</span>). En bas, des réalisations conditionnelles (post-conditionnement) : la moyenne converge vers le krigeage simple <span class="math inline">\(Z^*_{\text{SK}}\)</span> (et passe exactement par les données) et la variance vers la variance de krigeage <span class="math inline">\(\sigma^2_{\text{SK}}\)</span>. Activez l’affichage du krigeage simple pour superposer la cible de convergence, et montez jusqu’à 200 réalisations.</p>
+<div class="geostat-widget" data-widget="c12_nc_vs_c">
+  <div class="gw-placeholder">Chargement (non conditionnel vs conditionnel)…</div>
+</div>
+<p>La moyenne et la variance ne sont que les deux premiers moments. Le vrai intérêt des simulations se révèle dès qu’on cherche une quantité non linéaire de la teneur, un volume au-delà d’un seuil, un tonnage récupérable, que le krigeage, par son lissage, estime mal (<a href="#fig-c12-quantiles" class="quarto-xref">Figure&nbsp;<span>12.8</span></a>). Les deux ateliers suivants l’illustrent, l’un sur un site contaminé, puis l’autre sur un gisement minier.</p>
+<div id="fig-c12-quantiles" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c12-quantiles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c12_04_quantiles_depassement.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c12-quantiles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.8: Quantiles P10/P50/P90 et probabilité de dépassement : les simulations révèlent un halo à risque que le krigeage lissé, seuillé, écrase.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="atelier-interactif-12.4-site-contaminé-krigeage-ou-simulations" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-12.4-site-contaminé-krigeage-ou-simulations">🧮 Atelier interactif 12.4 — Site contaminé : krigeage ou simulations</h2>
+<p>On reprend l’atelier du krigeage d’indicatrices (site pollué), mais en remplaçant le KI par des simulations conditionnelles. En haut, la référence (vérité). Au milieu, le krigeage (KO) : teneur estimée <span class="math inline">\(Z^*\)</span> et variance <span class="math inline">\(\sigma^2_{\text{OK}}\)</span>. En bas, les simulations conditionnelles : la moyenne E-type <span class="math inline">\(\mathbb{E}[Z \mid \mathbf{x}]\)</span> et la variance entre réalisations <span class="math inline">\(\operatorname{Var}[Z \mid \mathbf{x}]\)</span>. Cliquez la carte de référence pour forer ou retirer un sondage. Le bilan compare la fraction de sol contaminé (<span class="math inline">\(Z &gt; z_c\)</span>) : vérité, seuillage du krigeage (biaisé par le lissage), et simulations. Basculez entre loi gaussienne et log-normale (anamorphose gaussienne).</p>
+<div class="geostat-widget" data-widget="c12_contaminant">
+  <div class="gw-placeholder">Chargement (krigeage vs simulations — site contaminé)…</div>
+</div>
+</section>
+<section id="atelier-interactif-12.5-ressources-minières-krigeage-ou-simulations" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-12.5-ressources-minières-krigeage-ou-simulations">🧮 Atelier interactif 12.5 — Ressources minières : krigeage ou simulations</h2>
+<p>On applique la même logique à un gisement. Pour une teneur de coupure <span class="math inline">\(z_c\)</span>, le tonnage récupérable <span class="math inline">\(T(z_c)\)</span> et le métal récupérable <span class="math inline">\(Q(z_c)\)</span> sont des fonctions non linéaires des teneurs. Estimés à partir du champ krigé (lissé), ils sont biaisés; estimés sur un ensemble de simulations conditionnelles, ils sont restitués sans biais et assortis d’une incertitude. L’atelier trace <span class="math inline">\(T(z_c)\)</span> et <span class="math inline">\(Q(z_c)\)</span> pour la vérité (noir), le krigeage (bleu) et les simulations (médiane et fourchette P10–P90), et donne la distribution du métal à la coupure. Déplacez la coupure et comparez les trois courbes.</p>
+<div class="geostat-widget" data-widget="c12_decisions_minieres">
+  <div class="gw-placeholder">Chargement (décisions minières)…</div>
+</div>
+</section>
+<section id="méthodes-de-simulation-avancées" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="méthodes-de-simulation-avancées"><span class="header-section-number">12.6</span> Méthodes de simulation avancées</h2>
+<p>La décomposition de Cholesky des sections précédentes est simple et exacte, mais son coût en <span class="math inline">\(\mathcal{O}(n^3)\)</span> la limite à quelques milliers de points. Dès qu’on veut simuler sur de grandes grilles, il faut des générateurs plus efficaces. Cette section présente quatre méthodes classiques de simulation non conditionnelle d’un champ gaussien stationnaire de covariance <span class="math inline">\(C(\mathbf{h})\)</span> : les bandes tournantes, leur variante spectrale, la FFT-MA et la décomposition de Karhunen–Loève. Chacune a un atout propre — passage à l’échelle pour les trois premières, paramétrisation réduite pour la dernière.</p>
+<p>Toutes produisent une réalisation <em>non conditionnelle</em>. Pour honorer des données, on les combine au post-conditionnement par krigeage (section précédente). Et comme la décomposition de Cholesky, elles supposent la variable gaussienne : une variable asymétrique se traite par anamorphose (voir la section sur la simulation non conditionnelle).</p>
+<p>Plusieurs de ces méthodes s’expriment dans le domaine spectral. On y utilise la <strong>densité spectrale</strong> <span class="math inline">\(f(\boldsymbol{\omega})\)</span> de la covariance, définie par le théorème de Bochner :</p>
+<p><span class="math display">\[
+C(\mathbf{h}) = \int_{\mathbb{R}^d} e^{\,i\,\langle \boldsymbol{\omega},\, \mathbf{h}\rangle}\, f(\boldsymbol{\omega})\, \mathrm{d}\boldsymbol{\omega}, \qquad \int_{\mathbb{R}^d} f(\boldsymbol{\omega})\, \mathrm{d}\boldsymbol{\omega} = C(\mathbf{0}) = \sigma^2 .
+\]</span></p>
+<p>Une covariance admissible a une densité spectrale positive. Normalisée par <span class="math inline">\(\sigma^2\)</span>, elle devient une densité de probabilité, ce dont les méthodes spectrales tirent parti.</p>
+<section id="bandes-tournantes" class="level3">
+<h3 class="anchored" data-anchor-id="bandes-tournantes">Bandes tournantes</h3>
+<p>La méthode des bandes tournantes (Matheron) ramène une simulation en dimension <span class="math inline">\(d\)</span> à une somme de simulations unidimensionnelles le long de droites (<a href="#fig-c12-bandes-tournantes" class="quarto-xref">Figure&nbsp;<span>12.9</span></a>). On tire <span class="math inline">\(L\)</span> directions unitaires <span class="math inline">\(\mathbf{u}_1, \dots, \mathbf{u}_L\)</span> réparties sur la sphère. Sur chaque droite <span class="math inline">\(\ell\)</span>, on simule un processus 1D indépendant <span class="math inline">\(X_\ell(t)\)</span> de covariance <span class="math inline">\(C_1\)</span>, puis on projette et on somme :</p>
+<p><span class="math display">\[
+Z(\mathbf{x}) = \frac{1}{\sqrt{L}} \sum_{\ell=1}^{L} X_\ell\big(\langle \mathbf{x},\, \mathbf{u}_\ell\rangle\big),
+\]</span></p>
+<p>où <span class="math inline">\(\langle \mathbf{x}, \mathbf{u}_\ell\rangle\)</span> est l’abscisse de la projection de <span class="math inline">\(\mathbf{x}\)</span> sur la droite <span class="math inline">\(\ell\)</span>. Chaque droite n’apporte qu’une structure « en bandes » perpendiculaires à sa direction; c’est leur superposition sur des directions bien réparties qui reconstruit l’isotropie (ou l’anisotropie voulue), et le théorème central limite rend le champ gaussien lorsque <span class="math inline">\(L \to \infty\)</span>.</p>
+<div id="fig-c12-bandes-tournantes" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c12-bandes-tournantes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c12_06_bandes_tournantes.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c12-bandes-tournantes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.9: Principe des bandes tournantes : projection sur des droites orientées, simulation d’un processus 1D par bande, puis recombinaison.
+</figcaption>
+</figure>
+</div>
+<p>Le point clé est le lien entre la covariance 1D à simuler et la covariance cible. En trois dimensions, pour des directions uniformes sur la sphère et une covariance isotrope <span class="math inline">\(C_3(r)\)</span>, ce lien est particulièrement simple :</p>
+<p><span class="math display">\[
+C_3(r) = \frac{1}{r} \int_0^r C_1(s)\, \mathrm{d}s
+\qquad \Longleftrightarrow \qquad
+C_1(r) = \frac{\mathrm{d}}{\mathrm{d}r}\big[\, r\, C_3(r)\,\big].
+\]</span></p>
+<p>On déduit donc la covariance des processus de droite de la covariance 3D visée; elle admet une forme explicite pour les modèles usuels (sphérique, exponentiel, etc.). En deux dimensions, la relation fait intervenir une transformée intégrale moins commode : en pratique, on simule alors en 3D et on prélève une section plane, ou on recourt à la variante spectrale ci-dessous.</p>
+<p>Les processus 1D se simulent par n’importe quelle méthode unidimensionnelle (discrétisation de la droite, ou approche spectrale). Le coût total croît essentiellement comme <span class="math inline">\(\mathcal{O}(L\, n)\)</span>, linéaire en nombre de points : c’est ce qui rend la méthode efficace sur de grands domaines. Sa faiblesse est visuelle : trop peu de droites laissent apparaître des artefacts de bandes (des stries dans le champ simulé). On emploie donc un grand nombre de directions, réparties de façon régulière (suites quasi aléatoires) plutôt que purement aléatoires, pour lisser ces artefacts.</p>
+</section>
+<section id="bandes-tournantes-spectrales" class="level3">
+<h3 class="anchored" data-anchor-id="bandes-tournantes-spectrales">Bandes tournantes spectrales</h3>
+<p>La variante spectrale simule chaque processus de droite non pas en discrétisant la droite, mais par une représentation en cosinus. Un processus 1D stationnaire s’obtient en effet en tirant une fréquence dans sa densité spectrale et une phase aléatoire. En combinant la direction de bande <span class="math inline">\(\mathbf{u}_\ell\)</span> et la fréquence 1D, on aboutit directement à la méthode spectrale en dimension <span class="math inline">\(d\)</span> :</p>
+<p><span class="math display">\[
+Z(\mathbf{x}) = \sqrt{\frac{2}{L}} \sum_{\ell=1}^{L} \cos\big(\langle \boldsymbol{\omega}_\ell,\, \mathbf{x}\rangle + \phi_\ell\big),
+\]</span></p>
+<p>où le champ est pris centré réduit (<span class="math inline">\(\sigma^2 = 1\)</span>), les vecteurs de fréquence <span class="math inline">\(\boldsymbol{\omega}_\ell = \omega_\ell\, \mathbf{u}_\ell\)</span> sont tirés selon la densité spectrale normalisée <span class="math inline">\(f(\boldsymbol{\omega})/\sigma^2\)</span>, et les phases <span class="math inline">\(\phi_\ell \sim U[0, 2\pi]\)</span> sont indépendantes.</p>
+<p>La méthode reproduit la covariance de façon remarquablement directe. Pour un seul mode, l’espérance sur la phase donne</p>
+<p><span class="math display">\[
+\mathbb{E}\big[\, 2\cos(\langle \boldsymbol{\omega}, \mathbf{x}\rangle + \phi)\,\cos(\langle \boldsymbol{\omega}, \mathbf{x}+\mathbf{h}\rangle + \phi)\,\big] = \cos\big(\langle \boldsymbol{\omega}, \mathbf{h}\rangle\big),
+\]</span></p>
+<p>et l’espérance sur la fréquence, comme <span class="math inline">\(f\)</span> est symétrique, redonne exactement <span class="math inline">\(\mathbb{E}[\cos\langle \boldsymbol{\omega}, \mathbf{h}\rangle] = C(\mathbf{h})\)</span>. Un seul mode a donc déjà la bonne covariance; la somme sur <span class="math inline">\(L\)</span> modes réduit la variance de la covariance empirique et, par le théorème central limite, rend le champ gaussien.</p>
+<p>Cette approche a deux avantages sur les bandes tournantes discrétisées. Elle est <em>continue</em> : on évalue <span class="math inline">\(Z(\mathbf{x})\)</span> en n’importe quel point, sans grille ni discrétisation des droites. Et elle reproduit la covariance sans biais, mode par mode. Elle suppose en revanche de savoir échantillonner la densité spectrale — connue en forme close pour les modèles courants (au modèle gaussien correspond une densité spectrale gaussienne, à l’exponentiel une densité de type Cauchy) — et reste sujette, comme toute méthode à <span class="math inline">\(L\)</span> fini, à un léger bruit résiduel si <span class="math inline">\(L\)</span> est trop petit.</p>
+</section>
+<section id="fft-ma" class="level3">
+<h3 class="anchored" data-anchor-id="fft-ma">FFT-MA</h3>
+<p>La FFT-MA (<em>Fast Fourier Transform — Moving Average</em>, Le Ravalec, Noetinger et Hu) simule sur une grille régulière en exploitant la transformée de Fourier rapide. Elle repose sur l’écriture d’un champ gaussien stationnaire comme une convolution (moyenne mobile) d’un bruit blanc <span class="math inline">\(\varepsilon\)</span> par un noyau <span class="math inline">\(g\)</span> :</p>
+<p><span class="math display">\[
+Z = g * \varepsilon .
+\]</span></p>
+<p>La covariance d’une convolution est l’autocorrélation du noyau; dans le domaine spectral, cela impose <span class="math inline">\(|\hat{g}(\boldsymbol{\omega})|^2 = \hat{C}(\boldsymbol{\omega}) = f(\boldsymbol{\omega})\)</span>. Il suffit donc de prendre pour noyau la racine de la densité spectrale, <span class="math inline">\(\hat{g} = \sqrt{\hat{C}}\)</span>. Comme une convolution devient un produit en Fourier, l’algorithme est immédiat :</p>
+<ol type="1">
+<li>évaluer la covariance sur la grille (périodisée) et en calculer la transformée de Fourier <span class="math inline">\(\hat{C}\)</span>;</li>
+<li>poser <span class="math inline">\(\hat{g} = \sqrt{\hat{C}}\)</span>;</li>
+<li>générer un bruit blanc <span class="math inline">\(\varepsilon\)</span> sur la grille et le transformer, <span class="math inline">\(\hat{\varepsilon}\)</span>;</li>
+<li>multiplier terme à terme, <span class="math inline">\(\hat{Z} = \sqrt{\hat{C}}\; \hat{\varepsilon}\)</span>;</li>
+<li>transformer en sens inverse pour obtenir <span class="math inline">\(Z\)</span>.</li>
+</ol>
+<p>Le coût est celui de la FFT, <span class="math inline">\(\mathcal{O}(N \log N)\)</span> pour <span class="math inline">\(N\)</span> nœuds : la méthode traite sans peine des grilles de plusieurs millions de cellules. Deux conditions l’encadrent. La grille doit être régulière. Et la transformée de la covariance périodisée doit rester positive (<span class="math inline">\(\hat{C} \ge 0\)</span>) pour que sa racine ait un sens; on l’assure en rembourrant le domaine (en l’agrandissant) de sorte que la covariance décroisse jusqu’à être négligeable dans la zone ajoutée, ce qui évite du même coup les artefacts de périodicité (le champ qui « se recolle » d’un bord à l’autre). La méthode est en cela une cousine de l’immersion circulante (<em>circulant embedding</em>).</p>
+<p>Un atout distingue la FFT-MA : elle sépare le bruit blanc <span class="math inline">\(\varepsilon\)</span> — la « graine » aléatoire — de la structure de covariance. Perturber légèrement le bruit perturbe continûment la réalisation, ce qui rend la méthode précieuse pour le calage d’historique et les problèmes inverses, où l’on cherche à déformer une réalisation pour l’ajuster à des observations.</p>
+</section>
+<section id="décomposition-de-karhunenloève" class="level3">
+<h3 class="anchored" data-anchor-id="décomposition-de-karhunenloève">Décomposition de Karhunen–Loève</h3>
+<p>La décomposition de Karhunen–Loève (KL) représente le champ comme une série de fonctions spatiales déterministes pondérées par des coefficients aléatoires décorrélés. Pour un champ centré de covariance <span class="math inline">\(C(\mathbf{x}, \mathbf{y})\)</span> sur un domaine <span class="math inline">\(\mathcal{D}\)</span> :</p>
+<p><span class="math display">\[
+Z(\mathbf{x}) = \sum_{k=1}^{\infty} \sqrt{\lambda_k}\; \xi_k\; \phi_k(\mathbf{x}),
+\]</span></p>
+<p>où les couples <span class="math inline">\((\lambda_k, \phi_k)\)</span> sont les valeurs et fonctions propres de l’opérateur de covariance, solutions de l’équation intégrale de Fredholm</p>
+<p><span class="math display">\[
+\int_{\mathcal{D}} C(\mathbf{x}, \mathbf{y})\, \phi_k(\mathbf{y})\, \mathrm{d}\mathbf{y} = \lambda_k\, \phi_k(\mathbf{x}),
+\]</span></p>
+<p>les fonctions propres <span class="math inline">\(\phi_k\)</span> étant orthonormées, les valeurs propres ordonnées <span class="math inline">\(\lambda_1 \ge \lambda_2 \ge \cdots \ge 0\)</span>, et les coefficients <span class="math inline">\(\xi_k\)</span> décorrélés, de moyenne nulle et de variance unité. Pour un champ gaussien, les <span class="math inline">\(\xi_k\)</span> sont indépendants et suivent <span class="math inline">\(\mathcal{N}(0,1)\)</span>.</p>
+<p>La décomposition est optimale au sens suivant : parmi toutes les représentations linéaires tronquées à <span class="math inline">\(M\)</span> termes, celle de KL minimise l’erreur quadratique moyenne intégrée <span class="math inline">\(\mathbb{E}\!\int_{\mathcal{D}} (Z - Z_M)^2\, \mathrm{d}\mathbf{x}\)</span>. C’est donc la représentation la plus parcimonieuse. On tronque en gardant les <span class="math inline">\(M\)</span> plus grandes valeurs propres; la fraction de variance restituée est <span class="math inline">\(\sum_{k=1}^{M} \lambda_k \big/ \sum_{k=1}^{\infty} \lambda_k\)</span>. La décroissance des valeurs propres commande le nombre de termes utiles : rapide pour un champ très continu (covariance gaussienne), lente pour un champ irrégulier.</p>
+<p>Sur une grille, l’équation de Fredholm se ramène à la décomposition en valeurs propres de la matrice de covariance <span class="math inline">\(\mathbf{K} = \boldsymbol{\Phi}\, \boldsymbol{\Lambda}\, \boldsymbol{\Phi}^\top\)</span>, et la réalisation s’écrit <span class="math inline">\(\mathbf{z} = \boldsymbol{\Phi}\, \boldsymbol{\Lambda}^{1/2}\, \mathbf{y}\)</span> avec <span class="math inline">\(\mathbf{y}\)</span> gaussien centré réduit : c’est la décomposition spectrale évoquée comme extension de la méthode matricielle. Le calcul complet des vecteurs propres coûte <span class="math inline">\(\mathcal{O}(N^3)\)</span>, comme Cholesky, mais on peut ne calculer que les <span class="math inline">\(M\)</span> premiers modes. Le véritable intérêt de KL n’est donc pas la vitesse, mais la <em>paramétrisation réduite</em> : le champ est décrit par <span class="math inline">\(M \ll N\)</span> coefficients, ce qui sert en quantification d’incertitude, en éléments finis stochastiques (chaos polynomial) et en problèmes inverses. Son conditionnement aux données est en revanche moins direct que le post-conditionnement.</p>
+</section>
+<section id="comparaison" class="level3">
+<h3 class="anchored" data-anchor-id="comparaison">Comparaison</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Méthode</th>
+<th style="text-align: left;">Support</th>
+<th style="text-align: left;">Coût</th>
+<th style="text-align: left;">Atout principal</th>
+<th style="text-align: left;">Limite</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Bandes tournantes</td>
+<td style="text-align: left;">points ou grille</td>
+<td style="text-align: left;"><span class="math inline">\(\mathcal{O}(L\,n)\)</span></td>
+<td style="text-align: left;">rapide, tout support</td>
+<td style="text-align: left;">artefacts de bandes si <span class="math inline">\(L\)</span> faible; relation 1D–3D simple surtout en 3D</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bandes tournantes spectrales</td>
+<td style="text-align: left;">points ou grille</td>
+<td style="text-align: left;"><span class="math inline">\(\mathcal{O}(L\,n)\)</span></td>
+<td style="text-align: left;">continu, évaluable partout</td>
+<td style="text-align: left;">requiert la densité spectrale</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FFT-MA</td>
+<td style="text-align: left;">grille régulière</td>
+<td style="text-align: left;"><span class="math inline">\(\mathcal{O}(N \log N)\)</span></td>
+<td style="text-align: left;">très rapide; découple bruit et structure</td>
+<td style="text-align: left;">grille et rembourrage; <span class="math inline">\(\hat{C} \ge 0\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Karhunen–Loève</td>
+<td style="text-align: left;">points ou grille</td>
+<td style="text-align: left;"><span class="math inline">\(\mathcal{O}(N^3)\)</span>, ou <span class="math inline">\(M\)</span> modes</td>
+<td style="text-align: left;">paramétrisation réduite (<span class="math inline">\(M\)</span> coefficients)</td>
+<td style="text-align: left;">coût de la décomposition; conditionnement indirect</td>
+</tr>
+</tbody>
+</table>
+<p>Le choix dépend du contexte : FFT-MA pour de très grandes grilles régulières, bandes tournantes (spectrales) pour un support quelconque ou une évaluation en des points isolés, Karhunen–Loève quand une représentation réduite du champ est recherchée. Dans tous les cas, la réalisation produite est non conditionnelle et se rend conditionnelle par post-conditionnement.</p>
+
+
+<!-- -->
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../chapters/C11/index.html" class="pagination-link" aria-label="Krigeage d'indicatrices">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Krigeage d’indicatrices</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../chapters/C13/index.html" class="pagination-link" aria-label="Simulations géostatistiques de variable catégorielle">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable catégorielle</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Code source</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Simulations géostatistiques de variable continue"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">abstract:</span><span class="co"> |</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">  Ce chapitre présente les principes et les applications des simulations géostatistiques pour la modélisation de variables spatiales continues. Leur principal intérêt réside dans leur capacité à quantifier l’incertitude et à produire des représentations spatiales qui reproduisent la variabilité observée dans les données de terrain. La distinction entre estimation et simulation est d’abord établie, puis les cas conditionnel et non conditionnel sont détaillés. Les principaux algorithmes, notamment la décomposition de Cholesky et la simulation gaussienne séquentielle, sont ensuite présentés. Le chapitre expose également les critères guidant le choix de la méthode la mieux adaptée au contexte étudié et souligne les limites propres à chaque approche.</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Objectifs d'apprentissage</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>À la fin de ce chapitre, vous serez en mesure de :</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Identifier les problèmes pour lesquels les méthodes de simulation géostatistique sont appropriées;</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Distinguer les concepts d'estimation et de simulation, ainsi que leurs objectifs respectifs;</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Expliquer les différences entre les simulations non conditionnelles et conditionnelles;</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Appliquer les méthodes de simulation de Cholesky et de simulation séquentielle gaussienne (SGS), et en discuter les avantages et les limites;</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Utiliser et interpréter les résultats de simulations dans le cadre de l'estimation des ressources;</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Expliquer les principales propriétés statistiques et spatiales des simulations.</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## Références</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>Ce chapitre s'appuie principalement sur les ouvrages suivants :</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>Lantuéjoul, C. (2002). *Geostatistical Simulation: Models and Algorithms*. Springer.</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>Chilès, J., &amp; Delfiner, P. (2012). *Geostatistics: Modeling Spatial Uncertainty*. John Wiley &amp; Sons.</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>{{&lt; include 12-01.qmd &gt;}}</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>{{&lt; include 12-02.qmd &gt;}}</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>{{&lt; include 12-03.qmd &gt;}}</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>{{&lt; include 12-04.qmd &gt;}}</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>{{&lt; include 12-05.qmd &gt;}}</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>{{&lt; include 12-06.qmd &gt;}}</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Géostatistique et géologie minière</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Danlauz/glq3401-3651/edit/main/chapters/C12/index.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/Danlauz/glq3401-3651/issues/new" class="toc-action"><i class="bi empty"></i>Signaler un problème ou<br>formuler une suggestion</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Ce livre a été réalisé avec <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+<script type="module" src="../../scripts/geostat-js/loader.js"></script>
+<script src="../../scripts/geostat-js/notebook-button.js" defer=""></script>
+
+
+
+
+</body></html>

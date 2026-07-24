@@ -1,0 +1,1991 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>10&nbsp; Géostatistique multivariable – Géostatistique et géologie minière</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../chapters/C11/index.html" rel="next">
+<link href="../../chapters/C09/index.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-f2c6d6e2b784ddc5de38779acc06f37d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-74c88ba48ad0bebf983f0ffd06dd1671.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f2c6d6e2b784ddc5de38779acc06f37d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents correspondants",
+    "search-copy-link-title": "Copier le lien",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "Rechercher",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles/site-polish.css">
+<link rel="stylesheet" href="../../styles/callouts.css">
+<link rel="stylesheet" href="../../styles/exercice.css">
+<link rel="stylesheet" href="../../styles/chapter-downloads.css">
+<link rel="stylesheet" href="../../scripts/geostat-js/style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/C10/index.html">Partie III: Géostatistique non-linéaire</a></li><li class="breadcrumb-item"><a href="../../chapters/C10/index.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Géostatistique multivariable</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Géostatistique et géologie minière</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/Danlauz/glq3401-3651" title="Code source" class="quarto-navigation-tool px-1" aria-label="Code source"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Basculer le mode sombre"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Préface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">À propos de l’auteur</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie I: Géologie minière</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C01/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Rapport Technique NI 43-101 et Loi sur les mines</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C02/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aspect économique</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C03/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Théorie de Gy et contrôle qualité</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C04/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Traitement et analyse statistique des données de forage</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C05/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Méthodes déterministes d’estimation des ressources</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie II: Géostatistique linéaire</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C06/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction à la géostatistique</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C07/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Variogramme</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C08/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Variance de blocs, de dispersion et d’estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C09/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Krigeage</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Partie III: Géostatistique non-linéaire</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C10/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Géostatistique multivariable</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C11/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Krigeage d’indicatrices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C12/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable continue</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C13/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable catégorielle</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie IV: Exercices et examens</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/exercices/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Recueil d’exercices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/examens/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Anciens examens</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Références</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Annexes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Algèbre linéaire : vecteurs et plans</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Probabilités &amp; statistiques</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-c.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Table de la loi normale centrée-réduite</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Abaques - Variances de dispersion</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-e.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Abaques - Variances d’estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Notation mathématique</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#notations-et-hypothèses" id="toc-notations-et-hypothèses" class="nav-link active" data-scroll-target="#notations-et-hypothèses"><span class="header-section-number">10.1</span> Notations et hypothèses</a>
+  <ul class="collapse">
+  <li><a href="#cadre-général" id="toc-cadre-général" class="nav-link" data-scroll-target="#cadre-général">Cadre général</a></li>
+  <li><a href="#estimateur-de-cokrigeage" id="toc-estimateur-de-cokrigeage" class="nav-link" data-scroll-target="#estimateur-de-cokrigeage">Estimateur de cokrigeage</a></li>
+  <li><a href="#covariance-croisée" id="toc-covariance-croisée" class="nav-link" data-scroll-target="#covariance-croisée">Covariance croisée</a></li>
+  <li><a href="#variogramme-croisé" id="toc-variogramme-croisé" class="nav-link" data-scroll-target="#variogramme-croisé">Variogramme croisé</a></li>
+  <li><a href="#calcul-expérimental" id="toc-calcul-expérimental" class="nav-link" data-scroll-target="#calcul-expérimental">Calcul expérimental</a></li>
+  <li><a href="#variance-destimation" id="toc-variance-destimation" class="nav-link" data-scroll-target="#variance-destimation">Variance d’estimation</a></li>
+  </ul></li>
+  <li><a href="#cokrigeage-simple" id="toc-cokrigeage-simple" class="nav-link" data-scroll-target="#cokrigeage-simple"><span class="header-section-number">10.2</span> Cokrigeage simple</a>
+  <ul class="collapse">
+  <li><a href="#construction-de-lestimateur" id="toc-construction-de-lestimateur" class="nav-link" data-scroll-target="#construction-de-lestimateur">Construction de l’estimateur</a></li>
+  <li><a href="#condition-de-non-biais" id="toc-condition-de-non-biais" class="nav-link" data-scroll-target="#condition-de-non-biais">Condition de non-biais</a></li>
+  <li><a href="#système-de-cokrigeage-simple" id="toc-système-de-cokrigeage-simple" class="nav-link" data-scroll-target="#système-de-cokrigeage-simple">Système de cokrigeage simple</a></li>
+  <li><a href="#forme-matricielle" id="toc-forme-matricielle" class="nav-link" data-scroll-target="#forme-matricielle">Forme matricielle</a></li>
+  <li><a href="#variance-de-cokrigeage-simple" id="toc-variance-de-cokrigeage-simple" class="nav-link" data-scroll-target="#variance-de-cokrigeage-simple">Variance de cokrigeage simple</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-10.1-cokrigeage-simple-cs" id="toc-atelier-interactif-10.1-cokrigeage-simple-cs" class="nav-link" data-scroll-target="#atelier-interactif-10.1-cokrigeage-simple-cs">🧮 Atelier interactif 10.1 — Cokrigeage simple (CS)</a></li>
+  <li><a href="#cokrigeage-ordinaire" id="toc-cokrigeage-ordinaire" class="nav-link" data-scroll-target="#cokrigeage-ordinaire"><span class="header-section-number">10.3</span> Cokrigeage ordinaire</a>
+  <ul class="collapse">
+  <li><a href="#conditions-de-non-biais" id="toc-conditions-de-non-biais" class="nav-link" data-scroll-target="#conditions-de-non-biais">Conditions de non-biais</a></li>
+  <li><a href="#système-de-cokrigeage-ordinaire" id="toc-système-de-cokrigeage-ordinaire" class="nav-link" data-scroll-target="#système-de-cokrigeage-ordinaire">Système de cokrigeage ordinaire</a></li>
+  <li><a href="#forme-matricielle-1" id="toc-forme-matricielle-1" class="nav-link" data-scroll-target="#forme-matricielle-1">Forme matricielle</a></li>
+  <li><a href="#variance-de-cokrigeage-ordinaire" id="toc-variance-de-cokrigeage-ordinaire" class="nav-link" data-scroll-target="#variance-de-cokrigeage-ordinaire">Variance de cokrigeage ordinaire</a></li>
+  <li><a href="#cas-particulier-une-moyenne-connue-lautre-inconnue" id="toc-cas-particulier-une-moyenne-connue-lautre-inconnue" class="nav-link" data-scroll-target="#cas-particulier-une-moyenne-connue-lautre-inconnue">Cas particulier : une moyenne connue, l’autre inconnue</a></li>
+  <li><a href="#changement-de-paradigme-par-rapport-au-krigeage" id="toc-changement-de-paradigme-par-rapport-au-krigeage" class="nav-link" data-scroll-target="#changement-de-paradigme-par-rapport-au-krigeage">Changement de paradigme par rapport au krigeage</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-10.2-cokrigeage-ordinaire-co" id="toc-atelier-interactif-10.2-cokrigeage-ordinaire-co" class="nav-link" data-scroll-target="#atelier-interactif-10.2-cokrigeage-ordinaire-co">🧮 Atelier interactif 10.2 — Cokrigeage ordinaire (CO)</a></li>
+  <li><a href="#exemple-de-système-de-cokrigeage" id="toc-exemple-de-système-de-cokrigeage" class="nav-link" data-scroll-target="#exemple-de-système-de-cokrigeage"><span class="header-section-number">10.4</span> Exemple de système de cokrigeage</a></li>
+  <li><a href="#atelier-interactif-10.3-système-de-cokrigeage-pas-à-pas" id="toc-atelier-interactif-10.3-système-de-cokrigeage-pas-à-pas" class="nav-link" data-scroll-target="#atelier-interactif-10.3-système-de-cokrigeage-pas-à-pas">🧮 Atelier interactif 10.3 — Système de cokrigeage pas à pas</a></li>
+  <li><a href="#cokrigeage-universel" id="toc-cokrigeage-universel" class="nav-link" data-scroll-target="#cokrigeage-universel"><span class="header-section-number">10.5</span> Cokrigeage universel</a>
+  <ul class="collapse">
+  <li><a href="#modèle-avec-dérives" id="toc-modèle-avec-dérives" class="nav-link" data-scroll-target="#modèle-avec-dérives">Modèle avec dérives</a></li>
+  <li><a href="#conditions-de-non-biais-1" id="toc-conditions-de-non-biais-1" class="nav-link" data-scroll-target="#conditions-de-non-biais-1">Conditions de non-biais</a></li>
+  <li><a href="#système-de-cokrigeage-universel" id="toc-système-de-cokrigeage-universel" class="nav-link" data-scroll-target="#système-de-cokrigeage-universel">Système de cokrigeage universel</a></li>
+  <li><a href="#considérations-pratiques" id="toc-considérations-pratiques" class="nav-link" data-scroll-target="#considérations-pratiques">Considérations pratiques</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-10.4-cokrigeage-universel-cu" id="toc-atelier-interactif-10.4-cokrigeage-universel-cu" class="nav-link" data-scroll-target="#atelier-interactif-10.4-cokrigeage-universel-cu">🧮 Atelier interactif 10.4 — Cokrigeage universel (CU)</a></li>
+  <li><a href="#variables-liées-par-un-opérateur-linéaire" id="toc-variables-liées-par-un-opérateur-linéaire" class="nav-link" data-scroll-target="#variables-liées-par-un-opérateur-linéaire"><span class="header-section-number">10.6</span> Variables liées par un opérateur linéaire</a>
+  <ul class="collapse">
+  <li><a href="#principe-général" id="toc-principe-général" class="nav-link" data-scroll-target="#principe-général">Principe général</a></li>
+  <li><a href="#exemple-en-une-dimension-y-est-la-dérivée-de-z" id="toc-exemple-en-une-dimension-y-est-la-dérivée-de-z" class="nav-link" data-scroll-target="#exemple-en-une-dimension-y-est-la-dérivée-de-z">Exemple en une dimension : <span class="math inline">\(Y\)</span> est la dérivée de <span class="math inline">\(Z\)</span></a></li>
+  <li><a href="#extension-aux-dimensions-supérieures" id="toc-extension-aux-dimensions-supérieures" class="nav-link" data-scroll-target="#extension-aux-dimensions-supérieures">Extension aux dimensions supérieures</a></li>
+  <li><a href="#avantages-de-cette-approche" id="toc-avantages-de-cette-approche" class="nav-link" data-scroll-target="#avantages-de-cette-approche">Avantages de cette approche</a></li>
+  <li><a href="#application-inversion-gravimétrique" id="toc-application-inversion-gravimétrique" class="nav-link" data-scroll-target="#application-inversion-gravimétrique">Application : inversion gravimétrique</a></li>
+  </ul></li>
+  <li><a href="#fonctions-aléatoires-multivariées" id="toc-fonctions-aléatoires-multivariées" class="nav-link" data-scroll-target="#fonctions-aléatoires-multivariées"><span class="header-section-number">10.7</span> Fonctions aléatoires multivariées</a>
+  <ul class="collapse">
+  <li><a href="#conditions-dadmissibilité" id="toc-conditions-dadmissibilité" class="nav-link" data-scroll-target="#conditions-dadmissibilité">Conditions d’admissibilité</a></li>
+  <li><a href="#modèle-à-covariances-proportionnelles" id="toc-modèle-à-covariances-proportionnelles" class="nav-link" data-scroll-target="#modèle-à-covariances-proportionnelles">Modèle à covariances proportionnelles</a></li>
+  <li><a href="#modèle-linéaire-de-corégionalisation-mlc" id="toc-modèle-linéaire-de-corégionalisation-mlc" class="nav-link" data-scroll-target="#modèle-linéaire-de-corégionalisation-mlc">Modèle linéaire de corégionalisation (MLC)</a></li>
+  <li><a href="#exemple-de-mlc-et-comparaison-krigeagecokrigeage" id="toc-exemple-de-mlc-et-comparaison-krigeagecokrigeage" class="nav-link" data-scroll-target="#exemple-de-mlc-et-comparaison-krigeagecokrigeage">Exemple de MLC et comparaison krigeage–cokrigeage</a></li>
+  <li><a href="#ajustement-dun-mlc" id="toc-ajustement-dun-mlc" class="nav-link" data-scroll-target="#ajustement-dun-mlc">Ajustement d’un MLC</a></li>
+  <li><a href="#comparaison-krigeagecokrigeage" id="toc-comparaison-krigeagecokrigeage" class="nav-link" data-scroll-target="#comparaison-krigeagecokrigeage">Comparaison krigeage–cokrigeage</a></li>
+  <li><a href="#propriétés-du-cokrigeage" id="toc-propriétés-du-cokrigeage" class="nav-link" data-scroll-target="#propriétés-du-cokrigeage">Propriétés du cokrigeage</a></li>
+  <li><a href="#quand-le-cokrigeage-est-il-utile" id="toc-quand-le-cokrigeage-est-il-utile" class="nav-link" data-scroll-target="#quand-le-cokrigeage-est-il-utile">Quand le cokrigeage est-il utile?</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-10.5-modèle-linéaire-de-corégionalisation-mlc" id="toc-atelier-interactif-10.5-modèle-linéaire-de-corégionalisation-mlc" class="nav-link" data-scroll-target="#atelier-interactif-10.5-modèle-linéaire-de-corégionalisation-mlc">🧮 Atelier interactif 10.5 — Modèle linéaire de corégionalisation (MLC)</a></li>
+  <li><a href="#cokrigeage-versus-krigeage" id="toc-cokrigeage-versus-krigeage" class="nav-link" data-scroll-target="#cokrigeage-versus-krigeage"><span class="header-section-number">10.8</span> Cokrigeage versus krigeage</a></li>
+  <li><a href="#atelier-interactif-10.6-avantage-du-cokrigeage" id="toc-atelier-interactif-10.6-avantage-du-cokrigeage" class="nav-link" data-scroll-target="#atelier-interactif-10.6-avantage-du-cokrigeage">🧮 Atelier interactif 10.6 — Avantage du cokrigeage</a></li>
+  <li><a href="#cokrigeage-colocalisé" id="toc-cokrigeage-colocalisé" class="nav-link" data-scroll-target="#cokrigeage-colocalisé"><span class="header-section-number">10.9</span> Cokrigeage colocalisé</a>
+  <ul class="collapse">
+  <li><a href="#principe" id="toc-principe" class="nav-link" data-scroll-target="#principe">Principe</a></li>
+  <li><a href="#une-approximation-non-une-équivalence" id="toc-une-approximation-non-une-équivalence" class="nav-link" data-scroll-target="#une-approximation-non-une-équivalence">Une approximation, non une équivalence</a></li>
+  <li><a href="#cas-ordinaire" id="toc-cas-ordinaire" class="nav-link" data-scroll-target="#cas-ordinaire">Cas ordinaire</a></li>
+  </ul></li>
+  <li><a href="#modèles-spatio-temporels" id="toc-modèles-spatio-temporels" class="nav-link" data-scroll-target="#modèles-spatio-temporels"><span class="header-section-number">10.10</span> Modèles spatio-temporels</a>
+  <ul class="collapse">
+  <li><a href="#cadre-général-1" id="toc-cadre-général-1" class="nav-link" data-scroll-target="#cadre-général-1">Cadre général</a></li>
+  <li><a href="#modèles-séparables" id="toc-modèles-séparables" class="nav-link" data-scroll-target="#modèles-séparables">Modèles séparables</a></li>
+  <li><a href="#modèles-somme" id="toc-modèles-somme" class="nav-link" data-scroll-target="#modèles-somme">Modèles somme</a></li>
+  <li><a href="#modèles-produit-somme" id="toc-modèles-produit-somme" class="nav-link" data-scroll-target="#modèles-produit-somme">Modèles produit-somme</a></li>
+  <li><a href="#modèles-non-séparables" id="toc-modèles-non-séparables" class="nav-link" data-scroll-target="#modèles-non-séparables">Modèles non séparables</a></li>
+  <li><a href="#anisotropie-espace-temps" id="toc-anisotropie-espace-temps" class="nav-link" data-scroll-target="#anisotropie-espace-temps">Anisotropie espace-temps</a></li>
+  <li><a href="#lien-avec-le-cokrigeage" id="toc-lien-avec-le-cokrigeage" class="nav-link" data-scroll-target="#lien-avec-le-cokrigeage">Lien avec le cokrigeage</a></li>
+  <li><a href="#considérations-pratiques-1" id="toc-considérations-pratiques-1" class="nav-link" data-scroll-target="#considérations-pratiques-1">Considérations pratiques</a></li>
+  <li><a href="#applications-et-travaux-de-référence" id="toc-applications-et-travaux-de-référence" class="nav-link" data-scroll-target="#applications-et-travaux-de-référence">Applications et travaux de référence</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-10.7-krigeage-spatio-temporel-précipitations" id="toc-atelier-interactif-10.7-krigeage-spatio-temporel-précipitations" class="nav-link" data-scroll-target="#atelier-interactif-10.7-krigeage-spatio-temporel-précipitations">🧮 Atelier interactif 10.7 — Krigeage spatio-temporel (précipitations)</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Danlauz/glq3401-3651/edit/main/chapters/C10/index.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/Danlauz/glq3401-3651/issues/new" class="toc-action"><i class="bi empty"></i>Signaler un problème ou<br>formuler une suggestion</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/C10/index.html">Partie III: Géostatistique non-linéaire</a></li><li class="breadcrumb-item"><a href="../../chapters/C10/index.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Géostatistique multivariable</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Géostatistique multivariable</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Résumé</div>
+    <p>Ce chapitre introduit le cokrigeage, c’est-à-dire l’application du krigeage à plusieurs variables. Cette méthode permet d’estimer une variable principale en exploitant également l’information fournie par d’autres variables corrélées. La covariance croisée et le variogramme croisé, qui décrivent les relations entre les différentes variables, sont d’abord définis. Le cokrigeage simple, ordinaire et universel est ensuite présenté. Le chapitre aborde également certains cas particuliers, notamment celui d’une variable secondaire très densément échantillonnée ou liée à la variable principale par une relation connue. Les fonctions aléatoires multivariées et le modèle linéaire de corégionalisation sont alors introduits afin de construire des modèles cohérents entre plusieurs variables. Enfin, la discussion s’étend aux modèles spatio-temporels, dans lesquels les données varient à la fois dans l’espace et dans le temps.</p>
+  </div>
+</div>
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Objectifs d’apprentissage
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>À la fin de ce chapitre, vous serez en mesure de :</p>
+<ul>
+<li><p>Décrire la mécanique du cokrigeage comme généralisation du krigeage au cas multivariable;</p></li>
+<li><p>Calculer et interpréter des covariances croisées et des variogrammes croisés;</p></li>
+<li><p>Dériver et résoudre les systèmes de cokrigeage simple, ordinaire et universel;</p></li>
+<li><p>Définir les paramètres d’un modèle linéaire de corégionalisation et vérifier son admissibilité;</p></li>
+<li><p>Analyser les situations où le cokrigeage apporte un gain significatif par rapport au krigeage;</p></li>
+<li><p>Expliquer les principes des modèles spatio-temporels en géostatistique.</p></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Référence
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ce chapitre s’appuie principalement sur le livre suivant :</p>
+<p>Wackernagel, H. (2003). <em>Multivariate Geostatistics: An Introduction with Applications</em> (3ᵉ éd.). Springer-Verlag, Berlin.</p>
+</div>
+</div>
+<section id="notations-et-hypothèses" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="notations-et-hypothèses"><span class="header-section-number">10.1</span> Notations et hypothèses</h2>
+<p>Le cokrigeage étend le krigeage à l’estimation multivariable. Lorsque plusieurs variables régionalisées corrélées sont disponibles, on estime la variable principale en exploitant aussi l’information des variables secondaires. Les liens entre variables sont décrits par les covariances croisées, qui s’ajoutent aux covariances directes dans le système d’estimation; la variance de cokrigeage qui en résulte est inférieure ou égale à celle du krigeage univarié.</p>
+<p>Ce cadre recouvre plusieurs configurations d’échantillonnage : variables mesurées aux mêmes points (teneurs en cuivre et en nickel sur les mêmes forages), ou en des points distincts (charge hydraulique et transmissivité en hydrogéologie). Le cas le plus favorable au cokrigeage est celui d’une variable principale peu échantillonnée, complétée par une variable secondaire dense telle qu’un levé sismique ou géophysique. Ce chapitre établit les systèmes d’estimation associés, la modélisation des covariances directes et croisées, et les conditions sous lesquelles le cokrigeage apporte un gain sur le krigeage.</p>
+<section id="cadre-général" class="level3">
+<h3 class="anchored" data-anchor-id="cadre-général">Cadre général</h3>
+<p>On note <span class="math inline">\(Z(\mathbf{x})\)</span> la variable régionalisée principale, celle qu’on cherche à estimer, et <span class="math inline">\(Y(\mathbf{x})\)</span> une variable régionalisée secondaire dont on veut exploiter l’information. Tout ce qui suit se généralise sans peine à plusieurs variables secondaires; on s’en tient à une seule pour garder les équations lisibles.</p>
+<p>Les observations de <span class="math inline">\(Z\)</span> sont disponibles en <span class="math inline">\(n_Z\)</span> points, <span class="math inline">\(Z_1 = Z(\mathbf{x}_1^Z), \dots, Z_{n_Z} = Z(\mathbf{x}_{n_Z}^Z)\)</span>, et celles de <span class="math inline">\(Y\)</span> en <span class="math inline">\(n_Y\)</span> points, <span class="math inline">\(Y_1 = Y(\mathbf{x}_1^Y), \dots, Y_{n_Y} = Y(\mathbf{x}_{n_Y}^Y)\)</span>. Les points d’échantillonnage de <span class="math inline">\(Z\)</span> et de <span class="math inline">\(Y\)</span> peuvent différer, en nombre comme en position. Les données sont alors :</p>
+<ul>
+<li><strong>colocalisées</strong> : chaque point de mesure porte à la fois une observation de <span class="math inline">\(Z\)</span> et de <span class="math inline">\(Y\)</span>;</li>
+<li><strong>non colocalisées</strong> : aucune observation des deux variables n’est disponible au même emplacement;</li>
+<li><strong>partiellement colocalisées</strong> : certaines positions portent les deux variables, d’autres une seule.</li>
+</ul>
+<p>Le cas le plus intéressant est celui où la variable secondaire est bien plus dense que la principale. C’est là que le cokrigeage a le plus à offrir.</p>
+</section>
+<section id="estimateur-de-cokrigeage" class="level3">
+<h3 class="anchored" data-anchor-id="estimateur-de-cokrigeage">Estimateur de cokrigeage</h3>
+<p>L’estimateur de cokrigeage est une combinaison linéaire des observations des deux variables :</p>
+<p><span class="math display">\[
+Z_0^* = \sum_{i=1}^{n_Z} \lambda_i \, Z_i + \sum_{j=1}^{n_Y} \alpha_j \, Y_j
+\]</span></p>
+<p>où <span class="math inline">\(Z_0 = Z(\mathbf{x}_0)\)</span> est la valeur à estimer au point <span class="math inline">\(\mathbf{x}_0\)</span>, <span class="math inline">\(\lambda_i\)</span> les poids des observations de <span class="math inline">\(Z\)</span> et <span class="math inline">\(\alpha_j\)</span> ceux des observations de <span class="math inline">\(Y\)</span>. On cherche ces poids de façon à minimiser la variance de l’erreur d’estimation, sous d’éventuelles contraintes de non-biais.</p>
+<p>Pour monter le système, il faut deux covariances directes et une covariance croisée :</p>
+<ul>
+<li><span class="math inline">\(C_{ZZ}(\mathbf{h})\)</span>, la covariance directe de la variable principale;</li>
+<li><span class="math inline">\(C_{YY}(\mathbf{h})\)</span>, la covariance directe de la variable secondaire;</li>
+<li><span class="math inline">\(C_{ZY}(\mathbf{h})\)</span>, la covariance croisée entre <span class="math inline">\(Z\)</span> et <span class="math inline">\(Y\)</span>.</li>
+</ul>
+<p>Les deux covariances directes sont celles du krigeage univarié. La covariance croisée, elle, décrit la dépendance spatiale entre les deux variables : c’est par elle que l’information passe de la secondaire vers la principale.</p>
+</section>
+<section id="covariance-croisée" class="level3">
+<h3 class="anchored" data-anchor-id="covariance-croisée">Covariance croisée</h3>
+<p>La covariance croisée entre <span class="math inline">\(Z(\mathbf{x})\)</span> et <span class="math inline">\(Y(\mathbf{x})\)</span> est définie par :</p>
+<p><span class="math display">\[
+C_{ZY}(\mathbf{h}) = \operatorname{Cov}\big[Z(\mathbf{x}),\, Y(\mathbf{x} + \mathbf{h})\big] = \mathbb{E}\big[(Z(\mathbf{x}) - m_Z)(Y(\mathbf{x} + \mathbf{h}) - m_Y)\big]
+\]</span></p>
+<p>où <span class="math inline">\(m_Z = \mathbb{E}[Z(\mathbf{x})]\)</span> et <span class="math inline">\(m_Y = \mathbb{E}[Y(\mathbf{x})]\)</span> sont les moyennes, supposées constantes sous stationnarité. Elle mesure l’intensité de la corrélation entre <span class="math inline">\(Z\)</span> et <span class="math inline">\(Y\)</span> à une séparation <span class="math inline">\(\mathbf{h}\)</span> : positive, les deux variables augmentent ou diminuent ensemble; négative, elles varient en sens inverse; nulle, elles sont décorrélées à cette distance.</p>
+<p>Contrairement à la covariance directe, la covariance croisée n’est pas forcément symétrique : en général, <span class="math inline">\(C_{ZY}(\mathbf{h}) \neq C_{ZY}(-\mathbf{h})\)</span>. Cette asymétrie traduit souvent un <strong>effet de retard</strong> (<em>delay effect</em>), quand une variable réagit avec un décalage spatial sur l’autre; le maximum de corrélation n’est alors pas à l’origine, mais à un certain décalage <span class="math inline">\(\mathbf{h}\)</span>. Sous stationnarité d’ordre deux, on a par ailleurs</p>
+<p><span class="math display">\[
+C_{ZY}(\mathbf{h}) = C_{YZ}(-\mathbf{h}).
+\]</span></p>
+<p>La valeur à l’origine <span class="math inline">\(C_{ZY}(\mathbf{0})\)</span> est la covariance entre <span class="math inline">\(Z\)</span> et <span class="math inline">\(Y\)</span> au même point; on la normalise pour obtenir le coefficient de corrélation :</p>
+<p><span class="math display">\[
+\rho_{ZY} = \frac{C_{ZY}(\mathbf{0})}{\sqrt{C_{ZZ}(\mathbf{0}) \, C_{YY}(\mathbf{0})}}.
+\]</span></p>
+</section>
+<section id="variogramme-croisé" class="level3">
+<h3 class="anchored" data-anchor-id="variogramme-croisé">Variogramme croisé</h3>
+<p>Le variogramme croisé est défini par :</p>
+<p><span class="math display">\[
+\gamma_{ZY}(\mathbf{h}) = \frac{1}{2} \, \mathbb{E}\big[(Z(\mathbf{x}+\mathbf{h}) - Z(\mathbf{x}))(Y(\mathbf{x}+\mathbf{h}) - Y(\mathbf{x}))\big]
+\]</span></p>
+<p>Sous stationnarité d’ordre deux, il se relie à la covariance croisée par :</p>
+<p><span class="math display">\[
+\gamma_{ZY}(\mathbf{h}) = C_{ZY}(\mathbf{0}) - \frac{1}{2}\big(C_{ZY}(\mathbf{h}) + C_{ZY}(-\mathbf{h})\big)
+\]</span></p>
+<p>Le variogramme croisé est toujours symétrique, <span class="math inline">\(\gamma_{ZY}(\mathbf{h}) = \gamma_{ZY}(-\mathbf{h})\)</span>. Il ne peut donc pas rendre compte des asymétries de la covariance croisée : celle-ci est en ce sens plus générale.</p>
+</section>
+<section id="calcul-expérimental" class="level3">
+<h3 class="anchored" data-anchor-id="calcul-expérimental">Calcul expérimental</h3>
+<p>La covariance croisée expérimentale, pour une classe de distance centrée sur <span class="math inline">\(h\)</span>, est :</p>
+<p><span class="math display">\[
+\hat{C}_{ZY}(h) = \frac{1}{N(h)} \sum_{(i,j) \in N(h)} \big(Z(\mathbf{x}_i) - m_Z\big)\big(Y(\mathbf{x}_j) - m_Y\big)
+\]</span></p>
+<p>où la somme porte sur les paires <span class="math inline">\((\mathbf{x}_i, \mathbf{x}_j)\)</span> telles que <span class="math inline">\(\|\mathbf{x}_j - \mathbf{x}_i\| \approx h\)</span>, avec <span class="math inline">\(Z\)</span> observé en <span class="math inline">\(\mathbf{x}_i\)</span> et <span class="math inline">\(Y\)</span> en <span class="math inline">\(\mathbf{x}_j\)</span>. Le variogramme croisé expérimental est :</p>
+<p><span class="math display">\[
+\hat{\gamma}_{ZY}(h) = \frac{1}{2N(h)} \sum_{(i,j) \in N(h)} \big(Z(\mathbf{x}_i) - Z(\mathbf{x}_j)\big)\big(Y(\mathbf{x}_i) - Y(\mathbf{x}_j)\big)
+\]</span></p>
+<p>La différence entre les deux est décisive en pratique. Pour la covariance croisée, il suffit d’avoir <span class="math inline">\(Z\)</span> à un point et <span class="math inline">\(Y\)</span> à un autre, à la distance <span class="math inline">\(h\)</span> : chaque paire <span class="math inline">\((Z(\mathbf{x}_i), Y(\mathbf{x}_j))\)</span> compte. Le variogramme croisé, lui, exige les deux variables aux deux extrémités de chaque paire, soit quatre observations <span class="math inline">\(Z(\mathbf{x}_i), Z(\mathbf{x}_j), Y(\mathbf{x}_i), Y(\mathbf{x}_j)\)</span> : toutes les données non colocalisées sont donc perdues.</p>
+<p>Quand les variables ne sont que partiellement colocalisées, la covariance croisée exploite bien plus de données. Et si elles sont entièrement hétérotopes (aucun point commun), le variogramme croisé n’est plus estimable : on lui substitue le <strong>variogramme pseudo-croisé</strong>, construit sur des paires où chaque variable n’est observée qu’à une extrémité. Comme au chapitre précédent, ces fonctions se déclinent par direction pour tenir compte de l’anisotropie, les classes étant définies par distance et par direction, chacune avec sa tolérance.</p>
+</section>
+<section id="variance-destimation" class="level3">
+<h3 class="anchored" data-anchor-id="variance-destimation">Variance d’estimation</h3>
+<p>La variance de l’erreur d’estimation du cokrigeage s’écrit, dans le cas général :</p>
+<p><span class="math display">\[
+\begin{aligned}
+\sigma_e^2 = \operatorname{Var}(Z_0 - Z_0^*)
+&amp;= C_{ZZ}(\mathbf{0}) \\
+&amp;\quad + \sum_{i=1}^{n_Z} \sum_{j=1}^{n_Z} \lambda_i \lambda_j \, C_{ZZ}(\mathbf{x}_i - \mathbf{x}_j)
++ 2 \sum_{i=1}^{n_Z} \sum_{j=1}^{n_Y} \lambda_i \alpha_j \, C_{ZY}(\mathbf{x}_i - \mathbf{x}_j)
++ \sum_{i=1}^{n_Y} \sum_{j=1}^{n_Y} \alpha_i \alpha_j \, C_{YY}(\mathbf{x}_i - \mathbf{x}_j) \\
+&amp;\quad - 2 \sum_{i=1}^{n_Z} \lambda_i \, C_{ZZ}(\mathbf{x}_i - \mathbf{x}_0)
+- 2 \sum_{j=1}^{n_Y} \alpha_j \, C_{YZ}(\mathbf{x}_j - \mathbf{x}_0)
+\end{aligned}
+\]</span></p>
+<p>Les covariances croisées <span class="math inline">\(C_{ZY}\)</span> sont au cœur de cette expression : ce sont elles qui font gagner en précision. On minimise cette variance sous les contraintes de non-biais appropriées, et on obtient les différents systèmes de cokrigeage des sections suivantes.</p>
+<p>On retrouve les trois phénomènes de la variance d’estimation en krigeage : 1) la variabilité du phénomène ; 2) la redondance entre observations ; et 3) leur position par rapport au point à estimer. Le cokrigeage les étend aux interactions entre variables ; redondance entre données principales, entre principale et secondaire, entre secondaires, et position des données secondaires par rapport au point à estimer.</p>
+<p>Le modèle linéaire de corégionalisation, qui rend ces covariances directes et croisées admissibles, est détaillé plus loin (section « Fonctions aléatoires multivariées »). Deux facteurs commandent l’apport du cokrigeage : l’intensité du lien entre variables et la configuration des données. On commence par le cas le plus simple, celui où les moyennes sont connues : le cokrigeage simple.</p>
+</section>
+</section>
+<section id="cokrigeage-simple" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="cokrigeage-simple"><span class="header-section-number">10.2</span> Cokrigeage simple</h2>
+<p>Le cokrigeage simple s’applique quand les moyennes <span class="math inline">\(m_Z\)</span> et <span class="math inline">\(m_Y\)</span> sont connues. Comme au krigeage simple, on travaille alors sur les écarts à la moyenne : les poids combinent ces écarts, sans qu’il faille ajouter de contrainte de non-biais.</p>
+<section id="construction-de-lestimateur" class="level3">
+<h3 class="anchored" data-anchor-id="construction-de-lestimateur">Construction de l’estimateur</h3>
+<p>En centrant les observations sur leurs moyennes respectives, l’estimateur du cokrigeage simple s’écrit :</p>
+<p><span class="math display">\[
+Z_0^* = m_Z + \sum_{i=1}^{n_Z} \lambda_i \, (Z_i - m_Z) + \sum_{j=1}^{n_Y} \alpha_j \, (Y_j - m_Y)
+\]</span></p>
+</section>
+<section id="condition-de-non-biais" class="level3">
+<h3 class="anchored" data-anchor-id="condition-de-non-biais">Condition de non-biais</h3>
+<p>La vérification est immédiate. Comme <span class="math inline">\(\mathbb{E}[Z_i - m_Z] = 0\)</span> et <span class="math inline">\(\mathbb{E}[Y_j - m_Y] = 0\)</span> :</p>
+<p><span class="math display">\[
+\mathbb{E}[Z_0^*] = m_Z + \sum_{i=1}^{n_Z} \lambda_i \underbrace{\mathbb{E}[Z_i - m_Z]}_{=\,0} + \sum_{j=1}^{n_Y} \alpha_j \underbrace{\mathbb{E}[Y_j - m_Y]}_{=\,0} = m_Z = \mathbb{E}[Z_0]
+\]</span></p>
+<p>L’estimateur est donc sans biais quels que soient les poids, exactement comme au krigeage simple. On n’impose rien sur <span class="math inline">\(\lambda_i\)</span> ni sur <span class="math inline">\(\alpha_j\)</span>.</p>
+</section>
+<section id="système-de-cokrigeage-simple" class="level3">
+<h3 class="anchored" data-anchor-id="système-de-cokrigeage-simple">Système de cokrigeage simple</h3>
+<p>On minimise la variance d’estimation sans contrainte. En annulant les dérivées partielles par rapport à chaque poids <span class="math inline">\(\lambda_k\)</span> et <span class="math inline">\(\alpha_k\)</span>, on obtient le système :</p>
+<p><span class="math display">\[
+\begin{cases}
+\displaystyle\sum_{j=1}^{n_Z} \lambda_j \, C_{ZZ}(\mathbf{x}_i - \mathbf{x}_j) + \sum_{j=1}^{n_Y} \alpha_j \, C_{ZY}(\mathbf{x}_i - \mathbf{x}_j) = C_{ZZ}(\mathbf{x}_i - \mathbf{x}_0), &amp; i = 1, \dots, n_Z \\[8pt]
+\displaystyle\sum_{j=1}^{n_Z} \lambda_j \, C_{YZ}(\mathbf{x}_i - \mathbf{x}_j) + \sum_{j=1}^{n_Y} \alpha_j \, C_{YY}(\mathbf{x}_i - \mathbf{x}_j) = C_{YZ}(\mathbf{x}_i - \mathbf{x}_0), &amp; i = 1, \dots, n_Y
+\end{cases}
+\]</span></p>
+<p>Le premier bloc de <span class="math inline">\(n_Z\)</span> équations vient de la dérivation par rapport aux poids <span class="math inline">\(\lambda_i\)</span> de la variable principale, le second de <span class="math inline">\(n_Y\)</span> équations par rapport aux poids <span class="math inline">\(\alpha_j\)</span> de la variable secondaire. Le second membre fait intervenir les covariances entre chaque observation et la quantité à estimer <span class="math inline">\(Z_0\)</span>.</p>
+</section>
+<section id="forme-matricielle" class="level3">
+<h3 class="anchored" data-anchor-id="forme-matricielle">Forme matricielle</h3>
+<p>Le système se met sous la forme compacte <span class="math inline">\(\mathbf{K}\, \boldsymbol{w} = \mathbf{k}\)</span> :</p>
+<p><span class="math display">\[
+\underbrace{\begin{bmatrix}
+\mathbf{K}_{ZZ} &amp; \mathbf{K}_{ZY} \\
+\mathbf{K}_{YZ} &amp; \mathbf{K}_{YY}
+\end{bmatrix}}_{\mathbf{K}}
+\underbrace{\begin{bmatrix}
+\boldsymbol{\lambda} \\
+\boldsymbol{\alpha}
+\end{bmatrix}}_{\boldsymbol{w}}
+=
+\underbrace{\begin{bmatrix}
+\mathbf{k}_{ZZ_0} \\
+\mathbf{k}_{YZ_0}
+\end{bmatrix}}_{\mathbf{k}}
+\]</span></p>
+<p>où <span class="math inline">\(\mathbf{K}_{ZZ}\)</span> (<span class="math inline">\(n_Z \times n_Z\)</span>) rassemble les covariances entre les observations de <span class="math inline">\(Z\)</span>, <span class="math inline">\(\mathbf{K}_{YY}\)</span> (<span class="math inline">\(n_Y \times n_Y\)</span>) celles entre les observations de <span class="math inline">\(Y\)</span>, et <span class="math inline">\(\mathbf{K}_{ZY} = \mathbf{K}_{YZ}^\top\)</span> (<span class="math inline">\(n_Z \times n_Y\)</span>) les covariances croisées. Les vecteurs <span class="math inline">\(\mathbf{k}_{ZZ_0}\)</span> et <span class="math inline">\(\mathbf{k}_{YZ_0}\)</span> contiennent les covariances entre les observations, respectivement de <span class="math inline">\(Z\)</span> et de <span class="math inline">\(Y\)</span>, et le point à estimer <span class="math inline">\(Z_0\)</span>. Le système est de taille <span class="math inline">\((n_Z + n_Y) \times (n_Z + n_Y)\)</span>, plus grand que celui du krigeage simple (<span class="math inline">\(n_Z \times n_Z\)</span>).</p>
+</section>
+<section id="variance-de-cokrigeage-simple" class="level3">
+<h3 class="anchored" data-anchor-id="variance-de-cokrigeage-simple">Variance de cokrigeage simple</h3>
+<p>La variance d’estimation optimale est :</p>
+<p><span class="math display">\[
+\sigma_{CS}^2 = C_{ZZ}(\mathbf{0}) - \sum_{i=1}^{n_Z} \lambda_i \, C_{ZZ}(\mathbf{x}_i - \mathbf{x}_0) - \sum_{j=1}^{n_Y} \alpha_j \, C_{YZ}(\mathbf{x}_j - \mathbf{x}_0)
+\]</span></p>
+<p>ou, sous forme matricielle, <span class="math inline">\(\sigma_{CS}^2 = C_{ZZ}(\mathbf{0}) - \boldsymbol{w}^\top \mathbf{k}\)</span>. Cette variance est toujours inférieure ou égale à celle du krigeage simple de <span class="math inline">\(Z\)</span> seul : ajouter les observations de <span class="math inline">\(Y\)</span> ne peut qu’améliorer l’estimation, ou la laisser inchangée.</p>
+<blockquote class="blockquote">
+<p><strong>Remarque.</strong> Le cokrigeage simple peut estimer <span class="math inline">\(Z_0\)</span> même sans aucune donnée de la variable principale <span class="math inline">\(Z\)</span>. Il suffit d’avoir au moins une donnée de la variable secondaire <span class="math inline">\(Y\)</span> et un lien non nul entre <span class="math inline">\(Z\)</span> et <span class="math inline">\(Y\)</span>. Sans donnée de <span class="math inline">\(Y\)</span>, on retombe simplement sur le krigeage simple de la principale. On verra que le cokrigeage ordinaire, lui, exige de connaître <span class="math inline">\(Z\)</span>.</p>
+</blockquote>
+</section>
+</section>
+<section id="atelier-interactif-10.1-cokrigeage-simple-cs" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-10.1-cokrigeage-simple-cs">🧮 Atelier interactif 10.1 — Cokrigeage simple (CS)</h2>
+<p>Pendant du KS, mais à deux variables, avec moyennes connues (<span class="math inline">\(m_Z\)</span>, <span class="math inline">\(m_Y\)</span>). La principale <span class="math inline">\(Z\)</span> (rare) et la secondaire <span class="math inline">\(Y\)</span> (dense) sont sur deux axes distincts (échelles différentes). Le modèle de corégionalisation est réglé par la matrice de paliers <span class="math inline">\(\mathbf{B} = \begin{bmatrix} b_{ZZ} &amp; b_{ZY} \\ b_{ZY} &amp; b_{YY} \end{bmatrix}\)</span>, avec <span class="math inline">\(\rho = b_{ZY}/\sqrt{b_{ZZ} b_{YY}}\)</span>. Là où <span class="math inline">\(Z\)</span> manque, le cokrigeage exploite <span class="math inline">\(Y\)</span> par l’intermédiaire de <span class="math inline">\(b_{ZY}\)</span>; comparez au krigeage de <span class="math inline">\(Z\)</span> seul et augmentez <span class="math inline">\(|\rho|\)</span> pour voir l’apport.</p>
+<div class="geostat-widget" data-widget="c10_cokrigeage_cs">
+  <div class="gw-placeholder">Chargement du widget (cokrigeage simple)…</div>
+</div>
+</section>
+<section id="cokrigeage-ordinaire" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="cokrigeage-ordinaire"><span class="header-section-number">10.3</span> Cokrigeage ordinaire</h2>
+<p>Le cokrigeage ordinaire s’applique quand les moyennes <span class="math inline">\(m_Z\)</span> et <span class="math inline">\(m_Y\)</span> sont inconnues. On ne peut plus centrer les données sur une moyenne connue : le non-biais est alors imposé par des contraintes sur les poids.</p>
+<section id="conditions-de-non-biais" class="level3">
+<h3 class="anchored" data-anchor-id="conditions-de-non-biais">Conditions de non-biais</h3>
+<p>L’estimateur garde la forme du krigeage ordinaire, avec les données de la variable secondaire en plus :</p>
+<p><span class="math display">\[
+Z_0^* = \sum_{i=1}^{n_Z} \lambda_i \, Z_i + \sum_{j=1}^{n_Y} \alpha_j \, Y_j
+\]</span></p>
+<p>Pour qu’il soit sans biais, son espérance doit valoir la moyenne de la variable principale, <span class="math inline">\(m_Z\)</span> :</p>
+<p><span class="math display">\[
+\mathbb{E}[Z_0^*] = m_Z \sum_{i=1}^{n_Z} \lambda_i + m_Y \sum_{j=1}^{n_Y} \alpha_j
+\]</span></p>
+<p>Comme <span class="math inline">\(m_Z\)</span> et <span class="math inline">\(m_Y\)</span> sont inconnues, et pas forcément égales, on impose deux contraintes :</p>
+<p><span class="math display">\[
+\sum_{i=1}^{n_Z} \lambda_i = 1 \quad \text{et} \quad \sum_{j=1}^{n_Y} \alpha_j = 0
+\]</span></p>
+<p>La première est celle du krigeage ordinaire : elle force les poids de la variable principale à restituer la moyenne de <span class="math inline">\(Z\)</span>. La seconde empêche la moyenne inconnue de <span class="math inline">\(Y\)</span> d’entrer dans l’estimation : la variable secondaire aide donc par ses variations spatiales et sa corrélation avec <span class="math inline">\(Z\)</span>, jamais par son niveau moyen. C’est une vraie limite du cokrigeage ordinaire, surtout face au cokrigeage simple.</p>
+</section>
+<section id="système-de-cokrigeage-ordinaire" class="level3">
+<h3 class="anchored" data-anchor-id="système-de-cokrigeage-ordinaire">Système de cokrigeage ordinaire</h3>
+<p>On minimise la variance d’estimation sous les deux contraintes, par les multiplicateurs de Lagrange <span class="math inline">\(\nu_Z\)</span> et <span class="math inline">\(\nu_Y\)</span>. On obtient le système :</p>
+<p><span class="math display">\[
+\begin{cases}
+\displaystyle\sum_{j=1}^{n_Z} \lambda_j \, C_{ZZ}(\mathbf{x}_i - \mathbf{x}_j) + \sum_{j=1}^{n_Y} \alpha_j \, C_{ZY}(\mathbf{x}_i - \mathbf{x}_j) + \nu_Z = C_{ZZ}(\mathbf{x}_i - \mathbf{x}_0), &amp; i = 1, \dots, n_Z \\[8pt]
+\displaystyle\sum_{j=1}^{n_Z} \lambda_j \, C_{YZ}(\mathbf{x}_i - \mathbf{x}_j) + \sum_{j=1}^{n_Y} \alpha_j \, C_{YY}(\mathbf{x}_i - \mathbf{x}_j) + \nu_Y = C_{YZ}(\mathbf{x}_i - \mathbf{x}_0), &amp; i = 1, \dots, n_Y \\[8pt]
+\displaystyle\sum_{i=1}^{n_Z} \lambda_i = 1 \\[6pt]
+\displaystyle\sum_{j=1}^{n_Y} \alpha_j = 0
+\end{cases}
+\]</span></p>
+<p>Le système compte <span class="math inline">\(n_Z + n_Y + 2\)</span> équations et autant d’inconnues. Sa structure décalque celle du krigeage ordinaire, à deux ajouts près : les termes de covariance croisée liés à la variable secondaire et la contrainte de non-biais qui pèse sur elle.</p>
+</section>
+<section id="forme-matricielle-1" class="level3">
+<h3 class="anchored" data-anchor-id="forme-matricielle-1">Forme matricielle</h3>
+<p>Le système de cokrigeage ordinaire s’écrit sous forme matricielle :</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+\mathbf{K}_{ZZ} &amp; \mathbf{K}_{ZY} &amp; \mathbf{1} &amp; \mathbf{0} \\
+\mathbf{K}_{YZ} &amp; \mathbf{K}_{YY} &amp; \mathbf{0} &amp; \mathbf{1} \\
+\mathbf{1}^\top &amp; \mathbf{0}^\top &amp; 0 &amp; 0 \\
+\mathbf{0}^\top &amp; \mathbf{1}^\top &amp; 0 &amp; 0
+\end{bmatrix}
+\begin{bmatrix}
+\boldsymbol{\lambda} \\
+\boldsymbol{\alpha} \\
+\nu_Z \\
+\nu_Y
+\end{bmatrix}
+=
+\begin{bmatrix}
+\mathbf{k}_{ZZ_0} \\
+\mathbf{k}_{YZ_0} \\
+1 \\
+0
+\end{bmatrix}
+\]</span></p>
+<p>où <span class="math inline">\(\mathbf{K}_{ZZ}\)</span> et <span class="math inline">\(\mathbf{K}_{YY}\)</span> sont les matrices de covariances directes de <span class="math inline">\(Z\)</span> et de <span class="math inline">\(Y\)</span>, <span class="math inline">\(\mathbf{K}_{ZY} = \mathbf{K}_{YZ}^\top\)</span> la matrice des covariances croisées, et <span class="math inline">\(\mathbf{1}\)</span>, <span class="math inline">\(\mathbf{0}\)</span> des vecteurs de 1 et de 0 qui imposent les contraintes de non-biais. Les vecteurs <span class="math inline">\(\mathbf{k}_{ZZ_0}\)</span> et <span class="math inline">\(\mathbf{k}_{YZ_0}\)</span> contiennent les covariances entre les observations et le point à estimer <span class="math inline">\(Z_0\)</span>; <span class="math inline">\(\nu_Z\)</span> et <span class="math inline">\(\nu_Y\)</span> sont les multiplicateurs de Lagrange associés aux deux contraintes.</p>
+</section>
+<section id="variance-de-cokrigeage-ordinaire" class="level3">
+<h3 class="anchored" data-anchor-id="variance-de-cokrigeage-ordinaire">Variance de cokrigeage ordinaire</h3>
+<p><span class="math display">\[
+\sigma_{CO}^2 = C_{ZZ}(\mathbf{0}) - \sum_{i=1}^{n_Z} \lambda_i \, C_{ZZ}(\mathbf{x}_i - \mathbf{x}_0) - \sum_{j=1}^{n_Y} \alpha_j \, C_{YZ}(\mathbf{x}_j - \mathbf{x}_0) - \nu_Z
+\]</span></p>
+<p>Seul <span class="math inline">\(\nu_Z\)</span> apparaît : le terme en <span class="math inline">\(\nu_Y\)</span> est multiplié par la valeur de la contrainte sur <span class="math inline">\(Y\)</span>, qui est nulle.</p>
+<blockquote class="blockquote">
+<p><strong>Note.</strong> Un cokrigeage ordinaire demande au moins une observation de <span class="math inline">\(Z\)</span> (pour satisfaire <span class="math inline">\(\sum \lambda_i = 1\)</span>) et au moins deux observations de <span class="math inline">\(Y\)</span> (pour satisfaire <span class="math inline">\(\sum \alpha_j = 0\)</span> sans tout annuler). Avec une seule observation de <span class="math inline">\(Y\)</span>, son poids serait forcément nul et le système se ramènerait au krigeage ordinaire classique.</p>
+</blockquote>
+</section>
+<section id="cas-particulier-une-moyenne-connue-lautre-inconnue" class="level3">
+<h3 class="anchored" data-anchor-id="cas-particulier-une-moyenne-connue-lautre-inconnue">Cas particulier : une moyenne connue, l’autre inconnue</h3>
+<p>En pratique, il arrive que la moyenne de la variable secondaire soit connue — <span class="math inline">\(Y\)</span> vient d’un modèle physique ou d’une mesure exhaustive déjà centrée — alors que celle de la variable principale reste inconnue. On centre alors les observations de <span class="math inline">\(Y\)</span> sur <span class="math inline">\(m_Y\)</span> et on n’impose plus qu’une seule contrainte, sur les poids de <span class="math inline">\(Z\)</span> :</p>
+<p><span class="math display">\[
+Z_0^* = \sum_{i=1}^{n_Z} \lambda_i \, Z_i + \sum_{j=1}^{n_Y} \alpha_j \, (Y_j - m_Y), \qquad \sum_{i=1}^{n_Z} \lambda_i = 1.
+\]</span></p>
+<p>Le système correspondant n’a plus qu’un seul multiplicateur de Lagrange, <span class="math inline">\(\nu_Z\)</span> :</p>
+<p><span class="math display">\[
+\begin{cases}
+\displaystyle\sum_{j=1}^{n_Z} \lambda_j \, C_{ZZ}(\mathbf{x}_i - \mathbf{x}_j) + \sum_{j=1}^{n_Y} \alpha_j \, C_{ZY}(\mathbf{x}_i - \mathbf{x}_j) + \nu_Z = C_{ZZ}(\mathbf{x}_i - \mathbf{x}_0), &amp; i = 1, \dots, n_Z \\[8pt]
+\displaystyle\sum_{j=1}^{n_Z} \lambda_j \, C_{YZ}(\mathbf{x}_i - \mathbf{x}_j) + \sum_{j=1}^{n_Y} \alpha_j \, C_{YY}(\mathbf{x}_i - \mathbf{x}_j) = C_{YZ}(\mathbf{x}_i - \mathbf{x}_0), &amp; i = 1, \dots, n_Y \\[8pt]
+\displaystyle\sum_{i=1}^{n_Z} \lambda_i = 1
+\end{cases}
+\]</span></p>
+<p>Ce cas intermédiaire est fréquent et commode : il libère les poids de <span class="math inline">\(Y\)</span> de la contrainte <span class="math inline">\(\sum \alpha_j = 0\)</span>, donc laisse passer plus d’information, sans exiger de connaître <span class="math inline">\(m_Z\)</span>. C’est exactement le cadre du cokrigeage colocalisé, vu plus loin, où la variable secondaire est dense et sa moyenne bien estimée.</p>
+</section>
+<section id="changement-de-paradigme-par-rapport-au-krigeage" class="level3">
+<h3 class="anchored" data-anchor-id="changement-de-paradigme-par-rapport-au-krigeage">Changement de paradigme par rapport au krigeage</h3>
+<p>En krigeage univarié, on privilégie le krigeage ordinaire : il ne demande pas la moyenne et s’accommode bien de la quasi-stationnarité locale, avec le variogramme pour outil de base. En cokrigeage, la logique s’inverse. On utilise souvent le cokrigeage simple, pour trois raisons :</p>
+<ul>
+<li>la contrainte <span class="math inline">\(\sum \alpha_j = 0\)</span> du cokrigeage ordinaire bride le transfert d’information de la variable secondaire, donc rogne le gain sur le krigeage seul;</li>
+<li>la covariance — et non le variogramme — devient l’outil de base : elle seule décrit les relations potentiellement asymétriques entre variables, ce que le variogramme croisé ne sait pas faire;</li>
+<li>la covariance croisée exploite les données non colocalisées, là où le variogramme croisé exige les deux variables aux deux bouts de chaque paire.</li>
+</ul>
+<p>En pratique, quand la corrélation entre variables est forte et que la secondaire est dense, le cokrigeage simple procure un gain substantiel.</p>
+</section>
+</section>
+<section id="atelier-interactif-10.2-cokrigeage-ordinaire-co" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-10.2-cokrigeage-ordinaire-co">🧮 Atelier interactif 10.2 — Cokrigeage ordinaire (CO)</h2>
+<p>Pendant du KO, mais à deux variables, moyennes inconnues (contraintes de non-biais par variable). La principale <span class="math inline">\(Z\)</span> (rare) et la secondaire <span class="math inline">\(Y\)</span> (dense) sont sur deux axes distincts (variances différentes). Réglez la matrice de corégionalisation <span class="math inline">\(\mathbf{B} = \begin{bmatrix} b_{ZZ} &amp; b_{ZY} \\ b_{ZY} &amp; b_{YY} \end{bmatrix}\)</span>, avec <span class="math inline">\(\rho = b_{ZY}/\sqrt{b_{ZZ} b_{YY}}\)</span>, et comparez le cokrigeage de <span class="math inline">\(Z\)</span> au krigeage de <span class="math inline">\(Z\)</span> seul : là où <span class="math inline">\(Z\)</span> manque, le cokrigeage emprunte l’information de <span class="math inline">\(Y\)</span> et réduit la variance.</p>
+<div class="geostat-widget" data-widget="c10_cokrigeage_co">
+  <div class="gw-placeholder">Chargement du widget (cokrigeage ordinaire)…</div>
+</div>
+</section>
+<section id="exemple-de-système-de-cokrigeage" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="exemple-de-système-de-cokrigeage"><span class="header-section-number">10.4</span> Exemple de système de cokrigeage</h2>
+<p>On construit ici le système de cokrigeage sur un petit jeu de données, afin d’expliciter l’origine de chaque poids et la place des covariances croisées dans l’estimation.</p>
+<p>La matrice élargie du cokrigeage réunit trois choses : les covariances directes de <span class="math inline">\(Z\)</span> et de <span class="math inline">\(Y\)</span>, les covariances croisées <span class="math inline">\(Z\)</span>–<span class="math inline">\(Y\)</span>, et les contraintes de non-biais par variable. Ce sont ses blocs croisés qui commandent la répartition des poids entre les deux variables, donc la façon dont la secondaire vient épauler la principale.</p>
+<p>On travaille avec trois positions. On connaît <span class="math inline">\(Z_1\)</span> et <span class="math inline">\(Y_1\)</span> au même endroit, en <span class="math inline">\(\mathbf{x}_1 = 0\)</span>; on connaît aussi <span class="math inline">\(Z_2\)</span> en <span class="math inline">\(\mathbf{x}_2 = 10\)</span>. On veut estimer <span class="math inline">\(Z_0\)</span> en <span class="math inline">\(\mathbf{x}_0 = 5\)</span>, où une donnée secondaire <span class="math inline">\(Y_0\)</span> est également disponible.</p>
+<p>Les moyennes sont connues : on est dans le cas du cokrigeage simple. Le système s’écrit <span class="math inline">\(\mathbf{A}\, \boldsymbol{w} = \mathbf{b}\)</span>, dont les inconnues sont les poids des données disponibles : <span class="math inline">\(\lambda_1\)</span> et <span class="math inline">\(\lambda_2\)</span> pour les principales <span class="math inline">\(Z_1\)</span> et <span class="math inline">\(Z_2\)</span>, puis <span class="math inline">\(\alpha_1\)</span> et <span class="math inline">\(\alpha_0\)</span> pour les secondaires <span class="math inline">\(Y_1\)</span> et <span class="math inline">\(Y_0\)</span>.</p>
+<p><span class="math display">\[
+\underbrace{\begin{bmatrix}
+C_{ZZ}(0) &amp; C_{ZZ}(10) &amp; C_{ZY}(0) &amp; C_{ZY}(5) \\
+C_{ZZ}(10) &amp; C_{ZZ}(0) &amp; C_{ZY}(10) &amp; C_{ZY}(5) \\
+C_{YZ}(0) &amp; C_{YZ}(10) &amp; C_{YY}(0) &amp; C_{YY}(5) \\
+C_{YZ}(5) &amp; C_{YZ}(5) &amp; C_{YY}(5) &amp; C_{YY}(0)
+\end{bmatrix}}_{\mathbf{A}}
+\underbrace{\begin{bmatrix} \lambda_1 \\ \lambda_2 \\ \alpha_1 \\ \alpha_0 \end{bmatrix}}_{\boldsymbol{w}}
+=
+\underbrace{\begin{bmatrix} C_{ZZ}(5) \\ C_{ZZ}(5) \\ C_{YZ}(5) \\ C_{YZ}(0) \end{bmatrix}}_{\mathbf{b}}
+\]</span></p>
+<p>Chaque ligne est une équation : les deux premières viennent de la dérivation par rapport aux poids de <span class="math inline">\(Z\)</span>, les deux suivantes par rapport aux poids de <span class="math inline">\(Y\)</span>. Les blocs diagonaux portent les covariances directes (<span class="math inline">\(C_{ZZ}\)</span>, <span class="math inline">\(C_{YY}\)</span>), les blocs hors diagonale les covariances croisées (<span class="math inline">\(C_{ZY}\)</span>, <span class="math inline">\(C_{YZ}\)</span>). Le second membre <span class="math inline">\(\mathbf{b}\)</span> rassemble les covariances entre chaque donnée et le point à estimer <span class="math inline">\(Z_0\)</span>. Remarquez <span class="math inline">\(Y_0\)</span>, posé au point à estimer : il ne se couple à <span class="math inline">\(Z_0\)</span> que par <span class="math inline">\(C_{YZ}(0)\)</span>. C’est par ce seul terme que la mesure secondaire colocalisée transmet son information. L’atelier ci-dessous remplit cette matrice pour des données saisies par l’utilisateur et en livre la solution numérique complète.</p>
+</section>
+<section id="atelier-interactif-10.3-système-de-cokrigeage-pas-à-pas" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-10.3-système-de-cokrigeage-pas-à-pas">🧮 Atelier interactif 10.3 — Système de cokrigeage pas à pas</h2>
+<p>Entrez vos données (positions, <span class="math inline">\(z\)</span> pour <span class="math inline">\(Z\)</span>, <span class="math inline">\(y\)</span> pour <span class="math inline">\(Y\)</span>), choisissez un modèle de corégionalisation, et visualisez la matrice élargie <span class="math inline">\(\mathbf{A}\)</span> (blocs <span class="math inline">\(\mathbf{K}_{ZZ}\)</span>, <span class="math inline">\(\mathbf{K}_{YY}\)</span>, croisés <span class="math inline">\(\mathbf{K}_{ZY}\)</span> et contraintes par variable), le vecteur <span class="math inline">\(\mathbf{b}\)</span> et la solution complète (poids, estimations, variances).</p>
+<div class="geostat-widget" data-widget="c10_systeme_2var">
+  <div class="gw-placeholder">Chargement du widget (calculateur cokrigeage)…</div>
+</div>
+</section>
+<section id="cokrigeage-universel" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="cokrigeage-universel"><span class="header-section-number">10.5</span> Cokrigeage universel</h2>
+<p>Le cokrigeage universel généralise le cokrigeage ordinaire au cas où les moyennes ne sont plus constantes, mais suivent des tendances (dérives) modélisées dans l’espace.</p>
+<section id="modèle-avec-dérives" class="level3">
+<h3 class="anchored" data-anchor-id="modèle-avec-dérives">Modèle avec dérives</h3>
+<p>On décompose chaque variable en une dérive déterministe et un résidu stationnaire :</p>
+<p><span class="math display">\[
+Z(\mathbf{x}) = m_Z(\mathbf{x}) + R_Z(\mathbf{x}), \quad Y(\mathbf{x}) = m_Y(\mathbf{x}) + R_Y(\mathbf{x})
+\]</span></p>
+<p>Les dérives sont des combinaisons linéaires de fonctions de base connues :</p>
+<p><span class="math display">\[
+m_Z(\mathbf{x}) = \sum_{\ell=0}^{L_Z} a_\ell^Z f_\ell^Z(\mathbf{x}), \quad m_Y(\mathbf{x}) = \sum_{\ell=0}^{L_Y} a_\ell^Y f_\ell^Y(\mathbf{x})
+\]</span></p>
+<p>où les fonctions <span class="math inline">\(f_\ell^Z\)</span> et <span class="math inline">\(f_\ell^Y\)</span> sont connues (par exemple <span class="math inline">\(1, x, y, x^2, \dots\)</span>) et les coefficients <span class="math inline">\(a_\ell^Z\)</span> et <span class="math inline">\(a_\ell^Y\)</span> inconnus. Les résidus <span class="math inline">\(R_Z\)</span> et <span class="math inline">\(R_Y\)</span> sont des fonctions aléatoires stationnaires de moyenne nulle, décrites par les covariances directes et croisées.</p>
+</section>
+<section id="conditions-de-non-biais-1" class="level3">
+<h3 class="anchored" data-anchor-id="conditions-de-non-biais-1">Conditions de non-biais</h3>
+<p>L’estimateur reste une combinaison linéaire :</p>
+<p><span class="math display">\[
+Z_0^* = \sum_{i=1}^{n_Z} \lambda_i \, Z_i + \sum_{j=1}^{n_Y} \alpha_j \, Y_j
+\]</span></p>
+<p>La condition de non-biais <span class="math inline">\(\mathbb{E}[Z_0^* - Z_0] = 0\)</span> force les poids à reproduire exactement les dérives. En substituant leurs expressions et en identifiant les coefficients inconnus <span class="math inline">\(a_\ell^Z\)</span> et <span class="math inline">\(a_\ell^Y\)</span>, on obtient les <strong>conditions d’universalité</strong> :</p>
+<p><span class="math display">\[
+\sum_{i=1}^{n_Z} \lambda_i \, f_\ell^Z(\mathbf{x}_i^Z) = f_\ell^Z(\mathbf{x}_0), \quad \ell = 0, \dots, L_Z
+\]</span></p>
+<p><span class="math display">\[
+\sum_{j=1}^{n_Y} \alpha_j \, f_\ell^Y(\mathbf{x}_j^Y) = 0, \quad \ell = 0, \dots, L_Y
+\]</span></p>
+<p>Le premier jeu de contraintes assure que la dérive de <span class="math inline">\(Z\)</span> est bien reproduite. Le second annule la contribution de la dérive de <span class="math inline">\(Y\)</span> : c’est la généralisation de <span class="math inline">\(\sum \alpha_j = 0\)</span> au cas non constant.</p>
+</section>
+<section id="système-de-cokrigeage-universel" class="level3">
+<h3 class="anchored" data-anchor-id="système-de-cokrigeage-universel">Système de cokrigeage universel</h3>
+<p>La minimisation sous contraintes, avec les multiplicateurs de Lagrange <span class="math inline">\(\nu_\ell^Z\)</span> (<span class="math inline">\(\ell = 0, \dots, L_Z\)</span>) et <span class="math inline">\(\nu_\ell^Y\)</span> (<span class="math inline">\(\ell = 0, \dots, L_Y\)</span>), conduit au système :</p>
+<p><span class="math display">\[
+\begin{cases}
+\displaystyle\sum_{j=1}^{n_Z} \lambda_j \, C_{ZZ}(\mathbf{x}_i^Z - \mathbf{x}_j^Z) + \sum_{j=1}^{n_Y} \alpha_j \, C_{ZY}(\mathbf{x}_i^Z - \mathbf{x}_j^Y) + \sum_{\ell=0}^{L_Z} \nu_\ell^Z f_\ell^Z(\mathbf{x}_i^Z) = C_{ZZ}(\mathbf{x}_i^Z - \mathbf{x}_0), &amp; i = 1, \dots, n_Z \\[8pt]
+\displaystyle\sum_{j=1}^{n_Z} \lambda_j \, C_{YZ}(\mathbf{x}_i^Y - \mathbf{x}_j^Z) + \sum_{j=1}^{n_Y} \alpha_j \, C_{YY}(\mathbf{x}_i^Y - \mathbf{x}_j^Y) + \sum_{\ell=0}^{L_Y} \nu_\ell^Y f_\ell^Y(\mathbf{x}_i^Y) = C_{YZ}(\mathbf{x}_i^Y - \mathbf{x}_0), &amp; i = 1, \dots, n_Y \\[8pt]
+\displaystyle\sum_{i=1}^{n_Z} \lambda_i \, f_\ell^Z(\mathbf{x}_i^Z) = f_\ell^Z(\mathbf{x}_0), &amp; \ell = 0, \dots, L_Z \\[6pt]
+\displaystyle\sum_{j=1}^{n_Y} \alpha_j \, f_\ell^Y(\mathbf{x}_j^Y) = 0, &amp; \ell = 0, \dots, L_Y
+\end{cases}
+\]</span></p>
+<p>Ce système comporte <span class="math inline">\(n_Z + n_Y + L_Z + L_Y + 2\)</span> équations. On retrouve le cokrigeage ordinaire comme cas particulier, avec <span class="math inline">\(L_Z = L_Y = 0\)</span> et <span class="math inline">\(f_0^Z = f_0^Y = 1\)</span>.</p>
+</section>
+<section id="considérations-pratiques" class="level3">
+<h3 class="anchored" data-anchor-id="considérations-pratiques">Considérations pratiques</h3>
+<p>Le cokrigeage universel est rarement utilisé tel quel. Il cumule les difficultés des deux méthodes dont il descend : la circularité du krigeage universel (il faut le variogramme des résidus pour estimer la dérive, et la dérive pour estimer le variogramme) et la lourdeur du cokrigeage (ajustement des covariances croisées, vérification de l’admissibilité). On lui préfère souvent une approche en deux temps : retirer d’abord une tendance par régression, puis faire un cokrigeage simple ou ordinaire sur les résidus.</p>
+</section>
+</section>
+<section id="atelier-interactif-10.4-cokrigeage-universel-cu" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-10.4-cokrigeage-universel-cu">🧮 Atelier interactif 10.4 — Cokrigeage universel (CU)</h2>
+<p>Pendant du KU, mais à deux variables. La principale <span class="math inline">\(Z\)</span> (rare) et la secondaire <span class="math inline">\(Y\)</span> (dense) sont tracées sur deux axes distincts (variances différentes). Chaque variable a sa propre dérive polynomiale (ordre 1 ou 2). Placez le point à estimer au-delà des données pour voir le CU extrapoler la tendance, et comparez au krigeage de <span class="math inline">\(Z\)</span> seul. La matrice <span class="math inline">\(\mathbf{B}\)</span> du modèle de corégionalisation est réglable (<span class="math inline">\(\rho = b_{ZY}/\sqrt{b_{ZZ} b_{YY}}\)</span>).</p>
+<div class="geostat-widget" data-widget="c10_cokrigeage_cu">
+  <div class="gw-placeholder">Chargement du widget (cokrigeage universel)…</div>
+</div>
+</section>
+<section id="variables-liées-par-un-opérateur-linéaire" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="variables-liées-par-un-opérateur-linéaire"><span class="header-section-number">10.6</span> Variables liées par un opérateur linéaire</h2>
+<p>Dans certains cas, la variable secondaire <span class="math inline">\(Y\)</span> est une transformation linéaire déterministe de la variable principale <span class="math inline">\(Z\)</span> : une dérivée, une intégrale, une combinaison linéaire. Il est alors inutile d’ajuster un modèle de covariance complet pour chaque variable. On part de la covariance de <span class="math inline">\(Z\)</span> et on lui applique l’opérateur; les covariances croisées suivent d’elles-mêmes.</p>
+<section id="principe-général" class="level3">
+<h3 class="anchored" data-anchor-id="principe-général">Principe général</h3>
+<p>Soit <span class="math inline">\(L\)</span> un opérateur linéaire appliqué à <span class="math inline">\(Z\)</span> (dérivée, intégrale, combinaison linéaire). Si la variable secondaire est définie par <span class="math inline">\(Y(\mathbf{x}) = L[Z(\mathbf{x})]\)</span>, ses covariances croisée et directe se déduisent de celle de <span class="math inline">\(Z\)</span> :</p>
+<p><span class="math display">\[
+C_{ZY}(\mathbf{h}) = \operatorname{Cov}\big(Z(\mathbf{x}),\, L[Z(\mathbf{x}+\mathbf{h})]\big) = L\big[C_{ZZ}(\mathbf{h})\big]
+\]</span></p>
+<p><span class="math display">\[
+C_{YY}(\mathbf{h}) = \operatorname{Cov}\big(L[Z(\mathbf{x})],\, L[Z(\mathbf{x}+\mathbf{h})]\big) = L \circ L\big[C_{ZZ}(\mathbf{h})\big]
+\]</span></p>
+<p>où l’opérateur <span class="math inline">\(L\)</span> agit sur la variable de séparation <span class="math inline">\(\mathbf{h}\)</span>. Il suffit donc d’un modèle de covariance admissible pour <span class="math inline">\(Z\)</span> : les covariances croisées en découlent automatiquement, et l’admissibilité du modèle multivariable est garantie.</p>
+</section>
+<section id="exemple-en-une-dimension-y-est-la-dérivée-de-z" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-en-une-dimension-y-est-la-dérivée-de-z">Exemple en une dimension : <span class="math inline">\(Y\)</span> est la dérivée de <span class="math inline">\(Z\)</span></h3>
+<p>Supposons que la variable secondaire soit la dérivée spatiale de la variable principale, <span class="math inline">\(Y(\mathbf{x}) = dZ(\mathbf{x})/dx\)</span>. Le cas se rencontre en géophysique, où la gravimétrie fournit une information liée à la dérivée du champ de densité. Les covariances s’écrivent alors :</p>
+<p><span class="math display">\[
+C_{ZY}(h) = \operatorname{Cov}\left(Z(\mathbf{x}), \frac{dZ(\mathbf{x}+h)}{d(x+h)}\right) = \frac{dC_{ZZ}(h)}{dh}
+\]</span></p>
+<p><span class="math display">\[
+C_{YZ}(h) = \operatorname{Cov}\left(\frac{dZ(\mathbf{x})}{dx}, Z(\mathbf{x}+h)\right) = -\frac{dC_{ZZ}(h)}{dh} = -C_{ZY}(h)
+\]</span></p>
+<p><span class="math display">\[
+C_{YY}(h) = \operatorname{Cov}\left(\frac{dZ(\mathbf{x})}{dx}, \frac{dZ(\mathbf{x}+h)}{d(x+h)}\right) = -\frac{d^2 C_{ZZ}(h)}{dh^2}
+\]</span></p>
+<p>Deux points méritent l’attention :</p>
+<ul>
+<li>La covariance croisée est antisymétrique, <span class="math inline">\(C_{ZY}(h) = -C_{YZ}(h)\)</span>, donc <span class="math inline">\(C_{ZY}(0) = 0\)</span> (<a href="#fig-c10-cov-derivee" class="quarto-xref">Figure&nbsp;<span>10.1</span></a>). Autrement dit, <span class="math inline">\(Z\)</span> et sa dérivée ne sont pas corrélées au même point : la valeur d’une fonction en un point ne dit rien de sa pente locale.</li>
+<li>La covariance de la dérivée, <span class="math inline">\(C_{YY}(h)\)</span>, est la dérivée seconde de <span class="math inline">\(C_{ZZ}(h)\)</span> changée de signe. Elle n’existe que si <span class="math inline">\(C_{ZZ}(h)\)</span> est deux fois dérivable, ce qui exclut les modèles à comportement linéaire à l’origine (sphérique, exponentiel). Le modèle gaussien, lui, est assez régulier.</li>
+</ul>
+<div id="fig-c10-cov-derivee" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c10-cov-derivee-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c10_01_cov_derivee.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c10-cov-derivee-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.1: Covariances d’une variable et de sa dérivée : <span class="math inline">\(C_{ZZ}\)</span>, <span class="math inline">\(C_{ZY}\)</span>, <span class="math inline">\(C_{YZ}\)</span> (antisymétrique) et <span class="math inline">\(C_{YY}\)</span> ; <span class="math inline">\(C_{ZY}(0)=0\)</span>.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="extension-aux-dimensions-supérieures" class="level3">
+<h3 class="anchored" data-anchor-id="extension-aux-dimensions-supérieures">Extension aux dimensions supérieures</h3>
+<p>En deux ou trois dimensions, la variable secondaire peut être une dérivée partielle ou un gradient :</p>
+<p><span class="math display">\[
+Y_k(\mathbf{x}) = \frac{\partial Z(\mathbf{x})}{\partial x_k}
+\]</span></p>
+<p>Les covariances croisées s’obtiennent en dérivant <span class="math inline">\(C_{ZZ}\)</span> par rapport à la composante correspondante du vecteur de séparation <span class="math inline">\(\mathbf{h}\)</span>. On traite de la même façon le cas où la variable secondaire est une intégrale de <span class="math inline">\(Z\)</span> sur un domaine : une mesure gravimétrique, par exemple, est une intégrale pondérée du champ de densité. Le principe ne change pas : on applique l’opérateur linéaire à la covariance de <span class="math inline">\(Z\)</span>.</p>
+</section>
+<section id="avantages-de-cette-approche" class="level3">
+<h3 class="anchored" data-anchor-id="avantages-de-cette-approche">Avantages de cette approche</h3>
+<p>Cette façon de faire a trois atouts. On garde un modèle cohérent entre variables, puisque toutes les covariances viennent du même modèle de départ. On évite d’ajuster séparément <span class="math inline">\(C_{ZZ}\)</span>, <span class="math inline">\(C_{ZY}\)</span> et <span class="math inline">\(C_{YY}\)</span>. Enfin, le lien entre variables reste ancré dans la physique du problème, plutôt que dans un ajustement purement statistique.</p>
+</section>
+<section id="application-inversion-gravimétrique" class="level3">
+<h3 class="anchored" data-anchor-id="application-inversion-gravimétrique">Application : inversion gravimétrique</h3>
+<p>La gravimétrie en est l’exemple classique : les mesures gravimétriques en surface sont liées à la densité des roches en profondeur par une intégrale. Une fois la covariance du champ de densité modélisée, on en tire les covariances croisées avec les données gravimétriques. Ces données sont souvent bien plus nombreuses et moins coûteuses que les forages : elles servent alors de variable secondaire pour mieux estimer la densité en profondeur.</p>
+</section>
+</section>
+<section id="fonctions-aléatoires-multivariées" class="level2" data-number="10.7">
+<h2 data-number="10.7" class="anchored" data-anchor-id="fonctions-aléatoires-multivariées"><span class="header-section-number">10.7</span> Fonctions aléatoires multivariées</h2>
+<p>Le cokrigeage requiert un modèle de covariance pour chaque variable et les covariances croisées qui décrivent leurs liens. Ces fonctions ne se choisissent pas indépendamment : l’ensemble doit former un modèle admissible, dont la matrice de covariance reste valide pour toute configuration de points. Cette section pose les conditions d’un modèle multivariable admissible, présente les modèles utilisés en pratique, puis quelques propriétés importantes du cokrigeage.</p>
+<section id="conditions-dadmissibilité" class="level3">
+<h3 class="anchored" data-anchor-id="conditions-dadmissibilité">Conditions d’admissibilité</h3>
+<p>Les covariances directes et croisées ne se choisissent pas séparément : les fonctions <span class="math inline">\(C_{ZZ}(h)\)</span>, <span class="math inline">\(C_{YY}(h)\)</span>, <span class="math inline">\(C_{ZY}(h)\)</span> et <span class="math inline">\(C_{YZ}(h)\)</span> doivent former un tout cohérent. Concrètement, la matrice de covariance doit rester semi-définie positive, quelle que soit la position des points (<a href="#fig-c10-mlc-inadmissible" class="quarto-xref">Figure&nbsp;<span>10.2</span></a>). On vérifie cette condition dans le domaine spectral : pour chaque fréquence <span class="math inline">\(\omega\)</span>, on forme la matrice des densités spectrales</p>
+<p><span class="math display">\[
+\mathbf{S}(\omega) =
+\begin{pmatrix}
+S_{ZZ}(\omega) &amp; S_{ZY}(\omega) \\
+S_{YZ}(\omega) &amp; S_{YY}(\omega)
+\end{pmatrix}
+\]</span></p>
+<p>Le modèle est admissible si cette matrice est semi-définie positive à toutes les fréquences, <span class="math inline">\(\mathbf{S}(\omega) \succeq 0\)</span>, ce qui pour deux variables revient à</p>
+<p><span class="math display">\[
+|S_{ZY}(\omega)|^2 \leq S_{ZZ}(\omega)\,S_{YY}(\omega).
+\]</span></p>
+<p>La vérification est correcte en théorie, mais on ne l’applique presque jamais directement. Heureusement, certains modèles garantissent l’admissibilité par construction. En voici trois.</p>
+<div id="fig-c10-mlc-inadmissible" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c10-mlc-inadmissible-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c10_03_mlc_inadmissible.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c10-mlc-inadmissible-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.2: Modèle inadmissible : le variogramme croisé sort de l’enveloppe de Cauchy-Schwarz <span class="math inline">\(\pm\sqrt{\gamma_{ZZ}\gamma_{YY}}\)</span>.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="modèle-à-covariances-proportionnelles" class="level3">
+<h3 class="anchored" data-anchor-id="modèle-à-covariances-proportionnelles">Modèle à covariances proportionnelles</h3>
+<p>Ici, toutes les fonctions de covariance sont proportionnelles à une même fonction de base <span class="math inline">\(C(h)\)</span> :</p>
+<p><span class="math display">\[
+\mathbf{C}(h) = \begin{bmatrix} C_{ZZ}(h) &amp; C_{ZY}(h) \\ C_{YZ}(h) &amp; C_{YY}(h) \end{bmatrix} = \mathbf{B} \, C(h)
+\]</span></p>
+<p>où <span class="math inline">\(\mathbf{B}\)</span> est la <strong>matrice de corégionalisation</strong>, symétrique et semi-définie positive (<span class="math inline">\(\det \mathbf{B} \geq 0\)</span>), et <span class="math inline">\(C(h)\)</span> une fonction de covariance admissible. On l’appelle corégionalisation intrinsèque : elle revient à supposer que le lien entre variables reste le même à toutes les distances.</p>
+<p>Un cas important est celui où les deux variables sont mesurées aux mêmes endroits. Le cokrigeage n’apporte alors rien de plus que le krigeage de la variable principale seule : on dit que la variable est autocrigeable. Si, en revanche, <span class="math inline">\(Y\)</span> est disponible ailleurs que <span class="math inline">\(Z\)</span>, elle ajoute de l’information spatiale, et le cokrigeage peut améliorer l’estimation, pourvu que la corrélation entre <span class="math inline">\(Z\)</span> et <span class="math inline">\(Y\)</span> soit assez forte.</p>
+</section>
+<section id="modèle-linéaire-de-corégionalisation-mlc" class="level3">
+<h3 class="anchored" data-anchor-id="modèle-linéaire-de-corégionalisation-mlc">Modèle linéaire de corégionalisation (MLC)</h3>
+<p>C’est le modèle multivariable le plus utilisé en géostatistique (<a href="#fig-c10-mlc-admissible" class="quarto-xref">Figure&nbsp;<span>10.3</span></a>). On décompose les fonctions de covariance en une somme de structures élémentaires partagées :</p>
+<p><span class="math display">\[
+\mathbf{C}(h) = \sum_{k=0}^{K} \mathbf{B}_k \, C_k(h)
+\]</span></p>
+<p>où chaque <span class="math inline">\(C_k(h)\)</span> est une fonction de covariance admissible de palier unitaire (effet de pépite, sphérique, exponentiel, gaussien, etc.) et chaque <span class="math inline">\(\mathbf{B}_k\)</span> une matrice <span class="math inline">\(2 \times 2\)</span> (dans le cas bivarié) de coefficients, symétrique et semi-définie positive.</p>
+<p>Le modèle est admissible si et seulement si chaque matrice <span class="math inline">\(\mathbf{B}_k\)</span> est semi-définie positive, c’est-à-dire</p>
+<p><span class="math display">\[
+\det(\mathbf{B}_k) \geq 0 \quad \text{et} \quad \text{éléments diagonaux} \geq 0, \quad \forall \, k.
+\]</span></p>
+<p>Cette condition est facile à vérifier : c’est là tout l’intérêt du MLC. Si une matrice <span class="math inline">\(\mathbf{B}_k\)</span> n’est pas semi-définie positive, le modèle n’est pas nécessairement inadmissible (il faudrait alors une vérification spectrale complète); mais si c’est celle de l’effet de pépite qui échoue, le modèle est certainement inadmissible. Le MLC est très souple : chaque structure élémentaire <span class="math inline">\(C_k(h)\)</span> peut porter un effet différent (variabilité à courte portée, à longue portée), avec ses propres relations croisées à chaque échelle.</p>
+<div id="fig-c10-mlc-admissible" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c10-mlc-admissible-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c10_02_mlc_admissible.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c10-mlc-admissible-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.3: Modèle linéaire de corégionalisation admissible : variogrammes directs <span class="math inline">\(\gamma_{ZZ}\)</span>, <span class="math inline">\(\gamma_{YY}\)</span> et croisé <span class="math inline">\(\gamma_{ZY}\)</span>.
+</figcaption>
+</figure>
+</div>
+<blockquote class="blockquote">
+<p><strong>Remarque.</strong> Le modèle à covariances proportionnelles est un cas particulier du MLC à une seule structure (<span class="math inline">\(K = 0\)</span>, sans effet de pépite, ou avec un effet de pépite proportionnel).</p>
+</blockquote>
+</section>
+<section id="exemple-de-mlc-et-comparaison-krigeagecokrigeage" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-de-mlc-et-comparaison-krigeagecokrigeage">Exemple de MLC et comparaison krigeage–cokrigeage</h3>
+<p>Déroulons un exemple complet : vérification de l’admissibilité, calcul de covariances, puis comparaison des performances du krigeage et du cokrigeage.</p>
+<p><strong>Modèle.</strong> On considère deux variables <span class="math inline">\(Z\)</span> et <span class="math inline">\(Y\)</span> décrites par le MLC suivant (effet de pépite et composante sphérique de portée 30) :</p>
+<p><span class="math display">\[
+\mathbf{C}(h) = \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 1 \end{bmatrix} \delta(h) + \begin{bmatrix} 2 &amp; 2{,}4 \\ 2{,}4 &amp; 4 \end{bmatrix} C_{\text{Sph}}(h;\,30)
+\]</span></p>
+<p><strong>Admissibilité.</strong> On vérifie que chaque matrice <span class="math inline">\(\mathbf{B}_k\)</span> est semi-définie positive :</p>
+<ul>
+<li><span class="math inline">\(\mathbf{B}_0 = \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 1 \end{bmatrix}\)</span> : <span class="math inline">\(\det = 1 &gt; 0\)</span>, admissible.</li>
+<li><span class="math inline">\(\mathbf{B}_1 = \begin{bmatrix} 2 &amp; 2{,}4 \\ 2{,}4 &amp; 4 \end{bmatrix}\)</span> : <span class="math inline">\(\det = 2 \times 4 - 2{,}4^2 = 2{,}24 &gt; 0\)</span>, admissible.</li>
+</ul>
+<p>Le modèle est donc un MLC admissible.</p>
+<p><strong>Covariance croisée à <span class="math inline">\(h = 10\)</span>.</strong> À titre d’exemple :</p>
+<p><span class="math display">\[
+C_{ZY}(10) = 0 \cdot \delta(10) + 2{,}4 \times C_{\text{Sph}}(10;\,30) = 2{,}4 \times \left[1 - \frac{3}{2}\frac{10}{30} + \frac{1}{2}\left(\frac{10}{30}\right)^3\right] = 1{,}24
+\]</span></p>
+<p><strong>Corrélation globale.</strong> À distance <span class="math inline">\(h = 0\)</span> :</p>
+<p><span class="math display">\[
+\rho_{ZY} = \frac{C_{ZY}(\mathbf{0})}{\sqrt{C_{ZZ}(\mathbf{0}) \, C_{YY}(\mathbf{0})}} = \frac{0 + 2{,}4}{\sqrt{(1+2)(1+4)}} = \frac{2{,}4}{\sqrt{15}} \approx 0{,}62
+\]</span></p>
+<p>Si l’on ne retient que le signal structuré (sans l’effet de pépite, vu comme du bruit de mesure), la corrélation monte à <span class="math inline">\(\rho = 2{,}4 / \sqrt{2 \times 4} \approx 0{,}85\)</span>.</p>
+<p><strong>Configuration de données.</strong> On dispose de <span class="math inline">\(Z_1\)</span> et <span class="math inline">\(Y_1\)</span> en <span class="math inline">\(\mathbf{x}_1 = 0\)</span>, de <span class="math inline">\(Z_2\)</span> en <span class="math inline">\(\mathbf{x}_2 = 10\)</span>, et de <span class="math inline">\(Y_0\)</span> en <span class="math inline">\(\mathbf{x}_0 = 5\)</span>. On estime <span class="math inline">\(Z_0\)</span> au point <span class="math inline">\(\mathbf{x}_0 = 5\)</span>. Les moyennes sont supposées nulles.</p>
+</section>
+<section id="ajustement-dun-mlc" class="level3">
+<h3 class="anchored" data-anchor-id="ajustement-dun-mlc">Ajustement d’un MLC</h3>
+<p>Ajuster un MLC, c’est déterminer les matrices <span class="math inline">\(\mathbf{B}_k\)</span> et les paramètres des structures <span class="math inline">\(C_k(h)\)</span> à partir des variogrammes et covariances croisés expérimentaux. La procédure typique :</p>
+<ol type="1">
+<li>calculer les variogrammes ou covariances directes et croisés expérimentaux;</li>
+<li>choisir un ensemble de structures élémentaires (nombre, types, portées);</li>
+<li>ajuster simultanément toutes les fonctions en optimisant les coefficients des matrices <span class="math inline">\(\mathbf{B}_k\)</span>;</li>
+<li>vérifier que chaque matrice <span class="math inline">\(\mathbf{B}_k\)</span> est semi-définie positive.</li>
+</ol>
+<p>L’ajustement doit être mené simultanément sur toutes les fonctions : ajuster chaque variogramme séparément ne garantit pas l’admissibilité du modèle global.</p>
+</section>
+<section id="comparaison-krigeagecokrigeage" class="level3">
+<h3 class="anchored" data-anchor-id="comparaison-krigeagecokrigeage">Comparaison krigeage–cokrigeage</h3>
+<p>Sur la configuration ci-dessus, par krigeage simple (avec seulement <span class="math inline">\(Z_1\)</span> et <span class="math inline">\(Z_2\)</span>) :</p>
+<p><span class="math display">\[
+\lambda_1 = 0{,}3727, \quad \lambda_2 = 0{,}3727, \quad \sigma_{KS}^2 = 1{,}88
+\]</span></p>
+<p>Par cokrigeage simple (avec <span class="math inline">\(Z_1\)</span>, <span class="math inline">\(Z_2\)</span>, <span class="math inline">\(Y_1\)</span> et <span class="math inline">\(Y_0\)</span>) :</p>
+<p><span class="math display">\[
+\lambda_{Z_1} = 0{,}2294, \quad \lambda_{Z_2} = 0{,}2336, \quad \alpha_{Y_1} = 0{,}0072, \quad \alpha_{Y_0} = 0{,}3085, \quad \sigma_{CS}^2 = 1{,}55
+\]</span></p>
+<p>On observe trois choses. La variable secondaire <span class="math inline">\(Y_0\)</span>, posée pile au point à estimer, reçoit un poids important (<span class="math inline">\(0{,}31\)</span>) : c’est l’effet d’écran transposé au cokrigeage, l’information la plus proche dominant. La symétrie des poids de <span class="math inline">\(Z_1\)</span> et <span class="math inline">\(Z_2\)</span>, égaux en krigeage simple, est rompue, car <span class="math inline">\(Y_1\)</span> est colocalisé avec <span class="math inline">\(Z_1\)</span>, pas avec <span class="math inline">\(Z_2\)</span>. Enfin, la variance chute nettement, de <span class="math inline">\(1{,}88\)</span> (krigeage) à <span class="math inline">\(1{,}55\)</span> (cokrigeage), soit 18 % de mieux.</p>
+<p>Par cokrigeage ordinaire, les contraintes <span class="math inline">\(\sum \lambda_i = 1\)</span> et <span class="math inline">\(\sum \alpha_j = 0\)</span> donnent :</p>
+<p><span class="math display">\[
+\lambda_{Z_1} = 0{,}5494, \quad \lambda_{Z_2} = 0{,}4506, \quad \alpha_{Y_1} = -0{,}1678, \quad \alpha_{Y_0} = 0{,}1678, \quad \sigma_{CO}^2 = 1{,}91
+\]</span></p>
+<p>La variance du cokrigeage ordinaire (<span class="math inline">\(1{,}91\)</span>) dépasse à peine celle du krigeage ordinaire (<span class="math inline">\(2{,}01\)</span>) : la contrainte <span class="math inline">\(\sum \alpha_j = 0\)</span> empêche la variable secondaire de contribuer pleinement. L’exemple illustre bien le changement de paradigme évoqué plus haut.</p>
+</section>
+<section id="propriétés-du-cokrigeage" class="level3">
+<h3 class="anchored" data-anchor-id="propriétés-du-cokrigeage">Propriétés du cokrigeage</h3>
+<p>Le cokrigeage hérite de toutes les propriétés du krigeage (linéarité, absence de biais, variance minimale, interpolation exacte, effet d’écran, lissage). Il en gagne quelques-unes en propre.</p>
+<p><strong>Variance toujours inférieure ou égale.</strong> La variance de cokrigeage ne dépasse jamais celle du krigeage de <span class="math inline">\(Z\)</span> seul : ajouter de l’information ne peut qu’améliorer, ou maintenir, la précision.</p>
+<p><strong>Linéarité des combinaisons estimées.</strong> Estimer par cokrigeage une combinaison linéaire de variables (par exemple, épaisseur = sommet − base) donne le même résultat que la même combinaison appliquée aux estimations individuelles. Cette cohérence n’est pas vérifiée par le krigeage séparé de chaque variable.</p>
+<blockquote class="blockquote">
+<p><strong>Exemple.</strong> Pour tracer le sommet et la base d’une formation, on peut estimer directement le sommet, la base et l’épaisseur. En krigeage séparé, (sommet estimé − base estimée) ne colle pas forcément à l’épaisseur estimée. En cokrigeage, les deux approches donnent exactement le même résultat.</p>
+</blockquote>
+<p><strong>Cohérence avec les transformations linéaires.</strong> Si l’on cokrige <span class="math inline">\(Z\)</span> et sa dérivée, la dérivée du cokrigeage de <span class="math inline">\(Z\)</span> égale le cokrigeage de la dérivée. C’est la généralisation de la propriété précédente.</p>
+<p><strong>Autocrigeabilité dans le cas intrinsèque.</strong> Si les covariances sont proportionnelles (<span class="math inline">\(\mathbf{C}(h) = \mathbf{B}\, C(h)\)</span>, corégionalisation intrinsèque) et que les variables sont colocalisées (mêmes points, situation isotope), le cokrigeage se réduit exactement au krigeage : chaque variable est autocrigeable et le gain est nul. La condition exacte est un peu plus large que la proportionnalité de tout le modèle : il suffit que les covariances croisées avec la variable d’intérêt soient proportionnelles à sa covariance directe.</p>
+</section>
+<section id="quand-le-cokrigeage-est-il-utile" class="level3">
+<h3 class="anchored" data-anchor-id="quand-le-cokrigeage-est-il-utile">Quand le cokrigeage est-il utile?</h3>
+<p>Le gain du cokrigeage sur le krigeage dépend de trois facteurs :</p>
+<ol type="1">
+<li><strong>La corrélation entre variables.</strong> Une corrélation forte (typiquement <span class="math inline">\(|\rho| &gt; 0{,}5\)</span>, idéalement <span class="math inline">\(&gt; 0{,}7\)</span>) est nécessaire pour justifier l’effort.</li>
+<li><strong>La différence de densité d’échantillonnage.</strong> Le gain est maximal quand la variable secondaire est bien plus dense que la principale. Si les deux sont colocalisées, il est souvent négligeable.</li>
+<li><strong>Le modèle de corégionalisation.</strong> Avec des covariances proportionnelles et des données colocalisées, le gain est nul. Avec un MLC à plusieurs structures aux corrélations différentes, le gain potentiel grimpe.</li>
+</ol>
+<p>En pratique, on compare krigeage et cokrigeage par validation croisée avant de se lancer dans une approche multivariable, nettement plus lourde à mettre en œuvre.</p>
+</section>
+</section>
+<section id="atelier-interactif-10.5-modèle-linéaire-de-corégionalisation-mlc" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-10.5-modèle-linéaire-de-corégionalisation-mlc">🧮 Atelier interactif 10.5 — Modèle linéaire de corégionalisation (MLC)</h2>
+<p>Le modèle s’écrit <span class="math inline">\(\boldsymbol{\Gamma}(h) = \sum_k \mathbf{B}_k\,\gamma_k(h)\)</span>. Saisissez chaque matrice de corégionalisation <span class="math inline">\(\mathbf{B}_k\)</span> en forme matricielle (<span class="math inline">\(B_{ZZ}\)</span>, <span class="math inline">\(B_{ZY}\)</span>, <span class="math inline">\(B_{YY}\)</span>; la cellule <span class="math inline">\(B_{YZ}\)</span> recopie <span class="math inline">\(B_{ZY}\)</span> pour la symétrie), ajoutez des structures imbriquées, et observez les variogrammes direct (<span class="math inline">\(\gamma_{ZZ}\)</span>, <span class="math inline">\(\gamma_{YY}\)</span>) et croisé (<span class="math inline">\(\gamma_{ZY}\)</span>). L’exemple par défaut illustre une corrélation négative (<span class="math inline">\(\gamma_{ZY} &lt; 0\)</span>). Le variogramme croisé reste toujours dans l’enveloppe de Cauchy-Schwarz <span class="math inline">\(|\gamma_{ZY}(h)| \le \sqrt{\gamma_{ZZ}(h)\,\gamma_{YY}(h)}\)</span> (zone grisée) : c’est garanti dès que chaque <span class="math inline">\(\mathbf{B}_k\)</span> est semi-définie positive (<span class="math inline">\(B_{ZY}^2 \le B_{ZZ}\,B_{YY}\)</span>).</p>
+<div class="geostat-widget" data-widget="c10_LMC">
+  <div class="gw-placeholder">Chargement du widget (LMC)…</div>
+</div>
+</section>
+<section id="cokrigeage-versus-krigeage" class="level2" data-number="10.8">
+<h2 data-number="10.8" class="anchored" data-anchor-id="cokrigeage-versus-krigeage"><span class="header-section-number">10.8</span> Cokrigeage versus krigeage</h2>
+<p>L’intérêt pratique du cokrigeage n’est pas acquis d’avance : selon les cas, il améliore nettement l’estimation de la variable principale <span class="math inline">\(Z\)</span>, ou n’apporte rien de plus qu’un krigeage de <span class="math inline">\(Z\)</span> seule. Le résultat tient à trois éléments : la corrélation entre <span class="math inline">\(Z\)</span> et la variable secondaire <span class="math inline">\(Y\)</span>, la densité des données de <span class="math inline">\(Y\)</span> par rapport à celles de <span class="math inline">\(Z\)</span>, et le modèle de corégionalisation.</p>
+<p>Le cokrigeage devient intéressant quand <span class="math inline">\(Y\)</span> est bien corrélée avec <span class="math inline">\(Z\)</span> et beaucoup plus dense : <span class="math inline">\(Y\)</span> apporte alors de l’information là où <span class="math inline">\(Z\)</span> n’est pas observée. À l’inverse, si <span class="math inline">\(Y\)</span> est mesurée exactement aux mêmes endroits que <span class="math inline">\(Z\)</span>, le gain est souvent minime — on ajoute une variable, mais pas vraiment d’information spatiale nouvelle.</p>
+<p>On mesure ce gain par la baisse de la variance d’estimation face au krigeage de <span class="math inline">\(Z\)</span> seul. Le tableau suivant donne quelques cas typiques :</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Corrélation <span class="math inline">\(|\rho|\)</span></th>
+<th>Densité de <span class="math inline">\(Y\)</span> par rapport à <span class="math inline">\(Z\)</span></th>
+<th>Modèle de corégionalisation</th>
+<th>Gain attendu</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Faible (<span class="math inline">\(&lt; 0{,}3\)</span>)</td>
+<td>Peu importe</td>
+<td>Peu importe</td>
+<td>Très faible</td>
+</tr>
+<tr class="even">
+<td>Forte (<span class="math inline">\(&gt; 0{,}7\)</span>)</td>
+<td>Même position que <span class="math inline">\(Z\)</span></td>
+<td>Intrinsèque</td>
+<td>Presque nul</td>
+</tr>
+<tr class="odd">
+<td>Forte (<span class="math inline">\(&gt; 0{,}7\)</span>)</td>
+<td><span class="math inline">\(Y\)</span> beaucoup plus dense</td>
+<td>Intrinsèque</td>
+<td>Modéré</td>
+</tr>
+<tr class="even">
+<td>Forte (<span class="math inline">\(&gt; 0{,}7\)</span>)</td>
+<td><span class="math inline">\(Y\)</span> beaucoup plus dense</td>
+<td>MLC à plusieurs structures</td>
+<td>Important</td>
+</tr>
+</tbody>
+</table>
+<p>Le cokrigeage vaut donc surtout la peine quand la variable secondaire ajoute réellement de l’information spatiale : bonne corrélation avec <span class="math inline">\(Z\)</span>, mais aussi couverture plus dense ou différente. Sinon, le gain ne justifie pas la complexité supplémentaire.</p>
+</section>
+<section id="atelier-interactif-10.6-avantage-du-cokrigeage" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-10.6-avantage-du-cokrigeage">🧮 Atelier interactif 10.6 — Avantage du cokrigeage</h2>
+<p>Cas minier classique : <span class="math inline">\(N_Z\)</span> forages coûteux (Au) et <span class="math inline">\(N_Y \gg N_Z\)</span> mesures denses et bon marché (densité). Comparez la carte d’estimation de <span class="math inline">\(Z\)</span> par krigeage de <span class="math inline">\(Z\)</span> seul et par cokrigeage exploitant <span class="math inline">\(Y\)</span> : entre les forages, le cokrigeage suit la trame de <span class="math inline">\(Y\)</span>. Faites varier la corrélation et la densité de <span class="math inline">\(Y\)</span>; le bandeau du bas indique la réduction de la variance d’estimation, c’est-à-dire le gain du cokrigeage.</p>
+<div class="geostat-widget" data-widget="c10_undersampled">
+  <div class="gw-placeholder">Chargement du widget (variable rare + variable dense)…</div>
+</div>
+</section>
+<section id="cokrigeage-colocalisé" class="level2" data-number="10.9">
+<h2 data-number="10.9" class="anchored" data-anchor-id="cokrigeage-colocalisé"><span class="header-section-number">10.9</span> Cokrigeage colocalisé</h2>
+<p>Souvent, la variable secondaire <span class="math inline">\(Y\)</span> est beaucoup plus dense que la variable principale <span class="math inline">\(Z\)</span>. Une image de télédétection, un levé sismique, une mesure géophysique couvrent presque tout le domaine, alors que <span class="math inline">\(Z\)</span> n’est connue qu’à quelques forages. Utiliser toutes les valeurs de <span class="math inline">\(Y\)</span> dans un cokrigeage complet ferait exploser la taille du système, plus lourd à résoudre et parfois moins stable numériquement. Le cokrigeage colocalisé propose une simplification.</p>
+<section id="principe" class="level3">
+<h3 class="anchored" data-anchor-id="principe">Principe</h3>
+<p>On garde les données de <span class="math inline">\(Z\)</span> du voisinage, mais on ne retient qu’une seule donnée de <span class="math inline">\(Y\)</span> : celle du point à estimer <span class="math inline">\(\mathbf{x}_0\)</span>. C’est possible parce que <span class="math inline">\(Y\)</span> est supposée disponible partout, ou presque. L’estimateur du cokrigeage simple colocalisé s’écrit :</p>
+<p><span class="math display">\[
+Z_0^* = m_Z + \sum_{i=1}^{n_Z} \lambda_i \, (Z_i - m_Z) + \alpha_0 \big(Y(\mathbf{x}_0) - m_Y\big)
+\]</span></p>
+<p>Le système reste proche du cokrigeage simple, mais la partie secondaire se réduit à un seul poids, <span class="math inline">\(\alpha_0\)</span>. Il existe aussi une variante multicolocalisée : on ajoute les valeurs de <span class="math inline">\(Y\)</span> aux points où <span class="math inline">\(Z\)</span> est observée. On exploite alors un peu plus d’information sur <span class="math inline">\(Y\)</span>, sans repasser à un système complet trop grand.</p>
+</section>
+<section id="une-approximation-non-une-équivalence" class="level3">
+<h3 class="anchored" data-anchor-id="une-approximation-non-une-équivalence">Une approximation, non une équivalence</h3>
+<p>Le cokrigeage colocalisé est commode, mais ce n’est pas le cokrigeage complet : on ne garde que <span class="math inline">\(Y(\mathbf{x}_0)\)</span>, toutes les autres valeurs de <span class="math inline">\(Y\)</span> sont écartées, même disponibles. Il ne faut donc pas prétendre que les deux approches sont équivalentes. Même en modèle intrinsèque, les valeurs de <span class="math inline">\(Y\)</span> entre les forages portent encore de l’information; en les retirant, on simplifie le système, mais on en perd une part.</p>
+<p>Le cokrigeage colocalisé fonctionne quand même très bien si <span class="math inline">\(Y\)</span> est dense, assez régulière et bien corrélée à <span class="math inline">\(Z\)</span>. Il faut simplement le voir pour ce qu’il est : une approximation de voisinage. Les modèles de Markov, MM1 ou MM2, servent à la justifier : ils supposent que <span class="math inline">\(Y(\mathbf{x}_0)\)</span> contient déjà l’essentiel de l’information utile de la variable secondaire pour estimer <span class="math inline">\(Z(\mathbf{x}_0)\)</span>, les autres valeurs de <span class="math inline">\(Y\)</span> devenant secondaires. On signale l’idée ici, sans entrer dans le détail de ces modèles.</p>
+</section>
+<section id="cas-ordinaire" class="level3">
+<h3 class="anchored" data-anchor-id="cas-ordinaire">Cas ordinaire</h3>
+<p>En cokrigeage colocalisé ordinaire, la contrainte <span class="math inline">\(\sum \alpha_j = 0\)</span> bute sur le même problème qu’avec une seule observation de <span class="math inline">\(Y\)</span> : avec un unique poids <span class="math inline">\(\alpha_0\)</span>, elle force <span class="math inline">\(\alpha_0 = 0\)</span> et la variable secondaire disparaît de l’estimation. C’est pourquoi le cokrigeage colocalisé s’emploie surtout dans sa version simple, ou dans le cas intermédiaire où la moyenne de <span class="math inline">\(Y\)</span> est connue — le cadre naturel d’une variable secondaire dense, dont la moyenne est bien estimée.</p>
+<p>Le cadre multivariable est maintenant complet. Le chapitre se tourne enfin vers une extension importante : les modèles spatio-temporels, qui intègrent à la fois la dépendance spatiale et la dépendance temporelle.</p>
+</section>
+</section>
+<section id="modèles-spatio-temporels" class="level2" data-number="10.10">
+<h2 data-number="10.10" class="anchored" data-anchor-id="modèles-spatio-temporels"><span class="header-section-number">10.10</span> Modèles spatio-temporels</h2>
+<p>La géostatistique spatio-temporelle étend le cadre classique aux variables qui dépendent à la fois de la position et du temps, comme les niveaux piézométriques, les concentrations de contaminants, les températures ou les précipitations. Elle traite conjointement la dépendance spatiale et la dépendance temporelle.</p>
+<section id="cadre-général-1" class="level3">
+<h3 class="anchored" data-anchor-id="cadre-général-1">Cadre général</h3>
+<p>On considère une variable régionalisée <span class="math inline">\(Z(\mathbf{x}, t)\)</span>, où <span class="math inline">\(\mathbf{x} \in \mathbb{R}^d\)</span> est la position et <span class="math inline">\(t \in \mathbb{R}\)</span> le temps. Sous stationnarité spatio-temporelle, la covariance ne dépend que de la séparation spatiale <span class="math inline">\(\mathbf{h}\)</span> et de la séparation temporelle <span class="math inline">\(\tau\)</span> :</p>
+<p><span class="math display">\[
+C(\mathbf{h}, \tau) = \operatorname{Cov}\big(Z(\mathbf{x}, t),\, Z(\mathbf{x} + \mathbf{h}, t + \tau)\big)
+\]</span></p>
+<p>Le variogramme spatio-temporel s’écrit de même :</p>
+<p><span class="math display">\[
+\gamma(\mathbf{h}, \tau) = \frac{1}{2} \operatorname{Var}\big[Z(\mathbf{x} + \mathbf{h}, t + \tau) - Z(\mathbf{x}, t)\big]
+\]</span></p>
+<p>Le krigeage spatio-temporel se formule exactement comme le krigeage spatial : on remplace les covariances spatiales par les covariances spatio-temporelles. Toute la difficulté est dans la modélisation de <span class="math inline">\(C(\mathbf{h}, \tau)\)</span>.</p>
+</section>
+<section id="modèles-séparables" class="level3">
+<h3 class="anchored" data-anchor-id="modèles-séparables">Modèles séparables</h3>
+<p>Le modèle le plus simple suppose l’espace et le temps indépendants :</p>
+<p><span class="math display">\[
+C(\mathbf{h}, \tau) = C_S(\mathbf{h}) \cdot C_T(\tau)
+\]</span></p>
+<p>où <span class="math inline">\(C_S\)</span> est une covariance spatiale et <span class="math inline">\(C_T\)</span> une covariance temporelle. Il est facile à ajuster — chaque composante se modélise à part — et l’admissibilité est automatique. Son défaut : il impose la même structure spatiale à tous les instants, et réciproquement, ce qui est souvent trop rigide.</p>
+</section>
+<section id="modèles-somme" class="level3">
+<h3 class="anchored" data-anchor-id="modèles-somme">Modèles somme</h3>
+<p>Un peu plus souple, ce modèle décompose la covariance en une part purement spatiale et une part purement temporelle :</p>
+<p><span class="math display">\[
+C(\mathbf{h}, \tau) = C_S(\mathbf{h}) + C_T(\tau)
+\]</span></p>
+<p>Il est admissible et facile à ajuster, mais il ne modélise aucune interaction entre l’espace et le temps.</p>
+</section>
+<section id="modèles-produit-somme" class="level3">
+<h3 class="anchored" data-anchor-id="modèles-produit-somme">Modèles produit-somme</h3>
+<p>Pour introduire une interaction espace-temps sans perdre en simplicité, on utilise le modèle produit-somme :</p>
+<p><span class="math display">\[
+C(\mathbf{h}, \tau) = k_1 \, C_S(\mathbf{h}) \cdot C_T(\tau) + k_2 \, C_S(\mathbf{h}) + k_3 \, C_T(\tau)
+\]</span></p>
+<p>avec <span class="math inline">\(k_1 &gt; 0\)</span> et des conditions sur <span class="math inline">\(k_2\)</span>, <span class="math inline">\(k_3\)</span> pour l’admissibilité. Il combine les avantages des modèles séparables et somme, et fait un bon compromis pour de nombreuses applications.</p>
+<p>Introduit par De Cesare, Myers et Posa, puis généralisé par De Iaco, Myers et Posa <span class="citation" data-cites="deiaco2001 deiaco2002">(<a href="../../references.html#ref-deiaco2001" role="doc-biblioref">De Iaco, Myers, et Posa 2001</a>, <a href="../../references.html#ref-deiaco2002" role="doc-biblioref">2002</a>)</span>, ce modèle a deux atouts décisifs. D’abord, il s’ajuste à partir des variogrammes marginaux (purement spatial et purement temporel), ce qui allège beaucoup l’estimation. Ensuite, comme tout modèle spatio-temporel admissible, il permet d’estimer à des positions non échantillonnées, mais aussi de prédire à des instants futurs : un usage central pour le suivi de la pollution de l’air, de la météo ou des nappes. Autre particularité, les coefficients <span class="math inline">\(k_2\)</span> et <span class="math inline">\(k_3\)</span> peuvent être négatifs (dans des bornes assurant l’admissibilité) tout en gardant le caractère défini positif, ce qui autorise des covariances oscillantes. De Iaco, Myers et Posa ont d’ailleurs montré le lien étroit entre ce modèle et le modèle linéaire de corégionalisation vu plus haut <span class="citation" data-cites="deiaco2003">(<a href="../../references.html#ref-deiaco2003" role="doc-biblioref">De Iaco, Myers, et Posa 2003</a>)</span>, en traitant chaque instant comme une variable du système multivariable.</p>
+</section>
+<section id="modèles-non-séparables" class="level3">
+<h3 class="anchored" data-anchor-id="modèles-non-séparables">Modèles non séparables</h3>
+<p>Parfois, la dépendance spatiale change avec la séparation temporelle, et inversement : la portée spatiale d’un phénomène de diffusion croît avec le temps, par exemple. Des modèles non séparables, comme celui de Cressie-Huang ou celui de Gneiting, traitent ces cas. Leur formulation repose sur la théorie spectrale et dépasse le cadre de ce cours; on se contente d’en signaler l’existence.</p>
+</section>
+<section id="anisotropie-espace-temps" class="level3">
+<h3 class="anchored" data-anchor-id="anisotropie-espace-temps">Anisotropie espace-temps</h3>
+<p>Une distance de 10 mètres et un intervalle de 10 jours n’ont pas la même signification physique : les dimensions spatiales et temporelle ne sont pas directement comparables. Le rapport entre portée spatiale et portée temporelle, le rapport d’anisotropie spatio-temporel, est un paramètre clé du modèle. On l’estime empiriquement à partir des variogrammes expérimentaux calculés dans les directions spatiales et temporelle.</p>
+</section>
+<section id="lien-avec-le-cokrigeage" class="level3">
+<h3 class="anchored" data-anchor-id="lien-avec-le-cokrigeage">Lien avec le cokrigeage</h3>
+<p>Il existe une analogie formelle entre géostatistique spatio-temporelle et cokrigeage. Si l’on dispose d’une même variable à plusieurs instants (<span class="math inline">\(Z(\mathbf{x}, t_1), Z(\mathbf{x}, t_2), \dots\)</span>), on peut voir chaque instant comme une « variable » distincte et faire un cokrigeage spatial. La covariance croisée entre deux « variables » <span class="math inline">\(Z(\cdot, t_i)\)</span> et <span class="math inline">\(Z(\cdot, t_j)\)</span> est alors la covariance spatio-temporelle au décalage <span class="math inline">\(\tau = t_j - t_i\)</span>. La reformulation rend parfois service numériquement, surtout quand les instants sont peu nombreux.</p>
+</section>
+<section id="considérations-pratiques-1" class="level3">
+<h3 class="anchored" data-anchor-id="considérations-pratiques-1">Considérations pratiques</h3>
+<p>Ajuster un modèle spatio-temporel demande une couverture suffisante dans l’espace et dans le temps. On calcule les variogrammes expérimentaux dans les deux dimensions séparément, puis conjointement, pour repérer la structure de dépendance. La validation croisée spatio-temporelle en évalue la qualité prédictive : on retire des observations à certains instants et on vérifie que le krigeage spatio-temporel les retrouve.</p>
+</section>
+<section id="applications-et-travaux-de-référence" class="level3">
+<h3 class="anchored" data-anchor-id="applications-et-travaux-de-référence">Applications et travaux de référence</h3>
+<p>La géostatistique spatio-temporelle est aujourd’hui un domaine de recherche très actif, avec des applications en hydrogéologie, en climatologie et en surveillance environnementale. Les travaux de S. De Iaco et de ses collaborateurs (D. Posa, D. E. Myers) ont fortement structuré le champ : ils ont développé et analysé les modèles produit-somme et leurs familles non séparables <span class="citation" data-cites="deiaco2001 deiaco2002">(<a href="../../references.html#ref-deiaco2001" role="doc-biblioref">De Iaco, Myers, et Posa 2001</a>, <a href="../../references.html#ref-deiaco2002" role="doc-biblioref">2002</a>)</span>, et établi le pont formel entre ces modèles et le modèle linéaire de corégionalisation <span class="citation" data-cites="deiaco2003">(<a href="../../references.html#ref-deiaco2003" role="doc-biblioref">De Iaco, Myers, et Posa 2003</a>)</span>.</p>
+<p>Du côté hydrologique, les travaux d’E. A. Varouchakis illustrent l’usage opérationnel de ces méthodes pour le suivi des niveaux de nappes phréatiques : estimer et prédire dans le temps à partir d’observations éparses, au moyen de covariances spatio-temporelles flexibles (famille Spartan) et d’un cadre bayésien intégrant l’information physique <span class="citation" data-cites="varouchakis2019 varouchakis2022">(<a href="../../references.html#ref-varouchakis2019" role="doc-biblioref">Varouchakis et Hristopulos 2019</a>; <a href="../../references.html#ref-varouchakis2022" role="doc-biblioref">Varouchakis et al. 2022</a>)</span>. Ces études montrent que le choix du modèle de covariance espace-temps et du rapport d’anisotropie pèse directement sur la qualité des cartes prédictives, surtout dans les zones et aux instants peu échantillonnés.</p>
+<p>Le lecteur qui veut approfondir consultera ces références ainsi que les ouvrages généraux de géostatistique cités en bibliographie, qui détaillent la construction et l’admissibilité des covariances espace-temps.</p>
+</section>
+</section>
+<section id="atelier-interactif-10.7-krigeage-spatio-temporel-précipitations" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-10.7-krigeage-spatio-temporel-précipitations">🧮 Atelier interactif 10.7 — Krigeage spatio-temporel (précipitations)</h2>
+<p>Un système pluvieux traverse la carte au fil du temps, mais n’est mesuré qu’à quelques stations fixes, à chaque pas de temps. À chaque instant, le champ de pluie est reconstruit partout par krigeage spatio-temporel : le temps est traité comme un troisième axe, doté de sa propre portée temporelle <span class="math inline">\(a_t\)</span> (anisotropie géométrique espace-temps). Lancez l’animation (bouton Lecture) pour voir la cellule de pluie apparaître, se déplacer et s’atténuer, reconstruite à partir des seules stations. Faites varier la portée spatiale <span class="math inline">\(a_s\)</span> et la portée temporelle <span class="math inline">\(a_t\)</span> : une grande <span class="math inline">\(a_t\)</span> lisse le champ dans le temps (les averses « persistent »), une petite <span class="math inline">\(a_t\)</span> le fait coller aux mesures de chaque instant.</p>
+<div class="geostat-widget" data-widget="c10_spatiotemporel">
+  <div class="gw-placeholder">Chargement du widget (krigeage spatio-temporel animé)…</div>
+</div>
+
+
+<!-- -->
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-deiaco2001" class="csl-entry" role="listitem">
+De Iaco, S., D. E. Myers, et D. Posa. 2001. <span>«&nbsp;Space-time analysis using a general product-sum model&nbsp;»</span>. <em>Statistics &amp; Probability Letters</em> 52 (1): 21‑28. <a href="https://doi.org/10.1016/S0167-7152(00)00200-5">https://doi.org/10.1016/S0167-7152(00)00200-5</a>.
+</div>
+<div id="ref-deiaco2002" class="csl-entry" role="listitem">
+———. 2002. <span>«&nbsp;Nonseparable space-time covariance models: some parametric families&nbsp;»</span>. <em>Mathematical Geology</em> 34 (1): 23‑42. <a href="https://doi.org/10.1023/A:1014075310344">https://doi.org/10.1023/A:1014075310344</a>.
+</div>
+<div id="ref-deiaco2003" class="csl-entry" role="listitem">
+———. 2003. <span>«&nbsp;The linear coregionalization model and the product-sum space-time variogram&nbsp;»</span>. <em>Mathematical Geology</em> 35 (1): 25‑38. <a href="https://doi.org/10.1023/A:1022425111459">https://doi.org/10.1023/A:1022425111459</a>.
+</div>
+<div id="ref-varouchakis2022" class="csl-entry" role="listitem">
+Varouchakis, E. A. et al. 2022. <span>«&nbsp;Spatiotemporal geostatistical analysis of groundwater level in aquifer systems of complex hydrogeology&nbsp;»</span>. <em>Water Resources Research</em> 58 (8): e2021WR029988. <a href="https://doi.org/10.1029/2021WR029988">https://doi.org/10.1029/2021WR029988</a>.
+</div>
+<div id="ref-varouchakis2019" class="csl-entry" role="listitem">
+Varouchakis, E. A., et D. T. Hristopulos. 2019. <span>«&nbsp;Spatiotemporal geostatistical modeling of groundwater levels under a <span>Bayesian</span> framework using means of physical background&nbsp;»</span>. <em>Journal of Hydrology</em> 575: 487‑98. <a href="https://doi.org/10.1016/j.jhydrol.2019.05.045">https://doi.org/10.1016/j.jhydrol.2019.05.045</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../chapters/C09/index.html" class="pagination-link" aria-label="Krigeage">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Krigeage</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../chapters/C11/index.html" class="pagination-link" aria-label="Krigeage d'indicatrices">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Krigeage d’indicatrices</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Code source</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Géostatistique multivariable"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">abstract:</span><span class="co"> |</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">  Ce chapitre introduit le cokrigeage, c’est-à-dire l’application du krigeage à plusieurs variables. Cette méthode permet d’estimer une variable principale en exploitant également l’information fournie par d’autres variables corrélées. La covariance croisée et le variogramme croisé, qui décrivent les relations entre les différentes variables, sont d’abord définis. Le cokrigeage simple, ordinaire et universel est ensuite présenté. Le chapitre aborde également certains cas particuliers, notamment celui d’une variable secondaire très densément échantillonnée ou liée à la variable principale par une relation connue. Les fonctions aléatoires multivariées et le modèle linéaire de corégionalisation sont alors introduits afin de construire des modèles cohérents entre plusieurs variables. Enfin, la discussion s’étend aux modèles spatio-temporels, dans lesquels les données varient à la fois dans l’espace et dans le temps.</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Objectifs d'apprentissage</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>À la fin de ce chapitre, vous serez en mesure de :</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Décrire la mécanique du cokrigeage comme généralisation du krigeage au cas multivariable;</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Calculer et interpréter des covariances croisées et des variogrammes croisés;</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Dériver et résoudre les systèmes de cokrigeage simple, ordinaire et universel;</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Définir les paramètres d'un modèle linéaire de corégionalisation et vérifier son admissibilité;</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Analyser les situations où le cokrigeage apporte un gain significatif par rapport au krigeage;</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Expliquer les principes des modèles spatio-temporels en géostatistique.</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## Référence</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>Ce chapitre s'appuie principalement sur le livre suivant :</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>Wackernagel, H. (2003). *Multivariate Geostatistics: An Introduction with Applications* (3ᵉ éd.). Springer-Verlag, Berlin.</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>{{&lt; include 10-01.qmd &gt;}}</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>{{&lt; include 10-02.qmd &gt;}}</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>{{&lt; include 10-03.qmd &gt;}}</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>{{&lt; include 10-04.qmd &gt;}}</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>{{&lt; include 10-05.qmd &gt;}}</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>{{&lt; include 10-06.qmd &gt;}}</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>{{&lt; include 10-07.qmd &gt;}}</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>{{&lt; include 10-08.qmd &gt;}}</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>{{&lt; include 10-09.qmd &gt;}}</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>{{&lt; include 10-10.qmd &gt;}}</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Géostatistique et géologie minière</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Danlauz/glq3401-3651/edit/main/chapters/C10/index.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/Danlauz/glq3401-3651/issues/new" class="toc-action"><i class="bi empty"></i>Signaler un problème ou<br>formuler une suggestion</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Ce livre a été réalisé avec <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+<script type="module" src="../../scripts/geostat-js/loader.js"></script>
+<script src="../../scripts/geostat-js/notebook-button.js" defer=""></script>
+
+
+
+
+</body></html>

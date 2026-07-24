@@ -1,0 +1,34 @@
+line-length = 100
+target-version = "py310"
+
+extend-exclude = [
+    "python_code",     # ancien code, sera migré progressivement (cf. phase 5)
+    "docs",
+    ".quarto",
+    "_freeze",
+    "notebooks",       # cellules de notebooks tolèrent un style plus libre
+]
+
+[lint]
+select = [
+    "E", "F", "W",     # pycodestyle + pyflakes
+    "I",               # isort
+    "B",               # bugbear
+    "NPY",             # numpy-specific
+    "UP",              # pyupgrade
+]
+ignore = [
+    "E501",            # line-too-long déjà géré par line-length
+]
+
+# Interdire les appels à np.random qui contournent la gestion de seed.
+# Seul geostat_polymtl/_seed.py est autorisé à utiliser numpy.random directement.
+[lint.per-file-ignores]
+"tests/*"                      = ["NPY002"]
+"geostat_polymtl/_seed.py"     = ["NPY002"]
+"geostat_polymtl/testing/*"    = ["NPY002"]
+
+[lint.flake8-tidy-imports.banned-api]
+"numpy.random.normal".msg  = "Utiliser rng.normal() via geostat_polymtl._seed._resolve(rng)"
+"numpy.random.uniform".msg = "Utiliser rng.uniform() via geostat_polymtl._seed._resolve(rng)"
+"numpy.random.seed".msg    = "Interdit — utiliser un np.random.Generator local"

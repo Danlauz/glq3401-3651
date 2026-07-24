@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c10_isotopique_vs_heterotopique">
+  <div class="gw-placeholder">Chargement du widget (iso vs hétéro)…</div>
+</div>
+```

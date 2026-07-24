@@ -1,0 +1,1895 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Méthodes déterministes d’estimation des ressources – Géostatistique et géologie minière</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../chapters/C06/index.html" rel="next">
+<link href="../../chapters/C04/index.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-f2c6d6e2b784ddc5de38779acc06f37d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-74c88ba48ad0bebf983f0ffd06dd1671.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f2c6d6e2b784ddc5de38779acc06f37d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents correspondants",
+    "search-copy-link-title": "Copier le lien",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "Rechercher",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles/site-polish.css">
+<link rel="stylesheet" href="../../styles/callouts.css">
+<link rel="stylesheet" href="../../styles/exercice.css">
+<link rel="stylesheet" href="../../styles/chapter-downloads.css">
+<link rel="stylesheet" href="../../scripts/geostat-js/style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/C01/index.html">Partie I: Géologie minière</a></li><li class="breadcrumb-item"><a href="../../chapters/C05/index.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Méthodes déterministes d’estimation des ressources</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Géostatistique et géologie minière</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/Danlauz/glq3401-3651" title="Code source" class="quarto-navigation-tool px-1" aria-label="Code source"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Basculer le mode sombre"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Préface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">À propos de l’auteur</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Partie I: Géologie minière</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C01/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Rapport Technique NI 43-101 et Loi sur les mines</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C02/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aspect économique</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C03/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Théorie de Gy et contrôle qualité</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C04/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Traitement et analyse statistique des données de forage</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C05/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Méthodes déterministes d’estimation des ressources</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie II: Géostatistique linéaire</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C06/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction à la géostatistique</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C07/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Variogramme</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C08/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Variance de blocs, de dispersion et d’estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C09/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Krigeage</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie III: Géostatistique non-linéaire</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C10/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Géostatistique multivariable</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C11/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Krigeage d’indicatrices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C12/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable continue</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C13/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable catégorielle</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie IV: Exercices et examens</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/exercices/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Recueil d’exercices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/examens/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Anciens examens</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Références</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Annexes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Algèbre linéaire : vecteurs et plans</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Probabilités &amp; statistiques</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-c.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Table de la loi normale centrée-réduite</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Abaques - Variances de dispersion</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-e.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Abaques - Variances d’estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Notation mathématique</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#définitions" id="toc-définitions" class="nav-link active" data-scroll-target="#définitions"><span class="header-section-number">5.1</span> Définitions</a>
+  <ul class="collapse">
+  <li><a href="#estimateur-linéaire" id="toc-estimateur-linéaire" class="nav-link" data-scroll-target="#estimateur-linéaire">Estimateur linéaire</a></li>
+  <li><a href="#estimateur-sans-biais" id="toc-estimateur-sans-biais" class="nav-link" data-scroll-target="#estimateur-sans-biais">Estimateur sans biais</a></li>
+  <li><a href="#ce-qui-distingue-les-méthodes" id="toc-ce-qui-distingue-les-méthodes" class="nav-link" data-scroll-target="#ce-qui-distingue-les-méthodes">Ce qui distingue les méthodes</a></li>
+  </ul></li>
+  <li><a href="#méthode-des-polygones-plus-proche-voisin" id="toc-méthode-des-polygones-plus-proche-voisin" class="nav-link" data-scroll-target="#méthode-des-polygones-plus-proche-voisin"><span class="header-section-number">5.2</span> Méthode des polygones (plus proche voisin)</a>
+  <ul class="collapse">
+  <li><a href="#principe" id="toc-principe" class="nav-link" data-scroll-target="#principe">Principe</a></li>
+  <li><a href="#construction-des-polygones-de-voronoï" id="toc-construction-des-polygones-de-voronoï" class="nav-link" data-scroll-target="#construction-des-polygones-de-voronoï">Construction des polygones de Voronoï</a></li>
+  <li><a href="#poids-destimation" id="toc-poids-destimation" class="nav-link" data-scroll-target="#poids-destimation">Poids d’estimation</a></li>
+  <li><a href="#propriétés-importantes" id="toc-propriétés-importantes" class="nav-link" data-scroll-target="#propriétés-importantes">Propriétés importantes</a></li>
+  <li><a href="#avantages-et-limites" id="toc-avantages-et-limites" class="nav-link" data-scroll-target="#avantages-et-limites">Avantages et limites</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-5.1-polygones-de-thiessen-voronoï" id="toc-atelier-interactif-5.1-polygones-de-thiessen-voronoï" class="nav-link" data-scroll-target="#atelier-interactif-5.1-polygones-de-thiessen-voronoï">🧮 Atelier interactif 5.1 — Polygones de Thiessen (Voronoï)</a></li>
+  <li><a href="#méthode-des-triangles" id="toc-méthode-des-triangles" class="nav-link" data-scroll-target="#méthode-des-triangles"><span class="header-section-number">5.3</span> Méthode des triangles</a>
+  <ul class="collapse">
+  <li><a href="#principe-1" id="toc-principe-1" class="nav-link" data-scroll-target="#principe-1">Principe</a></li>
+  <li><a href="#construction-de-la-triangulation" id="toc-construction-de-la-triangulation" class="nav-link" data-scroll-target="#construction-de-la-triangulation">Construction de la triangulation</a></li>
+  <li><a href="#calcul-de-la-teneur-moyenne-du-triangle" id="toc-calcul-de-la-teneur-moyenne-du-triangle" class="nav-link" data-scroll-target="#calcul-de-la-teneur-moyenne-du-triangle">Calcul de la teneur moyenne du triangle</a></li>
+  <li><a href="#exemple-numérique" id="toc-exemple-numérique" class="nav-link" data-scroll-target="#exemple-numérique">Exemple numérique</a></li>
+  <li><a href="#interpolation-ponctuelle-par-coordonnées-barycentriques" id="toc-interpolation-ponctuelle-par-coordonnées-barycentriques" class="nav-link" data-scroll-target="#interpolation-ponctuelle-par-coordonnées-barycentriques">Interpolation ponctuelle par coordonnées barycentriques</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-5.2-méthode-des-triangles-tin" id="toc-atelier-interactif-5.2-méthode-des-triangles-tin" class="nav-link" data-scroll-target="#atelier-interactif-5.2-méthode-des-triangles-tin">🧮 Atelier interactif 5.2 — Méthode des triangles (TIN)</a></li>
+  <li><a href="#méthode-de-linverse-de-la-distance" id="toc-méthode-de-linverse-de-la-distance" class="nav-link" data-scroll-target="#méthode-de-linverse-de-la-distance"><span class="header-section-number">5.4</span> Méthode de l’inverse de la distance</a>
+  <ul class="collapse">
+  <li><a href="#principe-2" id="toc-principe-2" class="nav-link" data-scroll-target="#principe-2">Principe</a></li>
+  <li><a href="#rôle-de-lexposant-b" id="toc-rôle-de-lexposant-b" class="nav-link" data-scroll-target="#rôle-de-lexposant-b">Rôle de l’exposant <span class="math inline">\(b\)</span></a></li>
+  <li><a href="#exemple-numérique-1" id="toc-exemple-numérique-1" class="nav-link" data-scroll-target="#exemple-numérique-1">Exemple numérique</a></li>
+  <li><a href="#paramètres-dajustement" id="toc-paramètres-dajustement" class="nav-link" data-scroll-target="#paramètres-dajustement">Paramètres d’ajustement</a></li>
+  <li><a href="#estimation-de-blocs" id="toc-estimation-de-blocs" class="nav-link" data-scroll-target="#estimation-de-blocs">Estimation de blocs</a></li>
+  <li><a href="#validation-croisée" id="toc-validation-croisée" class="nav-link" data-scroll-target="#validation-croisée">Validation croisée</a></li>
+  <li><a href="#limites-de-la-méthode" id="toc-limites-de-la-méthode" class="nav-link" data-scroll-target="#limites-de-la-méthode">Limites de la méthode</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-5.3-inverse-de-la-distance-idw" id="toc-atelier-interactif-5.3-inverse-de-la-distance-idw" class="nav-link" data-scroll-target="#atelier-interactif-5.3-inverse-de-la-distance-idw">🧮 Atelier interactif 5.3 — Inverse de la distance (IDW)</a></li>
+  <li><a href="#la-méthode-des-sections" id="toc-la-méthode-des-sections" class="nav-link" data-scroll-target="#la-méthode-des-sections"><span class="header-section-number">5.5</span> La méthode des sections</a>
+  <ul class="collapse">
+  <li><a href="#approche-moderne" id="toc-approche-moderne" class="nav-link" data-scroll-target="#approche-moderne">Approche moderne</a></li>
+  <li><a href="#modélisation-explicite-et-implicite" id="toc-modélisation-explicite-et-implicite" class="nav-link" data-scroll-target="#modélisation-explicite-et-implicite">Modélisation explicite et implicite</a></li>
+  <li><a href="#construction-des-solides" id="toc-construction-des-solides" class="nav-link" data-scroll-target="#construction-des-solides">Construction des solides</a></li>
+  <li><a href="#méthodes-manuelles-estimation-entre-deux-sections" id="toc-méthodes-manuelles-estimation-entre-deux-sections" class="nav-link" data-scroll-target="#méthodes-manuelles-estimation-entre-deux-sections">Méthodes « manuelles » : estimation entre deux sections</a></li>
+  <li><a href="#formules-entre-deux-sections" id="toc-formules-entre-deux-sections" class="nav-link" data-scroll-target="#formules-entre-deux-sections">Formules entre deux sections</a></li>
+  <li><a href="#exemple-numérique-2" id="toc-exemple-numérique-2" class="nav-link" data-scroll-target="#exemple-numérique-2">Exemple numérique</a></li>
+  <li><a href="#sections-de-bout" id="toc-sections-de-bout" class="nav-link" data-scroll-target="#sections-de-bout">Sections de bout</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-5.4-modèle-de-blocs-vs-approximation-par-formes" id="toc-atelier-interactif-5.4-modèle-de-blocs-vs-approximation-par-formes" class="nav-link" data-scroll-target="#atelier-interactif-5.4-modèle-de-blocs-vs-approximation-par-formes">🧮 Atelier interactif 5.4 — Modèle de blocs vs approximation par formes</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Danlauz/glq3401-3651/edit/main/chapters/C05/index.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/Danlauz/glq3401-3651/issues/new" class="toc-action"><i class="bi empty"></i>Signaler un problème ou<br>formuler une suggestion</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/C01/index.html">Partie I: Géologie minière</a></li><li class="breadcrumb-item"><a href="../../chapters/C05/index.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Méthodes déterministes d’estimation des ressources</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Méthodes déterministes d’estimation des ressources</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Résumé</div>
+    <p>Ce chapitre présente les principales méthodes déterministes, dites conventionnelles, utilisées pour estimer les ressources à partir d’un échantillonnage limité. Toutes reposent sur le principe d’une moyenne pondérée, mais se distinguent par la manière dont les poids sont attribués aux observations. Les méthodes des polygones, ou du plus proche voisin, des triangles, fondée sur une interpolation par triangulation, de l’inverse de la distance et des sections sont successivement étudiées. Pour chacune, le principe, les formulations mathématiques, les avantages et les limites sont présentés. Des ateliers interactifs permettent de visualiser l’application de ces méthodes à des jeux de données synthétiques en deux dimensions.</p>
+  </div>
+</div>
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Objectifs d’apprentissage
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Comprendre le cadre général de l’estimation par moyenne pondérée et le rôle des poids <span class="math inline">\(\lambda_i\)</span>;</p></li>
+<li><p>Construire des polygones de Voronoï et expliquer leur lien avec la triangulation de Delaunay;</p></li>
+<li><p>Appliquer la méthode des triangles selon différentes hypothèses de variation de la teneur et de l’épaisseur;</p></li>
+<li><p>Estimer une teneur par la méthode de l’inverse de la distance et analyser l’effet de l’exposant <span class="math inline">\(b\)</span>;</p></li>
+<li><p>Utiliser la validation croisée pour comparer et calibrer les méthodes d’estimation;</p></li>
+<li><p>Appliquer la méthode des sections pour estimer le volume et la teneur d’un gisement.</p></li>
+</ul>
+</div>
+</div>
+<section id="définitions" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="définitions"><span class="header-section-number">5.1</span> Définitions</h2>
+<p>On appelle <strong>méthodes conventionnelles</strong> (ou déterministes) les méthodes d’estimation des ressources qui ne font pas appel à la géostatistique, c’est-à-dire qui ne prennent pas en compte la structure spatiale des données. Pour attribuer un poids à chaque observation, elles s’appuient uniquement sur des règles géométriques ou arithmétiques simples, telles que la distance entre le point à estimer et les données connues, ou l’aire d’influence de chaque donnée.</p>
+<p>Leur but reste celui de toute estimation : évaluer la teneur en un point ou un bloc non échantillonné, à partir des quelques observations voisines dont on dispose. Ce sont ces teneurs estimées, calculées sur l’ensemble du modèle de blocs, qui permettront d’appliquer une teneur de coupure et de délimiter le minerai.</p>
+<section id="estimateur-linéaire" class="level3">
+<h3 class="anchored" data-anchor-id="estimateur-linéaire">Estimateur linéaire</h3>
+<p>Notons <span class="math inline">\(Z(\mathbf{x}_i)\)</span>, ou plus simplement <span class="math inline">\(Z_i\)</span>, la teneur mesurée aux <span class="math inline">\(n\)</span> points d’échantillonnage, et <span class="math inline">\(\mathbf{x}_0\)</span> le point pour lequel on cherche à estimer une teneur inconnue. Presque toutes les méthodes, conventionnelles comme géostatistiques, donnent l’estimation de la variable d’intérêt <span class="math inline">\(Z(\mathbf{x}_0)\)</span> (ou <span class="math inline">\(Z_0\)</span>) sous la forme d’une <strong>combinaison linéaire</strong> des valeurs observées :</p>
+<p><span class="math display">\[
+Z_0^* = \sum_{i=1}^{n} \lambda_i\, Z_i,
+\]</span></p>
+<p>où <span class="math inline">\(\lambda_i\)</span> est le poids de l’observation <span class="math inline">\(i\)</span>. La formule est donc la même pour toutes les méthodes; ce qui change de l’une à l’autre, c’est la manière de calculer la valeur de chaque poids (<span class="math inline">\(\lambda_i \forall\, i=1,...,n\)</span>).</p>
+<p>Pour évaluer la qualité d’une telle estimation, on adopte un point de vue probabiliste. On ne voit plus la teneur comme un simple nombre, mais comme une <strong>variable aléatoire</strong> : à chaque position <span class="math inline">\(\mathbf{x}\)</span> correspond une variable <span class="math inline">\(Z(\mathbf{x})\)</span> dont la vraie valeur existe, mais qui reste cachée tant qu’on n’a pas extrait le bloc et traité celui-ci au concentrateur. Là où l’on a échantillonné, on connaît la valeur de <span class="math inline">\(Z(\mathbf{x}_i)\)</span>; en <span class="math inline">\(\mathbf{x}_0\)</span>, elle est encore inconnue, et c’est justement elle qu’on cherche à estimer. On peut alors parler de l’espérance <span class="math inline">\(\mathbb{E}[Z(\mathbf{x})]\)</span>, la valeur moyenne attendue en <span class="math inline">\(\mathbf{x}\)</span>.</p>
+</section>
+<section id="estimateur-sans-biais" class="level3">
+<h3 class="anchored" data-anchor-id="estimateur-sans-biais">Estimateur sans biais</h3>
+<p>La première exigence que l’on impose à l’estimateur est d’être <strong>sans biais</strong> : en moyenne, il ne doit ni surestimer ni sous-estimer la vraie valeur, soit <span class="math inline">\(\mathbb{E}[Z_0^*] = \mathbb{E}[Z(\mathbf{x}_0)]\)</span>. Cette exigence se traduit par une condition simple portant sur les poids.</p>
+<p>On reprend les deux hypothèses précédentes : la teneur est une variable aléatoire et sa moyenne est constante. On suppose donc que <span class="math inline">\(Z(\mathbf{x})\)</span> admet une espérance constante sur le domaine d’étude <span class="math inline">\(\mathcal{D}\)</span> :</p>
+<p><span class="math display">\[
+\mathbb{E}[Z(\mathbf{x})] = m, \quad \forall\, \mathbf{x} \in \mathcal{D}.
+\]</span></p>
+<p>L’espérance de l’estimateur s’écrit alors :</p>
+<p><span class="math display">\[
+\mathbb{E}[Z_0^*]
+= \mathbb{E}\!\left[ \sum_{i=1}^{n} \lambda_i Z_i \right]
+= \sum_{i=1}^{n} \lambda_i\, \mathbb{E}[Z_i].
+\]</span></p>
+<p>Comme <span class="math inline">\(\mathbb{E}[Z_i] = m\)</span> pour tout <span class="math inline">\(i\)</span>, on obtient :</p>
+<p><span class="math display">\[
+\mathbb{E}[Z_0^*] = \sum_{i=1}^{n} \lambda_i\, m = m \sum_{i=1}^{n} \lambda_i.
+\]</span></p>
+<p>Pour que l’estimateur soit sans biais, cette espérance doit égaler <span class="math inline">\(m = \mathbb{E}[Z(\mathbf{x}_0)]\)</span>, ce qui impose naturellement une contrainte sur les poids :</p>
+<p><span class="math display">\[
+\sum_{i=1}^{n} \lambda_i = 1.
+\]</span></p>
+<p>Le non-biais repose ainsi sur deux conditions conjointes : la moyenne de la variable est constante (<span class="math inline">\(\mathbb{E}[Z_i] = m\)</span> pour tout <span class="math inline">\(i\)</span>) et la somme des poids vaut 1. On retrouve cette contrainte <span class="math inline">\(\sum_i \lambda_i = 1\)</span> dans pratiquement toutes les méthodes d’estimation lorsque la moyenne est inconnue ou difficile à estimer à partir des données.</p>
+</section>
+<section id="ce-qui-distingue-les-méthodes" class="level3">
+<h3 class="anchored" data-anchor-id="ce-qui-distingue-les-méthodes">Ce qui distingue les méthodes</h3>
+<p>Les méthodes se distinguent par la façon dont elles fixent les poids <span class="math inline">\(\lambda_i\)</span>, qui mesurent l’influence d’une observation en <span class="math inline">\(\mathbf{x}_i\)</span> sur l’estimation de la valeur inconnue en <span class="math inline">\(\mathbf{x}_0\)</span>.</p>
+<p>Les <strong>méthodes conventionnelles</strong> fixent ces poids à partir de la seule géométrie des données : distances au point estimé, appartenance à un polygone ou position dans un triangle. Elles ne modélisent pas la continuité spatiale du phénomène et ignorent donc la redondance entre les points rapprochés et la structure spatiale du gisement.</p>
+<p>Les <strong>méthodes géostatistiques</strong> procèdent autrement : les poids sont calculés à partir d’un modèle statistique spatial, qui décrit comment les teneurs se ressemblent selon la distance et la direction, afin de minimiser la variance de l’erreur d’estimation. En d’autres termes, on impose un modèle statistique aux données et on l’utilise pour optimiser les poids de sorte que l’erreur soit toujours la plus faible possible, au sens de la variance.</p>
+<p>Pour le moment, nous allons présenter en détail les méthodes d’estimation conventionnelles encore largement utilisées dans les rapports techniques miniers NI-43-101 lors des phases d’exploration préliminaire, en raison de leur rapidité d’implémentation et de leur simplicité.</p>
+</section>
+</section>
+<section id="méthode-des-polygones-plus-proche-voisin" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="méthode-des-polygones-plus-proche-voisin"><span class="header-section-number">5.2</span> Méthode des polygones (plus proche voisin)</h2>
+<section id="principe" class="level3">
+<h3 class="anchored" data-anchor-id="principe">Principe</h3>
+<p>La méthode des polygones attribue à chaque point d’échantillonnage une <strong>zone d’influence</strong> constituée de l’ensemble des points du plan qui lui sont plus proches qu’à tout autre échantillon. Ces zones forment un pavage du plan appelé <strong>diagramme de Voronoï</strong> (ou polygones de Thiessen).</p>
+<p>La teneur estimée est constante à l’intérieur de chaque polygone et égale à la teneur mesurée au point d’échantillonnage correspondant. Le volume associé à un polygone est le produit de sa surface par l’épaisseur de la veine mesurée au point d’échantillonnage situé dans ce polygone.</p>
+</section>
+<section id="construction-des-polygones-de-voronoï" class="level3">
+<h3 class="anchored" data-anchor-id="construction-des-polygones-de-voronoï">Construction des polygones de Voronoï</h3>
+<p>La construction la plus courante procède en deux étapes :</p>
+<ol type="1">
+<li><p><strong>Triangulation de Delaunay.</strong> On relie les points d’échantillonnage en triangles de manière à maximiser les angles minimaux (triangles aussi équilatéraux que possible). Une triangulation de Delaunay est unique et se caractérise par la propriété suivante : le cercle circonscrit à chaque triangle ne contient aucun autre point d’échantillonnage. Des algorithmes très efficaces permettent de construire cette triangulation en quelques secondes, même pour plusieurs milliers de points. Ce critère du cercle circonscrit vide, qui garantit des triangles aussi équilatéraux que possible, est illustré à la <a href="#fig-delaunay-critere" class="quarto-xref">Figure&nbsp;<span>5.1</span></a>.</p></li>
+<li><p><strong>Polygones de Voronoï.</strong> Les polygones sont construits comme le <strong>dual</strong> de la triangulation de Delaunay. Pour chaque arête de la triangulation, on trace la médiatrice (perpendiculaire passant par le point médian du segment). Les intersections de ces médiatrices définissent les sommets des polygones. Chaque polygone entoure un point d’échantillonnage et contient tous les points du plan qui lui sont plus proches qu’à tout autre échantillon. La <a href="#fig-voronoi-construction" class="quarto-xref">Figure&nbsp;<span>5.2</span></a> illustre l’ensemble de la construction, de la triangulation aux zones d’influence colorées par la teneur du plus proche voisin.</p></li>
+</ol>
+<blockquote class="blockquote">
+<p><strong>Dualité Delaunay–Voronoï.</strong> Deux points d’échantillonnage sont voisins de Voronoï (leurs polygones partagent une arête) si et seulement s’ils sont reliés par une arête dans la triangulation de Delaunay. Les sommets des polygones de Voronoï correspondent aux centres des cercles circonscrits aux triangles de Delaunay.</p>
+</blockquote>
+<div id="fig-delaunay-critere" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-delaunay-critere-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C5_Delaunay_critere.gif" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-delaunay-critere-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.1: Critère de Delaunay. On essaie une triangulation; si le cercle circonscrit à un triangle contient un autre point d’échantillonnage, le triangle est trop allongé et l’on échange la diagonale. Les triangles retenus ont tous un cercle circonscrit vide.
+</figcaption>
+</figure>
+</div>
+<div id="fig-voronoi-construction" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-voronoi-construction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C5_Voronoi_construction.gif" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-voronoi-construction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.2: Construction du diagramme de Voronoï : triangulation de Delaunay (étape 1), puis polygones de Voronoï découpés au domaine (étape 2), et estimation par plus proche voisin (chaque zone prend la teneur de son point, en couleur).
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="poids-destimation" class="level3">
+<h3 class="anchored" data-anchor-id="poids-destimation">Poids d’estimation</h3>
+<p>Dans cette méthode, pour l’estimation d’un point <span class="math inline">\(\mathbf{x}_0\)</span> situé dans le polygone associé au point <span class="math inline">\(\mathbf{x}_i\)</span> :</p>
+<p><span class="math display">\[
+\lambda_i = 1, \quad \lambda_j = 0 \quad \text{pour tout } j \neq i
+\]</span></p>
+<p>L’estimation est donc simplement <span class="math inline">\(Z_0^* = Z_i\)</span> : la valeur du plus proche voisin.</p>
+</section>
+<section id="propriétés-importantes" class="level3">
+<h3 class="anchored" data-anchor-id="propriétés-importantes">Propriétés importantes</h3>
+<p>L’influence d’un échantillon s’étend sur tout son polygone de Voronoï et s’annule à la frontière du polygone, c’est-à-dire à l’intersection des médiatrices des segments reliant les échantillons voisins. L’étendue de cette zone d’influence ne dépend que du patron d’échantillonnage, et non des valeurs observées.</p>
+<p>Les échantillons situés en bordure du domaine sont plus délicats à traiter. Comme ils ne sont pas entourés d’autres échantillons, leur polygone ne se ferme pas naturellement. Il faut donc imposer une limite, soit avec une distance maximale d’influence, soit avec une limite géologique lorsque celle-ci est connue.</p>
+<p>Ce choix peut influencer le résultat. Si la limite est trop éloignée, un échantillon isolé peut recevoir trop de poids et faire varier le tonnage estimé en bordure du gisement. La <a href="#fig-voronoi-bordure" class="quarto-xref">Figure&nbsp;<span>5.3</span></a> illustre cet effet : pour un même jeu de données, la cellule du point de bordure (contour noir épais) s’étend et son poids augmente fortement lorsque la frontière s’éloigne.</p>
+<div id="fig-voronoi-bordure" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-voronoi-bordure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C5_Voronoi_bordure.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-voronoi-bordure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.3: Effet du choix de la frontière sur le poids d’un point de bordure. En haut, la cellule de Voronoï du point de bordure (contour noir) est bornée par une frontière proche (à gauche) ou s’étend vers une frontière éloignée (à droite). En bas, la distribution des poids des cellules : équitable pour une frontière proche, très inégale pour une frontière éloignée, où quelques cellules de bordure captent l’essentiel du poids.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="avantages-et-limites" class="level3">
+<h3 class="anchored" data-anchor-id="avantages-et-limites">Avantages et limites</h3>
+<p><strong>Avantages</strong>: La méthode des polygones est simple à mettre en œuvre et à interpréter, et ne demande aucun paramètre à ajuster. Elle donne des résultats satisfaisants pour des minéralisations continues, à variation graduelle, ainsi que pour des échantillonnages denses et réguliers. Elle est particulièrement utile pour des estimations préliminaires rapides, y compris sur des données irrégulières : le tonnage s’obtient alors en sommant les aires des polygones, multipliées par l’épaisseur et la densité. Pour ces mêmes raisons de simplicité et d’efficacité, elle est très employée en environnement et pour l’estimation des sols contaminés, où elle permet de délimiter rapidement les zones à traiter.</p>
+<p><strong>Limitations</strong>: Ses limites tiennent surtout à sa nature purement géométrique. L’estimation est discontinue aux frontières des polygones : un léger déplacement du point estimé peut faire basculer brusquement la valeur. Elle génère aussi un fort biais conditionnel, la qualité de l’estimation dépendant à la fois de la position des observations et des valeurs mesurées. Surtout, elle néglige l’effet de support : la distribution des valeurs estimées reste semblable à celle des valeurs ponctuelles observées, alors qu’un bloc minier, de volume fini, varie moins qu’un échantillon ponctuel — un écart que la géostatistique corrige (chapitre 6). Enfin, les données redondantes, proches les unes des autres, ne sont pas dépondérées : leur zone d’influence individuelle est réduite, mais la redondance d’information qu’elles portent n’est pas explicitement pénalisée.</p>
+<!-- W1 : Polygones de Thiessen -->
+</section>
+</section>
+<section id="atelier-interactif-5.1-polygones-de-thiessen-voronoï" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-5.1-polygones-de-thiessen-voronoï">🧮 Atelier interactif 5.1 — Polygones de Thiessen (Voronoï)</h2>
+<p>Cliquez sur le canevas pour placer des points d’échantillonnage. Chaque point se voit attribuer une teneur aléatoire et une zone d’influence (polygone de Voronoï). Basculez entre la vue polygones, la triangulation de Delaunay, ou les deux superposées.</p>
+<div id="gw_c05_polygones" class="geostat-widget" data-widget="c05_polygones">
+<div class="gw-placeholder">
+Chargement de l’atelier…
+</div>
+</div>
+</section>
+<section id="méthode-des-triangles" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="méthode-des-triangles"><span class="header-section-number">5.3</span> Méthode des triangles</h2>
+<section id="principe-1" class="level3">
+<h3 class="anchored" data-anchor-id="principe-1">Principe</h3>
+<p>Avec la méthode des triangles, on relie les points d’échantillonnage trois par trois pour découper le domaine en triangles. La teneur à l’intérieur d’un triangle est ensuite calculée à partir des teneurs mesurées aux trois sommets.</p>
+<p>Chaque triangle représente aussi un volume. On peut le voir comme un prisme triangulaire, dont la base est le triangle et dont l’épaisseur est définie à partir des valeurs observées aux sommets.</p>
+</section>
+<section id="construction-de-la-triangulation" class="level3">
+<h3 class="anchored" data-anchor-id="construction-de-la-triangulation">Construction de la triangulation</h3>
+<p>Tout comme la méthode des polygones, la triangulation de Delaunay est la méthode de référence pour construire les triangles. Elle est unique et produit les triangles les plus équilatéraux possibles, ce qui améliore la qualité de l’interpolation. Rappelons qu’une triangulation de Delaunay est obtenue lorsque le cercle circonscrit à chaque triangle ne contient aucun autre point d’échantillonnage.</p>
+<p>Dans certains cas, on peut choisir de tracer les triangles parallèlement à la direction de continuité de la minéralisation, lorsque celle-ci est connue. Ainsi, on adapte la création des triangles en fonction de la géologie.</p>
+</section>
+<section id="calcul-de-la-teneur-moyenne-du-triangle" class="level3">
+<h3 class="anchored" data-anchor-id="calcul-de-la-teneur-moyenne-du-triangle">Calcul de la teneur moyenne du triangle</h3>
+<p>Notons <span class="math inline">\(t_i\)</span> la teneur et <span class="math inline">\(w_i\)</span> l’épaisseur (ou, si la densité varie, le produit épaisseur × densité) au sommet <span class="math inline">\(i\)</span> du triangle (<span class="math inline">\(i = 1, 2, 3\)</span>). Chaque sommet porte ainsi une teneur <em>et</em> une épaisseur : le triangle définit un prisme dont la hauteur varie d’un sommet à l’autre (<a href="#fig-prisme-triangle" class="quarto-xref">Figure&nbsp;<span>5.4</span></a>).</p>
+<div id="fig-prisme-triangle" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prisme-triangle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C5_PrismeTriangle.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prisme-triangle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.4: Prisme triangulaire : à chaque sommet, une teneur <span class="math inline">\(t_i\)</span> (couleur) et une épaisseur <span class="math inline">\(w_i\)</span> (hauteur de la barre). La teneur moyenne du prisme pondère les teneurs par les épaisseurs.
+</figcaption>
+</figure>
+</div>
+<p>La teneur moyenne du prisme est le rapport entre le métal qu’il contient et son volume :</p>
+<p><span class="math display">\[
+\bar t = \frac{\displaystyle\int_T t\,w\,\mathrm{d}A}{\displaystyle\int_T w\,\mathrm{d}A} = \frac{\text{métal total}}{\text{volume total}}.
+\]</span></p>
+<p>Le numérateur intègre l’accumulation <span class="math inline">\(t\,w\)</span> (le métal par unité de surface), le dénominateur l’épaisseur <span class="math inline">\(w\)</span>. Le résultat dépend donc de la façon dont on suppose que la teneur et l’épaisseur varient dans le triangle. Deux hypothèses sont couramment retenues, d’où deux méthodes.</p>
+<section id="méthode-1-moyenne-pondérée-par-lépaisseur" class="level4">
+<h4 class="anchored" data-anchor-id="méthode-1-moyenne-pondérée-par-lépaisseur">Méthode 1 : Moyenne pondérée par l’épaisseur</h4>
+<p><strong>Hypothèse :</strong> l’épaisseur <span class="math inline">\(w\)</span> et l’accumulation <span class="math inline">\(a = t \cdot w\)</span> varient toutes deux linéairement entre les sommets du triangle. Autrement dit, la teneur en un point du triangle dépend à la fois de l’épaisseur de la veine (ou de l’unité géologique) et de la quantité totale de métal accumulée jusqu’à cette localisation.</p>
+<p>Sous cette hypothèse, le volume du prisme est égal à l’aire du triangle <span class="math inline">\(A\)</span> multipliée par l’épaisseur moyenne :</p>
+<p><span class="math display">\[
+V = A \times \frac{w_1 + w_2 + w_3}{3}
+\]</span></p>
+<p>L’intégrale de l’accumulation <span class="math inline">\(t \cdot w\)</span> sur le triangle vaut <span class="math inline">\(A \times \frac{t_1 w_1 + t_2 w_2 + t_3 w_3}{3}\)</span>, de sorte que la teneur moyenne est :</p>
+<p><span class="math display">\[
+\bar{t} = \frac{\displaystyle\sum_{i=1}^{3} t_i \, w_i}{\displaystyle\sum_{i=1}^{3} w_i}
+\]</span></p>
+<p>Les poids implicites sont :</p>
+<p><span class="math display">\[
+\lambda_i = \frac{w_i}{\displaystyle\sum_{j=1}^{3} w_j}, \quad i = 1, 2, 3
+\]</span></p>
+<blockquote class="blockquote">
+<p><strong>Remarque.</strong> La teneur estimée par cette formule est la teneur moyenne sur l’ensemble du triangle, et non la teneur en un point particulier.</p>
+</blockquote>
+</section>
+<section id="méthode-2-méthode-des" class="level4">
+<h4 class="anchored" data-anchor-id="méthode-2-méthode-des">Méthode 2 : Méthode des « % »</h4>
+<p><strong>Hypothèse :</strong> la teneur <span class="math inline">\(t\)</span> et l’épaisseur <span class="math inline">\(w\)</span> varient toutes deux linéairement entre les sommets (mais leur produit <span class="math inline">\(t \cdot w\)</span> n’est pas linéaire).</p>
+<p>L’intégrale du produit de deux fonctions linéaires sur un triangle donne :</p>
+<p><span class="math display">\[
+\int_T t \cdot w \, dA = \frac{A}{12} \left[ \left(\sum_{i=1}^{3} t_i\right)\left(\sum_{i=1}^{3} w_i\right) + \sum_{i=1}^{3} t_i w_i \right]
+\]</span></p>
+<p>En divisant par le volume <span class="math inline">\(V = A \times \frac{\sum w_i}{3}\)</span>, on obtient la teneur moyenne :</p>
+<p><span class="math display">\[
+\bar{t} = \frac{\left(\displaystyle\sum_{i=1}^{3} t_i\right) + \dfrac{\displaystyle\sum_{i=1}^{3} t_i w_i}{\displaystyle\sum_{i=1}^{3} w_i}}{4}
+\]</span></p>
+<p>Le numérateur se lit comme la somme des trois teneurs brutes plus la moyenne pondérée par l’épaisseur, le tout divisé par 4 (soit <span class="math inline">\(3 + 1\)</span>). Les poids implicites sur les teneurs sont :</p>
+<p><span class="math display">\[
+\lambda_i = \frac{1}{4} + \frac{w_i}{4\displaystyle\sum_{j=1}^{3} w_j}, \quad i = 1, 2, 3
+\]</span></p>
+<p>On vérifie que <span class="math inline">\(\sum \lambda_i = \frac{3}{4} + \frac{1}{4} = 1\)</span>.</p>
+<blockquote class="blockquote">
+<p><strong>Remarque.</strong> Comme pour la méthode 1, cette formule donne la teneur moyenne sur tout le triangle, et non en un point particulier. Elle diffère de la méthode 1 lorsque l’épaisseur varie entre les sommets : la méthode 1 suppose que le produit <span class="math inline">\(t \cdot w\)</span> est linéaire (ce qui n’est pas le cas si <span class="math inline">\(t\)</span> et <span class="math inline">\(w\)</span> sont chacun linéaires), tandis que la méthode 2 est exacte sous l’hypothèse de linéarité séparée de <span class="math inline">\(t\)</span> et <span class="math inline">\(w\)</span>.</p>
+</blockquote>
+</section>
+</section>
+<section id="exemple-numérique" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-numérique">Exemple numérique</h3>
+<p>Trois sommets d’un triangle présentent les données suivantes :</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Sommet</th>
+<th>Teneur <span class="math inline">\(t_i\)</span></th>
+<th>Épaisseur <span class="math inline">\(w_i\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>2,9 %</td>
+<td>8 m</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>5,2 %</td>
+<td>15 m</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>3,8 %</td>
+<td>25 m</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Moyenne arithmétique simple :</strong> <span class="math inline">\((2{,}9 + 5{,}2 + 3{,}8)/3 = 3{,}97\)</span> %</p>
+<p><strong>Épaisseur moyenne :</strong> <span class="math inline">\((8 + 15 + 25)/3 = 16\)</span> m</p>
+<p><strong>Méthode 1 (moyenne pondérée) :</strong></p>
+<p><span class="math display">\[
+\bar{t} = \frac{2{,}9 \times 8 + 5{,}2 \times 15 + 3{,}8 \times 25}{8 + 15 + 25} = \frac{23{,}2 + 78{,}0 + 95{,}0}{48} = 4{,}09\,\%
+\]</span></p>
+<p><strong>Méthode 2 (méthode des %) :</strong></p>
+<p><span class="math display">\[
+\bar{t} = \frac{(2{,}9 + 5{,}2 + 3{,}8) + 4{,}09}{4} = \frac{11{,}9 + 4{,}09}{4} = 4{,}00\,\%
+\]</span></p>
+<p>On observe que les trois estimations — moyenne simple, méthode 1 et méthode 2 — diffèrent légèrement. L’écart provient de la variation d’épaisseur entre les sommets : les sommets épais (25 m) reçoivent un poids plus élevé dans la méthode pondérée, favorisant la teneur du sommet 3.</p>
+</section>
+<section id="interpolation-ponctuelle-par-coordonnées-barycentriques" class="level3">
+<h3 class="anchored" data-anchor-id="interpolation-ponctuelle-par-coordonnées-barycentriques">Interpolation ponctuelle par coordonnées barycentriques</h3>
+<p>Si l’on souhaite estimer la teneur en un point particulier <span class="math inline">\(\mathbf{x}\)</span> situé à l’intérieur d’un triangle (et non la moyenne sur le triangle), on utilise les <strong>coordonnées barycentriques</strong> <span class="math inline">\(\lambda_1\)</span>, <span class="math inline">\(\lambda_2\)</span> et <span class="math inline">\(\lambda_3\)</span> du point par rapport aux trois sommets. La teneur interpolée s’écrit alors :</p>
+<p><span class="math display">\[
+t(\mathbf{x}) = \lambda_1 t_1 + \lambda_2 t_2 + \lambda_3 t_3
+\]</span></p>
+<p>avec :</p>
+<p><span class="math display">\[
+\lambda_1 + \lambda_2 + \lambda_3 = 1
+\qquad \text{et} \qquad
+\lambda_i \geq 0
+\]</span></p>
+<p>si le point <span class="math inline">\(\mathbf{x}\)</span> est situé à l’intérieur du triangle.</p>
+<section id="calcul-des-coordonnées-barycentriques" class="level4">
+<h4 class="anchored" data-anchor-id="calcul-des-coordonnées-barycentriques">Calcul des coordonnées barycentriques</h4>
+<p>Soient les sommets du triangle <span class="math inline">\(\mathbf{x}_1 = (x_1, y_1)\)</span>, <span class="math inline">\(\mathbf{x}_2 = (x_2, y_2)\)</span> et <span class="math inline">\(\mathbf{x}_3 = (x_3, y_3)\)</span>, et un point <span class="math inline">\(\mathbf{x} = (x, y)\)</span>. Les coordonnées barycentriques sont données par :</p>
+<p><span class="math display">\[
+\lambda_1 =
+\frac{
+(y_2 - y_3)(x - x_3) + (x_3 - x_2)(y - y_3)
+}{
+(y_2 - y_3)(x_1 - x_3) + (x_3 - x_2)(y_1 - y_3)
+}
+\]</span></p>
+<p><span class="math display">\[
+\lambda_2 =
+\frac{
+(y_3 - y_1)(x - x_3) + (x_1 - x_3)(y - y_3)
+}{
+(y_2 - y_3)(x_1 - x_3) + (x_3 - x_2)(y_1 - y_3)
+}
+\]</span></p>
+<p><span class="math display">\[
+\lambda_3 = 1 - \lambda_1 - \lambda_2
+\]</span></p>
+<p>Ces coefficients représentent les poids relatifs des trois sommets dans l’interpolation du point considéré.</p>
+<p>Cette interpolation est linéaire à l’intérieur de chaque triangle et assure la continuité aux arêtes partagées entre triangles adjacents.</p>
+<p>On peut aussi la voir comme une double interpolation linéaire (<a href="#fig-barycentrique" class="quarto-xref">Figure&nbsp;<span>5.5</span></a>). Pour estimer la teneur au point <span class="math inline">\(P\)</span>, on interpole d’abord linéairement le long du côté <span class="math inline">\(B\)</span>–<span class="math inline">\(C\)</span> afin d’obtenir la teneur au point <span class="math inline">\(D\)</span>, où la droite <span class="math inline">\(A\)</span>–<span class="math inline">\(P\)</span> coupe ce côté, puis on interpole une seconde fois le long de <span class="math inline">\(A\)</span>–<span class="math inline">\(D\)</span>, entre la teneur de <span class="math inline">\(A\)</span> et celle de <span class="math inline">\(D\)</span>. Le résultat est identique à la formule barycentrique.</p>
+<div id="fig-barycentrique" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-barycentrique-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C5_Barycentrique.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-barycentrique-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.5: Interpolation barycentrique vue comme une double interpolation linéaire : d’abord le long du côté B–C pour obtenir la teneur au point D (intersection de la droite A–P avec le côté), puis le long de A–D pour obtenir la teneur au point P. La couleur donne la teneur interpolée sur tout le triangle.
+</figcaption>
+</figure>
+</div>
+<!-- W2 : Triangles (TIN) -->
+</section>
+</section>
+</section>
+<section id="atelier-interactif-5.2-méthode-des-triangles-tin" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-5.2-méthode-des-triangles-tin">🧮 Atelier interactif 5.2 — Méthode des triangles (TIN)</h2>
+<p>Placez des points et observez la triangulation de Delaunay. Comparez la teneur moyenne par triangle avec l’interpolation barycentrique continue. Survolez un triangle pour voir les poids et la teneur interpolée.</p>
+<div id="gw_c05_triangles" class="geostat-widget" data-widget="c05_triangles">
+<div class="gw-placeholder">
+Chargement de l’atelier…
+</div>
+</div>
+</section>
+<section id="méthode-de-linverse-de-la-distance" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="méthode-de-linverse-de-la-distance"><span class="header-section-number">5.4</span> Méthode de l’inverse de la distance</h2>
+<section id="principe-2" class="level3">
+<h3 class="anchored" data-anchor-id="principe-2">Principe</h3>
+<p>Dans cette méthode, on estime la valeur en un point <span class="math inline">\(\mathbf{x}_0\)</span> à partir des observations voisines. L’idée est simple : plus une observation est proche du point à estimer, plus elle reçoit un poids important. À l’inverse, une observation éloignée aura moins d’influence.</p>
+<p>L’estimation s’écrit :</p>
+<p><span class="math display">\[
+Z_0^* = \frac{\displaystyle\sum_{i=1}^{n} \dfrac{Z_i}{d_i^b}}{\displaystyle\sum_{i=1}^{n} \dfrac{1}{d_i^b}}
+= \sum_{i=1}^{n} \lambda_i Z_i
+\]</span></p>
+<p>où <span class="math inline">\(d_i = |\mathbf{x}_i - \mathbf{x}_0|\)</span> est la distance entre l’observation <span class="math inline">\(\mathbf{x}_i\)</span> et le point à estimer <span class="math inline">\(\mathbf{x}_0\)</span>. Le paramètre <span class="math inline">\(b \geq 0\)</span> contrôle l’importance donnée à la distance. Plus <span class="math inline">\(b\)</span> est grand, plus les points proches dominent l’estimation.</p>
+<p>Les poids normalisés sont donnés par :</p>
+<p><span class="math display">\[
+\lambda_i =
+\frac{1/d_i^b}{\displaystyle\sum_{j=1}^{n} 1/d_j^b}
+\]</span></p>
+<p>Ces poids somment à 1, ce qui permet d’écrire l’estimation comme une moyenne pondérée des observations.</p>
+<p>Lorsque le point à estimer correspond exactement à une donnée, la distance devient nulle. Cette donnée prend alors tout le poids dans le calcul, et l’estimation devient simplement la valeur observée. Pour éviter qu’un point très proche domine complètement les autres, certaines implémentations ajoutent une petite constante à la distance.</p>
+</section>
+<section id="rôle-de-lexposant-b" class="level3">
+<h3 class="anchored" data-anchor-id="rôle-de-lexposant-b">Rôle de l’exposant <span class="math inline">\(b\)</span></h3>
+<p>Le choix de l’exposant contrôle la rapidité avec laquelle l’influence d’une observation décroît avec la distance :</p>
+<ul>
+<li><strong><span class="math inline">\(b = 0\)</span></strong> : tous les poids sont égaux → l’estimation est la moyenne arithmétique de toutes les données.</li>
+<li><strong><span class="math inline">\(b = 1\)</span></strong> : décroissance linéaire de l’influence. Surface assez lisse.</li>
+<li><strong><span class="math inline">\(b = 2\)</span></strong> : choix classique, offrant un bon compromis entre fidélité locale et lissage.</li>
+<li><strong><span class="math inline">\(b\)</span> élevé</strong> (<span class="math inline">\(b &gt; 3\)</span>) : les points très proches dominent fortement l’estimation, créant des « plateaux » autour de chaque donnée avec un effet dit « d’œil de bœuf ».</li>
+<li><strong><span class="math inline">\(b \to \infty\)</span></strong> : l’estimation converge vers la valeur du plus proche voisin, c’est-à-dire la méthode des polygones.</li>
+</ul>
+<p>La <a href="#fig-idw-exposant" class="quarto-xref">Figure&nbsp;<span>5.6</span></a> illustre ces comportements sur un même jeu de données.</p>
+<div id="fig-idw-exposant" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-idw-exposant-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C5_IDW_exposant.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-idw-exposant-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.6: Effet de l’exposant <span class="math inline">\(b\)</span> sur le champ estimé par inverse de la distance, pour un même jeu de données.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="exemple-numérique-1" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-numérique-1">Exemple numérique</h3>
+<p>On dispose de 5 observations autour d’un point <span class="math inline">\(\mathbf{x}_0\)</span> à estimer :</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Observation</th>
+<th style="text-align: right;">Distance <span class="math inline">\(d_i\)</span> (m)</th>
+<th style="text-align: right;">Teneur <span class="math inline">\(t_i\)</span> (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">1,0</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">1,0</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">1,5</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">1,5</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">3,0</td>
+</tr>
+</tbody>
+</table>
+<p>Avec <span class="math inline">\(b = 2\)</span> :</p>
+<p><span class="math display">\[
+Z_0^* = \frac{1{,}0/40^2 + 1{,}0/40^2 + 1{,}5/30^2 + 1{,}5/35^2 + 3{,}0/20^2}{1/40^2 + 1/40^2 + 1/30^2 + 1/35^2 + 1/20^2} = 2{,}05\,\%
+\]</span></p>
+<p>L’observation 5, la plus proche (<span class="math inline">\(d_5 = 20\)</span> m) et la plus riche (<span class="math inline">\(t_5 = 3{,}0\)</span> %), domine l’estimation avec un poids <span class="math inline">\(\lambda_5 \approx 0{,}44\)</span>. Les deux observations les plus éloignées (<span class="math inline">\(d_1 = d_2 = 40\)</span> m) reçoivent à l’inverse le poids le plus faible, <span class="math inline">\(\lambda_1 = \lambda_2 \approx 0{,}11\)</span> chacune.</p>
+</section>
+<section id="paramètres-dajustement" class="level3">
+<h3 class="anchored" data-anchor-id="paramètres-dajustement">Paramètres d’ajustement</h3>
+<p>On peut raffiner la méthode par les ajustements suivants :</p>
+<p><strong>(1) Distance maximale de recherche.</strong> Puisque l’influence d’un point devient négligeable à grande distance, on peut exclure les observations situées au-delà d’un rayon maximal. Cela accélère les calculs et évite d’inclure des données non pertinentes. La <a href="#fig-idw-recherche" class="quarto-xref">Figure&nbsp;<span>5.7</span></a> illustre ce principe.</p>
+<div id="fig-idw-recherche" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-idw-recherche-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C5_IDW_recherche.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-idw-recherche-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.7: Distance maximale de recherche. Seules les observations situées dans le rayon <span class="math inline">\(R\)</span> autour du point à estimer (étoile) sont utilisées; les données au-delà sont ignorées.
+</figcaption>
+</figure>
+</div>
+<p><strong>(2) Anisotropie géométrique.</strong> Si la minéralisation présente une direction de continuité préférentielle, on peut utiliser une <strong>distance anisotrope</strong>. En 2D, après rotation du système de coordonnées pour aligner les axes avec les directions principales de la minéralisation :</p>
+<p><span class="math display">\[
+d = \sqrt{\Delta x^2 + r^2 \, \Delta y^2}
+\]</span></p>
+<p>où <span class="math inline">\(r\)</span> est le <strong>rapport d’anisotropie</strong> (rapport de la portée dans la direction de faible continuité sur la portée dans la direction de forte continuité). Lorsque <span class="math inline">\(r = 1\)</span>, on retrouve la distance isotrope. Lorsque <span class="math inline">\(r &gt; 1\)</span>, les observations situées dans la direction <span class="math inline">\(y\)</span> sont perçues comme plus éloignées, réduisant leur influence. La généralisation en 3D est directe. L’effet est illustré à la <a href="#fig-idw-anisotropie" class="quarto-xref">Figure&nbsp;<span>5.8</span></a>.</p>
+<div id="fig-idw-anisotropie" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-idw-anisotropie-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C5_IDW_anisotropie.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-idw-anisotropie-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.8: Anisotropie géométrique. Les couleurs révèlent des structures de teneur allongées dans une direction de continuité (ici ≈ 25°).
+</figcaption>
+</figure>
+</div>
+<p><strong>(3) Choix de l’exposant.</strong> Le choix de <span class="math inline">\(b\)</span> est habituellement guidé par les connaissances géologiques du gisement (degré de continuité spatiale) et peut être optimisé par validation croisée.</p>
+</section>
+<section id="estimation-de-blocs" class="level3">
+<h3 class="anchored" data-anchor-id="estimation-de-blocs">Estimation de blocs</h3>
+<p>La méthode de l’inverse de la distance est d’abord une méthode d’estimation ponctuelle. Si on veut estimer un bloc, il faut donc représenter ce bloc par plusieurs points. On estime chacun de ces points, puis on prend la moyenne des valeurs obtenues. Cette moyenne donne ensuite l’estimation du bloc.</p>
+</section>
+<section id="validation-croisée" class="level3">
+<h3 class="anchored" data-anchor-id="validation-croisée">Validation croisée</h3>
+<p>La validation croisée permet de tester la méthode avec les données déjà disponibles (<a href="#fig-idw-validation" class="quarto-xref">Figure&nbsp;<span>5.9</span></a>). On prend une donnée connue, on la met temporairement de côté, puis on essaie de la retrouver avec les autres données. On répète ensuite l’opération pour chaque point.</p>
+<p>Pour chaque position <span class="math inline">\(\mathbf{x}_i\)</span>, on compare donc la valeur mesurée <span class="math inline">\(Z_i\)</span> avec la valeur estimée <span class="math inline">\(Z_i^*\)</span> obtenue sans utiliser cette donnée. Les erreurs de validation croisée sont alors :</p>
+<p><span class="math display">\[
+e_i = Z_i - Z_i^*
+\]</span></p>
+<p>et on calcule des statistiques sur ces erreurs : moyenne (qui doit être proche de 0), variance (la plus faible possible), etc. On peut répéter le processus en modifiant les paramètres de la méthode (exposant <span class="math inline">\(b\)</span>, rayon de recherche, anisotropie) et retenir la configuration qui donne les meilleures statistiques d’erreur.</p>
+<p>Ce principe de validation croisée s’applique à toutes les méthodes d’estimation, y compris les méthodes géostatistiques.</p>
+<div id="fig-idw-validation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-idw-validation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C5_IDW_validation.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-idw-validation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.9: Validation croisée (<em>leave-one-out</em>). À gauche : on retire tour à tour une donnée (cercle rouge) et on l’estime à partir de toutes les autres — ici, teneur mesurée 3,30 %, estimée 3,19 %, erreur +0,11. À droite : en répétant l’opération pour chaque point, on compare teneurs mesurées et estimées.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="limites-de-la-méthode" class="level3">
+<h3 class="anchored" data-anchor-id="limites-de-la-méthode">Limites de la méthode</h3>
+<ul>
+<li><strong>Effet d’œil de bœuf.</strong> L’IDW produit des artefacts circulaires (ou elliptiques en présence d’anisotropie) autour de chaque point de données, particulièrement visibles pour les valeurs élevées de <span class="math inline">\(b\)</span>.</li>
+<li><strong>Pas de prise en compte de la configuration spatiale.</strong> Deux observations proches l’une de l’autre fournissent une information redondante, mais l’IDW ne les dépondère pas : chacune reçoit un poids qui ne dépend que de sa distance au point à estimer, indépendamment de la présence des autres observations. Le krigeage, en revanche, tient compte de cette redondance.</li>
+<li><strong>Pas de mesure d’incertitude.</strong> L’IDW ne fournit pas directement une variance d’estimation. (Note : il serait possible d’en calculer une, mais cela nécessiterait de modéliser la fonction de covariance des données ou le variogramme, ce que nous verrons ultérieurement.)</li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>Note pratique.</strong> Un survol des études de faisabilité récentes déposées sur SEDAR indique que le krigeage ordinaire et l’inverse de la distance sont de loin les méthodes les plus utilisées pour l’estimation des ressources.</p>
+</blockquote>
+<!-- W3 : Inverse de la distance -->
+</section>
+</section>
+<section id="atelier-interactif-5.3-inverse-de-la-distance-idw" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-5.3-inverse-de-la-distance-idw">🧮 Atelier interactif 5.3 — Inverse de la distance (IDW)</h2>
+<p>Placez des points et ajustez l’exposant <span class="math inline">\(b\)</span> pour observer son effet sur la surface interpolée. Avec <span class="math inline">\(b = 0\)</span>, on obtient la moyenne arithmétique; avec <span class="math inline">\(b\)</span> élevé, on s’approche du plus proche voisin.</p>
+<div id="gw_c05_idw" class="geostat-widget" data-widget="c05_idw">
+<div class="gw-placeholder">
+Chargement de l’atelier…
+</div>
+</div>
+</section>
+<section id="la-méthode-des-sections" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="la-méthode-des-sections"><span class="header-section-number">5.5</span> La méthode des sections</h2>
+<p>La méthode des sections consiste à découper le gisement en une série de sections, souvent parallèles entre elles. Sur chaque section, on délimite les zones de minerai, puis on estime le volume total à partir des surfaces obtenues et des distances entre les sections.</p>
+<p>Cette méthode est surtout utilisée pour des gisements qui se suivent bien dans une direction, par exemple des veines ou des lentilles. Les sections sont généralement tracées perpendiculairement à la direction principale du corps minéralisé.</p>
+<section id="approche-moderne" class="level3">
+<h3 class="anchored" data-anchor-id="approche-moderne">Approche moderne</h3>
+<p>Pour ce type de gisements, les logiciels modernes de calcul des ressources procèdent habituellement en trois étapes :</p>
+<ol type="1">
+<li>Un <strong>modèle de blocs</strong> du gisement est construit à l’aide d’une méthode d’interpolation (inverse de la distance ou krigeage).</li>
+<li>Un <strong>solide</strong> est construit à partir des teneurs mesurées sur les carottes, d’une teneur de coupure spécifiée et de l’interprétation géologique.</li>
+<li>Le modèle de blocs est intersecté avec le solide, et la teneur pour l’ensemble du solide est la moyenne des blocs contenus dans l’enveloppe.</li>
+</ol>
+<blockquote class="blockquote">
+<p><strong>Remarque.</strong> Anciennement, les teneurs des forages servaient à estimer directement les teneurs des surfaces, lesquelles servaient ensuite à estimer les teneurs des volumes. Aujourd’hui, on préfère découper le volume en blocs et l’estimer par géostatistique ou par l’inverse de la distance.</p>
+</blockquote>
+</section>
+<section id="modélisation-explicite-et-implicite" class="level3">
+<h3 class="anchored" data-anchor-id="modélisation-explicite-et-implicite">Modélisation explicite et implicite</h3>
+<p>La méthode des sections est l’exemple type de la <strong>modélisation explicite</strong> : le géologue interprète et digitalise à la main les contours de la minéralisation sur chaque coupe, puis le logiciel relie ces contours pour former les solides. Cette approche laisse un contrôle total à l’interprète et intègre facilement sa connaissance géologique, mais elle est longue, en partie subjective, et doit être largement refaite chaque fois que de nouvelles données arrivent.</p>
+<p>La <strong>modélisation implicite</strong> procède autrement : la limite de la minéralisation n’est plus dessinée, mais définie par une fonction mathématique — un champ scalaire ajusté aux données, souvent par fonctions de base radiale. Les surfaces sont ensuite extraites comme des iso-contours de ce champ (<a href="#fig-modelisation-2d" class="quarto-xref">Figure&nbsp;<span>5.10</span></a>). Cette approche est plus rapide, reproductible et se met à jour automatiquement lorsqu’on ajoute des forages, au prix d’un contrôle manuel moins direct. Elle s’est largement répandue avec des logiciels comme <em>Leapfrog</em> et permet de construire directement des modèles géologiques 3D (<a href="#fig-modele3d-implicite" class="quarto-xref">Figure&nbsp;<span>5.11</span></a>).</p>
+<div id="fig-modelisation-2d" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-modelisation-2d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C5_Modelisation_impl_expl.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-modelisation-2d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.10: Modélisation explicite (contour digitalisé à la main, en rouge) et implicite (iso-contour d’un champ scalaire ajusté aux données, en noir) d’un même contour minéralisé.
+</figcaption>
+</figure>
+</div>
+<div id="fig-modele3d-implicite" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-modele3d-implicite-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C5_Modele3D_implicite.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-modele3d-implicite-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.11: Modèle géologique 3D obtenu par modélisation implicite : les unités sont délimitées par les iso-surfaces d’un champ scalaire ajusté aux données de forage.
+</figcaption>
+</figure>
+</div>
+<p>En pratique, les deux approches sont complémentaires : la modélisation implicite fournit rapidement une première enveloppe, que le géologue ajuste ensuite explicitement là où l’interprétation l’exige.</p>
+</section>
+<section id="construction-des-solides" class="level3">
+<h3 class="anchored" data-anchor-id="construction-des-solides">Construction des solides</h3>
+<p>La construction des solides s’effectue selon les étapes suivantes.</p>
+<section id="étape-1-zones-minéralisées-par-forage" class="level4">
+<h4 class="anchored" data-anchor-id="étape-1-zones-minéralisées-par-forage">Étape 1 : Zones minéralisées par forage</h4>
+<p>Pour une section donnée, on représente la trace des forages dans celle-ci. On spécifie habituellement une distance de tolérance, de part et d’autre de la section, pour considérer qu’un forage ou une partie de forage appartient à la section. Chaque analyse est représentée le long du forage, et on détermine les portions situées au-dessus de la teneur de coupure.</p>
+</section>
+<section id="étape-2-surfaces-minéralisées-par-section" class="level4">
+<h4 class="anchored" data-anchor-id="étape-2-surfaces-minéralisées-par-section">Étape 2 : Surfaces minéralisées par section</h4>
+<p>On superpose la géologie connue (lorsque disponible). En considérant la géologie et l’ensemble des portions de forage au-dessus de la teneur de coupure, on délimite une ou plusieurs surfaces minéralisées pour chaque section. On évite de créer des surfaces trop petites qui ne pourraient pas être exploitées. Dans la construction des surfaces, on évite d’extrapoler à des distances trop grandes par rapport aux forages, surtout lors de la fermeture de la surface, là où il n’y a pas de forages pour guider l’interprétation.</p>
+</section>
+<section id="étape-3-construction-des-volumes" class="level4">
+<h4 class="anchored" data-anchor-id="étape-3-construction-des-volumes">Étape 3 : Construction des volumes</h4>
+<p>Les logiciels construisent des solides en 3D à partir des polygones délimitant les surfaces minéralisées sur chaque section (<a href="#fig-sections-solide" class="quarto-xref">Figure&nbsp;<span>5.12</span></a>) :</p>
+<ul>
+<li>Chaque polygone est discrétisé en une série de points.</li>
+<li>Deux polygones de sections voisines sont joints par des triangles afin de fermer le vide entre les sections. Le solide est délimité par un ensemble de facettes triangulaires.</li>
+<li>Les sections de bout constituent un cas particulier : l’utilisateur doit fournir un point ou une surface de fermeture pour chaque extrémité.</li>
+</ul>
+<div id="fig-sections-solide" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sections-solide-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C5_Sections_solide.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sections-solide-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.12: Construction du solide : les contours mesurés sur des sections parallèles (à gauche) sont joints d’une section à l’autre pour former le solide (à droite).
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="étape-4-intersection-avec-le-modèle-de-blocs" class="level4">
+<h4 class="anchored" data-anchor-id="étape-4-intersection-avec-le-modèle-de-blocs">Étape 4 : Intersection avec le modèle de blocs</h4>
+<p>On détermine si chaque bloc est à l’intérieur ou à l’extérieur du solide formé. On calcule la moyenne des blocs intérieurs au solide. Chaque bloc peut comporter une estimation de la teneur seule (si la densité est constante) ou une estimation conjointe de la teneur et de la densité.</p>
+</section>
+</section>
+<section id="méthodes-manuelles-estimation-entre-deux-sections" class="level3">
+<h3 class="anchored" data-anchor-id="méthodes-manuelles-estimation-entre-deux-sections">Méthodes « manuelles » : estimation entre deux sections</h3>
+<p>Lorsque l’on ne dispose pas d’un logiciel de modélisation 3D, on peut obtenir des estimations approximatives en calculant la teneur moyenne et le volume entre chaque paire de sections consécutives. On note :</p>
+<ul>
+<li><span class="math inline">\(S_1\)</span>, <span class="math inline">\(S_2\)</span> : surfaces minéralisées des deux sections;</li>
+<li><span class="math inline">\(t_1\)</span>, <span class="math inline">\(t_2\)</span> : teneurs moyennes sur chaque section;</li>
+<li><span class="math inline">\(L\)</span> : distance entre les deux sections.</li>
+</ul>
+<p>Deux hypothèses sont possibles pour la variation de la teneur entre les sections :</p>
+<ul>
+<li><strong>Changement brusque</strong> : la teneur <span class="math inline">\(t_1\)</span> s’applique à la première moitié du volume (de la section 1 jusqu’à la mi-distance) et <span class="math inline">\(t_2\)</span> à la seconde moitié.</li>
+<li><strong>Changement graduel (linéaire)</strong> : la teneur varie linéairement entre <span class="math inline">\(t_1\)</span> et <span class="math inline">\(t_2\)</span>.</li>
+</ul>
+<p>De même, pour le calcul du volume, trois hypothèses géométriques sont courantes :</p>
+<ul>
+<li><strong>Surface linéaire</strong> : la surface de la section varie linéairement de <span class="math inline">\(S_1\)</span> à <span class="math inline">\(S_2\)</span>.</li>
+<li><strong>Cône tronqué</strong> : la section est circulaire et le rayon varie linéairement.</li>
+<li><strong>Obélisque</strong> : la section est rectangulaire (<span class="math inline">\(a_i \times b_i\)</span>) et les côtés varient linéairement.</li>
+</ul>
+</section>
+<section id="formules-entre-deux-sections" class="level3">
+<h3 class="anchored" data-anchor-id="formules-entre-deux-sections">Formules entre deux sections</h3>
+<p>Le tableau suivant présente les formules classiques de volume et de teneur moyenne pour les combinaisons les plus courantes. La densité est supposée constante. Les trois hypothèses géométriques sont illustrées à la <a href="#fig-sections-formes" class="quarto-xref">Figure&nbsp;<span>5.13</span></a>.</p>
+<div id="fig-sections-formes" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sections-formes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C5_Sections_formes.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sections-formes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.13: Les trois hypothèses géométriques entre deux sections <span class="math inline">\(S_1\)</span> et <span class="math inline">\(S_2\)</span> distantes de <span class="math inline">\(L\)</span> : surface linéaire (aire variant linéairement), cône tronqué (sections circulaires) et obélisque (sections rectangulaires).
+</figcaption>
+</figure>
+</div>
+<p>Ici, <strong>B</strong> désigne une teneur variant de façon brusque entre les sections et <strong>L</strong> une variation linéaire; pour l’obélisque, <span class="math inline">\(S_i = a_i \times b_i\)</span>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 30%">
+<col style="width: 23%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Méthode (volume)</th>
+<th style="text-align: center;">Teneur</th>
+<th>Volume</th>
+<th>Teneur moyenne <span class="math inline">\(\bar t\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Surface brusque</td>
+<td style="text-align: center;">B</td>
+<td><span class="math inline">\(\dfrac{(S_1+S_2)\,L}{2}\)</span></td>
+<td><span class="math inline">\(\dfrac{S_1 t_1 + S_2 t_2}{S_1+S_2}\)</span></td>
+</tr>
+<tr class="even">
+<td>Surface lin.</td>
+<td style="text-align: center;">B</td>
+<td><span class="math inline">\(\dfrac{(S_1+S_2)\,L}{2}\)</span></td>
+<td><span class="math inline">\(\dfrac{(3S_1+S_2)\,t_1+(3S_2+S_1)\,t_2}{4\,[S_1+S_2]}\)</span></td>
+</tr>
+<tr class="odd">
+<td>Surface lin.</td>
+<td style="text-align: center;">L</td>
+<td></td>
+<td><span class="math inline">\(\dfrac{(2S_1+S_2)\,t_1+(2S_2+S_1)\,t_2}{3\,[S_1+S_2]}\)</span></td>
+</tr>
+<tr class="even">
+<td>Cône tronqué</td>
+<td style="text-align: center;">B</td>
+<td><span class="math inline">\(\dfrac{(S_1+S_2+\sqrt{S_1S_2})\,L}{3}\)</span></td>
+<td><span class="math inline">\(\dfrac{(7S_1+S_2+4\sqrt{S_1S_2})\,t_1+(7S_2+S_1+4\sqrt{S_1S_2})\,t_2}{8\,[S_1+S_2+\sqrt{S_1S_2}]}\)</span></td>
+</tr>
+<tr class="odd">
+<td>Cône tronqué</td>
+<td style="text-align: center;">L</td>
+<td></td>
+<td><span class="math inline">\(\dfrac{(3S_1+S_2+2\sqrt{S_1S_2})\,t_1+(3S_2+S_1+2\sqrt{S_1S_2})\,t_2}{4\,[S_1+S_2+\sqrt{S_1S_2}]}\)</span></td>
+</tr>
+<tr class="even">
+<td>Obélisque</td>
+<td style="text-align: center;">B</td>
+<td><span class="math inline">\(\dfrac{(2S_1+2S_2+a_1b_2+a_2b_1)\,L}{6}\)</span></td>
+<td><span class="math inline">\(\dfrac{a_1b_1(7t_1+t_2)+(2t_1+2t_2)(a_2b_1+a_1b_2)+a_2b_2(t_1+7t_2)}{8a_1b_1+8a_2b_2+4a_1b_2+4a_2b_1}\)</span></td>
+</tr>
+<tr class="odd">
+<td>Obélisque</td>
+<td style="text-align: center;">L</td>
+<td></td>
+<td><span class="math inline">\(\dfrac{a_1b_1(3t_1+t_2)+(t_1+t_2)(a_2b_1+a_1b_2)+a_2b_2(t_1+3t_2)}{4a_1b_1+4a_2b_2+2a_1b_2+2a_2b_1}\)</span></td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p><strong>Remarque.</strong> En pratique, les méthodes les plus utilisées sont : (1) surface linéaire avec teneur brusque, (2) surface linéaire avec teneur linéaire, et (3) cône tronqué avec teneur brusque. Les formules de l’obélisque sont rarement utilisées car elles nécessitent de connaître les dimensions individuelles des sections, au-delà de leur seule surface.</p>
+</blockquote>
+</section>
+<section id="exemple-numérique-2" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-numérique-2">Exemple numérique</h3>
+<p>Données : <span class="math inline">\(S_1 = 600\;\text{m}^2\)</span>, <span class="math inline">\(S_2 = 1\,200\;\text{m}^2\)</span>, <span class="math inline">\(t_1 = 2\,\%\;\text{Cu}\)</span>, <span class="math inline">\(t_2 = 4\,\%\;\text{Cu}\)</span>, <span class="math inline">\(L = 20\;\text{m}\)</span>.</p>
+<p>Pour l’obélisque : <span class="math inline">\(a_1 = 30\;\text{m}\)</span>, <span class="math inline">\(b_1 = 20\;\text{m}\)</span>, <span class="math inline">\(a_2 = 40\;\text{m}\)</span>, <span class="math inline">\(b_2 = 30\;\text{m}\)</span>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Méthode</th>
+<th style="text-align: center;">Volume (× 10³ m³)</th>
+<th style="text-align: center;">Teneur moyenne (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Surface brusque</td>
+<td style="text-align: center;">18,00</td>
+<td style="text-align: center;">3,33</td>
+</tr>
+<tr class="even">
+<td>Surface lin., teneur linéaire</td>
+<td style="text-align: center;">18,00</td>
+<td style="text-align: center;">3,11</td>
+</tr>
+<tr class="odd">
+<td>Cône tronqué, teneur brusque</td>
+<td style="text-align: center;">17,66</td>
+<td style="text-align: center;">3,17</td>
+</tr>
+<tr class="even">
+<td>Cône tronqué, teneur linéaire</td>
+<td style="text-align: center;">17,66</td>
+<td style="text-align: center;">3,11</td>
+</tr>
+<tr class="odd">
+<td>Obélisque, teneur brusque</td>
+<td style="text-align: center;">17,67</td>
+<td style="text-align: center;">3,17</td>
+</tr>
+<tr class="even">
+<td>Obélisque, teneur linéaire</td>
+<td style="text-align: center;">17,67</td>
+<td style="text-align: center;">3,11</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Observations :</strong></p>
+<ul>
+<li>La différence la plus importante entre les estimés de teneur provient de l’hypothèse de changement brusque (3,33 %) versus graduel (3,11 %) de la teneur. L’écart entre les hypothèses géométriques de volume (surface linéaire, cône, obélisque) est secondaire.</li>
+<li>Les volumes diffèrent légèrement entre les méthodes (de 17,66 à 18,00 × 10³ m³), mais l’impact sur la teneur moyenne est faible.</li>
+<li>En pratique, le choix entre ces formules a moins d’influence sur le résultat final que la qualité de la délimitation des surfaces minéralisées et le choix de la teneur de coupure.</li>
+</ul>
+</section>
+<section id="sections-de-bout" class="level3">
+<h3 class="anchored" data-anchor-id="sections-de-bout">Sections de bout</h3>
+<p>Les sections de bout (première et dernière) nécessitent un traitement particulier, car il n’y a pas de section voisine d’un côté. On peut :</p>
+<ul>
+<li>Prolonger la section de bout sur une demi-distance vers l’extérieur (hypothèse conservatrice).</li>
+<li>Fermer le solide en un point (volume du cône).</li>
+<li>Utiliser une distance d’extrapolation basée sur les connaissances géologiques.</li>
+</ul>
+</section>
+</section>
+<section id="atelier-interactif-5.4-modèle-de-blocs-vs-approximation-par-formes" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-5.4-modèle-de-blocs-vs-approximation-par-formes">🧮 Atelier interactif 5.4 — Modèle de blocs vs approximation par formes</h2>
+<p>Deux vues 3D synchronisées : faire pivoter l’une fait pivoter l’autre (cliquez-glissez, molette pour zoomer). À gauche, le <strong>modèle de blocs réaliste</strong> : les teneurs proviennent d’un vrai <strong>champ gaussien log-normal</strong> (simulé par FFT-MA, comme dans les autres sections du livre), dont la moyenne locale suit une transition graduelle de <span class="math inline">\(t_1\)</span> vers <span class="math inline">\(t_2\)</span>. C’est la « réalité » de référence : son volume et sa teneur moyenne s’obtiennent par comptage des blocs. À droite, la même enveloppe est approximée par les formules, qui résument la transition de façon brusque (marche) ou linéaire (rampe) et le volume par surface linéaire ou cône tronqué. L’écart entre la réalité et l’approximation, affiché en pourcentage, montre la différence d’hypothèse et de teneur calculée. Le bouton « Nouveau champ » tire une autre réalisation; ajustez aussi les surfaces, les teneurs, la distance, la forme et la taille des blocs. La taille des blocs étant fixe, augmenter la distance <span class="math inline">\(L\)</span> ou la section augmente automatiquement leur nombre, comme dans un vrai modèle de blocs.</p>
+<div id="gw_c05_blocsections" class="geostat-widget" data-widget="c05_blocsections">
+<div class="gw-placeholder">
+Chargement de l’atelier…
+</div>
+</div>
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../chapters/C04/index.html" class="pagination-link" aria-label="Traitement et analyse statistique des données de forage">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Traitement et analyse statistique des données de forage</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../chapters/C06/index.html" class="pagination-link" aria-label="Introduction à la géostatistique">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction à la géostatistique</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Code source</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Méthodes déterministes d'estimation des ressources"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">abstract:</span><span class="co"> |</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">  Ce chapitre présente les principales méthodes déterministes, dites conventionnelles, utilisées pour estimer les ressources à partir d’un échantillonnage limité. Toutes reposent sur le principe d’une moyenne pondérée, mais se distinguent par la manière dont les poids sont attribués aux observations. Les méthodes des polygones, ou du plus proche voisin, des triangles, fondée sur une interpolation par triangulation, de l’inverse de la distance et des sections sont successivement étudiées. Pour chacune, le principe, les formulations mathématiques, les avantages et les limites sont présentés. Des ateliers interactifs permettent de visualiser l’application de ces méthodes à des jeux de données synthétiques en deux dimensions.</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## Objectifs d'apprentissage</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Comprendre le cadre général de l'estimation par moyenne pondérée et le rôle des poids $\lambda_i$;</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Construire des polygones de Voronoï et expliquer leur lien avec la triangulation de Delaunay;</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Appliquer la méthode des triangles selon différentes hypothèses de variation de la teneur et de l'épaisseur;</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Estimer une teneur par la méthode de l'inverse de la distance et analyser l'effet de l'exposant $b$;</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Utiliser la validation croisée pour comparer et calibrer les méthodes d'estimation;</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Appliquer la méthode des sections pour estimer le volume et la teneur d'un gisement.</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>{{&lt; include 05-01.qmd &gt;}}</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>{{&lt; include 05-02.qmd &gt;}}</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>{{&lt; include 05-03.qmd &gt;}}</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>{{&lt; include 05-04.qmd &gt;}}</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>{{&lt; include 05-05.qmd &gt;}}</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Géostatistique et géologie minière</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Danlauz/glq3401-3651/edit/main/chapters/C05/index.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/Danlauz/glq3401-3651/issues/new" class="toc-action"><i class="bi empty"></i>Signaler un problème ou<br>formuler une suggestion</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Ce livre a été réalisé avec <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+<script type="module" src="../../scripts/geostat-js/loader.js"></script>
+<script src="../../scripts/geostat-js/notebook-button.js" defer=""></script>
+
+
+
+
+</body></html>

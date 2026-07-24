@@ -1,0 +1,22 @@
+## Applications du krigeage d'indicatrices
+
+Le krigeage d'indicatrices se justifie lorsque la grandeur recherchée est une fonction non linéaire de la teneur, hors de portée du krigeage ordinaire (KO) ou simple (KS), qui estiment la teneur moyenne.
+
+Le KO et le KS estiment la valeur moyenne $Z_0^*$ : une estimation lissée, optimale au sens de l'erreur quadratique. Or beaucoup de questions pratiques ne portent pas sur la moyenne, mais sur une fonction non linéaire de la teneur.
+
+- *Ce sol dépasse-t-il le seuil réglementaire de contamination?* On veut $\mathbb{P}(Z(\mathbf{x}_0) > z_c)$, pas $Z_0^*$.
+- *Quel tonnage de minerai dépasse la teneur de coupure, et à quelle teneur?* On veut le **tonnage récupérable** $T(z_c) = 1 - F(z_c)$ et la **quantité de métal** $Q(z_c) = \int_{z_c}^{\infty} z \, \mathrm{d}F(z)$, deux intégrales de la distribution locale au-dessus de la coupure.
+
+Sur ces questions, le seuil de la carte du KO (ou KS) fournit une réponse biaisée. Le lissage atténue les valeurs extrêmes et déforme les proportions au-delà du seuil, d'autant plus que la distribution est asymétrique (la loi log-normale, typique des teneurs). Le KI, lui, estime directement la distribution conditionnelle locale $\widehat{F}_{KI}(\mathbf{x}_0; z)$ : sans hypothèse de loi, il fournit la probabilité de dépassement, la médiane et toute quantité dérivée de la distribution.
+
+L'atelier suivant illustre l'usage phare : délimiter une zone contaminée, où le KI estime la probabilité de dépassement et la quantité de sol contaminé bien mieux qu'un seuillage du KO.
+
+## 🧮 Atelier interactif 11.4 — Site pollué : KI contre KO {.unnumbered}
+
+::: {.content-visible when-format="html"}
+On délimite la zone d'un sol contaminé au-delà d'un seuil réglementaire $z_c$, à partir de quelques sondages. Comparez la vérité, l'estimation KO (teneur lissée et variance) et la carte KI de $\mathbb{P}(Z > z_c)$. Basculez entre une loi gaussienne et une loi log-normale (fortement asymétrique) : sur des données très non gaussiennes, seuiller la carte KO sous-estime la zone contaminée, alors que le KI reste proche de la vérité.
+{{< include widget/widget_ki_vs_ko.qmd >}}
+:::
+::: {.content-visible unless-format="html"}
+Cet atelier n'est disponible que dans la version web.
+:::

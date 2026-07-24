@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c13_tg_pgs">
+  <div class="gw-placeholder">Chargement (TGS / PGS — patron dessinable)…</div>
+</div>
+```

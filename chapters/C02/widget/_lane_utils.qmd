@@ -1,0 +1,81 @@
+```{=html}
+<!--
+  Helpers JS partagés pour les ateliers du chapitre 02 (Lane et Taylor).
+  PRINCIPE STRICT : ZERO duplication. Tous les calculs (teneurs limites,
+  reserves, courbes de profit, lognormale) sont effectués par la VRAIE
+  librairie `geostat_polymtl.economics` via Pyodide (`gpoly.lane*`).
+
+  Objet exposé : `window.LaneUtils` — toutes les méthodes sont **async**.
+    - teneurs_limites(y, p, k, h, f, F, H, K)         → { c1, c2, c3 }
+    - reserves(moyenne, variance, cc, distribution)   → { cc, xc, gc, qc }
+    - lognormpdf(x, moyenne, variance)                → densite (scalaire ou tableau)
+    - analyse_complete(params)                        → analyse complète
+
+  Source de vérité : geostat_polymtl/economics/economics.py et reserves.py.
+-->
+
+<script type="module">
+import { gpoly, afficherChargementJusquaPret } from '/scripts/geostat-js/pyodide_setup.js';
+
+if (!window.LaneUtils) {
+  // Defaults qui correspondent aux paramètres de ParametresLane (Python).
+  const DEFAUTS = {
+    m: 1.3, y: 0.9, p: 1700.0, k: 500.0, h: 3.0, f: 20.0, F: 0.0,
+    M: 24.0, H: 14.0, K: 0.22,
+    moyenne: 1.3, variance: 3.0, distribution: 'lognormale',
+  };
+
+  function _completer(params) {
+    return Object.assign({}, DEFAUTS, params || {});
+  }
+
+  window.LaneUtils = {
+    /**
+     * Calcule les 3 teneurs limites (mine, concentrateur, marché).
+     * → { c1, c2, c3 } en %.
+     * Délégué à geostat_polymtl.economics.teneurs_limites.
+     */
+    teneurs_limites: async function (y, p, k, h, f, F, H, K) {
+      const params = _completer({ y, p, k, h, f, F, H, K });
+      return await gpoly.laneTeneursLimites(params);
+    },
+
+    /**
+     * Calcule xc (proportion), gc (teneur moyenne du minerai), qc (xc·gc).
+     * cc peut être un scalaire ou un tableau.
+     * → { cc, xc, gc, qc }.
+     * Délégué à geostat_polymtl.economics.reserves.
+     */
+    reserves: async function (moyenne, variance, cc, distribution) {
+      const arr = Array.isArray(cc) ? cc : [cc];
+      const r = await gpoly.laneReserves(moyenne, variance, arr,
+                                          distribution || 'lognormale');
+      return r;
+    },
+
+    /**
+     * Densité lognormale paramétrée par (moyenne, variance).
+     * Délégué à geostat_polymtl.economics (formule analytique standard).
+     */
+    lognormpdf: async function (x, moyenne, variance) {
+      return await gpoly.laneLognormPdf(x, moyenne, variance);
+    },
+
+    /**
+     * Analyse complète : teneurs limites + courbes de profit + équilibres + optimum.
+     * → { c1, c2, c3, cc, v_mine, v_concentrateur, v_marche, c_opt,
+     *     profit_opt, nature_opt, equilibres, xc, gc }
+     * Délégué à geostat_polymtl.economics.courbes_profit.
+     */
+    analyse_complete: async function (params) {
+      const p = _completer(params);
+      const n = (params && params.n_points) || 600;
+      return await gpoly.laneAnalyseComplete(p, n);
+    },
+
+    /** Wrapper pratique pour les widgets : attend Pyodide + place spinner. */
+    pret: function (el) { return afficherChargementJusquaPret(el); },
+  };
+}
+</script>
+```

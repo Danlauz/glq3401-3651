@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c12_contaminant">
+  <div class="gw-placeholder">Chargement (krigeage vs simulations — site contaminé)…</div>
+</div>
+```

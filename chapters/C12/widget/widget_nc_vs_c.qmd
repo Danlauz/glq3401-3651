@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c12_nc_vs_c">
+  <div class="gw-placeholder">Chargement (non conditionnel vs conditionnel)…</div>
+</div>
+```

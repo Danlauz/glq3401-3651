@@ -1,0 +1,50 @@
+---
+title: "Aspect économique"
+abstract: |
+  Ce chapitre porte sur la notion de teneur de coupure, un élément central de l’évaluation économique d’un projet minier. La théorie de Lane permet de déterminer une teneur de coupure en fonction des coûts d’exploitation, du prix du métal, de la récupération métallurgique et des contraintes de capacité propres à l’opération minière. Les principales formes de teneur de coupure utilisées en planification minière sont ensuite présentées, notamment les teneurs de coupure limites, les teneurs de coupure d’équilibre et la teneur de coupure optimale. Des ateliers interactifs permettent enfin d’évaluer l’effet des paramètres économiques et opérationnels sur la rentabilité du projet. Ce chapitre suppose qu’un modèle de blocs de ressources et de réserves minières est déjà disponible. La construction de ce modèle sera abordée plus loin dans le livre.
+---
+
+::: {.callout-important}
+## Objectifs d'apprentissage
+
+À la fin de ce chapitre, vous serez en mesure de :
+
+- Expliquer le rôle de la teneur de coupure dans la décision d'exploiter, de traiter ou de rejeter un bloc;
+
+- Distinguer les teneurs de coupure limite, d'équilibre et optimale;
+
+- Calculer les teneurs limite et d'équilibre à partir des paramètres économiques et opérationnels d'un projet minier.
+
+- Déterminer la teneur de coupure optimale en comparant les contraintes liées à la mine, au concentrateur et au marché;
+
+- Analyser l'effet de paramètres comme le prix du métal, les coûts d'extraction, les coûts de traitement, la récupération métallurgique et les capacités de production sur la rentabilité d'un projet;
+
+- Expliquer pourquoi l'absence de biais conditionnel est nécessaire pour appliquer correctement la théorie de Lane à un modèle de blocs.
+:::
+
+::: {.callout-note}
+## Référence
+
+Ce chapitre s'appuie principalement sur le livre suivant :
+
+Lane, K. F. (2016). The economic definition of ore: Cut-Off Grades in Theory and Practice.
+
+:::
+
+{{< include widget/_lane_utils.qmd >}}
+
+{{< include 02-01.qmd >}}
+
+{{< include 02-02.qmd >}}
+
+{{< include 02-03.qmd >}}
+
+{{< include 02-04.qmd >}}
+
+{{< include 02-05.qmd >}}
+
+{{< include 02-06.qmd >}}
+
+{{< include 02-07.qmd >}}
+
+{{< include 02-08.qmd >}}

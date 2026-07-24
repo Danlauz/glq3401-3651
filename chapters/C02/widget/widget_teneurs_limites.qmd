@@ -1,0 +1,84 @@
+```{=html}
+<style>
+.w1-calc{max-width:660px;margin:0 auto;font-family:system-ui,sans-serif}
+.w1-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px 12px;margin-bottom:16px}
+.w1-grid label{font-size:13px;color:#555;display:flex;flex-direction:column;gap:2px}
+.w1-grid input{width:100%;padding:6px 8px;border:1px solid #ccc;border-radius:6px;font-size:14px;box-sizing:border-box}
+.w1-results{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:8px}
+.w1-card{text-align:center;padding:16px 10px;border-radius:12px;border:2px solid #ddd}
+.w1-card .w1-label{font-size:13px;font-weight:600;margin-bottom:4px}
+.w1-card .w1-value{font-size:1.8em;font-weight:700}
+.w1-card .w1-formula{font-size:11px;color:#888;margin-top:6px;font-family:monospace}
+.w1-mine{background:#eef4ff;border-color:#4a90d9;color:#1a4a7a}
+.w1-conc{background:#fff5ee;border-color:#d98a4a;color:#7a4a1a}
+.w1-marc{background:#eefff0;border-color:#4ad95a;color:#1a5a1a}
+@media(max-width:600px){.w1-grid{grid-template-columns:1fr 1fr}.w1-results{grid-template-columns:1fr}}
+</style>
+
+<div class="w1-calc" id="w1">
+  <div class="w1-grid">
+    <label>Récupération (y)<input type="number" id="w1-y" value="0.9" step="0.01" min="0.01" max="1"></label>
+    <label>Prix métal p ($/t)<input type="number" id="w1-p" value="1525" step="25"></label>
+    <label>Coût fonderie k ($/t)<input type="number" id="w1-k" value="500" step="25"></label>
+    <label>Coût traitement h ($/t)<input type="number" id="w1-h" value="2.9" step="0.1"></label>
+    <label>Frais fixes f (M$)<input type="number" id="w1-f" value="19.75" step="0.25"></label>
+    <label>Coût opportunité F (M$)<input type="number" id="w1-F" value="0" step="0.25"></label>
+    <label>Capacité traitement H (Mt)<input type="number" id="w1-H" value="6" step="0.25"></label>
+    <label>Capacité marché K (Mt)<input type="number" id="w1-K" value="0.1" step="0.01"></label>
+  </div>
+  <div class="w1-results">
+    <div class="w1-card w1-mine">
+      <div class="w1-label">c₁ — Mine</div>
+      <div class="w1-value" id="w1-c1">—</div>
+      <div class="w1-formula">h / [y·(p−k)] × 100</div>
+    </div>
+    <div class="w1-card w1-conc">
+      <div class="w1-label">c₂ — Concentrateur</div>
+      <div class="w1-value" id="w1-c2">—</div>
+      <div class="w1-formula">[h + (f+F)/H] / [y·(p−k)] × 100</div>
+    </div>
+    <div class="w1-card w1-marc">
+      <div class="w1-label">c₃ — Marché</div>
+      <div class="w1-value" id="w1-c3">—</div>
+      <div class="w1-formula">h / [(p−k) − (f+F)/K] / y × 100</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(async function(){
+  var ids = ['w1-y','w1-p','w1-k','w1-h','w1-f','w1-F','w1-H','w1-K'];
+  function val(id){ return parseFloat(document.getElementById(id).value) || 0; }
+
+  // Attendre que window.LaneUtils soit défini (chargé par _lane_utils.qmd).
+  while (!window.LaneUtils) { await new Promise(r => setTimeout(r, 80)); }
+  // Place un spinner sur la carte jusqu'à ce que Pyodide soit prêt.
+  await window.LaneUtils.pret(document.getElementById('w1'));
+
+  let busy = false, redo = false;
+  async function update(){
+    if (busy) { redo = true; return; }
+    busy = true;
+    try {
+      const lim = await window.LaneUtils.teneurs_limites(
+        val('w1-y'), val('w1-p'), val('w1-k'), val('w1-h'),
+        val('w1-f'), val('w1-F'), val('w1-H'), val('w1-K')
+      );
+      document.getElementById('w1-c1').textContent = isFinite(lim.c1) ? lim.c1.toFixed(2)+' %' : '—';
+      document.getElementById('w1-c2').textContent = isFinite(lim.c2) ? lim.c2.toFixed(2)+' %' : '—';
+      document.getElementById('w1-c3').textContent = isFinite(lim.c3) ? lim.c3.toFixed(2)+' %' : '—';
+    } catch (e) {
+      console.error('[w1 teneurs_limites]', e);
+      ['w1-c1','w1-c2','w1-c3'].forEach(id => {
+        document.getElementById(id).textContent = '⚠ ' + (e.message || 'erreur');
+      });
+    } finally {
+      busy = false;
+      if (redo) { redo = false; update(); }
+    }
+  }
+  ids.forEach(function(id){ document.getElementById(id).addEventListener('input', update); });
+  update();
+})();
+</script>
+```

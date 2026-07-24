@@ -1,0 +1,200 @@
+## Teneurs de coupure limites
+
+La détermination de la teneur de coupure optimale commence par l'identification de plusieurs valeurs candidates. Dans la théorie de Lane, ces valeurs correspondent à trois teneurs de coupure limites et à trois teneurs de coupure d'équilibre. Il a été montré que la teneur de coupure optimale appartient nécessairement à cet ensemble restreint de six valeurs.
+
+La teneur de coupure optimale ne peut donc pas être choisie arbitrairement. Elle résulte d'un compromis entre les capacités techniques du système minier et les conditions économiques du projet. Plus précisément, elle dépend de trois composantes principales : la mine, le concentrateur et le marché.
+
+Ces trois composantes peuvent chacune devenir la contrainte principale du système. Par exemple, il est possible qu'une mine puisse extraire plus de matériau que le concentrateur ne peut en traiter, ou encore qu'un concentrateur puisse produire plus de métal que le marché ne peut en absorber dans des conditions économiques favorables. La théorie de Lane permet de formaliser ces situations en associant à chacune d'elles une teneur de coupure particulière.
+
+On distingue ainsi trois facteurs limitatifs.
+
+- **Limite de la mine**
+  La limite de la mine correspond à la capacité maximale d'extraction du site. Elle dépend des équipements miniers, de la main-d'œuvre, des infrastructures disponibles et de l'organisation des opérations. Lorsque cette composante est limitante, la contrainte principale porte sur la quantité totale de matériau pouvant être extraite.
+
+- **Limite du concentrateur**
+  La limite du concentrateur correspond à la capacité maximale de traitement du minerai par l'usine. Même si la mine peut extraire une grande quantité de matériau minéralisé, seule une partie de ce matériau peut être traitée si la capacité de broyage, de flottation, de lixiviation ou de concentration est limitée. Lorsque cette composante est limitante, la contrainte principale porte sur la quantité de minerai pouvant être envoyée au traitement.
+
+- **Limite du marché**
+  La limite du marché correspond à la quantité maximale de produit pouvant être vendue dans des conditions économiques acceptables. Une production trop élevée peut entraîner une accumulation de stocks, des difficultés de vente ou une pression à la baisse des prix. Lorsque cette composante est limitante, la contrainte principale porte sur la quantité de métal ou de produit final pouvant être écoulée.
+
+### Calcul des teneurs limites
+
+Une teneur de coupure limite est calculée en supposant qu'une seule composante du système constitue la contrainte active : la mine, le concentrateur ou le marché. Autrement dit, on cherche la teneur de coupure qui maximise le profit lorsque cette composante fonctionne à pleine capacité, tandis que les autres composantes sont considérées, *de facto*, comme non limitantes.
+
+Pour comparer les trois teneurs limites de manière cohérente, les revenus et les coûts sont exprimés sur une même base de référence : la tonne de matériau minéralisé. Cette normalisation permet d'évaluer les profits associés à chaque contrainte avec des unités comparables.
+
+#### Teneur de coupure limite associée à la mine
+
+Considérons d'abord le cas où la mine est la contrainte active du système : les opérations minières fonctionnent alors à leur capacité maximale, notée $M$, exprimée en tonnes de matériau minéralisé par année. Cela signifie que nous extraisons du sous-sol $M$ tonnes de matériau minéralisé au cours de l'année. Les autres composantes du système, à savoir le concentrateur et le marché, sont alors supposées non limitantes.
+
+Dans ce cas, le profit net par tonne de matériau minéralisé lorsque la mine est limitente, noté $v_1$, peut s'écrire :
+
+$$
+v_1 = (p - k)\, x_c\, g_c\, y \;-\; m \;-\; x_c h \;-\; \frac{f + F}{M}.
+$$ {#eq-v1}
+
+Le premier terme représente le revenu net associé au métal récupéré. Plus précisément, $x_c$ désigne la proportion de matériau minéralisé envoyée au traitement, $g_c$ la teneur moyenne de ce minerai, et $y$ le taux de récupération métallurgique. Le produit $x_c g_c y$ correspond donc à la quantité de métal récupérée par tonne de matériau minéralisé.
+
+Le terme $(p-k)$ représente la valeur nette du métal vendu, où $p$ est le prix de vente du métal et $k$ le coût unitaire de mise en marché. Le terme $(p-k)x_c g_c y$ correspond donc au revenu net par tonne de matériau minéralisé.
+
+
+Les autres termes représentent les coûts. Le coût de minage $m$ s'applique à chaque tonne de matériau minéralisé extraite; le coût de traitement $x_c h$ ne porte que sur la fraction $x_c$ du matériau effectivement envoyée au concentrateur; enfin, le terme $\dfrac{f+F}{M}$ répartit les frais fixes $f$ et le coût d'opportunité $F$ sur la capacité annuelle de minage $M$.
+
+Dans ce cas, la mine est la contrainte active. On exprime donc le profit par tonne de matériau minéralisé extrait. La variable de décision est la proportion $x_c$ de ce matériau qui sera envoyée au traitement. Cette proportion dépend de la teneur de coupure : plus la teneur de coupure est élevée, plus $x_c$ diminue, mais plus la teneur moyenne du minerai traité $g_c$ augmente.
+
+Pour déterminer la teneur de coupure limite associée à la mine, on cherche la valeur de $x_c$ qui maximise le profit net $v$. La condition de premier ordre est donc :
+
+$$
+\frac{dv_1}{dx_c} = 0.
+$$
+
+À partir de l'équation du profit :
+
+$$
+v_1 = (p-k)x_cg_cy - m - x_ch - \frac{f+F}{M},
+$$
+
+on dérive chaque terme par rapport à $x_c$ :
+
+$$
+\frac{dv_1}{dx_c} = y(p-k)\frac{d(x_cg_c)}{dx_c}-h.
+$$
+
+Les termes $m$ et $\dfrac{f+F}{M}$ disparaissent lors de la dérivation, car ils ne dépendent pas de $x_c$. Ils sont constants par tonne de matériau minéralisé lorsque la mine fonctionne à pleine capacité.
+
+On utilise ensuite la relation suivante :
+
+$$
+\frac{d(x_c g_c)}{dx_c} = c.
+$$
+
+Cette relation signifie que lorsqu'on ajoute une petite quantité de matériau au traitement, la teneur marginale de ce matériau correspond à la teneur de coupure $c$. Autrement dit, $c$ représente la teneur du matériau situé exactement à la limite entre ce qui est traité et ce qui ne l'est pas.
+
+La condition d'optimalité devient alors :
+
+$$
+y(p-k)c - h = 0.
+$$
+
+En isolant $c$, on obtient la teneur de coupure limite associée à la mine que l'on nommera $c_1$ :
+
+$$
+c_1 = \frac{h}{y(p-k)}.
+$$ {#eq-c1}
+
+Cette expression montre que, lorsque la mine est la contrainte active, la teneur de coupure limite dépend du coût de traitement $h$, du taux de récupération métallurgique $y$ et de la valeur nette du métal $(p-k)$. Les coûts de minage, les frais fixes et le coût d'opportunité n'apparaissent pas dans l'expression finale, car ils ne varient pas avec la proportion $x_c$ envoyée au concentrateur dans cette formulation.
+
+#### Teneur de coupure limite associée au concentrateur
+
+Considérons maintenant le cas où c'est le concentrateur qui devient la contrainte active : l'usine de traitement fonctionne alors à sa capacité maximale, notée $H$, exprimée en tonnes de minerai traitées par année. La mine et le marché sont alors supposés non limitants.
+
+La logique est semblable au cas précédent, mais la répartition des frais fixes change. Lorsque le concentrateur est limitant, les frais fixes et le coût d'opportunité ne sont plus répartis sur la capacité de la mine $M$, mais sur la quantité de matériau minéralisé nécessaire pour alimenter le concentrateur à pleine capacité.
+
+Comme une tonne de matériau minéralisé contient une proportion $x_c$ de minerai, il faut extraire $\frac{H}{x_c}$ tonnes de matériau minéralisé pour fournir $H$ tonnes de minerai au concentrateur. Ainsi, les frais fixes et le coût d'opportunité, rapportés à une tonne de matériau minéralisé, deviennent :
+
+$$
+\frac{f+F}{H/x_c} = \frac{(f+F)x_c}{H}.
+$$
+
+L'équation du profit net par tonne de matériau minéralisé lorsque le concentrateur est limitant, noté $v_2$, devient donc :
+
+$$
+v_2 = (p - k) x_c g_c y - m - x_c h  - \frac{(f + F) x_c}{H}.
+$$ {#eq-v2}
+
+En maximisant cette expression par rapport à $x_c$ ($\frac{dv_2}{dx_c} = 0$), on obtient la teneur de coupure limite associée au concentrateur :
+
+$$
+c_2 = \frac{h + \frac{f+F}{H}}{y(p - k)}.
+$$ {#eq-c2}
+
+Cette expression diffère de celle associée à la mine, car la capacité limitée du concentrateur donne une valeur économique à chaque tonne de minerai traitée. La teneur de coupure doit donc couvrir le coût variable de traitement $h$ ainsi que la part des frais fixes et du coût d'opportunité associée à la capacité de traitement utilisée.
+
+#### Teneur de coupure limite associée au marché
+
+Considérons enfin le cas où le marché devient la contrainte active : la quantité de métal pouvant être vendue est alors limitée à $K$ tonnes par année. La mine et le concentrateur sont alors supposés non limitants.
+
+La logique est semblable à celle utilisée pour le concentrateur et la mine, mais la contrainte porte cette fois sur la quantité de métal produit. Pour une tonne de matériau minéralisé, la quantité de métal récupérée est donnée par $x_c g_c y$ où $x_c$ est la proportion de matériau envoyée au traitement, $g_c$ la teneur moyenne du minerai traité et $y$ le taux de récupération métallurgique.
+
+Si le marché peut absorber au maximum $K$ tonnes de métal, alors la quantité de matériau minéralisé nécessaire pour produire cette quantité est :
+
+$$
+\frac{K}{x_c g_c y}.
+$$
+
+Les frais fixes et le coût d'opportunité doivent donc être répartis sur cette quantité de matériau minéralisé. Rapportés à une tonne de matériau minéralisé, ils deviennent :
+
+$$
+\frac{f+F}{K/(x_c g_c y)} = \frac{(f+F)x_c g_c y}{K}.
+$$
+
+L'équation du profit net par tonne de matériau minéralisé lorsque le marché est limitant, noté $v_3$, devient alors :
+
+$$
+v_3 = (p - k) x_c g_c y - m - x_c h  - \frac{(f + F) x_c g_c y}{K}.
+$$ {#eq-v3}
+
+En maximisant cette expression par rapport à $x_c$ ($\frac{dv_3}{dx_c} = 0$), on obtient la teneur de coupure limite associée au marché :
+
+$$
+c_3 = \frac{h}{\Big((p - k) - \frac{f+F}{K}\Big) y}.
+$$ {#eq-c3}
+
+Cette expression montre que, lorsque le marché est la contrainte active, la capacité de vente du métal influence directement la teneur de coupure. Le terme $\frac{f+F}{K}$ représente la part des frais fixes et du coût d'opportunité associée à chaque tonne de métal pouvant être écoulée sur le marché. Il réduit donc la valeur nette effective du métal, soit $(p-k)$, dans le calcul de la teneur de coupure.
+
+::: {.callout-warning}
+Ces trois teneurs, dites limites, ne dépendent pas de la distribution des teneurs dans le gisement et sont donc de nature structurelle, puisqu'elles dépendent uniquement des capacités des infrastructures et des conditions du marché. En aucun cas, les termes $x_c$ et $g_c$ ne sont pris en compte dans le calcul des teneurs de coupure limite $c_1$, $c_2$ et $c_3$.
+
+On peut montrer que $c_1 < \min(c_2, c_3)$ en tout temps. L'intuition est la suivante : $c_1$ représente uniquement le coût de traitement $h$ ramené à une unité de métal, c'est-à-dire le seuil minimal pour que le traitement d'une tonne de minerai génère un revenu positif. Les teneurs $c_2$ et $c_3$ incluent en outre une part des frais fixes $(f + F)$ répartis sur les capacités $H$ et $K$, respectivement — elles sont donc nécessairement supérieures à $c_1$. En d'autres termes, $c_1$ est la teneur *breakeven* du traitement seul, tandis que $c_2$ et $c_3$ intègrent également le coût d'amortissement des infrastructures.
+:::
+
+### Exemple numérique
+
+Soit les données suivantes pour un gisement d'uranium :
+
+| Symbole | Valeur | Description |
+|:-------:|:------:|:------------|
+| $y$     | 0{,}87   | Taux de récupération du concentrateur |
+| $p-k$   | 60 \$/kg U | Prix net du métal (prix moins mise en marché) |
+| $h$     | 3{,}41 \$/t minerai | Coût variable de traitement |
+| $m$     | 1{,}32 \$/t matériau minéralisé | Coût variable de minage |
+| $f$     | 11{,}9 M\$/an | Frais fixes |
+| $F$     | 15{,}2 M\$ | Coût d'opportunité |
+| $M$     | 12 M t/an | Capacité de minage (matériau minéralisé) |
+| $H$     | 3{,}9 M t/an | Capacité de traitement (minerai) |
+| $K$     | 0{,}9 M t/an | Capacité du marché (métal) |
+
+: Données de l'exemple numérique. {#tbl-lane-exemple}
+
+Les unités s'annulent naturellement pour obtenir la teneur en kg d'uranium par tonne de matériau minéralisé.
+
+#### Teneur de la mine
+
+$$
+c_1 = \frac{h}{y (p - k)} = \frac{3{,}41}{0{,}87 \times 60} = 0{,}065 \ \text{kg/t}
+$$
+
+#### Teneur du concentrateur
+
+$$
+c_2 = \frac{h + (f + F) / H}{y (p - k)} = \frac{3{,}41 + \frac{11{,}9 + 15{,}2}{3{,}9}}{0{,}87 \times 60} = 0{,}198 \ \text{kg/t}
+$$
+
+#### Teneur du marché
+
+$$
+c_3 = \frac{3{,}41}{0{,}87 \times \left( 60 - \frac{11{,}9 + 15{,}2}{0{,}9} \right)} = 0{,}131 \ \text{kg/t}
+$$
+
+
+Nous obtenons ainsi trois teneurs de coupure correspondant aux limites de la mine, du concentrateur et du marché. Chacune de ces valeurs maximise le profit lorsque seule une composante du système constitue le facteur limitant. Autrement dit, si la mine seule était contraignante, la teneur optimale serait $c_1 = 0{,}065$ kg/t; si le concentrateur seul était limitant, la teneur optimale serait $c_2 = 0{,}198$ kg/t; et si le marché seul imposait la contrainte, la teneur optimale serait $c_3 = 0{,}131$ kg/t.
+
+Cependant, dans un système réel, ces trois contraintes coexistent. Opérer la mine à la teneur $c_1$ ne garantit donc ni que le concentrateur soit en mesure de traiter tout le minerai produit, ni que le marché puisse absorber l'ensemble du métal extrait. Il est ainsi nécessaire d'introduire une notion d'équilibre entre ces différentes composantes afin d'identifier la véritable contrainte dominante du système.
+
+## 🧮 Atelier interactif 2.2 — Calculateur des teneurs limites {.unnumbered}
+
+Ce calculateur permet d'explorer et de déterminer les teneurs limites en fonction des paramètres de la théorie de Lane.
+
+Cet outil est pleinement interactif dans la version web de ce document.
+
+{{< include widget/widget_teneurs_limites.qmd >}}

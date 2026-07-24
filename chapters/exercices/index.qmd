@@ -1,0 +1,37 @@
+---
+title: "Recueil d'exercices"
+abstract: |
+  Ce chapitre rassemble tous les exercices du cours, organisés par chapitre. Chaque section reprend les exercices du chapitre correspondant, avec énoncé et son corrigé (dépliable).
+---
+
+::: {.callout-important}
+## À propos de ce recueil
+
+Les exercices de l'ouvrage sont regroupés, section par section, dans l'ordre des chapitres. Pour chaque exercice, tentez d'abord l'énoncé, puis dépliez le corrigé pour vous valider vos réponses.
+:::
+
+{{< include ex-ch01.qmd >}}
+
+{{< include ex-ch02.qmd >}}
+
+{{< include ex-ch03.qmd >}}
+
+{{< include ex-ch04.qmd >}}
+
+{{< include ex-ch05.qmd >}}
+
+{{< include ex-ch06.qmd >}}
+
+{{< include ex-ch07.qmd >}}
+
+{{< include ex-ch08.qmd >}}
+
+{{< include ex-ch09.qmd >}}
+
+{{< include ex-ch10.qmd >}}
+
+{{< include ex-ch11.qmd >}}
+
+{{< include ex-ch12.qmd >}}
+
+{{< include ex-ch13.qmd >}}

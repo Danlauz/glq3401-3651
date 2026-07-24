@@ -1,0 +1,3 @@
+<div class="geostat-widget" id="gw_c05_triangles" data-widget="c05_triangles">
+  <div class="gw-placeholder">Chargement de l'atelier…</div>
+</div>

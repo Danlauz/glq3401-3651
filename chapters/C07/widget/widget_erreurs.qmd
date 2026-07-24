@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c07_erreurs">
+  <div class="gw-placeholder">Chargement du widget (erreurs et effets géologiques)…</div>
+</div>
+```

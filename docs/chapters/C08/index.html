@@ -1,0 +1,1925 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>8&nbsp; Variance de blocs, de dispersion et d’estimation – Géostatistique et géologie minière</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../chapters/C09/index.html" rel="next">
+<link href="../../chapters/C07/index.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-f2c6d6e2b784ddc5de38779acc06f37d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-74c88ba48ad0bebf983f0ffd06dd1671.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f2c6d6e2b784ddc5de38779acc06f37d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents correspondants",
+    "search-copy-link-title": "Copier le lien",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "Rechercher",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles/site-polish.css">
+<link rel="stylesheet" href="../../styles/callouts.css">
+<link rel="stylesheet" href="../../styles/exercice.css">
+<link rel="stylesheet" href="../../styles/chapter-downloads.css">
+<link rel="stylesheet" href="../../scripts/geostat-js/style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/C06/index.html">Partie II: Géostatistique linéaire</a></li><li class="breadcrumb-item"><a href="../../chapters/C08/index.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Variance de blocs, de dispersion et d’estimation</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Géostatistique et géologie minière</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/Danlauz/glq3401-3651" title="Code source" class="quarto-navigation-tool px-1" aria-label="Code source"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Basculer le mode sombre"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Préface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">À propos de l’auteur</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie I: Géologie minière</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C01/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Rapport Technique NI 43-101 et Loi sur les mines</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C02/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aspect économique</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C03/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Théorie de Gy et contrôle qualité</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C04/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Traitement et analyse statistique des données de forage</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C05/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Méthodes déterministes d’estimation des ressources</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Partie II: Géostatistique linéaire</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C06/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction à la géostatistique</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C07/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Variogramme</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C08/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Variance de blocs, de dispersion et d’estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C09/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Krigeage</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie III: Géostatistique non-linéaire</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C10/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Géostatistique multivariable</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C11/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Krigeage d’indicatrices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C12/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable continue</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C13/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable catégorielle</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie IV: Exercices et examens</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/exercices/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Recueil d’exercices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/examens/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Anciens examens</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Références</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Annexes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Algèbre linéaire : vecteurs et plans</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Probabilités &amp; statistiques</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-c.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Table de la loi normale centrée-réduite</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Abaques - Variances de dispersion</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-e.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Abaques - Variances d’estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Notation mathématique</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#définitions" id="toc-définitions" class="nav-link active" data-scroll-target="#définitions"><span class="header-section-number">8.1</span> Définitions</a></li>
+  <li><a href="#variances-de-blocs" id="toc-variances-de-blocs" class="nav-link" data-scroll-target="#variances-de-blocs"><span class="header-section-number">8.2</span> Variances de blocs</a>
+  <ul class="collapse">
+  <li><a href="#définition-de-la-teneur-dun-bloc" id="toc-définition-de-la-teneur-dun-bloc" class="nav-link" data-scroll-target="#définition-de-la-teneur-dun-bloc">Définition de la teneur d’un bloc</a></li>
+  <li><a href="#variance-de-bloc" id="toc-variance-de-bloc" class="nav-link" data-scroll-target="#variance-de-bloc">Variance de bloc</a></li>
+  <li><a href="#covariance-et-variogramme-moyens" id="toc-covariance-et-variogramme-moyens" class="nav-link" data-scroll-target="#covariance-et-variogramme-moyens">Covariance et variogramme moyens</a></li>
+  <li><a href="#exemple-1-modèle-sphérique" id="toc-exemple-1-modèle-sphérique" class="nav-link" data-scroll-target="#exemple-1-modèle-sphérique">Exemple 1 — Modèle sphérique</a></li>
+  <li><a href="#exemple-2-modèle-exponentiel-avec-effet-de-pépite" id="toc-exemple-2-modèle-exponentiel-avec-effet-de-pépite" class="nav-link" data-scroll-target="#exemple-2-modèle-exponentiel-avec-effet-de-pépite">Exemple 2 — Modèle exponentiel avec effet de pépite</a></li>
+  <li><a href="#propriétés" id="toc-propriétés" class="nav-link" data-scroll-target="#propriétés">Propriétés</a></li>
+  <li><a href="#variogramme-de-blocs" id="toc-variogramme-de-blocs" class="nav-link" data-scroll-target="#variogramme-de-blocs">Variogramme de blocs</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-8.1-variance-de-bloc" id="toc-atelier-interactif-8.1-variance-de-bloc" class="nav-link" data-scroll-target="#atelier-interactif-8.1-variance-de-bloc">🧮 Atelier interactif 8.1 — Variance de bloc</a></li>
+  <li><a href="#variance-de-dispersion" id="toc-variance-de-dispersion" class="nav-link" data-scroll-target="#variance-de-dispersion"><span class="header-section-number">8.3</span> Variance de dispersion</a>
+  <ul class="collapse">
+  <li><a href="#expressions-équivalentes" id="toc-expressions-équivalentes" class="nav-link" data-scroll-target="#expressions-équivalentes">Expressions équivalentes</a></li>
+  <li><a href="#propriétés-1" id="toc-propriétés-1" class="nav-link" data-scroll-target="#propriétés-1">Propriétés</a></li>
+  <li><a href="#applications" id="toc-applications" class="nav-link" data-scroll-target="#applications">Applications</a></li>
+  <li><a href="#additivité-des-dispersions" id="toc-additivité-des-dispersions" class="nav-link" data-scroll-target="#additivité-des-dispersions">Additivité des dispersions</a></li>
+  <li><a href="#notes-importantes-concernant-leffet-de-pépite" id="toc-notes-importantes-concernant-leffet-de-pépite" class="nav-link" data-scroll-target="#notes-importantes-concernant-leffet-de-pépite">Notes importantes concernant l’effet de pépite</a></li>
+  <li><a href="#remarque-finale" id="toc-remarque-finale" class="nav-link" data-scroll-target="#remarque-finale">Remarque finale</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-8.2-influence-du-modèle-de-variogramme" id="toc-atelier-interactif-8.2-influence-du-modèle-de-variogramme" class="nav-link" data-scroll-target="#atelier-interactif-8.2-influence-du-modèle-de-variogramme">🧮 Atelier interactif 8.2 — Influence du modèle de variogramme</a></li>
+  <li><a href="#sec-homogeneite-minerai" id="toc-sec-homogeneite-minerai" class="nav-link" data-scroll-target="#sec-homogeneite-minerai"><span class="header-section-number">8.4</span> Application de la variance de dispersion : Homogénéité du minerai</a>
+  <ul class="collapse">
+  <li><a href="#exemple-comparer-quatre-stratégies-dexploitation" id="toc-exemple-comparer-quatre-stratégies-dexploitation" class="nav-link" data-scroll-target="#exemple-comparer-quatre-stratégies-dexploitation">Exemple : comparer quatre stratégies d’exploitation</a></li>
+  <li><a href="#analyse-des-résultats" id="toc-analyse-des-résultats" class="nav-link" data-scroll-target="#analyse-des-résultats">Analyse des résultats</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-8.3-homogénéité-du-minerai" id="toc-atelier-interactif-8.3-homogénéité-du-minerai" class="nav-link" data-scroll-target="#atelier-interactif-8.3-homogénéité-du-minerai">🧮 Atelier interactif 8.3 — Homogénéité du minerai</a></li>
+  <li><a href="#variance-destimation" id="toc-variance-destimation" class="nav-link" data-scroll-target="#variance-destimation"><span class="header-section-number">8.5</span> Variance d’estimation</a>
+  <ul class="collapse">
+  <li><a href="#interprétation" id="toc-interprétation" class="nav-link" data-scroll-target="#interprétation">Interprétation</a></li>
+  <li><a href="#remarques-importantes" id="toc-remarques-importantes" class="nav-link" data-scroll-target="#remarques-importantes">Remarques importantes</a></li>
+  <li><a href="#formulation-avec-le-variogramme" id="toc-formulation-avec-le-variogramme" class="nav-link" data-scroll-target="#formulation-avec-le-variogramme">Formulation avec le variogramme</a></li>
+  <li><a href="#variance-dextension" id="toc-variance-dextension" class="nav-link" data-scroll-target="#variance-dextension">Variance d’extension</a></li>
+  <li><a href="#combinaison-derreurs-élémentaires" id="toc-combinaison-derreurs-élémentaires" class="nav-link" data-scroll-target="#combinaison-derreurs-élémentaires">Combinaison d’erreurs élémentaires</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-8.4-variance-destimation-dun-bloc" id="toc-atelier-interactif-8.4-variance-destimation-dun-bloc" class="nav-link" data-scroll-target="#atelier-interactif-8.4-variance-destimation-dun-bloc">🧮 Atelier interactif 8.4 — Variance d’estimation d’un bloc</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Danlauz/glq3401-3651/edit/main/chapters/C08/index.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/Danlauz/glq3401-3651/issues/new" class="toc-action"><i class="bi empty"></i>Signaler un problème ou<br>formuler une suggestion</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/C06/index.html">Partie II: Géostatistique linéaire</a></li><li class="breadcrumb-item"><a href="../../chapters/C08/index.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Variance de blocs, de dispersion et d’estimation</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Variance de blocs, de dispersion et d’estimation</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Résumé</div>
+    <p>Ce chapitre présente la variance de bloc, la variance de dispersion et la variance d’estimation. Il vise à montrer comment la variabilité des teneurs évolue lorsque l’analyse porte non plus uniquement sur des échantillons ponctuels, mais également sur des blocs, des panneaux ou des volumes de plus grande taille. À partir du variogramme, cette variabilité peut être reliée à la continuité spatiale du gisement et quantifiée au moyen de différents calculs, parfois réalisés à l’aide d’abaques. Ces notions sont ensuite mobilisées pour examiner des problèmes plus pratiques, notamment l’homogénéisation du minerai, la variabilité du matériau envoyé au concentrateur et l’effet de la configuration de l’échantillonnage.</p>
+  </div>
+</div>
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Objectifs d’apprentissage
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Comprendre les notions de variance de bloc et de variance de dispersion et décrire le lien avec le variogramme et la continuité spatiale qu’il exprime;</p></li>
+<li><p>Calculer les variances de bloc et variances de dispersion avec les abaques ;</p></li>
+<li><p>Effectuer la sélection de la meilleure alternative pour homogénéiser le minerai ;</p></li>
+<li><p>Recommander un sens de déplacement d’une pelle dans une mine pour minimiser la variabilité au concentrateur ;</p></li>
+<li><p>Prévoir l’impact sur la variabilité au concentrateur d’exploiter simultanément différentes portions du gisement ;</p></li>
+<li><p>Comprendre la notion de variance d’estimation;</p></li>
+<li><p>Calculer des variances d’estimation pour une configuration d’estimation et le modèle de variogramme;</p></li>
+<li><p>Identifier le lien entre patron d’échantillonnage et l’anisotropie du variogramme.</p></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Références
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ce chapitre s’appuie principalement sur les ouvrages suivants :</p>
+<p>Chilès, J., &amp; Delfiner, P. (2012). <em>Geostatistics: Modeling Spatial Uncertainty</em>. John Wiley &amp; Sons.</p>
+<p>Journel, A. G., &amp; Huijbregts, C. J. (1978). <em>Mining Geostatistics</em>. Academic Press.</p>
+</div>
+</div>
+<section id="définitions" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="définitions"><span class="header-section-number">8.1</span> Définitions</h2>
+<p>Le variogramme quantifie la variabilité spatiale d’une variable régionalisée. À partir de cet outil, trois types de variances peuvent être calculés. Elles jouent un rôle important dans la compréhension et la gestion de l’hétérogénéité d’un gisement.</p>
+<ul>
+<li><p><strong>Variance de bloc</strong>&nbsp;(<span class="math inline">\(\sigma_V^2\)</span>) : mesure la variabilité des teneurs moyennes de blocs de volume <span class="math inline">\(V\)</span> dans un domaine théoriquement infini. Elle permet de quantifier l’effet de support, c’est-à-dire la diminution de la variabilité lorsque l’on passe d’un échantillon ponctuel à un volume plus grand.</p></li>
+<li><p><strong>Variance de dispersion</strong>&nbsp;(<span class="math inline">\(D^2(v\mid V)\)</span>) : représente la variabilité des petits blocs <span class="math inline">\(v\)</span> à l’intérieur d’un volume fini <span class="math inline">\(V\)</span>. Elle met en évidence l’hétérogénéité interne d’un ensemble, par exemple un panneau, un tas ou une pile de minerai.</p></li>
+<li><p><strong>Variance d’estimation</strong>&nbsp;(<span class="math inline">\(\sigma_e^2\)</span>) : exprime l’incertitude associée à l’estimation de la teneur moyenne d’un bloc. Elle dépend notamment de l’espacement et de la configuration des données, du volume estimé et du modèle de variogramme utilisé.</p></li>
+</ul>
+</section>
+<section id="variances-de-blocs" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="variances-de-blocs"><span class="header-section-number">8.2</span> Variances de blocs</h2>
+<p>Jusqu’à présent, le variogramme a été considéré sur un support quasi ponctuel, correspondant au volume d’une carotte ou d’un composite. Ce support n’est pas réellement ponctuel, mais il peut être approximé comme tel lorsqu’il est très petit par rapport aux dimensions des blocs et aux échelles de continuité du gisement.</p>
+<p>Le support d’exploitation est toutefois beaucoup plus grand. Dans une mine, les décisions portent généralement sur des blocs de dimensions significatives, par exemple <span class="math inline">\(5\ \text{m}\times5\ \text{m}\times5\ \text{m}\)</span>. Il faut donc passer du support des données au support des blocs : c’est le <strong>changement de support</strong>.</p>
+<p>La question est alors la suivante : comment utiliser le variogramme établi à partir des données pour quantifier la variabilité des teneurs moyennes des blocs?</p>
+<p>Deux notions complémentaires interviennent :</p>
+<ul>
+<li><p><strong>Variance de bloc</strong> : décrit la variabilité des teneurs moyennes de blocs de support <span class="math inline">\(v\)</span> dans un domaine stationnaire théoriquement infini. Elle correspond à <span class="math inline">\(D^2(v\mid\infty)\)</span> et n’est définie au sens strict que lorsque la variance globale est finie, donc lorsque le variogramme possède un palier.</p></li>
+<li><p><strong>Variance de dispersion</strong> : décrit la variabilité des petites unités de support <span class="math inline">\(v\)</span> à l’intérieur d’un volume fini <span class="math inline">\(V\)</span>. Elle correspond à <span class="math inline">\(D^2(v\mid V)\)</span> et peut être calculée même lorsque le variogramme ne possède pas de palier.</p></li>
+</ul>
+<p>Ces notions interviennent notamment dans :</p>
+<ul>
+<li>l’évaluation des réserves récupérables;</li>
+<li>l’analyse des piles d’homogénéisation;</li>
+<li>l’étude de la variabilité de la production;</li>
+<li>le calcul des variances d’estimation.</li>
+</ul>
+<section id="définition-de-la-teneur-dun-bloc" class="level3">
+<h3 class="anchored" data-anchor-id="définition-de-la-teneur-dun-bloc">Définition de la teneur d’un bloc</h3>
+<p>Soit <span class="math inline">\(Z(\mathbf{x})\)</span> une fonction aléatoire définie au support ponctuel. Considérons un support <span class="math inline">\(v\)</span> centré à la position <span class="math inline">\(\mathbf{x}\)</span>, noté <span class="math inline">\(v_{\mathbf{x}}\)</span>.</p>
+<p>La teneur moyenne du bloc est :</p>
+<p><span class="math display">\[
+Z_v(\mathbf{x})
+=
+\frac{1}{|v|}
+\int_{v_{\mathbf{x}}}
+Z(\mathbf{u})\,d\mathbf{u},
+\]</span></p>
+<p>où <span class="math inline">\(|v|\)</span> représente le volume, l’aire ou la longueur du support, selon la dimension du problème.</p>
+<p>Cette relation indique que la teneur du bloc est la moyenne des valeurs ponctuelles qui le composent.</p>
+<p>Sous stationnarité d’ordre 2, l’espérance est conservée lors du changement de support :</p>
+<p><span class="math display">\[
+\mathbb{E}
+\left[
+Z_v(\mathbf{x})
+\right]
+=
+m.
+\]</span></p>
+</section>
+<section id="variance-de-bloc" class="level3">
+<h3 class="anchored" data-anchor-id="variance-de-bloc">Variance de bloc</h3>
+<p>La variance de bloc est la variance des teneurs moyennes de blocs de support <span class="math inline">\(v\)</span> dans un domaine théoriquement infini :</p>
+<p><span class="math display">\[
+\sigma_v^2
+=
+D^2(v\mid\infty)
+=
+\operatorname{Var}
+\left[
+Z_v(\mathbf{x})
+\right].
+\]</span></p>
+<p>En remplaçant <span class="math inline">\(Z_v(\mathbf{x})\)</span> par sa définition, on obtient :</p>
+<p><span class="math display">\[
+\sigma_v^2
+=
+\operatorname{Var}
+\left[
+\frac{1}{|v|}
+\int_{v_{\mathbf{x}}}
+Z(\mathbf{u})\,d\mathbf{u}
+\right].
+\]</span></p>
+<p>Sous stationnarité d’ordre 2 :</p>
+<p><span class="math display">\[
+\sigma_v^2
+=
+\frac{1}{|v|^2}
+\iint_{v_{\mathbf{x}}\times v_{\mathbf{x}}}
+C(\mathbf{u}-\mathbf{u}')
+\,d\mathbf{u}\,d\mathbf{u}'.
+\]</span></p>
+<p>La variance d’un bloc est donc la covariance moyenne entre toutes les paires de points appartenant au bloc.</p>
+</section>
+<section id="covariance-et-variogramme-moyens" class="level3">
+<h3 class="anchored" data-anchor-id="covariance-et-variogramme-moyens">Covariance et variogramme moyens</h3>
+<p>Pour deux supports <span class="math inline">\(A\)</span> et <span class="math inline">\(B\)</span>, la covariance moyenne est définie par :</p>
+<p><span class="math display">\[
+\overline{C}(A,B)
+=
+\frac{1}{|A|\,|B|}
+\iint_{A\times B}
+C(\mathbf{x}-\mathbf{y})
+\,d\mathbf{x}\,d\mathbf{y}.
+\]</span></p>
+<p>De manière analogue, le variogramme moyen est :</p>
+<p><span class="math display">\[
+\overline{\gamma}(A,B)
+=
+\frac{1}{|A|\,|B|}
+\iint_{A\times B}
+\gamma(\mathbf{x}-\mathbf{y})
+\,d\mathbf{x}\,d\mathbf{y}.
+\]</span></p>
+<p>La variance de bloc s’écrit donc simplement :</p>
+<p><span class="math display">\[
+\sigma_v^2
+=
+\overline{C}(v,v).
+\]</span></p>
+<p>Lorsque le variogramme possède un palier <span class="math inline">\(C(\mathbf{0})=\sigma^2\)</span>, la variance de bloc peut aussi être calculée à partir du variogramme ponctuel :</p>
+<p><span class="math display">\[
+\sigma_v^2
+=
+\sigma^2
+-
+\overline{\gamma}(v,v).
+\]</span></p>
+<p>Autrement dit :</p>
+<p><span class="math display">\[
+\sigma_v^2
+=
+\sigma^2
+-
+\frac{1}{|v|^2}
+\iint_{v\times v}
+\gamma(\mathbf{u}-\mathbf{u}')
+\,d\mathbf{u}\,d\mathbf{u}'.
+\]</span></p>
+<p>Le terme <span class="math inline">\(\overline{\gamma}(v,v)\)</span> représente la variabilité moyenne à l’intérieur du bloc. Cette variabilité est moyennée lors du passage du support ponctuel au support de bloc; elle est donc retranchée de la variance ponctuelle.</p>
+<p>La variance de bloc dépend :</p>
+<ul>
+<li>de la taille du support;</li>
+<li>de sa forme;</li>
+<li>de son orientation;</li>
+<li>du modèle de variogramme;</li>
+<li>de l’anisotropie.</li>
+</ul>
+<p>Deux blocs de même volume peuvent ainsi présenter des variances différentes s’ils n’ont pas la même géométrie ou la même orientation par rapport aux directions de continuité.</p>
+</section>
+<section id="exemple-1-modèle-sphérique" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-1-modèle-sphérique">Exemple 1 — Modèle sphérique</h3>
+<p>La <a href="#fig-C8_Bloc" class="quarto-xref">Figure&nbsp;<span>8.1</span></a> compare la variance de bloc mesurée sur un grand champ simulé à la variance calculée à partir du variogramme ponctuel.</p>
+<p>Le modèle utilisé est sphérique et isotrope, avec une portée de 15 pixels, un palier total unitaire et aucun effet de pépite.</p>
+<p>Les deux courbes sont très proches. Les écarts résiduels proviennent de la taille finie du champ simulé et de l’approximation numérique des intégrales.</p>
+<div id="fig-C8_Bloc" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-C8_Bloc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C8_Bloc.PNG" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-C8_Bloc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.1: Évolution de la variance de bloc pour un modèle sphérique isotrope de palier unitaire.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="exemple-2-modèle-exponentiel-avec-effet-de-pépite" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-2-modèle-exponentiel-avec-effet-de-pépite">Exemple 2 — Modèle exponentiel avec effet de pépite</h3>
+<p>La <a href="#fig-C8_BlocBruit" class="quarto-xref">Figure&nbsp;<span>8.2</span></a> présente le même exercice pour un modèle exponentiel isotrope comprenant :</p>
+<ul>
+<li>une portée effective de 50 pixels;</li>
+<li>un palier structuré <span class="math inline">\(C_1=1\)</span>;</li>
+<li>un effet de pépite <span class="math inline">\(C_0=0{,}5\)</span>;</li>
+<li>une variance ponctuelle totale <span class="math inline">\(C(\mathbf{0})=1{,}5\)</span>.</li>
+</ul>
+<p>La variance diminue rapidement lorsque le support augmente. La composante de pépite est particulièrement atténuée par le moyennage, puisqu’elle représente une variabilité sans continuité entre des positions distinctes.</p>
+<p>Dans une simulation discrète, la contribution résiduelle de la pépite dépend du nombre d’éléments indépendants moyennés dans chaque bloc et de la discrétisation utilisée.</p>
+<div id="fig-C8_BlocBruit" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-C8_BlocBruit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C8_BlocBruit.PNG" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-C8_BlocBruit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.2: Évolution de la variance de bloc pour un modèle exponentiel isotrope avec effet de pépite.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="propriétés" class="level3">
+<h3 class="anchored" data-anchor-id="propriétés">Propriétés</h3>
+<p>Lorsque le support du bloc tend vers le support ponctuel :</p>
+<p><span class="math display">\[
+\lim_{|v|\to0}
+\sigma_v^2
+=
+\sigma^2.
+\]</span></p>
+<p>La variance de bloc tend alors vers la variance ponctuelle.</p>
+<p>Lorsque la taille du bloc augmente, la variance diminue. Si la covariance décroît suffisamment avec la distance et si le domaine moyenné devient très grand :</p>
+<p><span class="math display">\[
+\lim_{|v|\to\infty}
+\sigma_v^2
+=
+0.
+\]</span></p>
+<p>Ces limites ne découlent pas simplement du fait que le variogramme est croissant. Elles supposent une fonction aléatoire stationnaire de variance finie et une dépendance spatiale qui s’atténue à grande distance.</p>
+<p>L’augmentation du support agit donc comme un lissage spatial : les valeurs fortes et faibles sont moyennées, ce qui réduit la variabilité entre les blocs.</p>
+</section>
+<section id="variogramme-de-blocs" class="level3">
+<h3 class="anchored" data-anchor-id="variogramme-de-blocs">Variogramme de blocs</h3>
+<p>Considérons deux blocs identiques de support <span class="math inline">\(v\)</span>, centrés aux positions <span class="math inline">\(\mathbf{x}\)</span> et <span class="math inline">\(\mathbf{x}+\mathbf{h}\)</span>.</p>
+<p>Le variogramme de blocs est défini par :</p>
+<p><span class="math display">\[
+\gamma_v(\mathbf{h})
+=
+\frac{1}{2}
+\operatorname{Var}
+\left[
+Z_v(\mathbf{x}+\mathbf{h})
+-
+Z_v(\mathbf{x})
+\right].
+\]</span></p>
+<p>Il mesure la variabilité entre les teneurs moyennes de deux blocs, plutôt qu’entre deux valeurs ponctuelles.</p>
+<p>La covariance entre les deux blocs est :</p>
+<p><span class="math display">\[
+C_v(\mathbf{h})
+=
+\frac{1}{|v|^2}
+\iint_{v\times v}
+C
+\left(
+\mathbf{h}
++
+\mathbf{u}'-\mathbf{u}
+\right)
+\,d\mathbf{u}\,d\mathbf{u}'.
+\]</span></p>
+<p>Sous stationnarité d’ordre 2 :</p>
+<p><span class="math display">\[
+\gamma_v(\mathbf{h})
+=
+C_v(\mathbf{0})
+-
+C_v(\mathbf{h}).
+\]</span></p>
+<p>Comme <span class="math inline">\(C_v(\mathbf{0})=\sigma_v^2\)</span>, le palier du variogramme de blocs correspond à la variance de bloc lorsque la covariance entre blocs tend vers zéro à grande distance.</p>
+<p>En fonction du variogramme ponctuel, le variogramme de blocs s’écrit :</p>
+<p><span class="math display">\[
+\gamma_v(\mathbf{h})
+=
+\overline{\gamma}
+\left(
+v_{\mathbf{x}},
+v_{\mathbf{x}+\mathbf{h}}
+\right)
+-
+\overline{\gamma}(v,v).
+\]</span></p>
+<p>Le premier terme est la moyenne du variogramme ponctuel entre toutes les paires dont un point appartient au premier bloc et l’autre au second. Le deuxième terme est la moyenne du variogramme à l’intérieur d’un bloc.</p>
+<p>Cette soustraction est essentielle. Elle garantit notamment que :</p>
+<p><span class="math display">\[
+\gamma_v(\mathbf{0})
+=
+0.
+\]</span></p>
+<p>Le variogramme de blocs (<a href="#fig-c8-regularisation" class="quarto-xref">Figure&nbsp;<span>8.3</span></a>) possède généralement :</p>
+<ul>
+<li>un palier plus faible que le variogramme ponctuel;</li>
+<li>une croissance plus progressive à courte distance;</li>
+<li>une forme dépendant de la taille, de la géométrie et de l’orientation des blocs.</li>
+</ul>
+<div id="fig-c8-regularisation" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c8-regularisation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c8_02_regularisation.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c8-regularisation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.3: Variogrammes régularisés pour plusieurs tailles de bloc : la variance de bloc décroît et le variogramme se lisse quand le support augmente.
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="atelier-interactif-8.1-variance-de-bloc" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-8.1-variance-de-bloc">🧮 Atelier interactif 8.1 — Variance de bloc</h2>
+<p>Un champ anisotrope est simulé à partir de portées, d’un palier, d’un effet de pépite et d’un angle réglables. En augmentant le support, observez le lissage du champ et la diminution de la variance de bloc. La variance empirique, calculée par moyennage glissant, est comparée à la variance théorique obtenue à partir de la covariance moyenne.</p>
+<div class="geostat-widget" data-widget="c08_variance_bloc">
+  <div class="gw-placeholder">Chargement du widget (variance de bloc)…</div>
+</div>
+</section>
+<section id="variance-de-dispersion" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="variance-de-dispersion"><span class="header-section-number">8.3</span> Variance de dispersion</h2>
+<p>La variance de bloc permet de calculer la variance théorique d’une teneur de bloc dans un domaine supposé très grand. En pratique, un gisement est toujours fini. On veut donc aussi connaître l’amplitude des variations de teneur à l’intérieur d’un volume donné, par exemple une zone du gisement, un panneau ou une période de production.</p>
+<p>Considérons un grand bloc <span class="math inline">\(V_j\)</span> découpé en petits blocs <span class="math inline">\(v_i\)</span>. On a :</p>
+<p><span class="math display">\[
+Z(V_j) = \frac{1}{n} \sum_{i=1}^n Z(v_i)
+\]</span></p>
+<p>La teneur du grand bloc <span class="math inline">\(V_j\)</span> est donc la moyenne des teneurs des petits blocs <span class="math inline">\(v_i\)</span> qui le composent (<a href="#fig-c8-supports-emboites" class="quarto-xref">Figure&nbsp;<span>8.4</span></a>). On peut ensuite regarder à quel point les teneurs des petits blocs varient autour de cette moyenne. Cette variabilité, calculée en moyenne sur tous les blocs <span class="math inline">\(V_j\)</span> du domaine, correspond à <strong>la variance de dispersion de <span class="math inline">\(v\)</span> dans <span class="math inline">\(V\)</span></strong>, notée <span class="math inline">\(D^2(v \mid V)\)</span>.</p>
+<div id="fig-c8-supports-emboites" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c8-supports-emboites-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c8_04_supports_emboites.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c8-supports-emboites-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.4: Supports emboîtés <span class="math inline">\(v \subset V\)</span> : de grands blocs <span class="math inline">\(V\)</span> sur un champ réel, et le zoom d’un bloc <span class="math inline">\(V\)</span> subdivisé en petits blocs <span class="math inline">\(v\)</span>.
+</figcaption>
+</figure>
+</div>
+<p>Soit la variance des petits blocs à l’intérieur d’un bloc <span class="math inline">\(V_j\)</span> :</p>
+<p><span class="math display">\[
+s^2_{v|V_j} = \frac{1}{n} \sum_{i=1}^n \left( Z(v_i) - Z(V_j) \right)^2
+\]</span></p>
+<p>Cette expression mesure la variabilité des teneurs des petits blocs <span class="math inline">\(v_i\)</span> autour de la teneur moyenne du grand bloc <span class="math inline">\(V_j\)</span>. Comme on peut faire ce calcul pour plusieurs blocs <span class="math inline">\(V_j\)</span> dans le gisement, la variance de dispersion est définie comme la moyenne de cette quantité sur l’ensemble des blocs :</p>
+<p><span class="math display">\[
+D^2(v \mid V) =
+\mathbb{E}_{V_j}\left[ s^2_{v|V_j} \right]
+=
+\mathbb{E}_{V_j}\left[
+\frac{1}{n} \sum_{i=1}^n
+\left( Z(v_i) - Z(V_j) \right)^2
+\right]
+\]</span></p>
+<blockquote class="blockquote">
+<p><strong>Variance de dispersion — Démonstration complète</strong></p>
+<p>Soit un bloc <span class="math inline">\(V_j\)</span> composé de <span class="math inline">\(n\)</span> sous-blocs <span class="math inline">\(v_i\)</span>. On part de la variance des petits blocs autour de la moyenne du grand bloc :</p>
+<p><span class="math display">\[
+s^2_{v|V_j} = \frac{1}{n} \sum_{i=1}^n \left( Z(v_i) - Z(V_j) \right)^2
+\]</span></p>
+<p>avec :</p>
+<p><span class="math display">\[
+Z(V_j) = \frac{1}{n} \sum_{i=1}^n Z(v_i)
+\]</span></p>
+<p>On développe le carré :</p>
+<p><span class="math display">\[
+\left( Z(v_i) - Z(V_j) \right)^2 = Z(v_i)^2 - 2Z(v_i)Z(V_j) + Z(V_j)^2
+\]</span></p>
+<p>En remplaçant dans la somme et en utilisant le fait que <span class="math inline">\(Z(V_j)\)</span> est la moyenne des <span class="math inline">\(Z(v_i)\)</span>, on obtient :</p>
+<p><span class="math display">\[
+s^2_{v|V_j} = \frac{1}{n} \sum_{i=1}^n Z(v_i)^2 - Z(V_j)^2
+\]</span></p>
+<p>On prend ensuite l’espérance sur l’ensemble des blocs <span class="math inline">\(V_j\)</span> :</p>
+<p><span class="math display">\[
+\mathbb{E}*{V_j} \left[ s^2*{v|V_j} \right] =
+\frac{1}{n} \sum_{i=1}^n \mathbb{E}[Z(v_i)^2]
+\mathbb{E}[Z(V_j)^2]
+\]</span></p>
+<p>En utilisant :</p>
+<p><span class="math display">\[
+\mathbb{E}[X^2] = \operatorname{Var}(X) + (\mathbb{E}[X])^2
+\]</span></p>
+<p>on obtient :</p>
+<p><span class="math display">\[
+\mathbb{E}*{V_j} \left[ s^2*{v|V_j} \right] =
+\frac{1}{n} \sum_{i=1}^n
+\left( \operatorname{Var}(Z(v_i)) + m^2 \right)
+\left( \operatorname{Var}(Z(V_j)) + m^2 \right)
+\]</span></p>
+<p>Les termes en <span class="math inline">\(m^2\)</span> s’annulent, car les petits blocs et les grands blocs ont la même moyenne sous l’hypothèse de stationnarité. Il reste :</p>
+<p><span class="math display">\[
+\mathbb{E}*{V_j} \left[ s^2*{v|V_j} \right] =
+\frac{1}{n} \sum_{i=1}^n \operatorname{Var}(Z(v_i))
+\operatorname{Var}(Z(V_j))
+\]</span></p>
+<p>Si les sous-blocs <span class="math inline">\(v_i\)</span> ont le même support, alors :</p>
+<p><span class="math display">\[
+\operatorname{Var}(Z(v_i)) = \operatorname{Var}(Z(v))
+\]</span></p>
+<p>et :</p>
+<p><span class="math display">\[
+\operatorname{Var}(Z(V_j)) =
+\frac{1}{n^2}
+\sum_{i=1}^n \sum_{k=1}^n
+\operatorname{Cov}(Z(v_i), Z(v_k))
+\]</span></p>
+<p>On obtient donc :</p>
+<p><span class="math display">\[
+\mathbb{E}*{V_j} \left[ s^2*{v|V_j} \right] =
+\operatorname{Var}(Z(v)) =
+\frac{1}{n^2}
+\sum_{i=1}^n \sum_{k=1}^n
+\operatorname{Cov}(Z(v_i), Z(v_k))
+\]</span></p>
+<p>Le premier terme correspond à la variance des petits blocs. Le second terme correspond à la variance des grands blocs, puisque <span class="math inline">\(V_j\)</span> est formé par la moyenne des <span class="math inline">\(v_i\)</span>. On peut donc écrire :</p>
+<p><span class="math display">\[
+D^2(v \mid V) = \bar{C}(v,v) - \bar{C}(V,V)
+\]</span></p>
+<p>et, avec le variogramme :</p>
+<p><span class="math display">\[
+D^2(v \mid V) = \bar{\gamma}(V,V) - \bar{\gamma}(v,v)
+\]</span></p>
+<p><strong>Conclusion</strong> : la variance de dispersion est la différence entre la variance des petits blocs et celle des grands blocs.</p>
+</blockquote>
+<p>Ainsi, la variance de dispersion s’écrit simplement :</p>
+<p><span class="math display">\[
+D^2(v \mid V) = \sigma_v^2 - \sigma_V^2
+\]</span></p>
+<p>Autrement dit, elle mesure la part de variabilité qui existe à l’échelle des petits blocs <span class="math inline">\(v\)</span>, mais qui disparaît lorsqu’on passe au grand bloc <span class="math inline">\(V\)</span>. Comme la variance de bloc a déjà été définie, la variance de dispersion se calcule directement par différence.</p>
+<section id="expressions-équivalentes" class="level3">
+<h3 class="anchored" data-anchor-id="expressions-équivalentes">Expressions équivalentes</h3>
+<p>Utilisant les résultats précédents concernant les variances de blocs, on peut obtenir les formulations suivantes :</p>
+<p><span class="math display">\[
+D^2(v \mid V) = \bar{C}(v,v) - \bar{C}(V,V)
+\]</span></p>
+<p>ou encore, en termes de variogramme :</p>
+<p><span class="math display">\[
+D^2(v \mid V) = \bar{\gamma}(V,V) - \bar{\gamma}(v,v)
+\]</span></p>
+</section>
+<section id="propriétés-1" class="level3">
+<h3 class="anchored" data-anchor-id="propriétés-1">Propriétés</h3>
+<p>On peut retenir trois cas limites :</p>
+<ul>
+<li>si <span class="math inline">\(v \to 0\)</span>, alors <span class="math inline">\(D^2(v \mid V) \to \bar{\gamma}(V,V)\)</span> ;</li>
+<li>si <span class="math inline">\(v \to V\)</span>, alors <span class="math inline">\(D^2(v \mid V) \to 0\)</span> ;</li>
+<li>si <span class="math inline">\(V \to \infty\)</span>, alors <span class="math inline">\(D^2(v \mid V) \to \sigma_v^2\)</span>.</li>
+</ul>
+<p>Le deuxième cas est le plus intuitif : si le petit support devient identique au grand support, il n’y a plus de dispersion à mesurer entre les deux.</p>
+</section>
+<section id="applications" class="level3">
+<h3 class="anchored" data-anchor-id="applications">Applications</h3>
+<p>Dans une mine, <span class="math inline">\(v\)</span> peut représenter la production d’une journée, alors que <span class="math inline">\(V\)</span> peut représenter une semaine ou un mois. La variance de dispersion sert alors à voir si les teneurs envoyées au concentrateur varient beaucoup d’une journée à l’autre. Si les teneurs changent trop rapidement, le procédé devient plus difficile à contrôler. Une alimentation plus régulière permet au contraire de mieux stabiliser le traitement et, idéalement, d’améliorer la récupération <span class="math inline">\(y\)</span>. Dans la logique de Lane, cette récupération influence directement la valeur économique de l’exploitation.</p>
+</section>
+<section id="additivité-des-dispersions" class="level3">
+<h3 class="anchored" data-anchor-id="additivité-des-dispersions">Additivité des dispersions</h3>
+<p>Les variances de dispersion peuvent s’additionner quand les supports sont emboîtés. C’est la relation de Krige. Si on passe d’un petit support <span class="math inline">\(v_1\)</span> à un grand support <span class="math inline">\(v_n\)</span>, avec des supports intermédiaires de plus en plus grands, on peut écrire :</p>
+<p><span class="math display">\[
+D^2(v_1 \mid v_n) = D^2(v_1 \mid v_2) + D^2(v_2 \mid v_3) + \dots + D^2(v_{n-1} \mid v_n)
+\]</span></p>
+<p>où les supports sont ordonnés de <span class="math inline">\(v_1\)</span> à <span class="math inline">\(v_n\)</span> et inclus les uns dans les autres.</p>
+<p>Cette relation dit simplement que la variabilité entre <span class="math inline">\(v_1\)</span> et <span class="math inline">\(v_n\)</span> peut être séparée en plusieurs morceaux. On regarde d’abord ce qui est perdu en passant de <span class="math inline">\(v_1\)</span> à <span class="math inline">\(v_2\)</span>, puis de <span class="math inline">\(v_2\)</span> à <span class="math inline">\(v_3\)</span>, et ainsi de suite. Au final, la somme de ces pertes donne la dispersion totale entre le petit support et le grand support.</p>
+<section id="exemple-pratique-piles-de-stockage" class="level4">
+<h4 class="anchored" data-anchor-id="exemple-pratique-piles-de-stockage">Exemple pratique : piles de stockage</h4>
+<p>Cette relation est utile pour représenter l’effet d’une pile d’homogénéisation. On peut, par exemple, considérer :</p>
+<ul>
+<li><span class="math inline">\(v_1\)</span> : la production journalière ;</li>
+<li><span class="math inline">\(v_2\)</span> : une pile de stockage ou une production homogénéisée ;</li>
+<li><span class="math inline">\(v_3\)</span> : l’alimentation mensuelle du concentrateur.</li>
+</ul>
+<p>La pile agit comme un mélangeur. Elle réduit les variations de teneur entre les journées. Si l’homogénéisation est très efficace, la teneur fournie par la pile varie peu d’une journée à l’autre. Dans ce cas, la dispersion entre <span class="math inline">\(v_1\)</span> et <span class="math inline">\(v_2\)</span> devient faible :</p>
+<p><span class="math display">\[
+D^2(v_1 \mid v_2) \approx 0
+\]</span></p>
+<p>La variabilité journalière est alors presque absorbée par la pile. Il reste surtout la variabilité entre les piles ou entre les volumes alimentant le concentrateur sur une plus longue période :</p>
+<p><span class="math display">\[
+D^2(v_1 \mid v_3) \approx D^2(v_2 \mid v_3)
+\]</span></p>
+<p>En pratique, cela veut dire que la pile ne change pas la teneur moyenne du minerai, mais elle réduit les fluctuations à court terme. C’est ce qui permet d’envoyer une alimentation plus stable au concentrateur.</p>
+</section>
+</section>
+<section id="notes-importantes-concernant-leffet-de-pépite" class="level3">
+<h3 class="anchored" data-anchor-id="notes-importantes-concernant-leffet-de-pépite">Notes importantes concernant l’effet de pépite</h3>
+<ol type="1">
+<li><p>Dans les relations précédentes, <span class="math inline">\(\gamma(\mathbf{h})\)</span> représente le variogramme ponctuel. Dans la pratique, ce variogramme n’est pas accessible : seul le variogramme défini sur un support « <span class="math inline">\(s\)</span> » existe (par exemple, les carottes de forage). Les relations restent valides tant que le support des données est inférieur à « <span class="math inline">\(v\)</span> ». Dans ce cas, l’effet de pépite n’intervient ni dans le calcul de la variance de bloc ni dans celui de la variance de dispersion.</p></li>
+<li><p>Lorsque <span class="math inline">\(v\)</span> est proche du support des données, l’effet de pépite ne disparaît pas complètement dans la variance de bloc. On ajoute alors souvent un terme de la forme <span class="math inline">\(\frac{C_0}{n}\)</span>, où <span class="math inline">\(C_0\)</span> est l’effet de pépite et <span class="math inline">\(n\)</span> le nombre de supports élémentaires dans le bloc. Plus il y a de supports dans le bloc, plus la pépite est moyennée. Pour un petit bloc, ce terme peut donc rester non négligeable.</p></li>
+</ol>
+</section>
+<section id="remarque-finale" class="level3">
+<h3 class="anchored" data-anchor-id="remarque-finale">Remarque finale</h3>
+<p>Le calcul des variances de bloc et de la variance d’estimation ne nécessite pas de connaître explicitement les données. Seul le variogramme est requis. Ces notions ne rendent donc pas compte de l’information accrue localement, issue de l’acquisition de nouvelles données.</p>
+</section>
+</section>
+<section id="atelier-interactif-8.2-influence-du-modèle-de-variogramme" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-8.2-influence-du-modèle-de-variogramme">🧮 Atelier interactif 8.2 — Influence du modèle de variogramme</h2>
+<p>Trois modèles de variogramme partageant une variance globale comparable mais des structures spatiales différentes sont confrontés : un sphérique (pépite + structure), un modèle imbriqué à deux portées (sans pépite, mais avec une composante de courte distance) et un sphérique indépendant. Pour chacun, observez côte à côte le variogramme, la variance de bloc en fonction de la taille, et la dispersion <span class="math inline">\(\mathrm{Var}(l\times l) - \mathrm{Var}(\text{bloc de référence})\)</span>. À palier voisin, le modèle qui place davantage de variance à courte distance produit une variance de bloc et une dispersion plus fortes : le choix du modèle, au-delà de la portée et du palier, conditionne la variance de dispersion calculée.</p>
+<div class="geostat-widget" data-widget="c08_influence">
+  <div class="gw-placeholder">Chargement du widget (influence du modèle)…</div>
+</div>
+</section>
+<section id="sec-homogeneite-minerai" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="sec-homogeneite-minerai"><span class="header-section-number">8.4</span> Application de la variance de dispersion : Homogénéité du minerai</h2>
+<p>La variance de dispersion mesure la variabilité des teneurs d’un support <span class="math inline">\(v\)</span> à l’intérieur d’un volume plus grand <span class="math inline">\(V\)</span>. Appliquée à la production, elle quantifie directement l’homogénéité du minerai livré au concentrateur : <span class="math inline">\(v\)</span> représente la teneur d’une unité de production (par exemple une journée) et <span class="math inline">\(V\)</span> l’ensemble alimenté sur une période (par exemple un mois). Plus <span class="math inline">\(D^2(v \mid V)\)</span> est faible, plus la teneur envoyée au concentrateur est stable d’une journée à l’autre.</p>
+<p>Cette stabilité a une valeur économique. Un concentrateur est réglé pour une teneur d’alimentation donnée ; si celle-ci fluctue, il faut ajuster continuellement le procédé, le rendement se dégrade et l’on perd du métal et de l’argent. L’intérêt de la variance de dispersion est qu’elle permet d’anticiper ces fluctuations et de comparer des stratégies d’exploitation <strong>avant</strong> de démarrer, à partir du seul variogramme :</p>
+<p><span class="math display">\[
+\text{variogramme} \;\rightarrow\; \text{variance de dispersion} \;\rightarrow\; \text{prévision des fluctuations} \;\rightarrow\; \text{design de l'exploitation.}
+\]</span></p>
+<div id="fig-homogeneite-scenarios" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-homogeneite-scenarios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C8_Homogeneite_Scenarios.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-homogeneite-scenarios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.5: Trois stratégies d’exploitation et l’effet attendu sur la fluctuation de la teneur livrée au concentrateur : une pelle (1), deux pelles indépendantes (2), et pelles avec pile de pré-homogénéisation (3). Plus la stratégie décorrèle et mélange le minerai, plus la teneur dans le temps est stable.
+</figcaption>
+</figure>
+</div>
+<section id="exemple-comparer-quatre-stratégies-dexploitation" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-comparer-quatre-stratégies-dexploitation">Exemple : comparer quatre stratégies d’exploitation</h3>
+<p>On cherche à minimiser les fluctuations de la teneur <strong>quotidienne</strong> sur un mois d’exploitation d’un panneau de 90 Kt (<span class="math inline">\(120 \times 50 \times 5\)</span> m). La production quotidienne est de 3 Kt (<span class="math inline">\(20 \times 10 \times 5\)</span> m), le banc fait 5 m, et le variogramme est connu : sphérique isotrope, de portée <span class="math inline">\(a_x = a_y = 50\)</span> m et de palier <span class="math inline">\(C = 5\,\%^2\)</span>.</p>
+<p>On compare quatre stratégies : (1) une seule pelle, (2) deux pelles indépendantes, (3) une pile d’homogénéisation de 15 Kt, (4) une pile d’homogénéisation de 90 Kt.</p>
+<p>Dans chaque cas, on évalue la variance de dispersion du bloc quotidien <span class="math inline">\(v\)</span> dans le panneau mensuel <span class="math inline">\(V\)</span>,</p>
+<p><span class="math display">\[
+D^2(v \mid V) = \sigma_v^2 - \sigma_V^2 = C\,\big[\, F(V) - F(v) \,\big],
+\]</span></p>
+<p>où <span class="math inline">\(F(\cdot)\)</span> est la fonction auxiliaire du modèle sphérique — la valeur standardisée <span class="math inline">\(\bar{\gamma}/C\)</span> du variogramme moyen sur un support, lue sur l’abaque en fonction des dimensions du support rapportées à la portée.</p>
+<section id="scénario-1-une-pelle" class="level4">
+<h4 class="anchored" data-anchor-id="scénario-1-une-pelle">Scénario 1 — une pelle</h4>
+<p>Toute la production d’une journée provient d’un même bloc <span class="math inline">\(v = 20 \times 10 \times 5\)</span>. On lit sur l’abaque <span class="math inline">\(F(120/50,\,50/50) = 0{,}83\)</span> pour le panneau mensuel et <span class="math inline">\(F(20/50,\,10/50) = 0{,}24\)</span> pour le bloc quotidien :</p>
+<p><span class="math display">\[
+D^2(v \mid V) = 5\,\%^2 \times (0{,}83 - 0{,}24) = 2{,}95\,\%^2.
+\]</span></p>
+</section>
+<section id="scénario-2-deux-pelles-indépendantes" class="level4">
+<h4 class="anchored" data-anchor-id="scénario-2-deux-pelles-indépendantes">Scénario 2 — deux pelles indépendantes</h4>
+<p>La production quotidienne est maintenant partagée entre deux pelles distantes de 60 m, chacune extrayant un demi-bloc <span class="math inline">\(v_1 = v_2 = 10 \times 10 \times 5\)</span> (1,5 Kt) dans sa propre zone <span class="math inline">\(V_1 = V_2 = 60 \times 50 \times 5\)</span> (45 Kt). La teneur quotidienne est la moyenne des deux pelles, <span class="math inline">\(Z(v) = \tfrac{1}{2}\big(Z(v_1) + Z(v_2)\big)\)</span>, d’où</p>
+<p><span class="math display">\[
+\operatorname{Var}\!\big(Z(v)\big) = \tfrac{1}{4}\Big(\operatorname{Var}\!\big(Z(v_1)\big) + \operatorname{Var}\!\big(Z(v_2)\big) + 2\operatorname{Cov}\!\big(Z(v_1), Z(v_2)\big)\Big).
+\]</span></p>
+<p>Les deux pelles étant séparées de 60 m, soit plus que la portée de 50 m, leurs teneurs sont décorrélées : <span class="math inline">\(\operatorname{Cov}\!\big(Z(v_1), Z(v_2)\big) = 0\)</span>. Comme les deux blocs ont la même variance, il reste <span class="math inline">\(\operatorname{Var}\!\big(Z(v)\big) = \tfrac{1}{2}\operatorname{Var}\!\big(Z(v_1)\big)\)</span> : moyenner deux teneurs indépendantes réduit de moitié la variance du bloc quotidien. La dispersion se calcule alors sur la zone propre à une pelle (<span class="math inline">\(V_1 = 60 \times 50 \times 5\)</span>) :</p>
+<p><span class="math display">\[
+D^2(v \mid V) = \tfrac{1}{2}\Big(5\,\%^2 \times \big(F(60/50,\,50/50) - F(10/50,\,10/50)\big)\Big) = \tfrac{1}{2}\big(5\,\%^2 \times (0{,}70 - 0{,}16)\big) = 1{,}35\,\%^2.
+\]</span></p>
+</section>
+<section id="scénario-3-pile-dhomogénéisation-de-15-kt" class="level4">
+<h4 class="anchored" data-anchor-id="scénario-3-pile-dhomogénéisation-de-15-kt">Scénario 3 — pile d’homogénéisation de 15 Kt</h4>
+<p>Une pile d’homogénéisation (<span class="math inline">\(50 \times 20 \times 5\)</span>, soit 15 Kt) est intercalée entre l’extraction et le concentrateur. On la traite comme un support intermédiaire <span class="math inline">\(v_{\text{homo}}\)</span> et on applique l’additivité des variances de dispersion (relation de Krige) :</p>
+<p><span class="math display">\[
+D^2(v \mid V) = D^2(v \mid v_{\text{homo}}) + D^2(v_{\text{homo}} \mid V).
+\]</span></p>
+<p>Le rôle de la pile est précisément d’homogénéiser les teneurs des blocs quotidiens qu’elle mélange, de sorte que <span class="math inline">\(D^2(v \mid v_{\text{homo}}) \approx 0\)</span>. Il ne reste que la dispersion de la pile dans le panneau mensuel :</p>
+<p><span class="math display">\[
+D^2(v \mid V) = D^2(v_{\text{homo}} \mid V) = 5\,\%^2 \times \big(F(120/50,\,50/50) - F(50/50,\,20/50)\big) = 5\,\%^2 \times (0{,}83 - 0{,}52) = 1{,}55\,\%^2.
+\]</span></p>
+<div id="fig-homogeneite-pile" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-homogeneite-pile-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C8_Homogeneite_Pile.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:55.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-homogeneite-pile-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.6: Représentation de la pile de 15 Kt (support intermédiaire <span class="math inline">\(v_{\text{homo}} = 50 \times 20 \times 5\)</span>) qui mélange les blocs quotidiens de 3 Kt à l’intérieur du panneau mensuel <span class="math inline">\(V = 120 \times 50 \times 5\)</span>.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="scénario-4-pile-dhomogénéisation-de-90-kt" class="level4">
+<h4 class="anchored" data-anchor-id="scénario-4-pile-dhomogénéisation-de-90-kt">Scénario 4 — pile d’homogénéisation de 90 Kt</h4>
+<p>Si la pile absorbe toute la production mensuelle, son support égale celui du panneau, <span class="math inline">\(v_{\text{homo}} = V = 120 \times 50 \times 5\)</span>. La dispersion résiduelle s’annule :</p>
+<p><span class="math display">\[
+D^2(v \mid V) = 5\,\%^2 \times \big(F(120/50,\,50/50) - F(120/50,\,50/50)\big) = 0\,\%^2.
+\]</span></p>
+<p>Une pile mensuelle mélange l’ensemble du minerai extrait sur le mois : la teneur livrée est alors constante, et la dispersion nulle.</p>
+</section>
+</section>
+<section id="analyse-des-résultats" class="level3">
+<h3 class="anchored" data-anchor-id="analyse-des-résultats">Analyse des résultats</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Stratégie</th>
+<th style="text-align: center;"><span class="math inline">\(D^2(v \mid V)\)</span> (<span class="math inline">\(\%^2\)</span>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Une pelle</td>
+<td style="text-align: center;">2,95</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Deux pelles indépendantes</td>
+<td style="text-align: center;">1,35</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pile d’homogénéisation de 15 Kt</td>
+<td style="text-align: center;">1,55</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pile d’homogénéisation de 90 Kt</td>
+<td style="text-align: center;"><span class="math inline">\(\approx 0\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Trois enseignements se dégagent. D’abord, exploiter simultanément deux zones décorrélées — deux pelles distantes de plus d’une portée — réduit fortement la variabilité livrée : moyenner deux teneurs indépendantes divise par deux la variance du bloc quotidien, ce qui abaisse la dispersion de 2,95 à 1,35 <span class="math inline">\(\%^2\)</span>. Ensuite, une pile d’homogénéisation abaisse d’autant plus la dispersion que sa capacité est grande ; une pile contenant toute la production mensuelle ramène la variabilité à zéro. Enfin, résultat le plus instructif sur le plan opérationnel, deux pelles indépendantes (1,35 <span class="math inline">\(\%^2\)</span>) font ici mieux qu’une pile de 15 Kt (1,55 <span class="math inline">\(\%^2\)</span>) : décorréler spatialement l’extraction est un levier simple et peu coûteux, parfois plus efficace qu’un ouvrage de stockage de capacité modeste.</p>
+</section>
+</section>
+<section id="atelier-interactif-8.3-homogénéité-du-minerai" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-8.3-homogénéité-du-minerai">🧮 Atelier interactif 8.3 — Homogénéité du minerai</h2>
+<p>La variance de dispersion permet de comparer différentes façons d’exploiter le gisement. Si <span class="math inline">\(D^2(v \mid V)=\sigma_v^2-\sigma_V^2\)</span> est faible, les teneurs envoyées au concentrateur varient moins d’une journée à l’autre. L’alimentation est donc plus stable.</p>
+<p>Dans l’atelier, comparez trois cas : une seule pelle, deux pelles éloignées et une pile d’homogénéisation. Avec deux pelles éloignées, les blocs sont moins corrélés entre eux, ce qui réduit la variance journalière. Avec une pile d’homogénéisation, plus la capacité augmente, plus les teneurs sont mélangées, et plus <span class="math inline">\(D^2\)</span> se rapproche de zéro.</p>
+<p>Vous pouvez aussi modifier l’anisotropie et le sens de chargement. Si la bande journalière est chargée en travers de la direction de forte continuité, elle coupe davantage de variabilité. Les camions contiennent alors un mélange plus représentatif du gisement, ce qui aide à stabiliser la teneur envoyée au concentrateur.</p>
+<div class="geostat-widget" data-widget="c08_homogeneite">
+  <div class="gw-placeholder">Chargement du widget (homogénéité du minerai)…</div>
+</div>
+</section>
+<section id="variance-destimation" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="variance-destimation"><span class="header-section-number">8.5</span> Variance d’estimation</h2>
+<p>Quand on estime la teneur moyenne d’un bloc ou d’une zone à partir de quelques échantillons, on commet une erreur. Cette erreur est d’autant plus grande que les données sont rares, mal placées, ou que le gisement est erratique. Tout l’intérêt, en pratique, c’est de pouvoir chiffrer cette erreur avant même de connaître les teneurs, pour juger si une maille d’échantillonnage est suffisante. On cherche donc ici à mesurer la précision d’une estimation obtenue par une méthode quelconque, généralement linéaire.</p>
+<p>Soit une variable aléatoire <span class="math inline">\(Z_v\)</span> qu’on veut estimer par une combinaison linéaire des valeurs observées :</p>
+<p><span class="math display">\[
+Z_v^* = \sum_{i=1}^n \lambda_i Z(\mathbf{x}_i) = \sum_{i=1}^n \lambda_i Z_i
+\]</span></p>
+<p>où <span class="math inline">\(Z_i\)</span> est la valeur observée au point <span class="math inline">\(\mathbf{x}_i\)</span>, <span class="math inline">\(Z_v^*\)</span> l’estimateur de <span class="math inline">\(Z_v\)</span>, et <span class="math inline">\(\lambda_i\)</span> le poids associé à la donnée <span class="math inline">\(Z_i\)</span>.</p>
+<p>L’erreur d’estimation est la différence entre la valeur estimée et la valeur réelle : <span class="math display">\[e = Z_v^* - Z_v\]</span></p>
+<p>La variance de cette erreur, la <strong>variance d’estimation</strong>, se développe ainsi : <span class="math display">\[
+\sigma_e^2 = \operatorname{Var}(e) = \operatorname{Var}(Z_v^* - Z_v) = \operatorname{Var}(Z_v^*) + \operatorname{Var}(Z_v) - 2\,\operatorname{Cov}(Z_v^*, Z_v)
+\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Rappel : Propriété de la variance sur une combinaison linéaire
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>On rappelle que la variance d’une combinaison linéaire de variables aléatoires est donnée par :</p>
+<p><span class="math display">\[
+\operatorname{Var}\left( \sum_{i=1}^n \lambda_i Z_i \right)
+= \sum_{i=1}^n \sum_{j=1}^n \lambda_i \lambda_j \, \operatorname{Cov}(Z_i, Z_j)
+\]</span></p>
+<p>et que</p>
+<p><span class="math display">\[
+\operatorname{Cov}(Z_i, Z_i) = \operatorname{Var}(Z_i)
+\]</span></p>
+</div>
+</div>
+</div>
+<p>En remplaçant <span class="math inline">\(Z_v^*\)</span> par son expression, on obtient : <span class="math display">\[
+\sigma_e^2 = \operatorname{Var}(Z_v) + \sum_{i=1}^n \sum_{j=1}^n \lambda_i \lambda_j \operatorname{Cov}(Z_i, Z_j) - 2 \sum_{i=1}^n \lambda_i \operatorname{Cov}(Z_i, Z_v)
+\]</span></p>
+<section id="interprétation" class="level3">
+<h3 class="anchored" data-anchor-id="interprétation">Interprétation</h3>
+<p>La variance d’estimation se compose donc de trois termes, et chacun a une interprétation très concrète.</p>
+<ol type="a">
+<li><p><span class="math inline">\(\operatorname{Var}(Z_v)\)</span> : <em>le phénomène est-il variable en lui-même ?</em> Plus le phénomène étudié est variable, plus les erreurs d’estimation le seront aussi. Estimer une teneur dans un champ constant est facile : la variance est nulle. Estimer dans un champ très erratique, proche d’un bruit blanc, est autrement plus difficile.</p></li>
+<li><p><span class="math inline">\(\sum_i \sum_j \lambda_i \lambda_j \operatorname{Cov}(Z_i, Z_j)\)</span> : <em>quelle est la redondance entre les observations ?</em> Ce terme mesure la redondance des données. L’estimation est meilleure quand les données sont bien réparties (<a href="#fig-c8-proximite-redondance" class="quarto-xref">Figure&nbsp;<span>8.7</span></a>). Des données trop rapprochées ont une forte covariance entre elles : elles répètent la même information et n’aident pas autant à réduire la variance que des données espacées. Inutile d’avoir cent données concentrées dans la même zone.</p></li>
+<li><p><span class="math inline">\(\sum_i \lambda_i \operatorname{Cov}(Z_i, Z_v)\)</span> : <em>les observations sont-elles bien placées par rapport à la cible ?</em> C’est le terme de proximité. Si les données sont proches du bloc à estimer, la covariance <span class="math inline">\(\operatorname{Cov}(Z_i, Z_v)\)</span> est élevée ; comme ce terme est soustrait, il fait chuter la variance d’estimation. À l’inverse, des données très éloignées n’apportent presque rien.</p></li>
+</ol>
+<div id="fig-c8-proximite-redondance" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c8-proximite-redondance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c8_08_proximite_redondance.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c8-proximite-redondance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.7: Variance d’estimation d’un bloc selon la configuration des données (agglomérées, bien réparties, peu/beaucoup de données, petit/grand bloc).
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="remarques-importantes" class="level3">
+<h3 class="anchored" data-anchor-id="remarques-importantes">Remarques importantes</h3>
+<ol type="1">
+<li>On reconnaît trois composantes : un terme lié au bloc (<span class="math inline">\(\bar{\gamma}(v,v)\)</span>), un terme lié aux points (<span class="math inline">\(\bar{\gamma}(\mathbf{x}_i, \mathbf{x}_j)\)</span>) et un terme croisé (<span class="math inline">\(\bar{\gamma}(\mathbf{x}_i, v)\)</span>).</li>
+<li>La variance d’estimation est une mesure de précision moyenne, pour une configuration géométrique donnée. Elle ne dépend pas des teneurs mesurées, seulement de la géométrie et du variogramme.</li>
+<li>Le krigeage, justement, consiste à choisir les poids <span class="math inline">\(\lambda_i\)</span> qui minimisent cette variance <span class="math inline">\(\sigma_e^2\)</span>.</li>
+</ol>
+</section>
+<section id="formulation-avec-le-variogramme" class="level3">
+<h3 class="anchored" data-anchor-id="formulation-avec-le-variogramme">Formulation avec le variogramme</h3>
+<p>En utilisant la relation <span class="math inline">\(\operatorname{Cov}(Z_i, Z_j) = \sigma^2 - \gamma(\mathbf{x}_i - \mathbf{x}_j)\)</span>, la variance d’estimation se réécrit avec le variogramme moyen <span class="math inline">\(\bar{\gamma}\)</span> introduit plus haut : <span class="math display">\[\sigma_e^2 = 2 \sum_i \lambda_i \bar{\gamma}(\mathbf{x}_i, v) - \sum_{i,j} \lambda_i \lambda_j \bar{\gamma}(\mathbf{x}_i, \mathbf{x}_j) - \bar{\gamma}(v, v)\]</span></p>
+</section>
+<section id="variance-dextension" class="level3">
+<h3 class="anchored" data-anchor-id="variance-dextension">Variance d’extension</h3>
+<p>La <strong>variance d’extension</strong> est le cas particulier où l’on étend la valeur d’un support <span class="math inline">\(v\)</span> (point, segment, surface) à un volume supérieur <span class="math inline">\(V\)</span>, sans optimiser les poids : on donne à <span class="math inline">\(v\)</span> un poids unitaire, au lieu de chercher les <span class="math inline">\(\lambda_i\)</span> du krigeage. L’expression précédente se réduit alors à <span class="math display">\[\sigma_e^2 = 2\,\bar{\gamma}(v, V) - \bar{\gamma}(v, v) - \bar{\gamma}(V, V),\]</span> une forme symétrique en <span class="math inline">\(\bar{\gamma}\)</span>, qui ne dépend que de la géométrie des deux supports. Ces situations simples se prêtent bien à l’usage d’abaques pour évaluer rapidement la précision.</p>
+</section>
+<section id="combinaison-derreurs-élémentaires" class="level3">
+<h3 class="anchored" data-anchor-id="combinaison-derreurs-élémentaires">Combinaison d’erreurs élémentaires</h3>
+<p>Pour estimer un grand volume <span class="math inline">\(V\)</span> à partir de nombreuses données, le calcul direct oblige à inverser un grand système de krigeage. L’idée de la combinaison d’erreurs est d’éviter ce calcul global : on découpe le domaine en <span class="math inline">\(n\)</span> sous-domaines <span class="math inline">\(v_i\)</span>, on évalue l’erreur élémentaire sur chacun, et l’erreur globale s’obtient par simple somme, à condition que les erreurs élémentaires soient indépendantes. La forme de cette somme dépend du plan d’échantillonnage (<a href="#fig-c8-patrons" class="quarto-xref">Figure&nbsp;<span>8.8</span></a>).</p>
+<div id="fig-c8-patrons" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c8-patrons-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c8_03_patrons.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c8-patrons-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.8: Trois plans d’échantillonnage : grille régulière, aléatoire stratifié et quelconque.
+</figcaption>
+</figure>
+</div>
+<section id="i.-grille-régulière-square-grid" class="level4">
+<h4 class="anchored" data-anchor-id="i.-grille-régulière-square-grid">i. Grille régulière (<em>square grid</em>)</h4>
+<p>Si chaque point <span class="math inline">\(Z_i\)</span> représente un bloc de même taille, de variance d’erreur <span class="math inline">\(\sigma_e^2\)</span>, alors : <span class="math display">\[\sigma_e^2(\text{globale}) = \frac{\sigma_e^2}{n}\]</span></p>
+</section>
+<section id="ii.-échantillonnage-aléatoire-stratifié-stratified-random" class="level4">
+<h4 class="anchored" data-anchor-id="ii.-échantillonnage-aléatoire-stratifié-stratified-random">ii. Échantillonnage aléatoire stratifié (<em>stratified random</em>)</h4>
+<p>Si le point est placé au hasard dans le bloc <span class="math inline">\(v_i\)</span> : <span class="math display">\[\sigma_e^2(\text{globale}) = \frac{D^2(\cdot \mid v)}{n}\]</span></p>
+</section>
+<section id="iii.-échantillonnage-quelconque" class="level4">
+<h4 class="anchored" data-anchor-id="iii.-échantillonnage-quelconque">iii. Échantillonnage quelconque</h4>
+<p>Pour un domaine <span class="math inline">\(V\)</span> découpé en parcelles <span class="math inline">\(v_i\)</span>, chacune estimée avec ses propres données : <span class="math display">\[\sigma_e^2 = \frac{1}{V^2} \sum_{i=1}^n v_i^2 \sigma_{e_i}^2\]</span></p>
+</section>
+<section id="remarques" class="level4">
+<h4 class="anchored" data-anchor-id="remarques">Remarques</h4>
+<ul>
+<li>La méthode d’estimation (krigeage, polygones, etc.) influence peu l’estimation globale d’un grand champ, mais elle est déterminante pour la précision locale.</li>
+<li>Pour que cette simplification tienne, il ne faut pas partager de données entre deux blocs voisins : sinon, les erreurs ne sont plus indépendantes.</li>
+</ul>
+</section>
+<section id="exemple" class="level4">
+<h4 class="anchored" data-anchor-id="exemple">Exemple</h4>
+<p>Une zone a été estimée directement par krigeage (variance de 0,36), puis par combinaison de 4 parcelles (<a href="#fig-VarEstimation" class="quarto-xref">Figure&nbsp;<span>8.9</span></a>). Les résultats par subdivision sont quasi identiques à ceux du calcul direct, ce qui valide l’approche par combinaison d’erreurs.</p>
+<div id="fig-VarEstimation" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-VarEstimation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C8_VarEstimation.PNG" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-VarEstimation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.9: Comparaison de l’estimation directe et de la combinaison par parcelles.
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+</section>
+<section id="atelier-interactif-8.4-variance-destimation-dun-bloc" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-8.4-variance-destimation-dun-bloc">🧮 Atelier interactif 8.4 — Variance d’estimation d’un bloc</h2>
+<p>La variance d’estimation d’un bloc <span class="math inline">\(V\)</span> à partir de données situées aux positions <span class="math inline">\(\mathbf{x}_i\)</span> s’écrit :</p>
+<p><span class="math display">\[
+\sigma_e^2 = 2\sum_i \lambda_i\,\bar{\gamma}(\mathbf{x}_i, V) \;-\; \bar{\gamma}(V, V) \;-\; \sum_i\sum_j \lambda_i\lambda_j\,\bar{\gamma}(\mathbf{x}_i, \mathbf{x}_j),
+\]</span></p>
+<p>Cette variance correspond à la variance de krigeage du bloc. Elle dépend surtout de deux choses : la position des données par rapport au bloc, et la redondance entre les données. Une donnée proche du bloc réduit généralement la variance d’estimation. Par contre, deux données très proches l’une de l’autre apportent presque la même information ; la seconde ajoute donc peu.</p>
+<p>Dans l’atelier, vous pouvez placer des données dans deux configurations, une rouge et une bleue, puis comparer la variance d’estimation obtenue pour le bloc. Vous pouvez aussi retirer un point en cliquant dessus. On voit alors qu’un point bien placé peut réduire fortement <span class="math inline">\(\sigma_e^2\)</span>, alors qu’un point ajouté près d’un autre a souvent peu d’effet.</p>
+<p>L’anisotropie peut aussi être modifiée. Dans la direction de forte continuité, une donnée reste utile même un peu plus loin du bloc. Dans la direction perpendiculaire, son influence diminue plus vite. C’est pour cette raison que la direction de l’échantillonnage doit rester cohérente avec la structure spatiale du gisement.</p>
+<div class="geostat-widget" data-widget="c08_estimation">
+  <div class="gw-placeholder">Chargement du widget (variance d'estimation)…</div>
+</div>
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../chapters/C07/index.html" class="pagination-link" aria-label="Variogramme">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Variogramme</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../chapters/C09/index.html" class="pagination-link" aria-label="Krigeage">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Krigeage</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Code source</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Variance de blocs, de dispersion et d’estimation"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">abstract:</span><span class="co"> |</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">  Ce chapitre présente la variance de bloc, la variance de dispersion et la variance d’estimation. Il vise à montrer comment la variabilité des teneurs évolue lorsque l’analyse porte non plus uniquement sur des échantillons ponctuels, mais également sur des blocs, des panneaux ou des volumes de plus grande taille. À partir du variogramme, cette variabilité peut être reliée à la continuité spatiale du gisement et quantifiée au moyen de différents calculs, parfois réalisés à l’aide d’abaques. Ces notions sont ensuite mobilisées pour examiner des problèmes plus pratiques, notamment l’homogénéisation du minerai, la variabilité du matériau envoyé au concentrateur et l’effet de la configuration de l’échantillonnage.</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Objectifs d'apprentissage</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Comprendre les notions de variance de bloc et de variance de dispersion et décrire le lien avec le variogramme et la continuité spatiale qu'il exprime;</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Calculer les variances de bloc et variances de dispersion avec les abaques ;</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Effectuer la sélection de la meilleure alternative pour homogénéiser le minerai ;</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Recommander un sens de déplacement d'une pelle dans une mine pour minimiser la variabilité au concentrateur ;</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Prévoir l'impact sur la variabilité au concentrateur d'exploiter simultanément différentes portions du gisement ;</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Comprendre la notion de variance d'estimation;</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Calculer des variances d'estimation pour une configuration d'estimation et le modèle de variogramme;</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Identifier le lien entre patron d'échantillonnage et l'anisotropie du variogramme.</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="fu">## Références</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>Ce chapitre s’appuie principalement sur les ouvrages suivants :</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>Chilès, J., &amp; Delfiner, P. (2012). *Geostatistics: Modeling Spatial Uncertainty*. John Wiley &amp; Sons.</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>Journel, A. G., &amp; Huijbregts, C. J. (1978). *Mining Geostatistics*. Academic Press.</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>{{&lt; include 08-01.qmd &gt;}}</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>{{&lt; include 08-02.qmd &gt;}}</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>{{&lt; include 08-03.qmd &gt;}}</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>{{&lt; include 08-04.qmd &gt;}}</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>{{&lt; include 08-05.qmd &gt;}}</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Géostatistique et géologie minière</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Danlauz/glq3401-3651/edit/main/chapters/C08/index.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/Danlauz/glq3401-3651/issues/new" class="toc-action"><i class="bi empty"></i>Signaler un problème ou<br>formuler une suggestion</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Ce livre a été réalisé avec <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+<script type="module" src="../../scripts/geostat-js/loader.js"></script>
+<script src="../../scripts/geostat-js/notebook-button.js" defer=""></script>
+
+
+
+
+</body></html>

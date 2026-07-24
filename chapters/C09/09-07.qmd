@@ -1,0 +1,155 @@
+## Krigeage universel
+
+Le krigeage simple et le krigeage ordinaire reposent sur l’hypothèse que la moyenne demeure constante dans le domaine considéré. Or, certaines variables présentent une évolution spatiale progressive : l’épaisseur d’une unité géologique peut augmenter dans une direction, tandis que la concentration d’un contaminant peut diminuer à mesure que l’on s’éloigne de sa source. Cette variation organisée de la moyenne dans l’espace est appelée tendance, ou dérive.
+
+Le krigeage universel (KU) permet de tenir compte de cette variation spatiale en représentant la dérive par une fonction des coordonnées, dont la forme est fixée, mais dont les coefficients restent à estimer. Il généralise ainsi le krigeage ordinaire : alors que l’inconnue sur une moyenne constante impose une seule contrainte aux poids, chaque terme utilisé pour décrire la dérive ajoute une contrainte supplémentaire.
+
+### Modèle avec dérive
+
+On décompose la fonction aléatoire $Z(\mathbf{x})$ en une composante déterministe, appelée dérive, et une composante aléatoire résiduelle :
+
+$$
+Z(\mathbf{x}) = m(\mathbf{x}) + Y(\mathbf{x})
+$$
+
+où $m(\mathbf{x}) = \mathbb{E}[Z(\mathbf{x})]$ représente la dérive, tandis que $Y(\mathbf{x})$ est un résidu de moyenne nulle, supposé stationnaire.
+
+La dérive décrit la variation systématique de la moyenne dans l’espace. Une fois cette variation retirée, le krigeage s’appuie sur la continuité spatiale du résidu $Y(\mathbf{x})$, représentée par son variogramme ou sa fonction de covariance. La variable $Z(\mathbf{x})$ n’est donc pas stationnaire en moyenne, mais son résidu est supposé l’être.
+
+La dérive est une combinaison linéaire de $L + 1$ fonctions de base connues $f_\ell(\mathbf{x})$ :
+
+$$
+m(\mathbf{x}) = \sum_{\ell=0}^{L} a_\ell \, f_\ell(\mathbf{x})
+$$
+
+où les $a_\ell$ sont des coefficients inconnus. Par convention, $f_0(\mathbf{x}) = 1$, si bien que $a_0$ est une constante. Le krigeage ordinaire correspond au cas particulier où $L=0$. La dérive se réduit alors à une moyenne inconnue, mais constante, $m(\mathbf{x})=a_0$.
+
+### Exemples de fonctions de dérive
+
+En deux dimensions, avec $\mathbf{x}=(x,y)$, les formes de dérive les plus courantes sont les suivantes :
+
+* ordre 0 — moyenne constante : $m(\mathbf{x})=a_0$. Ce cas correspond au krigeage ordinaire.
+
+* ordre 1 — dérive linéaire : $m(\mathbf{x})=a_0+a_1x+a_2y$
+
+* ordre 2 — dérive quadratique : $m(\mathbf{x})= a_0+a_1x+a_2y+a_3x^2+a_4xy+a_5y^2$
+
+Le choix de l’ordre doit être guidé par la structure spatiale observée et par le contexte géologique. Une dérive linéaire est souvent suffisante pour représenter une variation progressive de la moyenne. Les dérives d’ordre supérieur sont utilisées plus rarement, car elles comportent davantage de coefficients à estimer, exigent donc davantage de données et peuvent produire des comportements instables ou des artefacts près des limites du domaine.
+
+### Condition de non-biais
+
+L'estimateur garde la forme d'une combinaison linéaire des données :
+
+$$
+Z_0^* = \sum_{i=1}^n \lambda_i \, Z_i
+$$
+
+Pour qu'il soit sans biais, son espérance doit être égale à celle de la valeur à estimer : $\mathbb{E}[Z_0^*] = \mathbb{E}[Z_0]$. En remplaçant chaque donnée par son espérance $\mathbb{E}[Z_i] = m(\mathbf{x}_i) = \sum_\ell a_\ell f_\ell(\mathbf{x}_i)$ :
+
+$$
+\mathbb{E}[Z_0^*] = \sum_{i=1}^n \lambda_i \, m(\mathbf{x}_i) = \sum_{i=1}^n \lambda_i \sum_{\ell=0}^{L} a_\ell \, f_\ell(\mathbf{x}_i) = \sum_{\ell=0}^{L} a_\ell \left( \sum_{i=1}^n \lambda_i \, f_\ell(\mathbf{x}_i) \right)
+$$
+
+et, de même, $\mathbb{E}[Z_0] = m(\mathbf{x}_0) = \sum_\ell a_\ell \, f_\ell(\mathbf{x}_0)$. Le biais s'écrit donc
+
+$$
+\mathbb{E}[Z_0^* - Z_0] = \sum_{\ell=0}^{L} a_\ell \left( \sum_{i=1}^n \lambda_i \, f_\ell(\mathbf{x}_i) - f_\ell(\mathbf{x}_0) \right).
+$$
+
+Les coefficients $a_\ell$ de la dérive sont inconnus. Pour que le biais soit nul quelles que soient leurs valeurs, chaque terme entre parenthèses doit s'annuler séparément, ce qui donne les $L + 1$ conditions d'universalité :
+
+$$
+\sum_{i=1}^n \lambda_i \, f_\ell(\mathbf{x}_i) = f_\ell(\mathbf{x}_0), \quad \ell = 0, 1, \dots, L.
+$$
+
+Pour $\ell = 0$, comme $f_0 = 1$, on retrouve la contrainte du krigeage ordinaire, $\sum_i \lambda_i = 1$. Les $L$ conditions suivantes forcent l'estimateur à reproduire exactement chaque composante de la dérive : c'est ce qui le rend sans biais malgré une moyenne variable.
+
+### Système de krigeage universel
+
+Il reste à choisir, parmi tous les jeux de poids qui vérifient les conditions d'universalité, celui qui minimise la variance d'estimation. La démarche est celle du krigeage ordinaire — un multiplicateur de Lagrange par contrainte —, mais avec $L + 1$ contraintes au lieu d'une seule, d'où $L + 1$ multiplicateurs $\nu_0, \dots, \nu_L$. On obtient le système de krigeage universel :
+
+$$
+\begin{cases}
+\displaystyle\sum_{j=1}^n \lambda_j \, C_{ij} + \sum_{\ell=0}^{L} \nu_\ell \, f_\ell(\mathbf{x}_i) = C_{i0}, & i = 1, \dots, n \\[8pt]
+\displaystyle\sum_{j=1}^n \lambda_j \, f_\ell(\mathbf{x}_j) = f_\ell(\mathbf{x}_0), & \ell = 0, \dots, L
+\end{cases}
+$$
+
+Il comporte $n + L + 1$ équations et autant d'inconnues : les $n$ poids et les $L + 1$ multiplicateurs. En termes de variogramme des résidus :
+
+$$
+\begin{cases}
+\displaystyle\sum_{j=1}^n \lambda_j \, \gamma(\mathbf{x}_i - \mathbf{x}_j) - \sum_{\ell=0}^{L} \nu_\ell \, f_\ell(\mathbf{x}_i) = \gamma(\mathbf{x}_i - \mathbf{x}_0), & i = 1, \dots, n \\[8pt]
+\displaystyle\sum_{j=1}^n \lambda_j \, f_\ell(\mathbf{x}_j) = f_\ell(\mathbf{x}_0), & \ell = 0, \dots, L
+\end{cases}
+$$
+
+### Variance de krigeage universel
+
+En reportant la solution dans l'expression de la variance, on obtient
+
+$$
+\sigma_{UK}^2 = C(\mathbf{0}) - \sum_{i=1}^n \lambda_i \, C_{i0} - \sum_{\ell=0}^{L} \nu_\ell \, f_\ell(\mathbf{x}_0),
+$$
+
+ou, en termes de variogramme,
+
+$$
+\sigma_{UK}^2 = \sum_{i=1}^n \lambda_i \, \gamma(\mathbf{x}_i - \mathbf{x}_0) - \sum_{\ell=0}^{L} \nu_\ell \, f_\ell(\mathbf{x}_0).
+$$
+
+### Forme matricielle
+
+Avec la notation $C_{ij} = C(\mathbf{x}_i - \mathbf{x}_j)$ et $C_{i0} = C(\mathbf{x}_i - \mathbf{x}_0)$, le système $\mathbf{A}\, \boldsymbol{\lambda}^+ = \mathbf{b}$ s'écrit
+
+$$
+\underbrace{\begin{bmatrix}
+C_{11} & \cdots & C_{1n} & f_0(\mathbf{x}_1) & \cdots & f_L(\mathbf{x}_1) \\
+\vdots & \ddots & \vdots & \vdots & & \vdots \\
+C_{n1} & \cdots & C_{nn} & f_0(\mathbf{x}_n) & \cdots & f_L(\mathbf{x}_n) \\
+f_0(\mathbf{x}_1) & \cdots & f_0(\mathbf{x}_n) & 0 & \cdots & 0 \\
+\vdots & & \vdots & \vdots & \ddots & \vdots \\
+f_L(\mathbf{x}_1) & \cdots & f_L(\mathbf{x}_n) & 0 & \cdots & 0
+\end{bmatrix}}_{\mathbf{A}}
+\underbrace{\begin{bmatrix}
+\lambda_1 \\ \vdots \\ \lambda_n \\ \nu_0 \\ \vdots \\ \nu_L
+\end{bmatrix}}_{\boldsymbol{\lambda}^+}
+=
+\underbrace{\begin{bmatrix}
+C_{10} \\ \vdots \\ C_{n0} \\ f_0(\mathbf{x}_0) \\ \vdots \\ f_L(\mathbf{x}_0)
+\end{bmatrix}}_{\mathbf{b}}
+$$
+
+En notant $\mathbf{C}$ la matrice de covariance des données ($n \times n$) et $\mathbf{F}$ la matrice des fonctions de dérive évaluées aux données ($n \times (L+1)$, de terme $F_{i\ell} = f_\ell(\mathbf{x}_i)$), la matrice augmentée a la structure par blocs
+
+$$
+\mathbf{A} = \begin{bmatrix} \mathbf{C} & \mathbf{F} \\ \mathbf{F}^\top & \mathbf{0} \end{bmatrix}.
+$$
+
+Elle est inversible et la solution unique dès que deux conditions sont réunies : $\mathbf{C}$ est définie positive (modèle de covariance admissible, points distincts) et $\mathbf{F}$ est de rang plein $L + 1$, c'est-à-dire que les fonctions de dérive sont linéairement indépendantes aux points de données. Cette seconde condition impose $n \ge L + 1$ : il faut au moins autant de données que de coefficients de dérive. Comme en krigeage ordinaire, $\mathbf{A}$ n'est pas définie positive en raison des blocs de bord, mais la variance reste minimale sur le sous-espace des poids satisfaisant aux conditions d'universalité. Le krigeage ordinaire est le cas particulier où $L = 0$ et $f_0(\mathbf{x}) = 1$.
+
+### Difficultés pratiques
+
+La mise en œuvre du krigeage universel soulève une difficulté importante : la dérive et la continuité spatiale des résidus doivent être estimées conjointement. Or, l’ajustement du variogramme des résidus dépend de la dérive retirée, tandis que l’estimation optimale de cette dérive dépend elle-même du variogramme des résidus. Une mauvaise estimation de l’une peut donc influencer l’autre.
+
+Plusieurs approches permettent de traiter ce problème :
+
+1) Estimation itérative. Une première dérive est ajustée, par exemple par régression. Le variogramme est ensuite calculé sur les résidus, puis utilisé pour réestimer la dérive en tenant compte de leur dépendance spatiale. Ces étapes peuvent être répétées jusqu’à ce que les paramètres se stabilisent.
+
+2) Estimation conjointe. La dérive et les paramètres de covariance peuvent être estimés simultanément, notamment par maximum de vraisemblance ou par maximum de vraisemblance restreinte. Cette approche évite de séparer complètement l’ajustement de la dérive de celui de la structure spatiale.
+
+3) Fonctions aléatoires intrinsèques d’ordre $k$ — FAI-$k$. Cette formulation utilise des covariances ou des variogrammes généralisés conçus pour filtrer les dérives polynomiales jusqu’à un ordre donné. Elle permet ainsi de travailler sans estimer explicitement les coefficients de la dérive au préalable.
+
+Lorsque des variables auxiliaires pertinentes sont disponibles, la dérive peut également être décrite à partir de celles-ci plutôt qu’à partir des seules coordonnées spatiales. Cette extension, appelée krigeage avec dérive externe, fait l’objet de la section suivante.
+
+<!-- 9.8 : Krigeage universel -->
+## 🧮 Atelier interactif 9.8 — Krigeage universel (KU) {.unnumbered}
+
+::: {.content-visible when-format="html"}
+Données présentant une tendance. Le KU modélise la dérive comme un polynôme des coordonnées (de degré 1, linéaire, ou de degré 2, quadratique). Placez le point à estimer $\mathbf{x}_0$ au-delà des données : le KU extrapole la tendance, alors qu'en superposition le KO revient au niveau local et le KS à la moyenne fixe $m$. Cliquez le graphe pour ajouter ou retirer des données, et affichez les poids $\lambda_i$.
+{{< include widget/widget_krigeage_universel.qmd >}}
+:::
+
+::: {.content-visible unless-format="html"}
+Cet atelier interactif n'est disponible que dans la version web du chapitre.
+:::

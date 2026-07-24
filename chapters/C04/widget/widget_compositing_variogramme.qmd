@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c04_compositing_variogramme">
+  <div class="gw-placeholder">Chargement (compositing + variogramme)…</div>
+</div>
+```

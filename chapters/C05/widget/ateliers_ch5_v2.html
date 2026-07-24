@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ateliers — Méthodes déterministes d'estimation</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Source Serif 4',Georgia,serif;background:#faf9f6;color:#2c2c2c;line-height:1.6;}
+
+/* NAV */
+.tnav{position:sticky;top:0;z-index:100;background:#2c2a26;padding:0 24px;display:flex;align-items:center;gap:4px;overflow-x:auto;border-bottom:2px solid #4a4639;}
+.tnav .brand{font-family:'Source Serif 4',serif;font-weight:700;font-size:.95rem;color:#e8e4dc;margin-right:14px;}
+.tnav a{color:#c8c3b8;text-decoration:none;font-size:.8rem;font-family:'JetBrains Mono',monospace;padding:11px 14px;white-space:nowrap;border-bottom:2px solid transparent;transition:.2s;}
+.tnav a:hover{color:#fff;border-bottom-color:#8ca06a;}
+
+/* LAYOUT */
+.page{max-width:940px;margin:0 auto;padding:28px 24px 80px;}
+h1{font-size:1.7rem;font-weight:700;margin-bottom:4px;letter-spacing:-.03em;}
+h1 span{color:#8ca06a;}
+.psub{font-size:.92rem;color:#777;margin-bottom:32px;}
+.atl{margin-bottom:52px;scroll-margin-top:58px;}
+.ath{display:flex;align-items:center;gap:10px;margin-bottom:6px;padding-bottom:6px;border-bottom:2px solid #e4e0d8;}
+.anum{background:#3a3632;color:#fff;font-family:'JetBrains Mono',monospace;font-size:.73rem;font-weight:600;padding:3px 9px;border-radius:20px;}
+h2{font-size:1.25rem;font-weight:600;letter-spacing:-.02em;}
+.adesc{font-size:.88rem;color:#666;margin-bottom:14px;line-height:1.5;}
+
+/* SHARED WIDGET */
+.w5-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px;padding:9px 12px;background:#f0eee8;border-radius:6px;font-size:.82rem;}
+.w5-controls label{font-weight:600;white-space:nowrap;}
+.w5-controls select,.w5-controls button{font-family:'JetBrains Mono',monospace;font-size:.78rem;padding:4px 9px;border:1px solid #c0bdb5;border-radius:4px;background:#fff;}
+.w5-controls button{background:#3a3632;color:#fff;border:none;cursor:pointer;}
+.w5-controls button:hover{background:#555;}
+.w5-slider{display:flex;align-items:center;gap:5px;}
+.w5-slider input[type=range]{width:120px;accent-color:#6a7a5a;}
+.w5-val{font-family:'JetBrains Mono',monospace;font-size:.8rem;min-width:32px;background:#fff;border:1px solid #c0bdb5;border-radius:3px;padding:2px 5px;text-align:center;}
+.w5-probe{margin-top:7px;padding:7px 10px;background:#fff;border:1px solid #d4d0c8;border-radius:5px;font-family:'JetBrains Mono',monospace;font-size:.77rem;color:#555;min-height:32px;}
+.w5-stats{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:#555;margin-top:5px;}
+.info{margin-top:12px;padding:12px 14px;border-radius:0 6px 6px 0;font-size:.83rem;line-height:1.5;}
+.info-green{background:#eef2e8;border-left:3px solid #6a8c4a;}
+.info-blue{background:#e8edf2;border-left:3px solid #4a6a8c;}
+.info-gold{background:#f2efe8;border-left:3px solid #8c7a4a;}
+.info-purple{background:#ede8f2;border-left:3px solid #6a4a8c;}
+.formula{font-family:'JetBrains Mono',monospace;background:#f8f7f4;padding:5px 10px;border-radius:4px;font-size:.78rem;display:inline-block;margin:4px 0;}
+
+/* SECTIONS 3D */
+.sec-row{display:flex;gap:14px;flex-wrap:wrap;}
+.sec-view{flex:1;min-width:360px;height:430px;border:1.5px solid #d4d0c8;border-radius:6px;overflow:hidden;background:#1a1a2e;position:relative;}
+.sec-panel{flex:0 0 300px;}
+.sec-box{background:#f8f7f4;border:1px solid #d4d0c8;border-radius:6px;padding:9px 11px;margin-bottom:7px;}
+.sec-box h4{margin:0 0 5px;font-size:.86rem;font-weight:600;}
+.sf{display:flex;align-items:center;gap:5px;margin:3px 0;font-size:.78rem;}
+.sf label{min-width:72px;font-weight:500;}
+.sf input[type=range]{flex:1;accent-color:#4a6a8c;}
+.sf select{font-family:'JetBrains Mono',monospace;font-size:.76rem;padding:2px 5px;border:1px solid #c0bdb5;border-radius:3px;}
+.sec-res{background:#eef2e8;border:1px solid #b8c8a8;border-radius:6px;padding:9px 11px;}
+.sec-res h4{margin:0 0 5px;font-size:.86rem;font-weight:600;color:#4a6a3a;}
+.stbl{width:100%;border-collapse:collapse;font-size:.72rem;font-family:'JetBrains Mono',monospace;}
+.stbl th{background:#d8e4cc;padding:3px 4px;text-align:left;border:1px solid #b8c8a8;}
+.stbl td{padding:3px 4px;border:1px solid #d4d0c8;}
+.stbl tr:nth-child(even){background:#f4f8f0;}
+.sec-ov{position:absolute;bottom:7px;left:7px;background:rgba(0,0,0,.55);color:#ddd;font-family:'JetBrains Mono',monospace;font-size:.68rem;padding:3px 7px;border-radius:4px;pointer-events:none;}
+</style>
+</head>
+<body>
+
+<nav class="tnav">
+  <span class="brand">Ch. 5</span>
+  <a href="#w1">Polygones</a><a href="#w2">IDW</a><a href="#w3">Triangles</a><a href="#w4">Sections 3D</a>
+</nav>
+
+<div class="page">
+<h1>Ateliers — <span>Méthodes déterministes</span></h1>
+<p class="psub">Chaque atelier compare l'estimation à la réalité (un champ gaussien caché). Cliquez sur un des deux canevas pour échantillonner.</p>
+
+<!-- ═══════════════ W1 : POLYGONES ═══════════════ -->
+<div class="atl" id="w1">
+<div class="ath"><span class="anum">W1</span><h2>Polygones de Thiessen + Médiatrices</h2></div>
+<p class="adesc">Les teneurs sont échantillonnées d'un champ gaussien aléatoire (à gauche). L'estimation par plus proche voisin (à droite) montre les polygones, les médiatrices (arêtes de Voronoï en pointillés blancs) et la triangulation de Delaunay.</p>
+<div style="display:flex;gap:4px;margin-bottom:6px;">
+  <canvas id="cP1" width="430" height="340" style="border:1px solid #ccc;border-radius:4px;cursor:crosshair;flex:1;max-width:50%"></canvas>
+  <canvas id="cP2" width="430" height="340" style="border:1px solid #ccc;border-radius:4px;cursor:crosshair;flex:1;max-width:50%"></canvas>
+</div>
+<div style="display:flex;font-size:.76rem;font-family:'JetBrains Mono',monospace;color:#666;margin-bottom:4px;">
+  <span>◀ <b>Réalité</b></span><span style="margin-left:auto"><b>Estimation</b> ▶</span>
+</div>
+<div class="w5-controls">
+  <label>Afficher :</label>
+  <select id="pM"><option value="bisect" selected>Polygones + médiatrices</option><option value="voronoi">Polygones seuls</option><option value="delaunay">Delaunay + médiatrices</option></select>
+  <button id="pR">+ 8 pts</button><button id="pC">Nouveau champ</button>
+  <span class="w5-val" id="pE" style="min-width:200px;font-size:.76rem">—</span>
+</div>
+<div class="info info-green">
+  <b>Observations :</b> Les médiatrices (pointillés blancs) sont les arêtes du diagramme de Voronoï — elles passent par les centres des cercles circonscrits aux triangles de Delaunay. L'estimation est constante dans chaque polygone (λ<sub>i</sub>=1 pour le plus proche voisin). Comparez le RMSE avec les autres méthodes !
+</div>
+</div>
+
+<!-- ═══════════════ W2 : IDW ═══════════════ -->
+<div class="atl" id="w2">
+<div class="ath"><span class="anum">W2</span><h2>Inverse de la distance (IDW)</h2></div>
+<p class="adesc">Ajustez l'exposant <em>b</em> et observez comment la surface interpolée se rapproche (ou s'éloigne) de la réalité. Comparez le RMSE pour différentes valeurs de <em>b</em>.</p>
+<div style="display:flex;gap:4px;margin-bottom:6px;">
+  <canvas id="cI1" width="430" height="340" style="border:1px solid #ccc;border-radius:4px;cursor:crosshair;flex:1;max-width:50%"></canvas>
+  <canvas id="cI2" width="430" height="340" style="border:1px solid #ccc;border-radius:4px;cursor:crosshair;flex:1;max-width:50%"></canvas>
+</div>
+<div style="display:flex;font-size:.76rem;font-family:'JetBrains Mono',monospace;color:#666;margin-bottom:4px;">
+  <span>◀ <b>Réalité</b></span><span style="margin-left:auto"><b>Estimation IDW</b> ▶</span>
+</div>
+<div class="w5-controls">
+  <div class="w5-slider"><label>b :</label><input type="range" id="iB" min="0" max="60" value="20"><span class="w5-val" id="iBv">2.0</span></div>
+  <div class="w5-slider"><label>Rayon :</label><input type="range" id="iR" min="30" max="300" value="300"><span class="w5-val" id="iRv">∞</span></div>
+  <button id="iA">+ 8 pts</button><button id="iC">Nouveau champ</button>
+  <span class="w5-val" id="iE" style="min-width:200px;font-size:.76rem">—</span>
+</div>
+<div class="info info-blue">
+  <div class="formula">Z*(x₀) = Σ [Zᵢ / dᵢᵇ] / Σ [1 / dᵢᵇ]</div><br>
+  <b>b = 0</b> → moyenne arithmétique · <b>b = 2</b> → classique · <b>b élevé</b> → « œil de bœuf » · <b>b → ∞</b> → plus proche voisin
+</div>
+</div>
+
+<!-- ═══════════════ W3 : TRIANGLES ═══════════════ -->
+<div class="atl" id="w3">
+<div class="ath"><span class="anum">W3</span><h2>Méthode des triangles (TIN)</h2></div>
+<p class="adesc">L'interpolation barycentrique est continue aux arêtes des triangles. Survolez l'estimation pour voir les poids λ et comparer la valeur interpolée à la réalité au même point.</p>
+<div style="display:flex;gap:4px;margin-bottom:6px;">
+  <canvas id="cT1" width="430" height="340" style="border:1px solid #ccc;border-radius:4px;cursor:crosshair;flex:1;max-width:50%"></canvas>
+  <canvas id="cT2" width="430" height="340" style="border:1px solid #ccc;border-radius:4px;cursor:crosshair;flex:1;max-width:50%"></canvas>
+</div>
+<div style="display:flex;font-size:.76rem;font-family:'JetBrains Mono',monospace;color:#666;margin-bottom:4px;">
+  <span>◀ <b>Réalité</b></span><span style="margin-left:auto"><b>Estimation TIN</b> ▶</span>
+</div>
+<div class="w5-controls">
+  <label>Mode :</label>
+  <select id="tM"><option value="interp">Interpolation barycentrique</option><option value="flat">Teneur moyenne par triangle</option></select>
+  <button id="tA">+ 8 pts</button><button id="tC">Nouveau champ</button>
+  <span class="w5-val" id="tE" style="min-width:200px;font-size:.76rem">—</span>
+</div>
+<div class="w5-probe" id="tP">Survolez l'estimation pour voir les poids barycentriques.</div>
+<div class="info info-gold">
+  <b>Interpolation barycentrique :</b> t(x) = u·t₁ + v·t₂ + w·t₃ avec u+v+w=1. Continue aux arêtes partagées, mais dérivée discontinue (facettes planes). La teneur moyenne par triangle donne des discontinuités plus marquées.
+</div>
+</div>
+
+<!-- ═══════════════ W4 : SECTIONS 3D ═══════════════ -->
+<div class="atl" id="w4">
+<div class="ath"><span class="anum">W4</span><h2>Méthode des sections — Formes géologiques 3D</h2></div>
+<p class="adesc">Choisissez des formes géologiques réalistes (lentille, veine, chenal, irrégulier) pour chaque section. Le solide 3D montre la morphologie entre les deux sections et le tableau compare les formules de volume et de teneur.</p>
+<div class="sec-row">
+  <div class="sec-view" id="sV"><div class="sec-ov">Glissez pour pivoter · Molette pour zoomer</div></div>
+  <div class="sec-panel">
+    <div class="sec-box" style="border-left:3px solid #4a7abf;">
+      <h4>Section 1 (bleue)</h4>
+      <div class="sf"><label>Forme</label><select id="sF1"><option value="lentille">Lentille</option><option value="veine">Veine</option><option value="chenal" selected>Chenal</option><option value="irregulier">Irrégulier</option></select></div>
+      <div class="sf"><label>S₁ (m²)</label><input type="range" id="sS1" min="100" max="2000" value="600" step="50"><span class="w5-val" id="sS1v">600</span></div>
+      <div class="sf"><label>t₁ (%)</label><input type="range" id="sT1" min="5" max="80" value="20" step="1"><span class="w5-val" id="sT1v">2.0</span></div>
+    </div>
+    <div class="sec-box" style="border-left:3px solid #bf4a4a;">
+      <h4>Section 2 (rouge)</h4>
+      <div class="sf"><label>Forme</label><select id="sF2"><option value="lentille" selected>Lentille</option><option value="veine">Veine</option><option value="chenal">Chenal</option><option value="irregulier">Irrégulier</option></select></div>
+      <div class="sf"><label>S₂ (m²)</label><input type="range" id="sS2" min="100" max="2000" value="1200" step="50"><span class="w5-val" id="sS2v">1200</span></div>
+      <div class="sf"><label>t₂ (%)</label><input type="range" id="sT2" min="5" max="80" value="40" step="1"><span class="w5-val" id="sT2v">4.0</span></div>
+    </div>
+    <div class="sec-box"><h4>Paramètres</h4>
+      <div class="sf"><label>Espac. L</label><input type="range" id="sL" min="5" max="60" value="20" step="1"><span class="w5-val" id="sLv">20 m</span></div>
+    </div>
+    <div class="sec-res"><h4>Résultats</h4><table class="stbl" id="sTbl"><tbody></tbody></table></div>
+  </div>
+</div>
+<div class="info info-purple">
+  <b>Formes géologiques :</b> Veine (mince, allongée), lentille (œil symétrique), chenal (U asymétrique), irrégulier (contour bruité). Le solide 3D interpole les contours entre les deux sections. Essayez de combiner des formes différentes !
+</div>
+</div>
+</div>
+
+<!-- ═══════════════ SHARED JS ═══════════════ -->
+<script>
+window.Ch5=(()=>{
+  function cm(v){v=Math.max(0,Math.min(1,v));let r,g,b;if(v<.25){const t=v/.25;r=30+25*t;g=60+110*t;b=150+50*t;}else if(v<.5){const t=(v-.25)/.25;r=55+145*t;g=170+50*t;b=200-90*t;}else if(v<.75){const t=(v-.5)/.25;r=200+40*t;g=220-110*t;b=110-70*t;}else{const t=(v-.75)/.25;r=240+15*t;g=110-70*t;b=40-20*t;}return[Math.round(r),Math.round(g),Math.round(b)];}
+  function cmCSS(v){const c=cm(v);return`rgb(${c[0]},${c[1]},${c[2]})`;}
+  function cmA(v,a){const c=cm(v);return`rgba(${c[0]},${c[1]},${c[2]},${a})`;}
+
+  class GRF{constructor(W,H,p=130,seed){this.W=W;this.H=H;const N=50;this.grid=new Float32Array(W*H);let s=seed||Math.floor(Math.random()*1e8);const rn=()=>{s=(s*1103515245+12345)&0x7FFFFFFF;return s/0x7FFFFFFF;};const cs=[];for(let i=0;i<N;i++){const k=(.4+rn()*2.5)/p;const th=rn()*Math.PI*2;cs.push({kx:k*Math.cos(th),ky:k*Math.sin(th),ph:rn()*Math.PI*2,a:1/Math.sqrt(N)});}for(let y=0;y<H;y++)for(let x=0;x<W;x++){let v=0;for(const c of cs)v+=c.a*Math.cos(c.kx*x+c.ky*y+c.ph);this.grid[y*W+x]=Math.max(.02,Math.min(.98,.5+.32*v));}}
+    at(x,y){return this.grid[Math.max(0,Math.min(this.H-1,Math.round(y)))*this.W+Math.max(0,Math.min(this.W-1,Math.round(x)))];}
+    drawTo(ctx,a=1){const img=ctx.createImageData(this.W,this.H),d=img.data;for(let i=0;i<this.W*this.H;i++){const c=cm(this.grid[i]);d[i*4]=c[0];d[i*4+1]=c[1];d[i*4+2]=c[2];d[i*4+3]=Math.round(a*255);}ctx.putImageData(img,0,0);}}
+
+  function del(pts){if(pts.length<3)return[];const st=[{x:-1e4,y:-1e4},{x:1e4,y:-1e4},{x:0,y:1e4}];let ts=[[0,1,2]];const all=st.concat(pts);for(let p=3;p<all.length;p++){const px=all[p].x,py=all[p].y;let bad=[];for(let i=0;i<ts.length;i++){const[a,b,c]=ts[i];const ax=all[a].x-px,ay=all[a].y-py,bx=all[b].x-px,by=all[b].y-py,cx=all[c].x-px,cy=all[c].y-py;if((ax*ax+ay*ay)*(bx*cy-cx*by)-(bx*bx+by*by)*(ax*cy-cx*ay)+(cx*cx+cy*cy)*(ax*by-bx*ay)>0)bad.push(i);}let edges=[];for(const bi of bad){const t=ts[bi];for(let j=0;j<3;j++){const e=[t[j],t[(j+1)%3]];let sh=false;for(const bk of bad){if(bk===bi)continue;const t2=ts[bk];for(let k=0;k<3;k++)if((t2[k]===e[0]&&t2[(k+1)%3]===e[1])||(t2[k]===e[1]&&t2[(k+1)%3]===e[0])){sh=true;break;}if(sh)break;}if(!sh)edges.push(e);}}bad.sort((a,b)=>b-a);for(const bi of bad)ts.splice(bi,1);for(const e of edges)ts.push([e[0],e[1],p]);}return ts.filter(t=>t[0]>=3&&t[1]>=3&&t[2]>=3).map(t=>[t[0]-3,t[1]-3,t[2]-3]);}
+
+  function circumcenter(ax,ay,bx,by,cx,cy){const D=2*(ax*(by-cy)+bx*(cy-ay)+cx*(ay-by));if(Math.abs(D)<1e-10)return null;const a2=ax*ax+ay*ay,b2=bx*bx+by*by,c2=cx*cx+cy*cy;return{x:(a2*(by-cy)+b2*(cy-ay)+c2*(ay-by))/D,y:(a2*(cx-bx)+b2*(ax-cx)+c2*(bx-ax))/D};}
+
+  function voronoiEdges(pts,tris,W,H){const cc=tris.map(([a,b,c])=>circumcenter(pts[a].x,pts[a].y,pts[b].x,pts[b].y,pts[c].x,pts[c].y));const em=new Map();function ek(a,b){return a<b?a+','+b:b+','+a;}tris.forEach(([a,b,c],ti)=>{for(const[u,v]of[[a,b],[b,c],[c,a]]){const k=ek(u,v);if(!em.has(k))em.set(k,[]);em.get(k).push(ti);}});const edges=[];em.forEach((ti,key)=>{if(ti.length===2){const c1=cc[ti[0]],c2=cc[ti[1]];if(c1&&c2)edges.push({x1:c1.x,y1:c1.y,x2:c2.x,y2:c2.y});}else if(ti.length===1){const c1=cc[ti[0]];if(!c1)return;const[sa,sb]=key.split(',').map(Number);const mx=(pts[sa].x+pts[sb].x)/2,my=(pts[sa].y+pts[sb].y)/2;const dx=pts[sb].x-pts[sa].x,dy=pts[sb].y-pts[sa].y;const nx=-dy,ny=dx,len=Math.sqrt(nx*nx+ny*ny)||1;const sgn=((mx-c1.x)*(nx/len)+(my-c1.y)*(ny/len))>0?1:-1;const ext=Math.max(W,H)*2;edges.push({x1:c1.x,y1:c1.y,x2:c1.x+sgn*(nx/len)*ext,y2:c1.y+sgn*(ny/len)*ext});}});return edges;}
+
+  function nn(px,py,pts){let b=-1,bd=1/0;for(let i=0;i<pts.length;i++){const d=(px-pts[i].x)**2+(py-pts[i].y)**2;if(d<bd){bd=d;b=i;}}return b;}
+  function idw(px,py,pts,b,rM){if(!pts.length)return .5;if(b===0){let s=0,n=0;for(const p of pts){if(Math.sqrt((px-p.x)**2+(py-p.y)**2)<=rM){s+=p.t;n++;}}return n?s/n:.5;}let nu=0,de=0;for(const p of pts){const d=Math.sqrt((px-p.x)**2+(py-p.y)**2);if(d>rM)continue;if(d<.5)return p.t;const w=1/Math.pow(d,b);nu+=w*p.t;de+=w;}return de?nu/de:.5;}
+  function bary(px,py,ax,ay,bx,by,cx,cy){const d=(by-cy)*(ax-cx)+(cx-bx)*(ay-cy);if(Math.abs(d)<1e-10)return null;const u=((by-cy)*(px-cx)+(cx-bx)*(py-cy))/d;const v=((cy-ay)*(px-cx)+(ax-cx)*(py-cy))/d;const w=1-u-v;if(u>=-.001&&v>=-.001&&w>=-.001)return{u,v,w};return null;}
+
+  function makeGeoShape(type,N){const pts=[];for(let i=0;i<N;i++){const th=2*Math.PI*i/N;let r;switch(type){case'lentille':{const ct=Math.cos(th),st=Math.sin(th);r=1/Math.pow(Math.pow(Math.abs(ct)/1.8,2.5)+Math.pow(Math.abs(st)/.55,2.5),1/2.5);break;}case'veine':{const ct=Math.cos(th),st=Math.sin(th);r=(1/Math.sqrt((ct/2.5)**2+(st/.2)**2))*(1+.08*Math.sin(5*th));break;}case'chenal':{const ct=Math.cos(th),st=Math.sin(th);if(st>=0)r=1/Math.sqrt((ct/1.6)**2+(st/.5)**2);else r=1/Math.sqrt((ct/.8)**2+(st/1.1)**2);r*=(1+.06*Math.sin(4*th+.5));break;}default:r=1+.22*Math.sin(3*th+.3)+.15*Math.cos(5*th+1.2)+.1*Math.sin(7*th+2.1)+.08*Math.cos(2*th);}pts.push({x:r*Math.cos(th),y:r*Math.sin(th)});}return pts;}
+  function scaleShapeToArea(pts,tA){let a=0;const n=pts.length;for(let i=0;i<n;i++){const j=(i+1)%n;a+=pts[i].x*pts[j].y-pts[j].x*pts[i].y;}const cA=Math.abs(a)/2;const s=Math.sqrt(tA/Math.max(cA,1e-6));return pts.map(p=>({x:p.x*s,y:p.y*s}));}
+  function polyArea(pts){let a=0;const n=pts.length;for(let i=0;i<n;i++){const j=(i+1)%n;a+=pts[i].x*pts[j].y-pts[j].x*pts[i].y;}return Math.abs(a)/2;}
+  function computeError(grf,fn,W,H,s=8){let se=0,se2=0,n=0;for(let y=s;y<H-s;y+=s)for(let x=s;x<W-s;x+=s){const t=grf.at(x,y),e2=fn(x,y);if(e2===null)continue;const e=e2-t;se+=e;se2+=e*e;n++;}if(!n)return{biais:0,rmse:0};return{biais:se/n,rmse:Math.sqrt(se2/n)};}
+
+  return{cm,cmCSS,cmA,GRF,del,circumcenter,voronoiEdges,nn,idw,bary,makeGeoShape,scaleShapeToArea,polyArea,computeError};
+})();
+</script>
+
+<!-- ═══════════════ W1 : POLYGONES ═══════════════ -->
+<script>
+(()=>{const W=430,H=340;const c1=document.getElementById('cP1').getContext('2d'),c2=document.getElementById('cP2').getContext('2d');let grf=new Ch5.GRF(W,H),pts=[];
+function label(ctx,txt,x,y){ctx.fillStyle='rgba(255,255,255,.7)';ctx.fillRect(x,y-12,ctx.measureText(txt).width+8,16);ctx.fillStyle='#333';ctx.font='bold 10px JetBrains Mono';ctx.fillText(txt,x+4,y);}
+function dots(ctx){for(const p of pts){ctx.beginPath();ctx.arc(p.x,p.y,4,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle='#000';ctx.lineWidth=1.5;ctx.stroke();}}
+function dT(){grf.drawTo(c1);dots(c1);label(c1,'RÉALITÉ',4,16);}
+function dE(){c2.clearRect(0,0,W,H);const m=document.getElementById('pM').value;
+if(pts.length>0){const img=c2.createImageData(W,H),d=img.data;for(let y=0;y<H;y++)for(let x=0;x<W;x++){const i=Ch5.nn(x,y,pts),c=Ch5.cm(pts[i].t),o=(y*W+x)*4;d[o]=c[0];d[o+1]=c[1];d[o+2]=c[2];d[o+3]=200;}c2.putImageData(img,0,0);}
+else{c2.fillStyle='#f5f3ef';c2.fillRect(0,0,W,H);c2.fillStyle='#aaa';c2.font='13px Source Serif 4';c2.textAlign='center';c2.fillText('Cliquez pour échantillonner',W/2,H/2);c2.textAlign='start';}
+if(pts.length>=3){const tris=Ch5.del(pts);
+if(m==='bisect'||m==='delaunay'){const ve=Ch5.voronoiEdges(pts,tris,W,H);c2.save();c2.beginPath();c2.rect(0,0,W,H);c2.clip();c2.setLineDash([4,3]);c2.strokeStyle='rgba(255,255,255,.75)';c2.lineWidth=1.2;for(const e of ve){c2.beginPath();c2.moveTo(e.x1,e.y1);c2.lineTo(e.x2,e.y2);c2.stroke();}c2.setLineDash([]);c2.restore();}
+if(m==='delaunay'){c2.strokeStyle='rgba(0,0,0,.3)';c2.lineWidth=1;for(const[a,b,c]of tris){c2.beginPath();c2.moveTo(pts[a].x,pts[a].y);c2.lineTo(pts[b].x,pts[b].y);c2.lineTo(pts[c].x,pts[c].y);c2.closePath();c2.stroke();}}}
+for(const p of pts){c2.beginPath();c2.arc(p.x,p.y,4,0,Math.PI*2);c2.fillStyle='#fff';c2.fill();c2.strokeStyle='#000';c2.lineWidth=1.5;c2.stroke();c2.fillStyle='#222';c2.font='10px JetBrains Mono';c2.fillText((p.t*10).toFixed(1)+'%',p.x+6,p.y-5);}
+label(c2,'ESTIMATION',W-82,16);
+if(pts.length>=3){const er=Ch5.computeError(grf,(x,y)=>{const i=Ch5.nn(x,y,pts);return pts[i].t;},W,H,6);document.getElementById('pE').textContent=`Biais: ${(er.biais*10).toFixed(3)}% | RMSE: ${(er.rmse*10).toFixed(3)}%`;}
+document.getElementById('polySt')&&(document.getElementById('polySt').textContent=`Points: ${pts.length}`);}
+function add(x,y){pts.push({x,y,t:grf.at(x,y)});dT();dE();}
+function h(e){const r=e.target.getBoundingClientRect();add((e.clientX-r.left)*(W/r.width),(e.clientY-r.top)*(H/r.height));}
+document.getElementById('cP1').addEventListener('click',h);document.getElementById('cP2').addEventListener('click',h);
+document.getElementById('pM').addEventListener('change',dE);
+document.getElementById('pR').addEventListener('click',()=>{for(let i=0;i<8;i++)add(30+Math.random()*(W-60),30+Math.random()*(H-60));});
+document.getElementById('pC').addEventListener('click',()=>{pts=[];grf=new Ch5.GRF(W,H);dT();dE();});
+dT();dE();})();
+</script>
+
+<!-- ═══════════════ W2 : IDW ═══════════════ -->
+<script>
+(()=>{const W=430,H=340;const c1=document.getElementById('cI1').getContext('2d'),c2=document.getElementById('cI2').getContext('2d');let grf=new Ch5.GRF(W,H),pts=[],bP=2,rM=9999;
+function label(ctx,t,x,y){ctx.fillStyle='rgba(255,255,255,.7)';ctx.fillRect(x,y-12,ctx.measureText(t).width+8,16);ctx.fillStyle='#333';ctx.font='bold 10px JetBrains Mono';ctx.fillText(t,x+4,y);}
+function dots(ctx){for(const p of pts){ctx.beginPath();ctx.arc(p.x,p.y,4,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle='#000';ctx.lineWidth=1.5;ctx.stroke();}}
+function dT(){grf.drawTo(c1);dots(c1);label(c1,'RÉALITÉ',4,16);}
+function dE(){if(!pts.length){c2.fillStyle='#f5f3ef';c2.fillRect(0,0,W,H);c2.fillStyle='#aaa';c2.font='13px Source Serif 4';c2.textAlign='center';c2.fillText('Cliquez pour échantillonner',W/2,H/2);c2.textAlign='start';return;}
+const s=4,img=c2.createImageData(W,H),d=img.data;for(let y=0;y<H;y+=s)for(let x=0;x<W;x+=s){const v=Ch5.idw(x,y,pts,bP,rM),c=Ch5.cm(v);for(let dy=0;dy<s&&y+dy<H;dy++)for(let dx=0;dx<s&&x+dx<W;dx++){const o=((y+dy)*W+(x+dx))*4;d[o]=c[0];d[o+1]=c[1];d[o+2]=c[2];d[o+3]=220;}}
+c2.putImageData(img,0,0);
+for(const p of pts){c2.beginPath();c2.arc(p.x,p.y,4,0,Math.PI*2);c2.fillStyle='#fff';c2.fill();c2.strokeStyle='#000';c2.lineWidth=1.5;c2.stroke();c2.fillStyle='#222';c2.font='10px JetBrains Mono';c2.fillText((p.t*10).toFixed(1)+'%',p.x+6,p.y-5);}
+label(c2,'ESTIMATION IDW',W-108,16);
+const er=Ch5.computeError(grf,(x,y)=>Ch5.idw(x,y,pts,bP,rM),W,H,8);
+document.getElementById('iE').textContent=`Biais: ${(er.biais*10).toFixed(3)}% | RMSE: ${(er.rmse*10).toFixed(3)}%`;}
+function add(x,y){pts.push({x,y,t:grf.at(x,y)});dT();dE();}
+function h(e){const r=e.target.getBoundingClientRect();add((e.clientX-r.left)*(W/r.width),(e.clientY-r.top)*(H/r.height));}
+document.getElementById('cI1').addEventListener('click',h);document.getElementById('cI2').addEventListener('click',h);
+document.getElementById('iB').addEventListener('input',e=>{bP=e.target.value/10;document.getElementById('iBv').textContent=bP.toFixed(1);dE();});
+document.getElementById('iR').addEventListener('input',e=>{rM=+e.target.value;document.getElementById('iRv').textContent=rM>=300?'∞':rM+'px';if(rM>=300)rM=9999;dE();});
+document.getElementById('iA').addEventListener('click',()=>{for(let i=0;i<8;i++)add(30+Math.random()*(W-60),30+Math.random()*(H-60));});
+document.getElementById('iC').addEventListener('click',()=>{pts=[];grf=new Ch5.GRF(W,H);dT();dE();});
+dT();dE();})();
+</script>
+
+<!-- ═══════════════ W3 : TRIANGLES ═══════════════ -->
+<script>
+(()=>{const W=430,H=340;const c1=document.getElementById('cT1').getContext('2d'),c2=document.getElementById('cT2').getContext('2d');let grf=new Ch5.GRF(W,H),pts=[],tris=[];
+function rc(){tris=Ch5.del(pts);}
+function ft(px,py){for(let i=0;i<tris.length;i++){const[a,b,c]=tris[i];const bc=Ch5.bary(px,py,pts[a].x,pts[a].y,pts[b].x,pts[b].y,pts[c].x,pts[c].y);if(bc)return{i,bc,t:tris[i]};}return null;}
+function te(x,y){const f=ft(x,y);if(!f)return null;const[a,b,c]=f.t;const m=document.getElementById('tM').value;if(m==='interp')return f.bc.u*pts[a].t+f.bc.v*pts[b].t+f.bc.w*pts[c].t;return(pts[a].t+pts[b].t+pts[c].t)/3;}
+function label(ctx,t,x,y){ctx.fillStyle='rgba(255,255,255,.7)';ctx.fillRect(x,y-12,ctx.measureText(t).width+8,16);ctx.fillStyle='#333';ctx.font='bold 10px JetBrains Mono';ctx.fillText(t,x+4,y);}
+function dots(ctx){for(const p of pts){ctx.beginPath();ctx.arc(p.x,p.y,4,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle='#000';ctx.lineWidth=1.5;ctx.stroke();}}
+function dT(){grf.drawTo(c1);dots(c1);label(c1,'RÉALITÉ',4,16);}
+function dE(){c2.clearRect(0,0,W,H);c2.fillStyle='#f5f3ef';c2.fillRect(0,0,W,H);
+if(pts.length<3){dots(c2);c2.fillStyle='#aaa';c2.font='13px Source Serif 4';c2.textAlign='center';c2.fillText(`${3-pts.length} pt(s) de plus`,W/2,H/2);c2.textAlign='start';return;}
+const m=document.getElementById('tM').value;
+if(m==='interp'){const s=3,img=c2.createImageData(W,H),d=img.data;for(let y=0;y<H;y+=s)for(let x=0;x<W;x+=s){const v=te(x,y);if(v!==null){const cl=Ch5.cm(v);for(let dy=0;dy<s&&y+dy<H;dy++)for(let dx=0;dx<s&&x+dx<W;dx++){const o=((y+dy)*W+(x+dx))*4;d[o]=cl[0];d[o+1]=cl[1];d[o+2]=cl[2];d[o+3]=200;}}}c2.putImageData(img,0,0);}
+else{for(const[a,b,c]of tris){const av=(pts[a].t+pts[b].t+pts[c].t)/3;c2.beginPath();c2.moveTo(pts[a].x,pts[a].y);c2.lineTo(pts[b].x,pts[b].y);c2.lineTo(pts[c].x,pts[c].y);c2.closePath();c2.fillStyle=Ch5.cmA(av,.75);c2.fill();}}
+c2.strokeStyle='rgba(0,0,0,.2)';c2.lineWidth=.8;for(const[a,b,c]of tris){c2.beginPath();c2.moveTo(pts[a].x,pts[a].y);c2.lineTo(pts[b].x,pts[b].y);c2.lineTo(pts[c].x,pts[c].y);c2.closePath();c2.stroke();}
+for(const p of pts){c2.beginPath();c2.arc(p.x,p.y,4,0,Math.PI*2);c2.fillStyle='#fff';c2.fill();c2.strokeStyle='#000';c2.lineWidth=1.5;c2.stroke();c2.fillStyle='#222';c2.font='10px JetBrains Mono';c2.fillText((p.t*10).toFixed(1)+'%',p.x+6,p.y-5);}
+label(c2,'ESTIMATION TIN',W-108,16);
+const er=Ch5.computeError(grf,te,W,H,6);document.getElementById('tE').textContent=`Biais: ${(er.biais*10).toFixed(3)}% | RMSE: ${(er.rmse*10).toFixed(3)}%`;}
+function add(x,y){pts.push({x,y,t:grf.at(x,y)});rc();dT();dE();}
+function h(e){const r=e.target.getBoundingClientRect();add((e.clientX-r.left)*(W/r.width),(e.clientY-r.top)*(H/r.height));}
+document.getElementById('cT1').addEventListener('click',h);document.getElementById('cT2').addEventListener('click',h);
+document.getElementById('cT2').addEventListener('mousemove',e=>{if(pts.length<3)return;const r=e.target.getBoundingClientRect();const px=(e.clientX-r.left)*(W/r.width),py=(e.clientY-r.top)*(H/r.height),f=ft(px,py),pr=document.getElementById('tP');if(f){const[a,b,c]=f.t;const{u,v,w}=f.bc;const ip=u*pts[a].t+v*pts[b].t+w*pts[c].t;pr.innerHTML=`λ=(${u.toFixed(2)},${v.toFixed(2)},${w.toFixed(2)}) | Interp: <b>${(ip*10).toFixed(2)}%</b> | Réalité: <b>${(grf.at(px,py)*10).toFixed(2)}%</b>`;}else pr.innerHTML='Hors triangulation.';});
+document.getElementById('tM').addEventListener('change',dE);
+document.getElementById('tA').addEventListener('click',()=>{for(let i=0;i<8;i++)add(30+Math.random()*(W-60),30+Math.random()*(H-60));});
+document.getElementById('tC').addEventListener('click',()=>{pts=[];tris=[];grf=new Ch5.GRF(W,H);dT();dE();});
+dT();dE();})();
+</script>
+
+<!-- ═══════════════ W4 : SECTIONS 3D ═══════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(()=>{let S1=600,S2=1200,t1=2,t2=4,L=20,f1='chenal',f2='lentille';const N=64;
+const box=document.getElementById('sV'),cw=box.clientWidth,ch=box.clientHeight;
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x1a1a2e);
+const cam=new THREE.PerspectiveCamera(45,cw/ch,.1,1000);
+const ren=new THREE.WebGLRenderer({antialias:true});ren.setSize(cw,ch);ren.setPixelRatio(Math.min(devicePixelRatio,2));box.insertBefore(ren.domElement,box.firstChild);
+scene.add(new THREE.AmbientLight(0xffffff,.45));const dl=new THREE.DirectionalLight(0xffffff,.65);dl.position.set(4,6,3);scene.add(dl);
+scene.add(new THREE.GridHelper(60,12,0x444466,0x333355));
+let th=Math.PI*.3,ph=Math.PI*.2,rad=55;
+function uc(){cam.position.set(rad*Math.cos(ph)*Math.sin(th),rad*Math.sin(ph),rad*Math.cos(ph)*Math.cos(th));cam.lookAt(0,0,0);}uc();
+let dr2=false,mpx,mpy;
+ren.domElement.addEventListener('pointerdown',e=>{dr2=true;mpx=e.clientX;mpy=e.clientY;});
+window.addEventListener('pointerup',()=>dr2=false);
+window.addEventListener('pointermove',e=>{if(!dr2)return;th-=(e.clientX-mpx)*.008;ph=Math.max(.05,Math.min(1.5,ph+(e.clientY-mpy)*.008));mpx=e.clientX;mpy=e.clientY;uc();ren.render(scene,cam);});
+ren.domElement.addEventListener('wheel',e=>{e.preventDefault();rad=Math.max(15,Math.min(120,rad+e.deltaY*.06));uc();ren.render(scene,cam);},{passive:false});
+const sg=new THREE.Group();scene.add(sg);
+function gc(t){return new THREE.Color().setHSL(.33*(1-Math.min(t/6,1)),.7,.5);}
+function build(){while(sg.children.length){const c=sg.children[0];if(c.geometry)c.geometry.dispose();if(c.material)c.material.dispose();sg.remove(c);}
+const s1=Ch5.scaleShapeToArea(Ch5.makeGeoShape(f1,N),S1),s2=Ch5.scaleShapeToArea(Ch5.makeGeoShape(f2,N),S2);
+const nS=24,verts=[],cols=[],idx=[];
+for(let s=0;s<=nS;s++){const u=s/nS,z=u*L-L/2;for(let i=0;i<N;i++){verts.push(s1[i].x+(s2[i].x-s1[i].x)*u,s1[i].y+(s2[i].y-s1[i].y)*u,z);const tg=t1+(t2-t1)*u;const c=gc(tg);cols.push(c.r,c.g,c.b);}}
+for(let s=0;s<nS;s++)for(let i=0;i<N;i++){const a=s*N+i,b=s*N+(i+1)%N,c=(s+1)*N+i,d=(s+1)*N+(i+1)%N;idx.push(a,b,c,b,d,c);}
+const c1i=verts.length/3;verts.push(0,0,-L/2);cols.push(...gc(t1).toArray());for(let i=0;i<N;i++)idx.push(c1i,(i+1)%N,i);
+const c2i=verts.length/3;verts.push(0,0,L/2);cols.push(...gc(t2).toArray());const o2=nS*N;for(let i=0;i<N;i++)idx.push(c2i,o2+i,o2+(i+1)%N);
+const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(verts,3));geo.setAttribute('color',new THREE.Float32BufferAttribute(cols,3));geo.setIndex(idx);geo.computeVertexNormals();
+sg.add(new THREE.Mesh(geo,new THREE.MeshPhongMaterial({vertexColors:true,side:THREE.DoubleSide,transparent:true,opacity:.8,shininess:20})));
+for(const[sh,z,col]of[[s1,-L/2,0x4a7abf],[s2,L/2,0xbf4a4a]]){const lp=sh.map(p=>new THREE.Vector3(p.x,p.y,z));lp.push(lp[0].clone());sg.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(lp),new THREE.LineBasicMaterial({color:col,linewidth:2})));}
+sg.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,-L/2-3),new THREE.Vector3(0,0,L/2+3)]),new THREE.LineBasicMaterial({color:0x888888})));
+ren.render(scene,cam);}
+function table(){const A1=Ch5.polyArea(Ch5.scaleShapeToArea(Ch5.makeGeoShape(f1,N),S1)),A2=Ch5.polyArea(Ch5.scaleShapeToArea(Ch5.makeGeoShape(f2,N),S2));
+const Vl=(A1+A2)*L/2,Vc=(A1+A2+Math.sqrt(A1*A2))*L/3;
+const tB=(t1*A1+t2*A2)/(A1+A2),tL=(2*t1*A1+t1*A2+t2*A1+2*t2*A2)/(3*(A1+A2));
+const rows=[['Surf. lin., t brusque',Vl,tB],['Surf. lin., t linéaire',Vl,tL],['Prismoïde, t brusque',Vc,tB],['Prismoïde, t linéaire',Vc,tL]];
+let h='<tr><th>Méthode</th><th>V (×10³)</th><th>t̄ (%)</th></tr>';
+for(const[n,V,t]of rows)h+=`<tr><td>${n}</td><td>${(V/1000).toFixed(2)}</td><td>${t.toFixed(2)}</td></tr>`;
+h+=`<tr style="background:#e8e5dc"><td colspan=3>S₁=${A1.toFixed(0)} m² | S₂=${A2.toFixed(0)} m² | ${f1} → ${f2}</td></tr>`;
+document.getElementById('sTbl').innerHTML=h;}
+function refresh(){build();table();}
+function bind(id,fn,fmt){document.getElementById(id).addEventListener('input',e=>{fn(+e.target.value);document.getElementById(id+'v').textContent=fmt(+e.target.value);refresh();});}
+bind('sS1',v=>S1=v,v=>v);bind('sS2',v=>S2=v,v=>v);bind('sT1',v=>t1=v/10,v=>(v/10).toFixed(1));bind('sT2',v=>t2=v/10,v=>(v/10).toFixed(1));bind('sL',v=>L=v,v=>v+' m');
+document.getElementById('sF1').addEventListener('change',e=>{f1=e.target.value;refresh();});
+document.getElementById('sF2').addEventListener('change',e=>{f2=e.target.value;refresh();});
+refresh();})();
+</script>
+</body>
+</html>

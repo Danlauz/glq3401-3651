@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c07_modeles">
+  <div class="gw-placeholder">Chargement du widget (modèles théoriques)…</div>
+</div>
+```

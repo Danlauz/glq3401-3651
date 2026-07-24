@@ -1,0 +1,18 @@
+<div class="geostat-widget-wrap">
+
+<div class="geostat-widget"
+     id="w-c03-gy-calculateur"
+     data-widget="c03_gy_calculateur"
+     data-version="0.1.0">
+
+  <div class="gw-placeholder">
+    <div class="gw-spinner"></div>
+    <p>Chargement du calculateur…</p>
+  </div>
+
+  <noscript>
+    <p class="gw-fallback-note">JavaScript désactivé : cet atelier interactif nécessite JavaScript.</p>
+  </noscript>
+</div>
+
+</div>

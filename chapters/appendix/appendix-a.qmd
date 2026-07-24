@@ -1,0 +1,307 @@
+---
+title: "Algèbre linéaire : vecteurs et plans"
+number-sections: true
+---
+
+## Vecteurs
+
+Un vecteur, généralement noté $\mathbf{u}$, est un objet mathématique caractérisé par une grandeur (norme), une direction et un sens. La direction et le sens définissent l’orientation du vecteur dans l’espace.
+
+Il est courant de représenter un vecteur par ses composantes spatiales $(x, y, z)$. Toutefois, dans un espace tridimensionnel, un vecteur peut également être décrit par sa norme et par deux angles définissant son orientation.
+
+L’orientation d’un vecteur dans l’espace peut ainsi être caractérisée par deux angles : l’azimut, qui décrit sa direction horizontale, et la plongée, qui décrit son inclinaison par rapport au plan horizontal.
+
+### Définitions
+
+**Azimut** — Angle, exprimé en degrés, mesuré dans le plan horizontal par rapport au Nord. L’azimut varie dans l’intervalle $[0,360[$ et est mesuré dans le sens horaire. Ainsi, l’est correspond à 90° et l’ouest à 270°.
+
+**Plongée** — Angle positif mesuré par rapport au plan horizontal (surface du sol), compris dans l’intervalle $[0,90]$. Un vecteur de plongée nul est horizontal, tandis qu’un vecteur de plongée de 90° est vertical.
+
+### Cosinus directeurs
+
+Une autre façon courante de caractériser l’orientation d’un vecteur consiste à utiliser ses cosinus directeurs, c’est-à-dire les composantes d’un vecteur unitaire parallèle au vecteur considéré.
+
+On adopte généralement un **système de coordonnées cartésiennes direct, dit système main droite**, défini comme suit :
+
+- l’axe $x$ est orienté vers l’est ;
+- l’axe $y$ est orienté vers le nord ;
+- l’axe $z$ est orienté vers le haut.
+
+Il est alors possible de relier directement l’azimut et la plongée aux cosinus directeurs du vecteur unitaire. En notant $a$ l’azimut et $b$ la plongée, on obtient, dans ce système de coordonnées :
+
+$$
+\begin{aligned}
+x &= \cos(b)\sin(a), \\
+y &= \cos(b)\cos(a), \\
+z &= -\sin(b).
+\end{aligned}
+$$
+
+### Visualisateur interactif de vecteurs
+
+Cette visualisation interactive permet de comprendre la relation entre les angles azimut et plongée et les coordonnées cartésiennes d'un vecteur unitaire.
+
+{{< include widget/widget_vecteurs.qmd >}}
+
+Ces mêmes angles d'azimut et de plongée permettent de décrire l'orientation d'un objet géométrique de dimension supérieure : le plan.
+
+## Plans
+
+Un plan est une surface plane de dimension deux, supposée infinie. D’un point de vue géométrique, il peut être défini par trois points non alignés. D’un point de vue vectoriel, il est entièrement caractérisé par un point du plan et deux vecteurs non colinéaires qui lui sont contenus.
+
+En géosciences, plusieurs conventions coexistent pour décrire cette orientation; elles sont équivalentes, mais chacune est adaptée à des usages particuliers.
+
+### Méthodes de représentation
+
+Il existe trois façons courantes d’identifier l’orientation d’un plan.
+
+1. **Par le pôle du plan**, c’est-à-dire le vecteur normal au plan. Son orientation est décrite par un azimut et une plongée, mesurée positivement vers le bas. Par convention, le pôle est toujours orienté vers le bas.
+
+2. **Par le vecteur de pendage du plan**, qui correspond à la direction de la plus forte pente contenue dans le plan. Ce vecteur est également décrit par un azimut et une plongée orientée vers le bas. Cette représentation possède une interprétation physique immédiate, car elle indique la direction dans laquelle un fluide s’écoulerait à la surface du plan.
+
+3. **Par la convention géologique** qui décrit l’orientation du plan à l’aide de sa direction et de son pendage. La direction du plan est déterminée par la règle de la main droite : en orientant le pouce dans la direction du vecteur de pendage, les doigts indiquent la direction du plan. Cette convention est largement utilisée en cartographie géologique et en géologie structurale.
+
+
+### Conversion entre systèmes
+
+Ces trois descriptions étant équivalentes, il est possible de passer de l’une à l’autre. On note $a_p$ et $b_p$ l’azimut et la plongée du pôle du plan, $a_d$ et $b_d$ l’azimut et la plongée du vecteur de pendage, et $a_g$ et $b_g$ la direction et le pendage du plan selon la convention géologique. Les relations entre les directions sont données par
+
+$$
+a_g = a_d - 90 \qquad \text{et} \qquad a_p = a_d + 180,
+$$
+tandis que les relations entre les inclinaisons sont
+$$
+b_g = b_d \qquad \text{et} \qquad b_p = 90 - b_d.
+$$
+
+Les azimuts doivent toujours être ramenés dans l’intervalle $[0,360[$. Si une valeur est négative, on lui ajoute $360^\circ$ ; si elle est supérieure ou égale à $360^\circ$, on lui soustrait $360^\circ$.
+
+{{< include widget/widget_plans.qmd >}}
+
+Quelle que soit la convention choisie pour décrire son orientation, un plan peut aussi être exprimé de façon purement algébrique à l'aide de son vecteur normal, sous la forme d'une équation implicite.
+
+## Pôle et équation implicite du plan
+
+Soit $\mathbf{n} = (n_x, n_y, n_z)$ le vecteur unitaire normal au plan, orienté vers le pôle du plan.
+
+L’équation implicite du plan s’écrit alors :
+$$
+n_x x + n_y y + n_z z + d = 0
+$$
+
+En connaissant les composantes du vecteur normal $\mathbf{n}$ et les coordonnées d’un point du plan, il est possible de déterminer la constante $d$. Le plan est alors entièrement défini.
+
+
+## Produit vectoriel
+
+Soient deux vecteurs non colinéaires $\mathbf{u}$ et $\mathbf{v}$ appartenant au même plan. Le vecteur orthogonal à ce plan est donné par le produit vectoriel :
+
+$$
+\mathbf{w} = \mathbf{u} \times \mathbf{v}
+$$
+
+où $\times$ désigne le produit vectoriel.
+
+En coordonnées cartésiennes, avec
+$$
+\mathbf{u} = (u_x, u_y, u_z), \qquad \mathbf{v} = (v_x, v_y, v_z),
+$$
+on obtient :
+
+$$
+\mathbf{w} =
+\begin{pmatrix}
+u_y v_z - u_z v_y \\
+u_z v_x - u_x v_z \\
+u_x v_y - u_y v_x
+\end{pmatrix}
+$$
+
+Après normalisation, $\mathbf{w}$ correspond au vecteur normal (pôle) du plan.
+
+Cette relation permet de déterminer l’orientation d’un plan recoupé par un forage : le produit vectoriel du **grand axe** de l’ellipse d’intersection et du **vecteur du forage** donne le **petit axe** ; un second produit vectoriel entre les deux axes fournit le **pôle du plan**.
+
+{{< include widget/widget_forage.qmd >}}
+
+Le produit vectoriel donne l'orientation relative entre deux vecteurs, mais ne dit rien de l'angle qui les sépare. Pour quantifier cet angle, on a recours au produit scalaire.
+
+## Produit scalaire
+
+Soient deux vecteurs unitaires $\mathbf{u}$ et $\mathbf{v}$. Leur produit scalaire permet d’obtenir directement l’angle $A$ entre eux :
+
+$$
+\cos(A)=\mathbf{u}\cdot\mathbf{v}
+\qquad\Longrightarrow\qquad
+A=\cos^{-1}(\mathbf{u}\cdot\mathbf{v}).
+$$
+
+Si $\mathbf{u}=(u_x,u_y,u_z)$ et $\mathbf{v}=(v_x,v_y,v_z)$, alors :
+
+$$
+\mathbf{u}\cdot\mathbf{v}=u_xv_x+u_yv_y+u_zv_z.
+$$
+
+Le produit scalaire est utilisé pour calculer l’angle $JO$, angle d’obliquité, entre un forage et un plan géologique (veine, stratification, faille, etc.).
+
+
+## Intersections plan-forage
+
+Lorsqu’un forage recoupe un plan géologique (veine, stratification, faille), il est souvent nécessaire de déterminer où cette intersection se produit et à quelle distance du collet elle se situe.
+
+Étant donné un plan dont on connaît l’orientation et un point appartenant à ce plan, il est possible de :
+- déterminer le point d’intersection entre le forage et le plan ;
+- calculer la distance entre le collet du forage et le point d’intersection ;
+- estimer la distance minimale à forer pour recouper le plan.
+
+**Notation** :
+On adopte les notations suivantes :
+- $\mathbf{n}$ : pôle du plan (vecteur unitaire)
+- $\mathbf{s}_0$ : collet du forage
+- $\mathbf{p}_0$ : un point connu du plan
+- $\mathbf{s}$ : vecteur unitaire donnant la direction du forage
+- $\mathbf{p}_i$ : point d'intersection recherché entre forage et plan
+- $e$ : constante. $|e|$ est la distance entre $\mathbf{s}_0$ et $\mathbf{p}_i$
+
+Le plan est défini par son pôle $\mathbf{n}$ et un point $\mathbf{p}_0$. Le forage est décrit comme une droite passant par le collet $\mathbf{s}_0$ et orientée par le vecteur $\mathbf{s}$. Le point d’intersection $\mathbf{p}_i$ appartient à la fois au plan et à la trajectoire du forage.
+
+Ces conditions conduisent à la relation suivante :
+
+$$(\mathbf{s}_0 - \mathbf{p}_0) \cdot \mathbf{n} = (\mathbf{s}_0 - \mathbf{p}_i) \cdot \mathbf{n} = -e(\mathbf{s} \cdot \mathbf{n})$$
+
+On en déduit directement la distance entre le collet et le point d’intersection :
+
+$$e = \left|\frac{(\mathbf{s}_0 - \mathbf{p}_0) \cdot \mathbf{n}}{\mathbf{s} \cdot \mathbf{n}}\right|$$
+
+Cette expression permet également de vérifier si le forage est parallèle au plan (cas où $\mathbf{s}\cdot \mathbf{n}=0$, et donc aucune intersection).
+
+Une fois la distance $e$ connue, la position du point d’intersection est obtenue simplement par :
+$$\mathbf{p}_i = \mathbf{s}_0 + e\mathbf{s}$$
+
+{{< include widget/widget_intersection.qmd >}}
+
+Cette analyse de l'intersection plan-forage suppose une section verticale alignée avec la direction réelle des éléments observés. Lorsque ce n'est pas le cas, il faut tenir compte de la **plongée apparente**, c'est-à-dire de l'angle observé une fois le vecteur ou le plan projeté sur la section considérée.
+
+## Plongée apparente
+
+### Pendage apparent d’un vecteur
+
+La plongée apparente correspond à l’angle que fait un vecteur avec l’horizontale lorsqu’il est projeté sur une section verticale donnée. Elle dépend donc à la fois de l’orientation réelle du vecteur et de l’orientation de la section.
+
+Soit :
+
+$(a_1, b_1, c_1)$ les cosinus directeurs du vecteur (par exemple la direction d’un forage),
+
+$(a_2, b_2, c_2)$ un vecteur horizontal définissant la direction de la section verticale (donc $c_2 = 0$).
+
+La plongée apparente $A$ du vecteur sur cette section est donnée par :
+
+$$\tan(A) = \frac{|c_1|}{|a_1a_2 + b_1b_2|}$$
+
+Cette relation exprime le rapport entre la composante verticale du vecteur et sa composante projetée dans la section.
+
+
+### Pendage apparent d’un plan
+
+Le pendage apparent d’un plan est l’angle de pente observé dans une section verticale donnée, qui est généralement inférieur ou égal au pendage vrai du plan.
+
+Soit :
+
+$(a_1, b_1, c_1)$ les cosinus directeurs du pôle du plan,
+
+$(a_2, b_2, c_2)$ un vecteur horizontal définissant la direction de la section verticale (avec $c_2 = 0$).
+
+Le pendage apparent $A$ du plan sur cette section est alors :
+
+$$\tan(A) = \frac{|a_1a_2 + b_1b_2|}{|c_1|}$$
+
+Cette expression est duale à celle de la plongée apparente d’un vecteur : elle relie la composante du pôle projetée dans la section à sa composante verticale.
+
+
+## Calcul de JO
+
+Pour rappel, JO correspond à l’angle aigu entre la direction du forage et le plan géologique. Géométriquement, il est complémentaire de l’angle formé entre le forage et le pôle du plan.
+
+Il est possible de le calculer de deux manières :
+
+1) À partir des orientations du plan et du forage
+
+Le pôle du plan fait un angle de $90^\circ - \text{JO}$ avec le forage, d’où :
+
+$$
+\sin(\text{JO}) = \mathbf{p} \cdot \mathbf{f}
+$$
+
+et donc :
+
+$$
+\text{JO} = \sin^{-1}\!\left(\mathbf{p} \cdot \mathbf{f}\right)
+$$
+
+où :
+
+- $\mathbf{p}$ est le vecteur unitaire représentant le pôle du plan ;
+- $\mathbf{f}$ est le vecteur unitaire représentant la direction du forage.
+
+2) Calcul de JO sachant les cosinus directeurs
+
+Soient $(a, b, c)$ les cosinus directeurs du forage et $(A, B, C)$ ceux du pôle du plan. Le produit scalaire s’écrit alors :
+
+$$
+\mathbf{p} \cdot \mathbf{f} = aA + bB + cC
+$$
+
+et l’angle de jonction est donné par :
+
+$$
+\text{JO} = \left| \sin^{-1}(aA + bB + cC) \right|
+$$
+
+La valeur absolue permet de retenir uniquement l’angle aigu, conformément à la définition de l’angle JO.
+
+
+
+
+## Relation entre pendage apparent et pendage vrai d’un plan
+
+Le pendage apparent correspond au pendage mesuré sur une section verticale non perpendiculaire à la direction du plan. Il est toujours inférieur ou égal au pendage vrai.
+
+Soient :
+
+- $\theta$ : le pendage apparent du plan ;
+- $\gamma$ : le pendage vrai du plan ;
+- $\alpha$ : l’angle aigu entre la **direction du plan** et le plan de projection (section verticale).
+
+Les relations suivantes permettent de passer d’un pendage à l’autre :
+
+$$
+\theta = \tan^{-1}\!\left(\tan(\gamma)\,\sin(\alpha)\right)
+$$
+
+et réciproquement :
+
+$$
+\gamma = \tan^{-1}\!\left(\frac{\tan(\theta)}{\sin(\alpha)}\right)
+$$
+
+Ces relations montrent que le pendage apparent tend vers le pendage vrai lorsque la section est perpendiculaire à la direction du plan ($\alpha = 90^\circ$), et qu’il devient nul lorsque la section est parallèle à cette direction ($\alpha = 0^\circ$).
+
+
+
+
+## Épaisseur vraie
+
+Lorsqu’un plan géologique est recoupé par un forage, l’épaisseur mesurée le long du forage correspond à une épaisseur apparente. L’épaisseur vraie est obtenue en corrigeant cette mesure à l’aide de l’angle JO entre le forage et le plan.
+
+La relation est donnée par :
+
+$$
+E_{\text{vraie}} = \sin(\text{JO}) \, E_{\text{apparente}}
+$$
+
+où :
+- $E_{\text{apparente}}$ est l’épaisseur mesurée le long du forage ;
+- $E_{\text{vraie}}$ est l’épaisseur perpendiculaire au plan ;
+- $\text{JO}$ est l’angle aigu entre la direction du forage et le plan.
+
+Cette relation montre que l’épaisseur apparente est toujours supérieure ou égale à l’épaisseur vraie, et que les deux coïncident lorsque le forage est perpendiculaire au plan ($\text{JO} = 90^\circ$).
+

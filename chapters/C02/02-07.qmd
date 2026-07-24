@@ -1,0 +1,59 @@
+## Influence des paramètres sur la teneur de coupure
+
+L'analyse de sensibilité consiste à faire varier un seul paramètre du modèle à la fois, les autres restant constants, pour isoler son influence sur la teneur de coupure optimale. L'atelier ci-dessous permet de l'explorer.
+
+Afin de fournir un point de référence, on peut considérer le jeu de paramètres suivant :
+$y = 0{,}87$, $p = 600$ \$/t métal, $k = 0$, $m = 1{,}32$ \$/t matériau minéralisé, $h = 3{,}41$ \$/t minerai, $f = 11{,}9$ M\$, $F = 0$, $M = 12$ Mt, $H = 3{,}9$ Mt et $K = 0{,}085$ Mt.
+
+À partir de cette configuration de base, on fait varier un seul paramètre (par exemple la variance de la distribution des teneurs) pour en analyser l'impact.
+
+## 🧮 Atelier interactif 2.5 — Analyse de sensibilité {.unnumbered}
+
+Cet atelier permet d'analyser l'influence des paramètres économiques, techniques et statistiques sur la teneur de coupure optimale.
+
+La manipulation interactive de cet atelier requiert la version web de ce document.
+
+{{< include widget/widget_sensibilite.qmd >}}
+
+### Cas simple de deux teneurs
+
+Considérons le cas simple mais courant où le marché n'influence pas le calcul de la teneur de coupure optimale. Ainsi, nous n'avons que trois teneurs de coupure à calculer :
+
+- **$c_1$** : teneur limite de la mine
+- **$c_2$** : teneur limite du concentrateur
+- **$c_{12}$** : teneur d'équilibre mine–concentrateur
+
+Lorsque l'on étudie les formules permettant d'obtenir ces trois teneurs de coupure, on constate les effets suivants des différents facteurs sur les teneurs de coupure :
+
+::: {#tbl-influence-parametres}
+| Facteur | $c_1$ | $c_{12}$ | $c_2$ |
+|-------------------------|--------|----------|--------|
+| Prix $(p-k)$ ↑ | ↓ | – | ↓ |
+| Coût de minage $(m)$ ↑ | – | – | – |
+| Coût de traitement $(h)$ ↑ | ↑ | – | ↑ |
+| Coût fixe $(f+F)$ ↑ | – | – | ↑ |
+| Taux de récupération ↑ | ↓ | – | ↓ |
+| Capacité minage $(M)$ ↑ | – | ↑ | – |
+| Capacité traitement $(H)$ ↑ | – | ↓ | ↓ |
+| Moyenne ↑ | – | ↑ | – |
+| Variance ↑ | – | ↓ (habituellement) | – |
+
+Influence des paramètres sur les teneurs de coupure
+:::
+
+On peut facilement observer ces phénomènes à partir de l'atelier interactif 2.5 — Analyse de sensibilité. Faites varier les différents paramètres et vous pourrez reconstituer le tableau ci-dessus.
+
+### Qualité de l'estimation et biais conditionnel
+
+En pratique, la distribution des teneurs du gisement n'est jamais parfaitement connue. Elle est construite à partir d'un nombre limité de données, surtout des forages, puis estimée par des méthodes géostatistiques. L'hypothèse d'une distribution connue, utilisée jusqu'ici pour calculer les fonctions $x_c$, $g_c$ et les teneurs de coupure d'équilibre, ne tient donc pas exactement.
+
+Cette distinction est importante. Dans une mine, les décisions sont prises à partir des teneurs estimées par le modèle de blocs. Un bloc est envoyé au concentrateur ou vers la halde à stérile selon la teneur que le modèle lui attribue. Cependant, la quantité de métal réellement récupérée dépend des teneurs réelles, qui ne sont pas connues lors de la planification.
+
+Il peut donc y avoir un écart entre ce que le modèle prévoit et ce que l'exploitation produit réellement. Cet écart devient particulièrement important autour de la teneur de coupure, car c'est à ce seuil que les décisions de sélection sont prises. Si les blocs classés comme minerai sont en réalité moins riches que prévu, les tonnages, les teneurs moyennes et les revenus anticipés seront surestimés.
+
+C'est ici que le biais conditionnel devient important. Le problème survient lorsque les blocs que le modèle présente comme riches sont, en moyenne, trop optimistes. Autrement dit, on risque de sélectionner des blocs parce qu'ils semblent au-dessus de la teneur de coupure, alors que leur teneur réelle pourrait être plus faible une fois le matériau extrait.
+
+Dans une mine, ce biais a un effet économique direct. Si le modèle surestime les blocs sélectionnés, les tonnes envoyées au traitement ne rapporteront pas autant que prévu. Le profit calculé à partir du modèle de blocs peut alors être plus élevé que le profit effectivement réalisé après extraction et traitement.
+
+La qualité de l'estimation a donc un effet direct sur les décisions minières. Elle influence les blocs que l'on choisit de traiter, la planification de l'exploitation et la valeur économique que l'on attribue au projet. C'est pourquoi le choix de la méthode d'estimation est aussi un choix économique : il modifie la lecture économique du gisement.
+

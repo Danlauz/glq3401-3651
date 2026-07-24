@@ -1,0 +1,14 @@
+## Examen final — CP3 {#sec-examens-cp3}
+
+L'examen final couvre l'ensemble de la matière, avec un accent sur la géostatistique non linéaire : cokrigeage, krigeage d'indicatrices, simulations continues et de faciès (Partie III).
+
+Chaque PDF réunit les questions **et** le corrigé.
+
+- [Automne 2025](pdf/CP3_2025.pdf){download="CP3_2025.pdf"}
+- [Automne 2024](pdf/CP3_2024.pdf){download="CP3_2024.pdf"}
+- [Automne 2023](pdf/CP3_2023.pdf){download="CP3_2023.pdf"}
+- [Automne 2022](pdf/CP3_2022.pdf){download="CP3_2022.pdf"}
+- [Automne 2021](pdf/CP3_2021.pdf){download="CP3_2021.pdf"}
+- [Automne 2019](pdf/CP3_2019.pdf){download="CP3_2019.pdf"}
+- [Automne 2015](pdf/CP3_2015.pdf){download="CP3_2015.pdf"}
+- [Automne 2014](pdf/CP3_2014.pdf){download="CP3_2014.pdf"}

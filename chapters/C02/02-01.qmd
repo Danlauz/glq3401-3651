@@ -1,0 +1,22 @@
+## Rentabilité économique d'un projet minier
+
+Pour rappel, une ressource minérale est une concentration de substances minérales présentant des perspectives d'extraction économique raisonnables. Une réserve minérale correspond à la portion économiquement exploitable d'une ressource mesurée ou indiquée, après application des facteurs modificateurs pertinents, notamment les conditions minières, métallurgiques, économiques, environnementales, juridiques et sociales.
+
+La teneur de coupure est l'un des paramètres utilisés dans cette évaluation. Elle correspond à la teneur minimale à partir de laquelle un matériau peut être considéré comme économiquement valorisable selon un ensemble d'hypothèses donné, telles que le prix du métal, les coûts d'extraction et de traitement, la récupération métallurgique et les contraintes d'exploitation.
+
+Dans un modèle de blocs, la teneur de coupure permet de distinguer les blocs destinés au traitement de ceux classés comme stériles ou matériaux pouvant être stockés pour un traitement ultérieur. Son application influence directement le tonnage retenu, la teneur moyenne du matériau traité et la quantité de métal récupérable. Cette classification ne repose toutefois pas uniquement sur la teneur : la localisation du bloc, les contraintes géométriques, la dilution, les pertes minières, les capacités de traitement et les séquences d'exploitation doivent également être prises en compte.
+
+La teneur de coupure dépend de plusieurs facteurs : la teneur en métal, le prix du métal, les coûts d'extraction et de traitement, la récupération métallurgique, les capacités de production et les contraintes opérationnelles. Dans certains gisements plus complexes, d'autres paramètres peuvent également être pris en compte, mais nous nous limiterons ici à ces principaux éléments.
+
+La teneur de coupure fait donc le lien entre ce que contient le gisement et ce qu'il est réellement possible d'exploiter de manière rentable.
+
+Cette notion est centrale, car un mauvais choix de la teneur de coupure peut réduire la valeur d'un projet. Une teneur trop basse peut mener au traitement de matériel peu rentable et saturer inutilement le concentrateur. Une teneur trop élevée peut, au contraire, laisser de côté du matériel qui aurait pu contribuer positivement à la valeur du projet. L'enjeu va au-delà d'un seuil minimal de rentabilité : il s'agit de choisir une stratégie qui maximise la valeur globale de l'exploitation tout au long du projet minier.
+
+La théorie de Lane formalise cette idée en tenant compte simultanément des principales contraintes d'un système minier. Elle distingue trois grands volets :
+
+- les **opérations minières**, qui déterminent la quantité de matériau extrait;
+- les **opérations de traitement**, qui déterminent la quantité de minerai pouvant être traitée et le métal récupéré;
+- les **opérations commerciales**, qui déterminent la valeur du métal produit sur le marché.
+
+La teneur de coupure optimale est déterminée en fonction de ces trois contraintes. Elle influence la séquence d'extraction, l'alimentation du concentrateur, la durée de vie de la mine et la valeur actualisée nette du projet. Comme les paramètres économiques, techniques et géologiques évoluent au cours de l'exploitation, elle doit être réévaluée périodiquement.
+

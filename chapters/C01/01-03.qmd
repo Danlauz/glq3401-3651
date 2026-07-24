@@ -1,0 +1,47 @@
+## Personnes qualifiées
+
+La classification des ressources et des réserves repose en partie sur une évaluation professionnelle. Ce jugement doit toutefois être encadré. Dans le cadre de la norme NI 43-101, cette responsabilité incombe à la personne qualifiée (PQ). La PQ possède l'expérience et les compétences nécessaires pour évaluer la fiabilité des informations techniques, vérifier les données disponibles, interpréter les incertitudes et assumer la responsabilité professionnelle des sections du rapport qu'elle signe.
+
+Pour participer à la rédaction d'un rapport conforme à la NI 43-101, une personne qualifiée doit satisfaire à certaines conditions. Elle doit notamment : **(i)** posséder une formation appropriée, **(ii)** être membre d'une association professionnelle reconnue, avec les obligations déontologiques qui y sont associées, et **(iii)** détenir une expérience pertinente dans le domaine concerné.
+
+Ainsi, une PQ est généralement une ingénieure, un ingénieur, une géologue ou un géologue possédant au moins cinq ans d'expérience pertinente en exploration minérale, en développement ou en exploitation minière, ou encore en évaluation de projets miniers. Elle doit également être membre en règle d'un ordre professionnel reconnu et démontrer que son expérience est pertinente pour le projet auquel elle participe.
+
+Par exemple, selon les définitions de l'ICM, une personne qui agit comme PQ pour l'estimation des réserves minérales d'un gisement d'or alluvial doit posséder une expérience pertinente de ce type de gisement. Cette expérience doit porter à la fois sur le contexte géologique, à savoir les gisements alluviaux, et sur la substance évaluée, à savoir l'or. Ainsi, une expérience acquise sur des gisements alluviaux contenant d'autres minéraux ne suffit pas nécessairement à être reconnue comme pertinente pour un gisement d'or alluvial, car les méthodes d'extraction peuvent être différentes. L'expertise doit être directement liée au type de minéralisation et aux enjeux propres au projet évalué.
+
+Au Québec, l'ordre professionnel reconnu est généralement l'Ordre des ingénieurs du Québec (OIQ) ou l'Ordre des géologues du Québec (OGQ).
+
+### Expérience de la personne qualifiée
+
+La compétence d'une personne qualifiée ne tient pas à son seul titre : elle dépend d'une expérience pertinente, évaluée au cas par cas selon le type de gisement, la substance et le contexte géologique. Cette expérience est essentielle, car la PQ engage sa responsabilité professionnelle quant aux informations techniques qu'elle prépare, vérifie ou signe. Dans l'exercice de cette responsabilité, elle doit notamment être en mesure de :
+
+- respecter le code de déontologie de son ordre professionnel (p.ex. OIQ ou OGQ);
+- respecter les lignes directrices et les normes de l'ICM;
+- réaliser uniquement des travaux relevant de son domaine de compétence;
+- communiquer clairement les principaux risques et incertitudes associés au projet;
+- s'assurer que les documents de divulgation de l'émetteur reflètent fidèlement ses conclusions et ne déforment pas ses propos.
+
+### Responsabilités de la personne qualifiée
+
+La PQ doit se conformer aux normes professionnelles et aux meilleures pratiques de l'industrie. Les autorités de réglementation ont indiqué que « la personne qualifiée doit être clairement convaincue qu'elle serait en mesure de se présenter devant ses pairs et de démontrer sa compétence ainsi qu'une expérience pertinente en lien avec la substance, le type de gisement et le contexte considérés ».
+
+La visite du site constitue une étape importante de la préparation d'un rapport technique conforme à la norme NI 43-101. En règle générale, la PQ principale responsable du rapport doit effectuer cette visite afin de vérifier le contexte du projet, les conditions du terrain et la cohérence des informations techniques présentées.
+
+Un rapport technique peut être préparé par plusieurs personnes qualifiées. Chacune intervient alors dans son propre champ d'expertise : géologie, estimation des ressources, métallurgie, environnement ou autres aspects du projet. Chaque personne signe les parties du rapport auxquelles elle a réellement contribué et pour lesquelles elle possède les compétences nécessaires. Cette façon de faire permet de répartir les responsabilités entre les spécialistes, tout en veillant à ce que chaque partie du rapport soit examinée par la bonne personne.
+
+La vérification des données est également un élément clé de la NI 43-101. La PQ doit indiquer explicitement si cette vérification a été effectuée. Si elle ne l'a pas été, elle doit en expliquer les raisons.
+
+Une PQ ne doit signer que les sections pour lesquelles elle possède l'expertise requise et dont elle a vérifié le contenu. Elle ne doit pas endosser des informations préparées par une autre personne sans avoir effectué une vérification indépendante suffisante.
+
+### Certificats et consentements
+
+Toute PQ ayant rédigé tout ou une partie d'un rapport technique doit fournir :
+
+- Un certificat (conformément à la section 8.1(2) de la NI 43-101), incluant notamment :
+  - Un résumé de son expérience pertinente;
+  - Les sections du rapport dont elle est responsable;
+  - Une déclaration d'indépendance vis-à-vis de l'entreprise.
+- Un consentement écrit, dans lequel la PQ :
+  - Autorise la diffusion publique du rapport technique;
+  - Confirme que les informations contenues dans les documents publics (ex. : communiqué de presse, formulaire annuel) reflètent fidèlement le contenu du rapport technique.
+
+Une PQ ne peut être tenue responsable si l'entreprise cite ses propos de manière erronée, sauf si elle a donné son consentement après révision du document de divulgation. Elle ne doit donc jamais accorder son consentement à l'avance.

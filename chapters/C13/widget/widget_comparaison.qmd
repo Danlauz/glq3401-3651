@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c13_comparaison_methodes">
+  <div class="gw-placeholder">Chargement (comparaison SIS/PGS/MPS)…</div>
+</div>
+```

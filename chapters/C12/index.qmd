@@ -1,0 +1,45 @@
+---
+title: "Simulations géostatistiques de variable continue"
+abstract: |
+  Ce chapitre présente les principes et les applications des simulations géostatistiques pour la modélisation de variables spatiales continues. Leur principal intérêt réside dans leur capacité à quantifier l’incertitude et à produire des représentations spatiales qui reproduisent la variabilité observée dans les données de terrain. La distinction entre estimation et simulation est d’abord établie, puis les cas conditionnel et non conditionnel sont détaillés. Les principaux algorithmes, notamment la décomposition de Cholesky et la simulation gaussienne séquentielle, sont ensuite présentés. Le chapitre expose également les critères guidant le choix de la méthode la mieux adaptée au contexte étudié et souligne les limites propres à chaque approche.
+---
+
+::: {.callout-important}
+## Objectifs d'apprentissage
+
+À la fin de ce chapitre, vous serez en mesure de :
+
+- Identifier les problèmes pour lesquels les méthodes de simulation géostatistique sont appropriées;
+
+- Distinguer les concepts d'estimation et de simulation, ainsi que leurs objectifs respectifs;
+
+- Expliquer les différences entre les simulations non conditionnelles et conditionnelles;
+
+- Appliquer les méthodes de simulation de Cholesky et de simulation séquentielle gaussienne (SGS), et en discuter les avantages et les limites;
+
+- Utiliser et interpréter les résultats de simulations dans le cadre de l'estimation des ressources;
+
+- Expliquer les principales propriétés statistiques et spatiales des simulations.
+:::
+
+::: {.callout-note}
+## Références
+
+Ce chapitre s'appuie principalement sur les ouvrages suivants :
+
+Lantuéjoul, C. (2002). *Geostatistical Simulation: Models and Algorithms*. Springer.
+
+Chilès, J., & Delfiner, P. (2012). *Geostatistics: Modeling Spatial Uncertainty*. John Wiley & Sons.
+:::
+
+{{< include 12-01.qmd >}}
+
+{{< include 12-02.qmd >}}
+
+{{< include 12-03.qmd >}}
+
+{{< include 12-04.qmd >}}
+
+{{< include 12-05.qmd >}}
+
+{{< include 12-06.qmd >}}

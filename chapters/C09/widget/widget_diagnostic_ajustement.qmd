@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c09_diagnostic_ajustement">
+  <div class="gw-placeholder">Chargement (diagnostic ajustement)…</div>
+</div>
+```

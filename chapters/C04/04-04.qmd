@@ -1,0 +1,147 @@
+
+## Analyse exploratoire des données
+
+L'analyse exploratoire décrit la distribution des teneurs, repère les anomalies et oriente les choix méthodologiques avant la modélisation spatiale et l'estimation. Elle porte sur des teneurs déjà ramenées à un support commun, donc comparables.
+
+### Statistiques descriptives univariées
+
+La première étape de l'analyse exploratoire consiste à décrire chaque variable séparément. Dans le cas des données de forage, on cherche notamment à comprendre la distribution des teneurs : leur niveau moyen, leur variabilité, la présence de valeurs extrêmes et le degré d'asymétrie de la distribution. Les définitions formelles de ces statistiques sont rappelées dans l'annexe de probabilités et statistiques; nous nous concentrons ici sur leur interprétation pour les teneurs.
+
+#### Mesures de tendance centrale
+
+Les mesures de tendance centrale résument le niveau général des teneurs.
+
+La moyenne arithmétique est la mesure la plus utilisée :
+
+$$
+\bar{z} = \frac{1}{n}\sum_{i=1}^{n} z_i
+$$
+
+Elle représente la teneur moyenne des échantillons. Toutefois, elle est sensible aux valeurs extrêmes et au biais d'échantillonnage. Par exemple, quelques teneurs très élevées ou une zone riche suréchantillonnée peuvent fortement augmenter la moyenne.
+
+La médiane est la valeur qui divise les données en deux groupes de même taille : 50 % des valeurs sont inférieures à la médiane et 50 % sont supérieures. Elle est plus robuste que la moyenne face aux valeurs extrêmes. Lorsque la moyenne est nettement supérieure à la médiane, cela indique généralement une distribution asymétrique à droite, ce qui est fréquent pour les teneurs minières.
+
+#### Mesures de dispersion
+
+Les mesures de dispersion décrivent la variabilité des teneurs par rapport à leur valeur centrale.
+
+La variance ($s^2$) et l'écart-type ($s$) mesurent l'étalement des données autour de la moyenne :
+
+$$
+s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(z_i - \bar{z})^2
+$$
+
+Un écart-type élevé indique que les teneurs varient fortement d'un échantillon à l'autre.
+
+Le coefficient de variation permet de comparer la variabilité relative d'une variable :
+
+$$
+\text{CV} = \frac{s}{\bar{z}}
+$$
+
+Un CV supérieur à 1 est courant pour les métaux précieux, comme l'or, et indique une forte hétérogénéité des teneurs.
+
+#### Mesures de forme
+
+Les mesures de forme décrivent l'allure générale de la distribution.
+
+Le coefficient d'asymétrie (*skewness*) indique si la distribution est symétrique ou présente une queue plus longue d'un côté. Une asymétrie positive, avec une queue orientée vers les valeurs élevées, est fréquente dans les distributions de teneurs.
+
+Le coefficient d'aplatissement (*kurtosis*) mesure l'ampleur des valeurs extrêmes. Un kurtosis élevé indique que la distribution contient des valeurs très éloignées du centre, ce qui peut influencer fortement la moyenne et la variance.
+
+#### Quantiles et diagrammes en boîte
+
+Les **quantiles** décrivent la distribution sans supposer de forme particulière. Les quartiles, déciles et percentiles permettent de résumer la proportion des données situées sous certains seuils.
+
+Le **diagramme en boîte** (*box plot*) est une représentation visuelle utile. Il montre la médiane, les quartiles, l'étendue des données et les valeurs extrêmes potentielles. Il permet donc de repérer rapidement l'asymétrie, la dispersion et la présence de teneurs atypiques.
+
+### Histogramme et fonction de répartition
+
+L'histogramme est la représentation graphique la plus directe de la distribution des données. Le choix du nombre de classes influence la perception : trop peu de classes masquent la structure, trop de classes introduisent du bruit. Des règles empiriques (Sturges, Freedman-Diaconis) existent pour guider ce choix.
+
+La fonction de répartition empirique (ou CDF) représente, pour chaque valeur $z$, la proportion des données inférieures ou égales à $z$. Elle est indépendante du choix des classes et constitue un outil diagnostique plus robuste que l'histogramme.
+
+> Cas particulier : les distributions log-normales. Les teneurs de métaux de base et précieux suivent souvent une distribution log-normale (c'est-à-dire que le logarithme des teneurs suit une distribution normale). L'histogramme des teneurs brutes est alors fortement asymétrique, tandis que celui des logarithmes des teneurs est approximativement symétrique. Il est toujours utile de tracer les deux histogrammes.
+
+### Analyse spatiale : carte des valeurs (*posting*)
+
+Le *posting* consiste à représenter chaque donnée à sa position spatiale, avec un symbole dont la taille ou la couleur reflète la valeur de la variable. Cette carte est l'outil le plus simple pour détecter des tendances spatiales, des zones de forte ou faible teneur, et des lacunes dans l'échantillonnage.
+
+Il est recommandé de tracer le posting en plan (vue en projection horizontale) et, si les données sont tridimensionnelles, en coupe verticale (sections parallèles ou perpendiculaires au corps minéralisé).
+
+### Valeurs extrêmes et écrêtage
+
+Les distributions de teneurs sont typiquement asymétriques à droite : une faible proportion d'échantillons très riches côtoie une majorité de valeurs faibles. Ces valeurs extrêmes posent un double problème. D'une part, elles pèsent lourd sur les statistiques : ajouter une seule teneur $z_{\max}$ déplace la moyenne de $(z_{\max} - \bar z)/n$ et gonfle davantage la variance, qui dépend du carré des écarts. D'autre part, lors de l'estimation, une teneur isolée très élevée est « étalée » sur tous les blocs de son voisinage, ce qui surestime le métal local (*smearing*).
+
+L'enjeu se mesure surtout en **quantité de métal**. Pour un seuil $z_c$, la part du métal portée par les échantillons au-dessus de ce seuil est
+
+$$
+M(z_c) = \frac{\sum_{z_i > z_c} z_i}{\sum_i z_i}.
+$$
+
+Dans une distribution fortement asymétrique, $M(z_c)$ peut atteindre 20 à 40 % du métal pour moins de 1 % des échantillons : la décision prise sur ces quelques valeurs conditionne une part majeure de la ressource.
+
+**Identifier les valeurs extrêmes.** Plusieurs outils se complètent :
+
+- la **règle des quartiles**, qui signale toute valeur au-delà de $Q_3 + 1{,}5\,\text{IQR}$ (avec $\text{IQR} = Q_3 - Q_1$);
+- le **graphe de probabilité log-normale**, où une rupture de pente dans la queue supérieure trahit une population de teneurs distincte — l'outil le plus employé pour fixer un seuil;
+- les **seuils en écart-type** ($\bar z + 2s$ ou $\bar z + 3s$), simples mais arbitraires;
+- la **vérification géologique**, indispensable : une teneur extrême peut être bien réelle si elle correspond à une zone à haute teneur connue.
+
+Il faut alors distinguer deux cas. Une valeur **erronée** (saisie, laboratoire, positionnement) est corrigée ou retirée. Une valeur **valide mais extrême** n'est pas supprimée — cela sous-estimerait la ressource — mais on limite son influence.
+
+**Écrêter (*capping*).** L'écrêtage remplace toute teneur supérieure à un seuil $z_c$ par ce seuil :
+
+$$
+z_i^{\text{écrêté}} = \min(z_i,\, z_c).
+$$
+
+Le choix de $z_c$ ne se fait pas au hasard. Les méthodes usuelles sont :
+
+- la **rupture sur le graphe de probabilité log-normale** (seuil au décrochage de la queue);
+- l'**analyse du métal contenu** (méthode de Parrish) : on trace $M(z_c)$ et le nombre d'échantillons coupés en fonction de $z_c$, et on retient un seuil où le métal écarté demeure raisonnable;
+- l'**analyse de sensibilité** : on calcule la moyenne écrêtée — et le coefficient de variation de la moyenne — sur une plage de seuils, puis on choisit là où la statistique se stabilise.
+
+D'autres approches limitent l'influence des fortes teneurs sans les modifier, par exemple en restreignant leur distance d'influence lors de l'estimation plutôt qu'en écrêtant la donnée elle-même.
+
+Enfin, l'écrêtage dépend du support : un seuil pertinent sur des composites de 2 m ne le serait pas sur des échantillons bruts de longueurs variables, car le compositage atténue déjà les valeurs extrêmes. Comme les teneurs ont été régularisées à l'étape précédente, on applique ici l'écrêtage directement sur les composites — le support qui servira à l'estimation. Certains praticiens préfèrent toutefois écrêter les teneurs brutes avant le compositage : l'ordre retenu doit être documenté. Quel que soit le choix, le seuil doit être justifié — c'est un point systématiquement examiné dans les rapports NI 43-101.
+
+::: {.callout-note}
+## Pourquoi les pratiques d'écrêtage semblent se contredire
+
+La littérature et les praticiens paraissent souvent en désaccord sur l'écrêtage. Ces contradictions sont surtout apparentes : elles viennent de ce que l'écrêtage n'est pas un calcul exact, mais un arbitrage de risque sans optimum unique. On introduit volontairement un biais — baisser la moyenne — pour se protéger d'un biais jugé pire : la surestimation locale et l'étalement (*smearing*) d'une forte teneur sur tout un voisinage de blocs. Chacun pondère ces deux risques différemment, d'où le côté « art et tradition » de la pratique.
+
+Le débat « avant ou après compositage » se résout de même par la notion de support. Puisque l'estimation se fait sur les composites, on écrête en général après compositage, quand les données ont un support égal. Écrêter avant reste correct, à condition de couper la bonne variable — l'accumulation (teneur × longueur), et non la teneur brute, sinon une forte valeur sur 0,2 m et la même sur 3 m seraient traitées à l'identique. Les deux ordres sont donc défendables; ce qui est fautif, c'est d'écrêter des teneurs brutes de longueurs inégales.
+
+Enfin, l'écrêtage n'est qu'un outil parmi deux : on peut aussi restreindre l'influence des fortes teneurs pendant l'estimation (portée ou nombre de blocs limités). Qui restreint coupe moins, qui ne restreint pas coupe plus — même risque géré autrement. Le principe, lui, ne varie pas : contrôler l'influence du métal extrême au support de l'estimation, garder l'écrêtage au minimum, et documenter le choix.
+:::
+
+### Analyse multivariée
+
+Lorsque plusieurs variables sont mesurées (par exemple : teneurs en Cu, Zn, Fe, densité), il est utile de construire des **nuages de corrélation** entre paires de variables et de calculer la **matrice de corrélation**. Ces analyses permettent de détecter des relations entre variables et de décider si un cokrigeage serait bénéfique.
+
+### Synthèse : liste de vérification
+
+Avant de passer à la modélisation géostatistique, l'analyste doit pouvoir répondre aux questions suivantes :
+
+1. La distribution des teneurs est-elle symétrique ou asymétrique? Faut-il envisager une transformation (logarithmique, normale score)?
+2. Y a-t-il des valeurs aberrantes? Ont-elles été vérifiées géologiquement?
+3. L'échantillonnage est-il spatialement uniforme ou biaisé? Un dégroupement est-il nécessaire?
+4. Y a-t-il des tendances spatiales visibles (gradient de teneur, zonation)?
+5. Les données sont-elles suffisamment denses pour supporter l'estimation à l'échelle souhaitée?
+6. Les teneurs reposent-elles bien sur un support uniforme (composites), et l'écrêtage éventuel a-t-il été documenté?
+
+
+<!-- W2 : Analyse exploratoire spatiale -->
+## 🧮 Atelier interactif 4.3 — Analyse exploratoire spatiale {.unnumbered}
+
+Cet atelier illustre l'étape de description du jeu de données, une fois les teneurs régularisées : décrire la distribution (forme, centre, dispersion), repérer les valeurs extrêmes et juger si une transformation est utile.
+
+::: {.content-visible when-format="html"}
+Trois panneaux : la **carte** des valeurs (champ + échantillons), l'**histogramme des données brutes**, et la **distribution transformée** (logarithme des teneurs pour des données log-normales — la transformation symétrise la distribution). Les statistiques descriptives — moyenne, médiane, variance, écart-type, coefficient de variation, asymétrie, minimum et maximum — se mettent à jour en direct. Changez la distribution (gaussienne ou log-normale), la portée et la pépite, et observez comment la forme de la distribution et ces statistiques évoluent.
+{{< include widget/widget_exploratoire.qmd >}}
+:::
+
+::: {.content-visible unless-format="html"}
+Cet atelier interactif est disponible uniquement dans la version web du chapitre. Il permet d'explorer un jeu de données à l'aide d'une carte des valeurs, d'un histogramme et des statistiques descriptives (moyenne, médiane, variance, coefficient de variation, asymétrie, valeurs extrêmes), et de comparer la distribution brute à sa version log-transformée.
+:::

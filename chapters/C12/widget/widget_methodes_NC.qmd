@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c12_methodes_NC">
+  <div class="gw-placeholder">Chargement (LU vs SGS vs FFT-MA)…</div>
+</div>
+```

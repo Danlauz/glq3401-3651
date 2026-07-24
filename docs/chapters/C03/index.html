@@ -1,0 +1,2174 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3&nbsp; Théorie de Gy et contrôle qualité – Géostatistique et géologie minière</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../chapters/C04/index.html" rel="next">
+<link href="../../chapters/C02/index.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-f2c6d6e2b784ddc5de38779acc06f37d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-74c88ba48ad0bebf983f0ffd06dd1671.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f2c6d6e2b784ddc5de38779acc06f37d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents correspondants",
+    "search-copy-link-title": "Copier le lien",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "Rechercher",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles/site-polish.css">
+<link rel="stylesheet" href="../../styles/callouts.css">
+<link rel="stylesheet" href="../../styles/exercice.css">
+<link rel="stylesheet" href="../../styles/chapter-downloads.css">
+<link rel="stylesheet" href="../../scripts/geostat-js/style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/C01/index.html">Partie I: Géologie minière</a></li><li class="breadcrumb-item"><a href="../../chapters/C03/index.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Théorie de Gy et contrôle qualité</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Géostatistique et géologie minière</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/Danlauz/glq3401-3651" title="Code source" class="quarto-navigation-tool px-1" aria-label="Code source"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Basculer le mode sombre"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Préface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">À propos de l’auteur</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Partie I: Géologie minière</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C01/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Rapport Technique NI 43-101 et Loi sur les mines</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C02/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aspect économique</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C03/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Théorie de Gy et contrôle qualité</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C04/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Traitement et analyse statistique des données de forage</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C05/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Méthodes déterministes d’estimation des ressources</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie II: Géostatistique linéaire</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C06/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction à la géostatistique</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C07/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Variogramme</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C08/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Variance de blocs, de dispersion et d’estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C09/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Krigeage</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie III: Géostatistique non-linéaire</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C10/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Géostatistique multivariable</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C11/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Krigeage d’indicatrices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C12/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable continue</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C13/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable catégorielle</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie IV: Exercices et examens</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/exercices/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Recueil d’exercices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/examens/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Anciens examens</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Références</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Annexes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Algèbre linéaire : vecteurs et plans</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Probabilités &amp; statistiques</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-c.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Table de la loi normale centrée-réduite</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Abaques - Variances de dispersion</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-e.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Abaques - Variances d’estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Notation mathématique</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#méthodologie-traçabilité-et-chaîne-derreurs" id="toc-méthodologie-traçabilité-et-chaîne-derreurs" class="nav-link active" data-scroll-target="#méthodologie-traçabilité-et-chaîne-derreurs"><span class="header-section-number">3.1</span> Méthodologie, traçabilité et chaîne d’erreurs</a>
+  <ul class="collapse">
+  <li><a href="#notions-de-biais-de-précision-et-de-justesse" id="toc-notions-de-biais-de-précision-et-de-justesse" class="nav-link" data-scroll-target="#notions-de-biais-de-précision-et-de-justesse">Notions de biais, de précision et de justesse</a></li>
+  <li><a href="#traçabilité" id="toc-traçabilité" class="nav-link" data-scroll-target="#traçabilité">Traçabilité</a></li>
+  <li><a href="#sources-derreurs" id="toc-sources-derreurs" class="nav-link" data-scroll-target="#sources-derreurs">Sources d’erreurs</a></li>
+  <li><a href="#les-sources-de-biais-et-les-méthodes-déchantillonnages" id="toc-les-sources-de-biais-et-les-méthodes-déchantillonnages" class="nav-link" data-scroll-target="#les-sources-de-biais-et-les-méthodes-déchantillonnages">Les sources de biais et les méthodes d’échantillonnages</a></li>
+  </ul></li>
+  <li><a href="#théorie-de-léchantillonnage-des-matières-morcelées" id="toc-théorie-de-léchantillonnage-des-matières-morcelées" class="nav-link" data-scroll-target="#théorie-de-léchantillonnage-des-matières-morcelées"><span class="header-section-number">3.2</span> Théorie de l’échantillonnage des matières morcelées</a>
+  <ul class="collapse">
+  <li><a href="#échantillon-probabiliste" id="toc-échantillon-probabiliste" class="nav-link" data-scroll-target="#échantillon-probabiliste">Échantillon probabiliste</a></li>
+  <li><a href="#équation-de-gy" id="toc-équation-de-gy" class="nav-link" data-scroll-target="#équation-de-gy">Équation de Gy</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-3.1-calculateur-de-la-théorie-de-gy" id="toc-atelier-interactif-3.1-calculateur-de-la-théorie-de-gy" class="nav-link" data-scroll-target="#atelier-interactif-3.1-calculateur-de-la-théorie-de-gy">🧮 Atelier interactif 3.1 — Calculateur de la théorie de Gy</a>
+  <ul class="collapse">
+  <li><a href="#exemples-dapplication" id="toc-exemples-dapplication" class="nav-link" data-scroll-target="#exemples-dapplication">Exemples d’application</a></li>
+  <li><a href="#procédures-multistages" id="toc-procédures-multistages" class="nav-link" data-scroll-target="#procédures-multistages">Procédures multistages</a></li>
+  <li><a href="#représentation-graphique" id="toc-représentation-graphique" class="nav-link" data-scroll-target="#représentation-graphique">Représentation graphique</a></li>
+  <li><a href="#calcul-de-lerreur-déchantillonnage-global-s_r-de-lexemple" id="toc-calcul-de-lerreur-déchantillonnage-global-s_r-de-lexemple" class="nav-link" data-scroll-target="#calcul-de-lerreur-déchantillonnage-global-s_r-de-lexemple">Calcul de l’erreur d’échantillonnage global (<span class="math inline">\(s_r\)</span>) de l’exemple</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-3.2-procédures-multistages.-calcul-de-lerreur-déchantillonnage." id="toc-atelier-interactif-3.2-procédures-multistages.-calcul-de-lerreur-déchantillonnage." class="nav-link" data-scroll-target="#atelier-interactif-3.2-procédures-multistages.-calcul-de-lerreur-déchantillonnage.">🧮 Atelier interactif 3.2 — Procédures multistages. Calcul de l’erreur d’échantillonnage.</a></li>
+  <li><a href="#contrôle-de-qualité-et-assurance-de-qualité" id="toc-contrôle-de-qualité-et-assurance-de-qualité" class="nav-link" data-scroll-target="#contrôle-de-qualité-et-assurance-de-qualité"><span class="header-section-number">3.3</span> Contrôle de qualité et assurance de qualité</a>
+  <ul class="collapse">
+  <li><a href="#définitions" id="toc-définitions" class="nav-link" data-scroll-target="#définitions">Définitions</a></li>
+  <li><a href="#outils-statistiques-pour-le-contrôle-qualité" id="toc-outils-statistiques-pour-le-contrôle-qualité" class="nav-link" data-scroll-target="#outils-statistiques-pour-le-contrôle-qualité">Outils statistiques pour le contrôle qualité</a></li>
+  <li><a href="#exemple-synthétique-de-résultats-qaqc" id="toc-exemple-synthétique-de-résultats-qaqc" class="nav-link" data-scroll-target="#exemple-synthétique-de-résultats-qaqc">Exemple synthétique de résultats QA/QC</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-3.3-blancs-et-détection-de-contamination" id="toc-atelier-interactif-3.3-blancs-et-détection-de-contamination" class="nav-link" data-scroll-target="#atelier-interactif-3.3-blancs-et-détection-de-contamination">🧮 Atelier interactif 3.3 — Blancs et détection de contamination</a></li>
+  <li><a href="#atelier-interactif-3.4-standards-justesse-et-dérive-analytique" id="toc-atelier-interactif-3.4-standards-justesse-et-dérive-analytique" class="nav-link" data-scroll-target="#atelier-interactif-3.4-standards-justesse-et-dérive-analytique">🧮 Atelier interactif 3.4 — Standards : justesse et dérive analytique</a></li>
+  <li><a href="#atelier-interactif-3.5-duplicatas-précision-analytique" id="toc-atelier-interactif-3.5-duplicatas-précision-analytique" class="nav-link" data-scroll-target="#atelier-interactif-3.5-duplicatas-précision-analytique">🧮 Atelier interactif 3.5 — Duplicatas : précision analytique</a>
+  <ul class="collapse">
+  <li><a href="#exemples-réels-de-protocoles-qaqc" id="toc-exemples-réels-de-protocoles-qaqc" class="nav-link" data-scroll-target="#exemples-réels-de-protocoles-qaqc">Exemples réels de protocoles QA/QC</a></li>
+  </ul></li>
+  <li><a href="#calcul-de-la-densité-théorique" id="toc-calcul-de-la-densité-théorique" class="nav-link" data-scroll-target="#calcul-de-la-densité-théorique"><span class="header-section-number">3.4</span> Calcul de la densité théorique</a>
+  <ul class="collapse">
+  <li><a href="#principe" id="toc-principe" class="nav-link" data-scroll-target="#principe">Principe</a></li>
+  <li><a href="#cas-dun-seul-minéral-porteur" id="toc-cas-dun-seul-minéral-porteur" class="nav-link" data-scroll-target="#cas-dun-seul-minéral-porteur">Cas d’un seul minéral porteur</a></li>
+  <li><a href="#une-relation-non-linéaire" id="toc-une-relation-non-linéaire" class="nav-link" data-scroll-target="#une-relation-non-linéaire">Une relation non linéaire</a></li>
+  <li><a href="#cas-de-plusieurs-minéraux-le-système-mathbfamathbfx-mathbfb" id="toc-cas-de-plusieurs-minéraux-le-système-mathbfamathbfx-mathbfb" class="nav-link" data-scroll-target="#cas-de-plusieurs-minéraux-le-système-mathbfamathbfx-mathbfb">Cas de plusieurs minéraux : le système <span class="math inline">\(\mathbf{A}\mathbf{x} = \mathbf{b}\)</span></a></li>
+  <li><a href="#exemple-gisement-cu-zn" id="toc-exemple-gisement-cu-zn" class="nav-link" data-scroll-target="#exemple-gisement-cu-zn">Exemple : gisement Cu-Zn</a></li>
+  <li><a href="#effet-de-la-porosité" id="toc-effet-de-la-porosité" class="nav-link" data-scroll-target="#effet-de-la-porosité">Effet de la porosité</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-3.6-densité-théorique-par-résolution-de-mathbfamathbfx-mathbfb" id="toc-atelier-interactif-3.6-densité-théorique-par-résolution-de-mathbfamathbfx-mathbfb" class="nav-link" data-scroll-target="#atelier-interactif-3.6-densité-théorique-par-résolution-de-mathbfamathbfx-mathbfb">🧮 Atelier interactif 3.6 — Densité théorique par résolution de <span class="math inline">\(\mathbf{A}\mathbf{x} = \mathbf{b}\)</span></a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Danlauz/glq3401-3651/edit/main/chapters/C03/index.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/Danlauz/glq3401-3651/issues/new" class="toc-action"><i class="bi empty"></i>Signaler un problème ou<br>formuler une suggestion</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/C01/index.html">Partie I: Géologie minière</a></li><li class="breadcrumb-item"><a href="../../chapters/C03/index.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Théorie de Gy et contrôle qualité</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Théorie de Gy et contrôle qualité</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Résumé</div>
+    <p>Ce chapitre présente les principes fondamentaux de l’échantillonnage en géologie minière, première étape de la chaîne menant à l’estimation des ressources. Les principales méthodes d’échantillonnage et les sources de biais susceptibles d’en compromettre la représentativité sont d’abord décrites. La théorie de Gy est ensuite introduite afin de fournir un cadre pour évaluer l’erreur fondamentale d’échantillonnage et relier la précision d’un échantillon à la masse prélevée, à la granulométrie, à la teneur et aux propriétés du matériau. Les principaux outils de contrôle qualité (QA/QC), notamment les blancs, les standards et les duplicatas, sont par la suite présentés. Ils permettent de détecter une contamination, un biais analytique ou un manque de précision. Le chapitre se termine par une méthode de calcul de la densité théorique d’un matériau à partir de son analyse chimique.</p>
+  </div>
+</div>
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Objectifs d’apprentissage
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>À la fin de ce chapitre, vous serez en mesure de :</p>
+<ul>
+<li><p>Identifier les principales sources d’erreur liées à l’échantillonnage, à la préparation des échantillons et aux analyses de laboratoire;</p></li>
+<li><p>Utiliser la théorie de Gy pour estimer l’erreur fondamentale d’échantillonnage et comprendre l’effet de la masse, de la granulométrie, de la teneur et des propriétés du matériau;</p></li>
+<li><p>Proposer une stratégie d’échantillonnage et d’analyse adaptée au niveau de précision recherché et aux contraintes du laboratoire;</p></li>
+<li><p>Interpréter les principaux outils de QA/QC, comme les blancs, les standards et les duplicatas, afin de détecter des problèmes possibles de contamination, de biais analytique ou de manque de précision;</p></li>
+<li><p>Calculer une densité théorique à partir d’une analyse chimique.</p></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Référence
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ce chapitre s’appuie principalement sur l’ouvrage suivant :</p>
+<p>Gy, P. M. (1982). Sampling of Particulate Materials: Theory and Practice. Elsevier, Amsterdam.</p>
+</div>
+</div>
+<!--
+  Fichier conservé pour compatibilité avec les `include` historiques.
+  Tout le code JS partagé (modèles de variogramme, solveurs, etc.) a été
+  retiré : il dupliquait `geostat_polymtl`. Les widgets utilisent
+  désormais Pyodide via `scripts/geostat-js/pyodide_setup.js` (objet
+  `gpoly`), qui appelle directement les fonctions de la librairie.
+-->
+<section id="méthodologie-traçabilité-et-chaîne-derreurs" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="méthodologie-traçabilité-et-chaîne-derreurs"><span class="header-section-number">3.1</span> Méthodologie, traçabilité et chaîne d’erreurs</h2>
+<p>La distribution des teneurs d’un gisement n’est jamais observée directement. Elle est reconstruite à partir d’une chaîne d’opérations : acquisition des données, échantillonnage, préparation des échantillons, analyse chimique, validation des résultats et, éventuellement, estimation géostatistique. Or la théorie de Lane suppose cette distribution suffisamment précise pour fixer une teneur de coupure optimale.</p>
+<p>Chaque étape de cette chaîne peut introduire une erreur, du forage jusqu’à l’estimation finale. Ces erreurs s’additionnent d’une étape à l’autre, et l’une des plus importantes provient souvent de la toute première : l’échantillonnage. Une erreur commise à ce stade ne peut plus être corrigée par la suite et se retrouve directement dans le modèle de ressources. D’où l’importance de comprendre et de documenter chaque étape de la chaîne avant l’estimation.</p>
+<p>Ce chapitre s’intéresse à l’une des premières étapes de ce processus : l’échantillonnage. En contexte minier, un échantillon est une petite quantité de matière censée représenter un ensemble plus vaste, appelé <strong>lot</strong>. Ce lot peut correspondre, par exemple, à une face de galerie, aux <em>cuttings</em> d’un forage de production, au minerai contenu dans un wagonnet ou à une carotte de forage aux diamants.</p>
+<p>Une fois l’échantillon prélevé, il doit être préparé puis analysé en laboratoire afin d’en déterminer la teneur. Cette teneur mesurée est ensuite utilisée pour représenter un volume de roche bien plus grand que celui de l’échantillon lui-même. Il s’agit donc déjà d’un problème d’estimation : on cherche à déduire une propriété du lot à partir d’une petite fraction de la matière.</p>
+<p>Prenons l’exemple d’une carotte de forage de 3 m de longueur et de 48 mm de diamètre (taille NQ) obtenue par forage au diamant. Supposons que l’on souhaite déterminer sa teneur en or afin de contribuer à l’estimation des ressources minérales. En laboratoire, l’analyse ne sera généralement pas réalisée sur toute la carotte. Celle-ci devra être concassée, divisée, broyée et réduite jusqu’à obtenir une petite masse de poudre, parfois de seulement quelques grammes, qui sera effectivement analysée.</p>
+<p>Ainsi, on part d’une carotte de plusieurs kilogrammes, mais l’analyse en laboratoire porte finalement sur seulement quelques grammes de poudre. Il y a donc une étape importante de réduction entre les deux. Si cette étape est mal réalisée, les quelques grammes analysés ne refléteront pas fidèlement le lot de départ, c’est-à-dire la teneur réelle de la carotte. On peut alors obtenir une teneur biaisée ou très variable, même si le laboratoire effectue correctement son analyse.</p>
+<p>C’est précisément ce problème qui a conduit au développement de la théorie de l’échantillonnage des matières morcelées, formulée par Pierre Gy. Cette théorie fournit un cadre pour comprendre, quantifier et réduire les erreurs d’échantillonnage afin d’obtenir des échantillons aussi représentatifs que possible de la réalité terrain.</p>
+<section id="notions-de-biais-de-précision-et-de-justesse" class="level3">
+<h3 class="anchored" data-anchor-id="notions-de-biais-de-précision-et-de-justesse">Notions de biais, de précision et de justesse</h3>
+<p>Avant d’aborder la théorie de l’échantillonnage et le contrôle de la qualité, il est essentiel de distinguer trois notions fondamentales : le biais, la précision et la justesse. Ces concepts permettent d’évaluer la qualité d’une mesure et la fiabilité des données utilisées pour estimer les ressources minérales (<a href="#fig-biais" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>).</p>
+<p>La <strong>justesse</strong> (<em>accuracy</em>) indique si les mesures sont proches de la vraie valeur. Si un appareil ou une méthode donne des résultats qui, en moyenne, tombent près de cette valeur, on dira que le système de mesure est juste.</p>
+<p>La <strong>précision</strong> (<em>precision</em>) décrit plutôt la dispersion des mesures répétées entre elles. Un système est précis lorsque les mesures obtenues à répétition sont peu dispersées, même si elles ne sont pas nécessairement centrées sur la valeur réelle. Autrement dit, si l’on mesure plusieurs fois le même échantillon et que l’on obtient des résultats très similaires, le système présente une bonne précision. Cela ne garantit toutefois pas que ces résultats soient justes : ils peuvent être répétables, mais systématiquement trop élevés ou trop faibles.</p>
+<p>Le <strong>biais</strong> correspond à une erreur systématique qui déplace les mesures dans une direction donnée par rapport à la valeur réelle. Un système biaisé peut donc produire des résultats très cohérents entre eux, mais systématiquement trop élevés ou trop faibles.</p>
+<p>Ces notions sont souvent illustrées par l’analogie d’une cible, où le regroupement des impacts traduit la précision et leur proximité du centre, la justesse (<a href="#fig-biais" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>) :</p>
+<ul>
+<li><strong>en haut à gauche</strong> — impacts regroupés et centrés : bonne précision et bonne justesse (le cas recherché);</li>
+<li><strong>en haut à droite</strong> — impacts regroupés mais décalés du centre : bonne précision, mais biais important;</li>
+<li><strong>en bas à gauche</strong> — impacts dispersés autour du centre : bonne justesse, mais faible précision;</li>
+<li><strong>en bas à droite</strong> — impacts dispersés et décalés : système à la fois peu précis et biaisé.</li>
+</ul>
+<p>Dans un contexte minier, cette distinction est importante. Un laboratoire peut produire des résultats très répétables, donc précis, tout en étant biaisé si ses analyses surestiment ou sous-estiment systématiquement les teneurs réelles. À l’inverse, des résultats non biaisés mais très dispersés demeurent difficiles à exploiter pour prendre des décisions fiables.</p>
+<p>Lorsque les mesures sont à la fois justes et précises, on parle d’exactitude : les résultats sont alors proches de la valeur réelle et reproductibles.</p>
+<div id="fig-biais" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-biais-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C3_biais.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biais-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.1: Notions de biais, de précision et de justesse.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="traçabilité" class="level3">
+<h3 class="anchored" data-anchor-id="traçabilité">Traçabilité</h3>
+<p>Dès que le matériau <em>in situ</em> est identifié, une chaîne d’opérations s’amorce : prélèvement, identification, transport, entreposage, préparation, division, broyage et analyse en laboratoire. À chacune de ces étapes, des erreurs peuvent être introduites. Certaines sont aléatoires, mais plusieurs peuvent être systématiques, c’est-à-dire qu’elles tendent à déplacer les résultats toujours dans la même direction. C’est pourquoi un protocole rigoureux est nécessaire pour encadrer la manipulation des échantillons et documenter toutes les étapes du processus.</p>
+<p>La <strong>traçabilité</strong> consiste à savoir exactement ce qui est arrivé à un échantillon, depuis son prélèvement sur le terrain jusqu’au résultat d’analyse. Chaque échantillon doit pouvoir être identifié et suivi tout au long de ces étapes, afin de rattacher son résultat à l’historique complet de sa manipulation.</p>
+<p>Cette exigence peut sembler administrative, mais elle est essentielle. Un échantillon mal identifié, mélangé avec un autre ou mal préparé peut donner une teneur qui ne représente plus le matériau de départ. Dans ce cas, le problème ne vient pas du laboratoire : l’analyse peut être parfaitement réalisée, mais sur un échantillon qui n’est plus le bon ou qui a été modifié avant même d’y arriver. L’erreur se situe alors du côté du prélèvement et de la préparation, sous la responsabilité de la compagnie minière.</p>
+<p>Les sources d’erreur possibles sont nombreuses. Elles peuvent provenir de la contamination par des poussières, de résidus dans les équipements, d’abrasion ou de corrosion. Elles peuvent aussi être liées à des pertes de matière, par exemple lorsque des fines sont emportées, lorsqu’une partie du matériau demeure dans le circuit de préparation ou lorsque le minéral d’intérêt est mal réparti après la division de l’échantillon. Certaines erreurs peuvent également modifier la composition chimique du matériau, notamment par oxydation.</p>
+<p>Il y a aussi les erreurs humaines : une étiquette mal posée, un échantillon mélangé avec un autre, un équipement pas assez bien nettoyé. La plupart du temps, ce sont des erreurs involontaires. Plus rarement, il peut y avoir une action volontaire, comme une fraude ou un sabotage. C’est pour éviter ce genre de problème qu’on doit bien documenter les étapes et mettre en place des contrôles de qualité. C’est d’ailleurs la principale raison ayant mené à la création de la norme NI 43-101, adoptée à la suite du scandale Bre-X.</p>
+</section>
+<section id="sources-derreurs" class="level3">
+<h3 class="anchored" data-anchor-id="sources-derreurs">Sources d’erreurs</h3>
+<p>On distingue généralement quatre grandes catégories d’erreurs dans la chaîne menant à l’estimation des ressources minières :</p>
+<table class="caption-top table">
+<caption>Classification simplifiée des principales erreurs affectant l’estimation des ressources minières.</caption>
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Grande classe</th>
+<th>Erreurs associées</th>
+<th>Effet principal</th>
+<th>Moyens de contrôle</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Précision</strong></td>
+<td>Erreur fondamentale (FSE)</td>
+<td>Variabilité aléatoire liée à l’hétérogénéité du matériau</td>
+<td>Formule de Gy, masse suffisante, réduction granulométrique</td>
+</tr>
+<tr class="even">
+<td><strong>Biais</strong></td>
+<td>Délimitation, extraction, pondération, préparation, ségrégation</td>
+<td>Échantillon systématiquement non représentatif</td>
+<td>Protocoles, prévention, homogénéisation, traçabilité, contrôle qualité</td>
+</tr>
+<tr class="odd">
+<td><strong>Analyse</strong></td>
+<td>Erreur analytique (AE)</td>
+<td>Erreur de mesure en laboratoire</td>
+<td>Calibration, standards, duplicatas, blancs, QA/QC</td>
+</tr>
+<tr class="even">
+<td><strong>Estimation</strong></td>
+<td>Hétérogénéités de longue portée et périodiques</td>
+<td>Mauvaise représentation spatiale du gisement</td>
+<td>Géostatistique, composites, variographie, plan d’échantillonnage adapté</td>
+</tr>
+</tbody>
+</table>
+<ol type="i">
+<li>Précision (Section 3.2)</li>
+</ol>
+<p>Pour la précision, le problème vient surtout de l’erreur fondamentale d’échantillonnage. Même avec un bon protocole, on ne peut pas faire disparaître le fait que le matériau est hétérogène. Les teneurs changent d’un fragment à l’autre, les fragments n’ont pas tous la même taille, et on finit toujours par analyser seulement une petite partie du lot de départ. Cette variabilité peut être réduite, mais elle restera toujours présente.</p>
+<p>Elle devient particulièrement importante lors des étapes de réduction de masse, telles que le concassage, le broyage ou la division, où seule une petite quantité de matériau est conservée pour l’analyse. Chaque étape peut donc introduire une incertitude qui s’accumule jusqu’au résultat final.</p>
+<p>La théorie de Pierre Gy permet de modéliser et de quantifier ces erreurs en fonction des propriétés physiques du matériau et des méthodes de préparation employées.</p>
+<ol start="2" type="i">
+<li>Biais (Section 3.1.4)</li>
+</ol>
+<p>Les erreurs créant des biais regroupent les erreurs de délimitation, d’extraction, de pondération, de préparation et de ségrégation. Contrairement à l’erreur fondamentale, qui dépend surtout de l’hétérogénéité naturelle du matériau, ces erreurs sont principalement liées aux choix et aux pratiques d’échantillonnage sur le terrain. Elles relèvent donc directement du contrôle de l’ingénieur : définition du volume à prélever, méthode d’extraction, masse prélevée, homogénéisation, manutention, préparation et traçabilité.</p>
+<p>Ces biais peuvent être évalués en comparant les résultats obtenus à partir de duplicatas et d’échantillons de contrôle. Sur le terrain, l’observation de la méthode de prélèvement, la vérification des masses, le contrôle des pertes de fines, la vérification de la constance des largeurs de rainure et la documentation des conditions de prélèvement permettent également d’identifier les sources potentielles de biais.</p>
+<p>Ces erreurs doivent surtout être évitées dès le prélèvement. Une fois qu’un échantillon est mal délimité, incomplet ou mal documenté, il devient difficile de corriger le problème plus tard. Un protocole clair sert donc à limiter le risque de travailler avec un échantillon non représentatif.</p>
+<ol start="3" type="i">
+<li>Analyse (Section 3.3)</li>
+</ol>
+<p>Même avec un bon échantillon, il peut encore y avoir des erreurs au laboratoire. Le problème peut venir de la calibration des appareils, d’une contamination, de la méthode d’analyse ou d’une manipulation mal faite. Dans ce cas, l’échantillon est représentatif, mais la teneur mesurée peut quand même être faussée.</p>
+<p>C’est pour cette raison que les programmes QA/QC sont essentiels. Les standards certifiés, les blancs, les duplicatas et les réanalyses permettent de vérifier si le laboratoire produit des résultats cohérents. Ils servent aussi à détecter une contamination, une dérive dans les mesures ou un problème de précision.</p>
+<p>L’ingénieur ne contrôle pas directement chaque étape réalisée au laboratoire. Par contre, il doit s’assurer que les bons contrôles sont prévus, que le laboratoire est fiable et que les résultats QA/QC sont réellement examinés avant d’utiliser les données dans une estimation.</p>
+<ol start="4" type="i">
+<li>Estimation (Chapitre 6 à 9)</li>
+</ol>
+<p>Les erreurs d’estimation apparaissent plus tard, lorsque les données sont utilisées pour construire un modèle du gisement. À ce stade, le problème ne vient pas nécessairement d’un mauvais échantillon ou d’une mauvaise analyse. Il peut venir du fait que les données disponibles ne décrivent pas assez bien la variabilité réelle du gisement.</p>
+<p>Par exemple, une tendance géologique peut être mal représentée, une limite entre deux domaines peut être placée au mauvais endroit, ou une alternance de veines et de lithologies peut être trop simplifiée dans le modèle. Dans ce cas, même avec des échantillons bien prélevés et bien analysés, l’estimation peut rester problématique si le modèle géologique ne respecte pas bien l’organisation du gisement.</p>
+<p>Ces questions seront reprises plus loin dans le livre, notamment dans les chapitres consacrés à la modélisation spatiale : le variogramme, le krigeage et la simulation.</p>
+</section>
+<section id="les-sources-de-biais-et-les-méthodes-déchantillonnages" class="level3">
+<h3 class="anchored" data-anchor-id="les-sources-de-biais-et-les-méthodes-déchantillonnages">Les sources de biais et les méthodes d’échantillonnages</h3>
+<p>En contexte minier, une <strong>méthode d’échantillonnage</strong> correspond à l’ensemble des choix permettant de prélever une portion (ou un lot) de minerai ou de matériau afin d’en estimer les caractéristiques, notamment la teneur moyenne en éléments d’intérêt. Ce lot peut être une carotte, une face de galerie, des cuttings, un tas de minerai ou encore du matériau sur un convoyeur. On parle de biais lorsque l’échantillon ne représente pas fidèlement le lot que l’on souhaite caractériser.</p>
+<p>Avant de présenter les principales méthodes d’échantillonnage, il est utile de rappeler les principales familles de biais susceptibles d’en affecter la qualité.</p>
+<ol type="i">
+<li><strong>Biais liés à l’opérateur</strong></li>
+</ol>
+<p>Ce type de biais provient directement de la personne qui prélève l’échantillon. Le problème apparaît lorsqu’on choisit, consciemment ou non, certains fragments plutôt que d’autres. Par exemple, on peut être tenté de choisir le matériau le plus visible, le plus facile à détacher ou celui qui semble le plus riche. Le résultat peut alors être un échantillon qui donne une image trop favorable ou simplement peu représentative du lot de départ.</p>
+<ol start="2" type="i">
+<li><strong>Biais liés aux dispositifs d’échantillonnage</strong></li>
+</ol>
+<p>Ces biais proviennent de l’outil de prélèvement lui-même. Un dispositif mal adapté récupère certains fragments plus facilement que d’autres — souvent au détriment des plus gros —, si bien que l’échantillon ne respecte plus les proportions du lot. Un tube trop étroit, une pelle trop petite ou un racleur mal conçu sur un convoyeur en sont des exemples typiques. Pour éviter ce biais, le dispositif doit donner à chaque fragment la même chance d’être prélevé, ce qui suppose de l’adapter au type de matériau, à la taille des fragments et à la façon dont le lot se présente.</p>
+<ol start="3" type="i">
+<li><strong>Biais liés aux propriétés mécaniques du matériau</strong></li>
+</ol>
+<p>Les différentes phases d’une roche ne se fragmentent pas de la même façon. Un minéral tendre ou ductile — l’or natif, la molybdénite, la galène — s’écrase et s’étale plutôt que de se casser : il peut adhérer aux outils, contaminer l’échantillon suivant (<em>smearing</em>) ou se perdre dans les fines. Une gangue dure ou cassante se brise au contraire en éclats susceptibles d’être projetés hors de l’échantillon. Comme l’élément d’intérêt est souvent porté par une phase distincte de la gangue, cette fragmentation différentielle enrichit ou appauvrit sélectivement l’échantillon en cet élément. Le biais dépend donc moins de la dureté globale de la roche que du comportement mécanique du minéral.</p>
+<ol start="4" type="i">
+<li><strong>Biais liés à la ségrégation granulométrique et à la densité des particules</strong></li>
+</ol>
+<p>Un lot fragmenté est rarement homogène : sous l’effet des vibrations, de la gravité et des courants d’eau ou d’air, les particules se réorganisent selon leur taille et leur densité. Les fines migrent vers le bas ou sont emportées, tandis que les grains grossiers et les minéraux lourds — souvent porteurs de l’élément d’intérêt, comme l’or natif ou la galène — se concentrent dans des zones distinctes. La composition varie alors d’un point à l’autre du lot. Prélever l’échantillon à un seul endroit revient dès lors à échantillonner une fraction non représentative : c’est l’erreur de ségrégation (ou de groupement) décrite par la théorie de Gy. Pour la limiter, on homogénéise le matériau avant le prélèvement, ou l’on constitue l’échantillon à partir de plusieurs incréments répartis sur l’ensemble du lot.</p>
+<ol start="22" type="a">
+<li><strong>Autres sources de biais</strong></li>
+</ol>
+<p>Certains biais dépendent directement de la minéralogie ou de la lithologie du gisement. Des minéraux solubles, comme certains sels ou sulfates, peuvent se dissoudre partiellement lors d’un forage à l’eau ou pendant l’entreposage, ce qui abaisse la teneur mesurée. À l’inverse, des minéraux denses comme l’or natif ou la galène tendent à se ségréger par gravité dans les <em>cuttings</em> ou la boue de forage, et se retrouvent alors sur- ou sous-représentés dans l’échantillon. Sur un affleurement, les lithologies plus tendres s’érodent plus vite et deviennent moins visibles : on risque de n’échantillonner que la roche résistante, plus dure, et donc de fausser la composition réelle. Ces biais n’obéissent pas à une règle générale; il faut les reconnaître selon le contexte du projet et adapter la méthode d’échantillonnage en conséquence.</p>
+<p>Voici une liste non exhaustive de méthodes d’échantillonnage utilisées en contexte minier et des biais qui peuvent leur être associés. Les figures des sections suivantes sont tirées de l’article de Dominy et al.&nbsp;(2018), qui présente l’intégration de la théorie de l’échantillonnage dans les stratégies de contrôle des teneurs en mines souterraines. Elles s’appliquent aussi au mine à ciel ouvert.</p>
+<blockquote class="blockquote">
+<p>Dominy, S., Glass, H., O’Connor, L., Lam, C., Purevgerel, S., &amp; Minnitt, R. (2018). <a href="https://doi.org/10.3390/min8060232"><em>Integrating the Theory of Sampling into Underground Mine Grade Control Strategies</em></a>. <em>Minerals</em>, 8(6), 232.</p>
+</blockquote>
+<section id="méthode-1-échantillonnage-linéaire-linear-sampling" class="level4">
+<h4 class="anchored" data-anchor-id="méthode-1-échantillonnage-linéaire-linear-sampling">Méthode 1: Échantillonnage linéaire (<em>Linear Sampling</em>)</h4>
+<p>L’échantillonnage linéaire regroupe les méthodes qui prélèvent le matériau le long d’une ligne ou d’une bande tracée sur une face rocheuse. Selon la continuité du prélèvement et la surface couverte, on distingue l’échantillonnage par écaille, par cannelure et par panneau.</p>
+<section id="méthode-11-échantillonnage-par-écaille-chip-sampling" class="level5">
+<h5 class="anchored" data-anchor-id="méthode-11-échantillonnage-par-écaille-chip-sampling">Méthode 1{,}1: Échantillonnage par écaille (<em>Chip Sampling</em>)</h5>
+<p>L’échantillonnage par écaille consiste à prélever une série d’éclats de roche le long d’une bande continue ou semi-continue, généralement à l’aide d’un marteau et d’un ciseau. Lorsque les éclats sont prélevés de façon discontinue, ils constituent plutôt une série d’échantillons ponctuels, qui s’apparentent davantage à des spécimens qu’à un échantillon représentatif.</p>
+<p>Cette méthode est souvent utilisée lorsque la minéralisation est exposée sur une face rocheuse et que l’on souhaite obtenir une première estimation de la teneur sur une zone donnée. Comme le montre la <a href="#fig-echantillonnage-cannelure1" class="quarto-xref">Figure&nbsp;<span>3.2</span></a>, le prélèvement peut suivre une ligne ou une bande tracée sur la paroi afin de guider l’échantillonnage et de limiter les variations dans la zone prélevée.</p>
+<div id="fig-echantillonnage-cannelure1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-echantillonnage-cannelure1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C3_Cannelure1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-echantillonnage-cannelure1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.2: Exemples d’échantillonnage par cannelure en mine souterraine. <strong>(A)</strong> L’échantillon est prélevé directement sur la face rocheuse en suivant la zone minéralisée. <strong>(B)</strong> La ligne rouge indique la cannelure à prélever; le matériau détaché est récupéré afin de constituer l’échantillon.
+</figcaption>
+</figure>
+</div>
+<p>L’orientation de la bande d’échantillonnage doit être adaptée à la géologie. Selon la disposition du corps minéralisé, elle peut être horizontale, verticale ou perpendiculaire au pendage. La <a href="#fig-echantillonnage-cannelure2" class="quarto-xref">Figure&nbsp;<span>3.3</span></a> illustre cette logique : le filon de quartz subvertical est échantillonné horizontalement, tandis que les veinules plus plates du mur inférieur sont échantillonnées verticalement. L’objectif est de faire correspondre l’orientation de l’échantillon à la géométrie réelle de la minéralisation.</p>
+<div id="fig-echantillonnage-cannelure2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-echantillonnage-cannelure2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C3_Cannelure2.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-echantillonnage-cannelure2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.3: Orientation des échantillons linéaires en fonction des exigences géologiques. Un filon de quartz subvertical est visible au premier plan, avec une zone de veinules subhorizontales dans le mur inférieur, dont le contact est indiqué par la ligne bleue. Le filon subvertical est échantillonné horizontalement, comme pour les échantillons 1 et 7, tandis que les veinules du mur inférieur sont échantillonnées verticalement, comme pour les échantillons 2 à 6.
+</figcaption>
+</figure>
+</div>
+<p>L’espacement entre les éclats peut varier selon la méthode utilisée. Les éclats peuvent être presque jointifs, formant alors une cannelure d’éclats, ou être séparés de plusieurs centimètres. Plus l’espacement est grand, plus l’échantillon risque de devenir ponctuel et moins il représente fidèlement l’ensemble de la bande minéralisée.</p>
+<p><strong>Risque :</strong> L’échantillonnage par éclats est sensible aux erreurs de délimitation et d’extraction. Ces biais peuvent être liés aux préférences de l’opérateur, à l’accessibilité des fragments ou aux variations de dureté de la roche. Par exemple, un opérateur peut, involontairement, privilégier les zones les plus visibles, les plus riches ou les plus faciles à détacher, ce qui peut produire un échantillon systématiquement non représentatif.</p>
+</section>
+<section id="méthode-12-échantillonnage-par-cannelure-channel-sampling" class="level5">
+<h5 class="anchored" data-anchor-id="méthode-12-échantillonnage-par-cannelure-channel-sampling">Méthode 1{,}2: Échantillonnage par cannelure (<em>Channel Sampling</em>)</h5>
+<p>L’échantillonnage par cannelure consiste à tailler une rainure continue dans la face rocheuse afin de prélever un échantillon représentatif de la zone minéralisée. Selon la géologie, cette rainure peut être orientée horizontalement, verticalement ou perpendiculairement au pendage du corps minéralisé. L’orientation doit donc être choisie en fonction de la géométrie de la minéralisation, plutôt que de la seule facilité de prélèvement.</p>
+<p>Pour limiter les erreurs de délimitation et d’extraction, la cannelure doit conserver une largeur et une profondeur aussi constantes que possible. En général, elle mesure entre 5 et 10 cm de largeur et environ 2,5 cm de profondeur, ce qui permet d’obtenir un échantillon d’environ 3 à 6 kg par mètre.</p>
+<p>En pratique, il est toutefois difficile de maintenir une rainure parfaitement uniforme lorsqu’elle est réalisée manuellement. Les variations de dureté de la roche, la fatigue de l’opérateur et la difficulté à conserver une profondeur constante peuvent altérer la qualité de l’échantillon. Dans certains cas, l’échantillonnage par cannelure manuelle se rapproche donc davantage d’un échantillonnage par éclats continus.</p>
+<p>La <a href="#fig-echantillonnage-cannelure3" class="quarto-xref">Figure&nbsp;<span>3.4</span></a> illustre les principales étapes d’un échantillonnage par cannelure en mine souterraine : la réalisation de la rainure, la délimitation de la zone à prélever, le détachement du matériau et sa collecte dans un contenant propre.</p>
+<div id="fig-echantillonnage-cannelure3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-echantillonnage-cannelure3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C3_Cannelure3.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-echantillonnage-cannelure3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.4: Étapes de l’échantillonnage par cannelure en mine souterraine. (<strong>A</strong>) Collecte d’un échantillon de canal découpé à la scie et (<strong>B</strong>) du canal résultant; (<strong>C</strong>) Découpe d’un échantillon de canal de paroi latérale et (<strong>D</strong>) utilisation d’un pic à air pour retirer l’échantillon.
+</figcaption>
+</figure>
+</div>
+<p>Certaines opérations utilisent une scie diamantée pour améliorer la qualité du prélèvement. Deux coupes parallèles sont alors réalisées dans la roche, généralement à une profondeur d’environ 2,5 cm et espacées de 5 à 10 cm. Le bloc de roche situé entre les deux coupes est ensuite extrait à l’aide d’un marteau et d’un ciseau, ou d’un outil pneumatique. Cette approche permet généralement de mieux contrôler la géométrie de l’échantillon que celle obtenue avec des cannelures entièrement réalisées à la main.</p>
+<p><strong>Risque :</strong> Les principaux biais associés à l’échantillonnage par cannelure sont les erreurs de délimitation et d’extraction. Une largeur ou une profondeur variable peut surreprésenter certaines lithologies, notamment les roches plus tendres, qui se détachent plus facilement que les roches dures. À l’inverse, les zones plus compétentes peuvent être sous-échantillonnées si elles sont difficiles à tailler. La perte de fines, la contamination par du matériau provenant des parois voisines ou une collecte incomplète du matériau peuvent également modifier la teneur mesurée. Ces biais doivent être limités par une cannelure bien délimitée, une profondeur constante, une récupération complète du matériau et un nettoyage adéquat de la zone de prélèvement.</p>
+</section>
+<section id="méthode-13-échantillonnage-dun-panneau-panel-sampling" class="level5">
+<h5 class="anchored" data-anchor-id="méthode-13-échantillonnage-dun-panneau-panel-sampling">Méthode 1{,}3: Échantillonnage d’un panneau (<em>Panel Sampling</em>)</h5>
+<p>L’échantillonnage d’un panneau consiste à prélever du matériau sur une surface délimitée de la face rocheuse, plutôt que le long d’une seule ligne comme dans le cas d’une cannelure. Le panneau est généralement tracé à la peinture sur la paroi afin de délimiter clairement la zone à échantillonner. Cette méthode est particulièrement utile lorsque la minéralisation est diffuse, irrégulière ou répartie dans plusieurs veinules sur une surface, plutôt que concentrée dans une structure linéaire.</p>
+<p>Deux variantes peuvent être distinguées. Dans un échantillon de copeaux-panneau, seuls certains fragments sont prélevés à l’intérieur du panneau; la proportion de roche effectivement échantillonnée demeure alors limitée, souvent inférieure à 50 % de la surface. Dans un échantillon de panneau-canal, les fragments sont prélevés de manière plus continue sur l’ensemble de la surface du panneau; la proportion de roche échantillonnée est alors plus élevée et peut dépasser 50 %. Cette seconde approche est généralement plus représentative, mais elle demande plus de temps et un meilleur contrôle de la profondeur et de la récupération du matériau.</p>
+<p>La <a href="#fig-echantillonnage-Panneaux" class="quarto-xref">Figure&nbsp;<span>3.5</span></a> illustre les principales étapes de cette méthode : la délimitation du panneau, le prélèvement du matériau sur la paroi, l’accumulation des fragments récupérés et l’utilisation d’une bâche ou d’un tapis pour limiter les pertes et la contamination.</p>
+<div id="fig-echantillonnage-Panneaux" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-echantillonnage-Panneaux-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C3_Panneaux.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-echantillonnage-Panneaux-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.5: Échantillonnage d’un panneau en mine souterraine. <strong>(A)</strong> Délimitation du panneau à échantillonner sur la face rocheuse. <strong>(B)</strong> Prélèvement des fragments à l’aide d’un marteau et d’un burin; les matériaux détachés sont récupérés sur une bâche. <strong>(C)</strong> Exemple de matériau prélevé dans un panneau. <strong>(D)</strong> Variante de récupération du matériau à l’aide de tapis afin de limiter les pertes et la contamination.
+</figcaption>
+</figure>
+</div>
+<p><strong>Risque :</strong><br>
+L’échantillonnage par panneau est sensible aux erreurs de délimitation, d’extraction et de ségrégation. Un panneau mal défini peut exclure des zones minéralisées ou inclure trop de matériau stérile. De plus, les variations de dureté ou de fracturation peuvent entraîner une profondeur de prélèvement inégale : les roches tendres ou friables risquent d’être surreprésentées, tandis que les zones plus dures peuvent être sous-échantillonnées. La perte ou la contamination du matériau est aussi un risque important. Les fragments peuvent tomber au sol, se mélanger à des débris ou être contaminés par des poussières. L’utilisation d’une bâche ou d’un tapis propre permet de mieux récupérer le matériau et de limiter ces biais.</p>
+</section>
+</section>
+<section id="méthode-2-échantillonnage-sur-place-ou-en-vrac-grab-sampling" class="level4">
+<h4 class="anchored" data-anchor-id="méthode-2-échantillonnage-sur-place-ou-en-vrac-grab-sampling">Méthode 2: Échantillonnage sur place ou en vrac (<em>Grab Sampling</em>)</h4>
+<p>L’échantillonnage sur place, ou <em>grab sampling</em>, consiste à prélever manuellement une ou plusieurs petites quantités de roche fragmentée dans un tas de minerai, un point de soutirage, une benne, un camion ou un wagonnet. Cette méthode est souvent utilisée pour le contrôle de teneur lorsque l’accès au front est difficile, lorsque les conditions de sécurité limitent l’échantillonnage direct ou lorsqu’aucune autre donnée n’est disponible. Elle permet d’obtenir rapidement une indication de la teneur, mais demeure peu représentative si elle n’est pas strictement encadrée.</p>
+<p>La <a href="#fig-grab-stockpile" class="quarto-xref">Figure&nbsp;<span>3.6</span></a> illustre un exemple d’échantillonnage ponctuel réalisé sur un tas de minerai en surface. Ce type de prélèvement est simple et rapide, mais il montre aussi la difficulté à représenter l’ensemble du volume à partir de fragments accessibles uniquement en surface. Les particules fines ou les fragments plus riches visuellement peuvent être surreprésentés, tandis que les blocs grossiers sont souvent ignorés.</p>
+<div id="fig-grab-stockpile" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-grab-stockpile-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C3_Grab_sampling_stockpile.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-grab-stockpile-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.6: Échantillonnage ponctuel sur un tas de minerai en surface. La méthode est rapide, mais la représentativité est limitée par la ségrégation granulométrique et l’accessibilité des fragments.
+</figcaption>
+</figure>
+</div>
+<p>La <a href="#fig-grab-drawpoint" class="quarto-xref">Figure&nbsp;<span>3.7</span></a> présente un exemple de prélèvement à un point de soutirage, où une grille peut être utilisée pour répartir les prises sur la surface du tas. Cette approche améliore la couverture spatiale du prélèvement, mais ne permet pas d’échantillonner l’intégralité du volume du tas. L’échantillon demeure donc fortement influencé par la position des fragments visibles et accessibles.</p>
+<div id="fig-grab-drawpoint" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-grab-drawpoint-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C3_Grab_sampling_drawpoint.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-grab-drawpoint-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.7: Échantillonnage ponctuel à un point de soutirage. <strong>(A)</strong> Grille de prélèvement tracée sur le tas de minerai. <strong>(B)</strong> Collecte des fragments selon les positions définies par la grille.
+</figcaption>
+</figure>
+</div>
+<p><strong>Risque :</strong> l’échantillonnage ponctuel est très sensible aux erreurs de délimitation, d’extraction, de ségrégation et à l’erreur fondamentale. Comme seuls quelques kilogrammes sont généralement prélevés pour représenter parfois plusieurs tonnes de minerai, l’échantillon peut être fortement biaisé. Les fines peuvent être enrichies en minéraux d’intérêt, les blocs grossiers peuvent être sous-échantillonnés, et l’opérateur peut involontairement choisir les fragments les plus visibles ou les plus minéralisés. Cette méthode doit donc être utilisée avec prudence, idéalement avec plusieurs prises réparties, une masse suffisante, des duplicatas et une caractérisation granulométrique.</p>
+</section>
+<section id="méthode-3-échantillons-de-forage-drilling-methods" class="level4">
+<h4 class="anchored" data-anchor-id="méthode-3-échantillons-de-forage-drilling-methods">Méthode 3: Échantillons de forage (<em>Drilling Methods</em>)</h4>
+<p>Les méthodes de forage permettent d’obtenir des échantillons en profondeur ou dans des zones difficilement accessibles par les méthodes de prélèvement direct. Elles sont généralement utilisées pour le contrôle des teneurs, la planification minière et la caractérisation géologique.</p>
+<section id="méthode-31-forage-carotté-au-diamant-diamond-core-drilling" class="level5">
+<h5 class="anchored" data-anchor-id="méthode-31-forage-carotté-au-diamant-diamond-core-drilling">Méthode 3{,}1: Forage carotté au diamant (<em>Diamond Core Drilling</em>)</h5>
+<p>Les échantillons obtenus par forage au diamant sont généralement considérés comme parmi les plus fiables, surtout lorsque la récupération de la carotte dépasse 85 %. Une bonne récupération permet de limiter les erreurs de délimitation et d’extraction, tout en offrant une observation directe de la géologie, des structures et de la qualité du massif rocheux. La carotte peut également être orientée dans l’espace, ce qui facilite l’interprétation géologique en trois dimensions.</p>
+<p>Dans les terrains fracturés ou instables, il peut toutefois être nécessaire d’utiliser des carottes de plus grand diamètre ou des techniques de forage à triple tube afin d’améliorer la récupération. Dans les terrains gonflants, l’utilisation de boues de forage adaptées peut aussi être requise. Malgré sa qualité, le forage au diamant fournit un volume d’échantillon relativement faible, par exemple d’environ 3 kg/m pour un diamètre BQ, et d’environ 15 kg/m pour un diamètre PQ. Dans les milieux très hétérogènes, cette faible masse peut rendre certains échantillons localement peu représentatifs.</p>
+<p>Cette méthode demeure également plus lente et plus coûteuse que d’autres techniques de forage, ce qui peut en limiter l’utilisation lorsque des forages très rapprochés sont nécessaires. Elle reste néanmoins largement utilisée en mine pour le contrôle des teneurs, la caractérisation géologique et la planification à court et moyen terme.</p>
+</section>
+<section id="méthode-32-forage-à-circulation-inverse-reverse-circulation-drilling" class="level5">
+<h5 class="anchored" data-anchor-id="méthode-32-forage-à-circulation-inverse-reverse-circulation-drilling">Méthode 3{,}2: Forage à circulation inverse (<em>Reverse Circulation Drilling</em>)</h5>
+<p>Le forage à circulation inverse permet de prélever un volume d’échantillon plus important, généralement compris entre 35 et 45 kg/m, en moins de temps et à moindre coût. Les trous peuvent également être orientés perpendiculairement à la minéralisation, ce qui améliore la représentativité géométrique de l’échantillonnage. Les fragments produits sont généralement de petite taille et relativement homogènes.</p>
+<p>Cette méthode présente toutefois certaines limites. Sur des terrains de mauvaise qualité, la récupération peut être insuffisante, ce qui accroît le risque d’erreur d’extraction. Les fragments de forage RC fournissent des informations utiles sur la teneur, mais ne permettent pas d’observer les structures géologiques avec le même niveau de détail qu’une carotte de forage.</p>
+<p>Un point critique concerne le sous-échantillonnage du matériau récupéré. Même si le forage RC produit un bon échantillon primaire, une erreur fondamentale importante peut survenir si une fraction trop faible est prélevée pour l’analyse. Par exemple, prélever seulement 5 kg à partir d’un composite initial de 40 kg peut entraîner une incertitude élevée, surtout dans un minerai d’or grossier. L’analyse de duplicatas est donc une bonne pratique pour évaluer empiriquement la qualité du protocole RC.</p>
+</section>
+<section id="méthode-33-forage-avec-récupération-des-boues-sludge-drilling" class="level5">
+<h5 class="anchored" data-anchor-id="méthode-33-forage-avec-récupération-des-boues-sludge-drilling">Méthode 3{,}3: forage avec récupération des boues (<em>Sludge Drilling</em>)</h5>
+<p>Le forage avec récupération des boues ou des <em>cuttings</em> (<em>sludge sampling</em> ou <em>blasthole drill sampling</em>) consiste à forer des trous ouverts à l’aide d’un jumbo, d’une foreuse long trou ou d’une foreuse pneumatique, puis à récupérer les fragments produits dans des contenants ou des dispositifs placés sous le trou (<a href="#fig-cuttings" class="quarto-xref">Figure&nbsp;<span>3.8</span></a>). La masse d’échantillon obtenue varie selon l’équipement utilisé, allant d’environ 2 kg/m pour les foreuses pneumatiques à près de 12 kg/m pour les foreuses long trou.</p>
+<p>Traditionnellement, le matériau est collecté par longueur de tige, par exemple tous les 1,2 à 1,8 m. Dans certains cas, les <em>cuttings</em> peuvent également être récupérés sur un anneau complet de forage, ce qui peut entraîner la production de plusieurs tonnes de matériau primaire. Ce volume doit ensuite être réduit par fractionnement, soit sous terre, soit en surface, avant l’analyse. Cette étape de réduction est critique, car un sous-échantillon trop petit peut entraîner une erreur fondamentale importante.</p>
+<p>Cette méthode présente toutefois plusieurs limites. La récupération complète du matériau est difficile, les fines peuvent être perdues et l’échantillon peut être contaminé par du matériau provenant des parois du trou. Les erreurs de délimitation, d’extraction et de préparation peuvent donc être importantes, surtout lorsque les fragments sont simplement ramassés au sol après le forage.</p>
+<p>Le forage avec récupération des boues est surtout utilisé pour vérifier la position d’une zone minéralisée, confirmer que des trous de mine traversent le minerai ou obtenir une indication ponctuelle de la teneur. En raison de ses biais potentiels et de la qualité parfois faible des échantillons, cette méthode est rarement utilisée directement pour appuyer une estimation des ressources.</p>
+<div id="fig-cuttings" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cuttings-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C3_cuttings.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cuttings-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.8: Récupération des boues. (A) La collecte des boues de forage de chantier à l’aide de boîtes en plastique placées sous le trou conduit; (B) La collecte des boues de forage de front de taille à l’aide d’une pelle sur le plancher de la galerie.
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="méthode-4-autres-méthodes-déchantillonnage" class="level4">
+<h4 class="anchored" data-anchor-id="méthode-4-autres-méthodes-déchantillonnage">Méthode 4 : Autres méthodes d’échantillonnage</h4>
+<p>Certaines méthodes d’échantillonnage ne visent pas directement une face rocheuse ou une structure géologique précise, mais plutôt le minerai déjà abattu, transporté ou traité. Elles sont utiles pour le suivi de production, la réconciliation des teneurs ou le contrôle à l’entrée du concentrateur. Leur principale limite est qu’elles représentent souvent un flux ou un lot de production, plutôt qu’une position géologique précise dans le gisement.</p>
+<section id="méthode-41-échantillonnage-systématique-de-la-production" class="level5">
+<h5 class="anchored" data-anchor-id="méthode-41-échantillonnage-systématique-de-la-production">Méthode 4{,}1 : Échantillonnage systématique de la production</h5>
+<p>L’échantillonnage systématique de la production consiste à prélever du minerai pendant le chargement du matériau abattu. Le prélèvement peut se faire à la pelletée, par exemple une pelletée toutes les <em>n</em> pelletées, ou encore par wagonnet, en sélectionnant certains wagonnets qui sont ensuite vidés sur une aire réservée.</p>
+<p>Cette méthode permet d’obtenir une estimation de la teneur du minerai extrait, mais elle dépend fortement de l’homogénéité du matériau abattu. Après un tir, le minerai ne se mélange pas toujours de façon uniforme : certaines portions de la volée peuvent être plus riches ou plus pauvres que d’autres. La teneur peut donc varier fortement d’un wagonnet à l’autre. De plus, la position du minerai dans la volée influence la granulométrie et la composition du matériau échantillonné.</p>
+<p><strong>Risque :</strong> Le principal risque est d’obtenir un échantillon qui représente seulement une partie du tir ou du chargement. Une distribution non homogène du minerai peut entraîner une surreprésentation ou une sous-représentation de certaines zones, notamment si le protocole de prélèvement n’est pas strictement systématique.</p>
+</section>
+<section id="méthode-42-échantillonnage-de-convoyeur-conveyor-belt-sampling" class="level5">
+<h5 class="anchored" data-anchor-id="méthode-42-échantillonnage-de-convoyeur-conveyor-belt-sampling">Méthode 4{,}2 : Échantillonnage de convoyeur (<em>Conveyor Belt Sampling</em>)</h5>
+<p>L’échantillonnage de convoyeur consiste à prélever automatiquement une portion du minerai transporté sur une courroie. Cette méthode permet d’échantillonner un flux de matériau en continu ou à intervalles réguliers. Elle est particulièrement utile pour estimer la teneur moyenne de grands volumes de minerai ou pour contrôler la teneur à l’entrée du concentrateur.</p>
+<p>Lorsqu’il est bien conçu, un système d’échantillonnage sur convoyeur peut être très représentatif du flux de production, car il intercepte une partie du matériau en mouvement. Il est toutefois moins utile pour relier une teneur à une position précise dans le gisement, puisque le minerai transporté peut provenir de plusieurs fronts, chantiers ou zones de production.</p>
+<p><strong>Risque :</strong> La principale limite est la perte d’information spatiale. La provenance exacte de l’échantillon est souvent difficile, voire impossible, à déterminer. Cette méthode est donc pertinente pour le contrôle global du flux de minerai, mais moins adaptée à la caractérisation géologique détaillée du gisement.</p>
+</section>
+<section id="méthode-43-analyseurs-en-continu-on-stream-analyzers" class="level5">
+<h5 class="anchored" data-anchor-id="méthode-43-analyseurs-en-continu-on-stream-analyzers">Méthode 4{,}3 : Analyseurs en continu (<em>On-stream Analyzers</em>)</h5>
+<p>Les analyseurs en continu mesurent la composition du minerai directement dans le flux de production, souvent à l’entrée du concentrateur. Ils utilisent différentes propriétés physiques ou chimiques, par exemple des sondes gamma-gamma, des méthodes électromagnétiques ou la fluorescence X. Leur principal avantage est de fournir une information rapide et continue sur la teneur du minerai.</p>
+<p>Ces instruments sont utiles pour le suivi en temps réel des procédés, l’ajustement des opérations et le contrôle de la qualité du minerai alimentant l’usine. Ils ne remplacent toutefois pas complètement les analyses de laboratoire, car leur réponse dépend des conditions de mesure, de la granulométrie, de l’humidité, de la calibration et de la position du minerai par rapport à la sonde.</p>
+<p><strong>Risque :</strong> Les principaux biais proviennent de la position du minerai dans le flux, de la granulométrie, de l’humidité et des variations de composition du matériau. Le signal mesuré peut différer selon que les particules sont en surface ou en profondeur. Des recalibrations régulières sont donc nécessaires pour maintenir la fiabilité des mesures.</p>
+</section>
+</section>
+</section>
+</section>
+<section id="théorie-de-léchantillonnage-des-matières-morcelées" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="théorie-de-léchantillonnage-des-matières-morcelées"><span class="header-section-number">3.2</span> Théorie de l’échantillonnage des matières morcelées</h2>
+<p>La théorie de l’échantillonnage des matières morcelées quantifie l’erreur fondamentale, celle qui naît de l’hétérogénéité du lot. Même avec un bon protocole, le matériau n’est jamais parfaitement homogène : les fragments n’ont pas tous la même taille ni la même teneur. C’est cette variabilité résiduelle qui produit l’erreur fondamentale d’échantillonnage.</p>
+<p>C’est précisément cette incertitude que la théorie de l’échantillonnage des matières morcelées cherche à quantifier. Pierre Gy, ingénieur des mines, a abordé le problème de l’échantillonnage sous un angle statistique. Il a développé une formule permettant d’estimer la <strong>précision relative</strong> d’un échantillon représentant un lot donné, en fonction de la taille des fragments, de la masse de l’échantillon et du lot, ainsi que de différents paramètres minéralogiques et granulométriques.</p>
+<p>Cette théorie permet donc de passer d’une approche principalement qualitative de l’échantillonnage — identifier les biais et les méthodes à risque — à une approche quantitative, où l’on peut estimer l’erreur attendue et ajuster la masse ou la préparation de l’échantillon en conséquence. La présentation retenue ici est simplifiée pour le cours; les ouvrages de référence en donnent le développement complet.</p>
+<blockquote class="blockquote">
+<p>Gy, P. (1982). <em>Sampling of Particulate Materials: Theory and Practice</em> (2e éd.). Elsevier.</p>
+</blockquote>
+<section id="échantillon-probabiliste" class="level3">
+<h3 class="anchored" data-anchor-id="échantillon-probabiliste">Échantillon probabiliste</h3>
+<p>La formule de Gy permet d’estimer la précision relative d’un échantillon. Mais pour que ce calcul ait un sens, l’échantillon doit être probabiliste. Cela veut dire que chaque fragment du lot doit avoir une chance d’être inclus dans l’échantillon final. Si certains fragments ne peuvent pas être prélevés dès le départ, l’échantillonnage n’est plus probabiliste : la formule de Gy ne s’applique alors plus, car elle ne décrit que l’erreur d’un prélèvement associé à un échantillonnage probabiliste sans biais.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Échantillon probabiliste
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Un échantillon probabiliste est un échantillon dans lequel chaque élément du lot a une probabilité non nulle d’être sélectionné.</p>
+<p>L’échantillonnage est considéré comme non biaisé lorsque tous les fragments ont la même probabilité d’être sélectionnés.</p>
+</div>
+</div>
+</div>
+<p>La <a href="#fig-echantillon" class="quarto-xref">Figure&nbsp;<span>3.9</span></a> illustre cette distinction. Dans un échantillonnage déterministe, une portion précise de la carotte est sélectionnée selon un choix imposé, par exemple parce qu’elle semble plus minéralisée, plus accessible ou plus intéressante visuellement. Ce type de sélection peut introduire un biais important, car certaines parties de la carotte n’ont aucune chance d’être analysées. À l’inverse, dans un échantillonnage probabiliste, chaque fragment de la carotte peut, en principe, contribuer à l’échantillon final.</p>
+<p>En pratique, on envoie souvent une demi-carotte à l’analyse et on conserve l’autre moitié en carothèque. Cette moitié peut servir plus tard pour vérifier les observations, refaire certaines analyses ou réaliser d’autres essais si nécessaire.</p>
+<p>De plus en plus de compagnies numérisent aujourd’hui les carottes à l’aide de photographies en haute résolution, d’imagerie géophysique ou d’autres méthodes d’acquisition numérique. Ces approches facilitent l’archivage et peuvent réduire les contraintes d’entreposage. Elles ne remplacent toutefois pas entièrement l’échantillon physique : l’observation directe d’une carotte par une personne expérimentée demeure importante, notamment pour interpréter les textures, les structures et certains détails géologiques difficiles à automatiser.</p>
+<div id="fig-echantillon" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-echantillon-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C3_Echantillon.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-echantillon-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.9: Exemple d’un échantillonnage déterministe et d’un échantillonnage probabiliste.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="équation-de-gy" class="level3">
+<h3 class="anchored" data-anchor-id="équation-de-gy">Équation de Gy</h3>
+<p>Soit un certain lot de minerai, par exemple, une demi-carotte de forage. Supposons que l’on concasse cette carotte jusqu’à ce que la taille des plus gros fragments soit de <span class="math inline">\(d\)</span> (en cm). On définit <span class="math inline">\(d = d_{5\%}\)</span> comme la taille du tamis qui retient uniquement les 5 % des fragments les plus gros, c’est-à-dire ceux qui représentent 5 % du poids total du lot.</p>
+<p>Si l’on prélève un échantillon de masse <span class="math inline">\(M_e\)</span> (habituellement faible en rapport avec la masse <span class="math inline">\(M_L\)</span> du lot qu’il représente), alors la variance relative (sans unité) de l’erreur d’échantillonnage, <span class="math inline">\(s_r^2\)</span>, peut s’écrire comme suit :</p>
+<p><span id="eq-Gy"><span class="math display">\[
+s_r^2 = \frac{s^2}{a_L^2} = K\,l\,\frac{d^3}{M_e} \left(1 - \frac{M_e}{M_L} \right) \approx K\,l\,\frac{d^3}{M_e}
+\tag{3.1}\]</span></span></p>
+<p>où <span class="math inline">\(M_e\)</span> est la masse de l’échantillon, en grammes. <span class="math inline">\(M_L\)</span> est la masse du lot échantillonné, généralement beaucoup plus grande que <span class="math inline">\(M_e\)</span>, également exprimée en grammes. <span class="math inline">\(l\)</span> est le facteur de libération, sans unité. <span class="math inline">\(K\)</span> est une constante dont l’unité est <span class="math inline">\(\text{g/cm}^3\)</span>. <span class="math inline">\(a_L\)</span> est la concentration du constituant d’intérêt (exprimée en fraction)</p>
+<p>Physiquement, l’erreur décrite par cette équation provient du caractère aléatoire de la sélection d’un nombre fini de fragments. La taille des fragments intervient au cube (<span class="math inline">\(d^3\)</span>) parce que la masse d’un fragment croît comme le cube de son diamètre : un gros fragment porte à lui seul une part importante du métal, de sorte que le prendre ou le laisser modifie fortement la teneur de l’échantillon. Concasser plus finement — c’est-à-dire réduire <span class="math inline">\(d\)</span> — réduit l’erreur de façon très marquée. À l’inverse, augmenter la masse de l’échantillon <span class="math inline">\(M_e\)</span> revient à prélever davantage de fragments, dont les fluctuations individuelles se moyennent : la variance décroît comme <span class="math inline">\(1/M_e\)</span>, comme pour une moyenne en fonction du nombre d’observations.</p>
+<p>Le facteur de libération <span class="math inline">\(l\)</span>, compris entre 0 et 1, mesure le degré de libération du minéral d’intérêt dans la gangue. Lorsqu’il forme des grains distincts (<span class="math inline">\(l \to 1\)</span>), sa teneur varie fortement d’un fragment à l’autre et l’erreur est maximale; lorsqu’il est finement disséminé dans la roche (<span class="math inline">\(l \to 0\)</span>), tous les fragments ont une teneur voisine et l’erreur devient faible. Le terme <span class="math inline">\((1 - M_e/M_L)\)</span> n’est qu’une correction de population finie, négligeable dès que l’échantillon est petit devant le lot, tandis que la constante <span class="math inline">\(K\)</span> regroupe les propriétés du matériau, indépendantes de la masse prélevée : forme des fragments, étalement granulométrique, densité et teneur en minéral.</p>
+<p>À noter que l’approximation n’est valable que lorsque <span class="math inline">\(M_e \ll M_L\)</span>.</p>
+<section id="détermination-du-facteur-de-libération-l" class="level4">
+<h4 class="anchored" data-anchor-id="détermination-du-facteur-de-libération-l">Détermination du facteur de libération <span class="math inline">\(l\)</span></h4>
+<p>La valeur du facteur de libération <span class="math inline">\(l\)</span> est donnée par :</p>
+<p><span id="eq-facteur_l"><span class="math display">\[
+l =
+\begin{cases}
+1, &amp; \text{si } d \leq d_0 \\
+\left( d_0/d \right)^{0{,}5}, &amp; \text{si } d &gt; d_0
+\end{cases}
+\tag{3.2}\]</span></span></p>
+<p>où <span class="math inline">\(d_0\)</span> représente la taille à laquelle le constituant d’intérêt est entièrement libéré de la gangue. Il s’agit, par exemple, de la taille à laquelle l’or disséminé dans la pyrite devient natif. L’or est alors entièrement libéré de la pyrite. Remarque, le facteur <span class="math inline">\(l\)</span> est sans unité.</p>
+<p>En pratique, la taille de libération <span class="math inline">\(d_0\)</span> se déduit de l’observation minéralogique du minerai, par exemple à l’aide de la microscopie ou de la minéralogie automatisée; les laboratoires fournissent souvent cette information. La forme <span class="math inline">\(l = \left( d_0/d \right)^{0{,}5}\)</span> retenue ici est l’expression classique de Gy; des formulations révisées du facteur de libération ont depuis été proposées (François-Bongarçon et Gy, 2001).</p>
+</section>
+<section id="détermination-de-la-constante-k" class="level4">
+<h4 class="anchored" data-anchor-id="détermination-de-la-constante-k">Détermination de la constante <span class="math inline">\(K\)</span></h4>
+<p>La constante <span class="math inline">\(K\)</span> regroupe plusieurs facteurs et peut s’écrire comme :</p>
+<p><span id="eq-constante_K"><span class="math display">\[K = f \cdot g \cdot (\mu\delta) \tag{3.3}\]</span></span></p>
+<p>avec <span class="math inline">\(f\)</span> un facteur de forme, défini comme le rapport du volume d’un fragment au volume du plus petit cube qui le contient entièrement. <span class="math inline">\(f\)</span> est sans dimension. <span class="math inline">\(g\)</span> est un facteur de distribution décrivant l’uniformité de la taille des fragments et donc lié à la courbe granulométrique. <span class="math inline">\(g\)</span> est sans unité. <span class="math inline">\((\mu\delta)\)</span> est un paramètre qui combine les effets de la teneur et des masses spécifiques du minéral. <span class="math inline">\(\mu\delta\)</span> est exprimée en unités de masse spécifique (<span class="math inline">\(\text{g/cm}^3\)</span>).</p>
+<section id="détermination-du-facteur-de-forme" class="level5">
+<h5 class="anchored" data-anchor-id="détermination-du-facteur-de-forme">Détermination du facteur de forme</h5>
+<p>Le facteur de forme <span class="math inline">\(f\)</span> est le rapport entre le volume d’un fragment et celui du plus petit cube qui le contient entièrement. Par exemple, pour un fragment sphérique de diamètre 1 cm, le plus petit cube qui peut contenir cette sphère a un côté de 1 cm. Le volume de la sphère est alors <span class="math inline">\(\frac{4\pi r^3}{3} = \frac{4\pi \cdot 0{,}5^3}{3} \approx 0{,}524 \,\text{cm}^3\)</span>, tandis que le volume du cube est de 1 <span class="math inline">\(\text{cm}^3\)</span>, ce qui donne <span class="math inline">\(f \approx 0{,}524\)</span>.</p>
+<p>Pour un minéral fibreux (comme l’amiante) ou tabulaire (par exemple le mica), le facteur de forme est beaucoup plus faible, généralement compris entre <span class="math inline">\(f = 0{,}1\)</span> et <span class="math inline">\(f = 0{,}2\)</span>.</p>
+<p>Après de nombreuses analyses en laboratoire sur divers minéraux, une valeur recommandée pour la plupart des minerais est <span class="math inline">\(f = 0{,}5\)</span>. Il convient toutefois de noter que ce n’est pas une règle universelle, et qu’il est préférable de consulter la littérature pour identifier le facteur approprié au matériau étudié.</p>
+<p>Par souci de simplicité, nous utiliserons ici systématiquement la valeur : <span id="eq-facteur_f"><span class="math display">\[
+f = 0{,}5
+\tag{3.4}\]</span></span></p>
+</section>
+<section id="détermination-du-facteur-de-distribution" class="level5">
+<h5 class="anchored" data-anchor-id="détermination-du-facteur-de-distribution">Détermination du facteur de distribution</h5>
+<p>Le facteur de distribution <span class="math inline">\(g\)</span> mesure l’uniformité de la courbe granulométrique. Il peut être estimé à partir des diamètres caractéristiques de la distribution, soit <span class="math inline">\(d_{5\%}\)</span> et <span class="math inline">\(d_{95\%}\)</span>, selon la règle suivante : <span class="math display">\[g =
+\begin{cases}
+    0{,}25, &amp; \text{si aucune calibration n'est effectuée} \\
+    0{,}40, &amp; \text{si } \frac{d_{95\%}}{d_{5\%}} &gt; 4 \\
+    0{,}50, &amp; \text{si } 4 &gt; \frac{d_{95\%}}{d_{5\%}} &gt; 2 \\
+    0{,}75, &amp; \text{si } 2 &gt; \frac{d_{95\%}}{d_{5\%}} &gt; 1 \\
+    1{,}00, &amp; \text{si } \frac{d_{95\%}}{d_{5\%}} = 1
+\end{cases}\]</span></p>
+<p>Cependant, la calibration précise des courbes granulométriques est relativement rare dans les laboratoires miniers en raison du temps et des coûts qu’elle implique. Une compagnie minière peut devoir faire analyser plusieurs milliers de carottes, et elle ne dispose généralement pas du temps ni des ressources nécessaires pour établir une courbe granulométrique détaillée pour chaque échantillon afin d’estimer précisément le facteur <span class="math inline">\(g\)</span>.</p>
+<p>D’ailleurs, l’utilisation du <span class="math inline">\(d_{5\%}\)</span> dans la formule de Gy n’est pas anodine. De nombreuses analyses expérimentales ont été menées en laboratoire pour établir une corrélation entre la distribution granulométrique et le facteur de distribution (<a href="#fig-facteur-g" class="quarto-xref">Figure&nbsp;<span>3.10</span></a>). Il a été observé que, pour un grand nombre d’échantillons, la valeur du facteur <span class="math inline">\(g\)</span> tend à se rapprocher de 0{,}25 lorsqu’on utilise <span class="math inline">\(d_{5\%}\)</span> dans les calculs. Ainsi, pour des raisons de simplicité et d’efficacité, nous adopterons systématiquement, dans nos calculs, la valeur : <span id="eq-facteur_g"><span class="math display">\[
+g = 0{,}25
+\tag{3.5}\]</span></span></p>
+<div id="fig-facteur-g" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-facteur-g-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C3_FacteurG.PNG" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-facteur-g-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.10: Relation entre le facteur de distribution granulométrique <span class="math inline">\(g\)</span> et le diamètre caractéristique <span class="math inline">\(d_{5\%}\)</span>. L’utilisation de <span class="math inline">\(d_{5\%}\)</span> conduit généralement à une valeur approximative de <span class="math inline">\(g = 0{,}25\)</span>.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="détermination-du-facteur-mudelta" class="level5">
+<h5 class="anchored" data-anchor-id="détermination-du-facteur-mudelta">Détermination du facteur <span class="math inline">\((\mu\delta)\)</span></h5>
+<p>Le facteur <span class="math inline">\(\mu\delta\)</span> est un paramètre qui combine les effets de la teneur et des masses spécifiques. Il est défini comme : <span id="eq-facteur_mu_delta"><span class="math display">\[
+\mu\delta = \frac{1-a_L}{a_L}  \Big[(1-a_L)\delta_a + a_L\delta_g \Big]
+\tag{3.6}\]</span></span></p>
+<p>où <span class="math inline">\(\delta_a\)</span> désigne la masse spécifique du constituant d’intérêt et <span class="math inline">\(\delta_g\)</span> celle de la gangue (toutes deux en <span class="math inline">\(\text{g/cm}^3\)</span>), et <span class="math inline">\(a_L\)</span> la concentration du constituant d’intérêt, exprimée en fraction (10 % = 0{,}10, 10 ppm = 0{,}00001).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Remarque 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La gangue est constituée de toute la matière qui n’est pas le constituant d’intérêt.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Remarque 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le constituant d’intérêt est le minéral qui contient le métal recherché. Par exemple : pour le cuivre : la chalcopyrite (CuFeS2); pour le zinc : la sphalérite (ZnS); pour l’or : la pyrite (FeS2), ou parfois l’or natif.</p>
+</div>
+</div>
+<p><strong>Exemple :</strong> Soit une analyse indiquant une teneur en cuivre (Cu) de 5 %. Le cuivre provient de la chalcopyrite, de formule CuFeS2. La valeur de <span class="math inline">\(a_L\)</span> doit donc représenter la fraction massique de chalcopyrite, et non celle de cuivre. Il faut donc convertir la teneur en cuivre en teneur équivalente en chalcopyrite, en utilisant les masses molaires.</p>
+<p>La masse molaire de la chalcopyrite est donnée par : <span class="math display">\[M_{\text{CuFeS}_2} = M_{\text{Cu}} + M_{\text{Fe}} + 2\,M_{\text{S}} = 63{,}5 + 55{,}8 + 2 \times 32{,}1 = 183{,}5~\text{g/mol}.\]</span></p>
+<p>Le rapport massique du cuivre dans la chalcopyrite est donc : <span class="math display">\[\frac{M_{\text{Cu}}}{M_{\text{CuFeS}_2}} = \frac{63{,}5}{183{,}5} \approx 0{,}35.\]</span></p>
+<p>Ainsi, une teneur de 5 % en cuivre correspond à une teneur de : <span class="math display">\[a_L = \frac{5~\%}{0{,}35} \approx 14~\% \quad \text{de chalcopyrite}.\]</span></p>
+<p>Cette valeur est utilisée pour le calcul du facteur <span class="math inline">\(\mu\delta\)</span>.</p>
+<p>Cette relation est vraie uniquement si le cuivre n’est présent que dans la chalcopyrite.</p>
+</section>
+</section>
+</section>
+</section>
+<section id="atelier-interactif-3.1-calculateur-de-la-théorie-de-gy" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-3.1-calculateur-de-la-théorie-de-gy">🧮 Atelier interactif 3.1 — Calculateur de la théorie de Gy</h2>
+<p>Ce calculateur permet d’estimer l’erreur fondamentale d’échantillonnage pour un seul échantillon à partir des paramètres de la théorie de Gy. En modifiant les caractéristiques du lot, du matériau et de l’échantillon, vous pouvez observer en temps réel l’effet de ces paramètres sur la variance d’échantillonnage.</p>
+<p>Il s’agit également d’un outil de validation que vous pouvez utiliser pour vérifier vos calculs et vous accompagner dans la résolution des exercices.</p>
+<p>Cet outil n’est manipulable que dans la version web de ce document.</p>
+<div class="geostat-widget-wrap">
+<div id="w-c03-gy-calculateur" class="geostat-widget" data-widget="c03_gy_calculateur" data-version="0.1.0">
+<div class="gw-placeholder">
+<pre><code>&lt;div class="gw-spinner"&gt;&lt;/div&gt;
+&lt;p&gt;Chargement du calculateur…&lt;/p&gt;</code></pre>
+</div>
+<noscript>
+<p class="gw-fallback-note">
+JavaScript désactivé : cet atelier interactif nécessite JavaScript.
+</p>
+<p></p>
+</noscript></div>
+</div>
+<section id="exemples-dapplication" class="level3">
+<h3 class="anchored" data-anchor-id="exemples-dapplication">Exemples d’application</h3>
+<section id="exemple-1---mine-de-murdochville" class="level4">
+<h4 class="anchored" data-anchor-id="exemple-1---mine-de-murdochville">Exemple 1 - Mine de Murdochville</h4>
+<p>La mine de Murdochville fait sauter chaque semaine un volume d’environ <span class="math inline">\(60\,\text{m} \times 40\,\text{m} \times 10\,\text{m}\)</span>. Le minerai est contenu dans la chalcopyrite, dont la masse spécifique est de <span class="math inline">\(4{,}2\,\text{g/cm}^3\)</span>, tandis que celle de la roche encaissante, la gangue, est de <span class="math inline">\(3\,\text{g/cm}^3\)</span>. Les plus gros blocs résultant du sautage ont un diamètre d’environ <span class="math inline">\(0{,}5\,\text{m}\)</span>. On déverse le minerai dans un concasseur qui réduit la taille des blocs à environ <span class="math inline">\(10\,\text{cm}\)</span>. La taille de libération de la chalcopyrite est d’environ <span class="math inline">\(1\,\text{mm}\)</span>. La teneur du volume sauté devrait se situer entre 1 % et 5 % de Cu.</p>
+<p><strong>Problème :</strong> Quelle masse d’échantillon la mine devrait-elle prélever pour connaître, avec une précision relative de <span class="math inline">\(20\,\%\)</span> (i.e.&nbsp;<span class="math inline">\(s_r/a_L = 0{,}2\)</span>), la teneur en cuivre du volume sauté, dans les deux cas suivants :</p>
+<ol type="1">
+<li><p>échantillonnage directement au chargeur, avant le concassage;</p></li>
+<li><p>échantillonnage après le concassage, sur le convoyeur menant au concentrateur.</p></li>
+</ol>
+<section id="solution" class="level5">
+<h5 class="anchored" data-anchor-id="solution">Solution</h5>
+<p>Nous supposons que <span class="math inline">\(M_e \ll M_L\)</span> et utilisons la formule simplifiée.</p>
+</section>
+<section id="a-échantillonnage-avant-le-concassage" class="level5">
+<h5 class="anchored" data-anchor-id="a-échantillonnage-avant-le-concassage">a) Échantillonnage avant le concassage</h5>
+<p>On pose : <span class="math display">\[f = 0{,}5, \quad g = 0{,}25, \quad d = 0{,}5\,\text{m}, \quad l = \left( \frac{1\,\text{mm}}{500\,\text{mm}} \right)^{0{,}5} \approx 0{,}0447\]</span></p>
+<p>La teneur en chalcopyrite est estimée entre : <span class="math display">\[a_L = \frac{1\,\%}{0{,}35} \approx 2{,}86\,\%, \quad \text{et} \quad a_L = \frac{5\,\%}{0{,}35} \approx 14{,}3\,\%\]</span></p>
+<p>En substituant dans l’expression du facteur <span class="math inline">\(\mu\delta\)</span>, on trouve : <span class="math display">\[\mu\delta \in [24{,}1, \, 141{,}5]\]</span></p>
+<p>On impose une précision relative <span class="math inline">\(s_r = 0{,}2 \Rightarrow s_r^2 = 0{,}2^2 = 0{,}04\)</span>. En remplaçant dans la formule de variance :</p>
+<p><span class="math display">\[0{,}04 = \mu\delta \cdot l \cdot f \cdot g \cdot \frac{d^3}{M_e}\]</span></p>
+<p><span class="math display">\[M_e = \mu\delta \cdot l \cdot f \cdot g \cdot \frac{d^3}{0{,}04}
+= \mu\delta \cdot 0{,}0447 \cdot 0{,}5 \cdot 0{,}25 \cdot \frac{0{,}5^3}{0{,}04}
+\Rightarrow M_e \in [421\,\text{kg},\,2470\,\text{kg}]\]</span></p>
+</section>
+<section id="b-échantillonnage-après-le-concassage" class="level5">
+<h5 class="anchored" data-anchor-id="b-échantillonnage-après-le-concassage">b) Échantillonnage après le concassage</h5>
+<p>Seuls <span class="math inline">\(d\)</span> et <span class="math inline">\(l\)</span> changent :</p>
+<p><span class="math display">\[d = 0{,}1\,\text{m}, \quad l = \left( \frac{1\,\text{mm}}{100\,\text{mm}} \right)^{0{,}5} = 0{,}1\]</span></p>
+<p><span class="math display">\[M_e = \mu\delta \cdot 0{,}1 \cdot 0{,}5 \cdot 0{,}25 \cdot \frac{0{,}1^3}{0{,}04}
+\Rightarrow M_e \in [7{,}5\,\text{kg},\,44\,\text{kg}]\]</span></p>
+<p>On constate donc qu’il est beaucoup plus économique d’échantillonner sur le convoyeur que d’échantillonner aux points de soutirage de la mine. De plus, lors de l’échantillonnage au soutirage, les fragments les plus gros ne peuvent être retenus, ce qui introduit un biais dans la méthode et affecte à la fois la teneur estimée et la variance d’échantillonnage. L’échantillonnage aux points de soutirage comporte également un risque opérationnel, puisqu’il peut interférer avec la production minière.</p>
+</section>
+</section>
+<section id="exemple-2---gisement-dor-disséminé" class="level4">
+<h4 class="anchored" data-anchor-id="exemple-2---gisement-dor-disséminé">Exemple 2 - Gisement d’or disséminé</h4>
+<p>Dans un gisement d’or, l’or est disséminé et emprisonné dans la structure de la pyrite (densité de la pyrite : 5; densité des roches volcaniques : 3). On prélève des carottes de 1 mètre que l’on divise en deux demi-carottes. On broie ensuite une demi-carotte en fragments de 2,5 mm et on prélève environ 100 g pour analyse. La procédure est-elle adéquate si la demi-carotte présente une teneur en or de 5 ppm, avec une taille de libération de la pyrite <span class="math inline">\(d_0 = 0{,}1\)</span> mm, un facteur de forme <span class="math inline">\(f = 0{,}5\)</span>, un facteur de distribution <span class="math inline">\(g = 0{,}75\)</span> et une concentration moyenne de 50 ppm d’or dans la pyrite?</p>
+<p><strong>Solution</strong>: Comme l’or n’est pas libre mais entièrement contenu dans la pyrite, c’est la pyrite qui joue le rôle de constituant d’intérêt dans la formule de Gy : les grains d’or accompagnent les grains de pyrite lors du prélèvement, et c’est donc la libération de la pyrite qui gouverne l’erreur. Il faut alors connaître la proportion de pyrite dans la roche.</p>
+<p>Or, l’or présente en moyenne 50 ppm dans la pyrite. Si la roche entière ne contient que 5 ppm d’or, c’est qu’elle renferme une fraction de pyrite égale à <span class="math inline">\(a_L = 5/50 = 0{,}1\)</span>, soit 10 % de pyrite en masse. C’est cette valeur que l’on introduit dans le calcul :</p>
+<p><span class="math display">\[\mu\delta = 43{,}2, \quad \text{avec} \quad a_L = 0{,}1,\ \delta_a = 5,\ \delta_g = 3\]</span></p>
+<p>On a également :</p>
+<p><span class="math display">\[l = (0{,}1/2{,}5)^{0{,}5} = 0{,}2, \quad f = 0{,}5, \quad g = 0{,}75.\]</span></p>
+<p>En appliquant la formule de la précision relative (<span class="math inline">\(s_r^2\)</span>) :</p>
+<p><span class="math display">\[s_r^2 = \frac{43{,}2 \times 0{,}2 \times 0{,}5 \times 0{,}75 \times 0{,}25^3}{100} = 0{,}0005\]</span></p>
+<p>d’où :</p>
+<p><span class="math display">\[s_r = \sqrt{s_r^2} = \sqrt{0{,}0005} = 0{,}02\]</span></p>
+<p>La procédure est excellente : elle permet une précision de l’ordre de 2 %.</p>
+</section>
+<section id="exemple-3---gisement-dor-natif" class="level4">
+<h4 class="anchored" data-anchor-id="exemple-3---gisement-dor-natif">Exemple 3 - Gisement d’or natif</h4>
+<p>Reprenons le même gisement qu’à l’exemple 2, mais supposons cette fois que l’or se présente sous forme native (pépites et paillettes), avec une taille de libération de 0,01 mm. La procédure de prélèvement reste la même (broyage à 2,5 mm, 100 g analysés). Est-elle toujours adéquate?</p>
+<p>Cette fois, l’or n’est plus emprisonné dans la pyrite : il forme ses propres grains. Le constituant d’intérêt est donc l’or lui-même, et sa concentration dans la roche entre directement dans la formule, soit <span class="math inline">\(a_L = 5\ \text{ppm} = 5 \times 10^{-6}\)</span> (au lieu des 10 % de pyrite de l’exemple précédent).</p>
+<p>Comme <span class="math inline">\(a_L\)</span> est très petit, le facteur minéralogique se simplifie en <span class="math inline">\(\mu\delta \approx \delta_a / a_L\)</span> :</p>
+<p><span class="math display">\[\mu\delta \approx \frac{19}{5 \times 10^{-6}} = 3{,}8 \times 10^6 \qquad (\delta_a = 19 : \text{densité de l'or})\]</span></p>
+<p>Le facteur de libération vaut <span class="math inline">\(l = (0{,}001/0{,}25)^{0{,}5} = 0{,}063\)</span>; l’or se présentant en paillettes, on pose un facteur de forme <span class="math inline">\(f = 0{,}2\)</span>, et le facteur de distribution reste <span class="math inline">\(g = 0{,}75\)</span>.</p>
+<p>En appliquant la formule de la précision relative :</p>
+<p><span class="math display">\[s_r^2 = \frac{3{,}8 \times 10^6 \times 0{,}063 \times 0{,}2 \times 0{,}75 \times 0{,}25^3}{100} = 5{,}61\]</span></p>
+<p><span class="math display">\[s_r = \sqrt{5{,}61} = 2{,}37\]</span></p>
+<p>La procédure est cette fois inadéquate. Avec un écart-type relatif de l’ordre de 237 %, la teneur mesurée se situera approximativement entre 0 et 30 ppm dans 95 % des cas, alors que la vraie teneur est de 5 ppm. À teneur identique, le simple fait que l’or soit natif plutôt qu’inclus dans la pyrite rend l’échantillonnage beaucoup plus difficile : c’est l’effet pépite. Pour retrouver une précision acceptable, il faudrait analyser toute la demi-carotte, ou broyer bien plus finement que 2,5 mm avant de prélever les 100 g. Nous verrons graphiquement comment poser ce type de diagnostic.</p>
+</section>
+</section>
+<section id="procédures-multistages" class="level3">
+<h3 class="anchored" data-anchor-id="procédures-multistages">Procédures multistages</h3>
+<p>Les procédures d’échantillonnage nécessitent presque toujours plusieurs étapes successives de broyage et d’échantillonnage. Par exemple, une demi-carotte peut être broyée à 2{,}5 mm, puis un sous-échantillon de 100 g est prélevé. Ce dernier est ensuite broyé à 0{,}5 mm, puis un prélèvement de 30 g est broyé à 0{,}1 mm, avant de prélever un dernier sous-échantillon de 5 g destiné à l’analyse.</p>
+<p>On reconnaît ainsi trois étapes de broyage (2{,}5 mm, 0{,}5 mm et 0{,}1 mm) et trois étapes de sous-échantillonnage (100 g, 30 g et 5 g). Chaque étape de sous-échantillonnage introduit une erreur d’échantillonnage, dont on peut calculer la variance à l’aide des équations présentées précédemment. Ces sous-échantillonnages étant réalisés de manière indépendante, les erreurs associées sont également indépendantes. Par conséquent, les variances relatives s’additionnent — ce point mérite d’être souligné, car ce sont bien les variances qui s’additionnent, et non les écarts-types. Or, la formule de Gy fournit un écart-type relatif. Il ne faut donc pas oublier de convertir les écarts-types en variances avant de les additionner.</p>
+<p>Dans une procédure d’échantillonnage, c’est donc le maillon faible — c’est-à-dire l’étape de sous-échantillonnage générant la plus grande erreur — qui sera responsable de la majorité de la variance totale de l’erreur. Il est essentiel d’identifier ce maillon faible afin d’apporter les ajustements nécessaires et améliorer la représentativité de l’échantillon.</p>
+<p>Sur un graphique où l’on porte en abscisse (<em>x</em>) la taille des plus gros fragments (<span class="math inline">\(d\)</span>) et en ordonnée (<em>y</em>) la masse de l’échantillon (<span class="math inline">\(M_e\)</span>), on peut représenter chaque étape de concassage ou de broyage par un segment horizontal, et chaque étape de sous-échantillonnage par un segment vertical. Il est possible de superposer à ce graphique les courbes de variance relative correspondant à chaque taille et chaque masse d’échantillon (voir section suivante). Cela permet de détecter aisément les étapes critiques nécessitant des améliorations afin d’obtenir un échantillon plus représentatif.</p>
+</section>
+<section id="représentation-graphique" class="level3">
+<h3 class="anchored" data-anchor-id="représentation-graphique">Représentation graphique</h3>
+<p>Les facteurs ayant le plus d’influence sur la variance d’échantillonnage sont nettement la taille des plus gros fragments (<span class="math inline">\(d\)</span>) et la masse de l’échantillon (<span class="math inline">\(M_e\)</span>). Sur des échelles log-log, la variance d’échantillonnage varie linéairement avec la taille des fragments et la masse de l’échantillon.</p>
+<p>On peut ainsi construire une série de droites sur ce graphique, ayant une pente de 3 lorsque <span class="math inline">\(d &lt; d_0\)</span> et de 2{,}5 lorsque <span class="math inline">\(d &gt; d_0\)</span>, ces droites représentant des configurations assurant une variance d’échantillonnage constante à chaque étape d’un sous-échantillonnage.</p>
+<p>La <a href="#fig-abaque-gy" class="quarto-xref">Figure&nbsp;<span>3.11</span></a> présente des isocontours (i.e., des plages de valeur pour <span class="math inline">\(M_e\)</span> et <span class="math inline">\(d\)</span> qui fournissent le même écart-type relatif <span class="math inline">\(s_r\)</span>) pour les paramètres suivants : <span class="math inline">\(M_L = 10\,000\)</span> g, <span class="math inline">\(d_0=0{,}04\)</span> cm, <span class="math inline">\(\delta_g=2{,}8\)</span>, <span class="math inline">\(\delta_a=5\)</span>, <span class="math inline">\(f=0{,}5\)</span>, <span class="math inline">\(g=0{,}5\)</span>, <span class="math inline">\(a_L=0{,}03\)</span>.</p>
+<div id="fig-abaque-gy" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-abaque-gy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C3_AbaqueGy.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-abaque-gy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.11: Exemple d’un abaque de Gy pour une procédure multistage.
+</figcaption>
+</figure>
+</div>
+<p>À partir de cette représentation graphique, il est facile, lorsqu’on connaît la procédure d’échantillonnage en plusieurs étapes (<em>multistage</em>), de la représenter et d’observer visuellement, sans calcul, si elle est adéquate.</p>
+<p>Par exemple, considérons l’analyse d’une carotte de 10 000 g (<span class="math inline">\(M_L = 10\ 000\)</span>). Trois étapes successives de concassage et de broyage sont réalisées pour réduire la taille des fragments à <span class="math inline">\(d = 0{,}5\)</span> cm, puis à <span class="math inline">\(d = 0,02\)</span> cm, et finalement à <span class="math inline">\(d = 0{,}007\)</span> cm. À chaque étape, une fraction du lot est prélevée : 5300 g lors de la première étape, 100 g lors de la deuxième, et enfin 25 g lors de l’analyse finale.</p>
+<p>La <a href="#fig-abaque-gy-ex" class="quarto-xref">Figure&nbsp;<span>3.12</span></a> illustre cette procédure. On part du point A avec une carotte de 10 000 g broyée à une taille de 0,5 cm. On prélève alors 5300 g, ce qui nous amène verticalement au point B. Ce lot est ensuite broyé à une taille de 0,02 cm, nous plaçant au point C. À partir de là, 100 g sont échantillonnés, ce qui nous mène au point D. Ces 100 g sont alors broyés à une taille de 0,007 cm (point E), puis un échantillon final de 25 g est prélevé pour l’analyse (point F).</p>
+<div id="fig-abaque-gy-ex" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-abaque-gy-ex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C3_AbaqueGyEx.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-abaque-gy-ex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.12: Exemple d’application de l’abaque de Gy dans une procédure multistage.
+</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Avertissement</span>Validité de l’abaque
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Les isocontours de l’abaque de Gy sont calculés à partir de la masse du lot initial (ici, <span class="math inline">\(M_L = M_{L,1} = 10\,000\)</span> g), qui intervient dans le terme de correction <span class="math inline">\((1 - M_e/M_L)\)</span>. Ils ne sont donc rigoureusement exacts que pour la première étape d’échantillonnage. Aux étapes suivantes, le lot réel est plus petit (ici, 5300 g, puis 100 g), et la valeur exacte de <span class="math inline">\(s_r\)</span> doit être recalculée avec la masse du lot propre à chaque étape.</p>
+<p>L’abaque sert donc de visualisation rapide: il permet de représenter la procédure et de vérifier rapidement, à l’œil, si elle est adéquate. On ne peut toutefois pas y lire directement la valeur de <span class="math inline">\(s_r\)</span> pour les étapes subséquentes — seul le calcul numérique permet de retrouver la valeur exacte de la variance relative totale.</p>
+</div>
+</div>
+<p>On note que trois étapes d’échantillonnage sont effectuées. Ce sont uniquement ces étapes d’échantillonnage qui entraînent une erreur d’échantillonnage. Nous supposons qu’aucune perte de matériau n’a lieu lors des étapes de concassage ou de broyage. Ainsi, la variance relative totale peut être obtenue en additionnant les variances relatives associées à chacune des trois étapes d’échantillonnage :</p>
+<p><span class="math display">\[s_r^2 = s_{r,1}^2 + s_{r,2}^2 + s_{r,3}^2\]</span></p>
+<p>Exemple : Supposons que l’on souhaite un écart-type relatif inférieur à 0,008 (ligne rouge sur la <a href="#fig-abaque-gy-ex" class="quarto-xref">Figure&nbsp;<span>3.12</span></a>). Pour vérifier rapidement si la procédure est adéquate, sans effectuer le calcul complet, il suffit de s’assurer que les points B, D et F (correspondant aux étapes d’échantillonnage) se situent tous au-dessus de la courbe rouge, et qu’au plus un seul point s’en approche. C’est le cas dans cet exemple, ce qui permet de valider la procédure. Cette règle visuelle découle directement de l’additivité des variances. Un point situé au-dessus de la courbe rouge correspond à une étape dont la variance est inférieure à la cible (<span class="math inline">\(s_{r,i} &lt; 0{,}008\)</span>) : plus le point est haut, plus la variance de l’étape est faible. Mais comme les trois variances s’additionnent, on ne peut pas se permettre que les trois étapes soient simultanément proches de la courbe : trois contributions égales à <span class="math inline">\(0{,}008\)</span> donneraient un écart-type total de <span class="math inline">\(\sqrt{3 \times 0{,}008^2} \approx 0{,}014\)</span>, bien au-dessus de la cible. En exigeant que les trois points soient au-dessus de la courbe et qu’au plus un seul la frôle, on garantit que la somme des variances reste sous la cible, sans avoir à faire le calcul.</p>
+</section>
+<section id="calcul-de-lerreur-déchantillonnage-global-s_r-de-lexemple" class="level3">
+<h3 class="anchored" data-anchor-id="calcul-de-lerreur-déchantillonnage-global-s_r-de-lexemple">Calcul de l’erreur d’échantillonnage global (<span class="math inline">\(s_r\)</span>) de l’exemple</h3>
+<p>Données : <span class="math display">\[\begin{aligned}
+a_L &amp;= 0{,}03 \\
+f &amp;= 0{,}5 \\
+g &amp;= 0{,}25 \\
+\delta_a &amp;= 5 \ \text{g/cm}^3 \\
+\delta_g &amp;= 2{,}8 \ \text{g/cm}^3 \\
+d_0 &amp;= 0{,}04 \ \text{cm}\end{aligned}\]</span></p>
+<p>Calcul de <span class="math inline">\(\mu\delta\)</span> : <span class="math display">\[\mu\delta = \frac{1 - a_L}{a_L} \cdot \left[ (1 - a_L) \cdot \delta_a + a_L \cdot \delta_g \right]
+= \frac{1 - 0{,}03}{0{,}03} \cdot \left[ (1 - 0{,}03) \cdot 5 + 0{,}03 \cdot 2{,}8 \right]
+= 159{,}5\]</span></p>
+<p>Calcul de <span class="math inline">\(K\)</span> : <span class="math display">\[K = \mu\delta \cdot f \cdot g
+= 159{,}5 \cdot 0{,}5 \cdot 0{,}25
+= 19{,}94 \ \text{g/cm}^3\]</span></p>
+<p>Calcul des <span class="math inline">\(s_r\)</span> pour chaque étape d’échantillonnage. Noter que la masse du lot (<span class="math inline">\(M_L\)</span>), la masse d’échantillon (<span class="math inline">\(M_e\)</span>), la taille (<span class="math inline">\(d\)</span>) et le facteur de libération (<span class="math inline">\(l\)</span>) varient en fonction de l’étape d’échantillonnage.</p>
+<ul>
+<li><p><strong>Étape B</strong><br>
+<span class="math inline">\(M_e = 5300\)</span> g, <span class="math inline">\(M_L = 10000\)</span> g, <span class="math inline">\(d = 0{,}5\)</span> cm<br>
+<span class="math inline">\(l = \left( \frac{0{,}04}{0{,}5} \right)^{0{,}5} = 0{,}2828\)</span><br>
+<span class="math inline">\(s_r^2 = \frac{19{,}94 \times 0{,}2828 \times 0{,}5^3}{5300} \left(1 - \frac{5300}{10000}\right) = 6{,}25 \times 10^{-5}\)</span><br>
+<span class="math inline">\(\Rightarrow s_r = 0{,}008\)</span></p></li>
+<li><p><strong>Étape D</strong><br>
+<span class="math inline">\(M_e = 100\)</span> g, <span class="math inline">\(M_L = 5300\)</span> g, <span class="math inline">\(d = 0{,}02\)</span> cm<br>
+<span class="math inline">\(l = 1\)</span><br>
+<span class="math inline">\(s_r^2 = \frac{19{,}94 \times 1 \times 0{,}02^3}{100} \left(1 - \frac{100}{5300} \right) = 1{,}56 \times 10^{-6}\)</span><br>
+<span class="math inline">\(\Rightarrow s_r = 0{,}001\)</span></p></li>
+<li><p><strong>Étape F</strong><br>
+<span class="math inline">\(M_e = 25\)</span> g, <span class="math inline">\(M_L = 100\)</span> g, <span class="math inline">\(d = 0{,}007\)</span> cm<br>
+<span class="math inline">\(l = 1\)</span><br>
+<span class="math inline">\(s_r^2 = \frac{19{,}94 \times 1 \times 0{,}007^3}{25} \left(1 - \frac{25}{100} \right) = 2{,}05 \times 10^{-7}\)</span><br>
+<span class="math inline">\(\Rightarrow s_r = 0{,}0005\)</span></p></li>
+</ul>
+<p><strong>Erreur globale :</strong><br>
+<span class="math inline">\(s_{r,\text{global}}^2 = 6{,}25 \times 10^{-5} + 1{,}56 \times 10^{-6} + 2{,}05 \times 10^{-7} = 6{,}43 \times 10^{-5}\)</span><br>
+<span class="math inline">\(\Rightarrow s_{r,\text{global}} = 0{,}008\)</span></p>
+<p>Le calcul complet montre clairement que l’échantillonnage à l’étape B introduit le plus de variance. L’erreur relative finale, <span class="math inline">\(s_{r,\text{global}}\)</span>, est pratiquement égale à celle de l’étape B, <span class="math inline">\(s_{r,1}\)</span>. À noter que, dans cet exemple, les valeurs apparaissent égales en raison des arrondis, ce qui n’est pas le cas en réalité.</p>
+</section>
+</section>
+<section id="atelier-interactif-3.2-procédures-multistages.-calcul-de-lerreur-déchantillonnage." class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-3.2-procédures-multistages.-calcul-de-lerreur-déchantillonnage.">🧮 Atelier interactif 3.2 — Procédures multistages. Calcul de l’erreur d’échantillonnage.</h2>
+<p>Cet atelier permet de visualiser les différentes étapes du calcul de l’erreur d’échantillonnage selon la théorie de Gy. Il peut également être utilisé comme calculateur pour valider vos résultats et vous accompagner dans la résolution des exercices.</p>
+<p>La version web de ce document donne accès à la pleine interactivité de cet atelier.</p>
+<div class="geostat-widget-wrap">
+<div id="w-c03-gy-abaque" class="geostat-widget" data-widget="c03_gy_abaque" data-version="0.1.0">
+<div class="gw-placeholder">
+<pre><code>&lt;div class="gw-spinner"&gt;&lt;/div&gt;
+&lt;p&gt;Chargement de l'abaque…&lt;/p&gt;</code></pre>
+</div>
+<noscript>
+<p class="gw-fallback-note">
+JavaScript désactivé : cet atelier interactif nécessite JavaScript.
+</p>
+<p></p>
+</noscript></div>
+</div>
+</section>
+<section id="contrôle-de-qualité-et-assurance-de-qualité" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="contrôle-de-qualité-et-assurance-de-qualité"><span class="header-section-number">3.3</span> Contrôle de qualité et assurance de qualité</h2>
+<p>Le contrôle de qualité et l’assurance qualité (<strong>QA/QC</strong>, <em>Quality Assurance / Quality Control</em>) regroupent les procédures qui vérifient toute la chaîne d’échantillonnage, du prélèvement à la validation des résultats. Elles garantissent que les teneurs obtenues sont fiables et peuvent appuyer une estimation des ressources ou une décision minière.</p>
+<p>Bre-X est un bon rappel de l’importance du QA/QC. Dans ce projet, des échantillons de carottes avaient été enrichis avec de la poussière d’or, ce qui a complètement faussé l’estimation des ressources. Ce scandale a poussé plusieurs pays miniers à renforcer leurs règles de divulgation.</p>
+<table class="caption-top table">
+<caption>Principales réglementations relatives à la divulgation des ressources et des réserves minérales.</caption>
+<thead>
+<tr class="header">
+<th>Pays</th>
+<th>Réglementation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Canada</td>
+<td>Règlement NI 43-101</td>
+</tr>
+<tr class="even">
+<td>Australie</td>
+<td>JORC Code</td>
+</tr>
+<tr class="odd">
+<td>Afrique du Sud</td>
+<td>SAMREC</td>
+</tr>
+<tr class="even">
+<td>Royaume-Uni</td>
+<td>IMM</td>
+</tr>
+<tr class="odd">
+<td>États-Unis</td>
+<td>SME</td>
+</tr>
+</tbody>
+</table>
+<p>Ces réglementations exigent que les données utilisées pour estimer les ressources soient appuyées par des procédures rigoureuses d’échantillonnage, de préparation, d’analyse et de validation. Le QA/QC permet donc de faire le lien entre les notions vues précédemment — biais, précision, justesse, traçabilité et erreur analytique — et leur application concrète dans un projet minier.</p>
+<p>Dans un rapport NI 43-101, le QA/QC doit être présenté clairement. Il faut montrer comment les échantillons ont été suivis, préparés et vérifiés avant d’utiliser les résultats dans l’estimation. Le rapport doit notamment expliquer :</p>
+<ul>
+<li>les méthodes d’échantillonnage utilisées;</li>
+<li>les procédures de préparation et d’entreposage;</li>
+<li>la traçabilité des échantillons;</li>
+<li>les mesures de sécurité et de protection des accès;</li>
+<li>les contrôles utilisés pour détecter les erreurs, les contaminations, les dérives analytiques ou d’éventuelles irrégularités;</li>
+<li>l’utilisation de blancs, de standards, de duplicatas et de réanalyses.</li>
+</ul>
+<section id="définitions" class="level3">
+<h3 class="anchored" data-anchor-id="définitions">Définitions</h3>
+<p>Le contrôle de qualité repose sur l’insertion d’échantillons de contrôle dans la séquence normale d’échantillons envoyés au laboratoire. Ces contrôles servent à vérifier différentes sources d’erreur : la précision, la justesse, la contamination et la reproductibilité des résultats.</p>
+<p>On distingue généralement quatre types principaux de contrôles QA/QC.</p>
+<ol type="1">
+<li><p><strong>Analyse par un tiers</strong></p>
+<p>Une partie du rejet ou de la pulpe est envoyée à un second laboratoire pour une analyse indépendante. Cette comparaison permet de vérifier si les résultats du laboratoire principal sont cohérents avec ceux d’un autre laboratoire. Elle sert surtout à détecter un problème de justesse, mais peut aussi révéler un problème de précision ou de méthode analytique.</p></li>
+<li><p><strong>Duplicatas</strong></p>
+<p>Un duplicata consiste à refaire une analyse à partir du même matériau, par exemple à partir du rejet, de la pulpe ou d’un second sous-échantillon. Lorsqu’il est analysé par le même laboratoire, il permet surtout d’évaluer la précision, c’est-à-dire la capacité du processus analytique à reproduire un résultat similaire. Lorsqu’il est envoyé à un autre laboratoire, on parle plutôt de duplicata externe, ainsi une analyse par un tiers.</p></li>
+<li><p><strong>Blancs</strong></p>
+<p>Un blanc est un matériau stérile, connu pour ne contenir aucune trace de l’élément analysé, que l’on insère dans la séquence d’échantillons afin de détecter une contamination. Sa teneur devant être nulle, toute valeur anormalement élevée trahit un apport de matière étranger — le plus souvent un résidu laissé par un échantillon riche traité juste avant, dans le concasseur, le broyeur ou l’appareil d’analyse. On distingue le <strong>blanc grossier</strong>, introduit avant la préparation pour tester la contamination lors du concassage et du broyage, et le <strong>blanc fin</strong> (ou de pulpe), inséré au moment de l’analyse pour isoler la contamination survenue en laboratoire.</p></li>
+<li><p><strong>Échantillons de référence, ou standards</strong></p>
+<p>Un standard est un échantillon préparé à l’avance, dont on connaît déjà la teneur. On l’envoie au laboratoire avec les autres échantillons, sans qu’il serve à estimer le gisement. Il sert plutôt à vérifier si le laboratoire retrouve la valeur qu’il devrait trouver. Si le résultat est trop loin de la valeur attendue, il peut y avoir un problème dans l’analyse.</p></li>
+</ol>
+</section>
+<section id="outils-statistiques-pour-le-contrôle-qualité" class="level3">
+<h3 class="anchored" data-anchor-id="outils-statistiques-pour-le-contrôle-qualité">Outils statistiques pour le contrôle qualité</h3>
+<p>Selon <span class="citation" data-cites="Abzalov2011">Abzalov (<a href="../../references.html#ref-Abzalov2011" role="doc-biblioref">2011</a>)</span>, la statistique la plus utile est le coefficient de variation (CV), défini par :</p>
+<p><span class="math display">\[\text{CV} = \frac{s}{m}\]</span></p>
+<p>Pour une paire de duplicatas (<span class="math inline">\(z_1, z_2\)</span>), l’écart-type expérimental est <span class="math inline">\(s = \frac{|z_1 - z_2|}{\sqrt{2}}\)</span> et la moyenne est <span class="math inline">\(m = \frac{z_1 + z_2}{2}\)</span>. En substituant, on obtient :</p>
+<p><span class="math display">\[\text{CV} = \frac{\sqrt{2} \, |z_1 - z_2|}{z_1 + z_2}\]</span></p>
+<p>D’autres mesures équivalentes existent, telles que le <strong>HARD</strong> (<span class="math inline">\(\frac{|z_1 - z_2|}{z_1 + z_2}\)</span>) ou le <strong>AMPD</strong> (<span class="math inline">\(\frac{2 |z_1 - z_2|}{z_1 + z_2} \times 100\%\)</span>). Comme ces statistiques sont proportionnelles, l’usage direct du CV est recommandé.</p>
+</section>
+<section id="exemple-synthétique-de-résultats-qaqc" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-synthétique-de-résultats-qaqc">Exemple synthétique de résultats QA/QC</h3>
+<section id="visualisation-des-blancs" class="level4">
+<h4 class="anchored" data-anchor-id="visualisation-des-blancs">Visualisation des Blancs</h4>
+<p>La manière traditionnelle de présenter les résultats des blancs consiste à les représenter sous forme de série temporelle. Chaque point correspond alors à un blanc analysé, placé dans l’ordre d’insertion de la séquence d’échantillons. Cette représentation permet de repérer rapidement des valeurs anormales, mais aussi d’identifier si les dépassements sont isolés ou s’ils se répètent dans une portion de la séquence.</p>
+<p>Pour interpréter un blanc, on compare souvent le résultat à la limite de détection de l’appareil, notée LD. Si la valeur mesurée est inférieure à 3 × LD, le résultat est généralement acceptable. Entre 3 × LD et 5 × LD, il peut y avoir une petite anomalie à surveiller. Lorsque la valeur dépasse 5 × LD, la possibilité d’une contamination devient plus sérieuse. Au-delà de 10 × LD, le résultat est suspect et il faut vérifier la séquence d’analyse.</p>
+<p>L’atelier interactif ci-dessous met cette logique en pratique : la limite de détection, le niveau de bruit analytique, le pourcentage de contamination et le nombre d’échantillons peuvent y être ajustés pour voir comment ils influencent la distribution des blancs, le nombre de dépassements et l’interprétation globale de la qualité analytique.</p>
+</section>
+</section>
+</section>
+<section id="atelier-interactif-3.3-blancs-et-détection-de-contamination" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-3.3-blancs-et-détection-de-contamination">🧮 Atelier interactif 3.3 — Blancs et détection de contamination</h2>
+<p>Ajustez la limite de détection, le bruit analytique, le taux de contamination et le nombre d’échantillons, puis observez la série temporelle des blancs et le nombre de dépassements des seuils (<span class="math inline">\(3\times\)</span>, <span class="math inline">\(5\times\)</span>, <span class="math inline">\(10\times\)</span> LD).</p>
+<p>Cet atelier est pleinement interactif dans la version web de ce document.</p>
+<div class="geostat-widget-wrap">
+<div id="w-c03-blancs" class="geostat-widget" data-widget="c03_blancs" data-version="0.1.0">
+<div class="gw-placeholder">
+<pre><code>&lt;div class="gw-spinner"&gt;&lt;/div&gt;
+&lt;p&gt;Chargement de l'atelier des blancs…&lt;/p&gt;</code></pre>
+</div>
+<noscript>
+<p class="gw-fallback-note">
+JavaScript désactivé : cet atelier interactif nécessite JavaScript.
+</p>
+<p></p>
+</noscript></div>
+</div>
+<p>À retenir : un blanc qui dépasse les seuils signale une contamination introduite par la chaîne de préparation ou d’analyse, et non par le gisement lui-même. La forme de la série aide au diagnostic : des dépassements isolés évoquent un incident ponctuel, tandis que des dépassements groupés trahissent un problème systématique sur une portion de la séquence.</p>
+<section id="échantillons-de-référence" class="level4">
+<h4 class="anchored" data-anchor-id="échantillons-de-référence">Échantillons de référence</h4>
+<p>Les standards sont des échantillons dont la teneur est déjà connue. On les insère dans la séquence d’analyse pour vérifier si le laboratoire retrouve bien la valeur attendue. Contrairement aux blancs, on ne s’attend donc pas à une teneur nulle. On s’attend plutôt à retrouver une valeur précise, avec une certaine tolérance autour de cette valeur.</p>
+<p>Les résultats des standards sont souvent présentés dans un graphique, selon l’ordre où ils ont été analysés. Chaque point représente un standard. La ligne centrale correspond à la teneur attendue, et les lignes autour montrent les limites de contrôle, généralement à <span class="math inline">\(\pm 1\sigma\)</span>, <span class="math inline">\(\pm 2\sigma\)</span> et <span class="math inline">\(\pm 3\sigma\)</span>.</p>
+<p>Si les points restent près de la valeur attendue, le laboratoire semble bien mesurer le standard. Si un résultat dépasse <span class="math inline">\(\pm 2\sigma\)</span>, on commence à porter attention. Si un résultat dépasse <span class="math inline">\(\pm 3\sigma\)</span>, il faut généralement vérifier ce qui s’est passé dans la séquence d’analyse.</p>
+<p>Au-delà des points isolés très éloignés, il faut regarder la forme de la série. Si plusieurs résultats sont toujours un peu trop élevés, ou toujours un peu trop faibles, cela peut indiquer un biais. Si les résultats se déplacent lentement dans une direction, on peut soupçonner une dérive du laboratoire. En principe, les résultats des standards devraient varier autour de la valeur attendue, sans tendance claire dans le temps.</p>
+<p>Ainsi, si plusieurs standards consécutifs sont mesurés au-dessus de la valeur attendue, cela peut indiquer que le laboratoire surestime systématiquement les teneurs. Comme la distribution attendue des standards est connue, il est possible de calculer la probabilité qu’une telle séquence se produise simplement par hasard. L’atelier interactif ci-dessous permet de calculer cette probabilité en faisant varier la moyenne attendue, l’écart-type certifié, le nombre d’échantillons, le biais et la dérive, afin de voir comment ces paramètres influencent la distribution des résultats, les dépassements des seuils de contrôle et l’interprétation globale de la qualité analytique.</p>
+</section>
+</section>
+<section id="atelier-interactif-3.4-standards-justesse-et-dérive-analytique" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-3.4-standards-justesse-et-dérive-analytique">🧮 Atelier interactif 3.4 — Standards : justesse et dérive analytique</h2>
+<p>Faites varier la teneur certifiée, l’écart-type, le biais et la dérive du laboratoire, puis observez la série temporelle des standards par rapport aux seuils de contrôle (<span class="math inline">\(\pm 1\sigma\)</span>, <span class="math inline">\(\pm 2\sigma\)</span>, <span class="math inline">\(\pm 3\sigma\)</span>) et la probabilité d’obtenir une telle séquence par hasard.</p>
+<p>Cet atelier est pleinement interactif dans la version web de ce document.</p>
+<div class="geostat-widget-wrap">
+<div id="w-c03-standards" class="geostat-widget" data-widget="c03_standards" data-version="0.1.0">
+<div class="gw-placeholder">
+<pre><code>&lt;div class="gw-spinner"&gt;&lt;/div&gt;
+&lt;p&gt;Chargement de l'atelier des standards…&lt;/p&gt;</code></pre>
+</div>
+<noscript>
+<p class="gw-fallback-note">
+JavaScript désactivé : cet atelier interactif nécessite JavaScript.
+</p>
+<p></p>
+</noscript></div>
+</div>
+<p>À retenir : les standards mesurent la justesse. Des écarts isolés au-delà de <span class="math inline">\(\pm 2\sigma\)</span> restent attendus de temps à autre, mais des dépassements répétés du même côté de la valeur certifiée — ou une tendance progressive — trahissent un biais ou une dérive du laboratoire, bien plus préoccupants qu’un écart ponctuel.</p>
+<section id="duplicatas" class="level4">
+<h4 class="anchored" data-anchor-id="duplicatas">Duplicatas</h4>
+<p>La manière traditionnelle de présenter les duplicatas consiste d’abord à tracer un nuage de points où chaque paire est représentée par deux valeurs : l’échantillon original sur un axe et son duplicata sur l’autre. Lorsque les résultats sont très reproductibles, les points se placent près de la droite 1:1. Plus les points s’éloignent de cette droite, plus l’écart entre l’original et le duplicata est important.</p>
+<p>Un deuxième graphique permet de visualiser la différence relative entre les deux analyses. Cette différence est souvent exprimée en pourcentage par rapport à la moyenne de la paire. Elle permet d’identifier les paires problématiques, par exemple celles qui dépassent le seuil de 10 %. Des écarts élevés peuvent indiquer une mauvaise homogénéisation, un sous-échantillonnage insuffisant, une contamination, une erreur analytique ou une forte hétérogénéité du matériau.</p>
+<p>L’indicateur <strong>HARD</strong> (<em>Half Absolute Relative Difference</em>) est souvent utilisé pour comparer les duplicatas. Il donne une mesure de l’écart entre deux résultats, par rapport à leur moyenne. Plus la valeur de HARD est faible, plus les deux analyses sont proches. On peut ensuite représenter les valeurs de HARD sous forme de courbe cumulative. Cette courbe permet de voir quelle proportion des duplicatas respecte un seuil donné. Par exemple, on peut vérifier si 90 % des paires ont un HARD inférieur à 10 %.</p>
+<p>Le seuil retenu dépend toutefois du type de duplicata. La tolérance de 10 % vise les duplicatas de pulpe, les plus reproductibles; on accepte généralement un écart plus élevé pour les duplicatas grossiers, de l’ordre de 20 %, et pour les duplicatas de terrain, de l’ordre de 25 %, car l’hétérogénéité du matériau y est plus grande. Les paires dont les deux valeurs sont très proches de la limite de détection sont par ailleurs souvent écartées de l’analyse, car l’écart relatif y devient peu significatif.</p>
+<p>La médiane des teneurs, le coefficient de variation et le nombre de paires de duplicatas peuvent être ajustés dans l’atelier interactif ci-dessous, pour observer comment la dispersion analytique influence le nuage de points, les écarts relatifs, la courbe HARD et les indicateurs synthétiques comme le <span class="math inline">\(R^2\)</span>, le HARD(90) et le coefficient de variation moyen.</p>
+</section>
+</section>
+<section id="atelier-interactif-3.5-duplicatas-précision-analytique" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-3.5-duplicatas-précision-analytique">🧮 Atelier interactif 3.5 — Duplicatas : précision analytique</h2>
+<p>Réglez la médiane des teneurs, le coefficient de variation et le nombre de paires, puis comparez le nuage original-duplicata à la droite 1:1, les écarts relatifs et la courbe cumulative du HARD.</p>
+<p>Cet atelier est pleinement interactif dans la version web de ce document.</p>
+<div class="geostat-widget-wrap">
+<div id="w-c03-duplicatas" class="geostat-widget" data-widget="c03_duplicatas" data-version="0.1.0">
+<div class="gw-placeholder">
+<pre><code>&lt;div class="gw-spinner"&gt;&lt;/div&gt;
+&lt;p&gt;Chargement de l'atelier des duplicatas…&lt;/p&gt;</code></pre>
+</div>
+<noscript>
+<p class="gw-fallback-note">
+JavaScript désactivé : cet atelier interactif nécessite JavaScript.
+</p>
+<p></p>
+</noscript></div>
+</div>
+<p>À retenir : les duplicatas mesurent la précision. Un nuage de points serré le long de la droite 1:1 et une courbe HARD montrant au moins 90 % des paires sous 10 % indiquent une bonne reproductibilité; les paires qui s’en écartent signalent une hétérogénéité du matériau, un sous-échantillonnage insuffisant ou une erreur analytique.</p>
+<section id="exemples-réels-de-protocoles-qaqc" class="level3">
+<h3 class="anchored" data-anchor-id="exemples-réels-de-protocoles-qaqc">Exemples réels de protocoles QA/QC</h3>
+<p>Les protocoles QA/QC décrits dans les rapports techniques NI 43-101 montrent comment les blancs, les standards, les duplicatas et la traçabilité s’appliquent dans des projets miniers réels. Pour respecter les droits d’auteur, les graphiques originaux ne sont pas reproduits ici : le lecteur est invité à consulter les rapports sur SEDAR+ pour visualiser les résultats détaillés. Les deux cas ci-dessous en sont décrits en mots.</p>
+<section id="exemple-1-windfall-osisko" class="level4">
+<h4 class="anchored" data-anchor-id="exemple-1-windfall-osisko">Exemple 1 : Windfall — Osisko</h4>
+<p>Le rapport technique du projet Windfall décrit un protocole QA/QC structuré autour de l’insertion systématique d’échantillons de contrôle dans la séquence d’analyse. Les blancs, constitués de gravier calcaire stérile, servent à détecter une contamination lors de la préparation ou de l’analyse. Les standards (matériaux de référence certifiés) sont insérés environ un tous les 20 échantillons pour vérifier la justesse et la précision; surtout, leur identifiant est effacé avant l’insertion, précisément pour que le laboratoire ne puisse pas les reconnaître et les traiter différemment. La traçabilité repose sur des étiquettes numérotées en triplicata (sac d’échantillon, boîte de carottes, carnet de terrain), qui permettent de suivre chaque échantillon tout au long de la chaîne.</p>
+<p>L’ampleur du programme — de l’ordre de 96 858 blancs, 87 029 standards et 5 922 duplicatas — illustre le volume de contrôle nécessaire dans un projet d’exploration avancé. On notera toutefois que des blancs de gravier calcaire, visuellement distincts de la roche, restent en principe repérables par le laboratoire.</p>
+</section>
+<section id="exemple-2-mine-dumont-royal-nickel" class="level4">
+<h4 class="anchored" data-anchor-id="exemple-2-mine-dumont-royal-nickel">Exemple 2 : Mine Dumont — Royal Nickel</h4>
+<p>Le rapport de la propriété Dumont présente un protocole plus large, couvrant aussi la sécurité et la préparation. Les accès à la carothèque sont protégés par un système d’alarme zoné, les sacs sont scellés dès la récolte, et les laboratoires sont certifiés ISO 9001:2000. Un blanc de sable (0 à 80 ppm de nickel) est inséré tous les 25 échantillons; la préparation comprend un concassage à 2 mm (70 % passant), la sélection d’une fraction de 100 g et une pulvérisation à 106 µm. Des duplicatas (quarts de carottes) sont envoyés à la même fréquence, et quatre matériaux de référence certifiés vérifient la justesse.</p>
+<p>Décrits en mots, les résultats se lisent ainsi. Les blancs et les duplicatas ne révèlent rien d’anormal — mais ce constat rassurant est à nuancer : un blanc de sable et un duplicata en quart de carotte sont tous deux facilement identifiables par le laboratoire, si bien que ces deux contrôles ne testent pas vraiment la procédure à l’aveugle. Le signal le plus important vient des standards : l’un d’eux (Standard 1) présente un biais marqué, et pour les deux laboratoires — exactement le type d’écart systématique que le QA/QC doit détecter avant que les données ne servent à estimer les ressources. Des contrôles trop reconnaissables perdent ainsi de leur valeur, tandis qu’un standard bien suivi peut révéler un biais réel.</p>
+</section>
+</section>
+</section>
+<section id="calcul-de-la-densité-théorique" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="calcul-de-la-densité-théorique"><span class="header-section-number">3.4</span> Calcul de la densité théorique</h2>
+<p>Certaines mines calculent la densité du minerai directement à partir des analyses chimiques. La densité est une variable importante, car elle détermine la quantité de métal contenue dans un volume donné : si la densité varie, le tonnage varie aussi. Elle intervient donc dans les estimations de ressources, les calculs de dilution et les bilans économiques.</p>
+<p>Deux approches existent. La première est une <strong>formule empirique obtenue par régression</strong> : à partir d’un jeu d’échantillons dont la densité a été mesurée physiquement, on ajuste une relation entre la densité et les teneurs chimiques. Elle est rapide à appliquer, mais purement statistique : elle n’est valable que sur la plage de teneurs ayant servi à la calibration, d’autant que la relation densité-teneur n’est pas linéaire (voir plus bas). La seconde est un <strong>calcul fondé sur la minéralogie déduite de l’analyse chimique</strong> : on reconstruit les proportions de minéraux à partir des teneurs, puis on en déduit la densité. C’est cette approche, physiquement fondée, que nous développons ici.</p>
+<section id="principe" class="level3">
+<h3 class="anchored" data-anchor-id="principe">Principe</h3>
+<p>Chaque élément mesuré par l’analyse chimique provient d’un ou de plusieurs minéraux de composition connue. En partant des teneurs, on reconstitue la proportion massique de chaque minéral, puis on additionne les volumes qu’ils occupent. Pour une masse donnée, un minéral de proportion <span class="math inline">\(t_i\)</span> et de densité <span class="math inline">\(d_i\)</span> occupe un volume <span class="math inline">\(t_i/d_i\)</span>, et la densité théorique vaut :</p>
+<p><span class="math display">\[
+d_{\text{moy}} = \frac{1}{\sum_{i=1}^{n} \dfrac{t_i}{d_i}}
+\]</span></p>
+<p>La densité ne se moyenne donc pas arithmétiquement : ce sont les volumes, et non les densités, qui s’additionnent.</p>
+</section>
+<section id="cas-dun-seul-minéral-porteur" class="level3">
+<h3 class="anchored" data-anchor-id="cas-dun-seul-minéral-porteur">Cas d’un seul minéral porteur</h3>
+<p>Prenons un gisement de cuivre où tout le cuivre est contenu dans la chalcopyrite (densité 4,2; 35 % Cu), seul sulfure présent, la gangue ayant une densité voisine de 3. Pour une roche à 1 % Cu, la proportion de chalcopyrite est <span class="math inline">\(1/0{,}35 = 2{,}86\,\%\)</span>. Dans 100 g de roche, ces 2,86 g de chalcopyrite occupent <span class="math inline">\(2{,}86/4{,}2 = 0{,}68\)</span> cm³, et les 97,14 g de gangue <span class="math inline">\(97{,}14/3 = 32{,}38\)</span> cm³, soit un volume total de 33,06 cm³ et une densité de <span class="math inline">\(100/33{,}06 = 3{,}02\)</span> g/cm³.</p>
+<p>Pour une roche cinq fois plus riche, à 5 % Cu, on obtient <span class="math inline">\(5/0{,}35 = 14{,}29\,\%\)</span> de chalcopyrite, un volume total de 31,97 cm³ et une densité de <span class="math inline">\(100/31{,}97 = 3{,}13\)</span> g/cm³.</p>
+</section>
+<section id="une-relation-non-linéaire" class="level3">
+<h3 class="anchored" data-anchor-id="une-relation-non-linéaire">Une relation non linéaire</h3>
+<p>En multipliant la teneur en cuivre par cinq (de 1 % à 5 %), la densité ne passe que de 3,02 à 3,13 g/cm³ : elle ne varie donc pas linéairement avec la teneur. Cela tient à la forme de la relation — c’est l’inverse de la densité, <span class="math inline">\(1/d = \sum_i t_i/d_i\)</span>, qui se combine linéairement avec les proportions massiques, tandis que la densité elle-même en est une fonction non linéaire. C’est aussi pour cette raison qu’une formule empirique reliant directement densité et teneur ne reste fiable que sur une plage de teneurs restreinte.</p>
+</section>
+<section id="cas-de-plusieurs-minéraux-le-système-mathbfamathbfx-mathbfb" class="level3">
+<h3 class="anchored" data-anchor-id="cas-de-plusieurs-minéraux-le-système-mathbfamathbfx-mathbfb">Cas de plusieurs minéraux : le système <span class="math inline">\(\mathbf{A}\mathbf{x} = \mathbf{b}\)</span></h3>
+<p>Avec un seul sulfure, le raisonnement est direct. Avec deux, on peut encore procéder par substitution : la teneur en cuivre donne la proportion de chalcopyrite (<span class="math inline">\(\%\text{Cu} \to \%\text{chalcopyrite}\)</span>), puis le soufre restant, une fois retiré celui de la chalcopyrite, donne la proportion de pyrite (<span class="math inline">\(\%\text{S} - \%\text{S}_{\text{chalcopyrite}} \to \%\text{pyrite}\)</span>) — mais seulement si l’on suppose que tout le soufre provient de la pyrite et de la chalcopyrite.</p>
+<p>Dès que plusieurs minéraux partagent les mêmes éléments, cette substitution ne suffit plus et l’on écrit un <strong>système d’équations linéaires</strong> :</p>
+<p><span class="math display">\[
+\mathbf{A}\mathbf{x} = \mathbf{b}
+\]</span></p>
+<p>Chaque ligne du système est un <strong>bilan de masse</strong> pour un élément : la teneur mesurée de l’élément <span class="math inline">\(i\)</span> dans la roche est la somme, sur tous les minéraux, de sa teneur dans chaque minéral pondérée par la proportion de ce minéral. Concrètement :</p>
+<ul>
+<li><span class="math inline">\(A_{ij}\)</span> est la teneur de l’élément <span class="math inline">\(i\)</span> dans le minéral <span class="math inline">\(j\)</span>, connue par la formule chimique du minéral;</li>
+<li><span class="math inline">\(b_i\)</span> est la teneur de l’élément <span class="math inline">\(i\)</span> dans la roche, connue par l’analyse chimique;</li>
+<li><span class="math inline">\(x_j\)</span> est la proportion massique du minéral <span class="math inline">\(j\)</span>, l’inconnue à déterminer.</li>
+</ul>
+<p>À ces bilans par élément s’ajoute l’<strong>équation de fermeture</strong></p>
+<p><span class="math display">\[
+\sum_{j} x_j = 1
+\]</span></p>
+<p>qui traduit un dernier bilan de masse : les proportions doivent totaliser 100 %. C’est elle qui ferme le système et permet de résoudre la dernière inconnue, la gangue. Pour <span class="math inline">\(n\)</span> minéraux, il faut donc <span class="math inline">\(n\)</span> équations, soit <span class="math inline">\((n-1)\)</span> bilans d’éléments plus la fermeture. Pour limiter le nombre d’inconnues, on n’isole que les minéraux dont la densité diffère nettement de celle de la gangue; les autres sont regroupés dans la gangue.</p>
+</section>
+<section id="exemple-gisement-cu-zn" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-gisement-cu-zn">Exemple : gisement Cu-Zn</h3>
+<p>Considérons un gisement où le cuivre se répartit entre la chalcopyrite (CuFeS₂) et la chalcocite (Cu₂S), le zinc dans la sphalérite (ZnS), avec de la pyrite (FeS₂) et une gangue contenant en moyenne 2 % de fer mais pas de soufre. Les densités sont : chalcopyrite 4,1; chalcocite 5,6; sphalérite 4,1; pyrite 5,0; gangue 2,9. L’analyse donne 6 % Cu, 9 % Zn, 10 % S et 5 % Fe.</p>
+<p>En dressant un bilan pour chaque élément (Cu, Zn, S, Fe) et en ajoutant la fermeture, le système s’écrit :</p>
+<p><span class="math display">\[
+\begin{array}{r}
+\text{Cu} \\ \text{Zn} \\ \text{S} \\ \text{Fe} \\ \textstyle\sum
+\end{array}
+\begin{bmatrix}
+0{,}35 &amp; 0{,}80 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0{,}67 &amp; 0 &amp; 0 \\
+0{,}35 &amp; 0{,}20 &amp; 0{,}33 &amp; 0{,}53 &amp; 0 \\
+0{,}30 &amp; 0 &amp; 0 &amp; 0{,}47 &amp; 0{,}02 \\
+1 &amp; 1 &amp; 1 &amp; 1 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+x_{\text{cp}} \\ x_{\text{cc}} \\ x_{\text{sp}} \\ x_{\text{py}} \\ x_{\text{g}}
+\end{bmatrix}
+=
+\begin{bmatrix}
+0{,}06 \\ 0{,}09 \\ 0{,}10 \\ 0{,}05 \\ 1
+\end{bmatrix}
+\]</span></p>
+<p>Chaque colonne correspond à un minéral, chaque ligne à un élément (la dernière étant la fermeture). La résolution du système donne les proportions massiques :</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Minéral</th>
+<th style="text-align: right;">Proportion</th>
+<th style="text-align: right;">Densité (g/cm³)</th>
+<th style="text-align: right;">Volume pour 100 g (cm³)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Chalcopyrite</td>
+<td style="text-align: right;">0 %</td>
+<td style="text-align: right;">4{,}1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td>Chalcocite</td>
+<td style="text-align: right;">7{,}7 %</td>
+<td style="text-align: right;">5{,}6</td>
+<td style="text-align: right;">1{,}38</td>
+</tr>
+<tr class="odd">
+<td>Sphalérite</td>
+<td style="text-align: right;">13{,}43 %</td>
+<td style="text-align: right;">4{,}1</td>
+<td style="text-align: right;">3{,}28</td>
+</tr>
+<tr class="even">
+<td>Pyrite</td>
+<td style="text-align: right;">7{,}9 %</td>
+<td style="text-align: right;">5{,}0</td>
+<td style="text-align: right;">1{,}58</td>
+</tr>
+<tr class="odd">
+<td>Gangue</td>
+<td style="text-align: right;">71{,}4 %</td>
+<td style="text-align: right;">2{,}9</td>
+<td style="text-align: right;">24{,}62</td>
+</tr>
+</tbody>
+</table>
+<p>Ici, le système explique entièrement l’analyse sans chalcopyrite (<span class="math inline">\(x_{\text{cp}} = 0\)</span>) : tout le cuivre est attribué à la chalcocite. Le volume total est de 30,86 cm³, d’où une densité théorique de <span class="math inline">\(100/30{,}86 = 3{,}24\)</span> g/cm³.</p>
+</section>
+<section id="effet-de-la-porosité" class="level3">
+<h3 class="anchored" data-anchor-id="effet-de-la-porosité">Effet de la porosité</h3>
+<p>La densité théorique représente celle de la phase solide. Si la roche présente une porosité <span class="math inline">\(n\)</span> (en fraction), une partie du volume total est occupée par des vides et la densité sèche totale devient :</p>
+<p><span id="eq-porosite"><span class="math display">\[
+\rho_{\text{réelle}} = \rho_{\text{théorique}} \, (1 - n)
+\tag{3.7}\]</span></span></p>
+<p>Par exemple, une roche de densité solide 3,24 g/cm³ et de porosité 5 % a une densité sèche d’environ <span class="math inline">\(3{,}24 \times (1 - 0{,}05) = 3{,}08\)</span> g/cm³. L’effet peut être important dans les roches altérées, fracturées ou poreuses.</p>
+</section>
+</section>
+<section id="atelier-interactif-3.6-densité-théorique-par-résolution-de-mathbfamathbfx-mathbfb" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-3.6-densité-théorique-par-résolution-de-mathbfamathbfx-mathbfb">🧮 Atelier interactif 3.6 — Densité théorique par résolution de <span class="math inline">\(\mathbf{A}\mathbf{x} = \mathbf{b}\)</span></h2>
+<p>Ce calculateur construit et résout le système <span class="math inline">\(\mathbf{A}\mathbf{x} = \mathbf{b}\)</span> présenté ci-dessus. La démarche suit quatre étapes : (1) <strong>cochez les minéraux présents</strong>; (2) <strong>choisissez les éléments</strong> à inclure dans le système; (3) la <strong>matrice <span class="math inline">\(\mathbf{A}\)</span></strong> et le <strong>vecteur <span class="math inline">\(\mathbf{b}\)</span></strong> se forment — les compositions sont pré-remplies à partir des formules mais restent éditables, et vous entrez les teneurs chimiques mesurées dans <span class="math inline">\(\mathbf{b}\)</span> (la ligne de fermeture <span class="math inline">\(\sum x = 1\)</span>, qui garantit 100 % de matière et détermine la gangue, est ajoutée automatiquement); (4) cliquez sur <strong>Calculer</strong> pour obtenir les <strong>proportions massiques <span class="math inline">\(\mathbf{x}\)</span></strong> des minéraux et la <strong>densité</strong> de la roche. Si la matrice n’est pas inversible, un message le signale; si des proportions sont négatives, le résultat s’affiche quand même — c’est le signe d’une combinaison minéraux/teneurs incohérente. Quelques exemples types sont accessibles d’un clic.</p>
+<p>L’objectif est de montrer que la densité dépend à la fois des teneurs chimiques et des hypothèses minéralogiques utilisées pour les interpréter : deux échantillons aux analyses semblables peuvent conduire à des densités différentes si la minéralogie, la gangue ou la porosité diffèrent.</p>
+<p>Cet atelier est pleinement interactif dans la version web de ce document.</p>
+<div class="geostat-widget-wrap">
+<div id="w-c03-densite" class="geostat-widget" data-widget="c03_densite" data-version="0.1.0">
+<div class="gw-placeholder">
+<pre><code>&lt;div class="gw-spinner"&gt;&lt;/div&gt;
+&lt;p&gt;Chargement du calculateur de densité…&lt;/p&gt;</code></pre>
+</div>
+<noscript>
+<p class="gw-fallback-note">
+JavaScript désactivé : cet atelier interactif nécessite JavaScript.
+</p>
+<p></p>
+</noscript></div>
+</div>
+
+
+<!-- -->
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Abzalov2011" class="csl-entry" role="listitem">
+Abzalov, Marat. 2011. <span>«&nbsp;Sampling <span>Errors</span> and <span>Control</span> of <span>Assay</span> <span>Data</span> <span>Quality</span> in <span>Exploration</span> and <span>Mining</span> <span>Geology</span>&nbsp;»</span>. In <em>Applications and <span>Experiences</span> of <span>Quality</span> <span>Control</span></em>. InTech. <a href="https://doi.org/10.5772/14965">https://doi.org/10.5772/14965</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../chapters/C02/index.html" class="pagination-link" aria-label="Aspect économique">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aspect économique</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../chapters/C04/index.html" class="pagination-link" aria-label="Traitement et analyse statistique des données de forage">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Traitement et analyse statistique des données de forage</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Code source</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Théorie de Gy et contrôle qualité"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="an">abstract:</span><span class="co"> |</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">  Ce chapitre présente les principes fondamentaux de l’échantillonnage en géologie minière, première étape de la chaîne menant à l’estimation des ressources. Les principales méthodes d’échantillonnage et les sources de biais susceptibles d’en compromettre la représentativité sont d’abord décrites. La théorie de Gy est ensuite introduite afin de fournir un cadre pour évaluer l’erreur fondamentale d’échantillonnage et relier la précision d’un échantillon à la masse prélevée, à la granulométrie, à la teneur et aux propriétés du matériau. Les principaux outils de contrôle qualité (QA/QC), notamment les blancs, les standards et les duplicatas, sont par la suite présentés. Ils permettent de détecter une contamination, un biais analytique ou un manque de précision. Le chapitre se termine par une méthode de calcul de la densité théorique d’un matériau à partir de son analyse chimique.</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Objectifs d'apprentissage</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>À la fin de ce chapitre, vous serez en mesure de :</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Identifier les principales sources d'erreur liées à l'échantillonnage, à la préparation des échantillons et aux analyses de laboratoire;</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Utiliser la théorie de Gy pour estimer l'erreur fondamentale d'échantillonnage et comprendre l'effet de la masse, de la granulométrie, de la teneur et des propriétés du matériau;</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Proposer une stratégie d'échantillonnage et d'analyse adaptée au niveau de précision recherché et aux contraintes du laboratoire;</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Interpréter les principaux outils de QA/QC, comme les blancs, les standards et les duplicatas, afin de détecter des problèmes possibles de contamination, de biais analytique ou de manque de précision;</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Calculer une densité théorique à partir d'une analyse chimique.</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## Référence</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>Ce chapitre s'appuie principalement sur l'ouvrage suivant :</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>Gy, P. M. (1982). Sampling of Particulate Materials: Theory and Practice. Elsevier, Amsterdam.</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>{{&lt; include widget/_gy_utils.qmd &gt;}}</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>{{&lt; include 03-01.qmd &gt;}}</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>{{&lt; include 03-02.qmd &gt;}}</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>{{&lt; include 03-03.qmd &gt;}}</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>{{&lt; include 03-04.qmd &gt;}}</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Géostatistique et géologie minière</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Danlauz/glq3401-3651/edit/main/chapters/C03/index.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/Danlauz/glq3401-3651/issues/new" class="toc-action"><i class="bi empty"></i>Signaler un problème ou<br>formuler une suggestion</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Ce livre a été réalisé avec <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+<script type="module" src="../../scripts/geostat-js/loader.js"></script>
+<script src="../../scripts/geostat-js/notebook-button.js" defer=""></script>
+
+
+
+
+</body></html>

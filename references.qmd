@@ -1,0 +1,17 @@
+---
+nocite: |
+  @*
+---
+
+```{=latex}
+\renewcommand{\partname}{} % Réinitialiser partie
+```
+
+# Références {.unnumbered}
+
+::: {#refs}
+:::
+
+## Ressources en ligne
+
+Lauzon, D. (2026), GitHub repository, https://github.com/Danlauz

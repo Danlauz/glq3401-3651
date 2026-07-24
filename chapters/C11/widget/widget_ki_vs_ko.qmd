@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c11_ki_vs_ko">
+  <div class="gw-placeholder">Chargement (KI vs KO)…</div>
+</div>
+```

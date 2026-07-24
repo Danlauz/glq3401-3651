@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c09_ajouter_forage">
+  <div class="gw-placeholder">Chargement (ajouter/retirer forage)…</div>
+</div>
+```

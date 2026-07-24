@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; Traitement et analyse statistique des données de forage – Géostatistique et géologie minière</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../chapters/C05/index.html" rel="next">
+<link href="../../chapters/C03/index.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-f2c6d6e2b784ddc5de38779acc06f37d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-74c88ba48ad0bebf983f0ffd06dd1671.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f2c6d6e2b784ddc5de38779acc06f37d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents correspondants",
+    "search-copy-link-title": "Copier le lien",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "Rechercher",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles/site-polish.css">
+<link rel="stylesheet" href="../../styles/callouts.css">
+<link rel="stylesheet" href="../../styles/exercice.css">
+<link rel="stylesheet" href="../../styles/chapter-downloads.css">
+<link rel="stylesheet" href="../../scripts/geostat-js/style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/C01/index.html">Partie I: Géologie minière</a></li><li class="breadcrumb-item"><a href="../../chapters/C04/index.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Traitement et analyse statistique des données de forage</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Géostatistique et géologie minière</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/Danlauz/glq3401-3651" title="Code source" class="quarto-navigation-tool px-1" aria-label="Code source"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Basculer le mode sombre"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Préface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">À propos de l’auteur</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Partie I: Géologie minière</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C01/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Rapport Technique NI 43-101 et Loi sur les mines</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C02/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aspect économique</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C03/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Théorie de Gy et contrôle qualité</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C04/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Traitement et analyse statistique des données de forage</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C05/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Méthodes déterministes d’estimation des ressources</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie II: Géostatistique linéaire</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C06/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction à la géostatistique</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C07/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Variogramme</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C08/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Variance de blocs, de dispersion et d’estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C09/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Krigeage</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie III: Géostatistique non-linéaire</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C10/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Géostatistique multivariable</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C11/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Krigeage d’indicatrices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C12/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable continue</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C13/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable catégorielle</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie IV: Exercices et examens</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/exercices/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Recueil d’exercices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/examens/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Anciens examens</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Références</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Annexes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Algèbre linéaire : vecteurs et plans</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Probabilités &amp; statistiques</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-c.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Table de la loi normale centrée-réduite</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Abaques - Variances de dispersion</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-e.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Abaques - Variances d’estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Notation mathématique</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#préparation-des-données-de-forage-pour-lestimation" id="toc-préparation-des-données-de-forage-pour-lestimation" class="nav-link active" data-scroll-target="#préparation-des-données-de-forage-pour-lestimation"><span class="header-section-number">4.1</span> Préparation des données de forage pour l’estimation</a></li>
+  <li><a href="#déviation-des-forages-et-levé" id="toc-déviation-des-forages-et-levé" class="nav-link" data-scroll-target="#déviation-des-forages-et-levé"><span class="header-section-number">4.2</span> Déviation des forages et levé</a>
+  <ul class="collapse">
+  <li><a href="#mise-en-contexte" id="toc-mise-en-contexte" class="nav-link" data-scroll-target="#mise-en-contexte">Mise en contexte</a></li>
+  <li><a href="#suivi-des-déviations" id="toc-suivi-des-déviations" class="nav-link" data-scroll-target="#suivi-des-déviations">Suivi des déviations</a></li>
+  <li><a href="#méthode-de-calcul-des-déviations" id="toc-méthode-de-calcul-des-déviations" class="nav-link" data-scroll-target="#méthode-de-calcul-des-déviations">Méthode de calcul des déviations</a></li>
+  <li><a href="#méthode-déquilibre-tangentielle-balanced-tangential-method" id="toc-méthode-déquilibre-tangentielle-balanced-tangential-method" class="nav-link" data-scroll-target="#méthode-déquilibre-tangentielle-balanced-tangential-method">Méthode d’équilibre tangentielle (<em>Balanced Tangential Method</em>)</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-4.1-déviation-des-forages-méthode-tangentielle-équilibrée" id="toc-atelier-interactif-4.1-déviation-des-forages-méthode-tangentielle-équilibrée" class="nav-link" data-scroll-target="#atelier-interactif-4.1-déviation-des-forages-méthode-tangentielle-équilibrée">🧮 Atelier interactif 4.1 — Déviation des forages (méthode tangentielle équilibrée)</a></li>
+  <li><a href="#régularisation-des-teneurs" id="toc-régularisation-des-teneurs" class="nav-link" data-scroll-target="#régularisation-des-teneurs"><span class="header-section-number">4.3</span> Régularisation des teneurs</a>
+  <ul class="collapse">
+  <li><a href="#exemple-simplifié-composites-réguliers" id="toc-exemple-simplifié-composites-réguliers" class="nav-link" data-scroll-target="#exemple-simplifié-composites-réguliers">Exemple simplifié : composites réguliers</a></li>
+  <li><a href="#exemple-simplifié-densité" id="toc-exemple-simplifié-densité" class="nav-link" data-scroll-target="#exemple-simplifié-densité">Exemple simplifié : densité</a></li>
+  <li><a href="#accumulation-teneur-épaisseur" id="toc-accumulation-teneur-épaisseur" class="nav-link" data-scroll-target="#accumulation-teneur-épaisseur">Accumulation (teneur × épaisseur)</a></li>
+  <li><a href="#importance-de-la-régularisation" id="toc-importance-de-la-régularisation" class="nav-link" data-scroll-target="#importance-de-la-régularisation">Importance de la régularisation</a></li>
+  <li><a href="#régularisation-par-trou-de-forage" id="toc-régularisation-par-trou-de-forage" class="nav-link" data-scroll-target="#régularisation-par-trou-de-forage">Régularisation par trou de forage</a></li>
+  <li><a href="#exemple-numérique-de-régularisation-par-trou-de-forage" id="toc-exemple-numérique-de-régularisation-par-trou-de-forage" class="nav-link" data-scroll-target="#exemple-numérique-de-régularisation-par-trou-de-forage">Exemple numérique de régularisation par trou de forage</a></li>
+  <li><a href="#exemples-de-calcul-de-composites" id="toc-exemples-de-calcul-de-composites" class="nav-link" data-scroll-target="#exemples-de-calcul-de-composites">Exemples de calcul de composites</a></li>
+  <li><a href="#choix-de-la-longueur-des-composites" id="toc-choix-de-la-longueur-des-composites" class="nav-link" data-scroll-target="#choix-de-la-longueur-des-composites">Choix de la longueur des composites</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-4.2-régularisation-et-composite" id="toc-atelier-interactif-4.2-régularisation-et-composite" class="nav-link" data-scroll-target="#atelier-interactif-4.2-régularisation-et-composite">🧮 Atelier interactif 4.2 — Régularisation et composite</a></li>
+  <li><a href="#analyse-exploratoire-des-données" id="toc-analyse-exploratoire-des-données" class="nav-link" data-scroll-target="#analyse-exploratoire-des-données"><span class="header-section-number">4.4</span> Analyse exploratoire des données</a>
+  <ul class="collapse">
+  <li><a href="#statistiques-descriptives-univariées" id="toc-statistiques-descriptives-univariées" class="nav-link" data-scroll-target="#statistiques-descriptives-univariées">Statistiques descriptives univariées</a></li>
+  <li><a href="#histogramme-et-fonction-de-répartition" id="toc-histogramme-et-fonction-de-répartition" class="nav-link" data-scroll-target="#histogramme-et-fonction-de-répartition">Histogramme et fonction de répartition</a></li>
+  <li><a href="#analyse-spatiale-carte-des-valeurs-posting" id="toc-analyse-spatiale-carte-des-valeurs-posting" class="nav-link" data-scroll-target="#analyse-spatiale-carte-des-valeurs-posting">Analyse spatiale : carte des valeurs (<em>posting</em>)</a></li>
+  <li><a href="#valeurs-extrêmes-et-écrêtage" id="toc-valeurs-extrêmes-et-écrêtage" class="nav-link" data-scroll-target="#valeurs-extrêmes-et-écrêtage">Valeurs extrêmes et écrêtage</a></li>
+  <li><a href="#analyse-multivariée" id="toc-analyse-multivariée" class="nav-link" data-scroll-target="#analyse-multivariée">Analyse multivariée</a></li>
+  <li><a href="#synthèse-liste-de-vérification" id="toc-synthèse-liste-de-vérification" class="nav-link" data-scroll-target="#synthèse-liste-de-vérification">Synthèse : liste de vérification</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-4.3-analyse-exploratoire-spatiale" id="toc-atelier-interactif-4.3-analyse-exploratoire-spatiale" class="nav-link" data-scroll-target="#atelier-interactif-4.3-analyse-exploratoire-spatiale">🧮 Atelier interactif 4.3 — Analyse exploratoire spatiale</a></li>
+  <li><a href="#débiaisement-debiasing-et-dégroupement-declustering" id="toc-débiaisement-debiasing-et-dégroupement-declustering" class="nav-link" data-scroll-target="#débiaisement-debiasing-et-dégroupement-declustering"><span class="header-section-number">4.5</span> Débiaisement (<em>debiasing</em>) et dégroupement (<em>declustering</em>)</a>
+  <ul class="collapse">
+  <li><a href="#mise-en-contexte-1" id="toc-mise-en-contexte-1" class="nav-link" data-scroll-target="#mise-en-contexte-1">Mise en contexte</a></li>
+  <li><a href="#méthode-de-dégroupement" id="toc-méthode-de-dégroupement" class="nav-link" data-scroll-target="#méthode-de-dégroupement">Méthode de dégroupement</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-4.4-dégroupement-par-cellules" id="toc-atelier-interactif-4.4-dégroupement-par-cellules" class="nav-link" data-scroll-target="#atelier-interactif-4.4-dégroupement-par-cellules">🧮 Atelier interactif 4.4 — Dégroupement par cellules</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Danlauz/glq3401-3651/edit/main/chapters/C04/index.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/Danlauz/glq3401-3651/issues/new" class="toc-action"><i class="bi empty"></i>Signaler un problème ou<br>formuler une suggestion</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/C01/index.html">Partie I: Géologie minière</a></li><li class="breadcrumb-item"><a href="../../chapters/C04/index.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Traitement et analyse statistique des données de forage</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Traitement et analyse statistique des données de forage</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Résumé</div>
+    <p>Ce chapitre porte sur la préparation des données de forage avant l’estimation des ressources. Une fois les teneurs produites et validées, elles doivent être replacées dans l’espace et rendues statistiquement comparables. Les mesures de déviation — azimut, pendage et profondeur — sont d’abord converties en coordonnées cartésiennes pour chaque trou. Les teneurs sont ensuite régularisées sur un support constant par la formation de composites. Enfin, l’effet d’un échantillonnage spatialement non uniforme est corrigé à l’aide de méthodes de débiaisement et de dégroupement. À chaque étape, l’accent est mis sur l’effet quantitatif de ces choix sur les statistiques et sur l’estimation des ressources. Des ateliers interactifs permettent d’en mesurer directement les répercussions.</p>
+  </div>
+</div>
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Objectifs d’apprentissage
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>À la fin de ce chapitre, l’étudiant devrait être en mesure de :</p>
+<ul>
+<li><p>Décrire la géométrie d’un forage et convertir les mesures de déviation en coordonnées cartésiennes;</p></li>
+<li><p>Réaliser une analyse exploratoire des teneurs (statistiques descriptives, histogrammes, corrélations) et traiter les valeurs extrêmes par écrêtage;</p></li>
+<li><p>Comprendre le rôle des composites et régulariser les teneurs sur un support constant;</p></li>
+<li><p>Reconnaître l’effet d’un échantillonnage spatial non uniforme et appliquer des méthodes de débiaisement ou de dégroupement.</p></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Référence
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ce chapitre s’appuie principalement sur le livre suivant :</p>
+<p>Pyrcz, M. J., &amp; Deutsch, C. V. (2014). <em>Geostatistical reservoir modeling.</em> Oxford University Press.</p>
+</div>
+</div>
+<!--
+  Fichier conservé pour compatibilité avec les `include` historiques.
+  Tout le code JS partagé (modèles de variogramme, solveurs, etc.) a été
+  retiré : il dupliquait `geostat_polymtl`. Les widgets utilisent
+  désormais Pyodide via `scripts/geostat-js/pyodide_setup.js` (objet
+  `gpoly`), qui appelle directement les fonctions de la librairie.
+-->
+<section id="préparation-des-données-de-forage-pour-lestimation" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="préparation-des-données-de-forage-pour-lestimation"><span class="header-section-number">4.1</span> Préparation des données de forage pour l’estimation</h2>
+<p>Une valeur analytique <span class="math inline">\(z_i\)</span> ne peut servir telle quelle à l’estimation. Une teneur n’a de sens que rattachée à sa position <span class="math inline">\(\mathbf{x}_i\)</span>, à son support (le volume de matière qu’elle représente, réduit à la longueur <span class="math inline">\(\ell_i\)</span> d’un intervalle pour une carotte de section constante) et au domaine géologique dont elle provient. Deux échantillons de même teneur ne portent donc pas la même information s’ils diffèrent par leur support ou leur contexte.</p>
+<p>Or, cette position n’est pas donnée d’emblée : un forage ne suit jamais exactement la droite prévue; il dévie sous l’effet des propriétés physiques des roches. On ne connaît la position réelle d’un échantillon qu’après avoir converti les mesures de déviation — azimut et pendage relevés à intervalles réguliers — en coordonnées le long du trou (le <em>levé</em>). Une trajectoire mal reconstituée déplace l’échantillon, fausse les distances entre données et, par suite, toute l’estimation. Rattacher chaque teneur <span class="math inline">\(z_i\)</span> à sa vraie position <span class="math inline">\(\mathbf{x}_i\)</span> est donc le premier préalable.</p>
+<p>Une fois les données correctement positionnées, on les examine avant tout traitement : c’est l’analyse exploratoire. Elle décrit la distribution des teneurs — forme, centre, dispersion, valeurs extrêmes — et met en évidence les deux propriétés qui empêchent d’appliquer directement les statistiques classiques aux données brutes.</p>
+<p>D’abord, les supports sont inégaux : les intervalles analysés n’ont pas tous la même longueur, si bien qu’une moyenne arithmétique des teneurs brutes accorde le même poids à un échantillon de 0,5 m et à un autre de 3 m. Il faut donc ramener les teneurs à un support constant — c’est la régularisation par composites.</p>
+<p>Ensuite, l’échantillonnage est spatialement préférentiel : les forages sont plus serrés là où la minéralisation est riche, précisément parce que c’est là qu’on cherche à la définir. Une statistique calculée sur les données brutes surpondère alors ces zones, et la moyenne obtenue surestime la teneur du gisement. Ce biais tient à la répartition des données, non à l’analyse; on le corrige par le débiaisement et le dégroupement.</p>
+<p>L’objectif de ce chapitre est de transformer les informations brutes — collets, mesures de déviation, intervalles, densités et teneurs — en un jeu de données cohérent et statistiquement exploitable. On procède en quatre étapes : convertir les mesures de déviation en coordonnées (levé), ramener les teneurs à un support commun (régularisation par composites), décrire la distribution des teneurs et traiter ses valeurs extrêmes (analyse exploratoire), puis corriger l’effet du suréchantillonnage (débiaisement et dégroupement).</p>
+</section>
+<section id="déviation-des-forages-et-levé" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="déviation-des-forages-et-levé"><span class="header-section-number">4.2</span> Déviation des forages et levé</h2>
+<p>Lors de l’estimation des ressources et des réserves minérales, il est nécessaire de connaître la localisation exacte <span class="math inline">\((x, y, z)\)</span> des teneurs afin d’interpoler les données à des coordonnées non observées. Cependant, il n’est pas rare que les forages dévient, modifiant les coordonnées initialement prévues. Il faut alors assurer le suivi des déviations et en mesurer l’orientation et la direction (i.e., azimut et plongée) afin de corriger les coordonnées.</p>
+<section id="mise-en-contexte" class="level3">
+<h3 class="anchored" data-anchor-id="mise-en-contexte">Mise en contexte</h3>
+<p>La déviation d’un trou de forage dépend de la nature des roches traversées, de la technique de forage utilisée, ainsi que de sa profondeur et de son inclinaison initiale. Si le trou est foré parallèlement à la schistosité ou à la structure naturelle de la roche, il tendra à suivre les plans de faiblesse (p.&nbsp;ex., d’une roche dure à une roche molle). En revanche, s’il est foré à un angle plus élevé, il tendra à se dévier perpendiculairement à ces plans de faiblesse (p.&nbsp;ex., d’une roche molle à une roche dure). Ces deux cas typiques sont illustrés à la <a href="#fig-img-deviation" class="quarto-xref">Figure&nbsp;<span>4.1</span></a>.</p>
+<div id="fig-img-deviation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-img-deviation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="fig-img-deviation-a" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-img-deviation-a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C4_ImgDeviation.png" class="img-fluid figure-img" data-ref-parent="fig-img-deviation">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-img-deviation-a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Déviation typique simplifiée
+</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-img-deviation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.1
+</figcaption>
+</figure>
+</div>
+<p>Un exemple célèbre illustrant l’importance de la mesure des déviations est celui de la mine de Louvicourt. Les forages ont dévié de manière significative et l’arpentage a été mal réalisé. En conséquence, une forte surestimation des réserves minérales a été constatée. La minière pensait disposer d’une veine minéralisée de plus de 40 Mt, soit une durée de vie de la mine de 25 ans. Les réserves réelles se sont avérées d’environ 15 Mt (une diminution de 25 Mt), avec une durée de vie réduite à 10 ans.</p>
+<p>La <a href="#fig-impact-dev" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> illustre cette problématique. Les ingénieurs croyaient avoir affaire à une veine dont la longueur correspondait à la ligne rose, avec des forages supposés non déviés (lignes bleues). Cependant, les forages ont en réalité montré des déviations importantes (lignes noires), et la longueur réelle de la minéralisation est beaucoup plus courte (ligne rouge). On observe clairement une surestimation de la longueur de la veine minéralisée par rapport à la vérité.</p>
+<div id="fig-impact-dev" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-impact-dev-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C4_ImpactDev.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-impact-dev-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.2: Impact des déviations non prises en compte
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="suivi-des-déviations" class="level3">
+<h3 class="anchored" data-anchor-id="suivi-des-déviations">Suivi des déviations</h3>
+<p>Pour estimer correctement les tonnages et les teneurs, il faut connaître avec précision la position des échantillons dans l’espace. Chaque teneur, associée à une profondeur le long du forage, doit être convertie en coordonnées cartésiennes <span class="math inline">\((x, y, z)\)</span> pour entrer dans un modèle géostatistique.</p>
+<p>Pour y parvenir, il faut d’abord connaître la position du collet du forage. Cette position doit être levée avec précision et intégrée au système de coordonnées approprié. Ensuite, il faut reconstruire la trajectoire du trou à partir des mesures de déviation. Un forage est rarement parfaitement droit : il dévie sous l’effet du dispositif de forage et des roches rencontrées.</p>
+<p>Le levé des collets de forage est généralement réalisé à l’aide d’une station totale ou d’un GPS de haute précision. Les coordonnées obtenues doivent être intégrées dans un système de référence unique, afin d’éviter les erreurs de positionnement entre les forages, la topographie et le modèle géologique. Les altitudes des collets doivent aussi être comparées à la topographie locale; un écart de plus d’une demi-hauteur de gradin, soit environ 2 m, est généralement considéré comme problématique et peut indiquer une erreur de levé ou de saisie.</p>
+<p>Les déviations sont mesurées à différentes profondeurs de forage. Selon le contexte, on peut utiliser des instruments magnétiques, des gyroscopes ou des mesures de type <em>single-shot</em> ou <em>multi-shot</em>. Ces mesures fournissent l’azimut et l’inclinaison du trou. On peut ensuite reconstruire la trajectoire du forage en 3D et replacer correctement les intervalles échantillonnés.</p>
+<p>Il faut faire attention, car un forage peut dévier bien plus qu’on ne le pense. C’est souvent le cas pour les forages inclinés, profonds ou réalisés dans des roches aux propriétés très variables. La trajectoire peut être influencée par les contrastes de dureté, les plans de faiblesse ou certaines structures géologiques. Les instruments magnétiques peuvent également être perturbés par des minéraux tels que la magnétite ou la pyrrhotite. Dans certains cas, il faut aussi corriger les azimuts en tenant compte de la déclinaison magnétique.</p>
+<p>Si les déviations ne sont pas correctement suivies, un intervalle minéralisé peut être placé au mauvais endroit dans le modèle. L’erreur peut atteindre plusieurs mètres. Ce déplacement fausse l’interprétation géologique et l’estimation des ressources.</p>
+</section>
+<section id="méthode-de-calcul-des-déviations" class="level3">
+<h3 class="anchored" data-anchor-id="méthode-de-calcul-des-déviations">Méthode de calcul des déviations</h3>
+<p>Pour utiliser les données de forage dans un modèle 3D, il faut convertir les profondeurs mesurées le long du trou en coordonnées <span class="math inline">\((x, y, z)\)</span>. Cette étape s’appelle le désondage, ou <em>desurveying</em>.</p>
+<p>Au départ, les analyses sont seulement placées selon leur profondeur dans le forage. Par exemple, les analyses chimiques peuvent n’être réalisées que sur un intervalle compris entre 120 m et 150 m le long du trou. Cette information indique où il se situe dans le forage, mais pas exactement où il se trouve dans l’espace. Si le forage est incliné ou s’il dévie avec la profondeur, l’intervalle ne sera pas directement sous le collet. Il faut donc reconstruire la trajectoire du trou pour placer correctement les échantillons dans le modèle.</p>
+<p>Le désondage utilise donc les mesures de déviation prises le long du forage. Ces mesures indiquent l’azimut et l’inclinaison du trou à différentes profondeurs.</p>
+<div id="def-azimut" class="theorem definition">
+<p><span class="theorem-title"><strong>Définition 4.1 (Azimut)</strong></span> Angle horizontal donnant la direction du forage, mesuré dans le plan horizontal à partir du nord, dans le sens horaire, et exprimé en degrés (0° à 360°). Un azimut de 0° pointe vers le nord, 90° vers l’est, 180° vers le sud et 270° vers l’ouest.</p>
+</div>
+<div id="def-inclinaison" class="theorem definition">
+<p><span class="theorem-title"><strong>Définition 4.2 (Inclinaison (plongée))</strong></span> Angle vertical entre la trajectoire du forage et le plan horizontal, exprimé en degrés. Un trou horizontal a une inclinaison de 0° et un trou vertical dirigé vers le bas une inclinaison de 90° (comptée négativement, −90°, dans plusieurs logiciels : la convention de signe doit toujours être vérifiée).</p>
+</div>
+<p>À partir de ces informations, il devient possible de reconstruire la trajectoire du forage et de calculer la position du centre de chaque composite.</p>
+<p>Prenons un exemple concret. Le tableau ci-dessous donne les mesures de déviation d’un forage, relevées au collet puis à 40 m, 100 m et 120 m de profondeur : à chaque station, on enregistre l’azimut et l’inclinaison du trou.</p>
+<div id="def-collet" class="theorem definition">
+<p><span class="theorem-title"><strong>Définition 4.3 (Collet et arpentage)</strong></span> Le collet est le point où le forage débute en surface. Ses coordonnées <span class="math inline">\((x_0, y_0, z_0)\)</span> — est, nord et élévation — sont déterminées par arpentage et constituent le point de départ à partir duquel toute la trajectoire du forage est reconstruite.</p>
+</div>
+<div id="tbl-deviation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-deviation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.1: Mesures de déviation d’un forage.
+</figcaption>
+<div aria-describedby="tbl-deviation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Point de mesure</th>
+<th style="text-align: center;">Azimut</th>
+<th style="text-align: center;">Inclinaison</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Collet</td>
+<td style="text-align: center;"><span class="math inline">\(103^\circ\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(53^\circ\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">40 m</td>
+<td style="text-align: center;"><span class="math inline">\(107^\circ\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(58^\circ\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">100 m</td>
+<td style="text-align: center;"><span class="math inline">\(120^\circ\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(65^\circ\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">120 m</td>
+<td style="text-align: center;"><span class="math inline">\(135^\circ\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(72^\circ\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>L’orientation du trou n’est donc connue qu’à ces quatre stations. Le désondage part du collet, dont les coordonnées <span class="math inline">\((x_0, y_0, z_0)\)</span> sont connues par arpentage, puis cumule les déplacements le long du trou à partir des mesures de déviation. Pour placer un échantillon situé entre deux stations, il faut interpoler la trajectoire; on obtient alors les coordonnées <span class="math inline">\((x, y, z)\)</span> du centre d’un composite, par exemple un intervalle situé autour de 110 m de profondeur.</p>
+<p>Plusieurs méthodes permettent d’effectuer ce calcul. Les plus utilisées dans les logiciels miniers sont la méthode de la courbure minimale et la méthode d’équilibre tangentielle. La différence tient à la façon d’interpoler la trajectoire entre deux stations : la méthode d’équilibre tangentielle relie les stations par des segments rectilignes, tandis que la courbure minimale les relie par un arc de cercle, ce qui suit mieux une trajectoire courbe. La courbure minimale est généralement considérée comme la plus précise des deux dans la littérature. Cependant, nous utiliserons la méthode d’équilibre tangentielle, car elle est simple à appliquer et permet de bien comprendre le principe du désondage. À noter que lorsque les mesures de déviation sont suffisamment rapprochées, les différentes méthodes de désondage deviennent pratiquement équivalentes.</p>
+</section>
+<section id="méthode-déquilibre-tangentielle-balanced-tangential-method" class="level3">
+<h3 class="anchored" data-anchor-id="méthode-déquilibre-tangentielle-balanced-tangential-method">Méthode d’équilibre tangentielle (<em>Balanced Tangential Method</em>)</h3>
+<p>La méthode d’équilibre tangentielle est utilisée pour calculer les coordonnées 3D d’un forage à partir des mesures de déviation. Elle suppose que la moitié de la distance mesurée (<em>Measured Depth</em>, ou <span class="math inline">\(MD/2\)</span>) suit l’orientation du point supérieur (azimut, inclinaison), et que l’autre moitié suit l’orientation du point inférieur. Cela implique que l’on doit identifier le point médian entre deux points de mesure. Prenons l’exemple précédent. La première section, allant de 0 m à 40 m, comprendra deux déviations de 20 m chacune : l’une avec l’inclinaison et l’azimut du collet, l’autre avec l’azimut et l’inclinaison mesurés à 40 m.</p>
+<p>Les formules utilisées pour calculer les coordonnées <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span> et <span class="math inline">\(z\)</span> sont les suivantes :</p>
+<p><span class="math display">\[\begin{aligned}
+\Delta x &amp;= \frac{MD}{2} \cdot \cos(I_1) \cdot \sin(Az_1) + \frac{MD}{2} \cdot \cos(I_2) \cdot \sin(Az_2) \\
+\Delta y &amp;= \frac{MD}{2} \cdot \cos(I_1) \cdot \cos(Az_1) + \frac{MD}{2} \cdot \cos(I_2) \cdot \cos(Az_2) \\
+\Delta z &amp;= \frac{MD}{2} \cdot \sin(I_1) + \frac{MD}{2} \cdot \sin(I_2)\end{aligned}\]</span></p>
+<p>Dans ces équations, <span class="math inline">\(MD\)</span> représente la distance mesurée entre deux points de déviation. <span class="math inline">\(I_1\)</span> et <span class="math inline">\(Az_1\)</span> correspondent à l’inclinaison et l’azimut du point supérieur, tandis que <span class="math inline">\(I_2\)</span> et <span class="math inline">\(Az_2\)</span> désignent les paramètres du point inférieur.</p>
+<p>Ces incréments <span class="math inline">\((\Delta x, \Delta y, \Delta z)\)</span> se cumulent à partir du point précédent. Connaissant les coordonnées du collet <span class="math inline">\((x_0, y_0, z_0)\)</span>, la position de la première station, à 40 m, s’obtient par simple addition :</p>
+<p><span class="math display">\[
+x_1 = x_0 + \Delta x, \qquad y_1 = y_0 + \Delta y, \qquad z_1 = z_0 - \Delta z
+\]</span></p>
+<p>où <span class="math inline">\(\Delta z\)</span> est la composante verticale descendante (on la soustrait si <span class="math inline">\(z\)</span> désigne l’élévation). On répète ensuite l’opération de section en section : la section 40–100 m donne <span class="math inline">\((x_2, y_2, z_2) = (x_1, y_1, z_1) + (\Delta x, \Delta y, \Delta z)\)</span>, puis 100–120 m, et ainsi de suite jusqu’à reconstruire toute la trajectoire du trou. Chaque échantillon est alors positionné en cumulant les déplacements depuis le collet.</p>
+<section id="exemple-numérique" class="level4">
+<h4 class="anchored" data-anchor-id="exemple-numérique">Exemple numérique</h4>
+<p>Considérons les mesures aux profondeurs de 0 m (<span class="math inline">\(I_1 = 53^\circ\)</span>, <span class="math inline">\(Az_1 = 103^\circ\)</span>) et de 40 m (<span class="math inline">\(I_2 = 58^\circ\)</span>, <span class="math inline">\(Az_2 = 107^\circ\)</span>). La distance mesurée est de <span class="math inline">\(MD = 40\)</span> m.</p>
+<p>Calculs :</p>
+<p><span class="math display">\[\begin{aligned}
+\Delta x &amp;= \frac{40}{2} \cdot \cos(53^\circ) \cdot \sin(103^\circ) + \frac{40}{2} \cdot \cos(58^\circ) \cdot \sin(107^\circ) \\
+        &amp;\approx \frac{40}{2} \cdot 0{,}6018 \cdot 0{,}9744 + \frac{40}{2} \cdot 0{,}5299 \cdot 0{,}9563 \\
+        &amp;\approx 11{,}73 + 10{,}13 = 21{,}86\,\text{m} \\
+\Delta y &amp;= \frac{40}{2} \cdot \cos(53^\circ) \cdot \cos(103^\circ) + \frac{40}{2} \cdot \cos(58^\circ) \cdot \cos(107^\circ) \\
+        &amp;\approx \frac{40}{2} \cdot 0{,}6018 \cdot (-0{,}2250) + \frac{40}{2} \cdot 0{,}5299 \cdot (-0{,}2924) \\
+        &amp;\approx -2{,}71 - 3{,}10 = -5{,}81\,\text{m} \\
+\Delta z &amp;= \frac{40}{2} \cdot \sin(53^\circ) + \frac{40}{2} \cdot \sin(58^\circ) \\
+        &amp;\approx \frac{40}{2} \cdot 0{,}7986 + \frac{40}{2} \cdot 0{,}8480 = 32{,}93\,\text{m}\end{aligned}\]</span></p>
+<p>Le déplacement du forage entre les profondeurs 0 m et 40 m est d’environ : <span class="math inline">\(\Delta x = 21{,}86\)</span> m, <span class="math inline">\(\Delta y = -5{,}81\)</span> m et <span class="math inline">\(\Delta z = 32{,}93\)</span> m. En répétant ce processus jusqu’à 120 m à partir de mesures successives, le profil 3D du sondage sera construit et les coordonnées des points de mesure seront déterminées.</p>
+<p>L’atelier interactif ci-dessous est un calculateur basé sur la méthode d’équilibre tangentielle qui vous permet d’introduire manuellement le nombre de points de mesure (Longueur, Azimut, Inclinaison) et d’obtenir la localisation de n’importe quel composite le long du forage <span class="math inline">\((x, y, z)\)</span>.</p>
+<!-- W1 : Déviation des forages -->
+</section>
+</section>
+</section>
+<section id="atelier-interactif-4.1-déviation-des-forages-méthode-tangentielle-équilibrée" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-4.1-déviation-des-forages-méthode-tangentielle-équilibrée">🧮 Atelier interactif 4.1 — Déviation des forages (méthode tangentielle équilibrée)</h2>
+Entrez les mesures de déviation (profondeur, azimut, inclinaison) et visualisez la trajectoire 3D du forage. Calculez les coordonnées de n’importe quel composite le long du forage.
+<div class="geostat-widget-wrap">
+<div id="w-c04-deviations" class="geostat-widget" data-widget="c04_deviations" data-version="0.1.0">
+<div class="gw-placeholder">
+<pre><code>&lt;div class="gw-spinner"&gt;&lt;/div&gt;
+&lt;p&gt;Chargement de l'atelier de trajectoire…&lt;/p&gt;</code></pre>
+</div>
+<noscript>
+<p class="gw-fallback-note">
+JavaScript désactivé : cet atelier interactif nécessite JavaScript.
+</p>
+<p></p>
+</noscript></div>
+</div>
+</section>
+<section id="régularisation-des-teneurs" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="régularisation-des-teneurs"><span class="header-section-number">4.3</span> Régularisation des teneurs</h2>
+<p>Une étape importante avant de calculer les ressources et les réserves minérales consiste à régulariser les teneurs mesurées sur des supports de longueur et volume variables. Il s’agit d’une pratique courante en estimation des ressources, considérée comme essentielle pour produire des estimations non biaisées.</p>
+<div id="def-support" class="theorem definition">
+<p><span class="theorem-title"><strong>Définition 4.4 (Support)</strong></span> Volume — avec sa forme et son orientation — sur lequel une teneur est mesurée ou définie. Deux teneurs ne sont directement comparables que si elles partagent le même support.</p>
+</div>
+<p>En général, les carottes de forage (ou les supports) sont collectées sur des longueurs différentes (ou à des intervalles irréguliers) en raison des variations des propriétés mécaniques des lithologies traversées, des stratégies d’échantillonnage et de la sélection des supports envoyés en analyse. En d’autres mots, nous n’analysons que rarement l’intégralité des carottes d’un forage et celles-ci n’ont pas toutes la même longueur.</p>
+<p>Une sélection est souvent effectuée afin d’envoyer uniquement les carottes jugées pertinentes pour l’analyse, introduisant ainsi un biais de sélection potentiel. La longueur des échantillons dépend aussi de plusieurs facteurs géomécaniques (qualité du massif rocheux) et opérationnels (p.&nbsp;ex., l’expérience du foreur).</p>
+<p>En géostatistique, il est primordial que les échantillons aient des supports identiques (voir l’effet de support du chapitre 6), c’est-à-dire que leur représentativité soit équivalente. Autrement dit, toutes les teneurs mesurées doivent correspondre à la même taille de support (par exemple, des carottes de 3 m, avec une densité et un volume identiques). Si les supports diffèrent, il faut procéder à une régularisation afin d’obtenir des composites de même longueur. Ainsi, un composite est un échantillon artificiel obtenu par l’agrégation de plusieurs échantillons (ici, des carottes de forage), souvent de longueurs variables, afin de former des segments de longueur uniforme.</p>
+<p>Le composite est généralement calculé comme une moyenne pondérée par la longueur des échantillons et peut également tenir compte de la densité spécifique, des variations de volume ou du taux de récupération du carottage. La régularisation peut répondre à divers objectifs : obtenir une valeur représentative à l’intersection d’un corps minéralisé, créer des composites lithologiques ou métallurgiques, produire des composites réguliers le long des trous, par gradin (<em>bench</em> en anglais), par section, par haute teneur, ou encore des composites minimaux en longueur et en teneur. Chacun de ces types de composites répond à des besoins spécifiques selon les contextes d’étude. Les composites de longueur régulière ou en gradins sont les plus fréquemment utilisés pour l’estimation des ressources.</p>
+<section id="exemple-simplifié-composites-réguliers" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-simplifié-composites-réguliers">Exemple simplifié : composites réguliers</h3>
+<p>Considérons un trou de forage traversant un corps minéralisé, dans lequel trois échantillons de longueurs différentes ont été prélevés. L’échantillon 1 présente une longueur de 1 m et une teneur de 1{,}00 %, l’échantillon 2 une longueur de 3 m et une teneur de 5{,}85 %, et l’échantillon 3 une longueur de 2 m et une teneur de 1{,}75 %.</p>
+<p>Sans régularisation, si l’on calcule simplement la moyenne des teneurs (sans pondération par la longueur), on obtient :</p>
+<p><span class="math display">\[\text{Moyenne non pondérée} = \frac{1{,}0 + 5{,}85 + 1{,}75}{3} = \frac{8{,}6}{3} = 2{,}87 \%\]</span></p>
+<p>Cependant, cette valeur ne reflète pas le fait que les longueurs des échantillons sont inégales. Supposons maintenant que l’on veuille créer des composites de 3 mètres. Le premier composite sera constitué de l’échantillon 1 (1 m) et d’une partie de l’échantillon 2 (2 m). La teneur du composite 1 sera obtenue par une moyenne pondérée par la longueur :</p>
+<p><span class="math display">\[z_1 = \frac{1 \times 1{,}00 + 2 \times 5{,}85}{1 + 2} = \frac{12{,}7}{3} \approx 4{,}23 \%\]</span></p>
+<p>De même, le second composite sera constitué d’une partie de l’échantillon 2 (1 m) et de l’intégralité de l’échantillon 3 (2 m). La teneur du composite 2 sera aussi obtenue par une moyenne pondérée par la longueur :</p>
+<p><span class="math display">\[z_2 = \frac{1 \times 5{,}85 + 2 \times 1{,}75}{1 + 2} = \frac{9{,}35}{3} \approx 3{,}12 \%\]</span></p>
+<p>Maintenant que les supports sont tous les mêmes, on peut procéder au calcul de la moyenne sans risque d’introduire un biais :</p>
+<p><span class="math display">\[\text{Moyenne régularisée} = \frac{z_1 + z_2}{2} = \frac{4{,}23 + 3{,}12}{2} = 3{,}68 \%\]</span></p>
+<p>On constate ici que la moyenne régularisée diffère de la moyenne non pondérée. Cette différence illustre l’impact de la régularisation : en tenant compte des longueurs réelles des échantillons, on obtient une estimation plus représentative de la teneur du gisement. La <a href="#fig-composite" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> illustre le calcul effectué ci-haut.</p>
+<div id="fig-composite" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-composite-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C4_Composite.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-composite-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.3: Exemple d’un composite
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="exemple-simplifié-densité" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-simplifié-densité">Exemple simplifié : densité</h3>
+<p>La densité des carottes, au même titre que leur longueur, intervient dans la régularisation des teneurs. Supposons qu’un bloc de minerai de 1 m³ contient 3 % de cuivre. Nous voulons calculer la quantité de cuivre en fonction de la densité du minerai.</p>
+<p>Si la densité du minerai est de 3{,}5 tonnes par mètre cube (t/m³), la masse totale du minerai dans 1 m³ est de 3{,}5 tonnes. La quantité de cuivre sera alors :</p>
+<p><span class="math display">\[\text{Quantité de cuivre} = 3\% \times 3{,}5 \, \text{t} = 0{,}03 \times 3{,}5 \, \text{t} = 0{,}105 \, \text{t} = 105 \, \text{kg}\]</span></p>
+<p>Si la densité du minerai est de 3{,}2 t/m³, la masse totale du minerai dans 1 m³ est de 3{,}2 tonnes. La quantité de cuivre sera alors :</p>
+<p><span class="math display">\[\text{Quantité de cuivre} = 3\% \times 3{,}2 \, \text{t} = 0{,}03 \times 3{,}2 \, \text{t} = 0{,}096 \, \text{t} = 96 \, \text{kg}\]</span></p>
+<p>Ainsi, pour 1 m³ de minerai à la densité de 3{,}5 t/m³, la quantité de cuivre est de 105 kg, mais elle chute à 96 kg lorsque la densité est de 3{,}2 t/m³. Bien que la teneur en cuivre soit constante à 3%, la quantité de cuivre dans 1 m³ de minerai varie en fonction de la densité. Plus la densité est faible (3{,}2 t/m³ contre 3{,}5 t/m³), moins il y a de métal dans un volume donné de minerai. Il est donc très important de tenir compte de la densité lors de l’estimation des ressources et des réserves minières. À noter que souvent, les variations de densité peuvent être considérées comme négligeables.</p>
+</section>
+<section id="accumulation-teneur-épaisseur" class="level3">
+<h3 class="anchored" data-anchor-id="accumulation-teneur-épaisseur">Accumulation (teneur × épaisseur)</h3>
+<p>Dans les gisements tabulaires ou filoniens — veines d’or, reefs de platine, certaines latérites nickelifères ou gisements d’uranium de type <em>roll-front</em> —, la régularisation classique par composites est mal adaptée. Les intercepts minéralisés sont étroits et de longueur irrégulière, on n’en compte souvent qu’un seul par forage, et les teneurs varient fortement, les intercepts les plus minces étant parfois les plus riches. Dans ces conditions, on travaille plutôt avec l’<strong>accumulation</strong>, aussi appelée variable teneur–épaisseur (<em>grade–thickness</em>, ou GT).</p>
+<p>L’accumulation est le produit de la teneur par l’épaisseur de l’intercept :</p>
+<p><span class="math display">\[
+GT = \text{teneur} \times \text{épaisseur}
+\]</span></p>
+<p>Cette quantité est proportionnelle au contenu en métal de l’intercept. On l’estime indépendamment de l’épaisseur, puis la teneur finale en un point ou un bloc s’obtient en divisant l’accumulation estimée par l’épaisseur estimée. L’épaisseur doit être l’épaisseur vraie, c’est-à-dire mesurée normalement au pendage, et non la longueur apparente le long du forage.</p>
+<p>Cette approche est particulièrement utile lorsque la teneur et l’épaisseur ne sont pas fortement corrélées. Au lieu d’estimer directement la teneur, on travaille avec le produit teneur × épaisseur. Cette variable est souvent moins variable que la teneur seule, ce qui peut rendre l’estimation plus stable. Cela évite aussi de donner trop de poids à quelques fortes teneurs locales.</p>
+</section>
+<section id="importance-de-la-régularisation" class="level3">
+<h3 class="anchored" data-anchor-id="importance-de-la-régularisation">Importance de la régularisation</h3>
+<p>Bien que la régularisation ne soit pas toujours indispensable pour estimer les ressources, elle s’impose dans la majorité des cas. Elle permet d’uniformiser le support des données — c’est-à-dire leur taille ou leur volume — et de corriger les intervalles d’échantillonnage partiels, ce qui facilite une estimation plus cohérente. La plupart des logiciels d’estimation considèrent d’ailleurs que les données sont issues de supports de taille constante, ce qui oblige à former des composites.</p>
+<p>La régularisation a aussi un effet très concret : elle lisse une partie de l’information brute. Les teneurs deviennent alors plus comparables entre elles, parce qu’elles sont ramenées sur un même support. Ce support devrait rester cohérent avec la sélectivité réelle de la mine. Par exemple, en mine à ciel ouvert, la hauteur des gradins peut guider le choix de la longueur des composites. En mine souterraine, on peut plutôt se baser sur l’épaisseur des tranches ou sur l’unité exploitée.</p>
+<p>Le choix des composites influence directement le modèle de ressources. Il faut donc faire attention à la longueur choisie, aux limites géologiques et aux intervalles incomplets ou manquants. Si les composites sont mal définis, on peut trop lisser les teneurs, mélanger des zones qui devraient rester séparées ou donner un poids trop important à certains intervalles. Les composites conditionnent donc directement l’estimation qui suit.</p>
+</section>
+<section id="régularisation-par-trou-de-forage" class="level3">
+<h3 class="anchored" data-anchor-id="régularisation-par-trou-de-forage">Régularisation par trou de forage</h3>
+<p>Nous répondrons à ces questions à l’aide d’un exemple numérique. Dans cette lecture, nous privilégierons la méthode de régularisation par trou de forage (<em>downhole compositing</em>). Il existe d’autres approches, notamment la régularisation par bancs ou par domaines géologiques, qui tiennent compte de critères de sélectivité liés aux opérations minières ou à la géologie du gisement.</p>
+<p>La régularisation par bancs (<em>bench compositing</em>) regroupe tous les intervalles compris entre l’élévation supérieure et l’élévation inférieure d’un banc, et place le centre du composite au milieu du banc. Elle est commode en mine à ciel ouvert lorsque les forages sont presque verticaux, mais elle se dégrade dès que les forages sont inclinés : pour un forage à 45°, un banc de 10 m intègre plus de 14 m de carotte. On la limite donc en pratique aux forages dont l’inclinaison ne dépasse pas environ 70°, et on l’évite lorsque le jeu de données mêle des forages verticaux et inclinés. La régularisation par trou de forage, elle, compose toujours la même longueur le long du trou et ne dépend pas de l’inclinaison : le centre du composite correspond exactement à la position des échantillons combinés. C’est cette robustesse qui en fait la méthode privilégiée ici. Bien la maîtriser suffit généralement à comprendre les principes des autres méthodes de régularisation.</p>
+</section>
+<section id="exemple-numérique-de-régularisation-par-trou-de-forage" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-numérique-de-régularisation-par-trou-de-forage">Exemple numérique de régularisation par trou de forage</h3>
+<p>L’exemple suivant illustre un cas typique de régularisation par trou (<em>down-the-hole</em>), avec des échantillons dont la longueur des carottes varie entre 3 et 7 m. Certains intervalles contiennent des données manquantes, soit en raison d’une perte d’information, soit en raison d’une non-analyse de l’échantillon. Nous appliquons une régularisation à longueur constante de 6 m. La longueur optimale de 6 m permet ici de réduire la variabilité sans perdre en sélectivité. La méthode utilisée est la régularisation par longueur constante en suivant la longueur du forage. Bien que le respect des limites géologiques ne soit pas pris en compte ici, on peut tronquer les composites à ces limites si nécessaire. Concernant la gestion des données manquantes, les composites contenant des zones sans données sont conservés si la portion valide couvre au moins 50 % de la longueur nominale. Ce seuil de 50 % est un usage courant dans l’industrie, mais il reste arbitraire : une étude de corrélation entre la longueur de composite et la teneur peut justifier un seuil plus bas lorsque cette corrélation est faible. En deçà du seuil retenu, le composite est ignoré.</p>
+</section>
+<section id="exemples-de-calcul-de-composites" class="level3">
+<h3 class="anchored" data-anchor-id="exemples-de-calcul-de-composites">Exemples de calcul de composites</h3>
+<p>La <a href="#fig-regularisation-large" class="quarto-xref">Figure&nbsp;<span>4.4</span></a> présente les résultats de la régularisation pour les distances de 60 m à 90 m. Il y a ainsi 5 composites à former (30/6 = 5). Nous expliquerons le calcul pour le composite 2 et 4.</p>
+<p>Le Composite 2 couvre l’intervalle de profondeur de 66 à 72 m. Sa teneur est calculée comme la moyenne pondérée des teneurs selon la formule suivante :</p>
+<p><span class="math display">\[
+\text{Teneur composite 2} = \frac{\sum_i \text{Teneur}_i \times \text{Longueur}_i}{\sum_i \text{Longueur}_i} = \frac{0{,}16 \times 4{,}5 + 0{,}09 \times 1{,}5}{6} = \frac{0{,}855}{6} \approx 0{,}14\ \%
+\]</span></p>
+<p>où les longueurs et teneurs considérées ne correspondent qu’aux portions valides. Le Composite 4 couvre l’intervalle de 78 m à 84 m. Bien qu’il croise également des carottes d’échantillonnage, la longueur totale des portions valides dans cet intervalle est inférieure à 3 m (moins de 50 % de la longueur nominale). En vertu du critère fixé, ce composite est donc ignoré et marqué comme <code>NaN</code> (non défini).</p>
+<div id="fig-regularisation-large" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-regularisation-large-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C4_RegularisationLarge.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-regularisation-large-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.4: Exemple complet d’une régularisation
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="choix-de-la-longueur-des-composites" class="level3">
+<h3 class="anchored" data-anchor-id="choix-de-la-longueur-des-composites">Choix de la longueur des composites</h3>
+<p>La longueur de composite choisie dans cet exemple est de 6 m. Ce choix repose d’abord sur l’analyse de la distribution des longueurs des échantillons bruts, qui montre une concentration marquée autour de cette valeur (<a href="#fig-distribution-carotte" class="quarto-xref">Figure&nbsp;<span>4.5</span></a>). Cela reflète une trame d’échantillonnage déjà assez régulière dans les forages. Du point de vue géostatistique, cette régularisation à 6 m permet de réduire la variabilité locale tout en maintenant une sélectivité suffisante pour distinguer les structures géologiques majeures. Une régularisation efficace vise d’ailleurs à augmenter le support d’échantillonnage, et non à le réduire.</p>
+<div id="fig-distribution-carotte" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-distribution-carotte-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C4_DistributionCarotte.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-distribution-carotte-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.5: Histogramme des longueurs de carottes
+</figcaption>
+</figure>
+</div>
+<!-- W3 : Composite (régularisation) -->
+</section>
+</section>
+<section id="atelier-interactif-4.2-régularisation-et-composite" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-4.2-régularisation-et-composite">🧮 Atelier interactif 4.2 — Régularisation et composite</h2>
+Ajoutez ou modifiez des échantillons de longueurs variables et observez la formation des composites de longueur fixe. Ajustez la longueur du composite et le seuil de couverture minimale.
+<div class="geostat-widget-wrap">
+<div id="w-c04-composite" class="geostat-widget" data-widget="c04_composite" data-version="0.1.0">
+<div class="gw-placeholder">
+<pre><code>&lt;div class="gw-spinner"&gt;&lt;/div&gt;
+&lt;p&gt;Chargement de l'atelier de compositing…&lt;/p&gt;</code></pre>
+</div>
+<noscript>
+<p class="gw-fallback-note">
+JavaScript désactivé : cet atelier interactif nécessite JavaScript.
+</p>
+<p></p>
+</noscript></div>
+</div>
+<p>Au-delà de son effet sur la moyenne, la régularisation modifie aussi la variabilité spatiale du jeu de données : en moyennant les teneurs sur un support plus grand, les composites lissent les valeurs extrêmes et réduisent la variance par rapport aux carottes originales. C’est la part la plus erratique de la variabilité, celle qui se manifeste à très courte distance, qui est le plus atténuée lorsque les composites sont longs. Cet effet du support sur la variabilité spatiale sera étudié plus loin dans le livre, une fois les outils d’analyse de la continuité spatiale — le variogramme — formellement introduits.</p>
+<p>Pour l’instant, il faut surtout retenir que la régularisation est nécessaire, mais qu’elle change aussi les statistiques des données. Maintenant que toutes les teneurs reposent sur un support commun, elles sont enfin comparables entre elles : on peut alors décrire rigoureusement leur distribution — forme, tendance centrale, dispersion, valeurs extrêmes. C’est l’objet de l’analyse exploratoire des données, présentée dans la section suivante.</p>
+</section>
+<section id="analyse-exploratoire-des-données" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="analyse-exploratoire-des-données"><span class="header-section-number">4.4</span> Analyse exploratoire des données</h2>
+<p>L’analyse exploratoire décrit la distribution des teneurs, repère les anomalies et oriente les choix méthodologiques avant la modélisation spatiale et l’estimation. Elle porte sur des teneurs déjà ramenées à un support commun, donc comparables.</p>
+<section id="statistiques-descriptives-univariées" class="level3">
+<h3 class="anchored" data-anchor-id="statistiques-descriptives-univariées">Statistiques descriptives univariées</h3>
+<p>La première étape de l’analyse exploratoire consiste à décrire chaque variable séparément. Dans le cas des données de forage, on cherche notamment à comprendre la distribution des teneurs : leur niveau moyen, leur variabilité, la présence de valeurs extrêmes et le degré d’asymétrie de la distribution. Les définitions formelles de ces statistiques sont rappelées dans l’annexe de probabilités et statistiques; nous nous concentrons ici sur leur interprétation pour les teneurs.</p>
+<section id="mesures-de-tendance-centrale" class="level4">
+<h4 class="anchored" data-anchor-id="mesures-de-tendance-centrale">Mesures de tendance centrale</h4>
+<p>Les mesures de tendance centrale résument le niveau général des teneurs.</p>
+<p>La moyenne arithmétique est la mesure la plus utilisée :</p>
+<p><span class="math display">\[
+\bar{z} = \frac{1}{n}\sum_{i=1}^{n} z_i
+\]</span></p>
+<p>Elle représente la teneur moyenne des échantillons. Toutefois, elle est sensible aux valeurs extrêmes et au biais d’échantillonnage. Par exemple, quelques teneurs très élevées ou une zone riche suréchantillonnée peuvent fortement augmenter la moyenne.</p>
+<p>La médiane est la valeur qui divise les données en deux groupes de même taille : 50 % des valeurs sont inférieures à la médiane et 50 % sont supérieures. Elle est plus robuste que la moyenne face aux valeurs extrêmes. Lorsque la moyenne est nettement supérieure à la médiane, cela indique généralement une distribution asymétrique à droite, ce qui est fréquent pour les teneurs minières.</p>
+</section>
+<section id="mesures-de-dispersion" class="level4">
+<h4 class="anchored" data-anchor-id="mesures-de-dispersion">Mesures de dispersion</h4>
+<p>Les mesures de dispersion décrivent la variabilité des teneurs par rapport à leur valeur centrale.</p>
+<p>La variance (<span class="math inline">\(s^2\)</span>) et l’écart-type (<span class="math inline">\(s\)</span>) mesurent l’étalement des données autour de la moyenne :</p>
+<p><span class="math display">\[
+s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(z_i - \bar{z})^2
+\]</span></p>
+<p>Un écart-type élevé indique que les teneurs varient fortement d’un échantillon à l’autre.</p>
+<p>Le coefficient de variation permet de comparer la variabilité relative d’une variable :</p>
+<p><span class="math display">\[
+\text{CV} = \frac{s}{\bar{z}}
+\]</span></p>
+<p>Un CV supérieur à 1 est courant pour les métaux précieux, comme l’or, et indique une forte hétérogénéité des teneurs.</p>
+</section>
+<section id="mesures-de-forme" class="level4">
+<h4 class="anchored" data-anchor-id="mesures-de-forme">Mesures de forme</h4>
+<p>Les mesures de forme décrivent l’allure générale de la distribution.</p>
+<p>Le coefficient d’asymétrie (<em>skewness</em>) indique si la distribution est symétrique ou présente une queue plus longue d’un côté. Une asymétrie positive, avec une queue orientée vers les valeurs élevées, est fréquente dans les distributions de teneurs.</p>
+<p>Le coefficient d’aplatissement (<em>kurtosis</em>) mesure l’ampleur des valeurs extrêmes. Un kurtosis élevé indique que la distribution contient des valeurs très éloignées du centre, ce qui peut influencer fortement la moyenne et la variance.</p>
+</section>
+<section id="quantiles-et-diagrammes-en-boîte" class="level4">
+<h4 class="anchored" data-anchor-id="quantiles-et-diagrammes-en-boîte">Quantiles et diagrammes en boîte</h4>
+<p>Les <strong>quantiles</strong> décrivent la distribution sans supposer de forme particulière. Les quartiles, déciles et percentiles permettent de résumer la proportion des données situées sous certains seuils.</p>
+<p>Le <strong>diagramme en boîte</strong> (<em>box plot</em>) est une représentation visuelle utile. Il montre la médiane, les quartiles, l’étendue des données et les valeurs extrêmes potentielles. Il permet donc de repérer rapidement l’asymétrie, la dispersion et la présence de teneurs atypiques.</p>
+</section>
+</section>
+<section id="histogramme-et-fonction-de-répartition" class="level3">
+<h3 class="anchored" data-anchor-id="histogramme-et-fonction-de-répartition">Histogramme et fonction de répartition</h3>
+<p>L’histogramme est la représentation graphique la plus directe de la distribution des données. Le choix du nombre de classes influence la perception : trop peu de classes masquent la structure, trop de classes introduisent du bruit. Des règles empiriques (Sturges, Freedman-Diaconis) existent pour guider ce choix.</p>
+<p>La fonction de répartition empirique (ou CDF) représente, pour chaque valeur <span class="math inline">\(z\)</span>, la proportion des données inférieures ou égales à <span class="math inline">\(z\)</span>. Elle est indépendante du choix des classes et constitue un outil diagnostique plus robuste que l’histogramme.</p>
+<blockquote class="blockquote">
+<p>Cas particulier : les distributions log-normales. Les teneurs de métaux de base et précieux suivent souvent une distribution log-normale (c’est-à-dire que le logarithme des teneurs suit une distribution normale). L’histogramme des teneurs brutes est alors fortement asymétrique, tandis que celui des logarithmes des teneurs est approximativement symétrique. Il est toujours utile de tracer les deux histogrammes.</p>
+</blockquote>
+</section>
+<section id="analyse-spatiale-carte-des-valeurs-posting" class="level3">
+<h3 class="anchored" data-anchor-id="analyse-spatiale-carte-des-valeurs-posting">Analyse spatiale : carte des valeurs (<em>posting</em>)</h3>
+<p>Le <em>posting</em> consiste à représenter chaque donnée à sa position spatiale, avec un symbole dont la taille ou la couleur reflète la valeur de la variable. Cette carte est l’outil le plus simple pour détecter des tendances spatiales, des zones de forte ou faible teneur, et des lacunes dans l’échantillonnage.</p>
+<p>Il est recommandé de tracer le posting en plan (vue en projection horizontale) et, si les données sont tridimensionnelles, en coupe verticale (sections parallèles ou perpendiculaires au corps minéralisé).</p>
+</section>
+<section id="valeurs-extrêmes-et-écrêtage" class="level3">
+<h3 class="anchored" data-anchor-id="valeurs-extrêmes-et-écrêtage">Valeurs extrêmes et écrêtage</h3>
+<p>Les distributions de teneurs sont typiquement asymétriques à droite : une faible proportion d’échantillons très riches côtoie une majorité de valeurs faibles. Ces valeurs extrêmes posent un double problème. D’une part, elles pèsent lourd sur les statistiques : ajouter une seule teneur <span class="math inline">\(z_{\max}\)</span> déplace la moyenne de <span class="math inline">\((z_{\max} - \bar z)/n\)</span> et gonfle davantage la variance, qui dépend du carré des écarts. D’autre part, lors de l’estimation, une teneur isolée très élevée est « étalée » sur tous les blocs de son voisinage, ce qui surestime le métal local (<em>smearing</em>).</p>
+<p>L’enjeu se mesure surtout en <strong>quantité de métal</strong>. Pour un seuil <span class="math inline">\(z_c\)</span>, la part du métal portée par les échantillons au-dessus de ce seuil est</p>
+<p><span class="math display">\[
+M(z_c) = \frac{\sum_{z_i &gt; z_c} z_i}{\sum_i z_i}.
+\]</span></p>
+<p>Dans une distribution fortement asymétrique, <span class="math inline">\(M(z_c)\)</span> peut atteindre 20 à 40 % du métal pour moins de 1 % des échantillons : la décision prise sur ces quelques valeurs conditionne une part majeure de la ressource.</p>
+<p><strong>Identifier les valeurs extrêmes.</strong> Plusieurs outils se complètent :</p>
+<ul>
+<li>la <strong>règle des quartiles</strong>, qui signale toute valeur au-delà de <span class="math inline">\(Q_3 + 1{,}5\,\text{IQR}\)</span> (avec <span class="math inline">\(\text{IQR} = Q_3 - Q_1\)</span>);</li>
+<li>le <strong>graphe de probabilité log-normale</strong>, où une rupture de pente dans la queue supérieure trahit une population de teneurs distincte — l’outil le plus employé pour fixer un seuil;</li>
+<li>les <strong>seuils en écart-type</strong> (<span class="math inline">\(\bar z + 2s\)</span> ou <span class="math inline">\(\bar z + 3s\)</span>), simples mais arbitraires;</li>
+<li>la <strong>vérification géologique</strong>, indispensable : une teneur extrême peut être bien réelle si elle correspond à une zone à haute teneur connue.</li>
+</ul>
+<p>Il faut alors distinguer deux cas. Une valeur <strong>erronée</strong> (saisie, laboratoire, positionnement) est corrigée ou retirée. Une valeur <strong>valide mais extrême</strong> n’est pas supprimée — cela sous-estimerait la ressource — mais on limite son influence.</p>
+<p><strong>Écrêter (<em>capping</em>).</strong> L’écrêtage remplace toute teneur supérieure à un seuil <span class="math inline">\(z_c\)</span> par ce seuil :</p>
+<p><span class="math display">\[
+z_i^{\text{écrêté}} = \min(z_i,\, z_c).
+\]</span></p>
+<p>Le choix de <span class="math inline">\(z_c\)</span> ne se fait pas au hasard. Les méthodes usuelles sont :</p>
+<ul>
+<li>la <strong>rupture sur le graphe de probabilité log-normale</strong> (seuil au décrochage de la queue);</li>
+<li>l’<strong>analyse du métal contenu</strong> (méthode de Parrish) : on trace <span class="math inline">\(M(z_c)\)</span> et le nombre d’échantillons coupés en fonction de <span class="math inline">\(z_c\)</span>, et on retient un seuil où le métal écarté demeure raisonnable;</li>
+<li>l’<strong>analyse de sensibilité</strong> : on calcule la moyenne écrêtée — et le coefficient de variation de la moyenne — sur une plage de seuils, puis on choisit là où la statistique se stabilise.</li>
+</ul>
+<p>D’autres approches limitent l’influence des fortes teneurs sans les modifier, par exemple en restreignant leur distance d’influence lors de l’estimation plutôt qu’en écrêtant la donnée elle-même.</p>
+<p>Enfin, l’écrêtage dépend du support : un seuil pertinent sur des composites de 2 m ne le serait pas sur des échantillons bruts de longueurs variables, car le compositage atténue déjà les valeurs extrêmes. Comme les teneurs ont été régularisées à l’étape précédente, on applique ici l’écrêtage directement sur les composites — le support qui servira à l’estimation. Certains praticiens préfèrent toutefois écrêter les teneurs brutes avant le compositage : l’ordre retenu doit être documenté. Quel que soit le choix, le seuil doit être justifié — c’est un point systématiquement examiné dans les rapports NI 43-101.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Pourquoi les pratiques d’écrêtage semblent se contredire
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La littérature et les praticiens paraissent souvent en désaccord sur l’écrêtage. Ces contradictions sont surtout apparentes : elles viennent de ce que l’écrêtage n’est pas un calcul exact, mais un arbitrage de risque sans optimum unique. On introduit volontairement un biais — baisser la moyenne — pour se protéger d’un biais jugé pire : la surestimation locale et l’étalement (<em>smearing</em>) d’une forte teneur sur tout un voisinage de blocs. Chacun pondère ces deux risques différemment, d’où le côté « art et tradition » de la pratique.</p>
+<p>Le débat « avant ou après compositage » se résout de même par la notion de support. Puisque l’estimation se fait sur les composites, on écrête en général après compositage, quand les données ont un support égal. Écrêter avant reste correct, à condition de couper la bonne variable — l’accumulation (teneur × longueur), et non la teneur brute, sinon une forte valeur sur 0,2 m et la même sur 3 m seraient traitées à l’identique. Les deux ordres sont donc défendables; ce qui est fautif, c’est d’écrêter des teneurs brutes de longueurs inégales.</p>
+<p>Enfin, l’écrêtage n’est qu’un outil parmi deux : on peut aussi restreindre l’influence des fortes teneurs pendant l’estimation (portée ou nombre de blocs limités). Qui restreint coupe moins, qui ne restreint pas coupe plus — même risque géré autrement. Le principe, lui, ne varie pas : contrôler l’influence du métal extrême au support de l’estimation, garder l’écrêtage au minimum, et documenter le choix.</p>
+</div>
+</div>
+</section>
+<section id="analyse-multivariée" class="level3">
+<h3 class="anchored" data-anchor-id="analyse-multivariée">Analyse multivariée</h3>
+<p>Lorsque plusieurs variables sont mesurées (par exemple : teneurs en Cu, Zn, Fe, densité), il est utile de construire des <strong>nuages de corrélation</strong> entre paires de variables et de calculer la <strong>matrice de corrélation</strong>. Ces analyses permettent de détecter des relations entre variables et de décider si un cokrigeage serait bénéfique.</p>
+</section>
+<section id="synthèse-liste-de-vérification" class="level3">
+<h3 class="anchored" data-anchor-id="synthèse-liste-de-vérification">Synthèse : liste de vérification</h3>
+<p>Avant de passer à la modélisation géostatistique, l’analyste doit pouvoir répondre aux questions suivantes :</p>
+<ol type="1">
+<li>La distribution des teneurs est-elle symétrique ou asymétrique? Faut-il envisager une transformation (logarithmique, normale score)?</li>
+<li>Y a-t-il des valeurs aberrantes? Ont-elles été vérifiées géologiquement?</li>
+<li>L’échantillonnage est-il spatialement uniforme ou biaisé? Un dégroupement est-il nécessaire?</li>
+<li>Y a-t-il des tendances spatiales visibles (gradient de teneur, zonation)?</li>
+<li>Les données sont-elles suffisamment denses pour supporter l’estimation à l’échelle souhaitée?</li>
+<li>Les teneurs reposent-elles bien sur un support uniforme (composites), et l’écrêtage éventuel a-t-il été documenté?</li>
+</ol>
+<!-- W2 : Analyse exploratoire spatiale -->
+</section>
+</section>
+<section id="atelier-interactif-4.3-analyse-exploratoire-spatiale" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-4.3-analyse-exploratoire-spatiale">🧮 Atelier interactif 4.3 — Analyse exploratoire spatiale</h2>
+<p>Cet atelier illustre l’étape de description du jeu de données, une fois les teneurs régularisées : décrire la distribution (forme, centre, dispersion), repérer les valeurs extrêmes et juger si une transformation est utile.</p>
+Trois panneaux : la <strong>carte</strong> des valeurs (champ + échantillons), l’<strong>histogramme des données brutes</strong>, et la <strong>distribution transformée</strong> (logarithme des teneurs pour des données log-normales — la transformation symétrise la distribution). Les statistiques descriptives — moyenne, médiane, variance, écart-type, coefficient de variation, asymétrie, minimum et maximum — se mettent à jour en direct. Changez la distribution (gaussienne ou log-normale), la portée et la pépite, et observez comment la forme de la distribution et ces statistiques évoluent.
+<div class="geostat-widget-wrap">
+<div id="w-c04-exploratoire" class="geostat-widget" data-widget="c04_exploratoire" data-version="0.1.0">
+<div class="gw-placeholder">
+<pre><code>&lt;div class="gw-spinner"&gt;&lt;/div&gt;
+&lt;p&gt;Chargement de l'atelier d'analyse exploratoire…&lt;/p&gt;</code></pre>
+</div>
+<noscript>
+<p class="gw-fallback-note">
+JavaScript désactivé : cet atelier interactif nécessite JavaScript.
+</p>
+<p></p>
+</noscript></div>
+</div>
+</section>
+<section id="débiaisement-debiasing-et-dégroupement-declustering" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="débiaisement-debiasing-et-dégroupement-declustering"><span class="header-section-number">4.5</span> Débiaisement (<em>debiasing</em>) et dégroupement (<em>declustering</em>)</h2>
+<p>La dernière étape, afin d’assurer une représentativité adéquate des teneurs, consiste en le débiaisement et le dégroupement des données. Le débiaisement est l’objectif — rendre les statistiques représentatives de l’ensemble du volume d’intérêt —, et le dégroupement en est la principale technique : il pondère les données selon leur densité spatiale. Les données de forage ne sont généralement pas collectées de manière aléatoire. Par exemple, les forages sont souvent réalisés dans des zones à forte teneur, qui sont prioritaires dans le calendrier d’exploitation. Ce biais d’échantillonnage, bien que justifié d’un point de vue opérationnel, fausse les statistiques globales. Il est donc nécessaire d’ajuster les histogrammes et les statistiques descriptives afin qu’elles soient représentatives de l’ensemble du volume d’intérêt.</p>
+<section id="mise-en-contexte-1" class="level3">
+<h3 class="anchored" data-anchor-id="mise-en-contexte-1">Mise en contexte</h3>
+<p>La <a href="../C07/index.html#fig-gisement" class="quarto-xref">Figure&nbsp;<span>7.2</span></a> présente les teneurs en cuivre d’un gisement synthétique suivant une distribution log-normale, de moyenne théorique 2 % et de variance unitaire. Les cercles surlignés indiquent la position des 140 forages. Deux zones apparaissent comme suréchantillonnées : l’une au centre de l’image, où 30 forages se concentrent dans une zone riche du gisement (cercles rouges), et l’autre dans le coin inférieur gauche, où 10 forages représentent une zone à faible teneur (cercles bleus).</p>
+<div id="fig-gisement" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gisement-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C4_Gisement.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gisement-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.6: Teneurs en cuivre d’un gisement synthétique avec échantillonnage ciblé
+</figcaption>
+</figure>
+</div>
+<p>La présence de zones de suréchantillonnage biaise le calcul de nos statistiques descriptives (par exemple, la moyenne, l’écart-type et les quantiles). Il va de soi que les 30 forages représentant une zone riche vont augmenter la teneur moyenne de nos échantillons, rendant ainsi cette moyenne non représentative de la teneur moyenne réelle du gisement. Dans cette situation, il est nécessaire de procéder au débiaisement des observations par leur dégroupement.</p>
+<p>La <a href="#fig-histogramme" class="quarto-xref">Figure&nbsp;<span>4.7</span></a> présente les histogrammes normalisés — c’est-à-dire ajustés pour permettre une comparaison équitable entre les distributions — des teneurs réelles du gisement (<a href="#fig-histogramme-a" class="quarto-xref">Figure&nbsp;<span>4.7 (a)</span></a>), des teneurs échantillonnées sans dégroupement (<a href="#fig-histogramme-b" class="quarto-xref">Figure&nbsp;<span>4.7 (b)</span></a>) et des teneurs après dégroupement (<a href="#fig-histogramme-c" class="quarto-xref">Figure&nbsp;<span>4.7 (c)</span></a>). Les statistiques descriptives sont affichées sur chaque histogramme.</p>
+<p>La comparaison de ces statistiques permet de constater que les données brutes (figure centrale) sont fortement biaisées, en raison d’une surreprésentation des zones à haute teneur, due au biais d’échantillonnage. Après dégroupement, les statistiques descriptives se rapprochent nettement de celles du gisement réel : la moyenne passe de 2,60 % à 1,90 %, alors que celle de la réalisation simulée est de 2,09 %. Le dégroupement corrige donc l’essentiel du biais, même s’il le sur-corrige légèrement ici (la moyenne théorique du modèle valant 2 %). Ce rapprochement est observable pour l’ensemble des indicateurs descriptifs. Cela illustre l’importance de corriger les biais d’échantillonnage, notamment lorsque les zones riches sont surexplorées. Dans cet exemple, l’absence de correction pourrait entraîner une surestimation significative de la richesse du gisement.</p>
+<div id="fig-histogramme" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-histogramme-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-histogramme" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-histogramme-a" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-histogramme-a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C4_Hist_Gisement.png" class="img-fluid figure-img" data-ref-parent="fig-histogramme">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-histogramme-a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Histogramme des valeurs réelles
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-histogramme" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-histogramme-b" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-histogramme-b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C4_Hist_Sample.png" class="img-fluid figure-img" data-ref-parent="fig-histogramme">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-histogramme-b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Teneurs sans dégroupement
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-histogramme" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-histogramme-c" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-histogramme-c-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C4_Hist_Sample_Degroupe.png" class="img-fluid figure-img" data-ref-parent="fig-histogramme">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-histogramme-c-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Teneurs avec dégroupement
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-histogramme-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.7: Comparaison des histogrammes de teneur.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="méthode-de-dégroupement" class="level3">
+<h3 class="anchored" data-anchor-id="méthode-de-dégroupement">Méthode de dégroupement</h3>
+<p>Les techniques de dégroupement visent à corriger les biais d’échantillonnage en attribuant un poids à chaque donnée en fonction de sa proximité avec les autres données. Ces poids sont strictement positifs et leur somme est égale à 1. La moyenne dégroupée s’écrit alors</p>
+<p><span class="math display">\[\bar z_w = \sum_{i=1}^{N} w_i\, z_i,\]</span></p>
+<p>et la variance dégroupée</p>
+<p><span class="math display">\[s_w^2 = \sum_{i=1}^{N} w_i\, (z_i - \bar z_w)^2,\]</span></p>
+<p>chaque échantillon comptant selon son poids <span class="math inline">\(w_i\)</span> plutôt qu’également (<span class="math inline">\(1/N\)</span>). On recense plusieurs méthodes de dégroupement dans la littérature. Nous nous limiterons aux trois méthodes les plus couramment implémentées dans les logiciels de calcul des ressources et des réserves minières.</p>
+<section id="dégroupement-polygonal" class="level4">
+<h4 class="anchored" data-anchor-id="dégroupement-polygonal">Dégroupement polygonal</h4>
+<p>La méthode de dégroupement polygonal est sans doute la plus simple. Elle attribue à chaque échantillon un poids proportionnel à sa surface ou à son volume d’influence. En pratique minière, cette approche fonctionne bien lorsque les limites de la zone d’intérêt sont clairement définies et que le rapport entre le plus grand et le plus petit poids est inférieur à 10 à 1.</p>
+<p>La technique repose sur la construction de polygones d’influence autour de chaque point d’échantillonnage. Ces polygones sont définis par les médiatrices des segments reliant chaque paire de points voisins (Diagramme de Voronoï). Un exemple simple de jeu de données avec polygones d’influence est illustré à la <a href="#fig-polygone" class="quarto-xref">Figure&nbsp;<span>4.8</span></a>.</p>
+<div id="fig-polygone" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-polygone-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C4_Polygone.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polygone-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.8: Construction des polygones de Voronoï
+</figcaption>
+</figure>
+</div>
+<p>Les polygones sont obtenus par la méthode de Voronoi, un algorithme implémenté dans la grande majorité des logiciels. Pour chaque polygone d’influence, on calcule l’aire, puis on assigne à chaque échantillon un poids proportionnel à l’aire de son polygone par rapport à la somme totale des aires de tous les polygones, soit :</p>
+<p><span class="math display">\[w_j = \frac{A_j}{\sum_{n=1}^{N} A_n}\]</span></p>
+<p>où <span class="math inline">\(w_j\)</span> est le poids associé à l’échantillon <span class="math inline">\(j\)</span>, <span class="math inline">\(A_j\)</span> est l’aire de son polygone d’influence, et <span class="math inline">\(N\)</span> est le nombre total d’échantillons. La <a href="#fig-polygone-declus" class="quarto-xref">Figure&nbsp;<span>4.9</span></a> présente 27 données de forage et les poids associés à ces forages, obtenus par la méthode des polygones d’influence. On constate que les poids sont les plus faibles au centre, où plus de données sont présentes, que sur les frontières, où les volumes sont plus importants.</p>
+<div id="fig-polygone-declus" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-polygone-declus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C4_PolygoneDeclus.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polygone-declus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.9: Poids associés par méthode polygonale
+</figcaption>
+</figure>
+</div>
+<p>La méthode des polygones a toutefois une limite importante. Les échantillons en bordure peuvent recevoir un poids très différent selon la frontière choisie. Si la frontière est placée loin des données, un échantillon isolé peut finir par représenter une trop grande surface.</p>
+<p>Le problème est que cette frontière n’est pas toujours facile à définir. Elle peut dépendre du modèle géologique, de la zone d’intérêt ou même des limites de la concession. Pour éviter de donner trop d’importance aux points périphériques, on peut fixer une frontière claire dès le départ ou limiter la portée d’influence de chaque échantillon.</p>
+</section>
+<section id="dégroupement-par-plus-proche-voisin" class="level4">
+<h4 class="anchored" data-anchor-id="dégroupement-par-plus-proche-voisin">Dégroupement par plus proche voisin</h4>
+<p>La technique de dégroupement par le voisin le plus proche est couramment utilisée pour l’estimation des ressources et est similaire à la méthode polygonale. La différence tient au fait qu’elle s’applique à une grille régulière de blocs ou de nœuds. À chaque bloc, le point le plus proche du jeu de données à dégrouper est attribué.</p>
+<p>La <a href="#fig-proche-declus" class="quarto-xref">Figure&nbsp;<span>4.10</span></a> présente les mêmes 27 données de forage que dans l’exemple précédent. Cette fois-ci, nous assignons directement à chaque bloc le point de forage (cercles noirs) le plus proche du centre du bloc (cercles rouges). Avec une densité de forages très régulière, la méthode de dégroupement par le voisin le plus proche est pratiquement équivalente à celle par polygones. L’avantage de cette approche réside dans le fait que les données sont directement associées au même support que celui utilisé pour les opérations minières et le calcul des ressources. Le poids d’un échantillon est alors la proportion de blocs qui lui sont attribués : <span class="math inline">\(w_i = m_i / M\)</span>, où <span class="math inline">\(m_i\)</span> est le nombre de blocs dont il est le plus proche voisin et <span class="math inline">\(M\)</span> le nombre total de blocs.</p>
+<div id="fig-proche-declus" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-proche-declus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C4_PlusProcheDeclus.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-proche-declus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.10: Dégroupement par plus proche voisin sur grille régulière
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="dégroupement-par-cellules" class="level4">
+<h4 class="anchored" data-anchor-id="dégroupement-par-cellules">Dégroupement par cellules</h4>
+<p>La technique de dégroupement par cellules est une autre méthode couramment utilisée et sûrement l’une des plus populaires. Le processus consiste d’abord à diviser le volume d’intérêt en une grille de cellules, indexée par <span class="math inline">\(l = 1, \dots, L\)</span>. On procède ensuite au comptage des cellules occupées <span class="math inline">\(L_o\)</span> et du nombre de données dans chaque cellule occupée <span class="math inline">\(n_{l_o}\)</span>. Enfin, un poids est attribué à chaque donnée en fonction du nombre de données présentes dans la même cellule. Pour une donnée <span class="math inline">\(i\)</span> se trouvant dans la cellule <span class="math inline">\(l\)</span>, le poids est donné par :</p>
+<p><span class="math display">\[w_i = \frac{1}{n_l \cdot L_o} \quad \text{si} \quad i \in l\]</span></p>
+<p>Les poids sont supérieurs à zéro et leur somme est égale à 1. Chaque cellule occupée se voit attribuer le même poids. Une cellule non occupée ne subit aucun poids.</p>
+<p>La <a href="#fig-cellule-declus" class="quarto-xref">Figure&nbsp;<span>4.11</span></a> présente les mêmes 27 données de forage. Nous comptabilisons le nombre de données présentes dans chaque cellule (délimitée par des encadrés noirs). Pour chaque cellule, un poids provisoire est attribué : si une seule donnée est présente, son poids est 1; s’il y en a deux, chacune reçoit 1/2. Plus généralement, pour <span class="math inline">\(n\)</span> données, chaque point reçoit <span class="math inline">\(1/n\)</span>. Une fois ces poids provisoires calculés, ils sont normalisés par le nombre total de cellules occupées. On observe que certaines cellules ne contiennent aucune donnée, auquel cas aucun poids n’est attribué.</p>
+<div id="fig-cellule-declus" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cellule-declus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C4_CellulesDeclus.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cellule-declus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.11: Dégroupement par cellules
+</figcaption>
+</figure>
+</div>
+<p>Les poids dépendent de la taille des cellules et de l’origine de la grille. Cette grille est un outil intermédiaire et ne correspond pas à la grille finale de modélisation. Si les cellules sont très petites, chaque donnée est isolée et toutes ont le même poids. À l’inverse, si elles sont trop grandes, toutes les données pourraient se regrouper dans une même cellule et recevoir un poids identique.</p>
+<p>Le choix des paramètres nécessite des tests de sensibilité. On cherche souvent à ajuster la taille de la grille afin d’obtenir environ une donnée par cellule dans les zones faiblement échantillonnées. Il est essentiel de vérifier la sensibilité aux variations : si une petite variation modifie fortement le résultat, cela peut être dû à des valeurs extrêmes mal pondérées. En pratique, on ne règle pas les poids directement, mais la taille des cellules : on trace la moyenne dégroupée en fonction de cette taille (<a href="#fig-size-vs-mean" class="quarto-xref">Figure&nbsp;<span>4.12</span></a>) et l’on retient la taille qui <strong>minimise</strong> cette moyenne lorsque le suréchantillonnage cible les zones riches (ou qui la <strong>maximise</strong> lorsqu’il cible les zones pauvres). C’est la taille qui corrige le mieux le biais.</p>
+<p>La dépendance à l’origine de la grille se traite de la même manière. À taille de cellule fixée, déplacer l’origine modifie les poids; pour éviter cet artéfact, on balaie plusieurs origines décalées et on moyenne les poids obtenus pour chaque décalage. Enfin, la forme des cellules doit s’adapter à l’anisotropie des données; si elles sont plus denses dans une direction, la taille des cellules dans cette direction doit être réduite.</p>
+<div id="fig-size-vs-mean" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-size-vs-mean-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C4_CellSizeVsMean.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-size-vs-mean-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.12: Moyenne dégroupée vs taille de cellule
+</figcaption>
+</figure>
+</div>
+<!-- W4 : Dégroupement -->
+</section>
+</section>
+</section>
+<section id="atelier-interactif-4.4-dégroupement-par-cellules" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-4.4-dégroupement-par-cellules">🧮 Atelier interactif 4.4 — Dégroupement par cellules</h2>
+Explorez l’effet de la taille des cellules sur la moyenne dégroupée. Un gisement synthétique spatialement corrélé est échantillonné avec un biais préférentiel vers les zones riches. Ajustez les paramètres et observez la correction du biais.
+<div class="geostat-widget-wrap">
+<div id="w-c04-degroupement" class="geostat-widget" data-widget="c04_degroupement" data-version="0.1.0">
+<div class="gw-placeholder">
+<pre><code>&lt;div class="gw-spinner"&gt;&lt;/div&gt;
+&lt;p&gt;Chargement de l'atelier de dégroupement…&lt;/p&gt;</code></pre>
+</div>
+<noscript>
+<p class="gw-fallback-note">
+JavaScript désactivé : cet atelier interactif nécessite JavaScript.
+</p>
+<p></p>
+</noscript></div>
+</div>
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../chapters/C03/index.html" class="pagination-link" aria-label="Théorie de Gy et contrôle qualité">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Théorie de Gy et contrôle qualité</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../chapters/C05/index.html" class="pagination-link" aria-label="Méthodes déterministes d'estimation des ressources">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Méthodes déterministes d’estimation des ressources</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Code source</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Traitement et analyse statistique des données de forage"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="an">abstract:</span><span class="co"> |</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">  Ce chapitre porte sur la préparation des données de forage avant l’estimation des ressources. Une fois les teneurs produites et validées, elles doivent être replacées dans l’espace et rendues statistiquement comparables. Les mesures de déviation — azimut, pendage et profondeur — sont d’abord converties en coordonnées cartésiennes pour chaque trou. Les teneurs sont ensuite régularisées sur un support constant par la formation de composites. Enfin, l’effet d’un échantillonnage spatialement non uniforme est corrigé à l’aide de méthodes de débiaisement et de dégroupement. À chaque étape, l’accent est mis sur l’effet quantitatif de ces choix sur les statistiques et sur l’estimation des ressources. Des ateliers interactifs permettent d’en mesurer directement les répercussions.</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Objectifs d'apprentissage</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>À la fin de ce chapitre, l'étudiant devrait être en mesure de :</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Décrire la géométrie d'un forage et convertir les mesures de déviation en coordonnées cartésiennes;</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Réaliser une analyse exploratoire des teneurs (statistiques descriptives, histogrammes, corrélations) et traiter les valeurs extrêmes par écrêtage;</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Comprendre le rôle des composites et régulariser les teneurs sur un support constant;</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Reconnaître l'effet d'un échantillonnage spatial non uniforme et appliquer des méthodes de débiaisement ou de dégroupement.</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## Référence</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>Ce chapitre s'appuie principalement sur le livre suivant :</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>Pyrcz, M. J., &amp; Deutsch, C. V. (2014). *Geostatistical reservoir modeling.* Oxford University Press.</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>{{&lt; include widget/_ch4_utils.qmd &gt;}}</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>{{&lt; include 04-01.qmd &gt;}}</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>{{&lt; include 04-02.qmd &gt;}}</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>{{&lt; include 04-03.qmd &gt;}}</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>{{&lt; include 04-04.qmd &gt;}}</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>{{&lt; include 04-05.qmd &gt;}}</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Géostatistique et géologie minière</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Danlauz/glq3401-3651/edit/main/chapters/C04/index.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/Danlauz/glq3401-3651/issues/new" class="toc-action"><i class="bi empty"></i>Signaler un problème ou<br>formuler une suggestion</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Ce livre a été réalisé avec <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+<script type="module" src="../../scripts/geostat-js/loader.js"></script>
+<script src="../../scripts/geostat-js/notebook-button.js" defer=""></script>
+
+
+
+
+</body></html>

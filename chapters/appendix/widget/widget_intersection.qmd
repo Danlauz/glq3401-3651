@@ -1,0 +1,24 @@
+<div class="geostat-widget-wrap">
+
+<div class="geostat-widget"
+     id="w-annexe-intersection"
+     data-widget="annexe_intersection"
+     data-version="0.1.0">
+
+  <header class="gw-header">
+    <span class="gw-icon">🧮</span>
+    <h4 class="gw-title">Atelier A.4 — Intersection plan–forage</h4>
+    <span class="gw-badge">geostat_polymtl ≥ 0.1</span>
+  </header>
+
+  <div class="gw-placeholder">
+    <div class="gw-spinner"></div>
+    <p>Chargement du widget (intersection)…</p>
+  </div>
+
+  <noscript>
+    <p class="gw-fallback-note">JavaScript désactivé : cet atelier interactif nécessite JavaScript.</p>
+  </noscript>
+</div>
+
+</div>

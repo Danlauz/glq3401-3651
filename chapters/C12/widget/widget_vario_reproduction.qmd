@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c12_vario_reproduction">
+  <div class="gw-placeholder">Chargement (reproduction du variogramme)…</div>
+</div>
+```

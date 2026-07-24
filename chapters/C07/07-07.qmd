@@ -1,0 +1,116 @@
+## Remarques pratiques concernant le variogramme
+
+### Fiabilité des points expérimentaux
+
+Tous les points d’un variogramme expérimental ne sont pas également fiables. Le nombre de paires $N(h)$ constitue un premier indicateur, mais il ne suffit pas à lui seul : une même observation peut participer à plusieurs paires, et des paires nombreuses peuvent rester spatialement redondantes.
+
+La règle des 30 paires par classe peut servir de repère :
+
+- plus de 30 paires : point généralement mieux renseigné;
+- de 10 à 30 paires : interprétation prudente;
+- moins de 10 paires : point souvent trop instable pour guider seul l’ajustement.
+
+Ces seuils ne sont pas absolus. Il faut aussi examiner la répartition des paires, la présence de valeurs extrêmes et la cohérence des classes voisines.
+
+Les premières classes sont particulièrement importantes, car elles renseignent sur la continuité à courte distance, la pente à l’origine et l’effet de pépite. Toutefois, si la distance minimale entre les observations est trop grande, il devient difficile de distinguer un effet de pépite d’une structure de très courte portée.
+
+À grande distance, les points sont souvent moins stables. Une distance maximale d’environ la moitié de l’étendue du domaine peut servir de point de départ :
+
+$$
+h_{\max}
+\approx
+\frac{d_{\max}}{2}.
+$$
+
+Cette règle doit être adaptée à la distribution réelle des paires et à la distance à laquelle le variogramme semble atteindre son palier.
+
+### Analyse directionnelle en 2D
+
+En deux dimensions, on peut commencer par un variogramme omnidirectionnel, puis calculer des variogrammes selon les directions suggérées par la géologie et la carte variographique.
+
+Des directions comme $0^\circ$, $45^\circ$, $90^\circ$ et $135^\circ$ sont utiles pour une première exploration, mais elles ne remplacent pas les directions structurales connues.
+
+Pour chaque direction, il faut vérifier :
+
+- le nombre de paires par classe;
+- la distance maximale correctement renseignée;
+- la stabilité de la courbe;
+- la cohérence avec les directions voisines.
+
+Des portées différentes pour un même palier peuvent indiquer une anisotropie géométrique. Des paliers différents peuvent suggérer une anisotropie zonale, mais aussi une tendance, des populations différentes ou un domaine mal défini.
+
+L’ajustement doit donc être réalisé simultanément dans les principales directions, plutôt que de fixer d’abord un modèle omnidirectionnel définitif.
+
+### Classes de distance et tolérances
+
+La largeur des classes contrôle le compromis entre résolution et stabilité :
+
+- des classes trop étroites contiennent peu de paires et produisent une courbe irrégulière;
+- des classes trop larges lissent la structure et peuvent masquer une courte portée.
+
+Le pas de calcul doit être cohérent avec l’espacement des données. Une tolérance sur la distance égale à environ la moitié du pas est souvent utilisée :
+
+$$
+\Delta h
+\approx
+\frac{h_{\mathrm{pas}}}{2}.
+$$
+
+Pour les variogrammes directionnels, la tolérance angulaire et la largeur de bande déterminent quelles paires sont retenues. Une tolérance faible distingue mieux les directions, mais réduit le nombre de paires. Une tolérance large stabilise la courbe, mais peut atténuer une anisotropie réelle.
+
+Des tolérances angulaires de l’ordre de $\pm 10^\circ$ à $\pm 22{,}5^\circ$ peuvent servir de valeurs initiales, sans constituer des règles universelles.
+
+### Données 3D et simplification en 2D
+
+En trois dimensions, la qualité du variogramme dépend fortement de la géométrie de l’échantillonnage. Dans un contexte minier, les données sont souvent nombreuses le long des forages, mais plus rares entre les forages. Certaines directions peuvent donc être bien renseignées et d’autres presque absentes.
+
+Les erreurs de localisation, de déviation des forages ou de position des échantillons peuvent également augmenter artificiellement la variabilité à courte distance et contribuer à l’effet de pépite.
+
+Pour certains gisements minces ou tabulaires, une représentation en deux dimensions peut être appropriée, à condition que la géométrie soit bien définie et que les distances soient calculées dans le plan de la structure.
+
+On peut alors modéliser séparément :
+
+- l’épaisseur vraie $t$;
+- l’accumulation $A$, définie par :
+
+$$
+A=t\,g,
+$$
+
+où $g$ est la teneur moyenne.
+
+Pour deux portions de même surface, la teneur moyenne combinée est :
+
+$$
+\overline{g}
+=
+\frac{t_1g_1+t_2g_2}{t_1+t_2}
+=
+\frac{A_1+A_2}{t_1+t_2}.
+$$
+
+Dans une approche indirecte, la teneur peut être reconstruite à partir des estimations de l’accumulation et de l’épaisseur :
+
+$$
+\widehat{g}
+=
+\frac{\widehat{A}}{\widehat{t}}.
+$$
+
+Cette approche tient compte des variations d’épaisseur, mais elle peut devenir instable lorsque l’épaisseur estimée est faible. Elle doit donc être comparée à une estimation directe de la teneur.
+
+::: {.callout-important}
+La réduction d’un problème 3D à un problème 2D doit être justifiée par la géométrie du gisement. Elle simplifie la modélisation, mais ne supprime pas l’incertitude liée à l’épaisseur, à l’orientation ou à la localisation des données.
+:::
+
+## 🧮 Atelier interactif 7.8 — Impact du nombre de données {.unnumbered}
+
+::: {.content-visible when-format="html"}
+Faites varier le nombre $N$ de points échantillonnés et observez l’effet sur le nombre de paires et la stabilité du variogramme expérimental. La taille des marqueurs est proportionnelle au nombre de paires par classe.
+
+{{< include widget/widget_quantites.qmd >}}
+:::
+
+::: {.content-visible unless-format="html"}
+Cet atelier interactif n'est disponible que dans la version web du chapitre.
+:::

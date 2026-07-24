@@ -1,0 +1,40 @@
+---
+title: "Traitement et analyse statistique des données de forage"
+abstract: |
+  Ce chapitre porte sur la préparation des données de forage avant l’estimation des ressources. Une fois les teneurs produites et validées, elles doivent être replacées dans l’espace et rendues statistiquement comparables. Les mesures de déviation — azimut, pendage et profondeur — sont d’abord converties en coordonnées cartésiennes pour chaque trou. Les teneurs sont ensuite régularisées sur un support constant par la formation de composites. Enfin, l’effet d’un échantillonnage spatialement non uniforme est corrigé à l’aide de méthodes de débiaisement et de dégroupement. À chaque étape, l’accent est mis sur l’effet quantitatif de ces choix sur les statistiques et sur l’estimation des ressources. Des ateliers interactifs permettent d’en mesurer directement les répercussions.
+---
+
+::: {.callout-important}
+## Objectifs d'apprentissage
+
+À la fin de ce chapitre, l'étudiant devrait être en mesure de :
+
+- Décrire la géométrie d'un forage et convertir les mesures de déviation en coordonnées cartésiennes;
+
+- Réaliser une analyse exploratoire des teneurs (statistiques descriptives, histogrammes, corrélations) et traiter les valeurs extrêmes par écrêtage;
+
+- Comprendre le rôle des composites et régulariser les teneurs sur un support constant;
+
+- Reconnaître l'effet d'un échantillonnage spatial non uniforme et appliquer des méthodes de débiaisement ou de dégroupement.
+:::
+
+::: {.callout-note}
+## Référence
+
+Ce chapitre s'appuie principalement sur le livre suivant :
+
+Pyrcz, M. J., & Deutsch, C. V. (2014). *Geostatistical reservoir modeling.* Oxford University Press.
+:::
+
+
+{{< include widget/_ch4_utils.qmd >}}
+
+{{< include 04-01.qmd >}}
+
+{{< include 04-02.qmd >}}
+
+{{< include 04-03.qmd >}}
+
+{{< include 04-04.qmd >}}
+
+{{< include 04-05.qmd >}}

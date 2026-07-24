@@ -1,0 +1,28 @@
+## Cokrigeage versus krigeage
+
+L'intérêt pratique du cokrigeage n'est pas acquis d'avance : selon les cas, il améliore nettement l'estimation de la variable principale $Z$, ou n'apporte rien de plus qu'un krigeage de $Z$ seule. Le résultat tient à trois éléments : la corrélation entre $Z$ et la variable secondaire $Y$, la densité des données de $Y$ par rapport à celles de $Z$, et le modèle de corégionalisation.
+
+Le cokrigeage devient intéressant quand $Y$ est bien corrélée avec $Z$ et beaucoup plus dense : $Y$ apporte alors de l'information là où $Z$ n'est pas observée. À l'inverse, si $Y$ est mesurée exactement aux mêmes endroits que $Z$, le gain est souvent minime — on ajoute une variable, mais pas vraiment d'information spatiale nouvelle.
+
+On mesure ce gain par la baisse de la variance d'estimation face au krigeage de $Z$ seul. Le tableau suivant donne quelques cas typiques :
+
+| Corrélation $|\rho|$ | Densité de $Y$ par rapport à $Z$ | Modèle de corégionalisation | Gain attendu |
+|---|---|---|---|
+| Faible ($< 0{,}3$) | Peu importe | Peu importe | Très faible |
+| Forte ($> 0{,}7$) | Même position que $Z$ | Intrinsèque | Presque nul |
+| Forte ($> 0{,}7$) | $Y$ beaucoup plus dense | Intrinsèque | Modéré |
+| Forte ($> 0{,}7$) | $Y$ beaucoup plus dense | MLC à plusieurs structures | Important |
+
+Le cokrigeage vaut donc surtout la peine quand la variable secondaire ajoute réellement de l'information spatiale : bonne corrélation avec $Z$, mais aussi couverture plus dense ou différente. Sinon, le gain ne justifie pas la complexité supplémentaire.
+
+## 🧮 Atelier interactif 10.6 — Avantage du cokrigeage {.unnumbered}
+
+::: {.content-visible when-format="html"}
+Cas minier classique : $N_Z$ forages coûteux (Au) et $N_Y \gg N_Z$ mesures denses et bon marché (densité). Comparez la carte d'estimation de $Z$ par krigeage de $Z$ seul et par cokrigeage exploitant $Y$ : entre les forages, le cokrigeage suit la trame de $Y$. Faites varier la corrélation et la densité de $Y$; le bandeau du bas indique la réduction de la variance d'estimation, c'est-à-dire le gain du cokrigeage.
+{{< include widget/widget_undersampled.qmd >}}
+:::
+
+::: {.content-visible unless-format="html"}
+Cet atelier interactif n'est disponible que dans la version web du chapitre.
+:::
+

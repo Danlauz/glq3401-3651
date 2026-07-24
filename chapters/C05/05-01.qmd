@@ -1,0 +1,61 @@
+## Définitions
+
+On appelle **méthodes conventionnelles** (ou déterministes) les méthodes d'estimation des ressources qui ne font pas appel à la géostatistique, c'est-à-dire qui ne prennent pas en compte la structure spatiale des données. Pour attribuer un poids à chaque observation, elles s'appuient uniquement sur des règles géométriques ou arithmétiques simples, telles que la distance entre le point à estimer et les données connues, ou l'aire d'influence de chaque donnée.
+
+Leur but reste celui de toute estimation : évaluer la teneur en un point ou un bloc non échantillonné, à partir des quelques observations voisines dont on dispose. Ce sont ces teneurs estimées, calculées sur l'ensemble du modèle de blocs, qui permettront d'appliquer une teneur de coupure et de délimiter le minerai.
+
+### Estimateur linéaire
+
+Notons $Z(\mathbf{x}_i)$, ou plus simplement $Z_i$, la teneur mesurée aux $n$ points d'échantillonnage, et $\mathbf{x}_0$ le point pour lequel on cherche à estimer une teneur inconnue. Presque toutes les méthodes, conventionnelles comme géostatistiques, donnent l'estimation de la variable d'intérêt $Z(\mathbf{x}_0)$ (ou $Z_0$) sous la forme d'une **combinaison linéaire** des valeurs observées :
+
+$$
+Z_0^* = \sum_{i=1}^{n} \lambda_i\, Z_i,
+$$
+
+où $\lambda_i$ est le poids de l'observation $i$. La formule est donc la même pour toutes les méthodes; ce qui change de l'une à l'autre, c'est la manière de calculer la valeur de chaque poids ($\lambda_i \forall\, i=1,...,n$).
+
+Pour évaluer la qualité d'une telle estimation, on adopte un point de vue probabiliste. On ne voit plus la teneur comme un simple nombre, mais comme une **variable aléatoire** : à chaque position $\mathbf{x}$ correspond une variable $Z(\mathbf{x})$ dont la vraie valeur existe, mais qui reste cachée tant qu'on n'a pas extrait le bloc et traité celui-ci au concentrateur. Là où l'on a échantillonné, on connaît la valeur de $Z(\mathbf{x}_i)$; en $\mathbf{x}_0$, elle est encore inconnue, et c'est justement elle qu'on cherche à estimer. On peut alors parler de l'espérance $\mathbb{E}[Z(\mathbf{x})]$, la valeur moyenne attendue en $\mathbf{x}$.
+
+### Estimateur sans biais
+
+La première exigence que l'on impose à l'estimateur est d'être **sans biais** : en moyenne, il ne doit ni surestimer ni sous-estimer la vraie valeur, soit $\mathbb{E}[Z_0^*] = \mathbb{E}[Z(\mathbf{x}_0)]$. Cette exigence se traduit par une condition simple portant sur les poids.
+
+On reprend les deux hypothèses précédentes : la teneur est une variable aléatoire et sa moyenne est constante. On suppose donc que $Z(\mathbf{x})$ admet une espérance constante sur le domaine d'étude $\mathcal{D}$ :
+
+$$
+\mathbb{E}[Z(\mathbf{x})] = m, \quad \forall\, \mathbf{x} \in \mathcal{D}.
+$$
+
+L'espérance de l'estimateur s'écrit alors :
+
+$$
+\mathbb{E}[Z_0^*] 
+= \mathbb{E}\!\left[ \sum_{i=1}^{n} \lambda_i Z_i \right]
+= \sum_{i=1}^{n} \lambda_i\, \mathbb{E}[Z_i].
+$$
+
+Comme $\mathbb{E}[Z_i] = m$ pour tout $i$, on obtient :
+
+$$
+\mathbb{E}[Z_0^*] = \sum_{i=1}^{n} \lambda_i\, m = m \sum_{i=1}^{n} \lambda_i.
+$$
+
+Pour que l'estimateur soit sans biais, cette espérance doit égaler $m = \mathbb{E}[Z(\mathbf{x}_0)]$, ce qui impose naturellement une contrainte sur les poids :
+
+$$
+\sum_{i=1}^{n} \lambda_i = 1.
+$$
+
+Le non-biais repose ainsi sur deux conditions conjointes : la moyenne de la variable est constante ($\mathbb{E}[Z_i] = m$ pour tout $i$) et la somme des poids vaut 1. On retrouve cette contrainte $\sum_i \lambda_i = 1$ dans pratiquement toutes les méthodes d'estimation lorsque la moyenne est inconnue ou difficile à estimer à partir des données.
+
+### Ce qui distingue les méthodes
+
+Les méthodes se distinguent par la façon dont elles fixent les poids $\lambda_i$, qui mesurent l'influence d'une observation en $\mathbf{x}_i$ sur l'estimation de la valeur inconnue en $\mathbf{x}_0$.
+
+Les **méthodes conventionnelles** fixent ces poids à partir de la seule géométrie des données : distances au point estimé, appartenance à un polygone ou position dans un triangle. Elles ne modélisent pas la continuité spatiale du phénomène et ignorent donc la redondance entre les points rapprochés et la structure spatiale du gisement.
+
+Les **méthodes géostatistiques** procèdent autrement : les poids sont calculés à partir d'un modèle statistique spatial, qui décrit comment les teneurs se ressemblent selon la distance et la direction, afin de minimiser la variance de l'erreur d'estimation. En d'autres termes, on impose un modèle statistique aux données et on l'utilise pour optimiser les poids de sorte que l'erreur soit toujours la plus faible possible, au sens de la variance.
+
+Pour le moment, nous allons présenter en détail les méthodes d'estimation conventionnelles encore largement utilisées dans les rapports techniques miniers NI-43-101 lors des phases d'exploration préliminaire, en raison de leur rapidité d'implémentation et de leur simplicité.
+
+

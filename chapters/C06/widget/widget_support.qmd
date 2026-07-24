@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c06_effet_support">
+  <div class="gw-placeholder">Chargement de l'atelier (effet du support)…</div>
+</div>
+```

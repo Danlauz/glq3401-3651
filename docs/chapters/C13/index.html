@@ -1,0 +1,1855 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>13&nbsp; Simulations géostatistiques de variable catégorielle – Géostatistique et géologie minière</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../chapters/exercices/index.html" rel="next">
+<link href="../../chapters/C12/index.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-f2c6d6e2b784ddc5de38779acc06f37d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-74c88ba48ad0bebf983f0ffd06dd1671.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f2c6d6e2b784ddc5de38779acc06f37d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents correspondants",
+    "search-copy-link-title": "Copier le lien",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "Rechercher",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles/site-polish.css">
+<link rel="stylesheet" href="../../styles/callouts.css">
+<link rel="stylesheet" href="../../styles/exercice.css">
+<link rel="stylesheet" href="../../styles/chapter-downloads.css">
+<link rel="stylesheet" href="../../scripts/geostat-js/style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/C10/index.html">Partie III: Géostatistique non-linéaire</a></li><li class="breadcrumb-item"><a href="../../chapters/C13/index.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable catégorielle</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Géostatistique et géologie minière</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/Danlauz/glq3401-3651" title="Code source" class="quarto-navigation-tool px-1" aria-label="Code source"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Basculer le mode sombre"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Préface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">À propos de l’auteur</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie I: Géologie minière</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C01/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Rapport Technique NI 43-101 et Loi sur les mines</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C02/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aspect économique</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C03/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Théorie de Gy et contrôle qualité</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C04/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Traitement et analyse statistique des données de forage</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C05/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Méthodes déterministes d’estimation des ressources</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie II: Géostatistique linéaire</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C06/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction à la géostatistique</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C07/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Variogramme</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C08/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Variance de blocs, de dispersion et d’estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C09/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Krigeage</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Partie III: Géostatistique non-linéaire</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C10/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Géostatistique multivariable</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C11/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Krigeage d’indicatrices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C12/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable continue</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C13/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable catégorielle</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie IV: Exercices et examens</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/exercices/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Recueil d’exercices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/examens/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Anciens examens</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Références</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Annexes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Algèbre linéaire : vecteurs et plans</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Probabilités &amp; statistiques</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-c.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Table de la loi normale centrée-réduite</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Abaques - Variances de dispersion</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-e.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Abaques - Variances d’estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Notation mathématique</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#modélisation-de-faciès-basée-sur-des-cellules" id="toc-modélisation-de-faciès-basée-sur-des-cellules" class="nav-link active" data-scroll-target="#modélisation-de-faciès-basée-sur-des-cellules"><span class="header-section-number">13.1</span> Modélisation de faciès basée sur des cellules</a>
+  <ul class="collapse">
+  <li><a href="#simulation-séquentielle-dindicatrices-sis" id="toc-simulation-séquentielle-dindicatrices-sis" class="nav-link" data-scroll-target="#simulation-séquentielle-dindicatrices-sis">Simulation séquentielle d’indicatrices (SIS)</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-13.1-animation-sis" id="toc-atelier-interactif-13.1-animation-sis" class="nav-link" data-scroll-target="#atelier-interactif-13.1-animation-sis">🧮 Atelier interactif 13.1 — Animation SIS</a>
+  <ul class="collapse">
+  <li><a href="#méthode-par-simulations-tronquées" id="toc-méthode-par-simulations-tronquées" class="nav-link" data-scroll-target="#méthode-par-simulations-tronquées">Méthode par simulations tronquées</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-13.2-simulations-tronquées-tgs-et-pgs" id="toc-atelier-interactif-13.2-simulations-tronquées-tgs-et-pgs" class="nav-link" data-scroll-target="#atelier-interactif-13.2-simulations-tronquées-tgs-et-pgs">🧮 Atelier interactif 13.2 — Simulations tronquées : TGS et PGS</a></li>
+  <li><a href="#modélisation-de-faciès-basée-sur-des-objets" id="toc-modélisation-de-faciès-basée-sur-des-objets" class="nav-link" data-scroll-target="#modélisation-de-faciès-basée-sur-des-objets"><span class="header-section-number">13.2</span> Modélisation de faciès basée sur des objets</a>
+  <ul class="collapse">
+  <li><a href="#concepts" id="toc-concepts" class="nav-link" data-scroll-target="#concepts">Concepts</a></li>
+  <li><a href="#le-modèle-booléen" id="toc-le-modèle-booléen" class="nav-link" data-scroll-target="#le-modèle-booléen">Le modèle booléen</a></li>
+  <li><a href="#conditionnement-aux-données" id="toc-conditionnement-aux-données" class="nav-link" data-scroll-target="#conditionnement-aux-données">Conditionnement aux données</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-13.3-modélisation-par-objets-chenaux-et-lentilles" id="toc-atelier-interactif-13.3-modélisation-par-objets-chenaux-et-lentilles" class="nav-link" data-scroll-target="#atelier-interactif-13.3-modélisation-par-objets-chenaux-et-lentilles">🧮 Atelier interactif 13.3 — Modélisation par objets : chenaux et lentilles</a></li>
+  <li><a href="#modélisation-de-faciès-par-simulation-multipoints" id="toc-modélisation-de-faciès-par-simulation-multipoints" class="nav-link" data-scroll-target="#modélisation-de-faciès-par-simulation-multipoints"><span class="header-section-number">13.3</span> Modélisation de faciès par simulation multipoints</a></li>
+  <li><a href="#atelier-interactif-13.4-animation-mps-deesse-et-filtersim" id="toc-atelier-interactif-13.4-animation-mps-deesse-et-filtersim" class="nav-link" data-scroll-target="#atelier-interactif-13.4-animation-mps-deesse-et-filtersim">🧮 Atelier interactif 13.4 — Animation MPS : DeeSse et FilterSim</a></li>
+  <li><a href="#exemples-dapplication-des-méthodes-de-simulation-de-faciès" id="toc-exemples-dapplication-des-méthodes-de-simulation-de-faciès" class="nav-link" data-scroll-target="#exemples-dapplication-des-méthodes-de-simulation-de-faciès"><span class="header-section-number">13.4</span> Exemples d’application des méthodes de simulation de faciès</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Danlauz/glq3401-3651/edit/main/chapters/C13/index.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/Danlauz/glq3401-3651/issues/new" class="toc-action"><i class="bi empty"></i>Signaler un problème ou<br>formuler une suggestion</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/C10/index.html">Partie III: Géostatistique non-linéaire</a></li><li class="breadcrumb-item"><a href="../../chapters/C13/index.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable catégorielle</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable catégorielle</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Résumé</div>
+    <p>Ce chapitre présente les principales méthodes de simulation de faciès utilisées en géostatistique. Il couvre les approches classiques fondées sur les pixels, la modélisation d’objets et les statistiques multipoints. La simulation séquentielle d’indicatrices, les simulations gaussiennes tronquées ainsi que des méthodes plus avancées reposant sur des images d’entraînement ou des modèles conceptuels y sont notamment abordées. Chaque technique est décrite en mettant en évidence ses fondements théoriques, ses avantages, ses limites et ses domaines d’application. Le chapitre présente également les différentes stratégies permettant de conditionner les simulations aux faciès observés en forage. L’objectif consiste à fournir les bases théoriques et pratiques nécessaires à la mise en œuvre, à l’analyse et à l’interprétation des simulations de faciès dans divers contextes géoscientifiques. Plusieurs exemples d’application tirés de la littérature scientifique concluent le chapitre.</p>
+  </div>
+</div>
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Objectifs d’apprentissage
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>À la fin de ce chapitre, vous serez en mesure de :</p>
+<ul>
+<li><p>Expliquer les principes et le fonctionnement des principales méthodes de simulation de faciès, y compris les approches fondées sur les pixels, la modélisation d’objets et les statistiques multipoints;</p></li>
+<li><p>Distinguer les fondements théoriques, les avantages, les limites et les domaines d’application de ces approches;</p></li>
+<li><p>Décrire le rôle des variables indicatrices, des covariances associées et des règles de codage dans la représentation et la simulation des faciès (méthodes indicatrices et tronquées);</p></li>
+<li><p>Interpréter des réalisations de faciès simulées à partir de leurs paramètres de modélisation, de leurs règles de codage ou de leurs images d’entraînement;</p></li>
+<li><p>Mettre en œuvre le conditionnement des simulations de faciès aux observations disponibles, notamment aux données de forage;</p></li>
+<li><p>Comparer des exemples d’applications issus de la littérature afin d’évaluer la pertinence des méthodes dans divers contextes géoscientifiques.</p></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Référence
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ce chapitre s’appuie principalement sur l’ouvrage de référence suivant:</p>
+<p>Pyrcz, M. J., &amp; Deutsch, C. V. (2014). <em>Geostatistical Reservoir Modeling</em>. Oxford University Press.</p>
+</div>
+</div>
+<p>La caractérisation du sous-sol repose sur l’observation de propriétés physiques, hydrauliques, mécaniques et géochimiques dont la distribution spatiale est contrôlée, à des degrés variables, par la géologie. La perméabilité d’un aquifère, la porosité d’une formation, la densité de fractures d’un massif rocheux ou le potentiel de drainage minier acide ou neutre contaminé d’un parc à résidus ou d’une halde à stériles dépendent notamment de la nature des matériaux, de leur mode de mise en place et des transformations qu’ils ont subies. Les processus de dépôt, de déformation, de fracturation, de circulation des fluides et d’altération produisent ainsi des hétérogénéités qui ne sont généralement ni aléatoires ni uniformément réparties.</p>
+<p>La représentation de cette organisation géologique fait souvent appel à des variables catégorielles décrivant, par exemple, la lithologie, la stratigraphie, le faciès ou le degré d’altération. Un faciès regroupe des matériaux présentant un ensemble de caractéristiques communes, telles que la composition, la texture, les structures ou les conditions de formation. La classification retenue dépend toutefois de l’objectif de la modélisation. Des unités géologiques distinctes peuvent, par exemple, être regroupées en hydrofaciès lorsqu’elles présentent des comportements hydrodynamiques comparables. À l’inverse, une même unité lithologique peut devoir être subdivisée si ses propriétés varient suffisamment pour influencer les résultats du modèle.</p>
+<p>Dans un modèle géologique ou hydrogéologique, la distribution des catégories définit l’architecture dans laquelle les propriétés continues sont ensuite attribuées ou simulées. La géométrie, les proportions et la connectivité des unités peuvent alors avoir une influence directe sur les écoulements, le transport, la stabilité mécanique ou les réactions géochimiques. Une représentation adéquate des faciès ne consiste donc pas uniquement à reproduire leurs proportions globales : elle doit également préserver les relations spatiales pertinentes pour le phénomène étudié.</p>
+<p>La simulation de faciès vise à produire plusieurs configurations catégorielles compatibles avec les données disponibles et avec un modèle de continuité ou d’organisation spatiale. Ces réalisations permettent d’examiner l’incertitude associée à la géométrie des unités et d’en évaluer la propagation vers les propriétés continues et les réponses calculées par les modèles numériques.</p>
+<p>Les méthodes de simulation ne reproduisent toutefois pas toutes les mêmes caractéristiques. Certaines décrivent principalement les proportions et la continuité à deux points, tandis que d’autres cherchent à représenter des géométries, des séquences, des objets ou des relations spatiales plus complexes. Le choix de la méthode dépend donc de la structure géologique à reproduire, de la quantité et du type de données disponibles, ainsi que de l’échelle et de l’objectif du modèle. Les dépôts stratifiés, les formations glaciaires, les réseaux de fractures, les corps minéralisés et les massifs cristallins ne peuvent généralement pas être décrits à partir des mêmes hypothèses géométriques.</p>
+<p>Ce chapitre présente les fondements des principales approches de modélisation et de simulation des variables catégorielles, leurs hypothèses, leurs domaines d’application et leurs principales limites. Des exemples tirés de la littérature illustrent la manière dont ces méthodes représentent les proportions, la continuité, la géométrie et la connectivité des unités géologiques.</p>
+<section id="modélisation-de-faciès-basée-sur-des-cellules" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="modélisation-de-faciès-basée-sur-des-cellules"><span class="header-section-number">13.1</span> Modélisation de faciès basée sur des cellules</h2>
+<p>La modélisation par cellules, ou approche <em>pixel-based</em>, découpe l’espace en une grille régulière et attribue à chaque cellule une catégorie : le faciès. L’étape est déterminante, car les propriétés physiques du milieu sont corrélées à ces unités. Un faciès argileux porte une conductivité faible, un faciès sableux une conductivité élevée. En fixant d’abord l’architecture des faciès, on contraint la distribution des paramètres physiques, puis on simule, plus finement, l’écoulement dans un aquifère, par exemple.</p>
+<p>L’approche s’appuie sur le variogramme pour décrire la structure spatiale. Elle s’organise autour de deux méthodes : la simulation séquentielle d’indicatrices (<em>sequential indicator simulation</em>, SIS) et la simulation gaussienne tronquée (<em>truncated Gaussian simulation</em>, TGS).</p>
+<section id="simulation-séquentielle-dindicatrices-sis" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-séquentielle-dindicatrices-sis">Simulation séquentielle d’indicatrices (SIS)</h3>
+<p>La SIS modélise la présence ou l’absence de faciès à partir de variables binaires (0 ou 1). Le principe reprend celui de la simulation séquentielle gaussienne (<em>sequential Gaussian simulation</em>, SGS) des variables continues, mais l’adapte aux variables catégorielles.</p>
+<section id="algorithme" class="level4">
+<h4 class="anchored" data-anchor-id="algorithme">Algorithme</h4>
+<p>C’est l’équivalent catégoriel de la SGS. On visite les points de la grille dans un ordre aléatoire et, à chaque emplacement, on simule un faciès parmi les <span class="math inline">\(K\)</span> possibles. Seule la loi de tirage change : au lieu d’une gaussienne conditionnelle, on tire dans une distribution catégorielle obtenue par krigeage d’indicatrices. Concrètement, on krige l’indicatrice de chaque faciès pour estimer sa probabilité de présence au point courant. Les <span class="math inline">\(K\)</span> probabilités forment un vecteur qu’on normalise à somme 1, puis on tire un faciès selon cette loi. Comme en SGS, le faciès simulé rejoint aussitôt les données conditionnantes, et on passe au point suivant du chemin.</p>
+<p>Soit un champ aléatoire catégoriel <span class="math inline">\(Z(\mathbf{x})\)</span> prenant <span class="math inline">\(K\)</span> états discrets <span class="math inline">\(\{s_1, s_2, \dots, s_K\}\)</span>, soit les <span class="math inline">\(K\)</span> faciès possibles. On dispose de <span class="math inline">\(N\)</span> observations <span class="math inline">\(z(\mathbf{x}_i)\)</span>, avec <span class="math inline">\(i = 1, \dots, N\)</span>, et on veut simuler le champ aux nœuds d’une grille <span class="math inline">\(\{\mathbf{x}_j, j = 1, \dots, n\}\)</span> conditionnellement aux données. Le processus se déroule ainsi.</p>
+<ol type="1">
+<li><strong>Codage en indicatrices.</strong></li>
+</ol>
+<p>Transformer les données catégorielles en indicatrices <span class="math inline">\(i(\mathbf{x}_i; s_k)\)</span> pour chaque faciès <span class="math inline">\(s_k\)</span> : <span class="math display">\[i(\mathbf{x}_i; s_k) = \begin{cases} 1 &amp; \text{si } z(\mathbf{x}_i) = s_k, \\ 0 &amp; \text{sinon.} \end{cases}\]</span></p>
+<ol start="2" type="1">
+<li><strong>Chemin aléatoire.</strong></li>
+</ol>
+<p>Définir un chemin qui visite chaque nœud <span class="math inline">\(\mathbf{x}_j\)</span> une seule fois.</p>
+<ol start="3" type="1">
+<li><strong>Estimation des probabilités locales.</strong></li>
+</ol>
+<p>Au nœud courant <span class="math inline">\(\mathbf{x}_j\)</span>, estimer la probabilité conditionnelle de chaque faciès par krigeage des indicatrices, <span class="math display">\[p^*(\mathbf{x}_j; s_k \mid (n)) = \mathbb{P}(Z(\mathbf{x}_j) = s_k \mid \text{données observées et simulées}),\]</span> soit l’estimateur de krigeage de l’indicatrice du faciès, <span class="math display">\[p^*(\mathbf{x}_j; s_k) = \sum_{\alpha=1}^{n} \lambda_\alpha^{(k)}\, i(\mathbf{x}_\alpha; s_k),\]</span> où les poids <span class="math inline">\(\lambda_\alpha^{(k)}\)</span> résolvent le système de krigeage construit sur le variogramme de l’indicatrice du faciès <span class="math inline">\(s_k\)</span> (krigeage d’indicatrices, voir le chapitre correspondant).</p>
+<ol start="4" type="1">
+<li><strong>Correction et normalisation.</strong></li>
+</ol>
+<p>Le krigeage des indicatrices ne garantit pas que les <span class="math inline">\(p^*\)</span> respectent les axiomes de probabilité — certaines valeurs sortent de <span class="math inline">\([0,1]\)</span>, leur somme s’écarte de 1. On impose donc <span class="math display">\[\sum_{k=1}^{K} p^*(\mathbf{x}_j; s_k) = 1 \quad \text{et} \quad p^*(\mathbf{x}_j; s_k) \in [0, 1]\]</span> par une correction des relations d’ordre : les probabilités négatives passent à 0, celles au-delà de 1 à 1, puis on renormalise pour que la somme vaille 1. Cette correction déforme un peu la structure imposée par les variogrammes d’indicatrices : c’est pourquoi la SIS ne les reproduit en général pas exactement (voir les remarques plus bas).</p>
+<ol start="5" type="1">
+<li><strong>Tirage de Monte-Carlo.</strong></li>
+</ol>
+<p>Construire la fonction de répartition locale et tirer selon la loi uniforme <span class="math inline">\(U[0, 1]\)</span>. Le faciès <span class="math inline">\(s_k\)</span> dont l’intervalle contient le tirage est attribué au nœud <span class="math inline">\(\mathbf{x}_j\)</span>.</p>
+<ol start="6" type="1">
+<li><strong>Mise à jour.</strong></li>
+</ol>
+<p>Ajouter la valeur simulée <span class="math inline">\(z(\mathbf{x}_j)\)</span> aux données conditionnantes des nœuds restants, puis reprendre à l’étape 3.</p>
+<p>La <a href="#fig-sis-anim" class="quarto-xref">Figure&nbsp;<span>13.1</span></a> illustre le déroulement séquentiel sur un cas simplifié. Le modèle comporte deux faciès dont la continuité spatiale suit un variogramme sphérique isotrope de portée 10 pixels, sur une grille de <span class="math inline">\(40 \times 40\)</span>. L’animation rend visible la nature séquentielle : les cellules sont simulées l’une après l’autre le long d’un chemin aléatoire, chaque nouvelle valeur s’ajoutant aux données de conditionnement. La probabilité globale du faciès rouge est de 40 %, celle du faciès vert de 60 %. À gauche, la construction séquentielle du champ de faciès; à droite, la probabilité conditionnelle de chaque catégorie. À chaque étape, une valeur est tirée selon <span class="math inline">\(U[0, 1]\)</span>, et le faciès dont l’intervalle de probabilité cumulée contient ce tirage est affecté à la cellule.</p>
+<div id="fig-sis-anim" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sis-anim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<video controls="" autoplay="" muted="" loop="" playsinline="" preload="metadata" style="max-width: 85%; height: auto; border-radius: 4px; display: block; margin: 0 auto;" poster="images/C13_SIS_animation_poster.png">
+  <source src="images/C13_SIS_animation.webm" type="video/webm">
+  Votre navigateur ne supporte pas la lecture vidéo HTML5.
+</video>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sis-anim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.1: Animation de la simulation séquentielle d’indicatrices (SIS). À gauche : construction séquentielle du champ de faciès; à droite : évolution des probabilités locales de présence.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="remarques-sur-la-méthode" class="level4">
+<h4 class="anchored" data-anchor-id="remarques-sur-la-méthode">Remarques sur la méthode</h4>
+<p>Sur le plan spatial, la SIS autorise toutes les transitions entre faciès, car les probabilités de transition entre deux catégories <span class="math inline">\(s_k\)</span> et <span class="math inline">\(s_{k'}\)</span> ne sont soumises à aucune règle géologique. La probabilité de transition à une distance <span class="math inline">\(\mathbf{h}\)</span>,</p>
+<p><span class="math display">\[\mathbb{P}(Z(\mathbf{x} + \mathbf{h}) = s_{k'} \mid Z(\mathbf{x}) = s_k),\]</span></p>
+<p>ne dépend que des variogrammes des indicatrices et des données locales. Rien n’interdit un contact : des faciès géologiquement incompatibles peuvent se retrouver côte à côte.</p>
+<p>De plus, la méthode reproduit les variogrammes des indicatrices de chaque faciès <span class="math inline">\(s_k\)</span> pris isolément, mais ignore les covariances croisées entre les indicatrices. L’estimation des probabilités suppose en effet l’indépendance des fonctions indicatrices, alors qu’elles sont spatialement corrélées :</p>
+<p><span class="math display">\[\operatorname{Cov}[i(\mathbf{x}; s_k), i(\mathbf{x} + \mathbf{h}; s_{k'})] \approx 0, \quad \forall k \neq k'.\]</span></p>
+<p>Les relations spatiales asymétriques ou complexes — dépôt préférentiel d’un faciès sur un autre, intrusion mafique dans un encaissant — échappent donc à la SIS. Un voisinage restreint peut également freiner la reproduction des structures à longue portée. Enfin, la nature discrète de la simulation empêche la formation de frontières lisses entre les unités. Le krigeage d’indicatrices donne des probabilités qui sortent parfois de <span class="math inline">\([0, 1]\)</span>; la correction qui les y ramène altère la structure imposée, si bien que la covariance des indicatrices n’est en général pas fidèlement reproduite. Les seules exceptions sont l’effet de pépite pur et la covariance exponentielle en une dimension. Certains modèles, notamment le modèle gaussien, très régulier à l’origine, ne peuvent donc pas être respectés. Malgré ces limites, la SIS reste un standard pour les environnements à géométrie incertaine ou lorsque les données sont rares.</p>
+</section>
+<section id="exemples-dapplication" class="level4">
+<h4 class="anchored" data-anchor-id="exemples-dapplication">Exemples d’application</h4>
+<p>La <a href="#fig-sis-2d-iso" class="quarto-xref">Figure&nbsp;<span>13.2</span></a> présente une réalisation avec les probabilités <span class="math inline">\(p_1 = 1/3\)</span> (bleu), <span class="math inline">\(p_2 = 1/2\)</span> (vert) et <span class="math inline">\(p_3 = 1/6\)</span> (brun), pour un variogramme sphérique de portée <span class="math inline">\(a = 50\)</span>. Toutes les transitions possibles s’y produisent, de façon isotrope.</p>
+<div id="fig-sis-2d-iso" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sis-2d-iso-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_SIS1.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sis-2d-iso-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.2: Simulation 2D isotrope.
+</figcaption>
+</figure>
+</div>
+<p>La <a href="#fig-sis-2d-aniso" class="quarto-xref">Figure&nbsp;<span>13.3</span></a> montre une simulation à variogramme sphérique anisotrope (<span class="math inline">\(a_x = 200\)</span>, <span class="math inline">\(a_y = 10\)</span>). L’étirement des formes rapproche l’image d’unités sédimentaires réalistes, mais les transitions entre faciès restent celles du cas précédent.</p>
+<div id="fig-sis-2d-aniso" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sis-2d-aniso-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_SIS2.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sis-2d-aniso-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.3: Simulation 2D anisotrope.
+</figcaption>
+</figure>
+</div>
+<p>Enfin, la <a href="#fig-sis-3d" class="quarto-xref">Figure&nbsp;<span>13.4</span></a> présente une réalisation 3D plus complexe. La méthode brille là où les forages (lignes noires) sont rares et où la géométrie exacte des corps est difficile à poser <em>a priori</em>. C’est un exemple qui reproduit un réservoir pétrolier.</p>
+<div id="fig-sis-3d" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sis-3d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_SIS3.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sis-3d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.4: Une réalisation 3D plus réaliste d’un cas d’application réel.
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+</section>
+<section id="atelier-interactif-13.1-animation-sis" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-13.1-animation-sis">🧮 Atelier interactif 13.1 — Animation SIS</h2>
+<p>Lancez l’animation : la grille se remplit pixel par pixel le long d’un chemin aléatoire. Chaque pixel est échantillonné à partir de la loi locale obtenue par krigeage des indicatrices des voisins déjà simulés. Les proportions réalisées convergent vers les cibles au fil du remplissage.</p>
+<div class="geostat-widget" data-widget="c13_SIS">
+  <div class="gw-placeholder">Chargement (Sequential Indicator Simulation)…</div>
+</div>
+<section id="méthode-par-simulations-tronquées" class="level3">
+<h3 class="anchored" data-anchor-id="méthode-par-simulations-tronquées">Méthode par simulations tronquées</h3>
+<p>Les simulations tronquées génèrent des variables catégorielles à partir de champs continus gaussiens. Le principe est simple : on simule d’abord un ou plusieurs champs gaussiens par une méthode classique (LU, SGS, FFT-MA, bandes tournantes), puis on découpe ces champs continus en catégories à l’aide de seuils ou de zones de codage. On contrôle ainsi les proportions de chaque catégorie, on reproduit la continuité spatiale via le variogramme du champ gaussien, et — selon le modèle — on impose certaines relations spatiales entre faciès (transitions permises ou interdites, proportions variables).</p>
+<p>Il y a deux variantes principales : la simulation gaussienne tronquée, qui découpe un seul champ gaussien en intervalles ordonnés; et la simulation plurigaussienne, plus souple, qui combine plusieurs champs gaussiens pour des organisations spatiales plus riches.</p>
+<section id="simulation-gaussienne-tronquée" class="level4">
+<h4 class="anchored" data-anchor-id="simulation-gaussienne-tronquée">Simulation gaussienne tronquée</h4>
+<p>L’algorithme non conditionnel est assez simple.</p>
+<ol type="1">
+<li><strong>Ordonnancement des faciès.</strong></li>
+</ol>
+<p>Les faciès doivent être ordonnés (par exemple F1 &lt; F2 &lt; F3). Cet ordre fixe les transitions possibles : seuls les faciès successifs peuvent être contigus, ce qui interdit une transition directe F1–F3.</p>
+<ol start="2" type="1">
+<li><strong>Détermination des seuils gaussiens.</strong></li>
+</ol>
+<p>À partir des proportions globales, on calcule les seuils comme quantiles d’une loi normale standard <span class="math inline">\(\mathcal{N}(0,1)\)</span>. Pour <span class="math inline">\(K\)</span> faciès ordonnés de proportions <span class="math inline">\(p_1, \dots, p_K\)</span>, le seuil séparant le faciès <span class="math inline">\(k\)</span> du faciès <span class="math inline">\(k+1\)</span> est <span class="math display">\[s_k = \Phi^{-1}\!\left( \sum_{j=1}^{k} p_j \right), \qquad s_0 = -\infty, \quad s_K = +\infty,\]</span> où <span class="math inline">\(\Phi\)</span> est la fonction de répartition de <span class="math inline">\(\mathcal{N}(0,1)\)</span>. Le faciès <span class="math inline">\(k\)</span> occupe l’intervalle <span class="math inline">\((s_{k-1}, s_k]\)</span> du champ latent, que l’on prend de moyenne nulle et de variance unitaire.</p>
+<ol start="3" type="1">
+<li><strong>Application des seuils de codage.</strong></li>
+</ol>
+<p>On génère une simulation gaussienne non conditionnelle par une méthode classique (LU, SGS, FFT-MA, bandes tournantes). Chaque valeur du champ continu est comparée aux seuils de l’étape 2 : si elle tombe dans l’intervalle du faciès <span class="math inline">\(k\)</span>, la cellule prend ce faciès. Le champ gaussien devient un champ catégoriel, aux proportions voulues et aux relations spatiales dictées par le modèle.</p>
+<p>La <a href="#fig-C13_TGS1" class="quarto-xref">Figure&nbsp;<span>13.5</span></a> présente un exemple à trois faciès <span class="math inline">\(F_1\)</span>, <span class="math inline">\(F_2\)</span>, <span class="math inline">\(F_3\)</span>, de probabilités <span class="math inline">\(p_1 = \frac{1}{3}\)</span>, <span class="math inline">\(p_2 = \frac{1}{2}\)</span>, <span class="math inline">\(p_3 = \frac{1}{6}\)</span>. Les seuils viennent de la fonction de répartition <span class="math inline">\(\Phi\)</span> de <span class="math inline">\(\mathcal{N}(0,1)\)</span>. Le premier, <span class="math inline">\(s_1\)</span>, à la transition <span class="math inline">\(F_1\)</span>–<span class="math inline">\(F_2\)</span>, vaut <span class="math inline">\(s_1 = \Phi^{-1}(p_1) = \Phi^{-1}\!\left(\frac{1}{3}\right) = -0{,}43073\)</span>. Le second, <span class="math inline">\(s_2\)</span>, à la transition <span class="math inline">\(F_2\)</span>–<span class="math inline">\(F_3\)</span>, cumule les deux premières proportions : <span class="math inline">\(s_2 = \Phi^{-1}(p_1 + p_2) = \Phi^{-1}\!\left(\frac{5}{6}\right) = 0{,}96742\)</span>. Toute valeur gaussienne inférieure à <span class="math inline">\(s_1\)</span> est codée <span class="math inline">\(F_1\)</span>, entre <span class="math inline">\(s_1\)</span> et <span class="math inline">\(s_2\)</span> codée <span class="math inline">\(F_2\)</span>, au-delà de <span class="math inline">\(s_2\)</span> codée <span class="math inline">\(F_3\)</span>. Avec un variogramme gaussien de portée 50 et ces proportions, on obtient le champ de la <a href="#fig-C13_TGS2" class="quarto-xref">Figure&nbsp;<span>13.6</span></a> : la transition de <span class="math inline">\(F_1\)</span> (bleu) à <span class="math inline">\(F_3\)</span> (rouge) passe obligatoirement par <span class="math inline">\(F_2\)</span> (vert), donc <span class="math inline">\(F_1\)</span> et <span class="math inline">\(F_3\)</span> ne sont jamais contigus. L’ordre des faciès doit donc respecter les relations observées.</p>
+<div id="fig-C13_TGS1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-C13_TGS1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_TGS1.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-C13_TGS1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.5: Exemple de seuil de codage pour une simulation gaussienne tronquée avec <span class="math inline">\(p_1 = \frac{1}{3}\)</span>, <span class="math inline">\(p_2 = \frac{1}{2}\)</span> et <span class="math inline">\(p_3 = \frac{1}{6}\)</span>.
+</figcaption>
+</figure>
+</div>
+<div id="fig-C13_TGS2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-C13_TGS2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_TGS2.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-C13_TGS2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.6: Exemple de simulation gaussienne tronquée réalisée à partir d’un champ latent gaussien suivant un variogramme gaussien de portée effective de 50 pixels, sur une grille de 250 par 250 pixels.
+</figcaption>
+</figure>
+</div>
+<section id="comment-déterminer-le-variogramme-de-la-variable-latente-gaussienne" class="level5">
+<h5 class="anchored" data-anchor-id="comment-déterminer-le-variogramme-de-la-variable-latente-gaussienne">Comment déterminer le variogramme de la variable latente gaussienne?</h5>
+<p>Une difficulté de la TGS réside dans l’identification de la structure spatiale du champ latent. Les données ne sont que des faciès, des variables catégorielles : on n’a donc aucune variable continue pour estimer directement le variogramme du champ gaussien latent. Tout ce qu’on a, ce sont les variogrammes des indicatrices, qui ne fournissent pas un variogramme latent unique. Il faut effectuer quelques manipulations pour relier les variogrammes des indicateurs à la structure latente continue.</p>
+<p>Pour contourner l’obstacle, la TGS s’appuie sur une calibration indirecte, fondée sur les probabilités conjointes estimables à partir des faciès. Ces probabilités sont des intégrales de la loi binormale définie par la covariance latente inconnue. La stratégie consiste à ajuster la covariance (ou le variogramme) du champ latent pour que les probabilités binormales collent au mieux aux probabilités expérimentales.</p>
+<p>On note <span class="math inline">\(W(\mathbf{x})\)</span> le faciès observé et <span class="math inline">\(Z(\mathbf{x})\)</span> le champ gaussien latent, le premier obtenu par troncature du second. Soit <span class="math display">\[
+p_{ij}(\mathbf{h}) = \mathbb{P}\big( W(\mathbf{x})=i,\; W(\mathbf{x}+\mathbf{h})=j \big) = \mathbb{E}\!\left[ I_i(\mathbf{x})\, I_j(\mathbf{x}+\mathbf{h}) \right]
+\]</span> la probabilité d’observer le faciès <span class="math inline">\(i\)</span> en <span class="math inline">\(\mathbf{x}\)</span> et le faciès <span class="math inline">\(j\)</span> en <span class="math inline">\(\mathbf{x}+\mathbf{h}\)</span>. Elle s’estime directement : pour chaque séparation <span class="math inline">\(\mathbf{h}\)</span>, on compte les paires <span class="math inline">\((\mathbf{x}, \mathbf{x}+\mathbf{h})\)</span> où l’on observe à la fois <span class="math inline">\(W(\mathbf{x})=i\)</span> et <span class="math inline">\(W(\mathbf{x}+\mathbf{h})=j\)</span>, puis on normalise par le nombre total de paires. <span class="math inline">\(p_{ij}(\mathbf{h})\)</span> est donc une simple fréquence relative observée :</p>
+<p><span class="math display">\[
+\hat p_{ij}(\mathbf{h}) = \frac{1}{N(\mathbf{h})} \sum_{(\mathbf{x},\,\mathbf{x}+\mathbf{h})} \mathbb{1}\{ W(\mathbf{x})=i \}\,\mathbb{1}\{ W(\mathbf{x}+\mathbf{h})=j \},
+\]</span></p>
+<p>où <span class="math inline">\(N(\mathbf{h})\)</span> est le nombre de paires séparées de <span class="math inline">\(\mathbf{h}\)</span> et <span class="math inline">\(\mathbb{1}\{\cdot\}\)</span> la fonction indicatrice. Comme chaque faciès <span class="math inline">\(i\)</span> correspond à l’intervalle de troncature <span class="math inline">\([s_{i-1}, s_i]\)</span> du champ latent, <span class="math display">\[
+W(\mathbf{x})=i \quad \Longleftrightarrow \quad s_{i-1} &lt; Z(\mathbf{x}) \le s_i,
+\]</span> la probabilité conjointe s’écrit aussi <span class="math display">\[
+p_{ij}(\mathbf{h})
+= \mathbb{P}\left( s_{i-1} &lt; Z(\mathbf{x}) \le s_i,\; s_{j-1} &lt; Z(\mathbf{x}+\mathbf{h}) \le s_j \right).
+\]</span></p>
+<p>Or cette probabilité se calcule théoriquement comme l’intégrale de la densité binormale définie par la covariance latente <span class="math inline">\(C(\mathbf{h})\)</span>. Pour chaque séparation <span class="math inline">\(\mathbf{h}\)</span>, les probabilités expérimentales <span class="math inline">\(p_{ij}(\mathbf{h})\)</span> imposent donc une contrainte sur la covariance <span class="math inline">\(C(\mathbf{h})\)</span>. L’objectif est alors d’identifier la covariance <span class="math inline">\(C(\mathbf{h})\)</span> qui minimise l’écart entre les probabilités théoriques <span class="math inline">\(p_{ij}(\mathbf{h})\)</span> du modèle binormal et leurs estimations empiriques <span class="math inline">\(\hat p_{ij}(\mathbf{h})\)</span>. La relation entre <span class="math inline">\(C(\mathbf{h})\)</span> et les probabilités conjointes n’est en général pas inversible analytiquement; on l’ajuste numériquement, sauf dans le cas particulier d’un seuil placé à <span class="math inline">\(y = 0\)</span>, où l’inversion devient directe.</p>
+<p>La <a href="#fig-C13_TGS3" class="quarto-xref">Figure&nbsp;<span>13.7</span></a> présente le calcul théorique du modèle binormal. La surface colorée est la densité de la loi normale bidimensionnelle du couple gaussien corrélé <span class="math inline">\((Z(\mathbf{x}), Z(\mathbf{x}+\mathbf{h}))\)</span>. Les lignes rouges marquent les seuils <span class="math inline">\((s_{i-1}, s_i)\)</span> et <span class="math inline">\((s_{j-1}, s_j)\)</span> des faciès <span class="math inline">\(i\)</span> et <span class="math inline">\(j\)</span>. La probabilité conjointe <span class="math inline">\(p_{ij}(\mathbf{h})\)</span> est l’intégrale de cette densité sur le rectangle délimité par ces seuils : <span class="math display">\[
+p_{ij}(\mathbf{h})
+= \iint_{\substack{s_{i-1} &lt; u \le s_i \\[2pt] s_{j-1} &lt; v \le s_j}}
+f_{Z(\mathbf{x}),Z(\mathbf{x}+\mathbf{h})}(u,v)\,\mathrm{d}u\,\mathrm{d}v,
+\]</span> où <span class="math inline">\(f_{Z(\mathbf{x}),Z(\mathbf{x}+\mathbf{h})}(u,v)\)</span> est la densité normale bidimensionnelle de moyenne nulle, de variance unitaire et de covariance <span class="math inline">\(C(\mathbf{h})\)</span>.</p>
+<p>La <a href="#fig-C13_TGS4" class="quarto-xref">Figure&nbsp;<span>13.8</span></a> présente les probabilités <span class="math inline">\(p_{ij}(\mathbf{h})=\mathbb{E}[ I_i\, I_j ]\)</span> du modèle TGS considéré (rappel : <span class="math inline">\(p_1 = \tfrac{1}{3}\)</span>, <span class="math inline">\(p_2 = \tfrac{1}{2}\)</span>, <span class="math inline">\(p_3 = \tfrac{1}{6}\)</span>). Les probabilités de la diagonale décroissent : plus la séparation <span class="math inline">\(\lVert\mathbf{h}\rVert\)</span> augmente, moins il est probable de tomber sur deux points du même faciès. Hors diagonale, l’inverse : les transitions entre faciès distincts deviennent plus probables avec la distance. Pour <span class="math inline">\(\mathbf{h} = \mathbf{0}\)</span>, on retrouve bien <span class="math inline">\(p_{ii}(\mathbf{0})=p_i\)</span> pour <span class="math inline">\(i=1,\ldots,3\)</span>, tandis que les probabilités entre faciès différents (<span class="math inline">\(i \neq j\)</span>) sont nulles. Et lorsque <span class="math inline">\(\lVert\mathbf{h}\rVert \to \infty\)</span>, elles convergent vers <span class="math inline">\(p_{ij}(\mathbf{h})=p_i\,p_j\)</span>.</p>
+<div id="fig-C13_TGS3" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-C13_TGS3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_TGS3.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-C13_TGS3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.7: Exemple de calcul théorique issu du modèle binormal.
+</figcaption>
+</figure>
+</div>
+<div id="fig-C13_TGS4" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-C13_TGS4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_TGS4.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-C13_TGS4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.8: Probabilités <span class="math inline">\(p_{ij}(\mathbf{h})\)</span>.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="comment-tenir-compte-des-faciès-observés-aux-points-déchantillonnage" class="level5">
+<h5 class="anchored" data-anchor-id="comment-tenir-compte-des-faciès-observés-aux-points-déchantillonnage">Comment tenir compte des faciès observés aux points d’échantillonnage?</h5>
+<p>Pour tenir compte des faciès observés, on utilise un échantillonnage de Gibbs. C’est une méthode de Monte-Carlo par chaînes de Markov (MCMC) qui échantillonne une distribution en construisant une chaîne de Markov dont la loi stationnaire est justement la loi cible. Pour une loi <span class="math inline">\(\pi\)</span> sur un espace <span class="math inline">\(\Omega\)</span>, l’algorithme produit une suite d’échantillons dont la loi limite est <span class="math inline">\(\pi\)</span>.</p>
+<p>En TGS, le Gibbs est nécessaire, car les valeurs latentes <span class="math inline">\(Z(\mathbf{x})\)</span> ne sont pas observables : seules les catégories <span class="math inline">\(W(\mathbf{x})\)</span>, issues de la troncature, le sont. Chaque faciès <span class="math inline">\(i\)</span> correspond à un intervalle <span class="math inline">\([s_{i-1}, s_i]\)</span> : si <span class="math inline">\(\mathbf{x}_\alpha\)</span> appartient au faciès <span class="math inline">\(i\)</span>, alors la valeur latente vérifie forcément <span class="math inline">\(s_{i-1} &lt; Z(\mathbf{x}_\alpha) \le s_i\)</span>. Le Gibbs échantillonne donc, en chaque point observé, une valeur latente <span class="math inline">\(Z(\mathbf{x}_\alpha)\)</span> compatible à la fois avec la covariance <span class="math inline">\(C(\mathbf{h})\)</span> et avec les contraintes de troncature des faciès observés.</p>
+<p>L’algorithme repose sur des krigeages simples successifs, qui fournissent la loi conditionnelle d’une variable gaussienne en un point. À chaque itération, on met à jour une valeur latente à partir des autres. Les itérations se déroulent ainsi.</p>
+<p><strong>Initialisation.</strong></p>
+<p>Pour chaque point échantillonné <span class="math inline">\(\mathbf{x}_i\)</span>, tirer au hasard une valeur gaussienne <span class="math inline">\(Z(\mathbf{x}_i)\)</span> dans l’intervalle du faciès observé : <span class="math display">\[
+W(\mathbf{x}_i)=k \quad \Longrightarrow \quad Z(\mathbf{x}_i) \in (s_{k-1}, s_k].
+\]</span> L’initialisation respecte donc le codage.</p>
+<ol type="1">
+<li><strong>Sélection d’un point.</strong></li>
+</ol>
+<p>Choisir un point <span class="math inline">\(\mathbf{x}_i\)</span> au hasard parmi les <span class="math inline">\(N\)</span> points à conditionner. Retirer temporairement sa valeur courante <span class="math inline">\(Z(\mathbf{x}_i)\)</span>.</p>
+<ol start="2" type="1">
+<li><strong>Estimation de la loi conditionnelle.</strong></li>
+</ol>
+<p>Estimer la loi conditionnelle de <span class="math inline">\(Z(\mathbf{x}_i)\)</span> compte tenu des autres valeurs latentes, <span class="math display">\[
+   Z(\mathbf{x}_i)\,\mid\,Z(\text{reste}) \sim \mathcal{N}(\hat Z(\mathbf{x}_i),\sigma_i^2),
+   \]</span> où <span class="math inline">\((\hat Z(\mathbf{x}_i),\sigma_i^2)\)</span> viennent du krigeage simple.</p>
+<ol start="3" type="1">
+<li><strong>Échantillonnage tronqué.</strong></li>
+</ol>
+<p>Comme <span class="math inline">\(W(\mathbf{x}_i)=k\)</span>, tirer une nouvelle valeur de <span class="math inline">\(Z(\mathbf{x}_i)\)</span> dans la loi normale tronquée à l’intervalle du patron de codage, <span class="math display">\[
+   Z(\mathbf{x}_i) \sim \mathcal{N}(\hat Z(\mathbf{x}_i),\sigma_i^2)\;\text{tronquée à}\;(s_{k-1},s_k].
+   \]</span></p>
+<ol start="4" type="1">
+<li><strong>Mise à jour.</strong></li>
+</ol>
+<p>Remplacer l’ancienne valeur de <span class="math inline">\(Z(\mathbf{x}_i)\)</span> par la nouvelle.</p>
+<ol start="5" type="1">
+<li><strong>Critère d’arrêt.</strong></li>
+</ol>
+<p>Vérifier un critère de convergence (nombre d’itérations, stabilité des moments, autocorrélation). Si le critère est satisfait, arrêter; sinon, retourner à l’étape 1.</p>
+<p>Au terme des itérations, on obtient des valeurs gaussiennes corrélées selon <span class="math inline">\(C(\mathbf{h})\)</span> et satisfaisant aux seuils. Le Gibbs produit ainsi un champ latent <span class="math inline">\(Z(\mathbf{x})\)</span> qui respecte à la fois la structure spatiale imposée par le variogramme et les faciès observés à travers les intervalles de codage.</p>
+</section>
+</section>
+<section id="simulations-plurigaussiennes" class="level4">
+<h4 class="anchored" data-anchor-id="simulations-plurigaussiennes">Simulations plurigaussiennes</h4>
+<p>Le modèle plurigaussien étend le modèle gaussien tronqué en combinant plusieurs variables gaussiennes corrélées, pour des faciès aux relations spatiales plus complexes. Pour simplifier, on s’en tient à deux champs latents. L’algorithme se résume ainsi.</p>
+<ol type="1">
+<li><strong>Simulation de deux champs gaussiens.</strong></li>
+</ol>
+<p>Simuler deux variables gaussiennes <span class="math inline">\(Z_1\)</span> et <span class="math inline">\(Z_2\)</span> avec la matrice de covariance <span class="math display">\[\mathbf{C}(\mathbf{h})=\begin{bmatrix} C_{11}(\mathbf{h}) &amp; C_{12}(\mathbf{h}) \\ C_{21}(\mathbf{h}) &amp; C_{22}(\mathbf{h}) \end{bmatrix}.\]</span> Chaque champ a son propre variogramme direct, et les deux peuvent être corrélés via les covariances croisées <span class="math inline">\(C_{12}(\mathbf{h})\)</span> et <span class="math inline">\(C_{21}(\mathbf{h})\)</span>.</p>
+<ol start="2" type="1">
+<li><strong>Définition du plan de codage des faciès.</strong></li>
+</ol>
+<p>Associer chaque faciès à une zone (rectangle ou autre forme) du plan <span class="math inline">\((Z_1, Z_2)\)</span>. Ce plan encode les relations spatiales voulues (exclusions, transitions obligatoires, voisinages imposés). Les proportions des faciès sont l’intégrale de la densité gaussienne bivariée sur les zones définies.</p>
+<ol start="3" type="1">
+<li><strong>Inférence des paramètres.</strong></li>
+</ol>
+<p>Calculer les covariances expérimentales des indicatrices et leurs covariances croisées, puis ajuster les modèles de covariance des deux champs latents et leur corrélation pour reproduire au mieux les structures observées.</p>
+<ol start="4" type="1">
+<li><strong>Conditionnement aux données observées (échantillonneur de Gibbs).</strong></li>
+</ol>
+<p>Pour chaque point d’observation <span class="math inline">\(\mathbf{x}_i\)</span>, appliquer un Gibbs où la loi conditionnelle de <span class="math inline">\((Z_1(\mathbf{x}_i), Z_2(\mathbf{x}_i))\)</span> vient d’un cokrigeage simple, conditionnellement aux valeurs latentes déjà fixées : calculer la loi normale conjointe conditionnelle <span class="math inline">\((Z_1, Z_2)\,\mid\,\text{reste}\)</span> par cokrigeage simple; tirer une paire <span class="math inline">\((z_1, z_2)\)</span> dans cette loi; vérifier qu’elle appartient à la zone du faciès observé; sinon, retirer jusqu’à obtenir une paire compatible; mettre à jour la valeur latente et passer au point suivant. On répète le balayage jusqu’à convergence du Gibbs.</p>
+<ol start="5" type="1">
+<li><strong>Simulation conditionnelle finale.</strong></li>
+</ol>
+<p>Réaliser une simulation gaussienne conditionnelle complète des champs <span class="math inline">\(Z_1\)</span> et <span class="math inline">\(Z_2\)</span> à partir des valeurs obtenues au conditionnement, puis convertir en faciès à l’aide du plan de codage.</p>
+<p>La <a href="#fig-C13_TGS5" class="quarto-xref">Figure&nbsp;<span>13.9</span></a> présente un patron de codage complexe. Si l’on observe par exemple <span class="math inline">\(Z_1 = -1\)</span> et <span class="math inline">\(Z_2 = 1\)</span>, le couple <span class="math inline">\((-1, 1)\)</span> tombe dans le rectangle du faciès <span class="math inline">\(F_1\)</span>, qui est donc attribué. La <a href="#fig-C13_TGS6" class="quarto-xref">Figure&nbsp;<span>13.10</span></a> applique ce patron à deux champs gaussiens indépendants. Le champ <span class="math inline">\(Z_1(\mathbf{x})\)</span> suit un variogramme sphérique isotrope de portée 150 pixels, le champ <span class="math inline">\(Z_2(\mathbf{x})\)</span> un variogramme sphérique isotrope de portée 260 pixels, sur une grille de 500 × 500. Quand les deux champs sont indépendants, comme ici, la proportion d’un faciès se lit directement comme l’aire de sa zone dans le plan <span class="math inline">\((Z_1, Z_2)\)</span>, pondérée par la densité gaussienne bivariée; une corrélation entre <span class="math inline">\(Z_1\)</span> et <span class="math inline">\(Z_2\)</span> déforme cette correspondance.</p>
+<p>Les relations spatiales entre faciès sont très complexes, mais le patron impose clairement certaines structures : le faciès <span class="math inline">\(F_4\)</span> est entièrement contenu dans <span class="math inline">\(F_3\)</span>, tandis que <span class="math inline">\(F_1\)</span>, <span class="math inline">\(F_2\)</span> et <span class="math inline">\(F_3\)</span> baignent dans <span class="math inline">\(F_0\)</span> et ne peuvent donc jamais se toucher.</p>
+<p>La <a href="#fig-C13_TGS7" class="quarto-xref">Figure&nbsp;<span>13.11</span></a> présente quatre images : une image réelle aux rayons X des pores d’un grès, et trois réalisations PGS qui en reproduisent la structure. Laquelle est la vraie? Celle en haut à gauche. Les simulations sont assez réalistes pour rendre la distinction difficile, voire impossible.</p>
+<div id="fig-C13_TGS5" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-C13_TGS5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_TGS5.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-C13_TGS5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.9: Exemple de plan de codage utilisé pour une simulation plurigaussienne à deux champs latents.
+</figcaption>
+</figure>
+</div>
+<div id="fig-C13_TGS6" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-C13_TGS6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_TGS6.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-C13_TGS6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.10: Exemple de simulation plurigaussienne réalisée à partir de deux champs gaussiens indépendants et du plan de codage de la <a href="#fig-C13_TGS5" class="quarto-xref">Figure&nbsp;<span>13.9</span></a>.
+</figcaption>
+</figure>
+</div>
+<div id="fig-C13_TGS7" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-C13_TGS7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_TGS7.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-C13_TGS7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.11: Comparaison entre une image réelle aux rayons X de pores d’un grès et trois réalisations PGS générées pour en reproduire la structure.
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+</section>
+<section id="atelier-interactif-13.2-simulations-tronquées-tgs-et-pgs" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-13.2-simulations-tronquées-tgs-et-pgs">🧮 Atelier interactif 13.2 — Simulations tronquées : TGS et PGS</h2>
+<p>Un seul atelier pour les deux variantes (bouton de bascule). En TGS, un seul champ gaussien <span class="math inline">\(Y_1\)</span> : le patron de codage se réduit à des seuils sur <span class="math inline">\(Y_1\)</span> (bandes verticales). En PGS, deux champs <span class="math inline">\(Y_1, Y_2\)</span> : le patron est une carte 2D du plan <span class="math inline">\((Y_1, Y_2)\)</span>, qui autorise des relations spatiales bien plus riches. Dessinez le patron à la main (cliquez-glissez) : le champ de faciès se recode instantanément. Observez qu’en TGS deux faciès non adjacents ne peuvent jamais se toucher, alors qu’en PGS on peut imposer qu’un faciès en enveloppe un autre.</p>
+<div class="geostat-widget" data-widget="c13_tg_pgs">
+  <div class="gw-placeholder">Chargement (TGS / PGS — patron dessinable)…</div>
+</div>
+</section>
+<section id="modélisation-de-faciès-basée-sur-des-objets" class="level2" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="modélisation-de-faciès-basée-sur-des-objets"><span class="header-section-number">13.2</span> Modélisation de faciès basée sur des objets</h2>
+<p>La modélisation basée sur des objets représente les unités géologiques sous la forme de géométries paramétrées, plutôt que d’attribuer directement une catégorie à chaque cellule du modèle. Elle se distingue ainsi des approches pixelisées ou par cellules, comme les simulations fondées sur des indicatrices et certaines méthodes multipoints. Les méthodes basées sur les processus constituent une famille apparentée, mais distincte : elles cherchent à reproduire les mécanismes de formation ou d’évolution des structures géologiques, plutôt qu’à placer directement des objets dont la géométrie est prescrite.</p>
+<p>Dans une approche par objets, des formes représentant des corps géologiques sont introduites successivement dans un faciès de fond. Leur position, leur orientation, leurs dimensions et leur géométrie sont tirées de distributions définies à partir des connaissances géologiques et des données disponibles. Le processus se poursuit jusqu’à satisfaire des critères tels que les proportions de faciès visées, les règles d’interaction entre les objets et le conditionnement aux observations.</p>
+<p>Les objets peuvent représenter, par exemple, des chenaux, des lobes, des dunes, des lentilles, des veines ou des corps intrusifs. Leur paramétrisation s’appuie généralement sur des observations d’affleurements, des environnements actuels, des données sismiques ou des modèles conceptuels du système géologique étudié.</p>
+<p>L’intérêt principal de cette approche réside dans sa capacité à reproduire explicitement la géométrie et la continuité des corps géologiques. Les réalisations peuvent présenter des limites nettes, des formes curvilignes, des rapports particuliers entre longueur, largeur et épaisseur, ainsi que des règles de superposition, d’érosion ou d’intersection. Ces caractéristiques sont difficiles à contrôler à partir des seules statistiques à deux points utilisées par les méthodes géostatistiques classiques.</p>
+<p>Le réalisme visuel ne garantit toutefois pas que le modèle soit géologiquement ou statistiquement adéquat. Les résultats dépendent fortement du choix des familles d’objets, de leurs paramètres géométriques et des règles qui régissent leurs interactions. Le conditionnement à des données nombreuses peut également devenir difficile, puisqu’un objet doit généralement être déplacé, redimensionné ou rejeté lorsqu’il contredit une observation.</p>
+<p>La présente section expose les principes de base de la modélisation par objets, ses principaux paramètres, ses méthodes de conditionnement et ses limites, sans chercher à couvrir l’ensemble de ses variantes.</p>
+<section id="concepts" class="level3">
+<h3 class="anchored" data-anchor-id="concepts">Concepts</h3>
+<p>Le principe consiste à imposer directement la géométrie des corps géologiques. On part d’un faciès de fond, puis on dépose des objets paramétrés jusqu’à atteindre les proportions visées. Les objets récents recoupent les plus anciens, ce qui reproduit des relations de superposition réalistes. La vraie difficulté réside dans le conditionnement aux données, qui contraint le placement des objets.</p>
+</section>
+<section id="le-modèle-booléen" class="level3">
+<h3 class="anchored" data-anchor-id="le-modèle-booléen">Le modèle booléen</h3>
+<p>Le cadre le plus courant est le modèle booléen (<em>Boolean model</em>), également appelé processus ponctuel marqué (<em>marked point process</em>). On tire d’abord des points dans l’espace selon un processus de Poisson d’intensité <span class="math inline">\(\lambda\)</span> : ces points, les germes, déterminent l’emplacement des objets. À chaque germe <span class="math inline">\(\mathbf{x}_i\)</span>, on attache un objet <span class="math inline">\(A_i\)</span>, un compact (chenal, lentille, ellipsoïde), tiré indépendamment selon la même loi de forme. L’ensemble simulé est l’union de ces objets translatés sur leurs germes, <span class="math display">\[
+X = \bigcup_i \tau_{\mathbf{x}_i} A_i,
+\]</span> où <span class="math inline">\(\tau_{\mathbf{x}_i}\)</span> est la translation au point <span class="math inline">\(\mathbf{x}_i\)</span>. Les objets peuvent se recouper; l’espace se partage alors en deux phases, les objets et le faciès de fond qui les entoure (<a href="#fig-c13-modele-booleen" class="quarto-xref">Figure&nbsp;<span>13.12</span></a>).</p>
+<div id="fig-c13-modele-booleen" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c13-modele-booleen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c13_03_modele_booleen.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c13-modele-booleen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.12: Modèle booléen (simulation par objets) : germes de Poisson, objets paramétrés (chenaux, lentilles) et réalisation finale sur un faciès de fond.
+</figcaption>
+</figure>
+</div>
+<p>Le modèle dépend de deux jeux de paramètres. L’intensité <span class="math inline">\(\lambda\)</span> du processus de Poisson détermine le nombre d’objets, donc la proportion du faciès de fond. La loi des objets décrit la distribution de leurs formes, de leurs tailles et de leurs orientations. On la calibre sur l’interprétation géologique : largeur et sinuosité des chenaux mesurées sur des analogues d’affleurement, épaisseur des lentilles, direction du paléocourant.</p>
+</section>
+<section id="conditionnement-aux-données" class="level3">
+<h3 class="anchored" data-anchor-id="conditionnement-aux-données">Conditionnement aux données</h3>
+<p>Le conditionnement aux forages se fait par acceptation–rejet : on génère des réalisations non conditionnelles et on ne conserve que celles qui respectent les faciès observés. Tant que peu d’objets sont contraints, cela reste praticable. Mais dès qu’un même objet doit recouper plusieurs points imposés, ou que la densité de forages augmente, le taux de rejet explose et l’algorithme converge très lentement, voire pas du tout. C’est la faiblesse majeure de l’approche, et la raison pour laquelle on lui préfère parfois les méthodes par cellules quand les données abondent.</p>
+<p>La modélisation par objets produit donc des géométries nettes et géologiquement réalistes, difficiles à obtenir autrement, mais au prix d’un conditionnement délicat. Elle convient surtout aux contextes où les corps ont des formes bien identifiées et où les données restent rares, par exemple un réservoir fluviatile reconnu par quelques puits.</p>
+</section>
+</section>
+<section id="atelier-interactif-13.3-modélisation-par-objets-chenaux-et-lentilles" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-13.3-modélisation-par-objets-chenaux-et-lentilles">🧮 Atelier interactif 13.3 — Modélisation par objets : chenaux et lentilles</h2>
+<p>Déposez des chenaux (rubans sinueux) et des lentilles (ellipses) sur un fond argileux, et réglez leur géométrie (nombre, largeur, sinuosité, longueur d’onde, pente, taille des lentilles). On obtient des formes réalistes — chenaux sinueux qui se recoupent, lentilles — que les méthodes pixel (SIS, TGS/PGS) reproduisent difficilement.</p>
+<div class="geostat-widget" data-widget="c13_objets">
+  <div class="gw-placeholder">Chargement (modélisation par objets)…</div>
+</div>
+</section>
+<section id="modélisation-de-faciès-par-simulation-multipoints" class="level2" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="modélisation-de-faciès-par-simulation-multipoints"><span class="header-section-number">13.3</span> Modélisation de faciès par simulation multipoints</h2>
+<p>Les méthodes de simulation multipoints (<em>Multiple-Point Statistics</em>, MPS) ont été développées pour représenter des structures spatiales qui ne sont pas suffisamment décrites par les statistiques à deux points. Un variogramme mesure la dépendance entre les valeurs prises en deux positions séparées par un vecteur donné. Il renseigne ainsi sur la portée, l’anisotropie et l’intensité de la continuité spatiale, mais pas directement sur l’organisation conjointe de plusieurs points.</p>
+<p>Cette limite est illustrée à la <a href="#fig-C13_MPS1" class="quarto-xref">Figure&nbsp;<span>13.13</span></a>. Trois champs de faciès présentant des géométries nettement différentes peuvent produire des variogrammes expérimentaux très semblables dans leurs directions principales. Des structures distinctes peuvent donc partager des statistiques à deux points comparables sans présenter la même connectivité, la même géométrie ni la même organisation spatiale.</p>
+<div id="fig-C13_MPS1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-C13_MPS1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_MPS1.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-C13_MPS1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.13: Comparaison des variogrammes expérimentaux obtenus pour trois champs de faciès présentant des structures spatiales clairement distinctes : malgré des géométries nettement différentes, les variogrammes dans les directions principales restent très semblables.
+</figcaption>
+</figure>
+</div>
+<p>Les méthodes multipoints décrivent plutôt la fréquence d’apparition de configurations formées par plusieurs cellules. Cette information est extraite d’une image d’entraînement (<em>training image</em>, TI), qui représente un modèle conceptuel de l’organisation spatiale attendue. La TI ne constitue pas nécessairement une reproduction du site étudié : elle doit surtout représenter les géométries, les proportions, les relations entre faciès et les styles de continuité jugés plausibles.</p>
+<p>En parcourant l’image d’entraînement à l’aide d’un gabarit spatial, on recense les configurations de faciès observées et leur fréquence. Ces statistiques multipoints permettent notamment de représenter des formes curvilignes, des objets connectés, des terminaisons, des bifurcations ou des relations spatiales entre plusieurs unités, qui ne sont pas déterminées par le seul variogramme.</p>
+<p>Les méthodes MPS sont particulièrement utiles lorsque les propriétés importantes du modèle concernent la géométrie et la connectivité des faciès, lorsque des structures différentes présentent des statistiques à deux points similaires, ou lorsqu’aucun modèle géométrique paramétrique simple ne permet de représenter adéquatement l’organisation géologique. Leur pertinence dépend toutefois fortement de la qualité et de la représentativité de l’image d’entraînement.</p>
+<section id="principe-général-reproduire-les-motifs-dune-image-dentraînement" class="level4">
+<h4 class="anchored" data-anchor-id="principe-général-reproduire-les-motifs-dune-image-dentraînement">Principe général : reproduire les motifs d’une image d’entraînement</h4>
+<p>L’image d’entraînement peut provenir d’une interprétation géologique, d’un analogue, d’une carte, d’une image de télédétection, d’un modèle fondé sur des objets ou d’une simulation de processus. Elle fournit un exemple exhaustif du type d’organisation spatiale que l’on souhaite reproduire, mais elle n’est généralement pas conditionnée aux données du site.</p>
+<p>La simulation est ensuite construite sur une grille cible, cellule par cellule ou par groupes de cellules. À chaque étape, la configuration déjà connue autour de la position à simuler est comparée aux motifs observés dans la TI. La valeur attribuée provient de la distribution conditionnelle associée aux configurations similaires.</p>
+<p>La réalisation obtenue ne constitue donc pas une copie de l’image d’entraînement. Elle représente une nouvelle configuration qui respecte les données de conditionnement tout en reproduisant, de manière statistique, les motifs et les relations spatiales présents dans la TI.</p>
+</section>
+<section id="méthode-1-la-simulation-point-par-point-pixel-par-pixel" class="level4">
+<h4 class="anchored" data-anchor-id="méthode-1-la-simulation-point-par-point-pixel-par-pixel">Méthode 1 : la simulation point par point (pixel par pixel)</h4>
+<p>La simulation multipoints, point par point, construit le modèle séquentiellement, un emplacement à la fois, à partir des informations déjà simulées dans un voisinage local. À chaque nouveau point, on prend la configuration (le <em>pattern</em>) déjà présente autour de lui et on cherche dans la TI les motifs semblables. De ces motifs, on tire une loi conditionnelle empirique pour la catégorie à simuler. Le processus se décrit ainsi.</p>
+<ol type="1">
+<li><strong>Initialisation du modèle.</strong></li>
+</ol>
+<p>Le champ simulé démarre avec les valeurs connues (données observées) et des cellules encore vides.</p>
+<ol start="2" type="1">
+<li><strong>Définition du voisinage de simulation.</strong></li>
+</ol>
+<p>Pour un point non simulé, on considère un voisinage structuré (fenêtre ou gabarit) qui contient les valeurs déjà simulées, utilisées comme condition.</p>
+<ol start="3" type="1">
+<li><strong>Recherche de motifs similaires dans la TI.</strong></li>
+</ol>
+<p>On compare le voisinage partiellement rempli à toutes les occurrences semblables de la TI. On repère ainsi les positions où le motif correspond, exactement ou à une tolérance près.</p>
+<ol start="4" type="1">
+<li><strong>Construction de la distribution conditionnelle.</strong></li>
+</ol>
+<p>Des occurrences repérées, on extrait la catégorie présente au centre du motif dans la TI. La distribution des catégories possibles approche la loi conditionnelle multipoints.</p>
+<ol start="5" type="1">
+<li><strong>Attribution d’une catégorie.</strong></li>
+</ol>
+<p>On tire une catégorie au hasard selon cette loi empirique, et on l’attribue au point courant.</p>
+<ol start="6" type="1">
+<li><strong>Répétition séquentielle.</strong></li>
+</ol>
+<p>On répète pour tous les points du domaine, selon un chemin de visite (souvent aléatoire), jusqu’à ce que la grille soit remplie.</p>
+<p>La <a href="#fig-C13_MPS2" class="quarto-xref">Figure&nbsp;<span>13.14</span></a> illustre la méthode pixel par pixel dans un cas simple. On veut simuler le faciès du carré rouge. On cherche dans la TI les occurrences où la même configuration de trois faciès déjà simulés apparaît autour d’un point, et on relève la catégorie du centre de chacun d’eux. Si le motif apparaît 7 fois dans la TI, dont 2 avec un centre bleu et 5 avec un centre jaune, la loi conditionnelle estimée est <span class="math inline">\(\hat p(\text{bleu}) = 2/7 \approx 29\,\%\)</span>, <span class="math inline">\(\hat p(\text{jaune}) = 5/7 \approx 71\,\%\)</span>, <span class="math inline">\(\hat p(\text{vert}) = 0\)</span>. On tire alors le faciès du point selon cette loi. Sur une vraie image d’entraînement, le décompte porte sur bien plus de répliques, ce qui stabilise les proportions.</p>
+<div id="fig-C13_MPS2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-C13_MPS2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_MPS2.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-C13_MPS2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.14: Schématisation de la méthode multipoint pixel par pixel utilisée dans l’algorithme SNESIM.
+</figcaption>
+</figure>
+</div>
+<p>La méthode pixel par pixel suppose que la TI fournisse suffisamment d’exemples pour représenter les motifs de voisinage rencontrés. Quand le motif recherché est absent ou trop rare, deux stratégies : réduire la taille du voisinage pour augmenter les chances de trouver des occurrences (au prix d’une perte d’information contextuelle); ou autoriser des correspondances approximatives (distance de similarité non nulle), au prix d’un compromis entre fidélité géologique et robustesse.</p>
+<p>L’approche est conceptuellement simple et fonde l’algorithme <strong>SNESIM</strong> <span class="citation" data-cites="Strebelle2002">(<a href="../../references.html#ref-Strebelle2002" role="doc-biblioref">Strebelle 2002</a>)</span>, qui stocke au préalable les configurations de la TI dans un arbre de recherche (<em>search tree</em>) pour accélérer la recherche. Elle peut devenir coûteuse quand la TI est importante ou les motifs rares. On passe alors au <em>Direct Sampling</em> <span class="citation" data-cites="MariethozRenard2010">(<a href="../../references.html#ref-MariethozRenard2010" role="doc-biblioref">Mariethoz, Renard, et Straubhaar 2010</a>)</span> : une simulation point par point qui parcourt la TI selon un chemin aléatoire et s’arrête au premier motif dont la distance au voisinage tombe en deçà d’un seuil, ce qui évite de balayer toute la TI.</p>
+</section>
+<section id="méthode-2-la-simulation-par-morceaux-patch-based" class="level4">
+<h4 class="anchored" data-anchor-id="méthode-2-la-simulation-par-morceaux-patch-based">Méthode 2 : la simulation par morceaux (<em>patch-based</em>)</h4>
+<p>La simulation multipoints par morceaux reproduit les structures en copiant-collant des blocs (patchs) extraits de la TI, plutôt que de simuler pixel par pixel. Elle convient aux objets géologiques à formes continues ou à textures complexes, difficiles à générer point par point. Il y a deux grandes variantes : <strong>FilterSim</strong> <span class="citation" data-cites="ZhangFilterSim2006">(<a href="../../references.html#ref-ZhangFilterSim2006" role="doc-biblioref">Zhang, Switzer, et Journel 2006</a>)</span>, qui décrit chaque patch par un jeu de filtres avant de le comparer au voisinage, et l’<em>image quilting</em> <span class="citation" data-cites="EfrosFreeman2001">(<a href="../../references.html#ref-EfrosFreeman2001" role="doc-biblioref">Efros et Freeman 2001</a>)</span>, qui assemble les patchs en cherchant une couture optimale sur leur recouvrement. La démarche générale se déroule ainsi.</p>
+<ol type="1">
+<li><p><strong>Définition d’un ensemble de patchs.</strong> On extrait de la TI des blocs de taille fixe (par exemple 8×8 ou 16×16 pixels), qui serviront de motifs de référence.</p></li>
+<li><p><strong>Caractérisation des patchs.</strong> Chaque patch est décrit par des mesures spatiales (textures, gradients, statistiques locales) pour faciliter la comparaison (<a href="#fig-C13_MPS3" class="quarto-xref">Figure&nbsp;<span>13.15</span></a>).</p></li>
+<li><p><strong>Regroupement des patchs.</strong> On regroupe les patchs similaires (<em>clustering</em>) pour accélérer la recherche de motifs compatibles.</p></li>
+<li><p><strong>Simulation par collage adaptatif.</strong> Au remplissage de la grille, on compare le voisinage déjà simulé aux patchs candidats, on choisit le patch qui minimise une mesure de dissimilarité, et on le colle à l’emplacement courant en conservant les pixels déjà simulés.</p></li>
+<li><p><strong>Gestion du recouvrement.</strong> Pour éviter les artefacts aux frontières des patchs, certaines variantes utilisent des zones de transition lissées, un chemin de coupure optimal (méthode <em>image quilting</em>) ou une fusion statistique locale.</p></li>
+</ol>
+<div id="fig-C13_MPS3" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-C13_MPS3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_MPS3.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-C13_MPS3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.15: Exemple de mesure de la distance entre un patch et la TI.
+</figcaption>
+</figure>
+</div>
+<p>Les méthodes par patchs ont plusieurs atouts (<a href="#fig-C13_MPS4" class="quarto-xref">Figure&nbsp;<span>13.16</span></a>). Elles reproduisent très fidèlement les motifs structuraux de la TI, ce qui en fait un outil efficace pour les géométries complexes. Elles sont robustes pour les architectures à grande échelle, où la continuité des objets compte. Et elles s’adaptent bien aux textures non stationnaires ou multi-échelles, car les patchs captent directement les variations locales de structure. Elles ont aussi une limite nette : des discontinuités peuvent apparaître aux jonctions entre patchs si la fusion n’est pas optimale. La qualité de la transition dépend beaucoup de la taille des patchs, de leur similarité avec le voisinage et de la technique de couture; une fusion inadéquate laisse des « coutures » visibles, qui nuisent au réalisme.</p>
+<div id="fig-C13_MPS4" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-C13_MPS4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_MPS4.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-C13_MPS4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.16: Exemple d’application d’un algorithme de simulation par patch.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="exemples-dimages-dentraînement-et-de-réalisations" class="level4">
+<h4 class="anchored" data-anchor-id="exemples-dimages-dentraînement-et-de-réalisations">Exemples d’images d’entraînement et de réalisations</h4>
+<p>Les exemples qui suivent donnent un aperçu de la diversité des structures qu’une simulation multipoints peut reproduire à partir d’une image d’entraînement. Celle-ci vient soit d’une interprétation 2D (carte satellite, photo d’affleurement), soit d’un modèle d’objets simulé en 3D (<a href="#fig-C13_MPS5" class="quarto-xref">Figure&nbsp;<span>13.17</span></a>). Selon le motif visé, on obtient des chenaux sinueux, des réseaux dendritiques, des réseaux de fractures ou des textures rocheuses. Les derniers exemples illustrent deux propriétés importantes : une même image d’entraînement produit des réalisations toutes différentes mais statistiquement équivalentes (<a href="#fig-C13_MPS11" class="quarto-xref">Figure&nbsp;<span>13.23</span></a>), et la grille simulée peut dépasser la taille de l’image d’entraînement (<a href="#fig-C13_MPS12" class="quarto-xref">Figure&nbsp;<span>13.24</span></a>) ou faire varier localement l’orientation et la taille des motifs (<a href="#fig-C13_MPS14" class="quarto-xref">Figure&nbsp;<span>13.26</span></a>).</p>
+<div id="fig-C13_MPS5" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-C13_MPS5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_MPS5.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-C13_MPS5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.17: Sources d’images d’entraînement : interprétation 2D (cartes satellites, affleurements) à gauche, modèle d’objets simulé en 3D à droite.
+</figcaption>
+</figure>
+</div>
+<div id="fig-C13_MPS6" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-C13_MPS6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_MPS6.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-C13_MPS6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.18: Image d’entraînement nº 1 — lentilles et barres allongées en pendage : la réalisation reproduit leur allongement et leur inclinaison.
+</figcaption>
+</figure>
+</div>
+<div id="fig-C13_MPS7" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-C13_MPS7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_MPS7.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-C13_MPS7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.19: Image d’entraînement nº 2 — chenal méandriforme extrait d’une image satellite : la réalisation restitue la sinuosité et les recoupements de méandres.
+</figcaption>
+</figure>
+</div>
+<div id="fig-C13_MPS8" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-C13_MPS8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_MPS8.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-C13_MPS8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.20: Image d’entraînement nº 3 — réseau chenalisant dendritique : la réalisation reproduit la hiérarchie des tributaires.
+</figcaption>
+</figure>
+</div>
+<div id="fig-C13_MPS9" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-C13_MPS9-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_MPS9.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-C13_MPS9-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.21: Image d’entraînement nº 4 — réseau de fractures polygonal : la réalisation conserve l’orientation et la connectivité du réseau.
+</figcaption>
+</figure>
+</div>
+<div id="fig-C13_MPS10" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-C13_MPS10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_MPS10.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-C13_MPS10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.22: Chenaux fluviatiles sinueux (motif classique de la littérature MPS) : image d’entraînement et réalisation sur une grille de 600 × 350.
+</figcaption>
+</figure>
+</div>
+<div id="fig-C13_MPS11" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-C13_MPS11-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_MPS11.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-C13_MPS11-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.23: Variabilité entre réalisations : à partir d’une même image d’entraînement (370 × 200), trois réalisations distinctes mais statistiquement équivalentes d’un chenal méandriforme.
+</figcaption>
+</figure>
+</div>
+<div id="fig-C13_MPS12" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-C13_MPS12-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_MPS12.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-C13_MPS12-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.24: Texture rocheuse : la simulation (1500 × 1500) reproduit la texture d’une image d’entraînement plus petite (800 × 600); la grille simulée peut donc dépasser la taille de la TI.
+</figcaption>
+</figure>
+</div>
+<div id="fig-C13_MPS13" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-C13_MPS13-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_MPS13.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-C13_MPS13-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.25: Réseau de fractures orientées reproduit à deux tailles de grille (400 × 600 et 800 × 600).
+</figcaption>
+</figure>
+</div>
+<div id="fig-C13_MPS14" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-C13_MPS14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C13_MPS14.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-C13_MPS14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.26: Simulation multipoints non stationnaire : une carte d’affinité (taille des motifs) et une carte de rotation (orientation) imposent localement des motifs en éventail sur une grille de 1600 × 1600.
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="atelier-interactif-13.4-animation-mps-deesse-et-filtersim" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-13.4-animation-mps-deesse-et-filtersim">🧮 Atelier interactif 13.4 — Animation MPS : DeeSse et FilterSim</h2>
+<p>Deux familles d’algorithmes multipoints, à comparer via le bouton de bascule. DeeSse (échantillonnage direct, par point) : pour chaque pixel d’un chemin aléatoire, on cherche dans la TI un emplacement dont le voisinage correspond aux voisins déjà simulés, puis on recopie la valeur centrale. FilterSim (par patch) : la grille se remplit par morceaux, chaque patch étant choisi dans la TI pour raccorder au mieux les bords déjà placés. Plusieurs images d’entraînement au choix, inspirées des motifs classiques de la littérature MPS (chenaux sinueux à la Strebelle, méandres, lentilles, disques, fractures, strates plissées). Lancez l’animation et observez la réalisation reproduire les motifs.</p>
+<div class="geostat-widget" data-widget="c13_mps_anim">
+  <div class="gw-placeholder">Chargement (animation MPS — DeeSse / FilterSim)…</div>
+</div>
+</section>
+<section id="exemples-dapplication-des-méthodes-de-simulation-de-faciès" class="level2" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="exemples-dapplication-des-méthodes-de-simulation-de-faciès"><span class="header-section-number">13.4</span> Exemples d’application des méthodes de simulation de faciès</h2>
+<p>Aucune méthode ne l’emporte dans tous les cas. Le choix entre SIS, TGS/PGS, modélisation par objets et MPS dépend de trois choses : la nature des relations spatiales à reproduire, la disponibilité d’une image d’entraînement représentative, et le compromis voulu entre simplicité de mise en œuvre et richesse géologique. La SIS respecte les proportions globales mais autorise toutes les transitions. La TGS/PGS impose un ordre (ou des règles 2D) de contact entre faciès. La modélisation par objets donne des géométries nettes et réalistes, mais se conditionne plus difficilement. La MPS reproduit des motifs complexes, au prix d’une forte dépendance à l’image d’entraînement.</p>
+<p>Le tableau suivant résume ces compromis selon cinq critères.</p>
+<div id="tbl-c13-synthese" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-c13-synthese-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;13.1: Synthèse comparative des méthodes de simulation de faciès.
+</figcaption>
+<div aria-describedby="tbl-c13-synthese-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Critère</th>
+<th style="text-align: left;">SIS</th>
+<th style="text-align: left;">TGS</th>
+<th style="text-align: left;">PGS</th>
+<th style="text-align: left;">Objets</th>
+<th style="text-align: left;">MPS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Statistiques exploitées</td>
+<td style="text-align: left;">bivariées (variogrammes d’indicatrices)</td>
+<td style="text-align: left;">bivariées (variogramme latent)</td>
+<td style="text-align: left;">bivariées (deux champs latents)</td>
+<td style="text-align: left;">géométriques (formes d’objets)</td>
+<td style="text-align: left;">multipoints (image d’entraînement)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Contrôle des contacts entre faciès</td>
+<td style="text-align: left;">aucun (toutes transitions permises)</td>
+<td style="text-align: left;">ordre imposé (faciès adjacents seulement)</td>
+<td style="text-align: left;">règles 2D (patron de codage)</td>
+<td style="text-align: left;">imposé par la géométrie des objets</td>
+<td style="text-align: left;">imposé par les motifs de la TI</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Conditionnement aux données</td>
+<td style="text-align: left;">direct (séquentiel)</td>
+<td style="text-align: left;">Gibbs sur le champ latent</td>
+<td style="text-align: left;">Gibbs par cokrigeage</td>
+<td style="text-align: left;">acceptation–rejet, difficile à forte densité</td>
+<td style="text-align: left;">direct (séquentiel)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Réalisme géométrique</td>
+<td style="text-align: left;">faible (frontières irrégulières)</td>
+<td style="text-align: left;">modéré</td>
+<td style="text-align: left;">bon</td>
+<td style="text-align: left;">élevé (formes nettes)</td>
+<td style="text-align: left;">élevé (motifs complexes)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Données requises</td>
+<td style="text-align: left;">variogrammes d’indicatrices</td>
+<td style="text-align: left;">proportions et variogramme latent</td>
+<td style="text-align: left;">proportions, variogrammes et patron</td>
+<td style="text-align: left;">loi des objets, faciès de fond</td>
+<td style="text-align: left;">image d’entraînement représentative</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+
+
+<!-- -->
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-EfrosFreeman2001" class="csl-entry" role="listitem">
+Efros, Alexei A., et William T. Freeman. 2001. <span>«&nbsp;Image quilting for texture synthesis and transfer&nbsp;»</span>. In <em>Proceedings of the 28th <span>Annual</span> <span>Conference</span> on <span>Computer</span> <span>Graphics</span> and <span>Interactive</span> <span>Techniques</span> (<span>SIGGRAPH</span> ’01)</em>, 341‑46. ACM. <a href="https://doi.org/10.1145/383259.383296">https://doi.org/10.1145/383259.383296</a>.
+</div>
+<div id="ref-MariethozRenard2010" class="csl-entry" role="listitem">
+Mariethoz, Gregoire, Philippe Renard, et Julien Straubhaar. 2010. <span>«&nbsp;The <span>Direct</span> <span>Sampling</span> method to perform multiple-point geostatistical simulations&nbsp;»</span>. <em>Water Resources Research</em> 46 (11): W11536. <a href="https://doi.org/10.1029/2008WR007621">https://doi.org/10.1029/2008WR007621</a>.
+</div>
+<div id="ref-Strebelle2002" class="csl-entry" role="listitem">
+Strebelle, Sebastien. 2002. <span>«&nbsp;Conditional simulation of complex geological structures using multiple-point statistics&nbsp;»</span>. <em>Mathematical Geology</em> 34 (1): 1‑21. <a href="https://doi.org/10.1023/A:1014009426274">https://doi.org/10.1023/A:1014009426274</a>.
+</div>
+<div id="ref-ZhangFilterSim2006" class="csl-entry" role="listitem">
+Zhang, Tuanfeng, Paul Switzer, et Andre Journel. 2006. <span>«&nbsp;Filter-based classification of training image patterns for spatial simulation&nbsp;»</span>. <em>Mathematical Geology</em> 38 (1): 63‑80. <a href="https://doi.org/10.1007/s11004-005-9004-x">https://doi.org/10.1007/s11004-005-9004-x</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../chapters/C12/index.html" class="pagination-link" aria-label="Simulations géostatistiques de variable continue">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable continue</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../chapters/exercices/index.html" class="pagination-link" aria-label="Recueil d'exercices">
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Recueil d’exercices</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Code source</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Simulations géostatistiques de variable catégorielle"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">abstract:</span><span class="co"> |</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">  Ce chapitre présente les principales méthodes de simulation de faciès utilisées en géostatistique. Il couvre les approches classiques fondées sur les pixels, la modélisation d’objets et les statistiques multipoints. La simulation séquentielle d’indicatrices, les simulations gaussiennes tronquées ainsi que des méthodes plus avancées reposant sur des images d’entraînement ou des modèles conceptuels y sont notamment abordées. Chaque technique est décrite en mettant en évidence ses fondements théoriques, ses avantages, ses limites et ses domaines d’application. Le chapitre présente également les différentes stratégies permettant de conditionner les simulations aux faciès observés en forage. L’objectif consiste à fournir les bases théoriques et pratiques nécessaires à la mise en œuvre, à l’analyse et à l’interprétation des simulations de faciès dans divers contextes géoscientifiques. Plusieurs exemples d’application tirés de la littérature scientifique concluent le chapitre.</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Objectifs d'apprentissage</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>À la fin de ce chapitre, vous serez en mesure de :</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Expliquer les principes et le fonctionnement des principales méthodes de simulation de faciès, y compris les approches fondées sur les pixels, la modélisation d'objets et les statistiques multipoints;</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Distinguer les fondements théoriques, les avantages, les limites et les domaines d'application de ces approches;</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Décrire le rôle des variables indicatrices, des covariances associées et des règles de codage dans la représentation et la simulation des faciès (méthodes indicatrices et tronquées);</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Interpréter des réalisations de faciès simulées à partir de leurs paramètres de modélisation, de leurs règles de codage ou de leurs images d'entraînement;</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Mettre en œuvre le conditionnement des simulations de faciès aux observations disponibles, notamment aux données de forage;</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Comparer des exemples d'applications issus de la littérature afin d'évaluer la pertinence des méthodes dans divers contextes géoscientifiques.</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## Référence</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>Ce chapitre s'appuie principalement sur l'ouvrage de référence suivant:</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>Pyrcz, M. J., &amp; Deutsch, C. V. (2014). *Geostatistical Reservoir Modeling*. Oxford University Press.</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>La caractérisation du sous-sol repose sur l’observation de propriétés physiques, hydrauliques, mécaniques et géochimiques dont la distribution spatiale est contrôlée, à des degrés variables, par la géologie. La perméabilité d’un aquifère, la porosité d’une formation, la densité de fractures d’un massif rocheux ou le potentiel de drainage minier acide ou neutre contaminé d’un parc à résidus ou d’une halde à stériles dépendent notamment de la nature des matériaux, de leur mode de mise en place et des transformations qu’ils ont subies. Les processus de dépôt, de déformation, de fracturation, de circulation des fluides et d’altération produisent ainsi des hétérogénéités qui ne sont généralement ni aléatoires ni uniformément réparties.</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>La représentation de cette organisation géologique fait souvent appel à des variables catégorielles décrivant, par exemple, la lithologie, la stratigraphie, le faciès ou le degré d’altération. Un faciès regroupe des matériaux présentant un ensemble de caractéristiques communes, telles que la composition, la texture, les structures ou les conditions de formation. La classification retenue dépend toutefois de l’objectif de la modélisation. Des unités géologiques distinctes peuvent, par exemple, être regroupées en hydrofaciès lorsqu’elles présentent des comportements hydrodynamiques comparables. À l’inverse, une même unité lithologique peut devoir être subdivisée si ses propriétés varient suffisamment pour influencer les résultats du modèle.</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>Dans un modèle géologique ou hydrogéologique, la distribution des catégories définit l’architecture dans laquelle les propriétés continues sont ensuite attribuées ou simulées. La géométrie, les proportions et la connectivité des unités peuvent alors avoir une influence directe sur les écoulements, le transport, la stabilité mécanique ou les réactions géochimiques. Une représentation adéquate des faciès ne consiste donc pas uniquement à reproduire leurs proportions globales : elle doit également préserver les relations spatiales pertinentes pour le phénomène étudié.</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>La simulation de faciès vise à produire plusieurs configurations catégorielles compatibles avec les données disponibles et avec un modèle de continuité ou d’organisation spatiale. Ces réalisations permettent d’examiner l’incertitude associée à la géométrie des unités et d’en évaluer la propagation vers les propriétés continues et les réponses calculées par les modèles numériques.</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>Les méthodes de simulation ne reproduisent toutefois pas toutes les mêmes caractéristiques. Certaines décrivent principalement les proportions et la continuité à deux points, tandis que d’autres cherchent à représenter des géométries, des séquences, des objets ou des relations spatiales plus complexes. Le choix de la méthode dépend donc de la structure géologique à reproduire, de la quantité et du type de données disponibles, ainsi que de l’échelle et de l’objectif du modèle. Les dépôts stratifiés, les formations glaciaires, les réseaux de fractures, les corps minéralisés et les massifs cristallins ne peuvent généralement pas être décrits à partir des mêmes hypothèses géométriques.</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>Ce chapitre présente les fondements des principales approches de modélisation et de simulation des variables catégorielles, leurs hypothèses, leurs domaines d’application et leurs principales limites. Des exemples tirés de la littérature illustrent la manière dont ces méthodes représentent les proportions, la continuité, la géométrie et la connectivité des unités géologiques.</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>{{&lt; include 13-01.qmd &gt;}}</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>{{&lt; include 13-02.qmd &gt;}}</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>{{&lt; include 13-03.qmd &gt;}}</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>{{&lt; include 13-04.qmd &gt;}}</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Géostatistique et géologie minière</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Danlauz/glq3401-3651/edit/main/chapters/C13/index.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/Danlauz/glq3401-3651/issues/new" class="toc-action"><i class="bi empty"></i>Signaler un problème ou<br>formuler une suggestion</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Ce livre a été réalisé avec <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+<script type="module" src="../../scripts/geostat-js/loader.js"></script>
+<script src="../../scripts/geostat-js/notebook-button.js" defer=""></script>
+
+
+
+
+</body></html>

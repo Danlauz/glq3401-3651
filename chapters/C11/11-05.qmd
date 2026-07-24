@@ -1,0 +1,23 @@
+## Krigeage simple d'indicatrices
+
+Le krigeage simple d'indicatrices suppose que la fonction de répartition marginale est connue et stationnaire. Pour un seuil $z_c$, l'espérance de l'indicatrice est alors la proportion globale :
+
+$$F_Z(z_c) = \mathbb{P}(Z(\mathbf{x}) \le z_c)$$
+
+Cette proportion joue le rôle de moyenne connue du champ d'indicatrices. L'estimateur de krigeage simple de l'indicatrice au point $\mathbf{x}$ s'écrit :
+
+$$I^*(\mathbf{x}; z_c) = \sum_{i=1}^{n} \lambda_i I(\mathbf{x}_i; z_c) + \left(1 - \sum_{i=1}^{n} \lambda_i\right) F_Z(z_c)$$
+
+Les poids $\lambda_i$ se calculent comme au krigeage simple habituel, mais sur des indicatrices, avec la fonction de répartition globale comme moyenne. Cet estimateur approche l'espérance conditionnelle :
+
+$$I^*(\mathbf{x}; z_c) \approx \mathbb{E}[I(\mathbf{x}; z_c) \mid I(\mathbf{x}_1; z_c), \ldots, I(\mathbf{x}_n; z_c)] = \mathbb{P}(Z(\mathbf{x}) \le z_c \mid Z(\mathbf{x}_1), \ldots, Z(\mathbf{x}_n))$$
+
+Il fournit donc directement une estimation de la fonction de répartition conditionnelle locale au seuil $z_c$.
+
+Le krigeage simple d'indicatrices est stable. Quand l'information locale est faible ou peu corrélée, l'estimation tend d'elle-même vers la proportion globale $F_Z(z_c)$. C'est ce qui le rend plus robuste que le krigeage ordinaire d'indicatrices sur des données éparses ou dans des voisinages peu informatifs.
+
+À la limite d'un effet de pépite pur, sans aucune corrélation spatiale, les poids s'annulent et l'estimation se réduit à :
+
+$$I^*(\mathbf{x}; z_c) = F_Z(z_c)$$
+
+Il n'y a alors plus d'information locale exploitable : impossible de discriminer spatialement les probabilités de dépassement, on retombe sur la proportion globale.

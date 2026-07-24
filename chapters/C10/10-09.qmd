@@ -1,0 +1,25 @@
+## Cokrigeage colocalisé
+
+Souvent, la variable secondaire $Y$ est beaucoup plus dense que la variable principale $Z$. Une image de télédétection, un levé sismique, une mesure géophysique couvrent presque tout le domaine, alors que $Z$ n'est connue qu'à quelques forages. Utiliser toutes les valeurs de $Y$ dans un cokrigeage complet ferait exploser la taille du système, plus lourd à résoudre et parfois moins stable numériquement. Le cokrigeage colocalisé propose une simplification.
+
+### Principe
+
+On garde les données de $Z$ du voisinage, mais on ne retient qu'une seule donnée de $Y$ : celle du point à estimer $\mathbf{x}_0$. C'est possible parce que $Y$ est supposée disponible partout, ou presque. L'estimateur du cokrigeage simple colocalisé s'écrit :
+
+$$
+Z_0^* = m_Z + \sum_{i=1}^{n_Z} \lambda_i \, (Z_i - m_Z) + \alpha_0 \big(Y(\mathbf{x}_0) - m_Y\big)
+$$
+
+Le système reste proche du cokrigeage simple, mais la partie secondaire se réduit à un seul poids, $\alpha_0$. Il existe aussi une variante multicolocalisée : on ajoute les valeurs de $Y$ aux points où $Z$ est observée. On exploite alors un peu plus d'information sur $Y$, sans repasser à un système complet trop grand.
+
+### Une approximation, non une équivalence
+
+Le cokrigeage colocalisé est commode, mais ce n'est pas le cokrigeage complet : on ne garde que $Y(\mathbf{x}_0)$, toutes les autres valeurs de $Y$ sont écartées, même disponibles. Il ne faut donc pas prétendre que les deux approches sont équivalentes. Même en modèle intrinsèque, les valeurs de $Y$ entre les forages portent encore de l'information; en les retirant, on simplifie le système, mais on en perd une part.
+
+Le cokrigeage colocalisé fonctionne quand même très bien si $Y$ est dense, assez régulière et bien corrélée à $Z$. Il faut simplement le voir pour ce qu'il est : une approximation de voisinage. Les modèles de Markov, MM1 ou MM2, servent à la justifier : ils supposent que $Y(\mathbf{x}_0)$ contient déjà l'essentiel de l'information utile de la variable secondaire pour estimer $Z(\mathbf{x}_0)$, les autres valeurs de $Y$ devenant secondaires. On signale l'idée ici, sans entrer dans le détail de ces modèles.
+
+### Cas ordinaire
+
+En cokrigeage colocalisé ordinaire, la contrainte $\sum \alpha_j = 0$ bute sur le même problème qu'avec une seule observation de $Y$ : avec un unique poids $\alpha_0$, elle force $\alpha_0 = 0$ et la variable secondaire disparaît de l'estimation. C'est pourquoi le cokrigeage colocalisé s'emploie surtout dans sa version simple, ou dans le cas intermédiaire où la moyenne de $Y$ est connue — le cadre naturel d'une variable secondaire dense, dont la moyenne est bien estimée.
+
+Le cadre multivariable est maintenant complet. Le chapitre se tourne enfin vers une extension importante : les modèles spatio-temporels, qui intègrent à la fois la dépendance spatiale et la dépendance temporelle.

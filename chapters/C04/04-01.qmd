@@ -1,0 +1,18 @@
+
+## Préparation des données de forage pour l'estimation
+
+Une valeur analytique $z_i$ ne peut servir telle quelle à l'estimation. Une teneur n'a de sens que rattachée à sa position $\mathbf{x}_i$, à son support (le volume de matière qu'elle représente, réduit à la longueur $\ell_i$ d'un intervalle pour une carotte de section constante) et au domaine géologique dont elle provient. Deux échantillons de même teneur ne portent donc pas la même information s'ils diffèrent par leur support ou leur contexte.
+
+Or, cette position n'est pas donnée d'emblée : un forage ne suit jamais exactement la droite prévue; il dévie sous l'effet des propriétés physiques des roches. On ne connaît la position réelle d'un échantillon qu'après avoir converti les mesures de déviation — azimut et pendage relevés à intervalles réguliers — en coordonnées le long du trou (le *levé*). Une trajectoire mal reconstituée déplace l'échantillon, fausse les distances entre données et, par suite, toute l'estimation. Rattacher chaque teneur $z_i$ à sa vraie position $\mathbf{x}_i$ est donc le premier préalable.
+
+Une fois les données correctement positionnées, on les examine avant tout traitement : c'est l'analyse exploratoire. Elle décrit la distribution des teneurs — forme, centre, dispersion, valeurs extrêmes — et met en évidence les deux propriétés qui empêchent d'appliquer directement les statistiques classiques aux données brutes.
+
+D'abord, les supports sont inégaux : les intervalles analysés n'ont pas tous la même longueur, si bien qu'une moyenne arithmétique des teneurs brutes accorde le même poids à un échantillon de 0,5 m et à un autre de 3 m. Il faut donc ramener les teneurs à un support constant — c'est la régularisation par composites.
+
+Ensuite, l'échantillonnage est spatialement préférentiel : les forages sont plus serrés là où la minéralisation est riche, précisément parce que c'est là qu'on cherche à la définir. Une statistique calculée sur les données brutes surpondère alors ces zones, et la moyenne obtenue surestime la teneur du gisement. Ce biais tient à la répartition des données, non à l'analyse; on le corrige par le débiaisement et le dégroupement.
+
+L'objectif de ce chapitre est de transformer les informations brutes — collets, mesures de déviation, intervalles, densités et teneurs — en un jeu de données cohérent et statistiquement exploitable. On procède en quatre étapes : convertir les mesures de déviation en coordonnées (levé), ramener les teneurs à un support commun (régularisation par composites), décrire la distribution des teneurs et traiter ses valeurs extrêmes (analyse exploratoire), puis corriger l'effet du suréchantillonnage (débiaisement et dégroupement).
+
+
+
+

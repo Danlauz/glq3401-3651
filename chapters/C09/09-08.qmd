@@ -1,0 +1,123 @@
+## Krigeage avec dérive externe
+
+En krigeage universel, la dérive est généralement représentée à partir de fonctions des coordonnées spatiales. Or, on dispose parfois d’une variable auxiliaire mesurée de manière dense, voire exhaustive, sur le domaine et liée à la variable d’intérêt.
+
+Le krigeage avec dérive externe (KED) utilise cette information auxiliaire pour modéliser la variation spatiale de la moyenne. La dérive n’est donc plus décrite uniquement à partir des coordonnées, mais à partir d’une ou de plusieurs variables secondaires connues aux points de données et aux emplacements à estimer.
+
+Le KED constitue ainsi une extension directe du krigeage universel et en conserve la même structure mathématique. La différence réside dans le choix des fonctions de dérive : celles-ci sont définies à partir des variables auxiliaires plutôt qu’à partir de polynômes des coordonnées. La relation entre la moyenne et ces variables demeure toutefois fixée par le modèle, généralement sous une forme linéaire.
+
+### Principe
+
+Comme en krigeage universel, la variable est décomposée en une dérive et un résidu stationnaire de moyenne nulle :
+
+$$
+Z(\mathbf{x})=m(\mathbf{x})+Y(\mathbf{x})
+$$
+
+Pour le krigeage avec dérive externe, la moyenne est décrite à partir de $L$ variables auxiliaires $s_\ell(\mathbf{x})$ :
+
+$$
+m(\mathbf{x}) = a_0 + \sum_{\ell=1}^{L} a_\ell \, s_\ell(\mathbf{x})
+$$
+
+où les $a_\ell$ sont des coefficients inconnus et les $s_\ell(\mathbf{x})$ les valeurs des variables auxiliaires au point $\mathbf{x}$. La dérive est donc modélisée comme une combinaison linéaire de ces variables.
+
+Les variables auxiliaires décrivent la variation spatiale de la moyenne, tandis que le variogramme ou la covariance représente la continuité du résidu $Y(\mathbf{x})$. C’est donc la structure spatiale du résidu, et non celle de la variable $Z(\mathbf{x})$ dans son ensemble, qui intervient dans le système de krigeage.
+
+### Exemples de variables auxiliaires
+
+Les variables auxiliaires sont généralement mesurées de manière dense, voire exhaustive, sur le domaine et présentent une relation avec la variable d’intérêt. Elles peuvent notamment correspondre à :
+
+* l’altitude ou la topographie, utilisées pour estimer des variables comme la température, les précipitations ou l’épaisseur de neige, qui varient souvent avec l’altitude;
+* des données géophysiques, comme la densité, la susceptibilité magnétique ou la résistivité électrique, souvent disponibles sur des grilles régulières et liées aux propriétés géologiques recherchées;
+* des données de télédétection, comme les images satellitaires, les photographies aériennes ou les indices de végétation, utilisées pour estimer différentes variables environnementales;
+* les coordonnées spatiales, qui, lorsqu’elles sont utilisées comme variables auxiliaires, ramènent formellement le KED au krigeage universel.
+
+La condition essentielle est que chaque variable auxiliaire soit connue aux points d’échantillonnage ainsi qu’à tous les emplacements où une estimation doit être produite. Sa valeur intervient directement dans la définition de la dérive.
+
+### Conditions de non-biais
+
+L'estimateur garde la forme d'une combinaison linéaire des données :
+
+$$
+Z_0^* = \sum_{i=1}^n \lambda_i \, Z_i
+$$
+
+Le raisonnement du krigeage universel s'applique tel quel, la constante et les variables auxiliaires jouant le rôle des fonctions de dérive. En reprenant $\mathbb{E}[Z_i] = a_0 + \sum_\ell a_\ell \, s_\ell(\mathbf{x}_i)$, le biais s'écrit comme une combinaison des coefficients inconnus $a_0, a_1, \dots, a_L$; il s'annule pour toutes leurs valeurs si et seulement si les poids vérifient les **conditions de non-biais** :
+
+$$
+\sum_{i=1}^n \lambda_i = 1
+$$
+
+$$
+\sum_{i=1}^n \lambda_i \, s_\ell(\mathbf{x}_i) = s_\ell(\mathbf{x}_0), \quad \ell = 1, \dots, L.
+$$
+
+La première provient du terme constant $a_0$, comme en krigeage ordinaire. Chacune des $L$ autres force l'estimateur à reproduire exactement une variable auxiliaire.
+
+### Système de krigeage avec dérive externe
+
+En minimisant la variance d'estimation sous ces conditions, avec un multiplicateur de Lagrange par contrainte ($\nu_0$ pour la constante, $\nu_1, \dots, \nu_L$ pour les variables auxiliaires), on obtient le système, où $C_{ij} = C(\mathbf{x}_i - \mathbf{x}_j)$ et $C_{i0} = C(\mathbf{x}_i - \mathbf{x}_0)$ :
+
+$$
+\begin{cases}
+\displaystyle\sum_{j=1}^n \lambda_j \, C_{ij} + \nu_0 + \sum_{\ell=1}^{L} \nu_\ell \, s_\ell(\mathbf{x}_i) = C_{i0}, & i = 1, \dots, n \\[8pt]
+\displaystyle\sum_{j=1}^n \lambda_j = 1 \\[8pt]
+\displaystyle\sum_{j=1}^n \lambda_j \, s_\ell(\mathbf{x}_j) = s_\ell(\mathbf{x}_0), & \ell = 1, \dots, L
+\end{cases}
+$$
+
+Il comporte $n + L + 1$ équations et autant d'inconnues : les $n$ poids et les $L + 1$ multiplicateurs.
+
+### Variance de krigeage
+
+$$
+\sigma_{KED}^2 = C(\mathbf{0}) - \sum_{i=1}^n \lambda_i \, C_{i0} - \nu_0 - \sum_{\ell=1}^{L} \nu_\ell \, s_\ell(\mathbf{x}_0)
+$$
+
+### Forme matricielle
+
+En notant $\mathbf{C}$ la matrice de covariance des données ($n \times n$) et $\mathbf{S}$ la matrice de terme général $S_{i0} = 1$, $S_{i\ell} = s_\ell(\mathbf{x}_i)$ — soit une colonne de 1 pour la constante, suivie des $L$ variables auxiliaires évaluées aux données ($n \times (L+1)$) —, le système a la même structure par blocs qu'en krigeage universel :
+
+$$
+\mathbf{A} = \begin{bmatrix} \mathbf{C} & \mathbf{S} \\ \mathbf{S}^\top & \mathbf{0} \end{bmatrix}.
+$$
+
+La matrice $\mathbf{A}$ est inversible et la solution unique dès que $\mathbf{C}$ est définie positive (modèle de covariance admissible, points distincts) et que $\mathbf{S}$ est de rang plein $L + 1$, c'est-à-dire que la constante et les variables auxiliaires sont linéairement indépendantes sur les points de données. Cette condition impose $n \ge L + 1$ : il faut au moins autant de données que de coefficients de dérive. Une dégénérescence propre au KED en découle : si une variable auxiliaire est constante sur les données, sa colonne devient proportionnelle à celle de la constante, $\mathbf{S}$ perd son rang et le système n'admet plus de solution unique. Comme en krigeage universel, $\mathbf{A}$ n'est pas définie positive à cause des blocs de bord, mais la variance reste minimale sur le sous-espace des poids qui vérifient les conditions de non-biais.
+
+### Krigeage universel ou dérive externe?
+
+Les deux méthodes reposent sur la même formulation mathématique. Elles se distinguent principalement par la nature des fonctions utilisées pour représenter la dérive.
+
+- En krigeage universel, la dérive est décrite par des fonctions des coordonnées spatiales, comme $x$, $y$, $x^2$ ou $xy$. Sa forme est donc déterminée par le choix préalable du degré du polynôme.
+- En krigeage avec dérive externe, la dérive est décrite à partir de variables auxiliaires mesurées, comme $s_1(\mathbf{x})$ ou $s_2(\mathbf{x})$. Lorsqu’elles sont bien liées à la variable d’intérêt, ces variables permettent de représenter une variation de la moyenne plus directement rattachée au phénomène étudié et souvent plus facile à interpréter physiquement.
+
+Le KED n’est toutefois pas nécessairement plus souple sur le plan mathématique : la dérive demeure une combinaison linéaire des variables auxiliaires choisies. Sa pertinence dépend donc surtout de la qualité, de la couverture spatiale et du pouvoir explicatif de ces variables.
+
+### Considérations pratiques
+
+**Relation avec les variables auxiliaires**. Le KED suppose que la moyenne de la variable d’intérêt est une combinaison linéaire des variables auxiliaires. Cette hypothèse ne signifie pas nécessairement que la relation observée est parfaitement linéaire, mais les variables choisies doivent expliquer une part significative de la variation spatiale de la moyenne. Lorsque leur pouvoir explicatif est faible, le KED apporte peu d’information supplémentaire par rapport à un krigeage sans dérive externe.
+
+**Une attention particulière doit également être portée à l’extrapolation**. Si, au point à estimer, une variable auxiliaire prend une valeur située en dehors de la plage observée aux points de données, la dérive est extrapolée. Les estimations peuvent alors devenir instables ou peu plausibles. Il est donc important d’examiner la relation entre les variables, leur domaine de variation et la présence éventuelle de valeurs extrêmes avant d’appliquer le KED.
+
+**Variogramme des résidus**. Le variogramme utilisé dans le système décrit la continuité spatiale du résidu $Y(\mathbf{x})$, après retrait de la dérive, et non celle de la variable brute $Z(\mathbf{x})$. Son estimation soulève la même difficulté qu’en krigeage universel : la dérive doit être connue pour calculer les résidus, alors que son estimation dépend elle-même de la covariance de ces résidus. Une estimation itérative ou conjointe peut donc être nécessaire.
+
+**Cohérence des supports et des résolutions**. Les variables auxiliaires doivent être définies sur un support compatible avec celui de la variable d’intérêt. Par exemple, l’association de données ponctuelles avec une variable auxiliaire moyennée sur de grandes cellules peut atténuer ou déformer la relation entre les deux variables. Les différences de résolution, de support ou de positionnement spatial doivent donc être prises en compte avant l’estimation.
+
+**Nombre et redondance des variables auxiliaires**. L’ajout de variables auxiliaires augmente le nombre de contraintes du système et le nombre de coefficients à estimer. Leur nombre doit demeurer faible par rapport au nombre et à la répartition des données. Des variables fortement corrélées entre elles apportent une information redondante et peuvent rendre le système mal conditionné. Il est donc préférable de retenir un ensemble restreint de variables pertinentes et suffisamment distinctes.
+
+**Validation**. L’apport des variables auxiliaires doit être vérifié par validation croisée. Le KED devrait réduire les erreurs d’estimation ou améliorer leur calibration par rapport à un modèle plus simple. Une amélioration apparente de l’ajustement de la dérive ne garantit pas, à elle seule, une meilleure capacité de prédiction.
+
+**Non-linéarité**. Lorsque la relation entre la variable d’intérêt et la variable auxiliaire est non linéaire, l’utilisation directe de cette dernière dans le KED peut s’avérer inadéquate. Une transformation, comme le logarithme, la racine carrée ou l’inverse, peut alors être appliquée pour rapprocher la relation de la linéarité.
+
+<!-- 9.9 : Krigeage avec dérive externe -->
+## 🧮 Atelier interactif 9.9 — Krigeage avec dérive externe (KED) {.unnumbered}
+
+::: {.content-visible when-format="html"}
+Une variable secondaire $s(\mathbf{x})$, connue partout, sert de dérive : $\mathbb{E}[Z(\mathbf{x})] = a_0 + a_1 \, s(\mathbf{x})$. Les données comportent un trou central. Comparez les estimateurs dans ce trou : le KED suit la forme de $s(\mathbf{x})$ (en superposition), tandis que le KO et le KS s'aplatissent et que le KU n'ajuste qu'un polynôme des coordonnées. Activez les courbes KO, KS et KU pour comparer, et déplacez le point à estimer $\mathbf{x}_0$ dans le trou.
+{{< include widget/widget_krigeage_derive_externe.qmd >}}
+:::
+
+::: {.content-visible unless-format="html"}
+Cet atelier interactif n'est disponible que dans la version web du chapitre.
+:::

@@ -1,0 +1,130 @@
+## Krigeage de bloc
+
+Le krigeage a d'abord été conçu pour estimer non pas des valeurs ponctuelles, mais des teneurs moyennes sur des blocs miniers. Son objectif initial était de corriger la surestimation systématique qui apparaît lorsqu'on sélectionne des blocs riches d'après leurs seuls échantillons internes. Ce biais de sélection s'explique par l'effet de régression, qu'on présente d'abord.
+
+### Effet de régression
+
+Considérons un bloc dont la teneur est estimée à partir des échantillons qu'il contient. Si le bloc est retenu parce que ses échantillons internes sont riches, les données situées autour du bloc apportent une autre information : leurs valeurs sont souvent moins fortes que celles de l'intérieur, si bien que la teneur calculée sur les seuls échantillons internes est probablement trop élevée. Le phénomène s'inverse pour un bloc pauvre, dont l'entourage indique en général des valeurs moins faibles. Ce retour vers la moyenne se résume ainsi :
+
+* un bloc très riche selon ses échantillons internes est souvent moins riche en réalité;
+* un bloc très pauvre selon ses échantillons internes est souvent moins pauvre en réalité.
+
+C'est l'effet de régression, ou régression vers la moyenne. Sous l'hypothèse d'une relation linéaire entre la vraie teneur et la teneur observée (exacte en cas de binormalité), on l'écrit :
+
+$$
+\mathbb{E}[Z_v \mid Z_v^{\text{obs}}] = m + \beta \left(Z_v^{\text{obs}} - m \right)
+$$
+
+où $Z_v$ est la vraie moyenne du bloc, $Z_v^{\text{obs}}$ la moyenne observée sur les échantillons internes, $m$ la moyenne globale et $0 < \beta < 1$ un coefficient de régression. Comme $\beta < 1$, l'estimation est ramenée vers la moyenne. Lorsque $m$ est inconnue, on la remplace par la moyenne des données $\bar{Z}$ :
+
+$$
+Z_v^* = \bar{Z} + \beta \left(Z_v^{\text{obs}} - \bar{Z} \right)
+$$
+
+Cette correction est une combinaison linéaire des données. Le krigeage de bloc généralise cette idée : au lieu de ne compter que les échantillons internes, il pondère toutes les données du voisinage — internes comme externes — d'après le variogramme, ce qui corrige le biais automatiquement.
+
+### Estimation d'un bloc
+
+On cherche à estimer la teneur moyenne de $Z(\mathbf{x})$ sur un bloc $v$ :
+
+$$
+Z_v = \frac{1}{|v|} \int_v Z(\mathbf{x}) \, d\mathbf{x}
+$$
+
+où $|v|$ est la mesure (aire ou volume) du bloc. L'estimateur garde la forme d'une combinaison linéaire des données, et les poids minimisent toujours la variance de l'erreur d'estimation sous la contrainte d'absence de biais :
+
+$$
+Z_v^* = \sum_{i=1}^n \lambda_i \, Z_i.
+$$
+
+Tout le krigeage de bloc découle d'une seule observation : passer du point au bloc revient à remplacer le point à estimer $\mathbf{x}_0$ par le bloc $v$. Dans la variance de l'erreur, seuls les termes qui font intervenir ce point à estimer changent; ils sont alors moyennés sur le bloc. Concrètement, deux substitutions par rapport au krigeage ponctuel :
+
+- la covariance entre une donnée et le point à estimer, $C_{i0}$, devient la covariance entre une donnée et le bloc
+
+$$
+\bar{C}_{iv} = \frac{1}{|v|} \int_v C(\mathbf{x}_i - \mathbf{x}) \, d\mathbf{x};
+$$
+
+- la variance ponctuelle $C(\mathbf{0})$ devient la variance du bloc
+
+$$
+\bar{C}_{vv} = \frac{1}{|v|^2} \int_v \int_v C(\mathbf{x} - \mathbf{y}) \, d\mathbf{x} \, d\mathbf{y}.
+$$
+
+
+Les covariances entre les données, $C_{ij}$, ne changent pas : elles ne dépendent pas du bloc à estimer. La matrice du système est donc exactement celle du krigeage ponctuel; seuls le second membre et le terme constant de la variance sont remplacés par leurs versions moyennées sur le bloc. En pratique, ces intégrales sont évaluées numériquement, en discrétisant le bloc en points régulièrement espacés et en moyennant les covariances correspondantes.
+
+### Krigeage simple et ordinaire de bloc
+
+Il ne reste qu'à appliquer ces substitutions aux systèmes déjà établis pour le point.
+
+Dans le cas du krigeage simple (moyenne connue), sans contrainte ni multiplicateur :
+
+$$
+\sum_{j=1}^n \lambda_j \, C_{ij} = \bar{C}_{iv}, \quad i = 1, \dots, n,
+\qquad
+\sigma_{SK,v}^2 = \bar{C}_{vv} - \sum_{i=1}^n \lambda_i \, \bar{C}_{iv}.
+$$
+
+Dans le cas du krigeage ordinaire (moyenne inconnue), avec la contrainte $\sum_i \lambda_i = 1$ et le multiplicateur $\nu$ :
+
+$$
+\begin{cases}
+\displaystyle\sum_{j=1}^n \lambda_j \, C_{ij} + \nu = \bar{C}_{iv}, & i = 1, \dots, n \\[6pt]
+\displaystyle\sum_{j=1}^n \lambda_j = 1
+\end{cases}
+\qquad
+\sigma_{OK,v}^2 = \bar{C}_{vv} - \sum_{i=1}^n \lambda_i \, \bar{C}_{iv} - \nu.
+$$
+
+Dans les deux cas, $\bar{C}_{vv}$ remplace le palier $C(\mathbf{0})$. Comme la variance d'une moyenne spatiale est inférieure à la variance ponctuelle, $\bar{C}_{vv} \le C(\mathbf{0})$, et que la variance de krigeage de bloc est en général plus faible que celle du krigeage ponctuel, on en déduit qu'il est plus facile d'estimer une moyenne sur un bloc qu'une valeur ponctuelle.
+
+### Formulation avec le variogramme
+
+En utilisant $C(\mathbf{h}) = \sigma^2 - \gamma(\mathbf{h})$ et la contrainte $\sum_i \lambda_i = 1$, le krigeage ordinaire de bloc s'écrit aussi avec le variogramme :
+
+$$
+\begin{cases}
+\displaystyle\sum_{j=1}^n \lambda_j \, \gamma(\mathbf{x}_i - \mathbf{x}_j) - \nu = \bar{\gamma}_{iv}, & i = 1, \dots, n \\[6pt]
+\displaystyle\sum_{j=1}^n \lambda_j = 1
+\end{cases}
+\qquad
+\sigma_{OK,v}^2 = \sum_{i=1}^n \lambda_i \, \bar{\gamma}_{iv} - \nu - \bar{\gamma}_{vv},
+$$
+
+avec les variogrammes moyennés sur le bloc, définis comme les covariances :
+
+$$
+\bar{\gamma}_{iv} = \frac{1}{|v|} \int_v \gamma(\mathbf{x}_i - \mathbf{x}) \, d\mathbf{x}, \qquad
+\bar{\gamma}_{vv} = \frac{1}{|v|^2} \int_v \int_v \gamma(\mathbf{x} - \mathbf{y}) \, d\mathbf{x} \, d\mathbf{y}.
+$$
+
+### Assemblage des estimations
+
+Si un domaine $V$ se compose de plusieurs blocs $v_k$, sa teneur moyenne est la moyenne des teneurs de bloc, pondérée par leur taille :
+
+$$
+Z_V = \frac{1}{|V|} \sum_k |v_k| \, Z_{v_k}.
+$$
+
+Par linéarité du krigeage, l'estimation du domaine s'obtient de la même façon, à partir des estimations de bloc :
+
+$$
+Z_V^* = \frac{1}{|V|} \sum_k |v_k| \, Z_{v_k}^*.
+$$
+
+
+> **Point clé.** Le krigeage de bloc corrige l'effet de régression parce qu'il intègre l'information de l'ensemble des données du voisinage, et non seulement des échantillons internes au bloc.
+
+<!-- 9.4 : Bloc vs ponctuel -->
+## 🧮 Atelier interactif 9.4 — Krigeage de bloc vs ponctuel {.unnumbered}
+
+::: {.content-visible when-format="html"}
+Comparez côte à côte les cartes d'estimation ponctuelle et de bloc. Ajustez la taille du bloc et observez l'effet de lissage ($\operatorname{Var}(Z^*_v) < \operatorname{Var}(Z^*_{\text{pt}})$) ainsi que la baisse de la variance de krigeage. Le krigeage d'un bloc est égal à la moyenne des krigeages ponctuels qui le composent.
+{{< include widget/widget_bloc_vs_ponctuel.qmd >}}
+:::
+
+::: {.content-visible unless-format="html"}
+Cet atelier interactif n'est disponible que dans la version web du chapitre.
+:::
+

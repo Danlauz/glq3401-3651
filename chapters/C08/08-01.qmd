@@ -1,0 +1,11 @@
+## Définitions
+
+Le variogramme quantifie la variabilité spatiale d’une variable régionalisée. À partir de cet outil, trois types de variances peuvent être calculés. Elles jouent un rôle important dans la compréhension et la gestion de l’hétérogénéité d’un gisement.
+
+- **Variance de bloc** ($\sigma_V^2$) : mesure la variabilité des teneurs moyennes de blocs de volume $V$ dans un domaine théoriquement infini. Elle permet de quantifier l’effet de support, c’est-à-dire la diminution de la variabilité lorsque l’on passe d’un échantillon ponctuel à un volume plus grand.
+
+- **Variance de dispersion** ($D^2(v\mid V)$) : représente la variabilité des petits blocs $v$ à l’intérieur d’un volume fini $V$. Elle met en évidence l’hétérogénéité interne d’un ensemble, par exemple un panneau, un tas ou une pile de minerai.
+
+- **Variance d’estimation** ($\sigma_e^2$) : exprime l’incertitude associée à l’estimation de la teneur moyenne d’un bloc. Elle dépend notamment de l’espacement et de la configuration des données, du volume estimé et du modèle de variogramme utilisé.
+
+

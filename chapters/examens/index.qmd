@@ -1,0 +1,19 @@
+---
+title: "Anciens examens"
+abstract: |
+  Ce chapitre rassemble les examens des années antérieures du cours GLQ3401-3651, offerts en téléchargement comme matériel de révision. Les épreuves sont regroupées par type : premier contrôle périodique (CP1), deuxième contrôle périodique (CP2) et examen final (CP3). Chaque fichier PDF réunit les questions et le corrigé.
+---
+
+::: {.callout-important}
+## À propos de ces examens
+
+Chaque lien ci-dessous ouvre le PDF d'un examen complet — **questions et corrigé** — d'une session antérieure. Les paramètres, données et seuils changent d'une année à l'autre ; le corrigé fourni correspond toujours à l'énoncé de l'année indiquée.
+
+Le premier contrôle périodique (CP1) porte sur la géologie minière et l'échantillonnage (Partie I). Le deuxième (CP2) porte sur la géostatistique linéaire (Partie II). L'examen final (CP3) couvre l'ensemble de la matière (Partie III).
+:::
+
+{{< include examens-cp1.qmd >}}
+
+{{< include examens-cp2.qmd >}}
+
+{{< include examens-cp3.qmd >}}

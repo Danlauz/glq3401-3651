@@ -1,0 +1,35 @@
+## Exemple de système de cokrigeage
+
+On construit ici le système de cokrigeage sur un petit jeu de données, afin d'expliciter l'origine de chaque poids et la place des covariances croisées dans l'estimation.
+
+La matrice élargie du cokrigeage réunit trois choses : les covariances directes de $Z$ et de $Y$, les covariances croisées $Z$–$Y$, et les contraintes de non-biais par variable. Ce sont ses blocs croisés qui commandent la répartition des poids entre les deux variables, donc la façon dont la secondaire vient épauler la principale.
+
+On travaille avec trois positions. On connaît $Z_1$ et $Y_1$ au même endroit, en $\mathbf{x}_1 = 0$; on connaît aussi $Z_2$ en $\mathbf{x}_2 = 10$. On veut estimer $Z_0$ en $\mathbf{x}_0 = 5$, où une donnée secondaire $Y_0$ est également disponible.
+
+Les moyennes sont connues : on est dans le cas du cokrigeage simple. Le système s'écrit $\mathbf{A}\, \boldsymbol{w} = \mathbf{b}$, dont les inconnues sont les poids des données disponibles : $\lambda_1$ et $\lambda_2$ pour les principales $Z_1$ et $Z_2$, puis $\alpha_1$ et $\alpha_0$ pour les secondaires $Y_1$ et $Y_0$.
+
+$$
+\underbrace{\begin{bmatrix}
+C_{ZZ}(0) & C_{ZZ}(10) & C_{ZY}(0) & C_{ZY}(5) \\
+C_{ZZ}(10) & C_{ZZ}(0) & C_{ZY}(10) & C_{ZY}(5) \\
+C_{YZ}(0) & C_{YZ}(10) & C_{YY}(0) & C_{YY}(5) \\
+C_{YZ}(5) & C_{YZ}(5) & C_{YY}(5) & C_{YY}(0)
+\end{bmatrix}}_{\mathbf{A}}
+\underbrace{\begin{bmatrix} \lambda_1 \\ \lambda_2 \\ \alpha_1 \\ \alpha_0 \end{bmatrix}}_{\boldsymbol{w}}
+=
+\underbrace{\begin{bmatrix} C_{ZZ}(5) \\ C_{ZZ}(5) \\ C_{YZ}(5) \\ C_{YZ}(0) \end{bmatrix}}_{\mathbf{b}}
+$$
+
+Chaque ligne est une équation : les deux premières viennent de la dérivation par rapport aux poids de $Z$, les deux suivantes par rapport aux poids de $Y$. Les blocs diagonaux portent les covariances directes ($C_{ZZ}$, $C_{YY}$), les blocs hors diagonale les covariances croisées ($C_{ZY}$, $C_{YZ}$). Le second membre $\mathbf{b}$ rassemble les covariances entre chaque donnée et le point à estimer $Z_0$. Remarquez $Y_0$, posé au point à estimer : il ne se couple à $Z_0$ que par $C_{YZ}(0)$. C'est par ce seul terme que la mesure secondaire colocalisée transmet son information. L'atelier ci-dessous remplit cette matrice pour des données saisies par l'utilisateur et en livre la solution numérique complète.
+
+## 🧮 Atelier interactif 10.3 — Système de cokrigeage pas à pas {.unnumbered}
+
+::: {.content-visible when-format="html"}
+Entrez vos données (positions, $z$ pour $Z$, $y$ pour $Y$), choisissez un modèle de corégionalisation, et visualisez la matrice élargie $\mathbf{A}$ (blocs $\mathbf{K}_{ZZ}$, $\mathbf{K}_{YY}$, croisés $\mathbf{K}_{ZY}$ et contraintes par variable), le vecteur $\mathbf{b}$ et la solution complète (poids, estimations, variances).
+{{< include widget/widget_systeme_2var.qmd >}}
+:::
+
+::: {.content-visible unless-format="html"}
+Cet atelier interactif n'est disponible que dans la version web du chapitre.
+:::
+

@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c09_krigeage_universel">
+  <div class="gw-placeholder">Chargement du widget (krigeage universel)…</div>
+</div>
+```

@@ -1,0 +1,47 @@
+## Notations et hypothèses
+
+Le krigeage d’indicatrices est une méthode non paramétrique fondée sur le krigeage de variables indicatrices. Plutôt que d’estimer uniquement l’espérance conditionnelle de la variable régionalisée, il vise à reconstruire, en chaque point du domaine, sa fonction de répartition conditionnelle locale. Cette distribution permet ensuite de calculer différentes grandeurs utiles à la décision, notamment les probabilités de dépassement d’un seuil, les quantiles, la variance conditionnelle ou encore l’espérance d’une fonction de coût.
+
+Cette approche répond directement à la nature de nombreux problèmes décisionnels. En exploitation minière sélective, l’estimation du tonnage et de la teneur récupérables au-delà d’une teneur de coupure $z_c$ nécessite d’évaluer la proportion locale de blocs pour lesquels $Z(\mathbf{x})>z_c$. En génie de l’environnement, l’évaluation du risque repose souvent sur la probabilité qu’une concentration dépasse un seuil réglementaire. En mécanique des roches, la stabilité d’une excavation peut être analysée à partir de la probabilité qu’une variable géomécanique, comme la densité de fractures, franchisse un seuil critique.
+
+Dans chacun de ces cas, la grandeur recherchée est une fonction non linéaire de la variable régionalisée. Une estimation ponctuelle obtenue par krigeage simple ou ordinaire ne suffit donc pas, à elle seule, à la déterminer : il faut disposer d’une représentation de la distribution conditionnelle locale.
+
+### La géostatistique non linéaire
+
+La quantité recherchée n’est alors plus seulement l’espérance conditionnelle locale, mais la fonction de répartition conditionnelle locale, c’est-à-dire, en chaque point, la distribution de la variable régionalisée conditionnellement aux données observées.
+
+Sous l’hypothèse de multinormalité, cette distribution conditionnelle est gaussienne et entièrement décrite par sa moyenne et sa variance conditionnelles. La moyenne correspond à l’estimation obtenue par krigeage, tandis que la variance conditionnelle correspond à la variance de krigeage. Il est ainsi possible de déduire directement de ces deux paramètres les probabilités de dépassement et les quantiles locaux.
+
+Cette propriété repose toutefois entièrement sur l’hypothèse gaussienne. De plus, la variance de krigeage dépend de la configuration spatiale des données et du modèle de covariance, mais pas des valeurs effectivement observées. Lorsque la distribution est non gaussienne, asymétrique ou comporte des valeurs extrêmes, seuiller l’estimation krigée de $Z(\mathbf{x})$ ne permet donc pas de restituer correctement les probabilités locales de dépassement. Cette limite motive l’estimation explicite de la fonction de répartition conditionnelle locale par les méthodes de géostatistique non linéaire.
+
+### Approches paramétriques et transformations gaussiennes
+
+Lorsque la distribution marginale des données n’est pas normale, une transformation peut être appliquée afin de la rapprocher d’une loi gaussienne, par exemple une transformation logarithmique, une transformation par rangs ou une anamorphose gaussienne. Cette démarche présente toutefois deux limites fondamentales. Premièrement, obtenir une distribution marginale normale ne garantit pas la multinormalité du champ aléatoire, pourtant nécessaire pour que la distribution conditionnelle soit rigoureusement déterminée par la moyenne et la variance de krigeage. Deuxièmement, lorsque la quantité recherchée porte sur un support différent de celui des observations, par exemple des blocs à partir de données ponctuelles, les probabilités estimées au support ponctuel ne peuvent pas être transposées directement au support de bloc sans modéliser l’effet de support.
+
+Pour éviter de spécifier une loi paramétrique pour $Z$, une approche fondée sur des variables indicatrices a été proposée. Le krigeage d’indicatrices estime directement, pour une série de seuils, les probabilités conditionnelles qui définissent une approximation discrète de la fonction de répartition locale. Il est ainsi qualifié de méthode non paramétrique, bien qu’il repose toujours sur des hypothèses de stationnarité et de continuité spatiale des indicatrices.
+
+### Fondements et notations
+
+Soit $Z(\mathbf{x})$ une variable aléatoire régionalisée. Pour un seuil $z_c$, on définit la **variable indicatrice** :
+
+$$
+I(\mathbf{x}; z_c) = \begin{cases} 1 & \text{si } Z(\mathbf{x}) \leq z_c, \\ 0 & \text{si } Z(\mathbf{x}) > z_c. \end{cases}
+$$
+
+On distingue la fonction de répartition marginale (globale), $F(z_c) = \mathbb{P}(Z(\mathbf{x}) \leq z_c)$, de la fonction de répartition conditionnelle (locale),
+
+$$
+F(\mathbf{x}_0; z_c) = \mathbb{P}\big(Z(\mathbf{x}_0) \leq z_c \mid Z(\mathbf{x}_1), \ldots, Z(\mathbf{x}_n)\big).
+$$
+
+On suppose les indicatrices stationnaires d'ordre deux, ce qui implique que l'espérance de l'indicatrice est constante, $\mathbb{E}[I(\mathbf{x}; z_c)] = F(z_c)$, et que la covariance des indicatrices ne dépend que du vecteur de séparation $\mathbf{h}$, $\operatorname{Cov}(I(\mathbf{x}; z_c), I(\mathbf{x}+\mathbf{h}; z_c)) = C_I(\mathbf{h}; z_c)$.
+
+## 🧮 Atelier interactif 11.1 — Codage de $Z$ en indicatrices {.unnumbered}
+
+::: {.content-visible when-format="html"}
+Le codage transforme le champ continu $Z(\mathbf{x})$ en un champ d'indicatrices $I(\mathbf{x}; z_c) = \mathbf{1}\{Z(\mathbf{x}) \leq z_c\}$ pour un seuil $z_c$. À gauche, le champ continu et ses 20 données; à droite, le même champ codé en binaire (1 si $Z \leq z_c$, 0 sinon), qui se redessine à chaque déplacement du seuil. Le KI krigera ensuite ces indicatrices.
+{{< include widget/widget_codage_cdf.qmd >}}
+:::
+::: {.content-visible unless-format="html"}
+Cet atelier n'est disponible que dans la version web.
+:::

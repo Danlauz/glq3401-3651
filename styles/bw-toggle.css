@@ -1,0 +1,45 @@
+/* Bouton flottant très visible */
+#bw-toggle {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  padding: 0.6em 1em;
+  background: #000;
+  color: #fff;
+  border: 2px solid #000;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 9999;
+  border-radius: 12px;
+  font-size: 0.9rem;
+}
+
+/* Effet au survol */
+#bw-toggle:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* Mode noir et blanc global */
+html.bw {
+  filter: grayscale(100%);
+}
+
+/* Lisibilité renforcée */
+html.bw body {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* Liens bien visibles en N&B */
+html.bw a,
+html.bw a:visited {
+  color: #000000 !important;
+  text-decoration: underline;
+}
+
+/* Callouts en noir et blanc */
+html.bw .callout {
+  border-color: #000000 !important;
+  background: #ffffff !important;
+}

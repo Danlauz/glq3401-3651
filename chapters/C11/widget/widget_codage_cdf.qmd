@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c11_codage_cdf">
+  <div class="gw-placeholder">Chargement (codage CDF)…</div>
+</div>
+```

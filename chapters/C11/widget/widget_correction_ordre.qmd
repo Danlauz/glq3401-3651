@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c11_correction_ordre">
+  <div class="gw-placeholder">Chargement (correction relation d'ordre)…</div>
+</div>
+```

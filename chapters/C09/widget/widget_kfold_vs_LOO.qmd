@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c09_kfold_vs_LOO">
+  <div class="gw-placeholder">Chargement (k-fold vs LOO)…</div>
+</div>
+```

@@ -1,0 +1,64 @@
+## Incertitude, risque et prise de décision
+
+Les sections précédentes ont montré que les données disponibles ne permettent qu’une connaissance partielle du gisement. Il faut maintenant distinguer trois notions liées, mais différentes : l’incertitude, le risque et la prise de décision.
+
+L’incertitude représente ce qui demeure inconnu ou imparfaitement connu compte tenu des données et des hypothèses retenues. Elle peut concerner la teneur d’un bloc, la géométrie d’une unité géologique, la continuité de la minéralisation ou les paramètres du modèle.
+
+::: {.callout-note title="Définition — Incertitude"}
+L’incertitude désigne le manque de connaissance concernant une valeur, une propriété ou un état du système. En géostatistique, elle représente l’ensemble des valeurs ou des configurations qui demeurent plausibles compte tenu des données et du modèle retenu.
+:::
+
+L’incertitude devient un risque lorsqu’elle peut influencer les conséquences d’une décision. Le risque dépend donc à la fois de la probabilité d’un résultat défavorable et de l’importance de ses conséquences.
+
+::: {.callout-note title="Définition — Risque"}
+Le risque résulte de la combinaison de la probabilité qu’un événement survienne et de l’ampleur de ses conséquences sur les objectifs du projet.
+:::
+
+La prise de décision consiste à choisir une action parmi plusieurs possibilités en fonction des objectifs du projet, de l’information disponible et des risques associés.
+
+::: {.callout-note title="Définition — Prise de décision"}
+La prise de décision est le processus par lequel une action est sélectionnée parmi plusieurs options en tenant compte des objectifs, de l’information disponible, de l’incertitude et des conséquences possibles.
+:::
+
+Une zone peut ainsi être très incertaine sans représenter un risque important si elle influence peu le projet. À l’inverse, une incertitude modérée peut devenir critique lorsqu’elle concerne un secteur situé près de la teneur de coupure ou déterminant pour la planification minière.
+
+La géostatistique ne supprime pas l’incertitude. Elle permet de la caractériser et d’évaluer ses conséquences afin de mieux soutenir la prise de décision.
+
+**Exemples d’incertitude :**
+
+* Teneur réelle entre deux forages;
+* Géométrie et limites d’un corps minéralisé;
+* Continuité spatiale des zones à forte teneur, notamment la présence ou l’absence de lentilles minéralisées;
+* Position des transitions entre les unités géologiques;
+* Interprétation des failles, des plis et des fractures ainsi que de leur influence sur la minéralisation;
+* Épaisseur d’une zone minéralisée entre les points d’observation;
+* Variabilité à petite échelle non résolue par l’échantillonnage;
+* Présence et étendue de zones d’altération ou de lessivage;
+* Erreurs de localisation, d’échantillonnage, de préparation ou d’analyse en laboratoire;
+* Interprétation géologique fondée sur les connaissances et les données disponibles.
+
+**Exemples de risque :**
+
+* Envoyer à l’usine un matériau dont la teneur réelle est inférieure à la teneur de coupure;
+* Diriger vers la halde à stérile ou laisser en place du minerai économiquement exploitable;
+* Mal planifier les séquences d’exploitation en raison d’une géométrie incorrectement définie;
+* Surdimensionner ou sous-dimensionner les infrastructures de traitement;
+* Rencontrer des problèmes de stabilité en raison d’une caractérisation insuffisante des structures géologiques;
+* Accroître la dilution en raison d’une mauvaise délimitation des zones minéralisées;
+* Gérer inadéquatement les stériles ou les rejets, avec des conséquences environnementales;
+* Surestimer le tonnage ou la teneur en raison d’une continuité spatiale mal évaluée;
+* Obtenir une production différente des prévisions en raison d’une variabilité sous-estimée;
+* Rencontrer des conditions de terrain différentes de celles anticipées, notamment en matière de dureté ou de fragmentation.
+
+**Exemples de prise de décision :**
+
+* Déterminer la teneur de coupure du gisement;
+* Classifier les ressources comme mesurées, indiquées ou présumées;
+* Choisir l’emplacement de nouveaux forages d’exploration ou intercalaires;
+* Délimiter les zones de minerai et de stérile;
+* Planifier la séquence d’extraction des blocs;
+* Définir le support d’estimation et l’unité de sélection minière;
+* Décider de poursuivre, de modifier ou d’interrompre le développement d’un projet;
+* Définir les hypothèses de dilution, de pertes minières et de récupération;
+* Prioriser certaines zones du gisement selon leur valeur et leur niveau d’incertitude;
+* Mettre à jour le modèle et adapter la stratégie d’exploitation à mesure que de nouvelles données deviennent disponibles.

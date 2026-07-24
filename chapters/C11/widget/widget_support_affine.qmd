@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c11_support_affine">
+  <div class="gw-placeholder">Chargement (support affine)…</div>
+</div>
+```

@@ -1,0 +1,320 @@
+```{=html}
+<style>
+.w2{max-width:780px;margin:0 auto;font-family:system-ui,sans-serif}
+.w2-section{padding:10px 12px;border:1px solid #ddd;border-radius:12px;background:#fafafa;margin-bottom:8px}
+.w2-section-title{font-size:12px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px}
+.w2-row{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+.w2-row label{font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px}
+.w2-row input[type=number]{width:72px;padding:4px 6px;border:1px solid #ccc;border-radius:6px;font-size:13px}
+.w2-row input[type=range]{width:200px}
+.w2-pill{padding:5px 12px;border-radius:20px;background:#fff;border:1px solid #ddd;font-size:13px;font-weight:600}
+.w2-panels{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.w2-panels canvas{width:100%;border-radius:8px;border:1px solid #eee;background:#fff}
+.w2-eqbox{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px}
+.w2-eq{text-align:center;padding:10px 6px;border-radius:10px;border:2px solid #ddd;background:#fff}
+.w2-eq .w2-eql{font-size:11px;color:#666;font-weight:600}
+.w2-eq .w2-eqv{font-size:1.4em;font-weight:700;margin-top:2px}
+.w2-eq .w2-eqf{font-size:10px;color:#999;margin-top:2px;font-family:monospace}
+.w2-eq-mc{border-color:#2563eb;color:#1a4a7a}
+.w2-eq-mm{border-color:#7c3aed;color:#4a1a7a}
+.w2-eq-cm{border-color:#059669;color:#1a5a3a}
+.w2-toggle{font-size:12px;cursor:pointer;user-select:none;padding:4px 10px;border-radius:16px;border:1px solid #ccc;background:#fff}
+.w2-toggle.active{background:#2563eb;color:#fff;border-color:#2563eb}
+@media(max-width:600px){.w2-panels{grid-template-columns:1fr}.w2-row input[type=range]{width:140px}.w2-eqbox{grid-template-columns:1fr}}
+</style>
+
+<div class="w2" id="w2">
+  <div class="w2-section">
+    <div class="w2-section-title">Distribution du gisement</div>
+    <div class="w2-row">
+      <label>Moyenne <input type="number" id="w2-moy" value="1.3" step="0.1" min="0.01"></label>
+      <label>Variance <input type="number" id="w2-var" value="3.0" step="0.1" min="0.01"></label>
+      <label>Coupure <input type="range" id="w2-c" min="0.01" max="5" step="0.01" value="0.5"></label>
+      <span class="w2-pill" id="w2-cval">c = 0.50</span>
+    </div>
+  </div>
+  <div class="w2-section">
+    <div class="w2-section-title">Capacités et récupération (pour les équilibres)</div>
+    <div class="w2-row">
+      <label>y <input type="number" id="w2-y" value="0.9" step="0.01" min="0.01" max="1"></label>
+      <label>M (Mt) <input type="number" id="w2-M" value="12" step="0.5" min="0.1"></label>
+      <label>H (Mt) <input type="number" id="w2-H" value="6" step="0.25" min="0.1"></label>
+      <label>K (Mt) <input type="number" id="w2-K" value="0.1" step="0.01" min="0.001"></label>
+      <span class="w2-toggle active" id="w2-showEq" title="Afficher/masquer les équilibres">Équilibres</span>
+    </div>
+  </div>
+  <div class="w2-panels">
+    <canvas id="w2-cv1" width="380" height="290"></canvas>
+    <canvas id="w2-cv2" width="380" height="290"></canvas>
+    <canvas id="w2-cv3" width="380" height="290"></canvas>
+    <canvas id="w2-cv4" width="380" height="290"></canvas>
+  </div>
+  <div class="w2-eqbox" id="w2-eqbox">
+    <div class="w2-eq w2-eq-mc">
+      <div class="w2-eql">c₁₂ — Mine–Concentrateur</div>
+      <div class="w2-eqv" id="w2-c12">—</div>
+      <div class="w2-eqf">xc · M = H</div>
+    </div>
+    <div class="w2-eq w2-eq-cm">
+      <div class="w2-eql">c₂₃ — Concentrateur–Marché</div>
+      <div class="w2-eqv" id="w2-c23">—</div>
+      <div class="w2-eqf">gc · y · H = K × 100</div>
+    </div>
+    <div class="w2-eq w2-eq-mm">
+      <div class="w2-eql">c₁₃ — Mine–Marché</div>
+      <div class="w2-eqv" id="w2-c13">—</div>
+      <div class="w2-eqf">xc · gc · y · M = K × 100</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(async function(){
+  var $ = function(id){return document.getElementById(id);};
+  // Attendre LaneUtils + Pyodide
+  while (!window.LaneUtils) { await new Promise(r => setTimeout(r, 80)); }
+  await window.LaneUtils.pret($('w2'));
+  var R = window.LaneUtils.reserves, LP = window.LaneUtils.lognormpdf;
+
+  var showEq = true;
+  $('w2-showEq').addEventListener('click', function(){
+    showEq = !showEq;
+    this.classList.toggle('active', showEq);
+    $('w2-eqbox').style.display = showEq ? '' : 'none';
+    update();
+  });
+
+  function drawChart(cvId, xs, ys, opts){
+    var cv = $(cvId), ctx = cv.getContext('2d');
+    var W = cv.width, H = cv.height;
+    var pad = {l:52, r:16, t:30, b:36};
+    var pw = W-pad.l-pad.r, ph = H-pad.t-pad.b;
+
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,H);
+
+    var xmin=opts.xmin, xmax=opts.xmax, ymin=opts.ymin, ymax=opts.ymax;
+    function tx(x){return pad.l+(x-xmin)/(xmax-xmin)*pw;}
+    function ty(y){return pad.t+(1-(y-ymin)/(ymax-ymin))*ph;}
+
+    // Grid
+    ctx.strokeStyle='#eee'; ctx.lineWidth=1;
+    for(var i=0;i<=4;i++){
+      var gy=ymin+i*(ymax-ymin)/4;
+      ctx.beginPath(); ctx.moveTo(pad.l,ty(gy)); ctx.lineTo(pad.l+pw,ty(gy)); ctx.stroke();
+    }
+
+    // Fill area (PDF hatch)
+    if(opts.fillAfter !== undefined){
+      ctx.fillStyle='rgba(150,150,150,0.15)';
+      ctx.beginPath();
+      var started=false;
+      for(var i=0;i<xs.length;i++){
+        if(xs[i]>=opts.fillAfter){
+          if(!started){ctx.moveTo(tx(xs[i]),ty(0));started=true;}
+          ctx.lineTo(tx(xs[i]),ty(ys[i]));
+        }
+      }
+      if(started){
+        ctx.lineTo(tx(xs[xs.length-1]),ty(0));
+        ctx.closePath(); ctx.fill();
+        ctx.save();ctx.clip();
+        ctx.strokeStyle='rgba(100,100,100,0.2)';ctx.lineWidth=1;
+        for(var d=-W;d<W+H;d+=8){ctx.beginPath();ctx.moveTo(d,0);ctx.lineTo(d+H,H);ctx.stroke();}
+        ctx.restore();
+      }
+    }
+
+    // Main curve
+    ctx.strokeStyle=opts.color||'#2563eb'; ctx.lineWidth=2;
+    ctx.beginPath();
+    for(var i=0;i<xs.length;i++){
+      var px=tx(xs[i]), py=ty(Math.max(ymin,Math.min(ymax,ys[i])));
+      i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+    }
+    ctx.stroke();
+
+    // Equilibrium lines + intersections
+    var eqResults = [];
+    if(opts.eqLines && showEq){
+      opts.eqLines.forEach(function(eq){
+        var cEq = null;
+        if(!isFinite(eq.yTarget) || eq.yTarget<ymin || eq.yTarget>ymax*1.1){
+          eqResults.push(null); return;
+        }
+
+        // Horizontal dashed line
+        var yClamp = Math.min(Math.max(eq.yTarget,ymin),ymax);
+        ctx.strokeStyle=eq.color; ctx.lineWidth=1.5; ctx.setLineDash([5,4]);
+        ctx.beginPath(); ctx.moveTo(pad.l,ty(yClamp)); ctx.lineTo(pad.l+pw,ty(yClamp)); ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Right-side label for the horizontal line
+        ctx.fillStyle=eq.color; ctx.font='bold 11px system-ui'; ctx.textAlign='right';
+        ctx.fillText(eq.hLabel||'', pad.l+pw-4, ty(yClamp)-4);
+
+        // Find intersection
+        for(var i=1;i<xs.length;i++){
+          var d0 = ys[i-1]-eq.yTarget, d1 = ys[i]-eq.yTarget;
+          if(d0*d1<=0 && d0!==d1){
+            var frac = d0/(d0-d1);
+            cEq = xs[i-1]+frac*(xs[i]-xs[i-1]);
+            break;
+          }
+        }
+
+        if(cEq !== null && cEq>=xmin && cEq<=xmax){
+          // Vertical drop
+          ctx.strokeStyle=eq.color; ctx.lineWidth=1; ctx.setLineDash([3,3]);
+          ctx.beginPath(); ctx.moveTo(tx(cEq),ty(eq.yTarget)); ctx.lineTo(tx(cEq),ty(ymin)); ctx.stroke();
+          ctx.setLineDash([]);
+
+          // Intersection dot (ring)
+          ctx.fillStyle=eq.color;
+          ctx.beginPath(); ctx.arc(tx(cEq),ty(eq.yTarget),6,0,2*Math.PI); ctx.fill();
+          ctx.fillStyle='#fff';
+          ctx.beginPath(); ctx.arc(tx(cEq),ty(eq.yTarget),3,0,2*Math.PI); ctx.fill();
+
+          // Label below x-axis
+          ctx.fillStyle=eq.color; ctx.font='bold 11px system-ui'; ctx.textAlign='center';
+          ctx.fillText(eq.label+' = '+cEq.toFixed(2)+'%', tx(cEq), pad.t+ph+28);
+        }
+        eqResults.push(cEq);
+      });
+    }
+
+    // Cutoff vertical line (red)
+    if(opts.cx!==undefined){
+      ctx.strokeStyle='#dc2626'; ctx.lineWidth=1.5; ctx.setLineDash([6,4]);
+      ctx.beginPath(); ctx.moveTo(tx(opts.cx),ty(ymin)); ctx.lineTo(tx(opts.cx),ty(ymax)); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // Current value point (red)
+    if(opts.px!==undefined && opts.py!==undefined){
+      ctx.fillStyle='#dc2626';
+      ctx.beginPath(); ctx.arc(tx(opts.px),ty(opts.py),5,0,2*Math.PI); ctx.fill();
+      ctx.fillStyle='#dc2626'; ctx.font='bold 11px system-ui'; ctx.textAlign='left';
+      ctx.fillText(opts.py.toFixed(2), tx(opts.px)+8, ty(opts.py)-6);
+    }
+
+    // Axes
+    ctx.strokeStyle='#333'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(pad.l,pad.t); ctx.lineTo(pad.l,pad.t+ph); ctx.lineTo(pad.l+pw,pad.t+ph); ctx.stroke();
+
+    ctx.fillStyle='#333'; ctx.font='11px system-ui'; ctx.textAlign='center';
+    ctx.fillText(opts.xlabel||'', pad.l+pw/2, H-4);
+    ctx.textAlign='right';
+    for(var i=0;i<=4;i++){
+      var gy=ymin+i*(ymax-ymin)/4;
+      ctx.fillText(gy.toFixed(opts.ydec||1), pad.l-5, ty(gy)+4);
+    }
+    ctx.fillStyle='#111'; ctx.font='bold 13px system-ui'; ctx.textAlign='center';
+    ctx.fillText(opts.title||'', pad.l+pw/2, 16);
+    if(opts.legend){
+      ctx.fillStyle=opts.color||'#2563eb'; ctx.font='11px system-ui'; ctx.textAlign='left';
+      ctx.fillText(opts.legend, pad.l+5, pad.t+14);
+    }
+
+    return eqResults;
+  }
+
+  let busy = false, redo = false;
+  async function update(){
+    if (busy) { redo = true; return; }
+    busy = true;
+    try {
+    var moy = parseFloat($('w2-moy').value)||1;
+    var v   = parseFloat($('w2-var').value)||1;
+    var c   = parseFloat($('w2-c').value)||0.5;
+    var y   = parseFloat($('w2-y').value)||0.9;
+    var M   = parseFloat($('w2-M').value)||12;
+    var Hc  = parseFloat($('w2-H').value)||6;
+    var K   = parseFloat($('w2-K').value)||0.1;
+    $('w2-cval').textContent = 'c = '+c.toFixed(2);
+
+    var xmax = Math.max(6, moy+3*Math.sqrt(v));
+    var N = 400;
+    var cs=[], xs=[];
+
+    for(var i=0;i<N;i++){
+      cs.push(0.001+i*xmax/N);
+      xs.push(0.001+i*xmax/N);
+    }
+
+    // UN seul appel Pyodide pour toute la grille (vectoriel).
+    var rgrid = await R(moy, v, cs);
+    var xcs = rgrid.xc, gcs = rgrid.gc;
+    var xcgcs = new Array(N);
+    for (var i = 0; i < N; i++) xcgcs[i] = xcs[i] * gcs[i];
+    var pdfs = await LP(xs, moy, v);
+
+    var rcGrid = await R(moy, v, [c]);
+    var rc = { xc: rcGrid.xc[0], gc: rcGrid.gc[0] };
+    var pdfC = await LP(c, moy, v);
+
+    var gcMax=0; for(var i=0;i<gcs.length;i++) if(isFinite(gcs[i])&&gcs[i]>gcMax) gcMax=gcs[i];
+    var xcgcMax=0; for(var i=0;i<xcgcs.length;i++) if(xcgcs[i]>xcgcMax) xcgcMax=xcgcs[i];
+    var pdfMax=0; for(var i=0;i<pdfs.length;i++) if(pdfs[i]>pdfMax) pdfMax=pdfs[i];
+
+    // Equilibrium targets
+    var xc_target_12   = Hc / M;                    // xc = H/M
+    var gc_target_23   = 100 * K / (y * Hc);        // gc = 100K/(yH)
+    var xcgc_target_13 = 100 * K / (y * M);         // xc·gc = 100K/(yM)
+
+    // Panel 1: xc vs c — c₁₂
+    var r1 = drawChart('w2-cv1', cs, xcs, {
+      xmin:0,xmax:xmax,ymin:0,ymax:1,
+      title:'Proportion au-dessus de c',xlabel:'Teneur de coupure (c)',
+      legend:'xc = P(X > c)', color:'#2563eb',
+      cx:c,px:c,py:rc.xc,
+      eqLines:[{yTarget:xc_target_12, color:'#2563eb', label:'c₁₂', hLabel:'H/M = '+xc_target_12.toFixed(2)}]
+    });
+
+    // Panel 2: gc vs c — c₂₃
+    var gcYmax = Math.max(Math.min(gcMax*1.2,20), gc_target_23*1.1);
+    var r2 = drawChart('w2-cv2', cs, gcs, {
+      xmin:0,xmax:xmax,ymin:0,ymax:gcYmax,
+      title:'Teneur moyenne conditionnelle',xlabel:'Teneur de coupure (c)',
+      legend:'gc = E[X|X>c]', color:'#059669',
+      cx:c,px:c,py:rc.gc,ydec:1,
+      eqLines:[{yTarget:gc_target_23, color:'#059669', label:'c₂₃', hLabel:'100K/(yH) = '+gc_target_23.toFixed(2)}]
+    });
+
+    // Panel 3: xc·gc vs c — c₁₃
+    var xcgcYmax = Math.max(xcgcMax*1.15, xcgc_target_13*1.1);
+    var r3 = drawChart('w2-cv3', cs, xcgcs, {
+      xmin:0,xmax:xmax,ymin:0,ymax:xcgcYmax,
+      title:'Teneur moyenne récupérée',xlabel:'Teneur de coupure (c)',
+      legend:'xc · gc', color:'#7c3aed',
+      cx:c,px:c,py:rc.xc*rc.gc,ydec:2,
+      eqLines:[{yTarget:xcgc_target_13, color:'#7c3aed', label:'c₁₃', hLabel:'100K/(yM) = '+xcgc_target_13.toFixed(2)}]
+    });
+
+    // Panel 4: PDF — no equilibrium
+    drawChart('w2-cv4', xs, pdfs, {
+      xmin:0,xmax:xmax,ymin:0,ymax:pdfMax*1.15,
+      title:'Densité lognormale',xlabel:'Teneur (c)',
+      legend:'PDF', color:'#6b7280',
+      cx:c,px:c,py:pdfC,ydec:2,fillAfter:c
+    });
+
+    // Update cards
+    $('w2-c12').textContent = (r1[0]!==null&&r1[0]!==undefined) ? r1[0].toFixed(2)+' %' : '—';
+    $('w2-c23').textContent = (r2[0]!==null&&r2[0]!==undefined) ? r2[0].toFixed(2)+' %' : '—';
+    $('w2-c13').textContent = (r3[0]!==null&&r3[0]!==undefined) ? r3[0].toFixed(2)+' %' : '—';
+    } catch (e) {
+      console.error('[w2 reserves_lognormale]', e);
+    } finally {
+      busy = false;
+      if (redo) { redo = false; update(); }
+    }
+  }
+
+  ['w2-moy','w2-var','w2-c','w2-y','w2-M','w2-H','w2-K'].forEach(function(id){
+    $(id).addEventListener('input', update);
+  });
+  update();
+})();
+</script>
+```

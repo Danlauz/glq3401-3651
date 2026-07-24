@@ -1,0 +1,39 @@
+---
+title: "Théorie de Gy et contrôle qualité"
+abstract: |
+  Ce chapitre présente les principes fondamentaux de l’échantillonnage en géologie minière, première étape de la chaîne menant à l’estimation des ressources. Les principales méthodes d’échantillonnage et les sources de biais susceptibles d’en compromettre la représentativité sont d’abord décrites. La théorie de Gy est ensuite introduite afin de fournir un cadre pour évaluer l’erreur fondamentale d’échantillonnage et relier la précision d’un échantillon à la masse prélevée, à la granulométrie, à la teneur et aux propriétés du matériau. Les principaux outils de contrôle qualité (QA/QC), notamment les blancs, les standards et les duplicatas, sont par la suite présentés. Ils permettent de détecter une contamination, un biais analytique ou un manque de précision. Le chapitre se termine par une méthode de calcul de la densité théorique d’un matériau à partir de son analyse chimique.
+---
+
+::: {.callout-important}
+## Objectifs d'apprentissage
+
+À la fin de ce chapitre, vous serez en mesure de :
+
+- Identifier les principales sources d'erreur liées à l'échantillonnage, à la préparation des échantillons et aux analyses de laboratoire;
+
+- Utiliser la théorie de Gy pour estimer l'erreur fondamentale d'échantillonnage et comprendre l'effet de la masse, de la granulométrie, de la teneur et des propriétés du matériau;
+
+- Proposer une stratégie d'échantillonnage et d'analyse adaptée au niveau de précision recherché et aux contraintes du laboratoire;
+
+- Interpréter les principaux outils de QA/QC, comme les blancs, les standards et les duplicatas, afin de détecter des problèmes possibles de contamination, de biais analytique ou de manque de précision;
+
+- Calculer une densité théorique à partir d'une analyse chimique.
+:::
+
+::: {.callout-note}
+## Référence
+
+Ce chapitre s'appuie principalement sur l'ouvrage suivant :
+
+Gy, P. M. (1982). Sampling of Particulate Materials: Theory and Practice. Elsevier, Amsterdam.
+:::
+
+{{< include widget/_gy_utils.qmd >}}
+
+{{< include 03-01.qmd >}}
+
+{{< include 03-02.qmd >}}
+
+{{< include 03-03.qmd >}}
+
+{{< include 03-04.qmd >}}

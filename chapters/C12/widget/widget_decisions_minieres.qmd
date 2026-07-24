@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c12_decisions_minieres">
+  <div class="gw-placeholder">Chargement (décisions minières)…</div>
+</div>
+```

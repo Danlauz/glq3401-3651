@@ -1,0 +1,51 @@
+---
+title: "Simulations géostatistiques de variable catégorielle"
+abstract: |
+  Ce chapitre présente les principales méthodes de simulation de faciès utilisées en géostatistique. Il couvre les approches classiques fondées sur les pixels, la modélisation d’objets et les statistiques multipoints. La simulation séquentielle d’indicatrices, les simulations gaussiennes tronquées ainsi que des méthodes plus avancées reposant sur des images d’entraînement ou des modèles conceptuels y sont notamment abordées. Chaque technique est décrite en mettant en évidence ses fondements théoriques, ses avantages, ses limites et ses domaines d’application. Le chapitre présente également les différentes stratégies permettant de conditionner les simulations aux faciès observés en forage. L’objectif consiste à fournir les bases théoriques et pratiques nécessaires à la mise en œuvre, à l’analyse et à l’interprétation des simulations de faciès dans divers contextes géoscientifiques. Plusieurs exemples d’application tirés de la littérature scientifique concluent le chapitre.
+---
+
+::: {.callout-important}
+## Objectifs d'apprentissage
+
+À la fin de ce chapitre, vous serez en mesure de :
+
+- Expliquer les principes et le fonctionnement des principales méthodes de simulation de faciès, y compris les approches fondées sur les pixels, la modélisation d'objets et les statistiques multipoints;
+
+- Distinguer les fondements théoriques, les avantages, les limites et les domaines d'application de ces approches;
+
+- Décrire le rôle des variables indicatrices, des covariances associées et des règles de codage dans la représentation et la simulation des faciès (méthodes indicatrices et tronquées);
+
+- Interpréter des réalisations de faciès simulées à partir de leurs paramètres de modélisation, de leurs règles de codage ou de leurs images d'entraînement;
+
+- Mettre en œuvre le conditionnement des simulations de faciès aux observations disponibles, notamment aux données de forage;
+
+- Comparer des exemples d'applications issus de la littérature afin d'évaluer la pertinence des méthodes dans divers contextes géoscientifiques.
+:::
+
+::: {.callout-note}
+## Référence
+
+Ce chapitre s'appuie principalement sur l'ouvrage de référence suivant:
+
+Pyrcz, M. J., & Deutsch, C. V. (2014). *Geostatistical Reservoir Modeling*. Oxford University Press.
+:::
+
+La caractérisation du sous-sol repose sur l’observation de propriétés physiques, hydrauliques, mécaniques et géochimiques dont la distribution spatiale est contrôlée, à des degrés variables, par la géologie. La perméabilité d’un aquifère, la porosité d’une formation, la densité de fractures d’un massif rocheux ou le potentiel de drainage minier acide ou neutre contaminé d’un parc à résidus ou d’une halde à stériles dépendent notamment de la nature des matériaux, de leur mode de mise en place et des transformations qu’ils ont subies. Les processus de dépôt, de déformation, de fracturation, de circulation des fluides et d’altération produisent ainsi des hétérogénéités qui ne sont généralement ni aléatoires ni uniformément réparties.
+
+La représentation de cette organisation géologique fait souvent appel à des variables catégorielles décrivant, par exemple, la lithologie, la stratigraphie, le faciès ou le degré d’altération. Un faciès regroupe des matériaux présentant un ensemble de caractéristiques communes, telles que la composition, la texture, les structures ou les conditions de formation. La classification retenue dépend toutefois de l’objectif de la modélisation. Des unités géologiques distinctes peuvent, par exemple, être regroupées en hydrofaciès lorsqu’elles présentent des comportements hydrodynamiques comparables. À l’inverse, une même unité lithologique peut devoir être subdivisée si ses propriétés varient suffisamment pour influencer les résultats du modèle.
+
+Dans un modèle géologique ou hydrogéologique, la distribution des catégories définit l’architecture dans laquelle les propriétés continues sont ensuite attribuées ou simulées. La géométrie, les proportions et la connectivité des unités peuvent alors avoir une influence directe sur les écoulements, le transport, la stabilité mécanique ou les réactions géochimiques. Une représentation adéquate des faciès ne consiste donc pas uniquement à reproduire leurs proportions globales : elle doit également préserver les relations spatiales pertinentes pour le phénomène étudié.
+
+La simulation de faciès vise à produire plusieurs configurations catégorielles compatibles avec les données disponibles et avec un modèle de continuité ou d’organisation spatiale. Ces réalisations permettent d’examiner l’incertitude associée à la géométrie des unités et d’en évaluer la propagation vers les propriétés continues et les réponses calculées par les modèles numériques.
+
+Les méthodes de simulation ne reproduisent toutefois pas toutes les mêmes caractéristiques. Certaines décrivent principalement les proportions et la continuité à deux points, tandis que d’autres cherchent à représenter des géométries, des séquences, des objets ou des relations spatiales plus complexes. Le choix de la méthode dépend donc de la structure géologique à reproduire, de la quantité et du type de données disponibles, ainsi que de l’échelle et de l’objectif du modèle. Les dépôts stratifiés, les formations glaciaires, les réseaux de fractures, les corps minéralisés et les massifs cristallins ne peuvent généralement pas être décrits à partir des mêmes hypothèses géométriques.
+
+Ce chapitre présente les fondements des principales approches de modélisation et de simulation des variables catégorielles, leurs hypothèses, leurs domaines d’application et leurs principales limites. Des exemples tirés de la littérature illustrent la manière dont ces méthodes représentent les proportions, la continuité, la géométrie et la connectivité des unités géologiques.
+
+{{< include 13-01.qmd >}}
+
+{{< include 13-02.qmd >}}
+
+{{< include 13-03.qmd >}}
+
+{{< include 13-04.qmd >}}

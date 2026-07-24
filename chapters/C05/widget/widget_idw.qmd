@@ -1,0 +1,3 @@
+<div class="geostat-widget" id="gw_c05_idw" data-widget="c05_idw">
+  <div class="gw-placeholder">Chargement de l'atelier…</div>
+</div>

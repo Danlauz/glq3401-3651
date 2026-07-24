@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c_pipeline_complet">
+  <div class="gw-placeholder">Chargement (pipeline complet : fil rouge)…</div>
+</div>
+```

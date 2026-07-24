@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c11_soft_data">
+  <div class="gw-placeholder">Chargement (données souples)…</div>
+</div>
+```

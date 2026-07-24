@@ -1,0 +1,7 @@
+```{=html}
+<!--
+  Fichier conservé pour compatibilité. Tout le code JS de KI a été migré
+  vers Pyodide via `geostat_polymtl.kriging.indicator` (codage, krigeage,
+  correction de relation d'ordre, décodage).
+-->
+```

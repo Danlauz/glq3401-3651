@@ -1,0 +1,69 @@
+[project]
+name = "geostat_polymtl"
+version = "0.1.0"
+description = "Bibliothèque pédagogique pour le cours GLQ3401/GLQ3651 — Géostatistique et géologie minière (Polytechnique Montréal)"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "Dany Lauzon", email = "dany.lauzon@polymtl.ca" }
+]
+license = { text = "MIT" }
+keywords = ["geostatistique", "geologie miniere", "krigeage", "polymtl", "education"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Education",
+    "Natural Language :: French",
+]
+
+# Dépendances ABSOLUMENT minimales (cœur).
+# Les modules qui en ont besoin ajoutent leur import à l'intérieur des fonctions
+# et lèvent un message clair si l'extra correspondant n'est pas installé.
+dependencies = [
+    "numpy>=1.24,<3",
+    "scipy>=1.10,<2",
+]
+
+[project.optional-dependencies]
+plot     = ["matplotlib>=3.7", "plotly>=5.18", "kaleido>=0.2"]
+data     = ["pandas>=2.0"]
+notebook = ["jupyter", "ipykernel", "nbformat"]
+all      = [
+    "matplotlib>=3.7",
+    "plotly>=5.18",
+    "kaleido>=0.2",
+    "pandas>=2.0",
+    "jupyter",
+    "ipykernel",
+    "nbformat",
+]
+dev = [
+    "pytest>=7",
+    "pytest-cov>=4",
+    "ruff>=0.4",
+    "build",
+]
+
+[project.scripts]
+geostat-polymtl-precompute = "geostat_polymtl.precompute.__main__:main"
+geostat-polymtl-goldens    = "geostat_polymtl.testing.golden:main"
+
+[project.urls]
+Repository    = "https://github.com/Danlauz/glq3401-3651"
+Documentation = "https://danlauz.github.io/glq3401-3651/"
+
+[build-system]
+requires      = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where   = ["."]
+include = ["geostat_polymtl*"]
+exclude = ["python_code*", "tests*", "notebooks*", "docs*", "scripts*"]

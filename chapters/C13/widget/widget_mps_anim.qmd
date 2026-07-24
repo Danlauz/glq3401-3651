@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c13_mps_anim">
+  <div class="gw-placeholder">Chargement (animation MPS — DeeSse / FilterSim)…</div>
+</div>
+```

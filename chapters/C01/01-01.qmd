@@ -1,0 +1,53 @@
+## Divulgation des ressources minières
+
+Une ressource minérale ne correspond pas à une quantité connue avec certitude. Elle constitue une estimation fondée sur les données disponibles, l'interprétation géologique du gisement, les méthodes employées et les hypothèses retenues pour sa modélisation. Sa classification reflète le niveau de confiance associé à cette estimation, lequel dépend notamment de la quantité et de la qualité des données, de la continuité géologique et des teneurs, ainsi que des choix méthodologiques effectués. Ainsi, deux équipes peuvent parvenir à des classifications différentes pour une même ressource lorsque leurs hypothèses, leurs interprétations ou leurs méthodes diffèrent, tout en respectant le cadre réglementaire applicable.
+
+La divulgation d'une ressource vise donc à communiquer non seulement une quantité et une teneur, mais également les données, les méthodes, les hypothèses et les incertitudes qui soutiennent cette estimation. Elle doit permettre au lecteur d'évaluer la robustesse du modèle et de comprendre les limites de l'information présentée.
+
+### Introduction aux rapports techniques miniers
+
+Les sociétés minières qui publient de l'information sur des projets d'exploration ou d'exploitation au Canada doivent respecter des règles strictes de divulgation. La principale référence est la norme canadienne NI 43-101 [@NI43101_2005], qui encadre la manière dont les informations techniques relatives aux propriétés minières doivent être préparées, vérifiées et communiquées.
+
+L'objectif de cette norme est de s'assurer que les informations publiées soient exactes, vérifiables et non trompeuses. Elle vise notamment à protéger les investisseurs contre les déclarations exagérées, erronées ou frauduleuses relatives au potentiel d'un projet minier.
+
+La mise en place de la NI 43-101 est fortement associée au scandale Bre-X, l'un des plus importants scandales miniers et boursiers au Canada. Dans les années 1990, Bre-X prétendait avoir découvert un gisement d'or contenant 200 millions d'onces (soit environ 6 200 tonnes) dans le cadre du projet Busang en Indonésie, ce qui aurait représenté jusqu'à 8 % des stocks d'or mondiaux à cette époque. Portée par ces annonces, la valeur boursière de l'entreprise a grimpé jusqu'à près de 6 milliards de dollars, attirant autant de petits épargnants que de grands investisseurs. Or, les échantillons de carottes de forage avaient été salés, c'est-à-dire enrichis par l'ajout d'or provenant d'une source externe : la découverte était montée de toutes pièces. Lorsque la fraude a été révélée en 1997, l'action s'est effondrée et sa capitalisation s'est évaporée presque entièrement, causant des pertes majeures à ceux qui avaient investi sur la bonne foi des données divulguées. C'est précisément ce risque financier — voir la valeur d'un titre reposer sur une ressource qui n'existe pas — qui a rendu nécessaire un encadrement plus rigoureux de l'information technique diffusée aux marchés financiers.
+
+Aujourd'hui, le rapport technique NI 43-101 est la principale forme de divulgation technique des projets miniers au Canada. Il permet de documenter, de manière structurée et vérifiable, l'état des connaissances relatives à une propriété minérale. On y retrouve autant les informations de base sur le projet que les données géologiques, les travaux d'exploration, les méthodes d'échantillonnage, la qualité des données, l'estimation des ressources et, lorsque le projet est suffisamment avancé, les éléments liés à l'exploitation, au traitement du minerai, aux aspects environnementaux et à l'analyse économique.
+
+Pour un ingénieur ou un géoscientifique, le rapport NI 43-101 est un outil d'évaluation : il permet d'évaluer la qualité des données disponibles, la logique des interprétations proposées et le niveau de confiance accordé aux ressources déclarées. Il aide également à repérer les zones d'incertitude susceptibles d'influencer la valeur du projet, sa faisabilité ou les décisions à prendre ultérieurement.
+
+Pour les investisseurs, ces rapports peuvent être difficiles à lire en raison de leur langage technique et de la quantité d'information qu'ils contiennent. Pour les géoscientifiques et les ingénieurs, ils constituent toutefois une source d'information très riche. Savoir lire, interpréter et expliquer un rapport technique fait donc partie des compétences essentielles de toute ingénieure et de tout ingénieur.
+
+
+### Notion de confiance et niveaux d'incertitude
+
+Une ressource déclarée n'a pas partout le même niveau de confiance. Une zone traversée par plusieurs forages rapprochés, à géologie cohérente et avec des analyses régulières, ne présente pas la même incertitude qu'une zone éloignée des observations ou appuyée sur des informations contradictoires.
+
+Cette différence est essentielle. L'incertitude tient à plusieurs sources : le manque de données, la construction du modèle géologique, la continuité supposée des teneurs et la qualité des informations disponibles. Déclarer une ressource, c'est donc annoncer une quantité de métal ou de minerai et indiquer dans quelle mesure cette quantité est étayée par les données et par l'interprétation géologique.
+
+Plusieurs sources d'incertitude influencent l'estimation d'une ressource :
+
+- les hypothèses géologiques utilisées pour construire le modèle;
+- la densité et la répartition spatiale des forages;
+- la qualité de l'échantillonnage et des analyses de laboratoire;
+- les erreurs de localisation ou de déviation des forages;
+- la représentativité des échantillons;
+- le traitement statistique des données;
+- la modélisation de la continuité géologique;
+- la méthode d'estimation ou de simulation choisie.
+
+Deux équipes, partant des mêmes données, peuvent donc aboutir à des modèles différents selon les hypothèses géologiques et les méthodes retenues. La confiance accordée à une estimation augmente lorsque les données sont nombreuses, bien réparties et cohérentes avec la géologie; elle demeure néanmoins une approximation, puisque seule une partie du sous-sol est observée. L'incertitude se décompose alors en deux composantes : la portion non vérifiable du gisement et l'erreur propre à la mesure.
+
+Pour communiquer ce niveau de confiance, les ressources minérales sont classées en trois grandes catégories :
+
+- **Ressource mesurée** : niveau de confiance élevé, fondé sur des données nombreuses, rapprochées et de bonne qualité;
+- **Ressource indiquée** : niveau de confiance intermédiaire, suffisant pour appuyer certaines études techniques et économiques;
+- **Ressource inférée** : niveau de confiance plus faible, associé à une incertitude accrue, rendant impossible la prise de toute décision économique.
+
+Cette classification influence directement la manière dont les résultats peuvent être utilisés. Une ressource inférée, par exemple, demeure trop incertaine pour fonder, à elle seule, une étude de faisabilité. Elle peut orienter la suite des travaux, mais elle ne fournit pas encore un niveau de confiance suffisant pour appuyer des décisions économiques importantes. Les ressources indiquées et mesurées, lorsque les données sont plus nombreuses et mieux comprises, permettent d'approfondir l'analyse technique et financière.
+
+Cette classification dépend aussi du regard des personnes qualifiées, qui doivent juger et/ou évaluer si les données sont suffisantes, fiables et cohérentes avec la compréhension géologique du gisement, afin d'en attribuer un degré d'incertitude.
+
+En géostatistique, l'incertitude ne disparaît pas parce qu'un modèle a été construit. Elle peut toutefois être mieux décrite. La variance de krigeage, par exemple, donne une indication de l'erreur d'estimation attendue, en fonction de la position des données et du modèle spatial utilisé. Les simulations conditionnelles permettent aussi de considérer le problème autrement, en produisant plusieurs images possibles du gisement plutôt qu'un seul résultat.
+
+Ces outils ne disent pas que le modèle est vrai. Ils servent plutôt à mieux comprendre où l'estimation est plus solide et où elle repose davantage sur l'interprétation. Le rôle de l'ingénieur ou du géoscientifique comprend le calcul de la ressource et la reconnaissance des limites du modèle, dont il faut tenir compte dans les décisions.

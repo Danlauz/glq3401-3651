@@ -1,0 +1,119 @@
+## Définitions des paramètres
+
+Avant d'entrer dans la théorie de Lane, il faut d'abord préciser quelques variables qui reviendront souvent dans le chapitre. Elles serviront de points de repère pour suivre les équations et comprendre comment les différents paramètres économiques et opérationnels influencent la teneur de coupure.
+
+### Terminologie
+
+::: {.callout-note collapse="true"}
+## Stérile
+Roche extraite au cours de l'exploitation minière, mais dont la teneur ou la valeur économique ne justifie pas le traitement pour en extraire le métal recherché. Le stérile peut toutefois contenir de faibles concentrations de métal ou être reclassé ultérieurement si les conditions économiques, technologiques ou opérationnelles changent. 
+:::
+
+::: {.callout-note collapse="true"}
+## Matériau minéralisé
+Volume de roche contenant une concentration anormale ou significative d'une substance d'intérêt, par exemple un métal. Le matériau minéralisé peut contenir du minerai, mais il n'est pas nécessairement économiquement rentable à exploiter ou à traiter dans les conditions actuelles.
+:::
+
+::: {.callout-note collapse="true"}
+## Minerai
+Portion du matériau minéralisé dont la teneur, le tonnage et les conditions d'exploitation permettent une extraction économiquement rentable, selon les paramètres économiques et opérationnels en vigueur.
+:::
+
+::: {.callout-note collapse="true"}
+## Concentrateur (ou usine de traitement)
+Une installation industrielle utilisée dans le processus de traitement des minerais pour séparer les minéraux de valeur des autres composants du minerai.
+:::
+
+::: {.callout-note collapse="true"}
+## Teneur
+Quantité d'un élément contenu dans un mélange, exprimée en pourcentage.
+:::
+
+::: {.callout-note collapse="true"}
+## Teneur de coupure
+La teneur minimale d'un élément contenu dans un mélange qui justifie son extraction et son traitement de manière économiquement viable.
+:::
+
+::: {.callout-note collapse="true"}
+## Teneur de coupure optimale
+Teneur de coupure permettant de maximiser le profit net par tonne de matériau minéralisé sous contraintes d'exploitation.
+:::
+
+::: {.callout-note collapse="true"}
+## Teneur de coupure limite
+Teneur de coupure maximisant le profit net par tonne de matériau minéralisé pour une composante spécifique des opérations minières.
+:::
+
+::: {.callout-note collapse="true"}
+## Teneur de coupure d'équilibre
+Teneur de coupure permettant de maximiser le profit net par tonne de matériau minéralisé tout en optimisant simultanément deux composantes spécifiques des opérations minières.
+:::
+
+### Définitions des variables
+
+La théorie de Lane repose sur un ensemble de variables économiques et opérationnelles qui permettent d'estimer les revenus d'un projet minier en fonction de ses capacités limitantes. Les variables présentées ci-dessous s'appliquent généralement à l'exploitation sélective d'une mine à ciel ouvert; le lecteur est invité à consulter l'ouvrage de référence pour d'autres contextes — exploitations souterraines ou multi-métaux — qui ne seront pas abordés ici.
+
+Ces variables se répartissent en deux groupes : les **paramètres économiques**, qui fixent les prix et les coûts du projet, et les **variables opérationnelles**, qui décrivent la sélection, les capacités et la récupération.
+
+Les paramètres économiques fixent les prix et les coûts du projet :
+
+| Symbole | Définition | Unité |
+|:--------|:-------------------|:------|
+| $p$   | Prix d'une tonne de métal | \$/t métal |
+| $k$   | Coût de mise en marché d'une tonne de métal (fonderie, transport, etc.) | \$/t métal |
+| $m$   | Coûts variables de minage | \$/t matériau minéralisé |
+| $h$   | Coûts variables de traitement | \$/t minerai |
+| $f$   | Frais fixes (administration, ingénierie, capital) | \$/an |
+| $F$   | Coût d'opportunité | \$ |
+| $v$   | Profit net généré par une unité de matériau minéralisé | \$/t matériau minéralisé |
+
+: Paramètres économiques du modèle de Lane. {#tbl-lane-economiques}
+
+Les variables opérationnelles décrivent la sélection, les capacités et la récupération :
+
+| Symbole | Définition | Unité |
+|:--------|:-------------------|:------|
+| $c$   | Teneur de coupure | % |
+| $x_c$ | Proportion du minerai sélectionné (fonction de $c$) | — |
+| $g_c$ | Teneur moyenne du minerai sélectionné (fonction de $c$) | % |
+| $y$   | Taux de récupération du concentrateur | — |
+| $M$   | Capacité de minage | t matériau minéralisé/an |
+| $H$   | Capacité de traitement | t minerai/an |
+| $K$   | Capacité du marché | t métal/an |
+
+: Variables opérationnelles du modèle de Lane. {#tbl-lane-operationnelles}
+
+::: {.callout-warning}
+## Attention aux bases de tonnage
+Trois bases distinctes interviennent et ne doivent jamais être confondues :
+
+- le **matériau minéralisé** — tout ce que la mine extrait (base des coûts de minage $m$ et de la capacité $M$);
+- le **minerai** — la fraction du matériau minéralisé retenue pour le traitement, soit les blocs au-dessus de la teneur de coupure (base des coûts de traitement $h$ et de la capacité $H$);
+- le **métal** — la quantité effectivement récupérée et vendue (base du prix $p$, des frais de mise en marché $k$ et de la capacité $K$).
+
+Un coût en \$/t de minerai n'est donc pas comparable directement à un coût en \$/t de matériau minéralisé ou en \$/t de métal.
+:::
+
+La théorie de Lane introduit trois capacités limitantes, chacune associée à une étape clé de l'exploitation minière :
+
+- **Capacité minière** ($M$) : quantité maximale de matériau minéralisé pouvant être extraite par la mine;
+- **Capacité du concentrateur** ($H$) : quantité maximale de minerai pouvant être traitée par l'usine de concentration;
+- **Capacité du marché** ($K$) : quantité maximale de métal que le marché peut absorber.
+
+Ces trois capacités traduisent une contrainte de gestion simple et logique : sur une année, on ne peut pas extraire plus de $M$ tonnes de matériau minéralisé, ni traiter plus de $H$ tonnes de minerai, ni écouler plus de $K$ tonnes de métal sur le marché. À tout moment, l'une de ces trois limites est atteinte avant les autres : c'est elle qui limite le débit d'exploitation et détermine la teneur de coupure la plus rentable.
+
+### Mise en contexte des variables
+
+Supposons une section d'un modèle de blocs, comme celle illustrée dans l'atelier ci-dessous. Chaque bloc représente un petit volume du gisement auquel on attribue une teneur $t$. Les blocs jaunes ($t \geq c$) sont considérés comme du minerai dans les conditions retenues, tandis que les blocs bleus ($t < c$), jugés non rentables, sont classés comme stériles.
+
+Deux quantités résument cette sélection : la proportion volumique de blocs retenus comme minerai, $x_c$, et leur teneur moyenne, $g_c$. Comme seuls les blocs les plus riches sont conservés, $g_c$ est toujours supérieure ou égale à la teneur moyenne du gisement complet. Ces deux quantités dépendent directement du seuil choisi : lorsque $c$ augmente, on retient moins de blocs — $x_c$ diminue — mais ceux-ci sont nécessairement plus riches, de sorte que $g_c$ augmente. On écrit donc ces relations sous forme de fonctions, $x_c = x(c)$ et $g_c = g(c)$.
+
+Tout l'enjeu est dès lors de fixer la valeur de $c$; dans ce chapitre, on cherchera plus précisément à déterminer la teneur de coupure optimale permettant de maximiser les profits.
+
+## 🧮 Atelier interactif 2.1 — Teneur de coupure sur un modèle de blocs {.unnumbered}
+
+Faites varier la teneur de coupure $c$ : les blocs dont la teneur atteint $c$ (minerai, en jaune) sont conservés, les autres (stérile, en bleu) sont écartés. Observez comment la proportion de minerai $x_c$ et la teneur moyenne récupérée $g_c$ évoluent lorsque $c$ augmente.
+
+Cet atelier est pleinement interactif dans la version web de ce document.
+
+{{< include widget/widget_cutoff_bloc.qmd >}}

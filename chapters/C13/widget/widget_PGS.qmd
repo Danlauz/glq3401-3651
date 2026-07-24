@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c13_PGS">
+  <div class="gw-placeholder">Chargement (Pluri-Gaussien)…</div>
+</div>
+```

@@ -1,0 +1,15 @@
+## Exemples d’application des méthodes de simulation de faciès
+
+Aucune méthode ne l'emporte dans tous les cas. Le choix entre SIS, TGS/PGS, modélisation par objets et MPS dépend de trois choses : la nature des relations spatiales à reproduire, la disponibilité d'une image d'entraînement représentative, et le compromis voulu entre simplicité de mise en œuvre et richesse géologique. La SIS respecte les proportions globales mais autorise toutes les transitions. La TGS/PGS impose un ordre (ou des règles 2D) de contact entre faciès. La modélisation par objets donne des géométries nettes et réalistes, mais se conditionne plus difficilement. La MPS reproduit des motifs complexes, au prix d'une forte dépendance à l'image d'entraînement.
+
+Le tableau suivant résume ces compromis selon cinq critères.
+
+| Critère | SIS | TGS | PGS | Objets | MPS |
+|:---|:---|:---|:---|:---|:---|
+| Statistiques exploitées | bivariées (variogrammes d'indicatrices) | bivariées (variogramme latent) | bivariées (deux champs latents) | géométriques (formes d'objets) | multipoints (image d'entraînement) |
+| Contrôle des contacts entre faciès | aucun (toutes transitions permises) | ordre imposé (faciès adjacents seulement) | règles 2D (patron de codage) | imposé par la géométrie des objets | imposé par les motifs de la TI |
+| Conditionnement aux données | direct (séquentiel) | Gibbs sur le champ latent | Gibbs par cokrigeage | acceptation–rejet, difficile à forte densité | direct (séquentiel) |
+| Réalisme géométrique | faible (frontières irrégulières) | modéré | bon | élevé (formes nettes) | élevé (motifs complexes) |
+| Données requises | variogrammes d'indicatrices | proportions et variogramme latent | proportions, variogrammes et patron | loi des objets, faciès de fond | image d'entraînement représentative |
+
+: Synthèse comparative des méthodes de simulation de faciès. {#tbl-c13-synthese}

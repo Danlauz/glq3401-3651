@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c12_conditionnement">
+  <div class="gw-placeholder">Chargement (post-conditionnement)…</div>
+</div>
+```

@@ -1,0 +1,16 @@
+## Deuxième contrôle périodique — CP2 {#sec-examens-cp2}
+
+Le deuxième contrôle périodique porte sur la géostatistique linéaire : variogramme, variances de bloc, de dispersion et d'estimation, et krigeage (Partie II).
+
+Chaque PDF réunit les questions **et** le corrigé.
+
+- [Automne 2025](pdf/CP2_2025.pdf){download="CP2_2025.pdf"}
+- [Automne 2023](pdf/CP2_2023.pdf){download="CP2_2023.pdf"}
+- [Automne 2022](pdf/CP2_2022.pdf){download="CP2_2022.pdf"}
+- [Automne 2021](pdf/CP2_2021.pdf){download="CP2_2021.pdf"}
+- [Automne 2017](pdf/CP2_2017.pdf){download="CP2_2017.pdf"}
+- [Automne 2016](pdf/CP2_2016.pdf){download="CP2_2016.pdf"}
+- [Automne 2015](pdf/CP2_2015.pdf){download="CP2_2015.pdf"}
+- [Automne 2014](pdf/CP2_2014.pdf){download="CP2_2014.pdf"}
+- [Automne 2013](pdf/CP2_2013.pdf){download="CP2_2013.pdf"}
+- [Automne 2008](pdf/CP2_2008.pdf){download="CP2_2008.pdf"}

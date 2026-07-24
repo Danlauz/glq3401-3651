@@ -1,0 +1,131 @@
+
+## Contenu du rapport NI 43-101
+
+Le rapport rassemble les informations disponibles au moment de sa préparation, que le projet soit au stade de l'exploration, du développement ou de la production. Les données y sont organisées, interprétées et vérifiées par les PQ responsables des différentes sections. Il décrit le projet et montre sur quelles informations reposent les conclusions présentées.
+
+Le rapport comprend notamment :
+
+- **Une page de titre** : elle indique le titre du rapport technique, l'emplacement du projet minier, le nom et le titre professionnel de chacune des personnes qualifiées, ainsi que la date d'effet du rapport.
+- **Une page de signature** : située au début ou à la fin du rapport, elle est signée par les PQ conformément aux exigences de la norme. La date d'effet du rapport et la date de signature doivent y figurer.
+- **Une table des matières** : elle présente l'organisation du rapport, y compris les sections, les figures et les tableaux.
+
+La norme impose une structure relativement rigide, organisée en rubriques obligatoires ou facultatives. Toutes les rubriques ne sont pas nécessairement complétées : elles doivent être traitées lorsque les données pertinentes sont disponibles et applicables au projet étudié.
+
+### Liste des rubriques du rapport NI 43-101
+
+Un rapport technique conforme à la norme NI 43-101 est structuré en rubriques normalisées. Cette section présente les titres utilisés dans la version française du rapport, ainsi qu'une brève description du contenu attendu pour chacun d'eux.
+
+Cliquez sur chaque rubrique pour afficher sa description (version en ligne).
+
+<details><summary>**1. Résumé**</summary>
+Description détaillée du terrain et de sa localisation, des propriétaires du projet, du cadre géologique et de la minéralisation. État d'avancement des travaux d'exploration, de développement et d'exploitation, estimations des ressources et des réserves minérales, conclusions et recommandations de la personne qualifiée.
+</details>
+
+<details><summary>**2. Introduction**</summary>
+Identification de l'émetteur et du destinataire, mandat et objectif du rapport, sources des données utilisées, détails sur la visite de terrain de chaque personne qualifiée (ou justification de son absence).
+</details>
+
+<details><summary>**3. Recours à d'autres experts**</summary>
+Présentation des contributions d'experts externes ou d'autres professionnels impliqués dans l'analyse ou la rédaction du rapport.
+</details>
+
+<details><summary>**4. Description et emplacement du terrain**</summary>
+Superficie, emplacement géographique, type de titre minier (claim, permis, concession), droits de surface et d'accès, obligations de conservation, redevances, obligations environnementales et permis nécessaires.
+</details>
+
+<details><summary>**5. Accessibilité, climat, ressources locales, infrastructure et géographie physique**</summary>
+Topographie, altitude, végétation, voies d'accès, proximité d'une agglomération, moyens de transport, climat et saison d'exploitation. Si pertinent : besoins en électricité et en eau, aires de stockage des stériles et des résidus, sites pour l'usine de traitement.
+</details>
+
+<details><summary>**6. Historique**</summary>
+Propriétaires antérieurs et changements de propriété, travaux réalisés par les anciens exploitants (type, montant, résultats), estimations historiques des ressources et réserves (art. 2.4), toute production antérieure sur le terrain.
+</details>
+
+<details><summary>**7. Contexte géologique et minéralisation**</summary>
+Géologie régionale et locale, zones minéralisées majeures, lithologie des épontes, contrôles géologiques, longueur/largeur/profondeur et continuité de la minéralisation, type et distribution géographique de la minéralisation.
+</details>
+
+<details><summary>**8. Types de gîtes minéraux**</summary>
+Nature des gîtes (or, cuivre, zinc, etc.), caractéristiques géologiques, modèle géologique appliqué à la prospection — ce modèle oriente les méthodes et techniques d'exploration du programme.
+</details>
+
+<details><summary>**9. Travaux d'exploration**</summary>
+Travaux réalisés (hors forage) : méthodes utilisées (levés géophysiques, géochimiques, prospection), techniques d'échantillonnage, emplacement et densité des échantillons, résultats significatifs avec interprétation.
+</details>
+
+<details><summary>**10. Forage**</summary>
+Méthodes de forage, résultats pertinents, facteurs affectant la fiabilité (récupération, échantillonnage). Pour les terrains en phase préliminaire : emplacement, azimut, inclinaison, profondeur des intervalles. Relation entre longueur de l'échantillon et épaisseur réelle de la minéralisation si l'orientation est connue.
+</details>
+
+<details><summary>**11. Préparation, analyse et sécurité des échantillons**</summary>
+Méthodes de préparation, contrôle de qualité avant laboratoire, procédés de fendage et réduction, mesures de sécurité, méthodes d'analyse, certification des laboratoires, procédures d'assurance-qualité (AQ/CQ), opinion de la PQ sur l'adéquation des procédés.
+</details>
+
+<details><summary>**12. Vérification des données**</summary>
+Étapes de vérification effectuées par la PQ (examen des sources, comparaison de jeux de données, validation), limites de la vérification et justification, avis de la PQ sur la qualité et la pertinence des données pour les conclusions du rapport.
+</details>
+
+<details><summary>**13. Essais de traitement des minerais**</summary>
+Nature et étendue des essais métallurgiques, résultats pertinents, hypothèses sur les taux de récupération, représentativité des échantillons par rapport aux types de minéralisation, éléments délétères pouvant affecter l'extraction rentable.
+</details>
+
+<details><summary>**14. Estimations des ressources minérales** *(obligatoire si applicable)*</summary>
+Hypothèses clés, méthodes et paramètres d'estimation suffisamment détaillés pour qu'un lecteur informé comprenne le processus. Respect des articles 2.2, 2.3 et 3.4 de la norme. Si plusieurs métaux : teneur de chacun, cours, taux de récupération et facteurs de conversion. Facteurs environnementaux, juridiques et sociopolitiques pouvant influencer les estimations. Les quantités et teneurs doivent être arrondies pour indiquer leur caractère approximatif.
+</details>
+
+<details><summary>**15. Estimations des réserves minérales**</summary>
+Méthodes et paramètres de conversion des ressources en réserves, conformité aux articles 2.2, 2.3 et 3.4. Si plusieurs métaux : teneur de chacun, cours et taux de récupération. Facteurs miniers, métallurgiques, d'infrastructure ou de permis susceptibles d'influencer significativement les réserves.
+</details>
+
+<details><summary>**16. Méthodes d'exploitation**</summary>
+Vue d'ensemble des méthodes d'exploitation envisagées et de leur adéquation aux ressources disponibles. Paramètres géotechniques et hydrologiques, taux de production, durée de vie de la mine, facteurs de dilution, travaux de décapage et de développement souterrain, équipements requis.
+</details>
+
+<details><summary>**17. Méthodes de récupération**</summary>
+Résultats des essais ou données d'exploitation sur le degré de récupération. Description ou schéma de l'usine de traitement (flottation, lixiviation en tas, gravité, etc.), plan de l'usine et caractéristiques des équipements, besoins en énergie, en eau et en réactifs.
+</details>
+
+<details><summary>**18. Infrastructures du projet**</summary>
+Routes, voies ferrées, installations portuaires, barrages, haldes, zones de lixiviation, évacuation des stériles, besoins en énergie, pipelines et autres besoins logistiques du projet.
+</details>
+
+<details><summary>**19. Études de marché et contrats**</summary>
+Informations sur les marchés de production, études de marché et projections de prix, évaluation des produits, stratégies d'entrée sur le marché. Contrats importants (exploitation, traitement, fonderie, affinage, transport, vente) — conclus ou en cours de négociation.
+</details>
+
+<details><summary>**20. Études environnementales, permis et conséquences sociales**</summary>
+Résumé des études environnementales, questions environnementales connues, plans de gestion des résidus et de l'eau, permis requis et état des demandes, exigences sociales ou communautaires, ententes avec les collectivités locales, exigences et coûts de fermeture de la mine.
+</details>
+
+<details><summary>**21. Coûts d'investissement et coûts opérationnels**</summary>
+Résumé des estimations des coûts d'investissement (CAPEX) et des coûts opérationnels (OPEX), principales composantes sous forme de tableau, base et justification des estimations.
+</details>
+
+<details><summary>**22. Analyse économique**</summary>
+Principales hypothèses retenues, prévisions de trésorerie annuelles sur la durée de vie du projet, indicateurs financiers (VAN, TRI, délai de récupération), résumé des impôts, taxes et redevances applicables, analyses de sensibilité aux prix, aux teneurs et aux coûts.
+</details>
+
+<details><summary>**23. Terrains adjacents**</summary>
+Informations issues de publications du propriétaire ou exploitant du terrain adjacent (source indiquée). La PQ précise qu'elle n'a pas vérifié ces informations et qu'elles ne sont pas nécessairement représentatives de la minéralisation du terrain principal.
+</details>
+
+<details><summary>**24. Autres données pertinentes**</summary>
+Toute information ou explication supplémentaire nécessaire pour garantir la clarté du rapport et éviter toute ambiguïté ou tromperie.
+</details>
+
+<details><summary>**25. Interprétation et conclusions**</summary>
+Résumé des interprétations et résultats clés, risques et incertitudes affectant la fiabilité des données d'exploration ou des estimations, impact de ces risques sur la viabilité économique, conclusions de la PQ.
+</details>
+
+<details><summary>**26. Recommandations**</summary>
+Programmes de travaux recommandés avec détail des coûts par phase. Maximum deux phases présentées; chaque phase doit permettre une décision avant de passer à la suivante. Si aucune recommandation significative ne peut être formulée, les raisons doivent être explicitées.
+</details>
+
+<details><summary>**27. Références**</summary>
+Liste détaillée des sources citées dans le rapport technique.
+</details>
+
+### Remarques finales
+
+Les sections 1 à 14 et 23 à 27 sont obligatoires dans tous les rapports techniques, car elles contiennent des informations disponibles à tous les stades du projet (exploration, préfaisabilité, exploitation). Les sections 15 à 22, quant à elles, dépendent de l'avancement du projet. En phase exploratoire, il est possible qu'aucune information ne soit encore disponible concernant les études économiques ou géométallurgiques. Il est donc normal que ces informations ne soient pas divulguées, puisqu'elles n'existent tout simplement pas à ce stade.
+

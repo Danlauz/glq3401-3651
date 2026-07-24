@@ -1,0 +1,9 @@
+```{=html}
+<!--
+  Fichier conservé pour compatibilité avec les `include` historiques.
+  Tout le code JS partagé (modèles de variogramme, solveurs, etc.) a été
+  retiré : il dupliquait `geostat_polymtl`. Les widgets utilisent
+  désormais Pyodide via `scripts/geostat-js/pyodide_setup.js` (objet
+  `gpoly`), qui appelle directement les fonctions de la librairie.
+-->
+```

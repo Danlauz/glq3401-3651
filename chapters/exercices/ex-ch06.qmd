@@ -1,0 +1,3 @@
+## Introduction à la géostatistique {#sec-ex-ch06 .recueil}
+
+*Exercices à venir.*

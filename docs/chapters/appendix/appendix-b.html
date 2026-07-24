@@ -1,0 +1,2006 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Annexe B — Probabilités &amp; statistiques – Géostatistique et géologie minière</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../chapters/appendix/appendix-c.html" rel="next">
+<link href="../../chapters/appendix/appendix-a.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-f2c6d6e2b784ddc5de38779acc06f37d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-74c88ba48ad0bebf983f0ffd06dd1671.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f2c6d6e2b784ddc5de38779acc06f37d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents correspondants",
+    "search-copy-link-title": "Copier le lien",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "Rechercher",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles/site-polish.css">
+<link rel="stylesheet" href="../../styles/callouts.css">
+<link rel="stylesheet" href="../../styles/exercice.css">
+<link rel="stylesheet" href="../../styles/chapter-downloads.css">
+<link rel="stylesheet" href="../../scripts/geostat-js/style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/appendix/appendix-a.html">Annexes</a></li><li class="breadcrumb-item"><a href="../../chapters/appendix/appendix-b.html"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Probabilités &amp; statistiques</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Géostatistique et géologie minière</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/Danlauz/glq3401-3651" title="Code source" class="quarto-navigation-tool px-1" aria-label="Code source"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Basculer le mode sombre"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Préface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">À propos de l’auteur</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie I: Géologie minière</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C01/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Rapport Technique NI 43-101 et Loi sur les mines</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C02/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aspect économique</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C03/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Théorie de Gy et contrôle qualité</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C04/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Traitement et analyse statistique des données de forage</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C05/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Méthodes déterministes d’estimation des ressources</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie II: Géostatistique linéaire</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C06/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction à la géostatistique</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C07/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Variogramme</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C08/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Variance de blocs, de dispersion et d’estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C09/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Krigeage</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie III: Géostatistique non-linéaire</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C10/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Géostatistique multivariable</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C11/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Krigeage d’indicatrices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C12/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable continue</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C13/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable catégorielle</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie IV: Exercices et examens</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/exercices/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Recueil d’exercices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/examens/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Anciens examens</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Références</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Annexes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Algèbre linéaire : vecteurs et plans</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-b.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Probabilités &amp; statistiques</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-c.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Table de la loi normale centrée-réduite</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Abaques - Variances de dispersion</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-e.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Abaques - Variances d’estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Notation mathématique</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#variables-aléatoires-et-fonctions-de-densité" id="toc-variables-aléatoires-et-fonctions-de-densité" class="nav-link active" data-scroll-target="#variables-aléatoires-et-fonctions-de-densité"><span class="header-section-number">B.1</span> Variables aléatoires et fonctions de densité</a>
+  <ul class="collapse">
+  <li><a href="#variable-aléatoire" id="toc-variable-aléatoire" class="nav-link" data-scroll-target="#variable-aléatoire">Variable aléatoire</a></li>
+  <li><a href="#fonction-de-densité-de-probabilité" id="toc-fonction-de-densité-de-probabilité" class="nav-link" data-scroll-target="#fonction-de-densité-de-probabilité">Fonction de densité de probabilité</a></li>
+  <li><a href="#fonction-de-répartition" id="toc-fonction-de-répartition" class="nav-link" data-scroll-target="#fonction-de-répartition">Fonction de répartition</a></li>
+  </ul></li>
+  <li><a href="#moments-statistiques-et-paramètres-de-population" id="toc-moments-statistiques-et-paramètres-de-population" class="nav-link" data-scroll-target="#moments-statistiques-et-paramètres-de-population"><span class="header-section-number">B.2</span> Moments statistiques et paramètres de population</a>
+  <ul class="collapse">
+  <li><a href="#espérance-mathématique-moyenne-théorique" id="toc-espérance-mathématique-moyenne-théorique" class="nav-link" data-scroll-target="#espérance-mathématique-moyenne-théorique">Espérance mathématique (moyenne théorique)</a></li>
+  <li><a href="#variance-et-écart-type-théoriques" id="toc-variance-et-écart-type-théoriques" class="nav-link" data-scroll-target="#variance-et-écart-type-théoriques">Variance et écart-type théoriques</a></li>
+  <li><a href="#covariance-et-corrélation" id="toc-covariance-et-corrélation" class="nav-link" data-scroll-target="#covariance-et-corrélation">Covariance et corrélation</a></li>
+  <li><a href="#autres-mesures-de-tendance-centrale" id="toc-autres-mesures-de-tendance-centrale" class="nav-link" data-scroll-target="#autres-mesures-de-tendance-centrale">Autres mesures de tendance centrale</a></li>
+  <li><a href="#moments-dordre-supérieur" id="toc-moments-dordre-supérieur" class="nav-link" data-scroll-target="#moments-dordre-supérieur">Moments d’ordre supérieur</a></li>
+  </ul></li>
+  <li><a href="#statistiques-échantillonnales" id="toc-statistiques-échantillonnales" class="nav-link" data-scroll-target="#statistiques-échantillonnales"><span class="header-section-number">B.3</span> Statistiques échantillonnales</a>
+  <ul class="collapse">
+  <li><a href="#moyenne-échantillonnale" id="toc-moyenne-échantillonnale" class="nav-link" data-scroll-target="#moyenne-échantillonnale">Moyenne échantillonnale</a></li>
+  <li><a href="#variance-échantillonnale" id="toc-variance-échantillonnale" class="nav-link" data-scroll-target="#variance-échantillonnale">Variance échantillonnale</a></li>
+  <li><a href="#covariance-et-corrélation-échantillonnales" id="toc-covariance-et-corrélation-échantillonnales" class="nav-link" data-scroll-target="#covariance-et-corrélation-échantillonnales">Covariance et corrélation échantillonnales</a></li>
+  </ul></li>
+  <li><a href="#statistiques-dune-variable-régionalisée" id="toc-statistiques-dune-variable-régionalisée" class="nav-link" data-scroll-target="#statistiques-dune-variable-régionalisée"><span class="header-section-number">B.4</span> Statistiques d’une variable régionalisée</a>
+  <ul class="collapse">
+  <li><a href="#moyenne-spatiale" id="toc-moyenne-spatiale" class="nav-link" data-scroll-target="#moyenne-spatiale">Moyenne spatiale</a></li>
+  <li><a href="#variance-spatiale" id="toc-variance-spatiale" class="nav-link" data-scroll-target="#variance-spatiale">Variance spatiale</a></li>
+  </ul></li>
+  <li><a href="#lois-de-distribution-courantes" id="toc-lois-de-distribution-courantes" class="nav-link" data-scroll-target="#lois-de-distribution-courantes"><span class="header-section-number">B.5</span> Lois de distribution courantes</a>
+  <ul class="collapse">
+  <li><a href="#loi-normale-gaussienne" id="toc-loi-normale-gaussienne" class="nav-link" data-scroll-target="#loi-normale-gaussienne">Loi normale (gaussienne)</a></li>
+  <li><a href="#loi-log-normale" id="toc-loi-log-normale" class="nav-link" data-scroll-target="#loi-log-normale">Loi log-normale</a></li>
+  </ul></li>
+  <li><a href="#biais-dans-lestimation" id="toc-biais-dans-lestimation" class="nav-link" data-scroll-target="#biais-dans-lestimation"><span class="header-section-number">B.6</span> Biais dans l’estimation</a>
+  <ul class="collapse">
+  <li><a href="#biais-systématique" id="toc-biais-systématique" class="nav-link" data-scroll-target="#biais-systématique">Biais systématique</a></li>
+  <li><a href="#biais-conditionnel" id="toc-biais-conditionnel" class="nav-link" data-scroll-target="#biais-conditionnel">Biais conditionnel</a></li>
+  </ul></li>
+  <li><a href="#théorème-central-limite" id="toc-théorème-central-limite" class="nav-link" data-scroll-target="#théorème-central-limite"><span class="header-section-number">B.7</span> Théorème central limite</a>
+  <ul class="collapse">
+  <li><a href="#énoncé" id="toc-énoncé" class="nav-link" data-scroll-target="#énoncé">Énoncé</a></li>
+  <li><a href="#conséquences-importantes" id="toc-conséquences-importantes" class="nav-link" data-scroll-target="#conséquences-importantes">Conséquences importantes</a></li>
+  </ul></li>
+  <li><a href="#propriétés-fondamentales-de-la-variance" id="toc-propriétés-fondamentales-de-la-variance" class="nav-link" data-scroll-target="#propriétés-fondamentales-de-la-variance"><span class="header-section-number">B.8</span> Propriétés fondamentales de la variance</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Danlauz/glq3401-3651/edit/main/chapters/appendix/appendix-b.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/Danlauz/glq3401-3651/issues/new" class="toc-action"><i class="bi empty"></i>Signaler un problème ou<br>formuler une suggestion</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/appendix/appendix-a.html">Annexes</a></li><li class="breadcrumb-item"><a href="../../chapters/appendix/appendix-b.html"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Probabilités &amp; statistiques</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Annexe B — Probabilités &amp; statistiques</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Cette annexe regroupe les notions de probabilités et de statistiques nécessaires à la compréhension des modèles et des méthodes d’estimation présentés dans les chapitres principaux.</p>
+<section id="variables-aléatoires-et-fonctions-de-densité" class="level2" data-number="B.1">
+<h2 data-number="B.1" class="anchored" data-anchor-id="variables-aléatoires-et-fonctions-de-densité"><span class="header-section-number">B.1</span> Variables aléatoires et fonctions de densité</h2>
+<section id="variable-aléatoire" class="level3">
+<h3 class="anchored" data-anchor-id="variable-aléatoire">Variable aléatoire</h3>
+<p>Une variable aléatoire (v.a.) est une fonction mathématique qui associe un résultat numérique à chaque issue possible d’une expérience aléatoire. Bien que les valeurs possibles de la v.a. soient connues, sa réalisation précise ne peut être déterminée <em>a priori</em> sans observation directe.</p>
+<p>En géosciences, des exemples typiques de variables aléatoires incluent :</p>
+<ul>
+<li>La teneur en cuivre d’une carotte de forage de 1 mètre</li>
+<li>L’épaisseur d’une veine minéralisée à un endroit donné</li>
+<li>La concentration d’un polluant dans une nappe phréatique</li>
+<li>Le pH de l’eau de pluie à une station de mesure</li>
+</ul>
+<p>On distingue deux types de variables aléatoires :</p>
+<ul>
+<li><strong>Variables discrètes</strong> : prennent un nombre fini ou dénombrable de valeurs (ex: nombre de fractures dans une carotte)</li>
+<li><strong>Variables continues</strong> : peuvent prendre n’importe quelle valeur dans un intervalle (ex: teneur en minerai)</li>
+</ul>
+<p>Dans le cadre de ce cours, nous nous concentrerons principalement sur les variables aléatoires continues.</p>
+</section>
+<section id="fonction-de-densité-de-probabilité" class="level3">
+<h3 class="anchored" data-anchor-id="fonction-de-densité-de-probabilité">Fonction de densité de probabilité</h3>
+<p>Même si la valeur exacte que prendra une variable aléatoire n’est pas connue avant l’observation, il est possible de décrire la probabilité qu’elle prenne certaines valeurs. Cette information est décrite par la fonction de densité de probabilité <span class="math inline">\(f_X(x)\)</span>.</p>
+<p>La fonction de densité vérifie deux propriétés essentielles :</p>
+<ol type="1">
+<li><p><strong>Positivité</strong> : Elle est positive ou nulle partout <span class="math display">\[
+f_X(x) \geq 0 \quad \text{pour tout } x \in \mathbb{R}
+\]</span></p></li>
+<li><p><strong>Normalisation</strong> : L’aire totale sous la courbe est égale à 1 <span class="math display">\[
+\int_{-\infty}^{\infty} f_X(x)\,dx = 1
+\]</span></p></li>
+</ol>
+<p>La probabilité que la variable aléatoire prenne une valeur comprise entre deux bornes <span class="math inline">\(a\)</span> et <span class="math inline">\(b\)</span> est donnée par l’intégrale de la fonction de densité sur cet intervalle : <span class="math display">\[
+\mathbb{P}(a \leq X \leq b) = \int_a^b f_X(x)\,dx
+\]</span></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Remarque importante">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Remarque importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Pour une variable continue, la probabilité d’un point précis est toujours nulle : <span class="math inline">\(\mathbb{P}(X = x) = 0\)</span>. On ne peut calculer que la probabilité d’appartenir à un intervalle.</p>
+</div>
+</div>
+<p>Dans l’atelier suivant, l’aire sous la courbe d’une fonction de densité <span class="math inline">\(f_X(x)\)</span>, entre deux bornes <span class="math inline">\(a\)</span> et <span class="math inline">\(b\)</span>, se manipule directement pour retrouver la probabilité <span class="math inline">\(\mathbb{P}(a \leq X \leq b)\)</span>.</p>
+<div class="geostat-widget-wrap">
+<div id="w-annexe-densite" class="geostat-widget" data-widget="annexe_densite" data-version="0.1.0">
+<header class="gw-header">
+<span class="gw-icon">🧮</span>
+<h4 class="gw-title anchored">
+Atelier B.1 — Densité normale et probabilité d’un intervalle
+</h4>
+<span class="gw-badge">geostat_polymtl ≥ 0.1</span>
+</header>
+<div class="gw-placeholder">
+<pre><code>&lt;div class="gw-spinner"&gt;&lt;/div&gt;
+&lt;p&gt;Chargement du widget (densité)…&lt;/p&gt;</code></pre>
+</div>
+<noscript>
+<p class="gw-fallback-note">
+JavaScript désactivé : cet atelier interactif nécessite JavaScript.
+</p>
+<p></p>
+</noscript></div>
+</div>
+<p>L’aire sous la courbe ainsi calculée correspond en fait à une valeur particulière de la fonction de répartition, présentée à la section suivante : elle cumule cette probabilité depuis <span class="math inline">\(-\infty\)</span> jusqu’à <span class="math inline">\(x\)</span>.</p>
+</section>
+<section id="fonction-de-répartition" class="level3">
+<h3 class="anchored" data-anchor-id="fonction-de-répartition">Fonction de répartition</h3>
+<p>La fonction de répartition (ou fonction de distribution cumulative) <span class="math inline">\(F_X(x)\)</span> donne la probabilité que la variable aléatoire soit inférieure ou égale à une valeur <span class="math inline">\(x\)</span> : <span class="math display">\[
+F_X(x) = \mathbb{P}(X \leq x) = \int_{-\infty}^{x} f_X(t)\,dt
+\]</span></p>
+<p>Cette fonction possède les propriétés suivantes :</p>
+<ul>
+<li>Elle est monotone croissante : <span class="math inline">\(F_X(x_1) \leq F_X(x_2)\)</span> si <span class="math inline">\(x_1 \leq x_2\)</span></li>
+<li><span class="math inline">\(\lim_{x \to -\infty} F_X(x) = 0\)</span> et <span class="math inline">\(\lim_{x \to +\infty} F_X(x) = 1\)</span></li>
+<li>La densité est la dérivée de la fonction de répartition : <span class="math inline">\(f_X(x) = \frac{dF_X(x)}{dx}\)</span></li>
+</ul>
+<p>L’atelier ci-dessous construit <span class="math inline">\(F_X(x)\)</span> par accumulation progressive de la densité <span class="math inline">\(f_X(x)\)</span> ; son caractère monotone croissant y apparaît clairement.</p>
+<div class="geostat-widget-wrap">
+<div id="w-annexe-cumulative" class="geostat-widget" data-widget="annexe_cumulative" data-version="0.1.0">
+<header class="gw-header">
+<span class="gw-icon">🧮</span>
+<h4 class="gw-title anchored">
+Atelier B.1 — Fonction de répartition N(μ, σ²)
+</h4>
+<span class="gw-badge">geostat_polymtl ≥ 0.1</span>
+</header>
+<div class="gw-placeholder">
+<pre><code>&lt;div class="gw-spinner"&gt;&lt;/div&gt;
+&lt;p&gt;Chargement du widget (fonction de répartition)…&lt;/p&gt;</code></pre>
+</div>
+<noscript>
+<p class="gw-fallback-note">
+JavaScript désactivé : cet atelier interactif nécessite JavaScript.
+</p>
+<p></p>
+</noscript></div>
+</div>
+<p>La densité et la fonction de répartition décrivent la distribution dans son ensemble. On peut toutefois en résumer la forme par un petit nombre d’indicateurs numériques, les moments statistiques, présentés à la section suivante.</p>
+</section>
+</section>
+<section id="moments-statistiques-et-paramètres-de-population" class="level2" data-number="B.2">
+<h2 data-number="B.2" class="anchored" data-anchor-id="moments-statistiques-et-paramètres-de-population"><span class="header-section-number">B.2</span> Moments statistiques et paramètres de population</h2>
+<p>Les moments statistiques permettent de caractériser la forme et les propriétés d’une distribution de probabilité. Il faut distinguer les <strong>paramètres théoriques</strong> de la population (notation grecque) des <strong>statistiques échantillonnales</strong> (notation latine) qui les estiment.</p>
+<section id="espérance-mathématique-moyenne-théorique" class="level3">
+<h3 class="anchored" data-anchor-id="espérance-mathématique-moyenne-théorique">Espérance mathématique (moyenne théorique)</h3>
+<p>L’<strong>espérance mathématique</strong> ou <strong>moyenne théorique</strong> d’une variable aléatoire <span class="math inline">\(X\)</span>, notée <span class="math inline">\(\mu\)</span> ou <span class="math inline">\(\mathbb{E}[X]\)</span>, représente la valeur centrale autour de laquelle les observations tendent à se répartir : <span class="math display">\[
+\mu = \mathbb{E}[X] = \int_{-\infty}^{\infty} x \cdot f_X(x)\,dx
+\]</span></p>
+<p>L’espérance possède les propriétés suivantes :</p>
+<ul>
+<li><strong>Linéarité</strong> : <span class="math inline">\(\mathbb{E}[aX + b] = a\mathbb{E}[X] + b\)</span></li>
+<li><strong>Additivité</strong> : <span class="math inline">\(\mathbb{E}[X + Y] = \mathbb{E}[X] + \mathbb{E}[Y]\)</span> (toujours vraie, même si <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> ne sont pas indépendantes)</li>
+</ul>
+</section>
+<section id="variance-et-écart-type-théoriques" class="level3">
+<h3 class="anchored" data-anchor-id="variance-et-écart-type-théoriques">Variance et écart-type théoriques</h3>
+<p>La <strong>variance</strong> <span class="math inline">\(\sigma^2\)</span> mesure la dispersion des valeurs autour de la moyenne : <span class="math display">\[
+\sigma^2 = \operatorname{Var}(X) = \mathbb{E}[(X - \mu)^2] = \int_{-\infty}^{\infty} (x - \mu)^2 \cdot f_X(x)\,dx
+\]</span></p>
+<p>Forme alternative pratique pour les calculs : <span class="math display">\[
+\sigma^2 = \mathbb{E}[X^2] - (\mathbb{E}[X])^2
+\]</span></p>
+<p>L’<strong>écart-type</strong> <span class="math inline">\(\sigma\)</span> est la racine carrée de la variance et s’exprime dans les mêmes unités que la variable : <span class="math display">\[
+\sigma = \sqrt{\sigma^2}
+\]</span></p>
+<p>Propriétés de la variance :</p>
+<ul>
+<li><span class="math inline">\(\operatorname{Var}(aX + b) = a^2 \operatorname{Var}(X)\)</span> (la constante <span class="math inline">\(b\)</span> disparaît)</li>
+<li><span class="math inline">\(\operatorname{Var}(X + Y) = \operatorname{Var}(X) + \operatorname{Var}(Y) + 2\operatorname{Cov}(X,Y)\)</span></li>
+</ul>
+</section>
+<section id="covariance-et-corrélation" class="level3">
+<h3 class="anchored" data-anchor-id="covariance-et-corrélation">Covariance et corrélation</h3>
+<p>Pour deux variables aléatoires <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>, la <strong>covariance</strong> mesure leur degré de dépendance linéaire : <span class="math display">\[
+\operatorname{Cov}(X,Y) = \mathbb{E}[(X - \mathbb{E}[X])(Y - \mathbb{E}[Y])] = \mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y]
+\]</span></p>
+<p>La <strong>corrélation</strong> <span class="math inline">\(\rho_{XY}\)</span> est la version normalisée de la covariance, comprise entre -1 et 1 : <span class="math display">\[
+\rho_{XY} = \frac{\operatorname{Cov}(X,Y)}{\sigma_X \sigma_Y}
+\]</span></p>
+<p>Interprétation :</p>
+<ul>
+<li><span class="math inline">\(\rho = 1\)</span> : corrélation linéaire positive parfaite</li>
+<li><span class="math inline">\(\rho = 0\)</span> : absence de corrélation linéaire (mais pas nécessairement indépendance)</li>
+<li><span class="math inline">\(\rho = -1\)</span> : corrélation linéaire négative parfaite</li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Avertissement
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Attention</strong> : Une corrélation nulle n’implique pas nécessairement l’indépendance entre les variables. Il peut exister une relation non linéaire.</p>
+</div>
+</div>
+</section>
+<section id="autres-mesures-de-tendance-centrale" class="level3">
+<h3 class="anchored" data-anchor-id="autres-mesures-de-tendance-centrale">Autres mesures de tendance centrale</h3>
+<p>Outre la moyenne, deux autres mesures caractérisent le centre d’une distribution :</p>
+<ul>
+<li><p><strong>Mode</strong> : La valeur la plus probable <span class="math display">\[
+\operatorname{Mode} = \arg\max_x f_X(x)
+\]</span></p></li>
+<li><p><strong>Médiane</strong> : La valeur <span class="math inline">\(x\)</span> qui divise la distribution en deux parties égales <span class="math display">\[
+F_X(x) = 0.5 \quad \Leftrightarrow \quad \int_{-\infty}^{x} f_X(t)\,dt = 0.5
+\]</span></p></li>
+</ul>
+<p>Comme illustré à la <a href="#fig-tendance" class="quarto-xref">Figure&nbsp;<span>B.1</span></a>, ces trois mesures coïncident pour une distribution symétrique (comme la loi normale) mais diffèrent pour une distribution asymétrique (comme la loi log-normale).</p>
+<div id="fig-tendance" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tendance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C1_MesureTendanceCentrale.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tendance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;B.1: Mesures de tendance centrale sur une loi normale (gauche) et une loi log-normale (droite). Pour une distribution symétrique, mode = médiane = moyenne. Pour une distribution asymétrique positive, mode &lt; médiane &lt; moyenne.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="moments-dordre-supérieur" class="level3">
+<h3 class="anchored" data-anchor-id="moments-dordre-supérieur">Moments d’ordre supérieur</h3>
+<p>Les moments d’ordre supérieur caractérisent plus finement la forme de la distribution :</p>
+<ul>
+<li><strong>Coefficient d’asymétrie</strong> (skewness) : mesure la dissymétrie de la distribution <span class="math display">\[
+\gamma_1 = \frac{\mathbb{E}[(X-\mu)^3]}{\sigma^3}
+\]</span>
+<ul>
+<li><span class="math inline">\(\gamma_1 = 0\)</span> : distribution symétrique</li>
+<li><span class="math inline">\(\gamma_1 &gt; 0\)</span> : asymétrie positive (queue à droite)</li>
+<li><span class="math inline">\(\gamma_1 &lt; 0\)</span> : asymétrie négative (queue à gauche)</li>
+</ul></li>
+<li><strong>Coefficient d’aplatissement</strong> (kurtosis) : mesure l’épaisseur des queues de distribution <span class="math display">\[
+\gamma_2 = \frac{\mathbb{E}[(X-\mu)^4]}{\sigma^4}
+\]</span>
+<ul>
+<li><span class="math inline">\(\gamma_2 = 3\)</span> : distribution normale (référence)</li>
+<li><span class="math inline">\(\gamma_2 &gt; 3\)</span> : distribution leptokurtique (queues épaisses)</li>
+<li><span class="math inline">\(\gamma_2 &lt; 3\)</span> : distribution platykurtique (queues minces)</li>
+</ul></li>
+</ul>
+<p>La <a href="#fig-dispersion" class="quarto-xref">Figure&nbsp;<span>B.2</span></a> illustre ces notions pour deux distributions différentes.</p>
+<div id="fig-dispersion" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dispersion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C1_MesureDispersion.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dispersion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;B.2: Mesures de dispersion et de forme pour une loi normale (symétrique, <span class="math inline">\(\gamma_1 = 0\)</span>) et une loi log-normale (asymétrique positive, <span class="math inline">\(\gamma_1 &gt; 0\)</span>).
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="statistiques-échantillonnales" class="level2" data-number="B.3">
+<h2 data-number="B.3" class="anchored" data-anchor-id="statistiques-échantillonnales"><span class="header-section-number">B.3</span> Statistiques échantillonnales</h2>
+<p>Dans la pratique, nous ne connaissons jamais les paramètres théoriques de la population. Nous devons les <strong>estimer</strong> à partir d’un échantillon de taille finie <span class="math inline">\(n\)</span>. Les formules diffèrent légèrement de leurs équivalents théoriques.</p>
+<section id="moyenne-échantillonnale" class="level3">
+<h3 class="anchored" data-anchor-id="moyenne-échantillonnale">Moyenne échantillonnale</h3>
+<p>La <strong>moyenne d’un échantillon</strong> de <span class="math inline">\(n\)</span> observations <span class="math inline">\(\{x_1, x_2, \ldots, x_n\}\)</span> est notée <span class="math inline">\(\bar{x}\)</span> : <span class="math display">\[
+\bar{x} = \frac{1}{n}\sum_{i=1}^n x_i
+\]</span></p>
+<p>C’est un <strong>estimateur sans biais</strong> de <span class="math inline">\(\mu\)</span> : <span class="math inline">\(\mathbb{E}[\bar{x}] = \mu\)</span></p>
+</section>
+<section id="variance-échantillonnale" class="level3">
+<h3 class="anchored" data-anchor-id="variance-échantillonnale">Variance échantillonnale</h3>
+<p>La <strong>variance d’un échantillon</strong> est notée <span class="math inline">\(s^2\)</span> : <span class="math display">\[
+s^2 = \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2
+\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Pourquoi $n-1$ ?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Pourquoi <span class="math inline">\(n-1\)</span> ?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le diviseur est <span class="math inline">\(n-1\)</span> (et non <span class="math inline">\(n\)</span>) pour obtenir un estimateur <strong>sans biais</strong> de <span class="math inline">\(\sigma^2\)</span>. On perd un degré de liberté car nous devons d’abord estimer <span class="math inline">\(\mu\)</span> par <span class="math inline">\(\bar{x}\)</span>. Cette correction s’appelle la <strong>correction de Bessel</strong>.</p>
+</div>
+</div>
+<p>L’<strong>écart-type échantillonnal</strong> est : <span class="math display">\[
+s = \sqrt{s^2}
+\]</span></p>
+</section>
+<section id="covariance-et-corrélation-échantillonnales" class="level3">
+<h3 class="anchored" data-anchor-id="covariance-et-corrélation-échantillonnales">Covariance et corrélation échantillonnales</h3>
+<p>Pour deux échantillons <span class="math inline">\((x_1, \ldots, x_n)\)</span> et <span class="math inline">\((y_1, \ldots, y_n)\)</span> :</p>
+<p><strong>Covariance échantillonnale</strong> : <span class="math display">\[
+s_{xy} = \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})
+\]</span></p>
+<p><strong>Coefficient de corrélation échantillonnal</strong> : <span class="math display">\[
+r_{xy} = \frac{s_{xy}}{s_x s_y}
+\]</span></p>
+<p>La <a href="#fig-correlation" class="quarto-xref">Figure&nbsp;<span>B.3</span></a> montre différents scénarios de corrélation entre deux variables.</p>
+<div id="fig-correlation" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-correlation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C1_Correlation.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-correlation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;B.3: Différents types de corrélations entre deux variables. La corrélation mesure uniquement la relation linéaire : même avec <span class="math inline">\(r = 0\)</span>, une relation non linéaire forte peut exister (panneau central).
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="statistiques-dune-variable-régionalisée" class="level2" data-number="B.4">
+<h2 data-number="B.4" class="anchored" data-anchor-id="statistiques-dune-variable-régionalisée"><span class="header-section-number">B.4</span> Statistiques d’une variable régionalisée</h2>
+<p>En géostatistique, nous travaillons avec des <strong>variables régionalisées</strong>, c’est-à-dire des variables dont la valeur dépend de la position dans l’espace. Une variable régionalisée <span class="math inline">\(Z(\mathbf{x})\)</span> est observée en <span class="math inline">\(n\)</span> localisations <span class="math inline">\(\{\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_n\}\)</span>.</p>
+<section id="moyenne-spatiale" class="level3">
+<h3 class="anchored" data-anchor-id="moyenne-spatiale">Moyenne spatiale</h3>
+<p>La <strong>moyenne spatiale</strong> d’une variable régionalisée sur un domaine <span class="math inline">\(D\)</span> est : <span class="math display">\[
+m = \mathbb{E}[Z(\mathbf{x})] = \int_D z \cdot f_Z(z)\,dz
+\]</span></p>
+<p>En pratique, elle est estimée par la <strong>moyenne échantillonnale</strong> : <span class="math display">\[
+\bar{z} = \frac{1}{n}\sum_{i=1}^n z(\mathbf{x}_i)
+\]</span></p>
+</section>
+<section id="variance-spatiale" class="level3">
+<h3 class="anchored" data-anchor-id="variance-spatiale">Variance spatiale</h3>
+<p>La <strong>variance spatiale</strong> caractérise la dispersion globale de la variable dans l’espace : <span class="math display">\[
+\sigma^2 = \operatorname{Var}[Z(\mathbf{x})] = \mathbb{E}[(Z(\mathbf{x}) - m)^2]
+\]</span></p>
+<p>Estimée par : <span class="math display">\[
+s^2 = \frac{1}{n-1}\sum_{i=1}^n [z(\mathbf{x}_i) - \bar{z}]^2
+\]</span></p>
+</section>
+</section>
+<section id="lois-de-distribution-courantes" class="level2" data-number="B.5">
+<h2 data-number="B.5" class="anchored" data-anchor-id="lois-de-distribution-courantes"><span class="header-section-number">B.5</span> Lois de distribution courantes</h2>
+<section id="loi-normale-gaussienne" class="level3">
+<h3 class="anchored" data-anchor-id="loi-normale-gaussienne">Loi normale (gaussienne)</h3>
+<p>La <strong>loi normale</strong> <span class="math inline">\(\mathcal{N}(\mu, \sigma^2)\)</span> est la distribution la plus importante en statistiques. Sa fonction de densité est : <span class="math display">\[
+f_X(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)
+\]</span></p>
+<p>Propriétés :</p>
+<ul>
+<li>Symétrique autour de <span class="math inline">\(\mu\)</span></li>
+<li>Mode = médiane = moyenne = <span class="math inline">\(\mu\)</span></li>
+<li>68% des valeurs dans <span class="math inline">\([\mu - \sigma, \mu + \sigma]\)</span></li>
+<li>95% des valeurs dans <span class="math inline">\([\mu - 2\sigma, \mu + 2\sigma]\)</span></li>
+<li>99.7% des valeurs dans <span class="math inline">\([\mu - 3\sigma, \mu + 3\sigma]\)</span></li>
+</ul>
+</section>
+<section id="loi-log-normale" class="level3">
+<h3 class="anchored" data-anchor-id="loi-log-normale">Loi log-normale</h3>
+<p>Une variable <span class="math inline">\(Y\)</span> suit une <strong>loi log-normale</strong> si <span class="math inline">\(X = \ln(Y)\)</span> suit une loi normale. Cette distribution est fréquente en géosciences car :</p>
+<ul>
+<li>Elle est toujours positive (<span class="math inline">\(Y &gt; 0\)</span>)</li>
+<li>Elle est asymétrique positive</li>
+<li>Elle modélise bien les teneurs en minerai, les concentrations de polluants, etc.</li>
+</ul>
+<p>Si <span class="math inline">\(X \sim \mathcal{N}(\mu_X, \sigma_X^2)\)</span>, alors pour <span class="math inline">\(Y = e^X\)</span> :</p>
+<p><strong>Paramètres de la log-normale</strong> : <span class="math display">\[
+\mathbb{E}[Y] = \exp\left(\mu_X + \frac{\sigma_X^2}{2}\right)
+\]</span> <span class="math display">\[
+\operatorname{Var}(Y) = \exp(2\mu_X + \sigma_X^2)\left[\exp(\sigma_X^2) - 1\right]
+\]</span></p>
+<p><strong>Transformation inverse</strong> : Si <span class="math inline">\(Y\)</span> suit une loi log-normale avec moyenne <span class="math inline">\(m_Y\)</span> et variance <span class="math inline">\(s_Y^2\)</span> : <span class="math display">\[
+\mu_X = \ln\left(\frac{m_Y^2}{\sqrt{m_Y^2 + s_Y^2}}\right)
+\]</span> <span class="math display">\[
+\sigma_X^2 = \ln\left(1 + \frac{s_Y^2}{m_Y^2}\right)
+\]</span></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Application en géostatistique">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Application en géostatistique
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>De nombreuses variables géologiques (teneurs, perméabilités) suivent des lois log-normales. Il est souvent nécessaire de travailler dans l’espace logarithmique pour :</p>
+<ul>
+<li>Respecter les hypothèses de normalité des méthodes géostatistiques</li>
+<li>Éviter d’obtenir des valeurs négatives lors de l’estimation</li>
+<li>Mieux modéliser la structure spatiale</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="biais-dans-lestimation" class="level2" data-number="B.6">
+<h2 data-number="B.6" class="anchored" data-anchor-id="biais-dans-lestimation"><span class="header-section-number">B.6</span> Biais dans l’estimation</h2>
+<section id="biais-systématique" class="level3">
+<h3 class="anchored" data-anchor-id="biais-systématique">Biais systématique</h3>
+<p>Un <strong>estimateur biaisé</strong> est un estimateur dont l’espérance ne correspond pas au paramètre qu’il est censé estimer. Le <strong>biais</strong> est défini par : <span class="math display">\[
+\operatorname{Biais}(\hat{\theta}) = \mathbb{E}[\hat{\theta}] - \theta
+\]</span></p>
+<p>où <span class="math inline">\(\hat{\theta}\)</span> est l’estimateur et <span class="math inline">\(\theta\)</span> le paramètre théorique.</p>
+<p><strong>Exemple</strong> : Si on utilisait <span class="math inline">\(n\)</span> au lieu de <span class="math inline">\(n-1\)</span> dans la variance échantillonnale : <span class="math display">\[
+\tilde{s}^2 = \frac{1}{n}\sum_{i=1}^n (x_i - \bar{x})^2
+\]</span></p>
+<p>Cet estimateur serait biaisé : <span class="math inline">\(\mathbb{E}[\tilde{s}^2] = \frac{n-1}{n}\sigma^2 \neq \sigma^2\)</span></p>
+<p>En géostatistique, le <strong>biais systématique</strong> se manifeste lorsqu’une méthode d’estimation surestime ou sous-estime systématiquement les valeurs réelles, indépendamment des données locales.</p>
+</section>
+<section id="biais-conditionnel" class="level3">
+<h3 class="anchored" data-anchor-id="biais-conditionnel">Biais conditionnel</h3>
+<p>Le <strong>biais conditionnel</strong> est plus subtil. Il désigne une erreur d’estimation qui dépend de la valeur estimée elle-même. C’est un phénomène omniprésent en géostatistique.</p>
+<p><strong>Caractéristiques du biais conditionnel</strong> :</p>
+<ul>
+<li>Les hautes valeurs estimées tendent à <strong>surestimer</strong> les hautes valeurs réelles</li>
+<li>Les basses valeurs estimées tendent à <strong>sous-estimer</strong> les basses valeurs réelles</li>
+<li>Globalement, l’estimateur peut être sans biais (<span class="math inline">\(\mathbb{E}[\hat{Z}] = \mathbb{E}[Z]\)</span>)</li>
+<li>Mais conditionnellement à une estimation donnée, il y a un biais systématique</li>
+</ul>
+<p><strong>Conséquence pratique</strong> : Ce biais explique pourquoi, comme illustré à la <a href="../C06/index.html#fig-information" class="quarto-xref">Figure&nbsp;<span>6.7</span></a>, nous récupérons systématiquement moins de métal que prévu lorsque nous exploitons les blocs classés comme “riches” selon nos estimations.</p>
+<p>Mathématiquement, pour un estimateur <span class="math inline">\(\hat{Z}\)</span> :</p>
+<ul>
+<li>Biais global (espéré) : <span class="math inline">\(\mathbb{E}[\hat{Z} - Z] = 0\)</span> (pas de biais systématique)</li>
+<li>Biais conditionnel (espéré) : <span class="math inline">\(\mathbb{E}[Z | \hat{Z} = z] = z\)</span> (pas de biais conditionnel)</li>
+</ul>
+</section>
+</section>
+<section id="théorème-central-limite" class="level2" data-number="B.7">
+<h2 data-number="B.7" class="anchored" data-anchor-id="théorème-central-limite"><span class="header-section-number">B.7</span> Théorème central limite</h2>
+<p>Le <strong>théorème central limite</strong> (TCL) est l’un des résultats les plus importants de la théorie des probabilités. Il justifie l’utilisation omniprésente de la loi normale en statistiques et en géostatistique.</p>
+<section id="énoncé" class="level3">
+<h3 class="anchored" data-anchor-id="énoncé">Énoncé</h3>
+<p>Soit <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span> une suite de variables aléatoires <strong>indépendantes et identiquement distribuées</strong> (i.i.d.) de moyenne <span class="math inline">\(\mu\)</span> et de variance finie <span class="math inline">\(\sigma^2\)</span>.</p>
+<p>La moyenne échantillonnale : <span class="math display">\[
+\bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_i
+\]</span></p>
+<p>converge en distribution vers une loi normale lorsque <span class="math inline">\(n \to \infty\)</span> : <span class="math display">\[
+\frac{\bar{X}_n - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} \mathcal{N}(0, 1)
+\]</span></p>
+<p>Ou de manière équivalente : <span class="math display">\[
+\bar{X}_n \sim \mathcal{N}\left(\mu, \frac{\sigma^2}{n}\right) \quad \text{pour } n \text{ suffisamment grand}
+\]</span></p>
+</section>
+<section id="conséquences-importantes" class="level3">
+<h3 class="anchored" data-anchor-id="conséquences-importantes">Conséquences importantes</h3>
+<ol type="1">
+<li><p><strong>Universalité</strong> : Quelle que soit la distribution initiale des <span class="math inline">\(X_i\)</span> (uniforme, exponentielle, log-normale, etc.), leur moyenne suit approximativement une loi normale pour <span class="math inline">\(n\)</span> suffisamment grand.</p></li>
+<li><p><strong>Réduction de la variance</strong> : La variance de la moyenne décroît de <span class="math inline">\(1/n\)</span>, ce qui signifie que l’écart-type décroît de <span class="math inline">\(1/\sqrt{n}\)</span>.</p></li>
+<li><p><strong>Inférence statistique</strong> : Le TCL permet de construire des intervalles de confiance et de mener des tests d’hypothèses, même lorsque la distribution initiale est inconnue.</p></li>
+</ol>
+</section>
+</section>
+<section id="propriétés-fondamentales-de-la-variance" class="level2" data-number="B.8">
+<h2 data-number="B.8" class="anchored" data-anchor-id="propriétés-fondamentales-de-la-variance"><span class="header-section-number">B.8</span> Propriétés fondamentales de la variance</h2>
+<p>Les propriétés suivantes sont essentielles en géostatistiques, sûrement les relations les plus utilisées :</p>
+<p><strong>Variance d’une somme</strong> : <span class="math display">\[
+\operatorname{Var}(X + Y) = \operatorname{Var}(X) + \operatorname{Var}(Y) + 2\operatorname{Cov}(X,Y)
+\]</span></p>
+<p>Cas particulier (variables indépendantes) : <span class="math inline">\(\operatorname{Cov}(X,Y) = 0 \Rightarrow \operatorname{Var}(X+Y) = \operatorname{Var}(X) + \operatorname{Var}(Y)\)</span></p>
+<p><strong>Variance d’une combinaison linéaire</strong> : <span class="math display">\[
+\operatorname{Var}(aX + bY) = a^2\operatorname{Var}(X) + b^2\operatorname{Var}(Y) + 2ab\operatorname{Cov}(X,Y)
+\]</span></p>
+<p><strong>Généralisation à <span class="math inline">\(n\)</span> variables</strong> : <span class="math display">\[
+\operatorname{Var}\left(\sum_{i=1}^n a_i X_i\right) = \sum_{i=1}^n a_i^2 \operatorname{Var}(X_i) + 2\sum_{i=1}^n\sum_{j&gt;i}^n a_i a_j \operatorname{Cov}(X_i,X_j)
+\]</span></p>
+<p>Forme matricielle compacte : <span class="math display">\[
+\operatorname{Var}\left(\sum_{i=1}^n a_i X_i\right) = \mathbf{a}^T \mathbf{C} \mathbf{a}
+\]</span></p>
+<p>où <span class="math inline">\(\mathbf{a} = [a_1, \ldots, a_n]^T\)</span> et <span class="math inline">\(\mathbf{C}\)</span> est la matrice de covariance : <span class="math display">\[
+\mathbf{C} = \begin{bmatrix}
+\operatorname{Var}(X_1) &amp; \operatorname{Cov}(X_1,X_2) &amp; \cdots &amp; \operatorname{Cov}(X_1,X_n) \\
+\operatorname{Cov}(X_2,X_1) &amp; \operatorname{Var}(X_2) &amp; \cdots &amp; \operatorname{Cov}(X_2,X_n) \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+\operatorname{Cov}(X_n,X_1) &amp; \operatorname{Cov}(X_n,X_2) &amp; \cdots &amp; \operatorname{Var}(X_n)
+\end{bmatrix}
+\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Application en géostatistique">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Astuce</span>Application en géostatistique
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ces relations sont fondamentales pour :</p>
+<ul>
+<li><strong>Calculer la variance d’estimation</strong> : une estimation par krigeage est une combinaison linéaire de valeurs observées</li>
+<li><strong>Quantifier l’incertitude</strong> : la variance d’erreur dépend des covariances entre données et avec le point à estimer</li>
+<li><strong>Optimiser les poids</strong> : les poids de krigeage minimisent la variance d’erreur sous contrainte de non-biais</li>
+</ul>
+</div>
+</div>
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../chapters/appendix/appendix-a.html" class="pagination-link" aria-label="Algèbre linéaire : vecteurs et plans">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Algèbre linéaire : vecteurs et plans</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../chapters/appendix/appendix-c.html" class="pagination-link" aria-label="Table de la loi normale centrée-réduite">
+        <span class="nav-page-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Table de la loi normale centrée-réduite</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Code source</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Probabilités &amp; statistiques"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="an">number-sections:</span><span class="co"> true</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="an">toc-depth:</span><span class="co"> 3</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>Cette annexe regroupe les notions de probabilités et de statistiques nécessaires à la compréhension des modèles et des méthodes d’estimation présentés dans les chapitres principaux.</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## Variables aléatoires et fonctions de densité</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">### Variable aléatoire</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>Une variable aléatoire (v.a.) est une fonction mathématique qui associe un résultat numérique à chaque issue possible d'une expérience aléatoire. Bien que les valeurs possibles de la v.a. soient connues, sa réalisation précise ne peut être déterminée *a priori* sans observation directe. </span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>En géosciences, des exemples typiques de variables aléatoires incluent :</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>La teneur en cuivre d'une carotte de forage de 1 mètre</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>L'épaisseur d'une veine minéralisée à un endroit donné</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>La concentration d'un polluant dans une nappe phréatique</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Le pH de l'eau de pluie à une station de mesure</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>On distingue deux types de variables aléatoires :</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Variables discrètes** : prennent un nombre fini ou dénombrable de valeurs (ex: nombre de fractures dans une carotte)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Variables continues** : peuvent prendre n'importe quelle valeur dans un intervalle (ex: teneur en minerai)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>Dans le cadre de ce cours, nous nous concentrerons principalement sur les variables aléatoires continues.</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="fu">### Fonction de densité de probabilité</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>Même si la valeur exacte que prendra une variable aléatoire n'est pas connue avant l'observation, il est possible de décrire la probabilité qu'elle prenne certaines valeurs. Cette information est décrite par la fonction de densité de probabilité $f_X(x)$.</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>La fonction de densité vérifie deux propriétés essentielles :</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Positivité** : Elle est positive ou nulle partout</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>f_X(x) \geq 0 \quad \text{pour tout } x \in \mathbb{R}</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Normalisation** : L'aire totale sous la courbe est égale à 1</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>\int_{-\infty}^{\infty} f_X(x)\,dx = 1</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>La probabilité que la variable aléatoire prenne une valeur comprise entre deux bornes $a$ et $b$ est donnée par l'intégrale de la fonction de densité sur cet intervalle :</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>\mathbb{P}(a \leq X \leq b) = \int_a^b f_X(x)\,dx</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>::: {.callout-important title="Remarque importante"}</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>Pour une variable continue, la probabilité d’un point précis est toujours nulle : $\mathbb{P}(X = x) = 0$. On ne peut calculer que la probabilité d'appartenir à un intervalle.</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>Dans l'atelier suivant, l'aire sous la courbe d'une fonction de densité $f_X(x)$, entre deux bornes $a$ et $b$, se manipule directement pour retrouver la probabilité $\mathbb{P}(a \leq X \leq b)$.</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>{{&lt; include widget/widget_density.qmd &gt;}}</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>L'aire sous la courbe ainsi calculée correspond en fait à une valeur particulière de la fonction de répartition, présentée à la section suivante : elle cumule cette probabilité depuis $-\infty$ jusqu'à $x$.</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="fu">### Fonction de répartition</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>La fonction de répartition (ou fonction de distribution cumulative) $F_X(x)$ donne la probabilité que la variable aléatoire soit inférieure ou égale à une valeur $x$ :</span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>F_X(x) = \mathbb{P}(X \leq x) = \int_{-\infty}^{x} f_X(t)\,dt</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>Cette fonction possède les propriétés suivantes :</span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Elle est monotone croissante : $F_X(x_1) \leq F_X(x_2)$ si $x_1 \leq x_2$</span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\lim_{x \to -\infty} F_X(x) = 0$ et $\lim_{x \to +\infty} F_X(x) = 1$</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>La densité est la dérivée de la fonction de répartition : $f_X(x) = \frac{dF_X(x)}{dx}$</span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>L'atelier ci-dessous construit $F_X(x)$ par accumulation progressive de la densité $f_X(x)$ ; son caractère monotone croissant y apparaît clairement.</span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>{{&lt; include widget/widget_cumulative.qmd &gt;}}</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>La densité et la fonction de répartition décrivent la distribution dans son ensemble. On peut toutefois en résumer la forme par un petit nombre d'indicateurs numériques, les moments statistiques, présentés à la section suivante.</span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a><span class="fu">## Moments statistiques et paramètres de population</span></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>Les moments statistiques permettent de caractériser la forme et les propriétés d'une distribution de probabilité. Il faut distinguer les **paramètres théoriques** de la population (notation grecque) des **statistiques échantillonnales** (notation latine) qui les estiment.</span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a><span class="fu">### Espérance mathématique (moyenne théorique)</span></span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>L'**espérance mathématique** ou **moyenne théorique** d'une variable aléatoire $X$, notée $\mu$ ou $\mathbb{E}<span class="co">[</span><span class="ot">X</span><span class="co">]</span>$, représente la valeur centrale autour de laquelle les observations tendent à se répartir :</span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>\mu = \mathbb{E}<span class="co">[</span><span class="ot">X</span><span class="co">]</span> = \int_{-\infty}^{\infty} x \cdot f_X(x)\,dx</span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>L'espérance possède les propriétés suivantes :</span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Linéarité** : $\mathbb{E}<span class="co">[</span><span class="ot">aX + b</span><span class="co">]</span> = a\mathbb{E}<span class="co">[</span><span class="ot">X</span><span class="co">]</span> + b$</span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Additivité** : $\mathbb{E}<span class="co">[</span><span class="ot">X + Y</span><span class="co">]</span> = \mathbb{E}<span class="co">[</span><span class="ot">X</span><span class="co">]</span> + \mathbb{E}<span class="co">[</span><span class="ot">Y</span><span class="co">]</span>$ (toujours vraie, même si $X$ et $Y$ ne sont pas indépendantes)</span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a><span class="fu">### Variance et écart-type théoriques</span></span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>La **variance** $\sigma^2$ mesure la dispersion des valeurs autour de la moyenne :</span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a>\sigma^2 = \operatorname{Var}(X) = \mathbb{E}<span class="co">[</span><span class="ot">(X - \mu)^2</span><span class="co">]</span> = \int_{-\infty}^{\infty} (x - \mu)^2 \cdot f_X(x)\,dx</span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>Forme alternative pratique pour les calculs :</span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>\sigma^2 = \mathbb{E}<span class="co">[</span><span class="ot">X^2</span><span class="co">]</span> - (\mathbb{E}<span class="co">[</span><span class="ot">X</span><span class="co">]</span>)^2</span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a>L'**écart-type** $\sigma$ est la racine carrée de la variance et s'exprime dans les mêmes unités que la variable :</span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a>\sigma = \sqrt{\sigma^2}</span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a>Propriétés de la variance :</span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\operatorname{Var}(aX + b) = a^2 \operatorname{Var}(X)$ (la constante $b$ disparaît)</span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\operatorname{Var}(X + Y) = \operatorname{Var}(X) + \operatorname{Var}(Y) + 2\operatorname{Cov}(X,Y)$</span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a><span class="fu">### Covariance et corrélation</span></span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a>Pour deux variables aléatoires $X$ et $Y$, la **covariance** mesure leur degré de dépendance linéaire :</span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a>\operatorname{Cov}(X,Y) = \mathbb{E}<span class="co">[</span><span class="ot">(X - \mathbb{E}[X])(Y - \mathbb{E}[Y])</span><span class="co">]</span> = \mathbb{E}<span class="co">[</span><span class="ot">XY</span><span class="co">]</span> - \mathbb{E}<span class="co">[</span><span class="ot">X</span><span class="co">]</span>\mathbb{E}<span class="co">[</span><span class="ot">Y</span><span class="co">]</span></span>
+<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a>La **corrélation** $\rho_{XY}$ est la version normalisée de la covariance, comprise entre -1 et 1 :</span>
+<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a>\rho_{XY} = \frac{\operatorname{Cov}(X,Y)}{\sigma_X \sigma_Y}</span>
+<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a>Interprétation :</span>
+<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\rho = 1$ : corrélation linéaire positive parfaite</span>
+<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\rho = 0$ : absence de corrélation linéaire (mais pas nécessairement indépendance)</span>
+<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\rho = -1$ : corrélation linéaire négative parfaite</span>
+<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a>**Attention** : Une corrélation nulle n'implique pas nécessairement l'indépendance entre les variables. Il peut exister une relation non linéaire.</span>
+<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a><span class="fu">### Autres mesures de tendance centrale</span></span>
+<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a>Outre la moyenne, deux autres mesures caractérisent le centre d'une distribution :</span>
+<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Mode** : La valeur la plus probable</span>
+<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a>\operatorname{Mode} = \arg\max_x f_X(x)</span>
+<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Médiane** : La valeur $x$ qui divise la distribution en deux parties égales</span>
+<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a>F_X(x) = 0.5 \quad \Leftrightarrow \quad \int_{-\infty}^{x} f_X(t)\,dt = 0.5</span>
+<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a>Comme illustré à la @fig-tendance, ces trois mesures coïncident pour une distribution symétrique (comme la loi normale) mais diffèrent pour une distribution asymétrique (comme la loi log-normale).</span>
+<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a><span class="al">![Mesures de tendance centrale sur une loi normale (gauche) et une loi log-normale (droite). Pour une distribution symétrique, mode = médiane = moyenne. Pour une distribution asymétrique positive, mode &lt; médiane &lt; moyenne.](images/C1_MesureTendanceCentrale.png)</span>{#fig-tendance fig-align="center"}</span>
+<span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a><span class="fu">### Moments d'ordre supérieur</span></span>
+<span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a>Les moments d'ordre supérieur caractérisent plus finement la forme de la distribution :</span>
+<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Coefficient d'asymétrie** (skewness) : mesure la dissymétrie de la distribution</span>
+<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a>\gamma_1 = \frac{\mathbb{E}<span class="co">[</span><span class="ot">(X-\mu)^3</span><span class="co">]</span>}{\sigma^3}</span>
+<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>$\gamma_1 = 0$ : distribution symétrique</span>
+<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>$\gamma_1 &gt; 0$ : asymétrie positive (queue à droite)</span>
+<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>$\gamma_1 &lt; 0$ : asymétrie négative (queue à gauche)</span>
+<span id="cb3-170"><a href="#cb3-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-171"><a href="#cb3-171" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Coefficient d'aplatissement** (kurtosis) : mesure l'épaisseur des queues de distribution</span>
+<span id="cb3-172"><a href="#cb3-172" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-173"><a href="#cb3-173" aria-hidden="true" tabindex="-1"></a>\gamma_2 = \frac{\mathbb{E}<span class="co">[</span><span class="ot">(X-\mu)^4</span><span class="co">]</span>}{\sigma^4}</span>
+<span id="cb3-174"><a href="#cb3-174" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-175"><a href="#cb3-175" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>$\gamma_2 = 3$ : distribution normale (référence)</span>
+<span id="cb3-176"><a href="#cb3-176" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>$\gamma_2 &gt; 3$ : distribution leptokurtique (queues épaisses)</span>
+<span id="cb3-177"><a href="#cb3-177" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>$\gamma_2 &lt; 3$ : distribution platykurtique (queues minces)</span>
+<span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-179"><a href="#cb3-179" aria-hidden="true" tabindex="-1"></a>La @fig-dispersion illustre ces notions pour deux distributions différentes.</span>
+<span id="cb3-180"><a href="#cb3-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-181"><a href="#cb3-181" aria-hidden="true" tabindex="-1"></a><span class="al">![Mesures de dispersion et de forme pour une loi normale (symétrique, $\gamma_1 = 0$) et une loi log-normale (asymétrique positive, $\gamma_1 &gt; 0$).](images/C1_MesureDispersion.png)</span>{#fig-dispersion fig-align="center"}</span>
+<span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-183"><a href="#cb3-183" aria-hidden="true" tabindex="-1"></a><span class="fu">## Statistiques échantillonnales</span></span>
+<span id="cb3-184"><a href="#cb3-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-185"><a href="#cb3-185" aria-hidden="true" tabindex="-1"></a>Dans la pratique, nous ne connaissons jamais les paramètres théoriques de la population. Nous devons les **estimer** à partir d'un échantillon de taille finie $n$. Les formules diffèrent légèrement de leurs équivalents théoriques.</span>
+<span id="cb3-186"><a href="#cb3-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-187"><a href="#cb3-187" aria-hidden="true" tabindex="-1"></a><span class="fu">### Moyenne échantillonnale</span></span>
+<span id="cb3-188"><a href="#cb3-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-189"><a href="#cb3-189" aria-hidden="true" tabindex="-1"></a>La **moyenne d'un échantillon** de $n$ observations $<span class="sc">\{</span>x_1, x_2, \ldots, x_n<span class="sc">\}</span>$ est notée $\bar{x}$ :</span>
+<span id="cb3-190"><a href="#cb3-190" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-191"><a href="#cb3-191" aria-hidden="true" tabindex="-1"></a>\bar{x} = \frac{1}{n}\sum_{i=1}^n x_i</span>
+<span id="cb3-192"><a href="#cb3-192" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-193"><a href="#cb3-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-194"><a href="#cb3-194" aria-hidden="true" tabindex="-1"></a>C'est un **estimateur sans biais** de $\mu$ : $\mathbb{E}<span class="co">[</span><span class="ot">\bar{x}</span><span class="co">]</span> = \mu$</span>
+<span id="cb3-195"><a href="#cb3-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-196"><a href="#cb3-196" aria-hidden="true" tabindex="-1"></a><span class="fu">### Variance échantillonnale</span></span>
+<span id="cb3-197"><a href="#cb3-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-198"><a href="#cb3-198" aria-hidden="true" tabindex="-1"></a>La **variance d'un échantillon** est notée $s^2$ :</span>
+<span id="cb3-199"><a href="#cb3-199" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-200"><a href="#cb3-200" aria-hidden="true" tabindex="-1"></a>s^2 = \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2</span>
+<span id="cb3-201"><a href="#cb3-201" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-202"><a href="#cb3-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-203"><a href="#cb3-203" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="Pourquoi $n-1$ ?"}</span>
+<span id="cb3-204"><a href="#cb3-204" aria-hidden="true" tabindex="-1"></a>Le diviseur est $n-1$ (et non $n$) pour obtenir un estimateur **sans biais** de $\sigma^2$. On perd un degré de liberté car nous devons d'abord estimer $\mu$ par $\bar{x}$. Cette correction s'appelle la **correction de Bessel**.</span>
+<span id="cb3-205"><a href="#cb3-205" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-206"><a href="#cb3-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-207"><a href="#cb3-207" aria-hidden="true" tabindex="-1"></a>L'**écart-type échantillonnal** est :</span>
+<span id="cb3-208"><a href="#cb3-208" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-209"><a href="#cb3-209" aria-hidden="true" tabindex="-1"></a>s = \sqrt{s^2}</span>
+<span id="cb3-210"><a href="#cb3-210" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-211"><a href="#cb3-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-212"><a href="#cb3-212" aria-hidden="true" tabindex="-1"></a><span class="fu">### Covariance et corrélation échantillonnales</span></span>
+<span id="cb3-213"><a href="#cb3-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-214"><a href="#cb3-214" aria-hidden="true" tabindex="-1"></a>Pour deux échantillons $(x_1, \ldots, x_n)$ et $(y_1, \ldots, y_n)$ :</span>
+<span id="cb3-215"><a href="#cb3-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-216"><a href="#cb3-216" aria-hidden="true" tabindex="-1"></a>**Covariance échantillonnale** :</span>
+<span id="cb3-217"><a href="#cb3-217" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-218"><a href="#cb3-218" aria-hidden="true" tabindex="-1"></a>s_{xy} = \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})</span>
+<span id="cb3-219"><a href="#cb3-219" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-220"><a href="#cb3-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-221"><a href="#cb3-221" aria-hidden="true" tabindex="-1"></a>**Coefficient de corrélation échantillonnal** :</span>
+<span id="cb3-222"><a href="#cb3-222" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-223"><a href="#cb3-223" aria-hidden="true" tabindex="-1"></a>r_{xy} = \frac{s_{xy}}{s_x s_y}</span>
+<span id="cb3-224"><a href="#cb3-224" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-225"><a href="#cb3-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-226"><a href="#cb3-226" aria-hidden="true" tabindex="-1"></a>La @fig-correlation montre différents scénarios de corrélation entre deux variables.</span>
+<span id="cb3-227"><a href="#cb3-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-228"><a href="#cb3-228" aria-hidden="true" tabindex="-1"></a><span class="al">![Différents types de corrélations entre deux variables. La corrélation mesure uniquement la relation linéaire : même avec $r = 0$, une relation non linéaire forte peut exister (panneau central).](images/C1_Correlation.png)</span>{#fig-correlation fig-align="center"}</span>
+<span id="cb3-229"><a href="#cb3-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-230"><a href="#cb3-230" aria-hidden="true" tabindex="-1"></a><span class="fu">## Statistiques d'une variable régionalisée</span></span>
+<span id="cb3-231"><a href="#cb3-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-232"><a href="#cb3-232" aria-hidden="true" tabindex="-1"></a>En géostatistique, nous travaillons avec des **variables régionalisées**, c'est-à-dire des variables dont la valeur dépend de la position dans l'espace. Une variable régionalisée $Z(\mathbf{x})$ est observée en $n$ localisations $<span class="sc">\{</span>\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_n<span class="sc">\}</span>$.</span>
+<span id="cb3-233"><a href="#cb3-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-234"><a href="#cb3-234" aria-hidden="true" tabindex="-1"></a><span class="fu">### Moyenne spatiale</span></span>
+<span id="cb3-235"><a href="#cb3-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-236"><a href="#cb3-236" aria-hidden="true" tabindex="-1"></a>La **moyenne spatiale** d'une variable régionalisée sur un domaine $D$ est :</span>
+<span id="cb3-237"><a href="#cb3-237" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-238"><a href="#cb3-238" aria-hidden="true" tabindex="-1"></a>m = \mathbb{E}<span class="co">[</span><span class="ot">Z(\mathbf{x})</span><span class="co">]</span> = \int_D z \cdot f_Z(z)\,dz</span>
+<span id="cb3-239"><a href="#cb3-239" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-240"><a href="#cb3-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-241"><a href="#cb3-241" aria-hidden="true" tabindex="-1"></a>En pratique, elle est estimée par la **moyenne échantillonnale** :</span>
+<span id="cb3-242"><a href="#cb3-242" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-243"><a href="#cb3-243" aria-hidden="true" tabindex="-1"></a>\bar{z} = \frac{1}{n}\sum_{i=1}^n z(\mathbf{x}_i)</span>
+<span id="cb3-244"><a href="#cb3-244" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-245"><a href="#cb3-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-246"><a href="#cb3-246" aria-hidden="true" tabindex="-1"></a><span class="fu">### Variance spatiale</span></span>
+<span id="cb3-247"><a href="#cb3-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-248"><a href="#cb3-248" aria-hidden="true" tabindex="-1"></a>La **variance spatiale** caractérise la dispersion globale de la variable dans l'espace :</span>
+<span id="cb3-249"><a href="#cb3-249" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-250"><a href="#cb3-250" aria-hidden="true" tabindex="-1"></a>\sigma^2 = \operatorname{Var}<span class="co">[</span><span class="ot">Z(\mathbf{x})</span><span class="co">]</span> = \mathbb{E}<span class="co">[</span><span class="ot">(Z(\mathbf{x}) - m)^2</span><span class="co">]</span></span>
+<span id="cb3-251"><a href="#cb3-251" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-252"><a href="#cb3-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-253"><a href="#cb3-253" aria-hidden="true" tabindex="-1"></a>Estimée par :</span>
+<span id="cb3-254"><a href="#cb3-254" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-255"><a href="#cb3-255" aria-hidden="true" tabindex="-1"></a>s^2 = \frac{1}{n-1}\sum_{i=1}^n <span class="co">[</span><span class="ot">z(\mathbf{x}_i) - \bar{z}</span><span class="co">]</span>^2</span>
+<span id="cb3-256"><a href="#cb3-256" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-257"><a href="#cb3-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-258"><a href="#cb3-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-259"><a href="#cb3-259" aria-hidden="true" tabindex="-1"></a><span class="fu">## Lois de distribution courantes</span></span>
+<span id="cb3-260"><a href="#cb3-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-261"><a href="#cb3-261" aria-hidden="true" tabindex="-1"></a><span class="fu">### Loi normale (gaussienne)</span></span>
+<span id="cb3-262"><a href="#cb3-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-263"><a href="#cb3-263" aria-hidden="true" tabindex="-1"></a>La **loi normale** $\mathcal{N}(\mu, \sigma^2)$ est la distribution la plus importante en statistiques. Sa fonction de densité est :</span>
+<span id="cb3-264"><a href="#cb3-264" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-265"><a href="#cb3-265" aria-hidden="true" tabindex="-1"></a>f_X(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)</span>
+<span id="cb3-266"><a href="#cb3-266" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-267"><a href="#cb3-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-268"><a href="#cb3-268" aria-hidden="true" tabindex="-1"></a>Propriétés :</span>
+<span id="cb3-269"><a href="#cb3-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-270"><a href="#cb3-270" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Symétrique autour de $\mu$</span>
+<span id="cb3-271"><a href="#cb3-271" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Mode = médiane = moyenne = $\mu$</span>
+<span id="cb3-272"><a href="#cb3-272" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>68% des valeurs dans $<span class="co">[</span><span class="ot">\mu - \sigma, \mu + \sigma</span><span class="co">]</span>$</span>
+<span id="cb3-273"><a href="#cb3-273" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>95% des valeurs dans $<span class="co">[</span><span class="ot">\mu - 2\sigma, \mu + 2\sigma</span><span class="co">]</span>$</span>
+<span id="cb3-274"><a href="#cb3-274" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>99.7% des valeurs dans $<span class="co">[</span><span class="ot">\mu - 3\sigma, \mu + 3\sigma</span><span class="co">]</span>$</span>
+<span id="cb3-275"><a href="#cb3-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-276"><a href="#cb3-276" aria-hidden="true" tabindex="-1"></a><span class="fu">### Loi log-normale</span></span>
+<span id="cb3-277"><a href="#cb3-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-278"><a href="#cb3-278" aria-hidden="true" tabindex="-1"></a>Une variable $Y$ suit une **loi log-normale** si $X = \ln(Y)$ suit une loi normale. Cette distribution est fréquente en géosciences car :</span>
+<span id="cb3-279"><a href="#cb3-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-280"><a href="#cb3-280" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Elle est toujours positive ($Y &gt; 0$)</span>
+<span id="cb3-281"><a href="#cb3-281" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Elle est asymétrique positive</span>
+<span id="cb3-282"><a href="#cb3-282" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Elle modélise bien les teneurs en minerai, les concentrations de polluants, etc.</span>
+<span id="cb3-283"><a href="#cb3-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-284"><a href="#cb3-284" aria-hidden="true" tabindex="-1"></a>Si $X \sim \mathcal{N}(\mu_X, \sigma_X^2)$, alors pour $Y = e^X$ :</span>
+<span id="cb3-285"><a href="#cb3-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-286"><a href="#cb3-286" aria-hidden="true" tabindex="-1"></a>**Paramètres de la log-normale** :</span>
+<span id="cb3-287"><a href="#cb3-287" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-288"><a href="#cb3-288" aria-hidden="true" tabindex="-1"></a>\mathbb{E}<span class="co">[</span><span class="ot">Y</span><span class="co">]</span> = \exp\left(\mu_X + \frac{\sigma_X^2}{2}\right)</span>
+<span id="cb3-289"><a href="#cb3-289" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-290"><a href="#cb3-290" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-291"><a href="#cb3-291" aria-hidden="true" tabindex="-1"></a>\operatorname{Var}(Y) = \exp(2\mu_X + \sigma_X^2)\left<span class="co">[</span><span class="ot">\exp(\sigma_X^2) - 1\right</span><span class="co">]</span></span>
+<span id="cb3-292"><a href="#cb3-292" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-293"><a href="#cb3-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-294"><a href="#cb3-294" aria-hidden="true" tabindex="-1"></a>**Transformation inverse** : Si $Y$ suit une loi log-normale avec moyenne $m_Y$ et variance $s_Y^2$ :</span>
+<span id="cb3-295"><a href="#cb3-295" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-296"><a href="#cb3-296" aria-hidden="true" tabindex="-1"></a>\mu_X = \ln\left(\frac{m_Y^2}{\sqrt{m_Y^2 + s_Y^2}}\right)</span>
+<span id="cb3-297"><a href="#cb3-297" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-298"><a href="#cb3-298" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-299"><a href="#cb3-299" aria-hidden="true" tabindex="-1"></a>\sigma_X^2 = \ln\left(1 + \frac{s_Y^2}{m_Y^2}\right)</span>
+<span id="cb3-300"><a href="#cb3-300" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-301"><a href="#cb3-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-302"><a href="#cb3-302" aria-hidden="true" tabindex="-1"></a>::: {.callout-important title="Application en géostatistique"}</span>
+<span id="cb3-303"><a href="#cb3-303" aria-hidden="true" tabindex="-1"></a>De nombreuses variables géologiques (teneurs, perméabilités) suivent des lois log-normales. Il est souvent nécessaire de travailler dans l'espace logarithmique pour :</span>
+<span id="cb3-304"><a href="#cb3-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-305"><a href="#cb3-305" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Respecter les hypothèses de normalité des méthodes géostatistiques</span>
+<span id="cb3-306"><a href="#cb3-306" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Éviter d'obtenir des valeurs négatives lors de l'estimation</span>
+<span id="cb3-307"><a href="#cb3-307" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Mieux modéliser la structure spatiale</span>
+<span id="cb3-308"><a href="#cb3-308" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-309"><a href="#cb3-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-310"><a href="#cb3-310" aria-hidden="true" tabindex="-1"></a><span class="fu">## Biais dans l'estimation</span></span>
+<span id="cb3-311"><a href="#cb3-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-312"><a href="#cb3-312" aria-hidden="true" tabindex="-1"></a><span class="fu">### Biais systématique</span></span>
+<span id="cb3-313"><a href="#cb3-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-314"><a href="#cb3-314" aria-hidden="true" tabindex="-1"></a>Un **estimateur biaisé** est un estimateur dont l'espérance ne correspond pas au paramètre qu'il est censé estimer. Le **biais** est défini par :</span>
+<span id="cb3-315"><a href="#cb3-315" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-316"><a href="#cb3-316" aria-hidden="true" tabindex="-1"></a>\operatorname{Biais}(\hat{\theta}) = \mathbb{E}<span class="co">[</span><span class="ot">\hat{\theta}</span><span class="co">]</span> - \theta</span>
+<span id="cb3-317"><a href="#cb3-317" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-318"><a href="#cb3-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-319"><a href="#cb3-319" aria-hidden="true" tabindex="-1"></a>où $\hat{\theta}$ est l'estimateur et $\theta$ le paramètre théorique.</span>
+<span id="cb3-320"><a href="#cb3-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-321"><a href="#cb3-321" aria-hidden="true" tabindex="-1"></a>**Exemple** : Si on utilisait $n$ au lieu de $n-1$ dans la variance échantillonnale :</span>
+<span id="cb3-322"><a href="#cb3-322" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-323"><a href="#cb3-323" aria-hidden="true" tabindex="-1"></a>\tilde{s}^2 = \frac{1}{n}\sum_{i=1}^n (x_i - \bar{x})^2</span>
+<span id="cb3-324"><a href="#cb3-324" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-325"><a href="#cb3-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-326"><a href="#cb3-326" aria-hidden="true" tabindex="-1"></a>Cet estimateur serait biaisé : $\mathbb{E}<span class="co">[</span><span class="ot">\tilde{s}^2</span><span class="co">]</span> = \frac{n-1}{n}\sigma^2 \neq \sigma^2$</span>
+<span id="cb3-327"><a href="#cb3-327" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-328"><a href="#cb3-328" aria-hidden="true" tabindex="-1"></a>En géostatistique, le **biais systématique** se manifeste lorsqu'une méthode d'estimation surestime ou sous-estime systématiquement les valeurs réelles, indépendamment des données locales.</span>
+<span id="cb3-329"><a href="#cb3-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-330"><a href="#cb3-330" aria-hidden="true" tabindex="-1"></a><span class="fu">### Biais conditionnel</span></span>
+<span id="cb3-331"><a href="#cb3-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-332"><a href="#cb3-332" aria-hidden="true" tabindex="-1"></a>Le **biais conditionnel** est plus subtil. Il désigne une erreur d'estimation qui dépend de la valeur estimée elle-même. C'est un phénomène omniprésent en géostatistique.</span>
+<span id="cb3-333"><a href="#cb3-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-334"><a href="#cb3-334" aria-hidden="true" tabindex="-1"></a>**Caractéristiques du biais conditionnel** :</span>
+<span id="cb3-335"><a href="#cb3-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-336"><a href="#cb3-336" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Les hautes valeurs estimées tendent à **surestimer** les hautes valeurs réelles</span>
+<span id="cb3-337"><a href="#cb3-337" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Les basses valeurs estimées tendent à **sous-estimer** les basses valeurs réelles</span>
+<span id="cb3-338"><a href="#cb3-338" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Globalement, l'estimateur peut être sans biais ($\mathbb{E}<span class="co">[</span><span class="ot">\hat{Z}</span><span class="co">]</span> = \mathbb{E}<span class="co">[</span><span class="ot">Z</span><span class="co">]</span>$)</span>
+<span id="cb3-339"><a href="#cb3-339" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Mais conditionnellement à une estimation donnée, il y a un biais systématique</span>
+<span id="cb3-340"><a href="#cb3-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-341"><a href="#cb3-341" aria-hidden="true" tabindex="-1"></a>**Conséquence pratique** : Ce biais explique pourquoi, comme illustré à la @fig-information, nous récupérons systématiquement moins de métal que prévu lorsque nous exploitons les blocs classés comme "riches" selon nos estimations.</span>
+<span id="cb3-342"><a href="#cb3-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-343"><a href="#cb3-343" aria-hidden="true" tabindex="-1"></a>Mathématiquement, pour un estimateur $\hat{Z}$ :</span>
+<span id="cb3-344"><a href="#cb3-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-345"><a href="#cb3-345" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Biais global (espéré) : $\mathbb{E}<span class="co">[</span><span class="ot">\hat{Z} - Z</span><span class="co">]</span> = 0$ (pas de biais systématique)</span>
+<span id="cb3-346"><a href="#cb3-346" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Biais conditionnel (espéré) : $\mathbb{E}<span class="co">[</span><span class="ot">Z | \hat{Z} = z</span><span class="co">]</span> = z$ (pas de biais conditionnel)</span>
+<span id="cb3-347"><a href="#cb3-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-348"><a href="#cb3-348" aria-hidden="true" tabindex="-1"></a><span class="fu">## Théorème central limite</span></span>
+<span id="cb3-349"><a href="#cb3-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-350"><a href="#cb3-350" aria-hidden="true" tabindex="-1"></a>Le **théorème central limite** (TCL) est l'un des résultats les plus importants de la théorie des probabilités. Il justifie l'utilisation omniprésente de la loi normale en statistiques et en géostatistique.</span>
+<span id="cb3-351"><a href="#cb3-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-352"><a href="#cb3-352" aria-hidden="true" tabindex="-1"></a><span class="fu">### Énoncé</span></span>
+<span id="cb3-353"><a href="#cb3-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-354"><a href="#cb3-354" aria-hidden="true" tabindex="-1"></a>Soit $X_1, X_2, \ldots, X_n$ une suite de variables aléatoires **indépendantes et identiquement distribuées** (i.i.d.) de moyenne $\mu$ et de variance finie $\sigma^2$. </span>
+<span id="cb3-355"><a href="#cb3-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-356"><a href="#cb3-356" aria-hidden="true" tabindex="-1"></a>La moyenne échantillonnale :</span>
+<span id="cb3-357"><a href="#cb3-357" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-358"><a href="#cb3-358" aria-hidden="true" tabindex="-1"></a>\bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_i</span>
+<span id="cb3-359"><a href="#cb3-359" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-360"><a href="#cb3-360" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-361"><a href="#cb3-361" aria-hidden="true" tabindex="-1"></a>converge en distribution vers une loi normale lorsque $n \to \infty$ :</span>
+<span id="cb3-362"><a href="#cb3-362" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-363"><a href="#cb3-363" aria-hidden="true" tabindex="-1"></a>\frac{\bar{X}_n - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} \mathcal{N}(0, 1)</span>
+<span id="cb3-364"><a href="#cb3-364" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-365"><a href="#cb3-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-366"><a href="#cb3-366" aria-hidden="true" tabindex="-1"></a>Ou de manière équivalente :</span>
+<span id="cb3-367"><a href="#cb3-367" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-368"><a href="#cb3-368" aria-hidden="true" tabindex="-1"></a>\bar{X}_n \sim \mathcal{N}\left(\mu, \frac{\sigma^2}{n}\right) \quad \text{pour } n \text{ suffisamment grand}</span>
+<span id="cb3-369"><a href="#cb3-369" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-370"><a href="#cb3-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-371"><a href="#cb3-371" aria-hidden="true" tabindex="-1"></a><span class="fu">### Conséquences importantes</span></span>
+<span id="cb3-372"><a href="#cb3-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-373"><a href="#cb3-373" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Universalité** : Quelle que soit la distribution initiale des $X_i$ (uniforme, exponentielle, log-normale, etc.), leur moyenne suit approximativement une loi normale pour $n$ suffisamment grand.</span>
+<span id="cb3-374"><a href="#cb3-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-375"><a href="#cb3-375" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Réduction de la variance** : La variance de la moyenne décroît de $1/n$, ce qui signifie que l'écart-type décroît de $1/\sqrt{n}$.</span>
+<span id="cb3-376"><a href="#cb3-376" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-377"><a href="#cb3-377" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Inférence statistique** : Le TCL permet de construire des intervalles de confiance et de mener des tests d'hypothèses, même lorsque la distribution initiale est inconnue.</span>
+<span id="cb3-378"><a href="#cb3-378" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-379"><a href="#cb3-379" aria-hidden="true" tabindex="-1"></a><span class="fu">## Propriétés fondamentales de la variance</span></span>
+<span id="cb3-380"><a href="#cb3-380" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-381"><a href="#cb3-381" aria-hidden="true" tabindex="-1"></a>Les propriétés suivantes sont essentielles en géostatistiques, sûrement les relations les plus utilisées :</span>
+<span id="cb3-382"><a href="#cb3-382" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-383"><a href="#cb3-383" aria-hidden="true" tabindex="-1"></a>**Variance d'une somme** :</span>
+<span id="cb3-384"><a href="#cb3-384" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-385"><a href="#cb3-385" aria-hidden="true" tabindex="-1"></a>\operatorname{Var}(X + Y) = \operatorname{Var}(X) + \operatorname{Var}(Y) + 2\operatorname{Cov}(X,Y)</span>
+<span id="cb3-386"><a href="#cb3-386" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-387"><a href="#cb3-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-388"><a href="#cb3-388" aria-hidden="true" tabindex="-1"></a>Cas particulier (variables indépendantes) : $\operatorname{Cov}(X,Y) = 0 \Rightarrow \operatorname{Var}(X+Y) = \operatorname{Var}(X) + \operatorname{Var}(Y)$</span>
+<span id="cb3-389"><a href="#cb3-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-390"><a href="#cb3-390" aria-hidden="true" tabindex="-1"></a>**Variance d'une combinaison linéaire** :</span>
+<span id="cb3-391"><a href="#cb3-391" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-392"><a href="#cb3-392" aria-hidden="true" tabindex="-1"></a>\operatorname{Var}(aX + bY) = a^2\operatorname{Var}(X) + b^2\operatorname{Var}(Y) + 2ab\operatorname{Cov}(X,Y)</span>
+<span id="cb3-393"><a href="#cb3-393" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-394"><a href="#cb3-394" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-395"><a href="#cb3-395" aria-hidden="true" tabindex="-1"></a>**Généralisation à $n$ variables** :</span>
+<span id="cb3-396"><a href="#cb3-396" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-397"><a href="#cb3-397" aria-hidden="true" tabindex="-1"></a>\operatorname{Var}\left(\sum_{i=1}^n a_i X_i\right) = \sum_{i=1}^n a_i^2 \operatorname{Var}(X_i) + 2\sum_{i=1}^n\sum_{j&gt;i}^n a_i a_j \operatorname{Cov}(X_i,X_j)</span>
+<span id="cb3-398"><a href="#cb3-398" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-399"><a href="#cb3-399" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-400"><a href="#cb3-400" aria-hidden="true" tabindex="-1"></a>Forme matricielle compacte :</span>
+<span id="cb3-401"><a href="#cb3-401" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-402"><a href="#cb3-402" aria-hidden="true" tabindex="-1"></a>\operatorname{Var}\left(\sum_{i=1}^n a_i X_i\right) = \mathbf{a}^T \mathbf{C} \mathbf{a}</span>
+<span id="cb3-403"><a href="#cb3-403" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-404"><a href="#cb3-404" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-405"><a href="#cb3-405" aria-hidden="true" tabindex="-1"></a>où $\mathbf{a} = <span class="co">[</span><span class="ot">a_1, \ldots, a_n</span><span class="co">]</span>^T$ et $\mathbf{C}$ est la matrice de covariance :</span>
+<span id="cb3-406"><a href="#cb3-406" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-407"><a href="#cb3-407" aria-hidden="true" tabindex="-1"></a>\mathbf{C} = \begin{bmatrix}</span>
+<span id="cb3-408"><a href="#cb3-408" aria-hidden="true" tabindex="-1"></a>\operatorname{Var}(X_1) &amp; \operatorname{Cov}(X_1,X_2) &amp; \cdots &amp; \operatorname{Cov}(X_1,X_n) <span class="sc">\\</span></span>
+<span id="cb3-409"><a href="#cb3-409" aria-hidden="true" tabindex="-1"></a>\operatorname{Cov}(X_2,X_1) &amp; \operatorname{Var}(X_2) &amp; \cdots &amp; \operatorname{Cov}(X_2,X_n) <span class="sc">\\</span></span>
+<span id="cb3-410"><a href="#cb3-410" aria-hidden="true" tabindex="-1"></a>\vdots &amp; \vdots &amp; \ddots &amp; \vdots <span class="sc">\\</span></span>
+<span id="cb3-411"><a href="#cb3-411" aria-hidden="true" tabindex="-1"></a>\operatorname{Cov}(X_n,X_1) &amp; \operatorname{Cov}(X_n,X_2) &amp; \cdots &amp; \operatorname{Var}(X_n)</span>
+<span id="cb3-412"><a href="#cb3-412" aria-hidden="true" tabindex="-1"></a>\end{bmatrix}</span>
+<span id="cb3-413"><a href="#cb3-413" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-414"><a href="#cb3-414" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-415"><a href="#cb3-415" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip title="Application en géostatistique"}</span>
+<span id="cb3-416"><a href="#cb3-416" aria-hidden="true" tabindex="-1"></a>Ces relations sont fondamentales pour :</span>
+<span id="cb3-417"><a href="#cb3-417" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-418"><a href="#cb3-418" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Calculer la variance d'estimation** : une estimation par krigeage est une combinaison linéaire de valeurs observées</span>
+<span id="cb3-419"><a href="#cb3-419" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Quantifier l'incertitude** : la variance d'erreur dépend des covariances entre données et avec le point à estimer</span>
+<span id="cb3-420"><a href="#cb3-420" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Optimiser les poids** : les poids de krigeage minimisent la variance d'erreur sous contrainte de non-biais</span>
+<span id="cb3-421"><a href="#cb3-421" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-422"><a href="#cb3-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-423"><a href="#cb3-423" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Géostatistique et géologie minière</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Danlauz/glq3401-3651/edit/main/chapters/appendix/appendix-b.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/Danlauz/glq3401-3651/issues/new" class="toc-action"><i class="bi empty"></i>Signaler un problème ou<br>formuler une suggestion</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Ce livre a été réalisé avec <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+<script type="module" src="../../scripts/geostat-js/loader.js"></script>
+<script src="../../scripts/geostat-js/notebook-button.js" defer=""></script>
+
+
+
+
+</body></html>

@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c13_MPS_image_training">
+  <div class="gw-placeholder">Chargement (MPS — image d'entraînement)…</div>
+</div>
+```

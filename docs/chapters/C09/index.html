@@ -1,0 +1,2247 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>9&nbsp; Krigeage – Géostatistique et géologie minière</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../chapters/C10/index.html" rel="next">
+<link href="../../chapters/C08/index.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-f2c6d6e2b784ddc5de38779acc06f37d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-74c88ba48ad0bebf983f0ffd06dd1671.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f2c6d6e2b784ddc5de38779acc06f37d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents correspondants",
+    "search-copy-link-title": "Copier le lien",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "Rechercher",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles/site-polish.css">
+<link rel="stylesheet" href="../../styles/callouts.css">
+<link rel="stylesheet" href="../../styles/exercice.css">
+<link rel="stylesheet" href="../../styles/chapter-downloads.css">
+<link rel="stylesheet" href="../../scripts/geostat-js/style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/C06/index.html">Partie II: Géostatistique linéaire</a></li><li class="breadcrumb-item"><a href="../../chapters/C09/index.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Krigeage</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Géostatistique et géologie minière</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/Danlauz/glq3401-3651" title="Code source" class="quarto-navigation-tool px-1" aria-label="Code source"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Basculer le mode sombre"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Préface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">À propos de l’auteur</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie I: Géologie minière</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C01/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Rapport Technique NI 43-101 et Loi sur les mines</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C02/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aspect économique</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C03/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Théorie de Gy et contrôle qualité</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C04/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Traitement et analyse statistique des données de forage</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C05/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Méthodes déterministes d’estimation des ressources</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Partie II: Géostatistique linéaire</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C06/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction à la géostatistique</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C07/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Variogramme</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C08/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Variance de blocs, de dispersion et d’estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C09/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Krigeage</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie III: Géostatistique non-linéaire</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C10/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Géostatistique multivariable</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C11/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Krigeage d’indicatrices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C12/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable continue</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C13/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable catégorielle</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie IV: Exercices et examens</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/exercices/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Recueil d’exercices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/examens/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Anciens examens</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Références</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Annexes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Algèbre linéaire : vecteurs et plans</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Probabilités &amp; statistiques</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-c.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Table de la loi normale centrée-réduite</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Abaques - Variances de dispersion</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-e.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Abaques - Variances d’estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Notation mathématique</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">9.1</span> Introduction</a>
+  <ul class="collapse">
+  <li><a href="#principales-formes-de-krigeage" id="toc-principales-formes-de-krigeage" class="nav-link" data-scroll-target="#principales-formes-de-krigeage">Principales formes de krigeage</a></li>
+  <li><a href="#cadre-du-chapitre" id="toc-cadre-du-chapitre" class="nav-link" data-scroll-target="#cadre-du-chapitre">Cadre du chapitre</a></li>
+  <li><a href="#étapes-du-krigeage" id="toc-étapes-du-krigeage" class="nav-link" data-scroll-target="#étapes-du-krigeage">Étapes du krigeage</a></li>
+  </ul></li>
+  <li><a href="#krigeage-simple" id="toc-krigeage-simple" class="nav-link" data-scroll-target="#krigeage-simple"><span class="header-section-number">9.2</span> Krigeage simple</a>
+  <ul class="collapse">
+  <li><a href="#condition-de-non-biais" id="toc-condition-de-non-biais" class="nav-link" data-scroll-target="#condition-de-non-biais">Condition de non-biais</a></li>
+  <li><a href="#dérivation-du-système-de-krigeage-simple" id="toc-dérivation-du-système-de-krigeage-simple" class="nav-link" data-scroll-target="#dérivation-du-système-de-krigeage-simple">Dérivation du système de krigeage simple</a></li>
+  <li><a href="#variance-de-krigeage-simple" id="toc-variance-de-krigeage-simple" class="nav-link" data-scroll-target="#variance-de-krigeage-simple">Variance de krigeage simple</a></li>
+  <li><a href="#comportement-loin-des-données" id="toc-comportement-loin-des-données" class="nav-link" data-scroll-target="#comportement-loin-des-données">Comportement loin des données</a></li>
+  <li><a href="#forme-matricielle" id="toc-forme-matricielle" class="nav-link" data-scroll-target="#forme-matricielle">Forme matricielle</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-9.1-krigeage-simple-ks" id="toc-atelier-interactif-9.1-krigeage-simple-ks" class="nav-link" data-scroll-target="#atelier-interactif-9.1-krigeage-simple-ks">🧮 Atelier interactif 9.1 — Krigeage simple (KS)</a></li>
+  <li><a href="#krigeage-ordinaire" id="toc-krigeage-ordinaire" class="nav-link" data-scroll-target="#krigeage-ordinaire"><span class="header-section-number">9.3</span> Krigeage ordinaire</a>
+  <ul class="collapse">
+  <li><a href="#construction-de-lestimateur" id="toc-construction-de-lestimateur" class="nav-link" data-scroll-target="#construction-de-lestimateur">Construction de l’estimateur</a></li>
+  <li><a href="#condition-de-non-biais-1" id="toc-condition-de-non-biais-1" class="nav-link" data-scroll-target="#condition-de-non-biais-1">Condition de non-biais</a></li>
+  <li><a href="#dérivation-du-système-par-la-méthode-de-lagrange" id="toc-dérivation-du-système-par-la-méthode-de-lagrange" class="nav-link" data-scroll-target="#dérivation-du-système-par-la-méthode-de-lagrange">Dérivation du système par la méthode de Lagrange</a></li>
+  <li><a href="#variance-de-krigeage-ordinaire" id="toc-variance-de-krigeage-ordinaire" class="nav-link" data-scroll-target="#variance-de-krigeage-ordinaire">Variance de krigeage ordinaire</a></li>
+  <li><a href="#formulation-en-termes-de-variogramme" id="toc-formulation-en-termes-de-variogramme" class="nav-link" data-scroll-target="#formulation-en-termes-de-variogramme">Formulation en termes de variogramme</a></li>
+  <li><a href="#forme-matricielle-1" id="toc-forme-matricielle-1" class="nav-link" data-scroll-target="#forme-matricielle-1">Forme matricielle</a></li>
+  <li><a href="#krigeage-simple-ou-ordinaire" id="toc-krigeage-simple-ou-ordinaire" class="nav-link" data-scroll-target="#krigeage-simple-ou-ordinaire">Krigeage simple ou ordinaire?</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-9.2-krigeage-ordinaire-ko" id="toc-atelier-interactif-9.2-krigeage-ordinaire-ko" class="nav-link" data-scroll-target="#atelier-interactif-9.2-krigeage-ordinaire-ko">🧮 Atelier interactif 9.2 — Krigeage ordinaire (KO)</a>
+  <ul class="collapse">
+  <li><a href="#exemple-de-construction-dun-système-de-krigeage-simple-et-ordinaire" id="toc-exemple-de-construction-dun-système-de-krigeage-simple-et-ordinaire" class="nav-link" data-scroll-target="#exemple-de-construction-dun-système-de-krigeage-simple-et-ordinaire">Exemple de construction d’un système de krigeage simple et ordinaire</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-9.3-système-de-krigeage-exemple-numérique" id="toc-atelier-interactif-9.3-système-de-krigeage-exemple-numérique" class="nav-link" data-scroll-target="#atelier-interactif-9.3-système-de-krigeage-exemple-numérique">🧮 Atelier interactif 9.3 — Système de krigeage (exemple numérique)</a></li>
+  <li><a href="#krigeage-de-bloc" id="toc-krigeage-de-bloc" class="nav-link" data-scroll-target="#krigeage-de-bloc"><span class="header-section-number">9.4</span> Krigeage de bloc</a>
+  <ul class="collapse">
+  <li><a href="#effet-de-régression" id="toc-effet-de-régression" class="nav-link" data-scroll-target="#effet-de-régression">Effet de régression</a></li>
+  <li><a href="#estimation-dun-bloc" id="toc-estimation-dun-bloc" class="nav-link" data-scroll-target="#estimation-dun-bloc">Estimation d’un bloc</a></li>
+  <li><a href="#krigeage-simple-et-ordinaire-de-bloc" id="toc-krigeage-simple-et-ordinaire-de-bloc" class="nav-link" data-scroll-target="#krigeage-simple-et-ordinaire-de-bloc">Krigeage simple et ordinaire de bloc</a></li>
+  <li><a href="#formulation-avec-le-variogramme" id="toc-formulation-avec-le-variogramme" class="nav-link" data-scroll-target="#formulation-avec-le-variogramme">Formulation avec le variogramme</a></li>
+  <li><a href="#assemblage-des-estimations" id="toc-assemblage-des-estimations" class="nav-link" data-scroll-target="#assemblage-des-estimations">Assemblage des estimations</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-9.4-krigeage-de-bloc-vs-ponctuel" id="toc-atelier-interactif-9.4-krigeage-de-bloc-vs-ponctuel" class="nav-link" data-scroll-target="#atelier-interactif-9.4-krigeage-de-bloc-vs-ponctuel">🧮 Atelier interactif 9.4 — Krigeage de bloc vs ponctuel</a></li>
+  <li><a href="#sélection-du-voisinage" id="toc-sélection-du-voisinage" class="nav-link" data-scroll-target="#sélection-du-voisinage"><span class="header-section-number">9.5</span> Sélection du voisinage</a>
+  <ul class="collapse">
+  <li><a href="#voisinage-global-et-voisinage-local" id="toc-voisinage-global-et-voisinage-local" class="nav-link" data-scroll-target="#voisinage-global-et-voisinage-local">Voisinage global et voisinage local</a></li>
+  <li><a href="#paramètres-du-voisinage" id="toc-paramètres-du-voisinage" class="nav-link" data-scroll-target="#paramètres-du-voisinage">Paramètres du voisinage</a></li>
+  <li><a href="#conséquences-du-voisinage-local" id="toc-conséquences-du-voisinage-local" class="nav-link" data-scroll-target="#conséquences-du-voisinage-local">Conséquences du voisinage local</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-9.5-sélection-du-voisinage-et-effet-décran" id="toc-atelier-interactif-9.5-sélection-du-voisinage-et-effet-décran" class="nav-link" data-scroll-target="#atelier-interactif-9.5-sélection-du-voisinage-et-effet-décran">🧮 Atelier interactif 9.5 — Sélection du voisinage et effet d’écran</a>
+  <ul class="collapse">
+  <li><a href="#validation-croisée" id="toc-validation-croisée" class="nav-link" data-scroll-target="#validation-croisée">Validation croisée</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-9.6-validation-croisée" id="toc-atelier-interactif-9.6-validation-croisée" class="nav-link" data-scroll-target="#atelier-interactif-9.6-validation-croisée">🧮 Atelier interactif 9.6 — Validation croisée</a></li>
+  <li><a href="#propriétés-du-krigeage" id="toc-propriétés-du-krigeage" class="nav-link" data-scroll-target="#propriétés-du-krigeage"><span class="header-section-number">9.6</span> Propriétés du krigeage</a>
+  <ul class="collapse">
+  <li><a href="#optimalité-linéarité-absence-de-biais-et-variance-minimale" id="toc-optimalité-linéarité-absence-de-biais-et-variance-minimale" class="nav-link" data-scroll-target="#optimalité-linéarité-absence-de-biais-et-variance-minimale">Optimalité : linéarité, absence de biais et variance minimale</a></li>
+  <li><a href="#interpolation-exacte" id="toc-interpolation-exacte" class="nav-link" data-scroll-target="#interpolation-exacte">Interpolation exacte</a></li>
+  <li><a href="#effet-décran" id="toc-effet-décran" class="nav-link" data-scroll-target="#effet-décran">Effet d’écran</a></li>
+  <li><a href="#prise-en-compte-de-la-géométrie" id="toc-prise-en-compte-de-la-géométrie" class="nav-link" data-scroll-target="#prise-en-compte-de-la-géométrie">Prise en compte de la géométrie</a></li>
+  <li><a href="#influence-de-la-continuité-spatiale" id="toc-influence-de-la-continuité-spatiale" class="nav-link" data-scroll-target="#influence-de-la-continuité-spatiale">Influence de la continuité spatiale</a></li>
+  <li><a href="#effet-de-lissage" id="toc-effet-de-lissage" class="nav-link" data-scroll-target="#effet-de-lissage">Effet de lissage</a></li>
+  <li><a href="#biais-conditionnel" id="toc-biais-conditionnel" class="nav-link" data-scroll-target="#biais-conditionnel">Biais conditionnel</a></li>
+  <li><a href="#transitivité" id="toc-transitivité" class="nav-link" data-scroll-target="#transitivité">Transitivité</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-9.7-effet-de-lissage-et-biais-conditionnel" id="toc-atelier-interactif-9.7-effet-de-lissage-et-biais-conditionnel" class="nav-link" data-scroll-target="#atelier-interactif-9.7-effet-de-lissage-et-biais-conditionnel">🧮 Atelier interactif 9.7 — Effet de lissage et biais conditionnel</a></li>
+  <li><a href="#krigeage-universel" id="toc-krigeage-universel" class="nav-link" data-scroll-target="#krigeage-universel"><span class="header-section-number">9.7</span> Krigeage universel</a>
+  <ul class="collapse">
+  <li><a href="#modèle-avec-dérive" id="toc-modèle-avec-dérive" class="nav-link" data-scroll-target="#modèle-avec-dérive">Modèle avec dérive</a></li>
+  <li><a href="#exemples-de-fonctions-de-dérive" id="toc-exemples-de-fonctions-de-dérive" class="nav-link" data-scroll-target="#exemples-de-fonctions-de-dérive">Exemples de fonctions de dérive</a></li>
+  <li><a href="#condition-de-non-biais-2" id="toc-condition-de-non-biais-2" class="nav-link" data-scroll-target="#condition-de-non-biais-2">Condition de non-biais</a></li>
+  <li><a href="#système-de-krigeage-universel" id="toc-système-de-krigeage-universel" class="nav-link" data-scroll-target="#système-de-krigeage-universel">Système de krigeage universel</a></li>
+  <li><a href="#variance-de-krigeage-universel" id="toc-variance-de-krigeage-universel" class="nav-link" data-scroll-target="#variance-de-krigeage-universel">Variance de krigeage universel</a></li>
+  <li><a href="#forme-matricielle-2" id="toc-forme-matricielle-2" class="nav-link" data-scroll-target="#forme-matricielle-2">Forme matricielle</a></li>
+  <li><a href="#difficultés-pratiques" id="toc-difficultés-pratiques" class="nav-link" data-scroll-target="#difficultés-pratiques">Difficultés pratiques</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-9.8-krigeage-universel-ku" id="toc-atelier-interactif-9.8-krigeage-universel-ku" class="nav-link" data-scroll-target="#atelier-interactif-9.8-krigeage-universel-ku">🧮 Atelier interactif 9.8 — Krigeage universel (KU)</a></li>
+  <li><a href="#krigeage-avec-dérive-externe" id="toc-krigeage-avec-dérive-externe" class="nav-link" data-scroll-target="#krigeage-avec-dérive-externe"><span class="header-section-number">9.8</span> Krigeage avec dérive externe</a>
+  <ul class="collapse">
+  <li><a href="#principe" id="toc-principe" class="nav-link" data-scroll-target="#principe">Principe</a></li>
+  <li><a href="#exemples-de-variables-auxiliaires" id="toc-exemples-de-variables-auxiliaires" class="nav-link" data-scroll-target="#exemples-de-variables-auxiliaires">Exemples de variables auxiliaires</a></li>
+  <li><a href="#conditions-de-non-biais" id="toc-conditions-de-non-biais" class="nav-link" data-scroll-target="#conditions-de-non-biais">Conditions de non-biais</a></li>
+  <li><a href="#système-de-krigeage-avec-dérive-externe" id="toc-système-de-krigeage-avec-dérive-externe" class="nav-link" data-scroll-target="#système-de-krigeage-avec-dérive-externe">Système de krigeage avec dérive externe</a></li>
+  <li><a href="#variance-de-krigeage" id="toc-variance-de-krigeage" class="nav-link" data-scroll-target="#variance-de-krigeage">Variance de krigeage</a></li>
+  <li><a href="#forme-matricielle-3" id="toc-forme-matricielle-3" class="nav-link" data-scroll-target="#forme-matricielle-3">Forme matricielle</a></li>
+  <li><a href="#krigeage-universel-ou-dérive-externe" id="toc-krigeage-universel-ou-dérive-externe" class="nav-link" data-scroll-target="#krigeage-universel-ou-dérive-externe">Krigeage universel ou dérive externe?</a></li>
+  <li><a href="#considérations-pratiques" id="toc-considérations-pratiques" class="nav-link" data-scroll-target="#considérations-pratiques">Considérations pratiques</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-9.9-krigeage-avec-dérive-externe-ked" id="toc-atelier-interactif-9.9-krigeage-avec-dérive-externe-ked" class="nav-link" data-scroll-target="#atelier-interactif-9.9-krigeage-avec-dérive-externe-ked">🧮 Atelier interactif 9.9 — Krigeage avec dérive externe (KED)</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Danlauz/glq3401-3651/edit/main/chapters/C09/index.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/Danlauz/glq3401-3651/issues/new" class="toc-action"><i class="bi empty"></i>Signaler un problème ou<br>formuler une suggestion</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/C06/index.html">Partie II: Géostatistique linéaire</a></li><li class="breadcrumb-item"><a href="../../chapters/C09/index.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Krigeage</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Krigeage</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Résumé</div>
+    <p>Ce chapitre est consacré au krigeage, une méthode permettant d’estimer une teneur inconnue à partir des données disponibles, en tenant compte non seulement de la distance entre les points, mais aussi de leur corrélation et leur redondance. Le krigeage simple et le krigeage ordinaire sont d’abord présentés, puis le krigeage de bloc. Le choix du voisinage est également abordé, puisqu’il peut avoir un effet important sur les estimations. Enfin, le krigeage universel et le krigeage avec dérive externe sont présentés pour traiter les situations où la moyenne varie dans l’espace. Des ateliers interactifs sont proposés pour illustrer les différentes méthodes de krigeage et leurs propriétés.</p>
+  </div>
+</div>
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Objectifs d’apprentissage
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Expliquer les différences entre krigeage simple, krigeage ordinaire et krigeage universel ;</p></li>
+<li><p>Dériver les équations du krigeage à partir du principe de minimisation de la variance d’estimation ;</p></li>
+<li><p>Construire et résoudre les systèmes de krigeage simple et ordinaire, calculer l’estimation et la variance de krigeage ;</p></li>
+<li><p>Formuler le krigeage de bloc et comprendre l’effet de régression ;</p></li>
+<li><p>Expliquer les principales propriétés du krigeage (interpolation exacte, effet d’écran, lissage, biais conditionnel) ;</p></li>
+<li><p>Utiliser et interpréter la validation croisée par krigeage pour évaluer la qualité du modèle de variogramme.</p></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Référence
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ce chapitre s’appuie principalement sur le livre suivant :</p>
+<p>Chilès, J., &amp; Delfiner, P. (2012). Geostatistics: Modeling Spatial Uncertainty. John Wiley &amp; Sons.</p>
+</div>
+</div>
+<section id="introduction" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">9.1</span> Introduction</h2>
+<p>Une estimation peut être construite comme une combinaison pondérée des données voisines. La difficulté consiste alors à choisir les poids. Une donnée proche de la cible est généralement informative, mais sa contribution dépend aussi de la continuité spatiale et de sa redondance avec les autres observations. Deux données très proches ne fournissent pas nécessairement deux informations indépendantes (<a href="#fig-c9-poids-ko" class="quarto-xref">Figure&nbsp;<span>9.1</span></a>).</p>
+<div id="fig-c9-poids-ko" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c9-poids-ko-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c9_01_poids_ko.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c9-poids-ko-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.1: Poids de krigeage ordinaire (variogramme sphérique isotrope, <span class="math inline">\(a=10\)</span>) : la somme des poids vaut 1 ; les données proches et non redondantes reçoivent le plus de poids.
+</figcaption>
+</figure>
+</div>
+<p>Le krigeage utilise le variogramme ou la covariance pour déterminer les poids. Ceux-ci sont calculés de manière à satisfaire une condition d’absence de biais et à minimiser la variance de l’erreur d’estimation. Le krigeage est ainsi souvent présenté comme le meilleur estimateur linéaire sans biais, sous les hypothèses du modèle retenu.</p>
+<p>Il fournit deux résultats :</p>
+<ul>
+<li>une estimation de la valeur ponctuelle ou de la teneur moyenne d’un bloc;</li>
+<li>une variance de krigeage, qui décrit la précision théorique associée à la configuration des données et au modèle spatial.</li>
+</ul>
+<section id="principales-formes-de-krigeage" class="level3">
+<h3 class="anchored" data-anchor-id="principales-formes-de-krigeage">Principales formes de krigeage</h3>
+<p>Les variantes du krigeage se distinguent principalement par le modèle attribué à la moyenne.</p>
+<ul>
+<li><p><strong>Krigeage simple (KS)</strong> : la moyenne est connue et constante.</p></li>
+<li><p><strong>Krigeage ordinaire (KO)</strong> : la moyenne est inconnue, mais supposée constante dans le voisinage de l’estimation.</p></li>
+<li><p><strong>Krigeage universel (KU)</strong> : la moyenne varie dans l’espace selon une fonction des coordonnées.</p></li>
+<li><p><strong>Krigeage avec dérive externe (KED)</strong> : la moyenne varie en fonction d’une ou de plusieurs variables auxiliaires.</p></li>
+</ul>
+<p>Dans le krigeage universel et le krigeage avec dérive externe, la moyenne varie selon la localisation des données. Le variogramme décrit alors la continuité spatiale des résidus, qui ont, de facto, une moyenne nulle, autour de la tendance.</p>
+</section>
+<section id="cadre-du-chapitre" class="level3">
+<h3 class="anchored" data-anchor-id="cadre-du-chapitre">Cadre du chapitre</h3>
+<p>Ce chapitre présente d’abord le krigeage simple et le krigeage ordinaire, qui permettent d’établir les principes fondamentaux de la méthode. Le krigeage de bloc, le choix du voisinage, le krigeage universel et le krigeage avec dérive externe sont ensuite abordés.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Forme de krigeage</th>
+<th style="text-align: left;">Modèle de moyenne</th>
+<th style="text-align: left;">Structure spatiale requise</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Krigeage simple (KS)</td>
+<td style="text-align: left;">Connue et constante</td>
+<td style="text-align: left;">Covariance ou variogramme avec variance finie</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Krigeage ordinaire (KO)</td>
+<td style="text-align: left;">Inconnue et constante localement</td>
+<td style="text-align: left;">Variogramme ou covariance</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Krigeage universel (KU)</td>
+<td style="text-align: left;">Fonction des coordonnées</td>
+<td style="text-align: left;">Variogramme ou covariance des résidus</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Krigeage avec dérive externe (KED)</td>
+<td style="text-align: left;">Fonction de variables auxiliaires</td>
+<td style="text-align: left;">Variogramme ou covariance des résidus</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="étapes-du-krigeage" class="level3">
+<h3 class="anchored" data-anchor-id="étapes-du-krigeage">Étapes du krigeage</h3>
+<p>L’analyse de la continuité spatiale et l’ajustement d’un modèle de variogramme ont été traités précédemment; le krigeage s’appuie sur ce modèle pour déterminer les poids et réaliser l’estimation. La démarche complète comprend généralement les étapes suivantes :</p>
+<ol type="1">
+<li>calculer le variogramme expérimental;</li>
+<li>ajuster un modèle de variogramme admissible;</li>
+<li>définir le point ou le bloc à estimer;</li>
+<li>choisir le type de krigeage et le voisinage;</li>
+<li>construire et résoudre le système de krigeage pour obtenir les poids;</li>
+<li>calculer l’estimation et la variance de krigeage;</li>
+<li>valider le modèle et les paramètres, par exemple par validation croisée.</li>
+</ol>
+<p>Les deux premières étapes étant acquises, ce chapitre porte sur la construction du système de krigeage, le calcul des poids, l’estimation et l’interprétation de la variance de krigeage.</p>
+</section>
+</section>
+<section id="krigeage-simple" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="krigeage-simple"><span class="header-section-number">9.2</span> Krigeage simple</h2>
+<p>Le krigeage simple s’applique à une fonction aléatoire <span class="math inline">\(Z(\mathbf{x})\)</span> stationnaire d’ordre deux, dont la moyenne et la fonction de covariance <span class="math inline">\(C(\mathbf{h})\)</span> sont supposées connues. On décompose la variable en une moyenne constante et un résidu :</p>
+<p><span class="math display">\[
+Z(\mathbf{x}) = m + Y(\mathbf{x})
+\]</span></p>
+<p>où <span class="math inline">\(m = \mathbb{E}[Z(\mathbf{x})]\)</span> est une constante et <span class="math inline">\(Y(\mathbf{x})\)</span> un résidu stationnaire de moyenne nulle. Comme le retrait d’une constante ne modifie pas la covariance, <span class="math inline">\(C(\mathbf{h})\)</span> est aussi la covaraince du résidu <span class="math inline">\(Y\)</span> (<span class="math inline">\(C_Z(\mathbf{h})\)</span> = <span class="math inline">\(C_Y(\mathbf{h})\)</span>), et la variance a priori de la variable vaut <span class="math inline">\(\sigma^2 = C(\mathbf{0})\)</span>.</p>
+<p>Dire que la moyenne <span class="math inline">\(m\)</span> est « connue » ne signifie pas nécessairement que sa valeur réelle est connue avec certitude. Il s’agit plutôt d’une hypothèse de modélisation : <span class="math inline">\(m\)</span> est fixée à partir d’informations extérieures, par exemple d’une longue série de campagnes d’échantillonnage ou d’un très grand nombre de données. L’estimation porte alors uniquement sur les écarts par rapport à cette moyenne.</p>
+<p>Cette hypothèse est forte et rarement vérifiée en pratique. Le krigeage ordinaire, qui ne suppose pas la connaissance de la moyenne, lui est donc souvent préféré pour l’estimation. Le krigeage simple demeure néanmoins particulièrement utile en simulation géostatistique, notamment lorsque la variable simulée suit une loi de distribution préalablement définie, dont la moyenne est fixée. C’est notamment le cas des simulations gaussiennes, pour lesquelles la variable transformée est généralement centrée et possède donc une moyenne connue, souvent égale à zéro.</p>
+<p>Une fois <span class="math inline">\(m\)</span> fixée, les résidus <span class="math inline">\(Y_i = Z_i - m\)</span> sont connus aux points de données, et seul le résidu <span class="math inline">\(Y_0 = Z_0 - m\)</span> à la cible reste à estimer. On estime alors la valeur inconnue <span class="math inline">\(Z_0 = Z(\mathbf{x}_0)\)</span> en ajoutant à la moyenne le résidu krigé :</p>
+<p><span class="math display">\[
+Z_0^* = m + \sum_{i=1}^{n} \lambda_i \, Y_i = m + \sum_{i=1}^{n} \lambda_i \, (Z_i - m)
+\]</span></p>
+<p>où <span class="math inline">\(Z_i = Z(\mathbf{x}_i)\)</span> est la valeur observée au point <span class="math inline">\(\mathbf{x}_i\)</span> et <span class="math inline">\(\lambda_i\)</span> son poids. Cette forme est sans biais quels que soient les poids, comme on le vérifie ci-dessous; les poids sont donc entièrement déterminés par la minimisation de la variance de l’erreur d’estimation, <span class="math inline">\(\operatorname{Var}(e)=\operatorname{Var}(Z_0 - Z_0^*)\)</span>, définie au chapitre précédent.</p>
+<section id="condition-de-non-biais" class="level3">
+<h3 class="anchored" data-anchor-id="condition-de-non-biais">Condition de non-biais</h3>
+<p>En prenant l’espérance, et comme <span class="math inline">\(\mathbb{E}[Z_i] = m\)</span> :</p>
+<p><span class="math display">\[
+\mathbb{E}[Z_0^*] = \mathbb{E}\!\left[m + \sum_{i=1}^{n} \lambda_i (Z_i - m)\right] = m + \sum_{i=1}^{n} \lambda_i \big(\mathbb{E}[Z_i] - m\big) = m + \sum_{i=1}^{n} \lambda_i (m - m) = m = \mathbb{E}[Z_0]
+\]</span></p>
+<p>L’estimateur est donc sans biais quels que soient les poids <span class="math inline">\(\lambda_i\)</span>. Aucune contrainte sur la somme des poids n’est nécessaire à cause que la moyenne est connue. Comme aucune contrainte n’est nécessaire sur les poids pour s,tisfaire la contrainte de non-bais, il est apossible dd’avoir des poisd de krigeage qui seront négatifs et voir supérieur à 1. Cela peut poser problème dans l,estimation des</p>
+</section>
+<section id="dérivation-du-système-de-krigeage-simple" class="level3">
+<h3 class="anchored" data-anchor-id="dérivation-du-système-de-krigeage-simple">Dérivation du système de krigeage simple</h3>
+<p>On cherche les poids <span class="math inline">\(\lambda_i\)</span> qui minimisent la variance de l’erreur d’estimation :</p>
+<p><span class="math display">\[
+\operatorname{Var}(e) = \operatorname{Var}(Z_0 - Z_0^*)
+\]</span></p>
+<p>En remplaçant l’estimateur <span class="math inline">\(Z_0^* = m + \sum_{i=1}^{n} \lambda_i (Z_i - m)\)</span>, l’erreur devient</p>
+<p><span class="math display">\[
+Z_0 - Z_0^* = Z_0 - m - \sum_{i=1}^{n} \lambda_i (Z_i - m) = (Z_0 - m) - \sum_{i=1}^{n} \lambda_i (Z_i - m).
+\]</span></p>
+<p>Chaque terme se regroupe avec la moyenne pour former un résidu centré, <span class="math inline">\(Y_0 = Z_0 - m\)</span> et <span class="math inline">\(Y_i = Z_i - m\)</span> :</p>
+<p><span class="math display">\[
+Z_0 - Z_0^* = Y_0 - \sum_{i=1}^{n} \lambda_i Y_i.
+\]</span></p>
+<p>La moyenne <span class="math inline">\(m\)</span> disparaît de l’erreur : elle n’y intervient que par l’intermédiaire des résidus. Comme la variance est insensible à l’ajout d’une constante et que les résidus ont la même covariance que <span class="math inline">\(Z\)</span>, la variance d’estimation et les poids ne dépendent pas de <span class="math inline">\(m\)</span>. C’est précisément ce qui permet de travailler avec la variable centrée.</p>
+<p>Pour développer cette variance, on applique la règle de la variance d’une différence, <span class="math inline">\(\operatorname{Var}(A - B) = \operatorname{Var}(A) + \operatorname{Var}(B) - 2\operatorname{Cov}(A, B)\)</span>, avec <span class="math inline">\(A = Y_0\)</span> et <span class="math inline">\(B = \sum_{i=1}^{n} \lambda_i Y_i\)</span> :</p>
+<p><span class="math display">\[
+\operatorname{Var}(e) = \operatorname{Var}(Y_0) + \operatorname{Var}\!\left(\sum_{i=1}^{n} \lambda_i Y_i\right) - 2\,\operatorname{Cov}\!\left(Y_0,\ \sum_{i=1}^{n} \lambda_i Y_i\right).
+\]</span></p>
+<p>On traite les trois termes séparément. Le premier est la variance du résidu à la cible :</p>
+<p><span class="math display">\[
+\operatorname{Var}(Y_0) = C(\mathbf{0}).
+\]</span></p>
+<p>Le deuxième est la variance d’une combinaison linéaire. La covariance étant bilinéaire, on sort les poids et le produit des deux sommes devient une somme double :</p>
+<p><span class="math display">\[
+\operatorname{Var}\!\left(\sum_{i=1}^{n} \lambda_i Y_i\right)
+= \sum_{i=1}^{n} \sum_{j=1}^{n} \lambda_i \lambda_j \, \operatorname{Cov}(Y_i, Y_j)
+= \sum_{i=1}^{n} \sum_{j=1}^{n} \lambda_i \lambda_j \, C(\mathbf{x}_i - \mathbf{x}_j).
+\]</span></p>
+<p>Le troisième reli les observations au point à estimer :</p>
+<p><span class="math display">\[
+\operatorname{Cov}\!\left(Y_0,\ \sum_{i=1}^{n} \lambda_i Y_i\right)
+= \sum_{i=1}^{n} \lambda_i \, \operatorname{Cov}(Y_0, Y_i)
+= \sum_{i=1}^{n} \lambda_i \, C(\mathbf{x}_i - \mathbf{x}_0).
+\]</span></p>
+<p>Par simplicité de notation, on a que <span class="math inline">\(\operatorname{Cov}(Y_i, Y_j) = \operatorname{Cov}(Z_i, Z_j) = C(\mathbf{x}_i - \mathbf{x}_j) = C_{ij}\)</span>, <span class="math inline">\(\operatorname{Cov}(Y_0, Y_i) = \operatorname{Cov}(Z_0, Z_i) = C(\mathbf{x}_i - \mathbf{x}_0) = C_{i0}\)</span> et <span class="math inline">\(\operatorname{Var}(Y_0) = \operatorname{Var}(Z_0) = C(\mathbf{0})\)</span>. En reportant les trois termes :</p>
+<p><span class="math display">\[
+\operatorname{Var}(e) = C(\mathbf{0}) + \sum_{i=1}^{n} \sum_{j=1}^{n} \lambda_i \lambda_j \, C_{ij} - 2 \sum_{i=1}^{n} \lambda_i \, C_{i0}.
+\]</span></p>
+<p>Cette variance est une fonction quadratique des poids; on la minimise en annulant ses dérivées partielles par rapport à chaque <span class="math inline">\(\lambda_k\)</span>. Dans la somme double, l’indice <span class="math inline">\(k\)</span> apparaît deux fois — une fois comme <span class="math inline">\(i\)</span>, une fois comme <span class="math inline">\(j\)</span> — et la symétrie <span class="math inline">\(C_{kj} = C_{jk}\)</span> réunit ces deux contributions, d’où le facteur 2 :</p>
+<p><span class="math display">\[
+\frac{\partial \sigma_K^2}{\partial \lambda_k} = 2 \sum_{j=1}^{n} \lambda_j \, C_{kj} - 2 \, C_{k0} = 0.
+\]</span></p>
+<p>En divisant par 2, on obtient une équation par point <span class="math inline">\(k\)</span>, soit le système de krigeage simple :</p>
+<p><span class="math display">\[
+\sum_{j=1}^{n} \lambda_j \, C_{kj} = C_{k0}, \quad k = 1, \dots, n.
+\]</span></p>
+<p>Le système comporte <span class="math inline">\(n\)</span> équations, une pour chaque donnée observée, et <span class="math inline">\(n\)</span> inconnues : les poids de krigeage. Comme le modèle de covariance est admissible et que les points de données sont distincts, la matrice du système est définie positive, donc inversible : le système admet une solution unique. Cette même propriété garantit que la variance <span class="math inline">\(\sigma_K^2\)</span>, fonction quadratique des poids, est strictement convexe; la solution du système en est donc bien le minimum.</p>
+</section>
+<section id="variance-de-krigeage-simple" class="level3">
+<h3 class="anchored" data-anchor-id="variance-de-krigeage-simple">Variance de krigeage simple</h3>
+<p>En reportant la solution dans l’expression de <span class="math inline">\(\operatorname{Var}(e)\)</span>, on obtient une forme simplifié de la varaince d’estimation nommé la variance de krigeage simple (<span class="math inline">\(\sigma_{SK}^2\)</span>), c’est-à-dire la valeur minimale de la variance d’estimation :</p>
+<p><span class="math display">\[
+\sigma_{SK}^2 = \operatorname{Var}(e) = C(\mathbf{0}) - \sum_{i=1}^n \lambda_i \, C_{i0}
+\]</span></p>
+<p>Elle part de la variance a priori <span class="math inline">\(\sigma^2 = C(\mathbf{0})\)</span> et lui retranche l’information apportée par les données pondérées. Plus les données sont proches de la cible et bien réparties autour d’elle, plus la réduction de la variance est forte.</p>
+</section>
+<section id="comportement-loin-des-données" class="level3">
+<h3 class="anchored" data-anchor-id="comportement-loin-des-données">Comportement loin des données</h3>
+<p>Lorsque la cible est éloignée de toutes les données au-delà de la portée, les covariances <span class="math inline">\(C_{i0}\)</span> sont nulles (modèle à portée finie, comme le sphérique) ou négligeables (modèle à portée effective, comme l’exponentiel ou le gaussien). Le système donne alors des poids nuls, <span class="math inline">\(\lambda_i \to 0 \forall i=1,...,n\)</span>, et :</p>
+<ul>
+<li><span class="math inline">\(Z_0^* \to m\)</span> : l’estimation revient à la moyenne;</li>
+<li><span class="math inline">\(\sigma_{SK}^2 \to \sigma^2\)</span> : la variance de krigeage tend vers la variance a priori.</li>
+</ul>
+<p>En l’absence d’information spatiale utile, le krigeage simple retourne donc la moyenne, avec une incertitude maximale.</p>
+</section>
+<section id="forme-matricielle" class="level3">
+<h3 class="anchored" data-anchor-id="forme-matricielle">Forme matricielle</h3>
+<p>Le système de krigeage est un ensemble de <span class="math inline">\(n\)</span> équations linéaires en les poids; on peut donc l’écrire sous forme matricielle, <span class="math inline">\(\mathbf{C}\, \boldsymbol{\lambda} = \mathbf{c}\)</span> :</p>
+<p><span class="math display">\[
+\underbrace{\begin{bmatrix}
+C_{11} &amp; C_{12} &amp; C_{13} &amp; \cdots &amp; C_{1n} \\
+C_{21} &amp; C_{22} &amp; C_{23} &amp; \cdots &amp; C_{2n} \\
+C_{31} &amp; C_{32} &amp; C_{33} &amp; \cdots &amp; C_{3n} \\
+\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+C_{n1} &amp; C_{n2} &amp; C_{n3} &amp; \cdots &amp; C_{nn}
+\end{bmatrix}}_{\mathbf{C}}
+\underbrace{\begin{bmatrix}
+\lambda_1 \\ \lambda_2 \\ \lambda_3 \\ \vdots \\ \lambda_n
+\end{bmatrix}}_{\boldsymbol{\lambda}}
+=
+\underbrace{\begin{bmatrix}
+C_{10} \\ C_{20} \\ C_{30} \\ \vdots \\ C_{n0}
+\end{bmatrix}}_{\mathbf{c}}
+\]</span></p>
+<p>La matrice <span class="math inline">\(\mathbf{C}\)</span> rassemble les covariances entre les données, et le vecteur <span class="math inline">\(\mathbf{c}\)</span>, les covariances entre les données et le point à estimer. <span class="math inline">\(\mathbf{C}\)</span> est symétrique et définie positive dès que le modèle de covariance est valide et que les points d’échantillonnage sont distincts, la matrice <span class="math inline">\(\mathbf{C}\)</span> est donc inversible :</p>
+<p><span class="math display">\[
+\boldsymbol{\lambda} = \mathbf{C}^{-1} \mathbf{c}.
+\]</span></p>
+<p>La variance de krigeage s’écrit alors, sous forme matricielle,</p>
+<p><span class="math display">\[
+\sigma_{SK}^2 = C(\mathbf{0}) - \boldsymbol{\lambda}^\top \mathbf{c}.
+\]</span></p>
+</section>
+</section>
+<section id="atelier-interactif-9.1-krigeage-simple-ks" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-9.1-krigeage-simple-ks">🧮 Atelier interactif 9.1 — Krigeage simple (KS)</h2>
+<p>La moyenne <span class="math inline">\(m\)</span> est supposée connue. Faites varier <span class="math inline">\(m\)</span>, la portée et l’effet de pépite, puis déplacez la cible. À mesure qu’elle s’éloigne des données, l’estimation retombe sur la moyenne (<span class="math inline">\(Z_0^* \to m\)</span>) et la variance remonte jusqu’au palier (<span class="math inline">\(\sigma_{SK}^2 \to C(\mathbf{0})\)</span>). Les poids <span class="math inline">\(\lambda_i\)</span>, eux, ne sont soumis à aucune contrainte.</p>
+<div class="geostat-widget" data-widget="c09_krigeage_simple">
+  <div class="gw-placeholder">Chargement du widget (krigeage simple)…</div>
+</div>
+</section>
+<section id="krigeage-ordinaire" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="krigeage-ordinaire"><span class="header-section-number">9.3</span> Krigeage ordinaire</h2>
+<p>Le krigeage ordinaire s’applique lorsque la moyenne <span class="math inline">\(m\)</span> est inconnue, mais qu’on peut la supposer constante dans le voisinage du point à estimer. C’est l’hypothèse la plus réaliste dans la plupart des situations, ce qui fait du krigeage ordinaire la variante de loin la plus utilisée en pratique.</p>
+<p>Ne pas connaître <span class="math inline">\(m\)</span> modifie la construction de l’estimateur. Dans le krigeage simple, on retranchait une moyenne connue pour travailler sur les résidus; ici, cette moyenne n’est plus disponible. On la remplace par une contrainte sur les poids, qui impose à l’estimateur de rester sans biais quelle que soit la valeur inconnue de la moyenne.</p>
+<section id="construction-de-lestimateur" class="level3">
+<h3 class="anchored" data-anchor-id="construction-de-lestimateur">Construction de l’estimateur</h3>
+<p>L’estimateur est une combinaison linéaire des données :</p>
+<p><span class="math display">\[
+Z_0^* = \sum_{i=1}^n \lambda_i \, Z_i
+\]</span></p>
+<p>où <span class="math inline">\(Z_i = Z(\mathbf{x}_i)\)</span> est la valeur observée au point <span class="math inline">\(\mathbf{x}_i\)</span> et <span class="math inline">\(\lambda_i\)</span> son poids.</p>
+</section>
+<section id="condition-de-non-biais-1" class="level3">
+<h3 class="anchored" data-anchor-id="condition-de-non-biais-1">Condition de non-biais</h3>
+<p>Pour que l’estimateur soit sans biais, son espérance doit être égale à celle de la variable à estimer. Sous stationnarité, toutes les données ont la même moyenne <span class="math inline">\(m\)</span> :</p>
+<p><span class="math display">\[
+\mathbb{E}[Z_0^*] = \sum_{i=1}^n \lambda_i \, \mathbb{E}[Z_i] = m \sum_{i=1}^n \lambda_i
+\]</span></p>
+<p>Cette espérance doit valoir <span class="math inline">\(\mathbb{E}[Z_0] = m\)</span>. En posant <span class="math inline">\(\sum_{i=1}^n \lambda_i = 1\)</span>, on obtient bien que <span class="math inline">\(\mathbb{E}[Z_0^*] = m\)</span>.</p>
+<blockquote class="blockquote">
+<p><strong>Remarque.</strong> Sous la contrainte <span class="math inline">\(\sum_i \lambda_i = 1\)</span>, on peut réécrire l’estimateur sous une forme semblable au krigeage simple : <span class="math display">\[Z_0^* = m + \sum_{i=1}^n \lambda_i (Z_i - m)\]</span> le terme en <span class="math inline">\(m\)</span> s’annule grâce à la contrainte. Le krigeage ordinaire agit donc comme si les données étaient corrigées autour d’une moyenne locale, sans qu’il faille fixer cette moyenne à l’avance.</p>
+</blockquote>
+</section>
+<section id="dérivation-du-système-par-la-méthode-de-lagrange" class="level3">
+<h3 class="anchored" data-anchor-id="dérivation-du-système-par-la-méthode-de-lagrange">Dérivation du système par la méthode de Lagrange</h3>
+<p>On cherche les poids <span class="math inline">\(\lambda_i\)</span> qui minimisent la variance de l’erreur d’estimation,</p>
+<p><span class="math display">\[
+\operatorname{Var}(e) = \operatorname{Var}\!\left( Z_0 - \sum_{i=1}^n \lambda_i \, Z_i \right),
+\]</span></p>
+<p>cette fois sous la contrainte <span class="math inline">\(\sum_{i=1}^n \lambda_i = 1\)</span>. En développant la variance comme en krigeage simple, on retrouve la même forme quadratique des poids :</p>
+<p><span class="math display">\[
+\operatorname{Var}(e) = C(\mathbf{0}) + \sum_{i=1}^n \sum_{j=1}^n \lambda_i \lambda_j \, C_{ij} - 2 \sum_{i=1}^n \lambda_i \, C_{i0}
+\]</span></p>
+<p>Cependant, cette forme ne tient pas compte de la contrainte de non-baise sur les poids. Il faut donc ajouter un terme dans l’équation pour s’assurer que les poids soient de somme unitaire. Ainsi, on introduit un multiplicateur de Lagrange <span class="math inline">\(\nu\)</span> et la fonctionnelle</p>
+<p><span class="math display">\[
+\mathcal{L}(\lambda_1, \dots, \lambda_n, \nu) = \operatorname{Var}(e) + 2\nu \left( \sum_{i=1}^n \lambda_i - 1 \right),
+\]</span></p>
+<p>le facteur 2 devant <span class="math inline">\(\nu\)</span> étant une convention qui allège les expressions finales. On annule les dérivées partielles par rapport à chaque poids <span class="math inline">\(\lambda_k\)</span>. Rappel que le facteur 2 du terme croisé vient, comme dans le cas du krigeage simple, de la symétrie <span class="math inline">\(C_{kj} = C_{jk}\)</span> :</p>
+<p><span class="math display">\[
+\frac{\partial \mathcal{L}}{\partial \lambda_k} = 2 \sum_{j=1}^n \lambda_j \, C_{kj} + 2\nu - 2 \, C_{k0} = 0.
+\]</span></p>
+<p>La dérivée par rapport à <span class="math inline">\(\nu\)</span> redonne la contrainte et on obtient le système de krigeage ordinaire :</p>
+<p><span class="math display">\[
+\begin{cases}
+\displaystyle\sum_{j=1}^n \lambda_j \, C_{kj} + \nu = C_{k0}, &amp; k = 1, \dots, n \\[6pt]
+\displaystyle\sum_{j=1}^n \lambda_j = 1
+\end{cases}
+\]</span></p>
+<p>Il comporte <span class="math inline">\(n + 1\)</span> équations à <span class="math inline">\(n + 1\)</span> inconnues : les <span class="math inline">\(n\)</span> poids <span class="math inline">\(\lambda_1, \dots, \lambda_n\)</span> et le multiplicateur <span class="math inline">\(\nu\)</span>.</p>
+<p>Le système comporte <span class="math inline">\(n + 1\)</span> équations, une par donnée observée, plus celle du multiplicateur de Lagrange, et autant d’inconnues : les <span class="math inline">\(n\)</span> poids <span class="math inline">\(\lambda_1, \dots, \lambda_n\)</span> et le multiplicateur <span class="math inline">\(\nu\)</span>. Dès que le modèle de covariance est admissible et que les points de données sont distincts, la matrice bordée du système est inversible : le système admet une solution unique. Contrairement au krigeage simple, cette matrice n’est pas définie positive, à cause de la ligne et de la colonne de contrainte; c’est toutefois la restriction de la variance <span class="math inline">\(\sigma_K^2\)</span> au sous-espace des poids vérifiant <span class="math inline">\(\sum_i \lambda_i = 1\)</span> qui reste strictement convexe, ce qui garantit que la solution du système en est bien le minimum.</p>
+</section>
+<section id="variance-de-krigeage-ordinaire" class="level3">
+<h3 class="anchored" data-anchor-id="variance-de-krigeage-ordinaire">Variance de krigeage ordinaire</h3>
+<p>En reportant la solution dans l’expression de la variance, on obtient la variance de krigeage ordinaire :</p>
+<p><span class="math display">\[
+\sigma_{OK}^2 = C(\mathbf{0}) - \sum_{i=1}^n \lambda_i \, C_{i0}) - \nu
+\]</span></p>
+<p>Elle contient, par rapport au krigeage simple, un terme supplémentaire <span class="math inline">\(-\nu\)</span>. Comme le krigeage ordinaire subit une contrainte de plus, sa variance est, à configuration égale, supérieure ou égale à celle du krigeage simple (<span class="math inline">\(\sigma_{SK}^2 \leq \sigma_{OK}^2\)</span>). C’est simple à expliquer : il est plus facile d’estimer une donnée lorsque l’on connaît sa moyenne que lorsque celle-ci est inconnue.</p>
+<blockquote class="blockquote">
+<p><strong>Point clé.</strong> La variance de krigeage ne dépend pas des valeurs observées. Elle est entièrement fixée par le modèle de variogramme (ou de covariance) et par la configuration géométrique des données par rapport au point (ou au bloc) à estimer. On peut donc la calculer avant même de collecter les données, ce qui est utile pour planifier les campagnes d’échantillonnage.</p>
+</blockquote>
+</section>
+<section id="formulation-en-termes-de-variogramme" class="level3">
+<h3 class="anchored" data-anchor-id="formulation-en-termes-de-variogramme">Formulation en termes de variogramme</h3>
+<p>On préfère souvent exprimer le système à l’aide du variogramme plutôt que de la covariance. C’est pratique sous l’hypothèse intrinsèque. En utilisant <span class="math inline">\(C(\mathbf{h}) = \sigma^2 - \gamma(\mathbf{h})\)</span> et la contrainte <span class="math inline">\(\sum_i \lambda_i = 1\)</span> (qui fait disparaître les termes en <span class="math inline">\(\sigma^2\)</span>), le système devient</p>
+<p><span class="math display">\[
+\begin{cases}
+\displaystyle\sum_{j=1}^n \lambda_j \, \gamma_{kj} - \nu = \gamma{k0}, &amp; k = 1, \dots, n \\[6pt]
+\displaystyle\sum_{i=1}^n \lambda_i = 1
+\end{cases}
+\]</span></p>
+<p>et la variance de krigeage :</p>
+<p><span class="math display">\[
+\sigma_{OK}^2 = \sum_{i=1}^n \lambda_i \, \gamma{i0} - \nu.
+\]</span></p>
+<p>Cette écriture ne fait intervenir que le variogramme, sans exiger la variance a priori <span class="math inline">\(\sigma^2\)</span>. C’est pourquoi le krigeage ordinaire ne requiert que le variogramme et fonctionne tant sous l’hypothèse de stationnarité d’ordre 2 que sous l’hypothèse intrinsèque, alors que le krigeage simple requiert la fonction de covariance, donc la stationnarité d’ordre 2.</p>
+</section>
+<section id="forme-matricielle-1" class="level3">
+<h3 class="anchored" data-anchor-id="forme-matricielle-1">Forme matricielle</h3>
+<p>Il est facile de passer de la forme matricielle du krigeage simple à celle du krigeage ordinaire : il suffit d’ajouter une ligne et une colonne de 1 à la matrice <span class="math inline">\(\mathbf{C}\)</span> pour tenir compte de la contrainte de non-biais (portée par le multiplicateur de Lagrange), avec un 0 dans le coin. On complète de même le vecteur <span class="math inline">\(\mathbf{c}\)</span> par un 1. Le système <span class="math inline">\(\mathbf{A}\, \boldsymbol{\lambda}^+ = \mathbf{b}\)</span> s’écrit alors :</p>
+<p><span class="math display">\[
+\underbrace{\begin{bmatrix}
+C_{11} &amp; C_{12} &amp; \cdots &amp; C_{1n} &amp; 1 \\
+C_{21} &amp; C_{22} &amp; \cdots &amp; C_{2n} &amp; 1 \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+C_{n1} &amp; C_{n2} &amp; \cdots &amp; C_{nn} &amp; 1 \\
+1 &amp; 1 &amp; \cdots &amp; 1 &amp; 0
+\end{bmatrix}}_{\mathbf{A}}
+\underbrace{\begin{bmatrix}
+\lambda_1 \\ \lambda_2 \\ \vdots \\ \lambda_n \\ \nu
+\end{bmatrix}}_{\boldsymbol{\lambda}^+}
+=
+\underbrace{\begin{bmatrix}
+C_{10} \\ C_{20} \\ \vdots \\ C_{n0} \\ 1
+\end{bmatrix}}_{\mathbf{b}}
+\]</span></p>
+</section>
+<section id="krigeage-simple-ou-ordinaire" class="level3">
+<h3 class="anchored" data-anchor-id="krigeage-simple-ou-ordinaire">Krigeage simple ou ordinaire?</h3>
+<div id="fig-c9-profil-krigeage" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c9-profil-krigeage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c9_03_profil_krigeage.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c9-profil-krigeage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.2: Profils de krigeage simple (KS) et ordinaire (KO) : loin des données, le KS revient vers la moyenne connue tandis que le KO reste sur un plateau ; la variance du KS plafonne au palier.
+</figcaption>
+</figure>
+</div>
+<p>Les deux variantes ne diffèrent que par le statut de la moyenne, et tout le reste en découle (<a href="#fig-c9-profil-krigeage" class="quarto-xref">Figure&nbsp;<span>9.2</span></a>) :</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Krigeage simple</th>
+<th style="text-align: left;">Krigeage ordinaire</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Moyenne <span class="math inline">\(m\)</span></td>
+<td style="text-align: left;">connue (déterministe)</td>
+<td style="text-align: left;">inconnue, constante</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Contrainte sur les poids</td>
+<td style="text-align: left;">aucune</td>
+<td style="text-align: left;"><span class="math inline">\(\sum_i \lambda_i = 1\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Multiplicateur de Lagrange</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;"><span class="math inline">\(\nu\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Prérequis</td>
+<td style="text-align: left;">covariance <span class="math inline">\(C(\mathbf{h})\)</span></td>
+<td style="text-align: left;">variogramme <span class="math inline">\(\gamma(\mathbf{h})\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Système</td>
+<td style="text-align: left;"><span class="math inline">\(\mathbf{C}\boldsymbol{\lambda} = \mathbf{c}\)</span> (<span class="math inline">\(n\)</span> équations)</td>
+<td style="text-align: left;"><span class="math inline">\(\mathbf{A}\boldsymbol{\lambda}^+ = \mathbf{b}\)</span> (<span class="math inline">\(n+1\)</span> équations)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Variance</td>
+<td style="text-align: left;"><span class="math inline">\(\sigma_{SK}^2 = C(\mathbf{0}) - \sum_i \lambda_i\, C_{i0}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\sigma_{OK}^2 = C(\mathbf{0}) - \sum_i \lambda_i\, C_{i0} - \nu\)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="atelier-interactif-9.2-krigeage-ordinaire-ko" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-9.2-krigeage-ordinaire-ko">🧮 Atelier interactif 9.2 — Krigeage ordinaire (KO)</h2>
+<p>La moyenne <span class="math inline">\(m\)</span> est inconnue. Ajustez la portée, l’effet de pépite et la position de la cible. Suivez la contrainte <span class="math inline">\(\sum_i \lambda_i = 1\)</span> et le multiplicateur <span class="math inline">\(\nu\)</span> qui s’ajuste pour la satisfaire, puis comparez avec le krigeage simple (option « Superposer KS ») : à configuration égale, <span class="math inline">\(\sigma_{OK}^2 \ge \sigma_{SK}^2\)</span>, car le krigeage ordinaire « paie » l’estimation implicite de la moyenne.</p>
+<div class="geostat-widget" data-widget="c09_krigeage_ordinaire">
+  <div class="gw-placeholder">Chargement du widget (krigeage ordinaire)…</div>
+</div>
+<section id="exemple-de-construction-dun-système-de-krigeage-simple-et-ordinaire" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-de-construction-dun-système-de-krigeage-simple-et-ordinaire">Exemple de construction d’un système de krigeage simple et ordinaire</h3>
+<p>Construire un système de krigeage n’est pas complexe en soi : il suffit d’en suivre les étapes. Voici un atelier interactif, modifiable, qui montre comment résoudre un système de krigeage simple ou ordinaire, étape par étape :</p>
+<ol type="1">
+<li>calculer la matrice des distances entre les données, et entre chaque donnée et la cible;</li>
+<li>en déduire la matrice de variogramme <span class="math inline">\(\gamma(h)\)</span>;</li>
+<li>convertir en matrice de covariance, <span class="math inline">\(C(h) = \sigma^2 - \gamma(h)\)</span>;</li>
+<li>assembler le système de krigeage (matrice <span class="math inline">\(\mathbf{A}\)</span> et second membre <span class="math inline">\(\mathbf{b}\)</span>);</li>
+<li>résoudre le système pour obtenir les poids <span class="math inline">\(\boldsymbol{\lambda}\)</span> et le multiplicateur <span class="math inline">\(\nu\)</span>;</li>
+<li>calculer l’estimation <span class="math inline">\(Z_0^*\)</span> et la variance de krigeage <span class="math inline">\(\sigma_K^2\)</span>.</li>
+</ol>
+<!-- 9.3 : Système matriciel pas à pas -->
+</section>
+</section>
+<section id="atelier-interactif-9.3-système-de-krigeage-exemple-numérique" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-9.3-système-de-krigeage-exemple-numérique">🧮 Atelier interactif 9.3 — Système de krigeage (exemple numérique)</h2>
+<p>Choisissez le krigeage simple ou ordinaire, réglez le modèle de variogramme, et suivez le calcul à chaque étape. Idéal pour vérifier vos calculs manuels.</p>
+<div class="geostat-widget" data-widget="c09_systeme">
+  <div class="gw-placeholder">Chargement du widget (calculateur système)…</div>
+</div>
+</section>
+<section id="krigeage-de-bloc" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="krigeage-de-bloc"><span class="header-section-number">9.4</span> Krigeage de bloc</h2>
+<p>Le krigeage a d’abord été conçu pour estimer non pas des valeurs ponctuelles, mais des teneurs moyennes sur des blocs miniers. Son objectif initial était de corriger la surestimation systématique qui apparaît lorsqu’on sélectionne des blocs riches d’après leurs seuls échantillons internes. Ce biais de sélection s’explique par l’effet de régression, qu’on présente d’abord.</p>
+<section id="effet-de-régression" class="level3">
+<h3 class="anchored" data-anchor-id="effet-de-régression">Effet de régression</h3>
+<p>Considérons un bloc dont la teneur est estimée à partir des échantillons qu’il contient. Si le bloc est retenu parce que ses échantillons internes sont riches, les données situées autour du bloc apportent une autre information : leurs valeurs sont souvent moins fortes que celles de l’intérieur, si bien que la teneur calculée sur les seuls échantillons internes est probablement trop élevée. Le phénomène s’inverse pour un bloc pauvre, dont l’entourage indique en général des valeurs moins faibles. Ce retour vers la moyenne se résume ainsi :</p>
+<ul>
+<li>un bloc très riche selon ses échantillons internes est souvent moins riche en réalité;</li>
+<li>un bloc très pauvre selon ses échantillons internes est souvent moins pauvre en réalité.</li>
+</ul>
+<p>C’est l’effet de régression, ou régression vers la moyenne. Sous l’hypothèse d’une relation linéaire entre la vraie teneur et la teneur observée (exacte en cas de binormalité), on l’écrit :</p>
+<p><span class="math display">\[
+\mathbb{E}[Z_v \mid Z_v^{\text{obs}}] = m + \beta \left(Z_v^{\text{obs}} - m \right)
+\]</span></p>
+<p>où <span class="math inline">\(Z_v\)</span> est la vraie moyenne du bloc, <span class="math inline">\(Z_v^{\text{obs}}\)</span> la moyenne observée sur les échantillons internes, <span class="math inline">\(m\)</span> la moyenne globale et <span class="math inline">\(0 &lt; \beta &lt; 1\)</span> un coefficient de régression. Comme <span class="math inline">\(\beta &lt; 1\)</span>, l’estimation est ramenée vers la moyenne. Lorsque <span class="math inline">\(m\)</span> est inconnue, on la remplace par la moyenne des données <span class="math inline">\(\bar{Z}\)</span> :</p>
+<p><span class="math display">\[
+Z_v^* = \bar{Z} + \beta \left(Z_v^{\text{obs}} - \bar{Z} \right)
+\]</span></p>
+<p>Cette correction est une combinaison linéaire des données. Le krigeage de bloc généralise cette idée : au lieu de ne compter que les échantillons internes, il pondère toutes les données du voisinage — internes comme externes — d’après le variogramme, ce qui corrige le biais automatiquement.</p>
+</section>
+<section id="estimation-dun-bloc" class="level3">
+<h3 class="anchored" data-anchor-id="estimation-dun-bloc">Estimation d’un bloc</h3>
+<p>On cherche à estimer la teneur moyenne de <span class="math inline">\(Z(\mathbf{x})\)</span> sur un bloc <span class="math inline">\(v\)</span> :</p>
+<p><span class="math display">\[
+Z_v = \frac{1}{|v|} \int_v Z(\mathbf{x}) \, d\mathbf{x}
+\]</span></p>
+<p>où <span class="math inline">\(|v|\)</span> est la mesure (aire ou volume) du bloc. L’estimateur garde la forme d’une combinaison linéaire des données, et les poids minimisent toujours la variance de l’erreur d’estimation sous la contrainte d’absence de biais :</p>
+<p><span class="math display">\[
+Z_v^* = \sum_{i=1}^n \lambda_i \, Z_i.
+\]</span></p>
+<p>Tout le krigeage de bloc découle d’une seule observation : passer du point au bloc revient à remplacer le point à estimer <span class="math inline">\(\mathbf{x}_0\)</span> par le bloc <span class="math inline">\(v\)</span>. Dans la variance de l’erreur, seuls les termes qui font intervenir ce point à estimer changent; ils sont alors moyennés sur le bloc. Concrètement, deux substitutions par rapport au krigeage ponctuel :</p>
+<ul>
+<li>la covariance entre une donnée et le point à estimer, <span class="math inline">\(C_{i0}\)</span>, devient la covariance entre une donnée et le bloc</li>
+</ul>
+<p><span class="math display">\[
+\bar{C}_{iv} = \frac{1}{|v|} \int_v C(\mathbf{x}_i - \mathbf{x}) \, d\mathbf{x};
+\]</span></p>
+<ul>
+<li>la variance ponctuelle <span class="math inline">\(C(\mathbf{0})\)</span> devient la variance du bloc</li>
+</ul>
+<p><span class="math display">\[
+\bar{C}_{vv} = \frac{1}{|v|^2} \int_v \int_v C(\mathbf{x} - \mathbf{y}) \, d\mathbf{x} \, d\mathbf{y}.
+\]</span></p>
+<p>Les covariances entre les données, <span class="math inline">\(C_{ij}\)</span>, ne changent pas : elles ne dépendent pas du bloc à estimer. La matrice du système est donc exactement celle du krigeage ponctuel; seuls le second membre et le terme constant de la variance sont remplacés par leurs versions moyennées sur le bloc. En pratique, ces intégrales sont évaluées numériquement, en discrétisant le bloc en points régulièrement espacés et en moyennant les covariances correspondantes.</p>
+</section>
+<section id="krigeage-simple-et-ordinaire-de-bloc" class="level3">
+<h3 class="anchored" data-anchor-id="krigeage-simple-et-ordinaire-de-bloc">Krigeage simple et ordinaire de bloc</h3>
+<p>Il ne reste qu’à appliquer ces substitutions aux systèmes déjà établis pour le point.</p>
+<p>Dans le cas du krigeage simple (moyenne connue), sans contrainte ni multiplicateur :</p>
+<p><span class="math display">\[
+\sum_{j=1}^n \lambda_j \, C_{ij} = \bar{C}_{iv}, \quad i = 1, \dots, n,
+\qquad
+\sigma_{SK,v}^2 = \bar{C}_{vv} - \sum_{i=1}^n \lambda_i \, \bar{C}_{iv}.
+\]</span></p>
+<p>Dans le cas du krigeage ordinaire (moyenne inconnue), avec la contrainte <span class="math inline">\(\sum_i \lambda_i = 1\)</span> et le multiplicateur <span class="math inline">\(\nu\)</span> :</p>
+<p><span class="math display">\[
+\begin{cases}
+\displaystyle\sum_{j=1}^n \lambda_j \, C_{ij} + \nu = \bar{C}_{iv}, &amp; i = 1, \dots, n \\[6pt]
+\displaystyle\sum_{j=1}^n \lambda_j = 1
+\end{cases}
+\qquad
+\sigma_{OK,v}^2 = \bar{C}_{vv} - \sum_{i=1}^n \lambda_i \, \bar{C}_{iv} - \nu.
+\]</span></p>
+<p>Dans les deux cas, <span class="math inline">\(\bar{C}_{vv}\)</span> remplace le palier <span class="math inline">\(C(\mathbf{0})\)</span>. Comme la variance d’une moyenne spatiale est inférieure à la variance ponctuelle, <span class="math inline">\(\bar{C}_{vv} \le C(\mathbf{0})\)</span>, et que la variance de krigeage de bloc est en général plus faible que celle du krigeage ponctuel, on en déduit qu’il est plus facile d’estimer une moyenne sur un bloc qu’une valeur ponctuelle.</p>
+</section>
+<section id="formulation-avec-le-variogramme" class="level3">
+<h3 class="anchored" data-anchor-id="formulation-avec-le-variogramme">Formulation avec le variogramme</h3>
+<p>En utilisant <span class="math inline">\(C(\mathbf{h}) = \sigma^2 - \gamma(\mathbf{h})\)</span> et la contrainte <span class="math inline">\(\sum_i \lambda_i = 1\)</span>, le krigeage ordinaire de bloc s’écrit aussi avec le variogramme :</p>
+<p><span class="math display">\[
+\begin{cases}
+\displaystyle\sum_{j=1}^n \lambda_j \, \gamma(\mathbf{x}_i - \mathbf{x}_j) - \nu = \bar{\gamma}_{iv}, &amp; i = 1, \dots, n \\[6pt]
+\displaystyle\sum_{j=1}^n \lambda_j = 1
+\end{cases}
+\qquad
+\sigma_{OK,v}^2 = \sum_{i=1}^n \lambda_i \, \bar{\gamma}_{iv} - \nu - \bar{\gamma}_{vv},
+\]</span></p>
+<p>avec les variogrammes moyennés sur le bloc, définis comme les covariances :</p>
+<p><span class="math display">\[
+\bar{\gamma}_{iv} = \frac{1}{|v|} \int_v \gamma(\mathbf{x}_i - \mathbf{x}) \, d\mathbf{x}, \qquad
+\bar{\gamma}_{vv} = \frac{1}{|v|^2} \int_v \int_v \gamma(\mathbf{x} - \mathbf{y}) \, d\mathbf{x} \, d\mathbf{y}.
+\]</span></p>
+</section>
+<section id="assemblage-des-estimations" class="level3">
+<h3 class="anchored" data-anchor-id="assemblage-des-estimations">Assemblage des estimations</h3>
+<p>Si un domaine <span class="math inline">\(V\)</span> se compose de plusieurs blocs <span class="math inline">\(v_k\)</span>, sa teneur moyenne est la moyenne des teneurs de bloc, pondérée par leur taille :</p>
+<p><span class="math display">\[
+Z_V = \frac{1}{|V|} \sum_k |v_k| \, Z_{v_k}.
+\]</span></p>
+<p>Par linéarité du krigeage, l’estimation du domaine s’obtient de la même façon, à partir des estimations de bloc :</p>
+<p><span class="math display">\[
+Z_V^* = \frac{1}{|V|} \sum_k |v_k| \, Z_{v_k}^*.
+\]</span></p>
+<blockquote class="blockquote">
+<p><strong>Point clé.</strong> Le krigeage de bloc corrige l’effet de régression parce qu’il intègre l’information de l’ensemble des données du voisinage, et non seulement des échantillons internes au bloc.</p>
+</blockquote>
+<!-- 9.4 : Bloc vs ponctuel -->
+</section>
+</section>
+<section id="atelier-interactif-9.4-krigeage-de-bloc-vs-ponctuel" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-9.4-krigeage-de-bloc-vs-ponctuel">🧮 Atelier interactif 9.4 — Krigeage de bloc vs ponctuel</h2>
+<p>Comparez côte à côte les cartes d’estimation ponctuelle et de bloc. Ajustez la taille du bloc et observez l’effet de lissage (<span class="math inline">\(\operatorname{Var}(Z^*_v) &lt; \operatorname{Var}(Z^*_{\text{pt}})\)</span>) ainsi que la baisse de la variance de krigeage. Le krigeage d’un bloc est égal à la moyenne des krigeages ponctuels qui le composent.</p>
+<div class="geostat-widget" data-widget="c09_bloc_vs_ponctuel">
+  <div class="gw-placeholder">Chargement du widget (bloc vs ponctuel)…</div>
+</div>
+</section>
+<section id="sélection-du-voisinage" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="sélection-du-voisinage"><span class="header-section-number">9.5</span> Sélection du voisinage</h2>
+<p>La théorie du krigeage est formulée à partir de l’ensemble des <span class="math inline">\(N\)</span> données disponibles, ce qui correspond à un voisinage global. En pratique, on utilise presque toujours un voisinage local : un sous-ensemble de données choisi autour du point (ou du bloc) à estimer. Ce choix tient à des raisons numériques autant que géostatistiques.</p>
+<p>La raison numérique est directe. Résoudre le système de krigeage suppose d’inverser sa matrice, une opération dont le coût croît comme <span class="math inline">\(O(N^3)\)</span>. Avec plusieurs milliers de données, cette inversion devient trop lourde pour un ordinateur classique. En restreignant le calcul aux données proches du point à estimer, le voisinage local ramène la matrice à une taille <span class="math inline">\(n \times n\)</span>, avec <span class="math inline">\(n \ll N\)</span>, et rend le krigeage praticable.</p>
+<section id="voisinage-global-et-voisinage-local" class="level3">
+<h3 class="anchored" data-anchor-id="voisinage-global-et-voisinage-local">Voisinage global et voisinage local</h3>
+<p>Dans le voisinage global, toutes les données contribuent à chaque estimation. La cohérence de l’estimateur est optimale, mais trois difficultés apparaissent :</p>
+<ul>
+<li>Le système de krigeage a une taille <span class="math inline">\(N \times N\)</span> (ou <span class="math inline">\((N+1) \times (N+1)\)</span> en krigeage ordinaire), ce qui devient vite prohibitif en calcul et en mémoire quand <span class="math inline">\(N\)</span> est grand.</li>
+<li>L’hypothèse de stationnarité est rarement vérifiée sur tout le domaine. Utiliser des données très éloignées du point à estimer peut introduire un biais si la moyenne ou la continuité spatiale varie à grande échelle.</li>
+<li>Les données éloignées reçoivent de toute façon des poids très faibles, voire nuls au-delà de la portée : leur contribution à l’estimation est négligeable.</li>
+</ul>
+<p>En voisinage local, seules les <span class="math inline">\(n\)</span> données les plus proches (ou situées à l’intérieur d’un rayon de recherche) servent à estimer chaque point. Le système de krigeage est résolu séparément pour chaque cible, avec un jeu de données et des poids différents à chaque fois.</p>
+</section>
+<section id="paramètres-du-voisinage" class="level3">
+<h3 class="anchored" data-anchor-id="paramètres-du-voisinage">Paramètres du voisinage</h3>
+<p>Les paramètres suivants définissent le voisinage utilisé pour chaque estimation.</p>
+<p><strong>Rayon de recherche</strong>. Le poids attribué à une donnée dépend de sa continuité spatiale avec le point à estimer. Pour un modèle à portée finie, les données situées au-delà de la portée ne sont plus corrélées avec la cible et apportent donc peu ou pas d’information. Le rayon de recherche délimite cette zone, généralement sous la forme d’un ellipsoïde centré sur le point à estimer. Ses dimensions sont souvent fixées à partir des portées du variogramme et peuvent être augmentées, par exemple jusqu’à deux fois la portée, dans les zones moins bien échantillonnées (<a href="#fig-c9-voisinage" class="quarto-xref">Figure&nbsp;<span>9.3</span></a>).</p>
+<div id="fig-c9-voisinage" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c9-voisinage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c9_04_voisinage.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c9-voisinage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.3: Effet du voisinage de krigeage (deux forages verticaux) : voisinage global, petit rayon (lacunes), grand rayon, et ellipse alignée sur l’anisotropie.
+</figcaption>
+</figure>
+</div>
+<p><strong>Nombre de données</strong>. Un nombre minimal de données est imposé afin d’éviter les estimations reposant sur une information trop limitée. Lorsque ce seuil, souvent fixé autour de huit données, n’est pas atteint, le point peut être laissé sans estimation. Un nombre maximal est également fixé, généralement autour de 30 données. Au-delà, les données supplémentaires apportent souvent peu d’information en raison de l’effet d’écran, tandis que la résolution du système de krigeage devient plus coûteuse.</p>
+<p><strong>Recherche par secteurs</strong>. Le nombre de données ne garantit pas qu’elles soient bien réparties autour de la cible. Dans un échantillonnage irrégulier, les données les plus proches peuvent toutes provenir d’une même direction, par exemple le long d’une ligne de forage. Pour limiter ce déséquilibre, le voisinage est divisé en secteurs, comme quatre quadrants ou huit octants, et un nombre maximal de données est retenu dans chacun d’eux. Cette approche favorise une meilleure couverture spatiale autour du point à estimer et réduit la redondance entre les données sélectionnées.</p>
+</section>
+<section id="conséquences-du-voisinage-local" class="level3">
+<h3 class="anchored" data-anchor-id="conséquences-du-voisinage-local">Conséquences du voisinage local</h3>
+<p>L’utilisation d’un voisinage local introduit deux approximations par rapport à une estimation fondée sur l’ensemble des données :</p>
+<ol type="1">
+<li>Deux points voisins peuvent être estimés à partir de jeux de données différents et recevoir des poids différents. De légères discontinuités peuvent ainsi apparaître d’un point ou d’un bloc à l’autre, notamment lorsque la composition du voisinage change brusquement.</li>
+<li>La variance de krigeage obtenue avec un voisinage local diffère de celle qui serait calculée avec un voisinage global. L’écart demeure généralement faible lorsque le voisinage couvre adéquatement la zone de continuité spatiale autour de la cible.</li>
+</ol>
+<p>Malgré ces approximations, le voisinage local reste essentiel en pratique. Il réduit fortement le coût des calculs et permet de limiter l’estimation à une zone où l’hypothèse de stationnarité est plus plausible. D’une certaine manière, on vient relâcher l’hypothèse de stationnarité d’ordre deux, en la rendant obligatoire uniquement dans le voisinage de l’estimation.</p>
+</section>
+</section>
+<section id="atelier-interactif-9.5-sélection-du-voisinage-et-effet-décran" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-9.5-sélection-du-voisinage-et-effet-décran">🧮 Atelier interactif 9.5 — Sélection du voisinage et effet d’écran</h2>
+<p>Faites varier le nombre <span class="math inline">\(k\)</span> de plus proches voisins. Observez les discontionuités de l’estimation lorsque un voisin entre ou sort du voisinage, et la convergence vers la solution globale lorsque <span class="math inline">\(k\)</span> grandit. L’effet d’écran rend les voisins lointains presque inutiles : un point proche fait barrière aux données plus éloignées dans la même direction.</p>
+<div class="geostat-widget" data-widget="c09_voisinage">
+  <div class="gw-placeholder">Chargement du widget (sélection du voisinage)…</div>
+</div>
+<section id="validation-croisée" class="level3">
+<h3 class="anchored" data-anchor-id="validation-croisée">Validation croisée</h3>
+<p>La validation croisée (<em>cross-validation</em>) évalue la qualité du modèle de variogramme et des paramètres de voisinage. Le principe : on retire temporairement chaque donnée de l’échantillonnage, puis on l’estime par krigeage à partir des données restantes. On obtient ainsi, pour chaque point <span class="math inline">\(\mathbf{x}_i\)</span> :</p>
+<ul>
+<li>l’estimation par krigeage : <span class="math inline">\(Z^*_{-i}(\mathbf{x}_i)\)</span></li>
+<li>la variance de krigeage : <span class="math inline">\(\sigma^2_{K,-i}(\mathbf{x}_i)\)</span></li>
+<li>l’erreur de validation croisée : <span class="math inline">\(e_i = Z(\mathbf{x}_i) - Z^*_{-i}(\mathbf{x}_i)\)</span></li>
+<li>l’erreur standardisée : <span class="math inline">\(e_i^s = e_i / \sigma_{K,-i}(\mathbf{x}_i)\)</span></li>
+</ul>
+<p>Un modèle bien calibré doit produire des erreurs sans biais systématique et compatibles avec l’incertitude annoncée par le krigeage. On examine notamment les critères suivants :</p>
+<ol type="1">
+<li>Moyenne des erreurs proche de zéro : <span class="math inline">\(\bar{e}\approx 0\)</span>. Une valeur sensiblement différente de zéro indique une tendance à surestimer ou à sous-estimer les données.</li>
+<li>Moyenne des erreurs standardisées proche de zéro : <span class="math inline">\(\bar{e}^s\approx 0\)</span>. Ce critère vérifie l’absence de biais relativement à l’incertitude propre à chaque estimation.</li>
+<li>Variance des erreurs standardisées proche de un : <span class="math inline">\(\operatorname{Var}(e^s)\approx 1\)</span>. Une valeur inférieure à un suggère que la variance de krigeage est trop grande, tandis qu’une valeur supérieure à un indique qu’elle est probablement sous-estimée.</li>
+<li>Absence de structure dans les erreurs : les erreurs ne devraient pas varier systématiquement selon la position, la valeur estimée, la densité des données ou la distance aux voisins.</li>
+</ol>
+<p>Lorsque le modèle repose sur une hypothèse gaussienne, la distribution des erreurs standardisées peut également être comparée à une loi normale centrée réduite à l’aide d’un histogramme ou d’un graphique quantile-quantile. Cette normalité n’est toutefois pas une exigence générale du krigeage.</p>
+<p>La validation croisée demeure un outil de diagnostic. Elle vérifie le comportement du modèle aux emplacements déjà échantillonnés, mais ne garantit pas sa validité dans les zones dépourvues de données. Elle sert surtout à comparer différents variogrammes ou voisinages et à repérer les problèmes de biais, de calibration de la variance ou de sélection des données.</p>
+</section>
+</section>
+<section id="atelier-interactif-9.6-validation-croisée" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-9.6-validation-croisée">🧮 Atelier interactif 9.6 — Validation croisée</h2>
+<p>Reprise de l’exemple simulé des notes de cours (diapo 53). Quatre vues : le <strong>champ simulé</strong> avec ses données ; la <strong>surface de <span class="math inline">\(\operatorname{Var}(e)\)</span></strong> (variance des erreurs de validation croisée leave-one-out) en fonction de la portée <span class="math inline">\(a\)</span> et du ratio <span class="math inline">\(c_0/C\)</span>, dont le <strong>minimum</strong> donne le meilleur modèle ; le <strong>variogramme</strong> expérimental confronté au modèle courant ; et le <strong>nuage de validation</strong> <span class="math inline">\(Z\)</span> observé vs <span class="math inline">\(Z^*\)</span> (estimé en retirant la donnée). Réglez le modèle, ou cliquez « Ajuster aux données » pour amener le modèle courant sur le minimum de la surface. Cherchez <span class="math inline">\(\overline{e^s} \approx 0\)</span> et <span class="math inline">\(\operatorname{Var}(e^s) \approx 1\)</span>.</p>
+<div class="geostat-widget" data-widget="c09_validation_croisee">
+  <div class="gw-placeholder">Chargement du widget (validation croisée)…</div>
+</div>
+</section>
+<section id="propriétés-du-krigeage" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="propriétés-du-krigeage"><span class="header-section-number">9.6</span> Propriétés du krigeage</h2>
+<p>Au-delà du calcul des poids, le krigeage possède plusieurs propriétés qui expliquent sa place centrale parmi les méthodes d’estimation spatiale.</p>
+<section id="optimalité-linéarité-absence-de-biais-et-variance-minimale" class="level3">
+<h3 class="anchored" data-anchor-id="optimalité-linéarité-absence-de-biais-et-variance-minimale">Optimalité : linéarité, absence de biais et variance minimale</h3>
+<p>Le krigeage est un estimateur linéaire : la valeur recherchée est estimée à partir d’une combinaison linéaire des données ou, dans le cas du krigeage simple, de leurs écarts par rapport à la moyenne connue. Les poids ne sont toutefois pas déterminés uniquement en fonction de la distance. Ils tiennent également compte de la continuité spatiale et de la redondance entre les données.</p>
+<p>Les poids sont calculés de manière à respecter deux propriétés : 1) l’absence de biais; 2) la minimisation de la variance de l’erreur d’estimation.</p>
+<p>Le krigeage est ainsi qualifié de meilleur estimateur linéaire sans biais, ou <em>Best Linear Unbiased Estimator</em> (BLUE). Le terme « meilleur » doit cependant être interprété dans ce cadre précis : parmi les estimateurs linéaires sans biais construits avec le modèle de covariance ou de variogramme choisi, le krigeage fournit la plus petite variance d’estimation.</p>
+<p>Cette optimalité ne garantit ni que le modèle de variogramme représente parfaitement la réalité ni que les estimations sont exactes partout. Elle signifie seulement que l’estimateur est optimal compte tenu des hypothèses retenues.</p>
+</section>
+<section id="interpolation-exacte" class="level3">
+<h3 class="anchored" data-anchor-id="interpolation-exacte">Interpolation exacte</h3>
+<p>Le krigeage est un interpolateur exact.</p>
+<p>Lorsqu’une estimation ponctuelle est réalisée exactement à l’emplacement et sur le même support qu’une donnée connue, le krigeage reproduit cette donnée : <span class="math inline">\(Z^*(\mathbf{x}_i) = Z(\mathbf{x}_i), \quad \forall \, \mathbf{x}_i \in S\)</span> et les variances de krigeage en ces points sont nulles : <span class="math inline">\(\sigma_K^2(\mathbf{x}_i) = 0, \quad \forall \, \mathbf{x}_i \in S\)</span>.</p>
+<p>La présence d’un effet de pépite ne supprime pas nécessairement cette propriété. Lorsque la pépite représente une variabilité à très courte distance faisant partie de la variable étudiée, le krigeage demeure un interpolateur exact.</p>
+<p>La situation est différente lorsque l’effet de pépite est interprétée comme une erreur de mesure ou comme un bruit que l’on souhaite filtrer. L’objectif consiste alors à estimer le signal sous-jacent plutôt que de reproduire fidèlement la valeur observée. Il existe ainsi une forme de krigeage, le krigeage avec erreur de mesure, qui permet de tenir compte de cette erreur ou de ce bruit dans les mesures et qui n’est donc plus un interpolateur exact, et dont la variance ne s’annule pas nécessairement aux points échantillonnés.</p>
+<blockquote class="blockquote">
+<p><strong>Remarque.</strong> L’interpolation exacte consiste en une estimation effectuée sur le même support que la donnée. Une donnée ponctuelle et la teneur moyenne d’un bloc représentent deux supports différents : l’estimation du bloc n’est donc pas tenue de reproduire exactement la valeur ponctuelle, même si le point se trouve à l’intérieur du bloc.</p>
+</blockquote>
+</section>
+<section id="effet-décran" class="level3">
+<h3 class="anchored" data-anchor-id="effet-décran">Effet d’écran</h3>
+<p>L’effet d’écran (<em>screening effect</em>) désigne la tendance des données proches de la cible à réduire l’influence des données plus éloignées qui apportent une information similaire.</p>
+<p>Par exemple, lorsqu’une donnée éloignée se trouve derrière une donnée plus proche dans une même direction, son information est en partie redondante. Le krigeage tient compte de cette redondance et lui attribue généralement un poids plus faible que si elle était isolée (<a href="#fig-c9-effet-ecran" class="quarto-xref">Figure&nbsp;<span>9.4</span></a>).</p>
+<div id="fig-c9-effet-ecran" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c9-effet-ecran-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c9_02_effet_ecran.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c9-effet-ecran-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.4: Effet d’écran (krigeage simple) : le point aligné derrière le point proche est masqué et reçoit un poids quasi nul, voire négatif.
+</figcaption>
+</figure>
+</div>
+<p>L’intensité de l’effet d’écran dépend notamment :</p>
+<ul>
+<li>de la géométrie des données;</li>
+<li>du comportement du variogramme à courte distance;</li>
+<li>de l’importance de l’effet de pépite;</li>
+<li>du type de krigeage utilisé.</li>
+</ul>
+<p>Un effet de pépite élevé réduit généralement l’effet d’écran, car les données proches deviennent moins fortement corrélées entre elles et avec la cible. Dans le cas limite d’un effet de pépite pur, les données ne présentent aucune continuité spatiale. En krigeage ordinaire, les données sélectionnées reçoivent alors des poids égaux. En krigeage simple, l’estimation revient plutôt vers la moyenne connue lorsque la cible ne coïncide avec aucune donnée.</p>
+<p>L’effet d’écran justifie en partie l’utilisation d’un voisinage local : lorsque le voisinage couvre adéquatement la zone d’influence de la cible, l’exclusion des données très éloignées entraîne généralement une faible perte d’information tout en réduisant considérablement le coût des calculs.</p>
+</section>
+<section id="prise-en-compte-de-la-géométrie" class="level3">
+<h3 class="anchored" data-anchor-id="prise-en-compte-de-la-géométrie">Prise en compte de la géométrie</h3>
+<p>Contrairement aux méthodes fondées uniquement sur la distance, comme l’inverse de la distance, le krigeage tient compte de la configuration spatiale de l’ensemble des données.</p>
+<p><strong>Position relative des données.</strong> Deux données proches l’une de l’autre fournissent une information partiellement redondante. Le krigeage ajuste leurs poids en fonction de leur position par rapport à la cible, mais également en fonction de leur position l’une par rapport à l’autre. Un regroupement de données dans une même zone ne reçoit donc pas automatiquement toute l’influence simplement parce qu’il contient plusieurs observations.</p>
+<p><strong>Support à estimer.</strong> Les poids dépendent également du support de la quantité recherchée. L’estimation d’un point et celle de la moyenne d’un bloc ne font pas intervenir les mêmes covariances. Lorsque la taille du bloc augmente, les poids tendent généralement à être répartis plus uniformément, puisque la quantité estimée représente une moyenne sur un volume plus important. La variance d’estimation tend également à diminuer, car une moyenne de bloc est moins variable qu’une valeur ponctuelle.</p>
+</section>
+<section id="influence-de-la-continuité-spatiale" class="level3">
+<h3 class="anchored" data-anchor-id="influence-de-la-continuité-spatiale">Influence de la continuité spatiale</h3>
+<p>Le variogramme décrit la continuité spatiale utilisée par le krigeage. Ses principales caractéristiques influencent directement les poids et la variance d’estimation.</p>
+<p><strong>Effet de pépite.</strong> Un effet de pépite élevé indique une forte variabilité à courte distance ou une erreur de mesure importante. Il réduit l’influence des données proches, affaiblit l’effet d’écran et augmente généralement la variance d’estimation.</p>
+<p><strong>Portée.</strong> À palier comparable, une grande portée indique que la continuité se maintient sur de plus longues distances. Les données éloignées peuvent alors conserver une influence significative sur l’estimation. Pour les modèles sans portée finie, comme le modèle exponentiel, on utilise plutôt une portée pratique correspondant à une distance au-delà de laquelle la covariance devient négligeable.</p>
+<p><strong>Anisotropie.</strong> Lorsque la continuité varie selon la direction, les poids dépendent non seulement de la distance, mais également de l’orientation des données par rapport à la cible. Une donnée située dans une direction de forte continuité peut ainsi recevoir davantage de poids qu’une donnée située à la même distance dans une direction de faible continuité (<a href="#fig-c9-aniso-poids" class="quarto-xref">Figure&nbsp;<span>9.5</span></a>).</p>
+<div id="fig-c9-aniso-poids" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c9-aniso-poids-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c9_08_aniso_poids.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c9-aniso-poids-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.5: Détection de l’anisotropie par les poids de krigeage : les poids sont plus forts dans la direction de grande continuité.
+</figcaption>
+</figure>
+</div>
+<blockquote class="blockquote">
+<p><strong>Remarque.</strong> Le comportement du variogramme aux distances comparables à l’espacement des données influence souvent davantage les estimations que son comportement à grande distance. Deux modèles différents peuvent ainsi produire des résultats semblables s’ils représentent de manière comparable la continuité aux courtes distances pertinentes pour le voisinage utilisé (<a href="#fig-c9-assoc-profils" class="quarto-xref">Figure&nbsp;<span>9.6</span></a>).</p>
+</blockquote>
+<div id="fig-c9-assoc-profils" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c9-assoc-profils-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c9_09_assoc_profils.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c9-assoc-profils-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.6: Profils de krigeage à associer à leur modèle de covariance : la forme du profil (lissage, portée, pépite) trahit le modèle.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="effet-de-lissage" class="level3">
+<h3 class="anchored" data-anchor-id="effet-de-lissage">Effet de lissage</h3>
+<p>Le krigeage produit généralement des estimations moins dispersées que les valeurs réelles. Ce phénomène, appelé effet de lissage, provient du fait que chaque estimation combine l’information de plusieurs données. Les fluctuations locales et les valeurs extrêmes sont alors atténuées.</p>
+<p>Cette propriété doit toutefois être interprétée avec prudence. La réduction de variance est garantie en krigeage simple, mais elle n’est pas automatiquement garantie pour toutes les configurations de krigeage ordinaire, notamment lorsque le voisinage est très restreint ou mal adapté.</p>
+<section id="krigeage-simple-1" class="level4">
+<h4 class="anchored" data-anchor-id="krigeage-simple-1">Krigeage simple</h4>
+<p>Pour le krigeage simple, la relation suivante lie la variance des valeurs réelles, la variance des estimations et la variance de krigeage :</p>
+<p><span class="math display">\[
+\operatorname{Var}(Z_v) = \operatorname{Var}(Z_v^*) + \sigma_{SK}^2
+\]</span></p>
+<p>Cette décomposition montre que la variance des estimations est toujours inférieure à la variance des valeurs réelles, la différence étant exactement égale à la variance de krigeage.</p>
+</section>
+<section id="krigeage-ordinaire-1" class="level4">
+<h4 class="anchored" data-anchor-id="krigeage-ordinaire-1">Krigeage ordinaire</h4>
+<p>Pour le krigeage ordinaire, la relation est légèrement modifiée par le multiplicateur de Lagrange :</p>
+<p><span class="math display">\[
+\operatorname{Var}(Z_v) = \operatorname{Var}(Z_v^*) + \sigma_{OK}^2 + 2\nu
+\]</span></p>
+<p><strong>Exemple numérique.</strong> Considérons un bloc de <span class="math inline">\(10 \times 10\)</span>, estimé par ses 4 coins, avec un variogramme sphérique de palier 1 et de portée 20 :</p>
+<ul>
+<li><span class="math inline">\(\operatorname{Var}(Z_v) = 0{,}6278\)</span></li>
+<li><span class="math inline">\(\sigma_{OK}^2 = 0{,}1311\)</span></li>
+<li><span class="math inline">\(\operatorname{Var}(Z_v^*) = 0{,}4353\)</span></li>
+<li><span class="math inline">\(\nu = 0{,}0307\)</span></li>
+</ul>
+<p>Vérification : <span class="math inline">\(0{,}4353 + 0{,}1311 + 2 \times 0{,}0307 = 0{,}6278\)</span></p>
+<p>L’effet de lissage a des conséquences importantes en pratique : l’histogramme des valeurs krigées est plus resserré autour de la moyenne que l’histogramme des valeurs réelles. Les valeurs extrêmes (très élevées ou très faibles) sont systématiquement atténuées.</p>
+<p>Sur une carte ou dans un modèle de blocs, l’effet de lissage se traduit visuellement par des valeurs krigées moins variables et plus lisses que celles du modèle de variogramme utilisé. Les teneurs très élevées sont atténuées, tandis que les teneurs très faibles sont ramenées vers la moyenne. Une carte krigée ne cherche donc pas à reproduire l’intégralité de la variabilité spatiale de la réalité; cet objectif relève plutôt des simulations géostatistiques.</p>
+</section>
+</section>
+<section id="biais-conditionnel" class="level3">
+<h3 class="anchored" data-anchor-id="biais-conditionnel">Biais conditionnel</h3>
+<p>L’absence de biais global signifie que l’erreur moyenne est nulle, <span class="math inline">\(\mathbb{E}[Z_v-Z_v^*]=0\)</span>. Cette propriété ne suffit toutefois pas à décrire le comportement de l’estimateur pour différents niveaux de teneur. Le biais conditionnel examine plutôt l’espérance de la valeur réelle lorsque la valeur estimée est connue, <span class="math inline">\(\mathbb{E}[Z_v\mid Z_v^*]\)</span>.</p>
+<p>En contexte minier, cette distinction est importante puisque les décisions reposent souvent sur une teneur de coupure. Il faut alors vérifier si les blocs estimés comme riches ou pauvres présentent effectivement, en moyenne, les teneurs annoncées.</p>
+<section id="krigeage-simple-2" class="level4">
+<h4 class="anchored" data-anchor-id="krigeage-simple-2">Krigeage simple</h4>
+<p>Sous l’hypothèse de multinormalité, le krigeage simple correspond à l’espérance conditionnelle linéaire de la valeur recherchée. Il est alors sans biais conditionnel :</p>
+<p><span class="math display">\[
+\mathbb{E}[Z_v\mid Z_v^*]=Z_v^*
+\]</span></p>
+<p>Ainsi, parmi tous les blocs ayant reçu une même estimation, la teneur réelle moyenne est égale à cette estimation.</p>
+<p>Cette propriété demeure compatible avec l’effet de lissage. Le krigeage simple peut produire une distribution d’estimations moins variable que celle des valeurs réelles tout en demeurant sans biais conditionnel.</p>
+</section>
+<section id="krigeage-ordinaire-2" class="level4">
+<h4 class="anchored" data-anchor-id="krigeage-ordinaire-2">Krigeage ordinaire</h4>
+<p>Pour le krigeage ordinaire, la relation conditionnelle peut être approchée par une régression linéaire :</p>
+<p><span class="math display">\[
+\mathbb{E}[Z_v\mid Z_v^*] \approx a + b \, Z_v^*
+\]</span></p>
+<p>où</p>
+<p><span class="math display">\[
+b = \frac{\operatorname{Cov}(Z_v,Z_v^*)}{\operatorname{Var}(Z_v^*)}
+\]</span></p>
+<p>et, lorsque <span class="math inline">\(Z_v\)</span> et <span class="math inline">\(Z_v^*\)</span> ont la même moyenne <span class="math inline">\(m\)</span>,</p>
+<p><span class="math display">\[
+a = (1-b)\,m
+\]</span></p>
+<p>Une pente <span class="math inline">\(b=1\)</span> correspond à l’absence de biais conditionnel linéaire. Lorsque <span class="math inline">\(b&lt;1\)</span>, les valeurs estimées élevées tendent à être trop élevées par rapport à la moyenne conditionnelle des valeurs réelles, tandis que les valeurs estimées faibles tendent à être trop faibles. Lorsque <span class="math inline">\(b&gt;1\)</span>, le comportement s’inverse.</p>
+<p>Avec la convention adoptée précédemment pour le système de krigeage ordinaire,</p>
+<p><span class="math display">\[
+\operatorname{Cov}(Z_v,Z_v^*) = \operatorname{Var}(Z_v^*)+\nu
+\]</span></p>
+<p>et, par conséquent,</p>
+<p><span class="math display">\[
+b = 1+\frac{\nu}{\operatorname{Var}(Z_v^*)}
+\]</span></p>
+<p>Le signe du multiplicateur de Lagrange détermine donc si la pente est inférieure ou supérieure à un. Une pente inférieure à un est fréquemment observée avec des voisinages locaux restrictifs, mais elle ne constitue pas une propriété universelle du krigeage ordinaire.</p>
+<p>Dans l’exemple numérique précédent,</p>
+<p><span class="math display">\[
+b = 1+\frac{0{,}0307}{0{,}4353} \approx 1{,}071
+\]</span></p>
+<p>La pente est donc légèrement supérieure à un dans ce cas particulier.</p>
+</section>
+<section id="lien-entre-lissage-et-biais-conditionnel" class="level4">
+<h4 class="anchored" data-anchor-id="lien-entre-lissage-et-biais-conditionnel">Lien entre lissage et biais conditionnel</h4>
+<p>En introduisant le coefficient de corrélation <span class="math inline">\(\rho\)</span> entre la valeur réelle et son estimation, la pente de régression s’écrit</p>
+<p><span class="math display">\[
+b = \rho \, \frac{\sigma_{Z_v}}{\sigma_{Z_v^*}}
+\]</span></p>
+<p>L’effet de lissage et le biais conditionnel sont donc liés, mais ils ne sont pas équivalents. La réduction de la variance des estimations ne suffit pas, à elle seule, à déterminer la valeur de <span class="math inline">\(b\)</span>.</p>
+<p>Le krigeage simple en fournit un exemple important : bien que</p>
+<p><span class="math display">\[
+\sigma_{Z_v^*}&lt;\sigma_{Z_v},
+\]</span></p>
+<p>la corrélation vérifie</p>
+<p><span class="math display">\[
+\rho = \frac{\sigma_{Z_v^*}}{\sigma_{Z_v}},
+\]</span></p>
+<p>de sorte que</p>
+<p><span class="math display">\[
+b=1.
+\]</span></p>
+<p>Le krigeage simple est ainsi lissé tout en demeurant sans biais conditionnel sous l’hypothèse gaussienne.</p>
+<p>En krigeage ordinaire, la pente peut s’éloigner de un lorsque le voisinage est trop restrictif ou que la configuration des données est défavorable. La pente de régression constitue donc un indicateur utile pour comparer différents voisinages, mais elle doit être interprétée conjointement avec la variance de krigeage, les poids et la géométrie des données.</p>
+</section>
+</section>
+<section id="transitivité" class="level3">
+<h3 class="anchored" data-anchor-id="transitivité">Transitivité</h3>
+<p>Le krigeage possède une propriété de transitivité. Supposons qu’une nouvelle observation soit recueillie à un point et que sa valeur coïncide exactement avec l’estimation obtenue à ce point à partir des données initiales. Si le même modèle et le même cadre de krigeage sont conservés, l’ajout de cette observation :</p>
+<ul>
+<li>ne modifie pas les estimations aux autres points;</li>
+<li>réduit toutefois les variances de krigeage, puisque la nouvelle observation apporte une contrainte supplémentaire.</li>
+</ul>
+<p>Cette propriété s’explique par le fait que la nouvelle donnée ne produit aucun résidu par rapport à l’estimation précédente. Elle ne déplace donc pas la moyenne conditionnelle, mais elle réduit l’incertitude associée au champ.</p>
+<p>De même, si l’on utilise les valeurs krigées comme si elles étaient de nouvelles données, les estimations de krigeage subséquentes restent inchangées (mais les variances de krigeage sont réduites). Cette propriété assure la cohérence interne du krigeage.</p>
+<!-- 9.7 : Effet de lissage et biais conditionnel -->
+</section>
+</section>
+<section id="atelier-interactif-9.7-effet-de-lissage-et-biais-conditionnel" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-9.7-effet-de-lissage-et-biais-conditionnel">🧮 Atelier interactif 9.7 — Effet de lissage et biais conditionnel</h2>
+<p>On compare l’histogramme de la vérité <span class="math inline">\(Z\)</span> avec l’histogramme du krigeage <span class="math inline">\(Z^*\)</span> : <span class="math inline">\(Z^*\)</span> est plus resserré (les queues sont atténuées). Le nuage <span class="math inline">\((Z^*, Z)\)</span> avec sa droite de régression montre une pente <span class="math inline">\(b &lt; 1\)</span> (biais conditionnel) : une sélection minière fondée sur <span class="math inline">\(Z^*\)</span> surestime les blocs « riches ».</p>
+<div class="geostat-widget" data-widget="c09_effet_lissage">
+  <div class="gw-placeholder">Chargement du widget (effet de lissage)…</div>
+</div>
+</section>
+<section id="krigeage-universel" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="krigeage-universel"><span class="header-section-number">9.7</span> Krigeage universel</h2>
+<p>Le krigeage simple et le krigeage ordinaire reposent sur l’hypothèse que la moyenne demeure constante dans le domaine considéré. Or, certaines variables présentent une évolution spatiale progressive : l’épaisseur d’une unité géologique peut augmenter dans une direction, tandis que la concentration d’un contaminant peut diminuer à mesure que l’on s’éloigne de sa source. Cette variation organisée de la moyenne dans l’espace est appelée tendance, ou dérive.</p>
+<p>Le krigeage universel (KU) permet de tenir compte de cette variation spatiale en représentant la dérive par une fonction des coordonnées, dont la forme est fixée, mais dont les coefficients restent à estimer. Il généralise ainsi le krigeage ordinaire : alors que l’inconnue sur une moyenne constante impose une seule contrainte aux poids, chaque terme utilisé pour décrire la dérive ajoute une contrainte supplémentaire.</p>
+<section id="modèle-avec-dérive" class="level3">
+<h3 class="anchored" data-anchor-id="modèle-avec-dérive">Modèle avec dérive</h3>
+<p>On décompose la fonction aléatoire <span class="math inline">\(Z(\mathbf{x})\)</span> en une composante déterministe, appelée dérive, et une composante aléatoire résiduelle :</p>
+<p><span class="math display">\[
+Z(\mathbf{x}) = m(\mathbf{x}) + Y(\mathbf{x})
+\]</span></p>
+<p>où <span class="math inline">\(m(\mathbf{x}) = \mathbb{E}[Z(\mathbf{x})]\)</span> représente la dérive, tandis que <span class="math inline">\(Y(\mathbf{x})\)</span> est un résidu de moyenne nulle, supposé stationnaire.</p>
+<p>La dérive décrit la variation systématique de la moyenne dans l’espace. Une fois cette variation retirée, le krigeage s’appuie sur la continuité spatiale du résidu <span class="math inline">\(Y(\mathbf{x})\)</span>, représentée par son variogramme ou sa fonction de covariance. La variable <span class="math inline">\(Z(\mathbf{x})\)</span> n’est donc pas stationnaire en moyenne, mais son résidu est supposé l’être.</p>
+<p>La dérive est une combinaison linéaire de <span class="math inline">\(L + 1\)</span> fonctions de base connues <span class="math inline">\(f_\ell(\mathbf{x})\)</span> :</p>
+<p><span class="math display">\[
+m(\mathbf{x}) = \sum_{\ell=0}^{L} a_\ell \, f_\ell(\mathbf{x})
+\]</span></p>
+<p>où les <span class="math inline">\(a_\ell\)</span> sont des coefficients inconnus. Par convention, <span class="math inline">\(f_0(\mathbf{x}) = 1\)</span>, si bien que <span class="math inline">\(a_0\)</span> est une constante. Le krigeage ordinaire correspond au cas particulier où <span class="math inline">\(L=0\)</span>. La dérive se réduit alors à une moyenne inconnue, mais constante, <span class="math inline">\(m(\mathbf{x})=a_0\)</span>.</p>
+</section>
+<section id="exemples-de-fonctions-de-dérive" class="level3">
+<h3 class="anchored" data-anchor-id="exemples-de-fonctions-de-dérive">Exemples de fonctions de dérive</h3>
+<p>En deux dimensions, avec <span class="math inline">\(\mathbf{x}=(x,y)\)</span>, les formes de dérive les plus courantes sont les suivantes :</p>
+<ul>
+<li><p>ordre 0 — moyenne constante : <span class="math inline">\(m(\mathbf{x})=a_0\)</span>. Ce cas correspond au krigeage ordinaire.</p></li>
+<li><p>ordre 1 — dérive linéaire : <span class="math inline">\(m(\mathbf{x})=a_0+a_1x+a_2y\)</span></p></li>
+<li><p>ordre 2 — dérive quadratique : <span class="math inline">\(m(\mathbf{x})= a_0+a_1x+a_2y+a_3x^2+a_4xy+a_5y^2\)</span></p></li>
+</ul>
+<p>Le choix de l’ordre doit être guidé par la structure spatiale observée et par le contexte géologique. Une dérive linéaire est souvent suffisante pour représenter une variation progressive de la moyenne. Les dérives d’ordre supérieur sont utilisées plus rarement, car elles comportent davantage de coefficients à estimer, exigent donc davantage de données et peuvent produire des comportements instables ou des artefacts près des limites du domaine.</p>
+</section>
+<section id="condition-de-non-biais-2" class="level3">
+<h3 class="anchored" data-anchor-id="condition-de-non-biais-2">Condition de non-biais</h3>
+<p>L’estimateur garde la forme d’une combinaison linéaire des données :</p>
+<p><span class="math display">\[
+Z_0^* = \sum_{i=1}^n \lambda_i \, Z_i
+\]</span></p>
+<p>Pour qu’il soit sans biais, son espérance doit être égale à celle de la valeur à estimer : <span class="math inline">\(\mathbb{E}[Z_0^*] = \mathbb{E}[Z_0]\)</span>. En remplaçant chaque donnée par son espérance <span class="math inline">\(\mathbb{E}[Z_i] = m(\mathbf{x}_i) = \sum_\ell a_\ell f_\ell(\mathbf{x}_i)\)</span> :</p>
+<p><span class="math display">\[
+\mathbb{E}[Z_0^*] = \sum_{i=1}^n \lambda_i \, m(\mathbf{x}_i) = \sum_{i=1}^n \lambda_i \sum_{\ell=0}^{L} a_\ell \, f_\ell(\mathbf{x}_i) = \sum_{\ell=0}^{L} a_\ell \left( \sum_{i=1}^n \lambda_i \, f_\ell(\mathbf{x}_i) \right)
+\]</span></p>
+<p>et, de même, <span class="math inline">\(\mathbb{E}[Z_0] = m(\mathbf{x}_0) = \sum_\ell a_\ell \, f_\ell(\mathbf{x}_0)\)</span>. Le biais s’écrit donc</p>
+<p><span class="math display">\[
+\mathbb{E}[Z_0^* - Z_0] = \sum_{\ell=0}^{L} a_\ell \left( \sum_{i=1}^n \lambda_i \, f_\ell(\mathbf{x}_i) - f_\ell(\mathbf{x}_0) \right).
+\]</span></p>
+<p>Les coefficients <span class="math inline">\(a_\ell\)</span> de la dérive sont inconnus. Pour que le biais soit nul quelles que soient leurs valeurs, chaque terme entre parenthèses doit s’annuler séparément, ce qui donne les <span class="math inline">\(L + 1\)</span> conditions d’universalité :</p>
+<p><span class="math display">\[
+\sum_{i=1}^n \lambda_i \, f_\ell(\mathbf{x}_i) = f_\ell(\mathbf{x}_0), \quad \ell = 0, 1, \dots, L.
+\]</span></p>
+<p>Pour <span class="math inline">\(\ell = 0\)</span>, comme <span class="math inline">\(f_0 = 1\)</span>, on retrouve la contrainte du krigeage ordinaire, <span class="math inline">\(\sum_i \lambda_i = 1\)</span>. Les <span class="math inline">\(L\)</span> conditions suivantes forcent l’estimateur à reproduire exactement chaque composante de la dérive : c’est ce qui le rend sans biais malgré une moyenne variable.</p>
+</section>
+<section id="système-de-krigeage-universel" class="level3">
+<h3 class="anchored" data-anchor-id="système-de-krigeage-universel">Système de krigeage universel</h3>
+<p>Il reste à choisir, parmi tous les jeux de poids qui vérifient les conditions d’universalité, celui qui minimise la variance d’estimation. La démarche est celle du krigeage ordinaire — un multiplicateur de Lagrange par contrainte —, mais avec <span class="math inline">\(L + 1\)</span> contraintes au lieu d’une seule, d’où <span class="math inline">\(L + 1\)</span> multiplicateurs <span class="math inline">\(\nu_0, \dots, \nu_L\)</span>. On obtient le système de krigeage universel :</p>
+<p><span class="math display">\[
+\begin{cases}
+\displaystyle\sum_{j=1}^n \lambda_j \, C_{ij} + \sum_{\ell=0}^{L} \nu_\ell \, f_\ell(\mathbf{x}_i) = C_{i0}, &amp; i = 1, \dots, n \\[8pt]
+\displaystyle\sum_{j=1}^n \lambda_j \, f_\ell(\mathbf{x}_j) = f_\ell(\mathbf{x}_0), &amp; \ell = 0, \dots, L
+\end{cases}
+\]</span></p>
+<p>Il comporte <span class="math inline">\(n + L + 1\)</span> équations et autant d’inconnues : les <span class="math inline">\(n\)</span> poids et les <span class="math inline">\(L + 1\)</span> multiplicateurs. En termes de variogramme des résidus :</p>
+<p><span class="math display">\[
+\begin{cases}
+\displaystyle\sum_{j=1}^n \lambda_j \, \gamma(\mathbf{x}_i - \mathbf{x}_j) - \sum_{\ell=0}^{L} \nu_\ell \, f_\ell(\mathbf{x}_i) = \gamma(\mathbf{x}_i - \mathbf{x}_0), &amp; i = 1, \dots, n \\[8pt]
+\displaystyle\sum_{j=1}^n \lambda_j \, f_\ell(\mathbf{x}_j) = f_\ell(\mathbf{x}_0), &amp; \ell = 0, \dots, L
+\end{cases}
+\]</span></p>
+</section>
+<section id="variance-de-krigeage-universel" class="level3">
+<h3 class="anchored" data-anchor-id="variance-de-krigeage-universel">Variance de krigeage universel</h3>
+<p>En reportant la solution dans l’expression de la variance, on obtient</p>
+<p><span class="math display">\[
+\sigma_{UK}^2 = C(\mathbf{0}) - \sum_{i=1}^n \lambda_i \, C_{i0} - \sum_{\ell=0}^{L} \nu_\ell \, f_\ell(\mathbf{x}_0),
+\]</span></p>
+<p>ou, en termes de variogramme,</p>
+<p><span class="math display">\[
+\sigma_{UK}^2 = \sum_{i=1}^n \lambda_i \, \gamma(\mathbf{x}_i - \mathbf{x}_0) - \sum_{\ell=0}^{L} \nu_\ell \, f_\ell(\mathbf{x}_0).
+\]</span></p>
+</section>
+<section id="forme-matricielle-2" class="level3">
+<h3 class="anchored" data-anchor-id="forme-matricielle-2">Forme matricielle</h3>
+<p>Avec la notation <span class="math inline">\(C_{ij} = C(\mathbf{x}_i - \mathbf{x}_j)\)</span> et <span class="math inline">\(C_{i0} = C(\mathbf{x}_i - \mathbf{x}_0)\)</span>, le système <span class="math inline">\(\mathbf{A}\, \boldsymbol{\lambda}^+ = \mathbf{b}\)</span> s’écrit</p>
+<p><span class="math display">\[
+\underbrace{\begin{bmatrix}
+C_{11} &amp; \cdots &amp; C_{1n} &amp; f_0(\mathbf{x}_1) &amp; \cdots &amp; f_L(\mathbf{x}_1) \\
+\vdots &amp; \ddots &amp; \vdots &amp; \vdots &amp; &amp; \vdots \\
+C_{n1} &amp; \cdots &amp; C_{nn} &amp; f_0(\mathbf{x}_n) &amp; \cdots &amp; f_L(\mathbf{x}_n) \\
+f_0(\mathbf{x}_1) &amp; \cdots &amp; f_0(\mathbf{x}_n) &amp; 0 &amp; \cdots &amp; 0 \\
+\vdots &amp; &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+f_L(\mathbf{x}_1) &amp; \cdots &amp; f_L(\mathbf{x}_n) &amp; 0 &amp; \cdots &amp; 0
+\end{bmatrix}}_{\mathbf{A}}
+\underbrace{\begin{bmatrix}
+\lambda_1 \\ \vdots \\ \lambda_n \\ \nu_0 \\ \vdots \\ \nu_L
+\end{bmatrix}}_{\boldsymbol{\lambda}^+}
+=
+\underbrace{\begin{bmatrix}
+C_{10} \\ \vdots \\ C_{n0} \\ f_0(\mathbf{x}_0) \\ \vdots \\ f_L(\mathbf{x}_0)
+\end{bmatrix}}_{\mathbf{b}}
+\]</span></p>
+<p>En notant <span class="math inline">\(\mathbf{C}\)</span> la matrice de covariance des données (<span class="math inline">\(n \times n\)</span>) et <span class="math inline">\(\mathbf{F}\)</span> la matrice des fonctions de dérive évaluées aux données (<span class="math inline">\(n \times (L+1)\)</span>, de terme <span class="math inline">\(F_{i\ell} = f_\ell(\mathbf{x}_i)\)</span>), la matrice augmentée a la structure par blocs</p>
+<p><span class="math display">\[
+\mathbf{A} = \begin{bmatrix} \mathbf{C} &amp; \mathbf{F} \\ \mathbf{F}^\top &amp; \mathbf{0} \end{bmatrix}.
+\]</span></p>
+<p>Elle est inversible et la solution unique dès que deux conditions sont réunies : <span class="math inline">\(\mathbf{C}\)</span> est définie positive (modèle de covariance admissible, points distincts) et <span class="math inline">\(\mathbf{F}\)</span> est de rang plein <span class="math inline">\(L + 1\)</span>, c’est-à-dire que les fonctions de dérive sont linéairement indépendantes aux points de données. Cette seconde condition impose <span class="math inline">\(n \ge L + 1\)</span> : il faut au moins autant de données que de coefficients de dérive. Comme en krigeage ordinaire, <span class="math inline">\(\mathbf{A}\)</span> n’est pas définie positive en raison des blocs de bord, mais la variance reste minimale sur le sous-espace des poids satisfaisant aux conditions d’universalité. Le krigeage ordinaire est le cas particulier où <span class="math inline">\(L = 0\)</span> et <span class="math inline">\(f_0(\mathbf{x}) = 1\)</span>.</p>
+</section>
+<section id="difficultés-pratiques" class="level3">
+<h3 class="anchored" data-anchor-id="difficultés-pratiques">Difficultés pratiques</h3>
+<p>La mise en œuvre du krigeage universel soulève une difficulté importante : la dérive et la continuité spatiale des résidus doivent être estimées conjointement. Or, l’ajustement du variogramme des résidus dépend de la dérive retirée, tandis que l’estimation optimale de cette dérive dépend elle-même du variogramme des résidus. Une mauvaise estimation de l’une peut donc influencer l’autre.</p>
+<p>Plusieurs approches permettent de traiter ce problème :</p>
+<ol type="1">
+<li><p>Estimation itérative. Une première dérive est ajustée, par exemple par régression. Le variogramme est ensuite calculé sur les résidus, puis utilisé pour réestimer la dérive en tenant compte de leur dépendance spatiale. Ces étapes peuvent être répétées jusqu’à ce que les paramètres se stabilisent.</p></li>
+<li><p>Estimation conjointe. La dérive et les paramètres de covariance peuvent être estimés simultanément, notamment par maximum de vraisemblance ou par maximum de vraisemblance restreinte. Cette approche évite de séparer complètement l’ajustement de la dérive de celui de la structure spatiale.</p></li>
+<li><p>Fonctions aléatoires intrinsèques d’ordre <span class="math inline">\(k\)</span> — FAI-<span class="math inline">\(k\)</span>. Cette formulation utilise des covariances ou des variogrammes généralisés conçus pour filtrer les dérives polynomiales jusqu’à un ordre donné. Elle permet ainsi de travailler sans estimer explicitement les coefficients de la dérive au préalable.</p></li>
+</ol>
+<p>Lorsque des variables auxiliaires pertinentes sont disponibles, la dérive peut également être décrite à partir de celles-ci plutôt qu’à partir des seules coordonnées spatiales. Cette extension, appelée krigeage avec dérive externe, fait l’objet de la section suivante.</p>
+<!-- 9.8 : Krigeage universel -->
+</section>
+</section>
+<section id="atelier-interactif-9.8-krigeage-universel-ku" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-9.8-krigeage-universel-ku">🧮 Atelier interactif 9.8 — Krigeage universel (KU)</h2>
+<p>Données présentant une tendance. Le KU modélise la dérive comme un polynôme des coordonnées (de degré 1, linéaire, ou de degré 2, quadratique). Placez le point à estimer <span class="math inline">\(\mathbf{x}_0\)</span> au-delà des données : le KU extrapole la tendance, alors qu’en superposition le KO revient au niveau local et le KS à la moyenne fixe <span class="math inline">\(m\)</span>. Cliquez le graphe pour ajouter ou retirer des données, et affichez les poids <span class="math inline">\(\lambda_i\)</span>.</p>
+<div class="geostat-widget" data-widget="c09_krigeage_universel">
+  <div class="gw-placeholder">Chargement du widget (krigeage universel)…</div>
+</div>
+</section>
+<section id="krigeage-avec-dérive-externe" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="krigeage-avec-dérive-externe"><span class="header-section-number">9.8</span> Krigeage avec dérive externe</h2>
+<p>En krigeage universel, la dérive est généralement représentée à partir de fonctions des coordonnées spatiales. Or, on dispose parfois d’une variable auxiliaire mesurée de manière dense, voire exhaustive, sur le domaine et liée à la variable d’intérêt.</p>
+<p>Le krigeage avec dérive externe (KED) utilise cette information auxiliaire pour modéliser la variation spatiale de la moyenne. La dérive n’est donc plus décrite uniquement à partir des coordonnées, mais à partir d’une ou de plusieurs variables secondaires connues aux points de données et aux emplacements à estimer.</p>
+<p>Le KED constitue ainsi une extension directe du krigeage universel et en conserve la même structure mathématique. La différence réside dans le choix des fonctions de dérive : celles-ci sont définies à partir des variables auxiliaires plutôt qu’à partir de polynômes des coordonnées. La relation entre la moyenne et ces variables demeure toutefois fixée par le modèle, généralement sous une forme linéaire.</p>
+<section id="principe" class="level3">
+<h3 class="anchored" data-anchor-id="principe">Principe</h3>
+<p>Comme en krigeage universel, la variable est décomposée en une dérive et un résidu stationnaire de moyenne nulle :</p>
+<p><span class="math display">\[
+Z(\mathbf{x})=m(\mathbf{x})+Y(\mathbf{x})
+\]</span></p>
+<p>Pour le krigeage avec dérive externe, la moyenne est décrite à partir de <span class="math inline">\(L\)</span> variables auxiliaires <span class="math inline">\(s_\ell(\mathbf{x})\)</span> :</p>
+<p><span class="math display">\[
+m(\mathbf{x}) = a_0 + \sum_{\ell=1}^{L} a_\ell \, s_\ell(\mathbf{x})
+\]</span></p>
+<p>où les <span class="math inline">\(a_\ell\)</span> sont des coefficients inconnus et les <span class="math inline">\(s_\ell(\mathbf{x})\)</span> les valeurs des variables auxiliaires au point <span class="math inline">\(\mathbf{x}\)</span>. La dérive est donc modélisée comme une combinaison linéaire de ces variables.</p>
+<p>Les variables auxiliaires décrivent la variation spatiale de la moyenne, tandis que le variogramme ou la covariance représente la continuité du résidu <span class="math inline">\(Y(\mathbf{x})\)</span>. C’est donc la structure spatiale du résidu, et non celle de la variable <span class="math inline">\(Z(\mathbf{x})\)</span> dans son ensemble, qui intervient dans le système de krigeage.</p>
+</section>
+<section id="exemples-de-variables-auxiliaires" class="level3">
+<h3 class="anchored" data-anchor-id="exemples-de-variables-auxiliaires">Exemples de variables auxiliaires</h3>
+<p>Les variables auxiliaires sont généralement mesurées de manière dense, voire exhaustive, sur le domaine et présentent une relation avec la variable d’intérêt. Elles peuvent notamment correspondre à :</p>
+<ul>
+<li>l’altitude ou la topographie, utilisées pour estimer des variables comme la température, les précipitations ou l’épaisseur de neige, qui varient souvent avec l’altitude;</li>
+<li>des données géophysiques, comme la densité, la susceptibilité magnétique ou la résistivité électrique, souvent disponibles sur des grilles régulières et liées aux propriétés géologiques recherchées;</li>
+<li>des données de télédétection, comme les images satellitaires, les photographies aériennes ou les indices de végétation, utilisées pour estimer différentes variables environnementales;</li>
+<li>les coordonnées spatiales, qui, lorsqu’elles sont utilisées comme variables auxiliaires, ramènent formellement le KED au krigeage universel.</li>
+</ul>
+<p>La condition essentielle est que chaque variable auxiliaire soit connue aux points d’échantillonnage ainsi qu’à tous les emplacements où une estimation doit être produite. Sa valeur intervient directement dans la définition de la dérive.</p>
+</section>
+<section id="conditions-de-non-biais" class="level3">
+<h3 class="anchored" data-anchor-id="conditions-de-non-biais">Conditions de non-biais</h3>
+<p>L’estimateur garde la forme d’une combinaison linéaire des données :</p>
+<p><span class="math display">\[
+Z_0^* = \sum_{i=1}^n \lambda_i \, Z_i
+\]</span></p>
+<p>Le raisonnement du krigeage universel s’applique tel quel, la constante et les variables auxiliaires jouant le rôle des fonctions de dérive. En reprenant <span class="math inline">\(\mathbb{E}[Z_i] = a_0 + \sum_\ell a_\ell \, s_\ell(\mathbf{x}_i)\)</span>, le biais s’écrit comme une combinaison des coefficients inconnus <span class="math inline">\(a_0, a_1, \dots, a_L\)</span>; il s’annule pour toutes leurs valeurs si et seulement si les poids vérifient les <strong>conditions de non-biais</strong> :</p>
+<p><span class="math display">\[
+\sum_{i=1}^n \lambda_i = 1
+\]</span></p>
+<p><span class="math display">\[
+\sum_{i=1}^n \lambda_i \, s_\ell(\mathbf{x}_i) = s_\ell(\mathbf{x}_0), \quad \ell = 1, \dots, L.
+\]</span></p>
+<p>La première provient du terme constant <span class="math inline">\(a_0\)</span>, comme en krigeage ordinaire. Chacune des <span class="math inline">\(L\)</span> autres force l’estimateur à reproduire exactement une variable auxiliaire.</p>
+</section>
+<section id="système-de-krigeage-avec-dérive-externe" class="level3">
+<h3 class="anchored" data-anchor-id="système-de-krigeage-avec-dérive-externe">Système de krigeage avec dérive externe</h3>
+<p>En minimisant la variance d’estimation sous ces conditions, avec un multiplicateur de Lagrange par contrainte (<span class="math inline">\(\nu_0\)</span> pour la constante, <span class="math inline">\(\nu_1, \dots, \nu_L\)</span> pour les variables auxiliaires), on obtient le système, où <span class="math inline">\(C_{ij} = C(\mathbf{x}_i - \mathbf{x}_j)\)</span> et <span class="math inline">\(C_{i0} = C(\mathbf{x}_i - \mathbf{x}_0)\)</span> :</p>
+<p><span class="math display">\[
+\begin{cases}
+\displaystyle\sum_{j=1}^n \lambda_j \, C_{ij} + \nu_0 + \sum_{\ell=1}^{L} \nu_\ell \, s_\ell(\mathbf{x}_i) = C_{i0}, &amp; i = 1, \dots, n \\[8pt]
+\displaystyle\sum_{j=1}^n \lambda_j = 1 \\[8pt]
+\displaystyle\sum_{j=1}^n \lambda_j \, s_\ell(\mathbf{x}_j) = s_\ell(\mathbf{x}_0), &amp; \ell = 1, \dots, L
+\end{cases}
+\]</span></p>
+<p>Il comporte <span class="math inline">\(n + L + 1\)</span> équations et autant d’inconnues : les <span class="math inline">\(n\)</span> poids et les <span class="math inline">\(L + 1\)</span> multiplicateurs.</p>
+</section>
+<section id="variance-de-krigeage" class="level3">
+<h3 class="anchored" data-anchor-id="variance-de-krigeage">Variance de krigeage</h3>
+<p><span class="math display">\[
+\sigma_{KED}^2 = C(\mathbf{0}) - \sum_{i=1}^n \lambda_i \, C_{i0} - \nu_0 - \sum_{\ell=1}^{L} \nu_\ell \, s_\ell(\mathbf{x}_0)
+\]</span></p>
+</section>
+<section id="forme-matricielle-3" class="level3">
+<h3 class="anchored" data-anchor-id="forme-matricielle-3">Forme matricielle</h3>
+<p>En notant <span class="math inline">\(\mathbf{C}\)</span> la matrice de covariance des données (<span class="math inline">\(n \times n\)</span>) et <span class="math inline">\(\mathbf{S}\)</span> la matrice de terme général <span class="math inline">\(S_{i0} = 1\)</span>, <span class="math inline">\(S_{i\ell} = s_\ell(\mathbf{x}_i)\)</span> — soit une colonne de 1 pour la constante, suivie des <span class="math inline">\(L\)</span> variables auxiliaires évaluées aux données (<span class="math inline">\(n \times (L+1)\)</span>) —, le système a la même structure par blocs qu’en krigeage universel :</p>
+<p><span class="math display">\[
+\mathbf{A} = \begin{bmatrix} \mathbf{C} &amp; \mathbf{S} \\ \mathbf{S}^\top &amp; \mathbf{0} \end{bmatrix}.
+\]</span></p>
+<p>La matrice <span class="math inline">\(\mathbf{A}\)</span> est inversible et la solution unique dès que <span class="math inline">\(\mathbf{C}\)</span> est définie positive (modèle de covariance admissible, points distincts) et que <span class="math inline">\(\mathbf{S}\)</span> est de rang plein <span class="math inline">\(L + 1\)</span>, c’est-à-dire que la constante et les variables auxiliaires sont linéairement indépendantes sur les points de données. Cette condition impose <span class="math inline">\(n \ge L + 1\)</span> : il faut au moins autant de données que de coefficients de dérive. Une dégénérescence propre au KED en découle : si une variable auxiliaire est constante sur les données, sa colonne devient proportionnelle à celle de la constante, <span class="math inline">\(\mathbf{S}\)</span> perd son rang et le système n’admet plus de solution unique. Comme en krigeage universel, <span class="math inline">\(\mathbf{A}\)</span> n’est pas définie positive à cause des blocs de bord, mais la variance reste minimale sur le sous-espace des poids qui vérifient les conditions de non-biais.</p>
+</section>
+<section id="krigeage-universel-ou-dérive-externe" class="level3">
+<h3 class="anchored" data-anchor-id="krigeage-universel-ou-dérive-externe">Krigeage universel ou dérive externe?</h3>
+<p>Les deux méthodes reposent sur la même formulation mathématique. Elles se distinguent principalement par la nature des fonctions utilisées pour représenter la dérive.</p>
+<ul>
+<li>En krigeage universel, la dérive est décrite par des fonctions des coordonnées spatiales, comme <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span>, <span class="math inline">\(x^2\)</span> ou <span class="math inline">\(xy\)</span>. Sa forme est donc déterminée par le choix préalable du degré du polynôme.</li>
+<li>En krigeage avec dérive externe, la dérive est décrite à partir de variables auxiliaires mesurées, comme <span class="math inline">\(s_1(\mathbf{x})\)</span> ou <span class="math inline">\(s_2(\mathbf{x})\)</span>. Lorsqu’elles sont bien liées à la variable d’intérêt, ces variables permettent de représenter une variation de la moyenne plus directement rattachée au phénomène étudié et souvent plus facile à interpréter physiquement.</li>
+</ul>
+<p>Le KED n’est toutefois pas nécessairement plus souple sur le plan mathématique : la dérive demeure une combinaison linéaire des variables auxiliaires choisies. Sa pertinence dépend donc surtout de la qualité, de la couverture spatiale et du pouvoir explicatif de ces variables.</p>
+</section>
+<section id="considérations-pratiques" class="level3">
+<h3 class="anchored" data-anchor-id="considérations-pratiques">Considérations pratiques</h3>
+<p><strong>Relation avec les variables auxiliaires</strong>. Le KED suppose que la moyenne de la variable d’intérêt est une combinaison linéaire des variables auxiliaires. Cette hypothèse ne signifie pas nécessairement que la relation observée est parfaitement linéaire, mais les variables choisies doivent expliquer une part significative de la variation spatiale de la moyenne. Lorsque leur pouvoir explicatif est faible, le KED apporte peu d’information supplémentaire par rapport à un krigeage sans dérive externe.</p>
+<p><strong>Une attention particulière doit également être portée à l’extrapolation</strong>. Si, au point à estimer, une variable auxiliaire prend une valeur située en dehors de la plage observée aux points de données, la dérive est extrapolée. Les estimations peuvent alors devenir instables ou peu plausibles. Il est donc important d’examiner la relation entre les variables, leur domaine de variation et la présence éventuelle de valeurs extrêmes avant d’appliquer le KED.</p>
+<p><strong>Variogramme des résidus</strong>. Le variogramme utilisé dans le système décrit la continuité spatiale du résidu <span class="math inline">\(Y(\mathbf{x})\)</span>, après retrait de la dérive, et non celle de la variable brute <span class="math inline">\(Z(\mathbf{x})\)</span>. Son estimation soulève la même difficulté qu’en krigeage universel : la dérive doit être connue pour calculer les résidus, alors que son estimation dépend elle-même de la covariance de ces résidus. Une estimation itérative ou conjointe peut donc être nécessaire.</p>
+<p><strong>Cohérence des supports et des résolutions</strong>. Les variables auxiliaires doivent être définies sur un support compatible avec celui de la variable d’intérêt. Par exemple, l’association de données ponctuelles avec une variable auxiliaire moyennée sur de grandes cellules peut atténuer ou déformer la relation entre les deux variables. Les différences de résolution, de support ou de positionnement spatial doivent donc être prises en compte avant l’estimation.</p>
+<p><strong>Nombre et redondance des variables auxiliaires</strong>. L’ajout de variables auxiliaires augmente le nombre de contraintes du système et le nombre de coefficients à estimer. Leur nombre doit demeurer faible par rapport au nombre et à la répartition des données. Des variables fortement corrélées entre elles apportent une information redondante et peuvent rendre le système mal conditionné. Il est donc préférable de retenir un ensemble restreint de variables pertinentes et suffisamment distinctes.</p>
+<p><strong>Validation</strong>. L’apport des variables auxiliaires doit être vérifié par validation croisée. Le KED devrait réduire les erreurs d’estimation ou améliorer leur calibration par rapport à un modèle plus simple. Une amélioration apparente de l’ajustement de la dérive ne garantit pas, à elle seule, une meilleure capacité de prédiction.</p>
+<p><strong>Non-linéarité</strong>. Lorsque la relation entre la variable d’intérêt et la variable auxiliaire est non linéaire, l’utilisation directe de cette dernière dans le KED peut s’avérer inadéquate. Une transformation, comme le logarithme, la racine carrée ou l’inverse, peut alors être appliquée pour rapprocher la relation de la linéarité.</p>
+<!-- 9.9 : Krigeage avec dérive externe -->
+</section>
+</section>
+<section id="atelier-interactif-9.9-krigeage-avec-dérive-externe-ked" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-9.9-krigeage-avec-dérive-externe-ked">🧮 Atelier interactif 9.9 — Krigeage avec dérive externe (KED)</h2>
+<p>Une variable secondaire <span class="math inline">\(s(\mathbf{x})\)</span>, connue partout, sert de dérive : <span class="math inline">\(\mathbb{E}[Z(\mathbf{x})] = a_0 + a_1 \, s(\mathbf{x})\)</span>. Les données comportent un trou central. Comparez les estimateurs dans ce trou : le KED suit la forme de <span class="math inline">\(s(\mathbf{x})\)</span> (en superposition), tandis que le KO et le KS s’aplatissent et que le KU n’ajuste qu’un polynôme des coordonnées. Activez les courbes KO, KS et KU pour comparer, et déplacez le point à estimer <span class="math inline">\(\mathbf{x}_0\)</span> dans le trou.</p>
+<div class="geostat-widget" data-widget="c09_krigeage_derive_externe">
+  <div class="gw-placeholder">Chargement du widget (krigeage avec dérive externe)…</div>
+</div>
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../chapters/C08/index.html" class="pagination-link" aria-label="Variance de blocs, de dispersion et d’estimation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Variance de blocs, de dispersion et d’estimation</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../chapters/C10/index.html" class="pagination-link" aria-label="Géostatistique multivariable">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Géostatistique multivariable</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Code source</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Krigeage"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">abstract:</span><span class="co"> |</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">  Ce chapitre est consacré au krigeage, une méthode permettant d’estimer une teneur inconnue à partir des données disponibles, en tenant compte non seulement de la distance entre les points, mais aussi de leur corrélation et leur redondance. Le krigeage simple et le krigeage ordinaire sont d’abord présentés, puis le krigeage de bloc. Le choix du voisinage est également abordé, puisqu’il peut avoir un effet important sur les estimations. Enfin, le krigeage universel et le krigeage avec dérive externe sont présentés pour traiter les situations où la moyenne varie dans l’espace. Des ateliers interactifs sont proposés pour illustrer les différentes méthodes de krigeage et leurs propriétés.</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Objectifs d'apprentissage</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Expliquer les différences entre krigeage simple, krigeage ordinaire et krigeage universel ;</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Dériver les équations du krigeage à partir du principe de minimisation de la variance d'estimation ;</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Construire et résoudre les systèmes de krigeage simple et ordinaire, calculer l'estimation et la variance de krigeage ;</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Formuler le krigeage de bloc et comprendre l'effet de régression ;</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Expliquer les principales propriétés du krigeage (interpolation exacte, effet d'écran, lissage, biais conditionnel) ;</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Utiliser et interpréter la validation croisée par krigeage pour évaluer la qualité du modèle de variogramme.</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">## Référence</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>Ce chapitre s’appuie principalement sur le livre suivant :</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>Chilès, J., &amp; Delfiner, P. (2012). Geostatistics: Modeling Spatial Uncertainty. John Wiley &amp; Sons.</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>{{&lt; include 09-01.qmd &gt;}}</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>{{&lt; include 09-02.qmd &gt;}}</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>{{&lt; include 09-03.qmd &gt;}}</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>{{&lt; include 09-04.qmd &gt;}}</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>{{&lt; include 09-05.qmd &gt;}}</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>{{&lt; include 09-06.qmd &gt;}}</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>{{&lt; include 09-07.qmd &gt;}}</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>{{&lt; include 09-08.qmd &gt;}}</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Géostatistique et géologie minière</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Danlauz/glq3401-3651/edit/main/chapters/C09/index.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/Danlauz/glq3401-3651/issues/new" class="toc-action"><i class="bi empty"></i>Signaler un problème ou<br>formuler une suggestion</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Ce livre a été réalisé avec <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+<script type="module" src="../../scripts/geostat-js/loader.js"></script>
+<script src="../../scripts/geostat-js/notebook-button.js" defer=""></script>
+
+
+
+
+</body></html>

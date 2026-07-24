@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c09_systeme">
+  <div class="gw-placeholder">Chargement du widget (calculateur système)…</div>
+</div>
+```

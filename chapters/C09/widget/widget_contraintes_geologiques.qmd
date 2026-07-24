@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c09_contraintes_geologiques">
+  <div class="gw-placeholder">Chargement (contraintes géologiques)…</div>
+</div>
+```

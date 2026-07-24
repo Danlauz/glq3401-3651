@@ -1,0 +1,52 @@
+---
+title: "Géostatistique multivariable"
+abstract: |
+  Ce chapitre introduit le cokrigeage, c’est-à-dire l’application du krigeage à plusieurs variables. Cette méthode permet d’estimer une variable principale en exploitant également l’information fournie par d’autres variables corrélées. La covariance croisée et le variogramme croisé, qui décrivent les relations entre les différentes variables, sont d’abord définis. Le cokrigeage simple, ordinaire et universel est ensuite présenté. Le chapitre aborde également certains cas particuliers, notamment celui d’une variable secondaire très densément échantillonnée ou liée à la variable principale par une relation connue. Les fonctions aléatoires multivariées et le modèle linéaire de corégionalisation sont alors introduits afin de construire des modèles cohérents entre plusieurs variables. Enfin, la discussion s’étend aux modèles spatio-temporels, dans lesquels les données varient à la fois dans l’espace et dans le temps.
+---
+
+::: {.callout-important}
+## Objectifs d'apprentissage
+
+À la fin de ce chapitre, vous serez en mesure de :
+
+- Décrire la mécanique du cokrigeage comme généralisation du krigeage au cas multivariable;
+
+- Calculer et interpréter des covariances croisées et des variogrammes croisés;
+
+- Dériver et résoudre les systèmes de cokrigeage simple, ordinaire et universel;
+
+- Définir les paramètres d'un modèle linéaire de corégionalisation et vérifier son admissibilité;
+
+- Analyser les situations où le cokrigeage apporte un gain significatif par rapport au krigeage;
+
+- Expliquer les principes des modèles spatio-temporels en géostatistique.
+:::
+
+::: {.callout-note}
+## Référence
+
+Ce chapitre s'appuie principalement sur le livre suivant :
+
+Wackernagel, H. (2003). *Multivariate Geostatistics: An Introduction with Applications* (3ᵉ éd.). Springer-Verlag, Berlin.
+:::
+
+
+{{< include 10-01.qmd >}}
+
+{{< include 10-02.qmd >}}
+
+{{< include 10-03.qmd >}}
+
+{{< include 10-04.qmd >}}
+
+{{< include 10-05.qmd >}}
+
+{{< include 10-06.qmd >}}
+
+{{< include 10-07.qmd >}}
+
+{{< include 10-08.qmd >}}
+
+{{< include 10-09.qmd >}}
+
+{{< include 10-10.qmd >}}

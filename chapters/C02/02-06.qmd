@@ -1,0 +1,31 @@
+## Courbes de Lane
+
+La teneur de coupure optimale est nécessairement l'une des trois teneurs de coupure limites ou des trois teneurs de coupure d'équilibre.
+
+Afin de l'identifier, il suffit de tracer les courbes de profit de Lane. Étant donné que la distribution des teneurs est connue, il est possible de calculer $x_c$ et $g_c$ pour toute valeur de $c$. On peut ainsi exprimer le profit par tonne de matériau minéralisé pour les trois cas, notés $v_1$, $v_2$ et $v_3$, correspondant respectivement aux limites de la mine, du concentrateur et du marché.
+
+Cela conduit aux courbes du profit par tonne de matériau minéralisé en fonction de la teneur de coupure $c$, explorables dans l'atelier interactif ci-dessous.
+
+### Exemple visuel
+
+L'atelier ci-dessous illustre l'effet des paramètres sur les courbes de profit de Lane. On peut y faire varier le prix du métal $p$, la récupération $y$, les coûts de minage $m$ et de traitement $h$, les frais fixes $f$, ainsi que les capacités de la mine $M$, du concentrateur $H$ et du marché $K$. La distribution des teneurs, ici log-normale, est également prise en compte. À chaque modification, les courbes se déplacent et la teneur de coupure optimale se réajuste : on observe ainsi directement comment chaque paramètre influence la solution.
+
+#### Interprétation des courbes
+Sur la courbe de la mine, on est à la limite de ce que la mine peut extraire. Pour la teneur de coupure $c$, le tonnage extrait correspond exactement à la capacité disponible. Au-dessus de cette courbe, le scénario n'est plus possible, car il faudrait en extraire davantage que la mine ne peut fournir.
+
+Si un point se situe au-dessus de cette courbe, le profit correspondant ne peut pas être atteint avec la capacité de la mine. Il faudrait en extraire davantage que ce que la mine peut fournir. À l'inverse, un point situé sous la courbe correspond à une situation où la mine n'est pas utilisée à pleine capacité.
+
+Le même raisonnement s'applique au concentrateur comme au marché. Pour qu'une combinaison $(c, v)$ soit possible, elle doit satisfaire simultanément les trois limites. La partie utile du graphique est donc celle qui reste sous les trois courbes.
+
+C'est pourquoi l'enveloppe inférieure est importante. Elle montre, pour chaque teneur de coupure, le profit maximal réellement atteignable sans dépasser la capacité du système. La meilleure solution est alors le point le plus haut de cette enveloppe.
+
+
+## 🧮 Atelier interactif 2.4 — Courbes de Lane et calculateur {.unnumbered}
+
+Cet atelier permet d'explorer dynamiquement les courbes de profit associées à la mine, au concentrateur et au marché. En modifiant les paramètres économiques, techniques et statistiques du gisement, vous pouvez observer en temps réel l'effet de ces changements sur les teneurs limites, les teneurs d'équilibre et la teneur de coupure optimale.
+
+Il s'agit également d'un calculateur que vous pouvez utiliser pour valider vos résultats et vous aider à résoudre les exercices.
+
+Cette interactivité n'est disponible que dans la version web de ce document.
+
+{{< include widget/widget_courbe_lane.qmd >}}

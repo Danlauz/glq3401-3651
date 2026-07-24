@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c07_anisotropie_3D">
+  <div class="gw-placeholder">Chargement (anisotropie 3D)…</div>
+</div>
+```

@@ -1,0 +1,22 @@
+/* ================================
+   Sidebar Quarto : PARTS seulement
+   (cache tout ce qui est niveau 2+)
+   ================================ */
+
+/* Cache tous les items qui ne sont PAS au niveau 1 */
+#quarto-sidebar .sidebar-item[aria-level]:not([aria-level="1"]) {
+  display: none !important;
+}
+
+/* Cache aussi les sous-listes (sécurité) */
+#quarto-sidebar .sidebar-item-container ul,
+#quarto-sidebar .sidebar-navigation ul ul {
+  display: none !important;
+}
+
+/* Met les PARTS en évidence */
+#quarto-sidebar .sidebar-item[aria-level="1"] > .sidebar-item-container > a,
+#quarto-sidebar .sidebar-item[aria-level="1"] > .sidebar-item-container > .sidebar-item-text {
+  font-weight: 700;
+  font-size: 0.95rem;
+}

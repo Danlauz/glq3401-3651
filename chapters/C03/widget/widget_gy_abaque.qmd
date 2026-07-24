@@ -1,0 +1,18 @@
+<div class="geostat-widget-wrap">
+
+<div class="geostat-widget"
+     id="w-c03-gy-abaque"
+     data-widget="c03_gy_abaque"
+     data-version="0.1.0">
+
+  <div class="gw-placeholder">
+    <div class="gw-spinner"></div>
+    <p>Chargement de l'abaque…</p>
+  </div>
+
+  <noscript>
+    <p class="gw-fallback-note">JavaScript désactivé : cet atelier interactif nécessite JavaScript.</p>
+  </noscript>
+</div>
+
+</div>

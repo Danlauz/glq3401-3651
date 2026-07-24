@@ -1,0 +1,23 @@
+```{=html}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+```
+
+<div class="geostat-widget-wrap">
+
+<div class="geostat-widget"
+     id="w-c01-blockmodel-v2"
+     data-widget="c01_blockmodel"
+     data-version="0.1.0">
+
+  <div class="gw-placeholder">
+    <div class="gw-spinner"></div>
+    <p>Chargement du modele de blocs (≈ 34 ko)…</p>
+  </div>
+
+  <noscript>
+    <p class="gw-fallback-note">JavaScript desactive : la version statique est ci-dessous.</p>
+    <img class="gw-fallback-img" src="/_assets/c01/blockmodel_fallback.png" alt="Modele de blocs 3D — version statique" />
+  </noscript>
+</div>
+
+</div>

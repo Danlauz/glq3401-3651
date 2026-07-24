@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c12_quantification_incertitude">
+  <div class="gw-placeholder">Chargement (quantification d'incertitude)…</div>
+</div>
+```

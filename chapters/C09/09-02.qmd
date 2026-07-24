@@ -1,0 +1,164 @@
+## Krigeage simple
+
+Le krigeage simple s'applique à une fonction aléatoire $Z(\mathbf{x})$ stationnaire d'ordre deux, dont la moyenne et la fonction de covariance $C(\mathbf{h})$ sont supposées connues. On décompose la variable en une moyenne constante et un résidu :
+
+$$
+Z(\mathbf{x}) = m + Y(\mathbf{x})
+$$
+
+où $m = \mathbb{E}[Z(\mathbf{x})]$ est une constante et $Y(\mathbf{x})$ un résidu stationnaire de moyenne nulle. Comme le retrait d'une constante ne modifie pas la covariance, $C(\mathbf{h})$ est aussi la covaraince du résidu $Y$ ($C_Z(\mathbf{h})$ = $C_Y(\mathbf{h})$), et la variance a priori de la variable vaut $\sigma^2 = C(\mathbf{0})$.
+
+Dire que la moyenne $m$ est « connue » ne signifie pas nécessairement que sa valeur réelle est connue avec certitude. Il s’agit plutôt d’une hypothèse de modélisation : $m$ est fixée à partir d’informations extérieures, par exemple d’une longue série de campagnes d’échantillonnage ou d’un très grand nombre de données. L’estimation porte alors uniquement sur les écarts par rapport à cette moyenne.
+
+Cette hypothèse est forte et rarement vérifiée en pratique. Le krigeage ordinaire, qui ne suppose pas la connaissance de la moyenne, lui est donc souvent préféré pour l’estimation. Le krigeage simple demeure néanmoins particulièrement utile en simulation géostatistique, notamment lorsque la variable simulée suit une loi de distribution préalablement définie, dont la moyenne est fixée. C’est notamment le cas des simulations gaussiennes, pour lesquelles la variable transformée est généralement centrée et possède donc une moyenne connue, souvent égale à zéro.
+
+Une fois $m$ fixée, les résidus $Y_i = Z_i - m$ sont connus aux points de données, et seul le résidu $Y_0 = Z_0 - m$ à la cible reste à estimer. On estime alors la valeur inconnue $Z_0 = Z(\mathbf{x}_0)$ en ajoutant à la moyenne le résidu krigé :
+
+$$
+Z_0^* = m + \sum_{i=1}^{n} \lambda_i \, Y_i = m + \sum_{i=1}^{n} \lambda_i \, (Z_i - m)
+$$
+
+où $Z_i = Z(\mathbf{x}_i)$ est la valeur observée au point $\mathbf{x}_i$ et $\lambda_i$ son poids. Cette forme est sans biais quels que soient les poids, comme on le vérifie ci-dessous; les poids sont donc entièrement déterminés par la minimisation de la variance de l'erreur d'estimation, $\operatorname{Var}(e)=\operatorname{Var}(Z_0 - Z_0^*)$, définie au chapitre précédent.
+
+### Condition de non-biais
+
+En prenant l'espérance, et comme $\mathbb{E}[Z_i] = m$ :
+
+$$
+\mathbb{E}[Z_0^*] = \mathbb{E}\!\left[m + \sum_{i=1}^{n} \lambda_i (Z_i - m)\right] = m + \sum_{i=1}^{n} \lambda_i \big(\mathbb{E}[Z_i] - m\big) = m + \sum_{i=1}^{n} \lambda_i (m - m) = m = \mathbb{E}[Z_0]
+$$
+
+L'estimateur est donc sans biais quels que soient les poids $\lambda_i$. Aucune contrainte sur la somme des poids n'est nécessaire à cause que la moyenne est connue. Comme aucune contrainte n'est nécessaire sur les poids pour s,tisfaire la contrainte de non-bais, il est apossible dd'avoir des poisd de krigeage qui seront négatifs et voir supérieur à 1. Cela peut poser problème dans l,estimation des 
+
+### Dérivation du système de krigeage simple
+
+On cherche les poids $\lambda_i$ qui minimisent la variance de l'erreur d'estimation :
+
+$$
+\operatorname{Var}(e) = \operatorname{Var}(Z_0 - Z_0^*)
+$$
+
+En remplaçant l'estimateur $Z_0^* = m + \sum_{i=1}^{n} \lambda_i (Z_i - m)$, l'erreur devient
+
+$$
+Z_0 - Z_0^* = Z_0 - m - \sum_{i=1}^{n} \lambda_i (Z_i - m) = (Z_0 - m) - \sum_{i=1}^{n} \lambda_i (Z_i - m).
+$$
+
+Chaque terme se regroupe avec la moyenne pour former un résidu centré, $Y_0 = Z_0 - m$ et $Y_i = Z_i - m$ :
+
+$$
+Z_0 - Z_0^* = Y_0 - \sum_{i=1}^{n} \lambda_i Y_i.
+$$
+
+La moyenne $m$ disparaît de l'erreur : elle n'y intervient que par l'intermédiaire des résidus. Comme la variance est insensible à l'ajout d'une constante et que les résidus ont la même covariance que $Z$, la variance d'estimation et les poids ne dépendent pas de $m$. C'est précisément ce qui permet de travailler avec la variable centrée.
+
+Pour développer cette variance, on applique la règle de la variance d'une différence, $\operatorname{Var}(A - B) = \operatorname{Var}(A) + \operatorname{Var}(B) - 2\operatorname{Cov}(A, B)$, avec $A = Y_0$ et $B = \sum_{i=1}^{n} \lambda_i Y_i$ :
+
+$$
+\operatorname{Var}(e) = \operatorname{Var}(Y_0) + \operatorname{Var}\!\left(\sum_{i=1}^{n} \lambda_i Y_i\right) - 2\,\operatorname{Cov}\!\left(Y_0,\ \sum_{i=1}^{n} \lambda_i Y_i\right).
+$$
+
+On traite les trois termes séparément. Le premier est la variance du résidu à la cible :
+
+$$
+\operatorname{Var}(Y_0) = C(\mathbf{0}).
+$$
+
+Le deuxième est la variance d'une combinaison linéaire. La covariance étant bilinéaire, on sort les poids et le produit des deux sommes devient une somme double :
+
+$$
+\operatorname{Var}\!\left(\sum_{i=1}^{n} \lambda_i Y_i\right)
+= \sum_{i=1}^{n} \sum_{j=1}^{n} \lambda_i \lambda_j \, \operatorname{Cov}(Y_i, Y_j)
+= \sum_{i=1}^{n} \sum_{j=1}^{n} \lambda_i \lambda_j \, C(\mathbf{x}_i - \mathbf{x}_j).
+$$
+
+Le troisième reli les observations au point à estimer :
+
+$$
+\operatorname{Cov}\!\left(Y_0,\ \sum_{i=1}^{n} \lambda_i Y_i\right)
+= \sum_{i=1}^{n} \lambda_i \, \operatorname{Cov}(Y_0, Y_i)
+= \sum_{i=1}^{n} \lambda_i \, C(\mathbf{x}_i - \mathbf{x}_0).
+$$
+
+Par simplicité de notation, on a que $\operatorname{Cov}(Y_i, Y_j) = \operatorname{Cov}(Z_i, Z_j) = C(\mathbf{x}_i - \mathbf{x}_j) = C_{ij}$, $\operatorname{Cov}(Y_0, Y_i) = \operatorname{Cov}(Z_0, Z_i) = C(\mathbf{x}_i - \mathbf{x}_0) = C_{i0}$ et $\operatorname{Var}(Y_0) = \operatorname{Var}(Z_0) = C(\mathbf{0})$. En reportant les trois termes :
+
+$$
+\operatorname{Var}(e) = C(\mathbf{0}) + \sum_{i=1}^{n} \sum_{j=1}^{n} \lambda_i \lambda_j \, C_{ij} - 2 \sum_{i=1}^{n} \lambda_i \, C_{i0}.
+$$
+
+Cette variance est une fonction quadratique des poids; on la minimise en annulant ses dérivées partielles par rapport à chaque $\lambda_k$. Dans la somme double, l'indice $k$ apparaît deux fois — une fois comme $i$, une fois comme $j$ — et la symétrie $C_{kj} = C_{jk}$ réunit ces deux contributions, d'où le facteur 2 :
+
+$$
+\frac{\partial \sigma_K^2}{\partial \lambda_k} = 2 \sum_{j=1}^{n} \lambda_j \, C_{kj} - 2 \, C_{k0} = 0.
+$$
+
+En divisant par 2, on obtient une équation par point $k$, soit le système de krigeage simple :
+
+$$
+\sum_{j=1}^{n} \lambda_j \, C_{kj} = C_{k0}, \quad k = 1, \dots, n.
+$$
+
+Le système comporte $n$ équations, une pour chaque donnée observée, et $n$ inconnues : les poids de krigeage. Comme le modèle de covariance est admissible et que les points de données sont distincts, la matrice du système est définie positive, donc inversible : le système admet une solution unique. Cette même propriété garantit que la variance $\sigma_K^2$, fonction quadratique des poids, est strictement convexe; la solution du système en est donc bien le minimum.
+
+### Variance de krigeage simple
+
+En reportant la solution dans l'expression de $\operatorname{Var}(e)$, on obtient une forme simplifié de la varaince d'estimation nommé la variance de krigeage simple ($\sigma_{SK}^2$), c'est-à-dire la valeur minimale de la variance d'estimation :
+
+$$
+\sigma_{SK}^2 = \operatorname{Var}(e) = C(\mathbf{0}) - \sum_{i=1}^n \lambda_i \, C_{i0}
+$$
+
+Elle part de la variance a priori $\sigma^2 = C(\mathbf{0})$ et lui retranche l'information apportée par les données pondérées. Plus les données sont proches de la cible et bien réparties autour d'elle, plus la réduction de la variance est forte.
+
+### Comportement loin des données
+
+Lorsque la cible est éloignée de toutes les données au-delà de la portée, les covariances $C_{i0}$ sont nulles (modèle à portée finie, comme le sphérique) ou négligeables (modèle à portée effective, comme l'exponentiel ou le gaussien). Le système donne alors des poids nuls, $\lambda_i \to 0 \forall i=1,...,n$, et :
+
+- $Z_0^* \to m$ : l'estimation revient à la moyenne;
+- $\sigma_{SK}^2 \to \sigma^2$ : la variance de krigeage tend vers la variance a priori.
+
+En l'absence d'information spatiale utile, le krigeage simple retourne donc la moyenne, avec une incertitude maximale.
+
+### Forme matricielle
+
+Le système de krigeage est un ensemble de $n$ équations linéaires en les poids; on peut donc l'écrire sous forme matricielle, $\mathbf{C}\, \boldsymbol{\lambda} = \mathbf{c}$ :
+
+$$
+\underbrace{\begin{bmatrix}
+C_{11} & C_{12} & C_{13} & \cdots & C_{1n} \\
+C_{21} & C_{22} & C_{23} & \cdots & C_{2n} \\
+C_{31} & C_{32} & C_{33} & \cdots & C_{3n} \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+C_{n1} & C_{n2} & C_{n3} & \cdots & C_{nn}
+\end{bmatrix}}_{\mathbf{C}}
+\underbrace{\begin{bmatrix}
+\lambda_1 \\ \lambda_2 \\ \lambda_3 \\ \vdots \\ \lambda_n
+\end{bmatrix}}_{\boldsymbol{\lambda}}
+=
+\underbrace{\begin{bmatrix}
+C_{10} \\ C_{20} \\ C_{30} \\ \vdots \\ C_{n0}
+\end{bmatrix}}_{\mathbf{c}}
+$$
+
+La matrice $\mathbf{C}$ rassemble les covariances entre les données, et le vecteur $\mathbf{c}$, les covariances entre les données et le point à estimer. $\mathbf{C}$ est symétrique et définie positive dès que le modèle de covariance est valide et que les points d'échantillonnage sont distincts, la matrice $\mathbf{C}$ est donc inversible :
+
+$$
+\boldsymbol{\lambda} = \mathbf{C}^{-1} \mathbf{c}.
+$$
+
+La variance de krigeage s'écrit alors, sous forme matricielle,
+
+$$
+\sigma_{SK}^2 = C(\mathbf{0}) - \boldsymbol{\lambda}^\top \mathbf{c}.
+$$
+
+## 🧮 Atelier interactif 9.1 — Krigeage simple (KS) {.unnumbered}
+
+::: {.content-visible when-format="html"}
+La moyenne $m$ est supposée connue. Faites varier $m$, la portée et l'effet de pépite, puis déplacez la cible. À mesure qu'elle s'éloigne des données, l'estimation retombe sur la moyenne ($Z_0^* \to m$) et la variance remonte jusqu'au palier ($\sigma_{SK}^2 \to C(\mathbf{0})$). Les poids $\lambda_i$, eux, ne sont soumis à aucune contrainte.
+{{< include widget/widget_krigeage_simple.qmd >}}
+:::
+
+::: {.content-visible unless-format="html"}
+Cet atelier interactif n'est disponible que dans la version web du chapitre.
+:::

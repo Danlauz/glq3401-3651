@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c09_planification_echantillonnage">
+  <div class="gw-placeholder">Chargement (planification échantillonnage)…</div>
+</div>
+```

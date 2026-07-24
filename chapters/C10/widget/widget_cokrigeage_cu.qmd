@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c10_cokrigeage_cu">
+  <div class="gw-placeholder">Chargement du widget (cokrigeage universel)…</div>
+</div>
+```

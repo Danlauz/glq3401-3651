@@ -1,0 +1,300 @@
+## Propriétés mathématiques du variogramme
+
+Le variogramme possède plusieurs propriétés qui découlent de sa définition. Certaines constituent des conditions mathématiques que tout modèle de variogramme doit respecter, tandis que d’autres correspondent à des comportements fréquemment observés dans les phénomènes spatiaux.
+
+### 1. Non-négativité
+
+Le variogramme est toujours positif ou nul :
+
+$$
+\gamma(\mathbf{h}) \geq 0.
+$$
+
+Cette propriété découle directement de sa définition :
+
+$$
+\gamma(\mathbf{h})
+=
+\frac{1}{2}
+\mathbb{E}
+\left[
+\left(
+Z(\mathbf{x}+\mathbf{h})-Z(\mathbf{x})
+\right)^2
+\right].
+$$
+
+Comme le carré d’une différence est toujours positif ou nul, son espérance l’est également.
+
+### 2. Valeur à l’origine et effet de pépite
+
+Par définition, le variogramme est toujours nul exactement à l’origine :
+
+$$
+\gamma(\mathbf{0})=0,
+$$
+
+puisqu’une valeur comparée à elle-même ne présente aucune différence :
+
+$$
+Z(\mathbf{x}+\mathbf{0})-Z(\mathbf{x})=0.
+$$
+
+En l’absence d’effet de pépite, le variogramme tend aussi vers zéro lorsque la distance tend vers zéro :
+
+$$
+\lim_{\mathbf{h}\to\mathbf{0}}
+\gamma(\mathbf{h})
+=
+0.
+$$
+
+En présence d’un effet de pépite, le variogramme demeure nul exactement à l’origine, mais il présente une discontinuité dès que la distance devient non nulle :
+
+$$
+\gamma(\mathbf{0})=0,
+$$
+
+alors que
+
+$$
+\lim_{\substack{\mathbf{h}\to\mathbf{0}\\\mathbf{h}\neq\mathbf{0}}}
+\gamma(\mathbf{h})
+=
+c_0,
+$$
+
+où $c_0$ est l’effet de pépite.
+
+Un modèle comportant un effet de pépite peut donc être représenté sous la forme :
+
+$$
+\gamma(\mathbf{h})
+=
+\begin{cases}
+0, & \mathbf{h}=\mathbf{0},\\
+c_0+\gamma_s(\mathbf{h}), & \mathbf{h}\neq\mathbf{0},
+\end{cases}
+$$
+
+où $\gamma_s(\mathbf{h})$ représente la composante spatialement structurée du variogramme et tend vers zéro lorsque $\mathbf{h}$ tend vers $\mathbf{0}$.
+
+::: {.callout-note title="À retenir — Effet de pépite"}
+L’effet de pépite n’est pas la valeur du variogramme exactement à l’origine. Il correspond au saut entre $\gamma(\mathbf{0})=0$ et la valeur du variogramme pour une distance non nulle aussi petite que possible.
+:::
+
+Cette discontinuité traduit une variabilité qui ne peut pas être résolue à l’échelle d’observation. Elle peut provenir de deux principales sources :
+
+- une variabilité géologique à une échelle plus fine que l’espacement ou le support des échantillons;
+- des erreurs de localisation, d’échantillonnage, de préparation ou d’analyse.
+
+Deux échantillons distincts prélevés à très faible distance peuvent ainsi présenter des teneurs différentes. Le variogramme seul ne permet généralement pas de séparer la variabilité géologique à petite échelle des erreurs de mesure. Des échantillons répétés ou des données de contrôle de qualité sont nécessaires pour mieux distinguer ces contributions.
+
+Dans un variogramme expérimental, aucune paire ne correspond habituellement à une distance exactement nulle. L’effet de pépite est donc estimé par extrapolation à partir des premières classes de distance ou à l’aide d’un modèle théorique.
+
+### 3. Symétrie
+
+Le variogramme est une fonction paire :
+
+$$
+\gamma(\mathbf{h})
+=
+\gamma(-\mathbf{h}).
+$$
+
+En effet, l’inversion du vecteur de séparation change seulement l’ordre des deux valeurs :
+
+$$
+\left[
+Z(\mathbf{x}+\mathbf{h})-Z(\mathbf{x})
+\right]^2
+=
+\left[
+Z(\mathbf{x})-Z(\mathbf{x}+\mathbf{h})
+\right]^2.
+$$
+
+Une direction et son opposée sont donc équivalentes. Par exemple, en deux dimensions, les orientations de $30^\circ$ et de $210^\circ$ décrivent le même axe de continuité.
+
+### 4. Condition d’admissibilité
+
+Toute fonction positive et symétrique n’est pas nécessairement un variogramme valide. Pour pouvoir être utilisée dans les méthodes géostatistiques, une fonction doit également être conditionnellement négative semi-définie.
+
+Pour un ensemble de $n$ positions $\mathbf{x}_1,\ldots,\mathbf{x}_n$ et de coefficients $\lambda_1,\ldots,\lambda_n$ dont la somme est nulle,
+
+$$
+\sum_{i=1}^{n}\lambda_i=0,
+$$
+
+la fonction doit satisfaire :
+
+$$
+\sum_{i=1}^{n}
+\sum_{j=1}^{n}
+\lambda_i\lambda_j
+\gamma(\mathbf{x}_i-\mathbf{x}_j)
+\leq 0.
+$$
+
+Cette condition garantit la cohérence mathématique du modèle et permet notamment d’obtenir des variances d’estimation valides. Elle explique pourquoi on ne peut pas ajuster n’importe quelle courbe à un variogramme expérimental : le modèle retenu doit appartenir à une famille de variogrammes admissibles.
+
+### 5. Évolution avec la distance
+
+Dans de nombreux phénomènes naturels, le variogramme tend à augmenter avec la distance. Les valeurs observées à faible distance sont généralement semblables, de sorte que leurs différences sont faibles. Lorsque la distance augmente, les différences tendent à devenir plus importantes.
+
+Cette croissance n’est toutefois pas une propriété mathématique obligatoire. Un variogramme peut présenter des diminutions locales ou des oscillations lorsque le phénomène possède une organisation périodique.
+
+Par exemple, une succession régulière de couches géologiques peut produire des valeurs semblables à certaines distances et différentes à d’autres. Le variogramme peut alors augmenter, diminuer, puis augmenter de nouveau. Ce comportement est appelé **effet de trou**.
+
+Un variogramme expérimental peut également être irrégulier en raison :
+
+- d’un nombre insuffisant de paires;
+- de valeurs extrêmes;
+- d’une anisotropie non prise en compte;
+- d’une tendance spatiale;
+- d’une structure géologique complexe;
+- de classes de distance ou de tolérances mal choisies.
+
+L’interprétation ne doit donc pas reposer sur chaque fluctuation du variogramme expérimental, mais sur sa structure générale et sur sa cohérence avec le phénomène étudié.
+
+### 6. Relation avec la covariance et la corrélation
+
+Sous l’hypothèse de stationnarité d’ordre 2, la continuité spatiale peut également être décrite à l’aide de la covariance :
+
+$$
+C(\mathbf{h})
+=
+\operatorname{Cov}
+\left[
+Z(\mathbf{x}),
+Z(\mathbf{x}+\mathbf{h})
+\right].
+$$
+
+Lorsque la moyenne $m$ est constante, cette covariance s’écrit :
+
+$$
+C(\mathbf{h})
+=
+\mathbb{E}
+\left[
+\left(
+Z(\mathbf{x})-m
+\right)
+\left(
+Z(\mathbf{x}+\mathbf{h})-m
+\right)
+\right].
+$$
+
+À l’origine, la covariance correspond à la variance de la fonction aléatoire :
+
+$$
+C(\mathbf{0})
+=
+\operatorname{Var}[Z(\mathbf{x})].
+$$
+
+La fonction de corrélation spatiale est obtenue en normalisant la covariance par cette variance :
+
+$$
+\rho(\mathbf{h})
+=
+\frac{C(\mathbf{h})}{C(\mathbf{0})}.
+$$
+
+Elle satisfait :
+
+$$
+\rho(\mathbf{0})=1.
+$$
+
+Sous stationnarité d’ordre 2, le variogramme et la covariance sont liés par :
+
+$$
+\gamma(\mathbf{h})
+=
+C(\mathbf{0})-C(\mathbf{h}).
+$$
+
+La relation peut également être exprimée en fonction de la corrélation :
+
+$$
+\gamma(\mathbf{h})
+=
+C(\mathbf{0})
+\left[
+1-\rho(\mathbf{h})
+\right].
+$$
+
+Le variogramme et la covariance décrivent donc la même structure spatiale, mais de manière inverse :
+
+- lorsque la covariance est élevée, le variogramme est faible;
+- lorsque la covariance diminue, le variogramme augmente;
+- lorsque la covariance est négative, le variogramme peut dépasser $C(\mathbf{0})$.
+
+Si la covariance tend vers zéro lorsque la distance augmente, les valeurs deviennent non corrélées et le variogramme tend vers la variance :
+
+$$
+\lim_{\lVert\mathbf{h}\rVert\to\infty}
+C(\mathbf{h})
+=
+0
+\quad\Longrightarrow\quad
+\lim_{\lVert\mathbf{h}\rVert\to\infty}
+\gamma(\mathbf{h})
+=
+C(\mathbf{0}).
+$$
+
+La valeur $C(\mathbf{0})$ constitue alors le **palier** du variogramme.
+
+Une covariance nulle n’implique toutefois pas nécessairement que les valeurs sont indépendantes. Cette équivalence exige des hypothèses supplémentaires, notamment dans le cas d’une fonction aléatoire gaussienne.
+
+Sous la seule hypothèse intrinsèque, la covariance peut ne pas être définie. Le variogramme demeure alors utilisable et peut croître sans atteindre de palier.
+
+La @fig-gamma-covariance illustre la relation entre ces deux fonctions. Lorsque la covariance décroît, le variogramme augmente de manière complémentaire, leur somme demeurant égale à $C(\mathbf{0})$.
+
+![Lien entre la covariance et le variogramme sous stationnarité d’ordre 2. La covariance $C(h)$ part de la variance $C(0)$ et décroît avec la distance, tandis que le variogramme $\gamma(h)=C(0)-C(h)$ augmente. Lorsque la covariance tend vers zéro, le variogramme tend vers son palier $C(0)$.](images/C7_gamma_covariance.png){#fig-gamma-covariance fig-align="center"}
+
+## 🧮 Atelier interactif 7.2 — Covariance, corrélation et variogramme {.unnumbered}
+
+::: {.content-visible when-format="html"}
+À gauche, le nuage représente les couples $(z(\mathbf{x}),z(\mathbf{x}+\mathbf{h}))$ pour le décalage $\mathbf{h}$ sélectionné. Lorsque les deux valeurs sont semblables, les points se situent près de la diagonale. Lorsque leur différence augmente, ils s’en éloignent.
+
+Pour une paire donnée, le carré de la distance perpendiculaire du point à la diagonale est égal à sa contribution variographique :
+
+$$
+d_{\perp}^{\,2}
+=
+\frac{1}{2}
+\left[
+z(\mathbf{x}+\mathbf{h})-z(\mathbf{x})
+\right]^2.
+$$
+
+La moyenne de ces distances au carré pour toutes les paires de la classe correspond au variogramme expérimental $\widehat{\gamma}(\mathbf{h})$.
+
+À droite, l’évolution conjointe du variogramme $\gamma(h)$, de la covariance $C(h)$ et de la corrélation $\rho(h)$ permet de visualiser les relations :
+
+$$
+\gamma(h)
+=
+C(0)-C(h)
+$$
+
+et
+
+$$
+\rho(h)
+=
+\frac{C(h)}{C(0)}.
+$$
+
+{{< include widget/widget_definition.qmd >}}
+:::
+
+::: {.content-visible unless-format="html"}
+Cet atelier interactif est disponible uniquement dans la version web du chapitre. Il illustre le lien entre le nuage des couples $z(\mathbf{x})$ et $z(\mathbf{x}+\mathbf{h})$, leurs écarts par rapport à la diagonale, le variogramme, la covariance et la corrélation spatiale.
+:::

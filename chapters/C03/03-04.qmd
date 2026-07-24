@@ -1,0 +1,107 @@
+## Calcul de la densité théorique
+
+Certaines mines calculent la densité du minerai directement à partir des analyses chimiques. La densité est une variable importante, car elle détermine la quantité de métal contenue dans un volume donné : si la densité varie, le tonnage varie aussi. Elle intervient donc dans les estimations de ressources, les calculs de dilution et les bilans économiques.
+
+Deux approches existent. La première est une **formule empirique obtenue par régression** : à partir d'un jeu d'échantillons dont la densité a été mesurée physiquement, on ajuste une relation entre la densité et les teneurs chimiques. Elle est rapide à appliquer, mais purement statistique : elle n'est valable que sur la plage de teneurs ayant servi à la calibration, d'autant que la relation densité-teneur n'est pas linéaire (voir plus bas). La seconde est un **calcul fondé sur la minéralogie déduite de l'analyse chimique** : on reconstruit les proportions de minéraux à partir des teneurs, puis on en déduit la densité. C'est cette approche, physiquement fondée, que nous développons ici.
+
+### Principe
+
+Chaque élément mesuré par l'analyse chimique provient d'un ou de plusieurs minéraux de composition connue. En partant des teneurs, on reconstitue la proportion massique de chaque minéral, puis on additionne les volumes qu'ils occupent. Pour une masse donnée, un minéral de proportion $t_i$ et de densité $d_i$ occupe un volume $t_i/d_i$, et la densité théorique vaut :
+
+$$
+d_{\text{moy}} = \frac{1}{\sum_{i=1}^{n} \dfrac{t_i}{d_i}}
+$$
+
+La densité ne se moyenne donc pas arithmétiquement : ce sont les volumes, et non les densités, qui s'additionnent.
+
+### Cas d'un seul minéral porteur
+
+Prenons un gisement de cuivre où tout le cuivre est contenu dans la chalcopyrite (densité 4,2; 35 % Cu), seul sulfure présent, la gangue ayant une densité voisine de 3. Pour une roche à 1 % Cu, la proportion de chalcopyrite est $1/0{,}35 = 2{,}86\,\%$. Dans 100 g de roche, ces 2,86 g de chalcopyrite occupent $2{,}86/4{,}2 = 0{,}68$ cm³, et les 97,14 g de gangue $97{,}14/3 = 32{,}38$ cm³, soit un volume total de 33,06 cm³ et une densité de $100/33{,}06 = 3{,}02$ g/cm³.
+
+Pour une roche cinq fois plus riche, à 5 % Cu, on obtient $5/0{,}35 = 14{,}29\,\%$ de chalcopyrite, un volume total de 31,97 cm³ et une densité de $100/31{,}97 = 3{,}13$ g/cm³.
+
+### Une relation non linéaire
+
+En multipliant la teneur en cuivre par cinq (de 1 % à 5 %), la densité ne passe que de 3,02 à 3,13 g/cm³ : elle ne varie donc pas linéairement avec la teneur. Cela tient à la forme de la relation — c'est l'inverse de la densité, $1/d = \sum_i t_i/d_i$, qui se combine linéairement avec les proportions massiques, tandis que la densité elle-même en est une fonction non linéaire. C'est aussi pour cette raison qu'une formule empirique reliant directement densité et teneur ne reste fiable que sur une plage de teneurs restreinte.
+
+### Cas de plusieurs minéraux : le système $\mathbf{A}\mathbf{x} = \mathbf{b}$
+
+Avec un seul sulfure, le raisonnement est direct. Avec deux, on peut encore procéder par substitution : la teneur en cuivre donne la proportion de chalcopyrite ($\%\text{Cu} \to \%\text{chalcopyrite}$), puis le soufre restant, une fois retiré celui de la chalcopyrite, donne la proportion de pyrite ($\%\text{S} - \%\text{S}_{\text{chalcopyrite}} \to \%\text{pyrite}$) — mais seulement si l'on suppose que tout le soufre provient de la pyrite et de la chalcopyrite.
+
+Dès que plusieurs minéraux partagent les mêmes éléments, cette substitution ne suffit plus et l'on écrit un **système d'équations linéaires** :
+
+$$
+\mathbf{A}\mathbf{x} = \mathbf{b}
+$$
+
+Chaque ligne du système est un **bilan de masse** pour un élément : la teneur mesurée de l'élément $i$ dans la roche est la somme, sur tous les minéraux, de sa teneur dans chaque minéral pondérée par la proportion de ce minéral. Concrètement :
+
+- $A_{ij}$ est la teneur de l'élément $i$ dans le minéral $j$, connue par la formule chimique du minéral;
+- $b_i$ est la teneur de l'élément $i$ dans la roche, connue par l'analyse chimique;
+- $x_j$ est la proportion massique du minéral $j$, l'inconnue à déterminer.
+
+À ces bilans par élément s'ajoute l'**équation de fermeture**
+
+$$
+\sum_{j} x_j = 1
+$$
+
+qui traduit un dernier bilan de masse : les proportions doivent totaliser 100 %. C'est elle qui ferme le système et permet de résoudre la dernière inconnue, la gangue. Pour $n$ minéraux, il faut donc $n$ équations, soit $(n-1)$ bilans d'éléments plus la fermeture. Pour limiter le nombre d'inconnues, on n'isole que les minéraux dont la densité diffère nettement de celle de la gangue; les autres sont regroupés dans la gangue.
+
+### Exemple : gisement Cu-Zn
+
+Considérons un gisement où le cuivre se répartit entre la chalcopyrite (CuFeS₂) et la chalcocite (Cu₂S), le zinc dans la sphalérite (ZnS), avec de la pyrite (FeS₂) et une gangue contenant en moyenne 2 % de fer mais pas de soufre. Les densités sont : chalcopyrite 4,1; chalcocite 5,6; sphalérite 4,1; pyrite 5,0; gangue 2,9. L'analyse donne 6 % Cu, 9 % Zn, 10 % S et 5 % Fe.
+
+En dressant un bilan pour chaque élément (Cu, Zn, S, Fe) et en ajoutant la fermeture, le système s'écrit :
+
+$$
+\begin{array}{r}
+\text{Cu} \\ \text{Zn} \\ \text{S} \\ \text{Fe} \\ \textstyle\sum
+\end{array}
+\begin{bmatrix}
+0{,}35 & 0{,}80 & 0 & 0 & 0 \\
+0 & 0 & 0{,}67 & 0 & 0 \\
+0{,}35 & 0{,}20 & 0{,}33 & 0{,}53 & 0 \\
+0{,}30 & 0 & 0 & 0{,}47 & 0{,}02 \\
+1 & 1 & 1 & 1 & 1
+\end{bmatrix}
+\begin{bmatrix}
+x_{\text{cp}} \\ x_{\text{cc}} \\ x_{\text{sp}} \\ x_{\text{py}} \\ x_{\text{g}}
+\end{bmatrix}
+=
+\begin{bmatrix}
+0{,}06 \\ 0{,}09 \\ 0{,}10 \\ 0{,}05 \\ 1
+\end{bmatrix}
+$$
+
+Chaque colonne correspond à un minéral, chaque ligne à un élément (la dernière étant la fermeture). La résolution du système donne les proportions massiques :
+
+| Minéral | Proportion | Densité (g/cm³) | Volume pour 100 g (cm³) |
+|---|---:|---:|---:|
+| Chalcopyrite | 0 % | 4{,}1 | 0 |
+| Chalcocite | 7{,}7 % | 5{,}6 | 1{,}38 |
+| Sphalérite | 13{,}43 % | 4{,}1 | 3{,}28 |
+| Pyrite | 7{,}9 % | 5{,}0 | 1{,}58 |
+| Gangue | 71{,}4 % | 2{,}9 | 24{,}62 |
+
+Ici, le système explique entièrement l'analyse sans chalcopyrite ($x_{\text{cp}} = 0$) : tout le cuivre est attribué à la chalcocite. Le volume total est de 30,86 cm³, d'où une densité théorique de $100/30{,}86 = 3{,}24$ g/cm³.
+
+### Effet de la porosité
+
+La densité théorique représente celle de la phase solide. Si la roche présente une porosité $n$ (en fraction), une partie du volume total est occupée par des vides et la densité sèche totale devient :
+
+$$
+\rho_{\text{réelle}} = \rho_{\text{théorique}} \, (1 - n)
+$$ {#eq-porosite}
+
+Par exemple, une roche de densité solide 3,24 g/cm³ et de porosité 5 % a une densité sèche d'environ $3{,}24 \times (1 - 0{,}05) = 3{,}08$ g/cm³. L'effet peut être important dans les roches altérées, fracturées ou poreuses.
+
+## 🧮 Atelier interactif 3.6 — Densité théorique par résolution de $\mathbf{A}\mathbf{x} = \mathbf{b}$ {.unnumbered}
+
+Ce calculateur construit et résout le système $\mathbf{A}\mathbf{x} = \mathbf{b}$ présenté ci-dessus. La démarche suit quatre étapes : (1) **cochez les minéraux présents**; (2) **choisissez les éléments** à inclure dans le système; (3) la **matrice $\mathbf{A}$** et le **vecteur $\mathbf{b}$** se forment — les compositions sont pré-remplies à partir des formules mais restent éditables, et vous entrez les teneurs chimiques mesurées dans $\mathbf{b}$ (la ligne de fermeture $\sum x = 1$, qui garantit 100 % de matière et détermine la gangue, est ajoutée automatiquement); (4) cliquez sur **Calculer** pour obtenir les **proportions massiques $\mathbf{x}$** des minéraux et la **densité** de la roche. Si la matrice n'est pas inversible, un message le signale; si des proportions sont négatives, le résultat s'affiche quand même — c'est le signe d'une combinaison minéraux/teneurs incohérente. Quelques exemples types sont accessibles d'un clic.
+
+L'objectif est de montrer que la densité dépend à la fois des teneurs chimiques et des hypothèses minéralogiques utilisées pour les interpréter : deux échantillons aux analyses semblables peuvent conduire à des densités différentes si la minéralogie, la gangue ou la porosité diffèrent.
+
+Cet atelier est pleinement interactif dans la version web de ce document.
+
+{{< include widget/widget_densite.qmd >}}

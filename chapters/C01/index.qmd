@@ -1,0 +1,38 @@
+---
+title: "Rapport Technique NI 43-101 et Loi sur les mines"
+abstract: |
+  Cette section présente la norme canadienne relative aux rapports techniques miniers : le rapport NI 43-101. Il rassemble une grande quantité d'informations sur les projets miniers, de la phase d'exploration à l'exploitation. Ce chapitre aborde ces aspects, puis conclut par une introduction à la Loi sur les mines du Québec.
+---
+
+
+::: {.callout-important}
+## Objectifs d'apprentissage
+
+À la fin de ce chapitre, vous serez en mesure de :
+
+- Expliquer le rôle du rapport technique NI 43-101 dans la communication de l'information relative aux projets miniers au Canada;
+
+- Distinguer les catégories de ressources minérales et de réserves minérales, ainsi que les niveaux de confiance associés;
+
+- Expliquer le rôle, les responsabilités et les obligations de la personne qualifiée (PQ) dans la préparation d'un rapport conforme à la NI 43-101;
+
+- Repérer les éléments de base de la Loi sur les mines du Québec qui encadrent l'exploration, l'exploitation et la restauration des sites miniers.
+:::
+
+::: {.callout-note}
+## Référence
+
+Ce chapitre s'appuie principalement sur le livre suivant :
+
+Rossi, M. E., & Deutsch, C. V. (2014). Mineral Resource Estimation. Springer Netherlands.
+:::
+
+{{< include 01-01.qmd >}}
+
+{{< include 01-02.qmd >}}
+
+{{< include 01-03.qmd >}}
+
+{{< include 01-04.qmd >}}
+
+{{< include 01-05.qmd >}}

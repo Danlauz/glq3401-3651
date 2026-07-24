@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c08_variance_bloc">
+  <div class="gw-placeholder">Chargement du widget (variance de bloc)…</div>
+</div>
+```

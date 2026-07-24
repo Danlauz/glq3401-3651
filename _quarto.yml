@@ -1,0 +1,271 @@
+project:
+  type: book
+  output-dir: docs
+  # Resources copiees telles quelles par Quarto vers docs/ a chaque render.
+  # Necessaire pour les widgets unifies (scripts/geostat-js/) et les precalculs
+  # Python (_assets/CXX/). Sans cette directive, Quarto ne sert que les CSS/JS
+  # explicitement reference dans `include-*-body`.
+  resources:
+    - "scripts/**/*"
+    - "_assets/**/*"
+    - "exports/**/*"
+    # PDF téléchargeables des anciens examens (un PDF par examen)
+    - "chapters/examens/pdf/**/*"
+    # Fichiers téléchargeables du recueil d'exercices
+    - "chapters/exercices/fichiers/**/*"
+    # Fichiers de la librairie geostat_polymtl servis aux widgets Pyodide
+    # (calcul live dans le navigateur, source unique = la vraie librairie Python).
+    # Dependances de la simulation FFT-MA
+    - "geostat_polymtl/simulation_methods/GFFTMA.py"
+    - "geostat_polymtl/simulation_methods/LU.py"
+    - "geostat_polymtl/simulation_methods/SGS.py"
+    - "geostat_polymtl/simulation_methods/STBM.py"
+    # Krigeage d'indicatrices (chap. 11)
+    - "geostat_polymtl/kriging/indicator.py"
+    # Simulation categorielle (chap. 13)
+    - "geostat_polymtl/categorical/__init__.py"
+    - "geostat_polymtl/categorical/truncated_gaussian.py"
+    - "geostat_polymtl/categorical/PGS.py"
+    - "geostat_polymtl/categorical/SIS.py"
+    - "geostat_polymtl/categorical/MPS.py"
+    - "geostat_polymtl/cov_func/covar_nu.py"
+    - "geostat_polymtl/functional/helper.py"
+    # Traitement statistique (chap. 04)
+    - "geostat_polymtl/treatment/composite.py"
+    - "geostat_polymtl/treatment/degroupement.py"
+    - "geostat_polymtl/treatment/deviations.py"
+    - "geostat_polymtl/treatment/erreurs.py"
+    - "geostat_polymtl/treatment/exploratoire.py"
+    # Methodes conventionnelles (chap. 05)
+    - "geostat_polymtl/conventional/idw.py"
+    - "geostat_polymtl/conventional/polygones.py"
+    - "geostat_polymtl/conventional/triangles.py"
+    - "geostat_polymtl/conventional/sections.py"
+    - "geostat_polymtl/conventional/qualite.py"
+    # Variogramme (modeles theoriques + experimental sur grille + scatter)
+    - "geostat_polymtl/cov_func/covar.py"
+    - "geostat_polymtl/exp_variogram/GeoStatFFT.py"
+    - "geostat_polymtl/exp_variogram/scatter.py"
+    # Variance de bloc (chap. 08) : quadrature, empirique, imbrique
+    # (__init__.py reel garde les imports absolus geostat_polymtl.* utiles
+    # pour les usages Python natifs ; pour Pyodide on monte les submodules
+    # directement avec un __init__.py vide, voir pyodide_setup.js)
+    - "geostat_polymtl/block_variance/quadrature.py"
+    - "geostat_polymtl/block_variance/empirique.py"
+    - "geostat_polymtl/block_variance/imbrique.py"
+    # Krigeage (chap. 09) : cokri + wrappers KS/KO/KU/bloc/VC/systeme
+    - "geostat_polymtl/kriging/cokriging.py"
+    - "geostat_polymtl/kriging/wrappers.py"
+    # Echantillonnage et QA/QC (chap. 03)
+    - "geostat_polymtl/sampling/gy.py"
+    - "geostat_polymtl/sampling/blancs.py"
+    - "geostat_polymtl/sampling/standards.py"
+    - "geostat_polymtl/sampling/duplicatas.py"
+    - "geostat_polymtl/sampling/densite.py"
+    # Donnees synthetiques (chap. 01, 06)
+    - "geostat_polymtl/data/blockmodel.py"
+    - "geostat_polymtl/data/synthetic.py"
+    - "geostat_polymtl/data/ressources.py"
+    - "geostat_polymtl/_seed.py"
+    - "geostat_polymtl/_exceptions.py"
+    # Economics - theorie de Lane (chap. 02). Servis aux widgets Pyodide.
+    - "geostat_polymtl/economics/reserves.py"
+    - "geostat_polymtl/economics/economics.py"
+    # Geometrie d'orientation 3D (annexe A : vecteurs, plans, intersections)
+    - "geostat_polymtl/forage/geometrie.py"
+
+  # ---------------------------------------------------------------------------
+  # Production des QUATRE sorties du projet :
+  #   - PDF + Word COMPLETS du livre  -> produits nativement par `quarto render`
+  #     (formats pdf et docx declares plus bas).
+  #   - PDF + Word PAR CHAPITRE       -> produits par scripts/build_chapter_exports.py
+  #
+  # Deux facons de generer les exports par chapitre :
+  #
+  #   (A) MANUEL (recommande pendant le developpement) :
+  #         quarto render                       # livre complet (html+pdf+docx)
+  #         python scripts/build_chapter_exports.py   # chapitres pdf+docx
+  #       ... ou en une commande :
+  #         python scripts/build_all.py
+  #
+  #   (B) AUTOMATIQUE a chaque `quarto render` : decommenter le hook ci-dessous.
+  #       (Le script a une garde anti-recursion et reste tolerant aux erreurs.)
+  #       Attention : ralentit chaque rendu (≈ 26 exports supplementaires).
+  #
+  # post-render:
+  #   - python scripts/build_chapter_exports.py
+
+website:
+  google-analytics: G-RX555YHK9M # Measurement ID or Tracking ID
+
+license:
+  content: CC-BY-4.0
+  code: MIT
+
+latex-auto-install: true
+
+bibliography: Book.bib
+
+lang: fr
+language:
+  title-block-author-plural: "Auteurs"
+  title-block-author-single: "Auteur"
+  title-block-published: "Publié"
+  page-navigation-previous: "Précédent"
+  page-navigation-next: "Suivant"
+  repo-action-links-issue: "Signaler un problème ou<br>formuler une suggestion"
+  section-title-abstract: "Résumé"
+  section-title-references: "Références"
+  search-text-placeholder: "Rechercher"
+  search-matching-documents-text: "documents correspondants"
+  search-copy-link-title: "Copier le lien"
+
+book:
+  title: "Géostatistique et géologie minière"
+  subtitle: "Première édition"
+  search: true
+  author:
+    - name: Dany Lauzon
+      url: https://www.polymtl.ca/expertises/lauzon-dany
+      affiliation: Département des génies civil, géologique et des mines<br>Polytechnique Montréal
+      affiliation-url: https://www.polymtl.ca/cgm
+  date: today
+  date-format: YYYY-MM-DD
+  reader-mode: false
+  page-footer:
+    left: |
+      Géostatistique et géologie minière
+    right: |
+      Ce livre a été réalisé avec <a href="https://quarto.org/">Quarto</a>.
+  sidebar:
+    style: floating
+    collapse-level: 1
+    search: true
+  repo-url: "https://github.com/Danlauz/glq3401-3651"
+  repo-actions: [edit, issue]
+
+  chapters:
+    - index.qmd
+    - preface.qmd
+
+    - part: "Partie I: Géologie minière"
+      chapters:
+        - chapters/C01/index.qmd
+        - chapters/C02/index.qmd
+        - chapters/C03/index.qmd
+        - chapters/C04/index.qmd
+        - chapters/C05/index.qmd
+
+    - part: "Partie II: Géostatistique linéaire"
+      chapters:
+        - chapters/C06/index.qmd
+        - chapters/C07/index.qmd
+        - chapters/C08/index.qmd
+        - chapters/C09/index.qmd
+
+    - part: "Partie III: Géostatistique non-linéaire"
+      chapters:
+        - chapters/C10/index.qmd
+        - chapters/C11/index.qmd
+        - chapters/C12/index.qmd
+        - chapters/C13/index.qmd
+
+    - part: "Partie IV: Exercices et examens"
+      chapters:
+        - chapters/exercices/index.qmd
+        - chapters/examens/index.qmd
+
+    - references.qmd
+
+
+  appendices:
+    - chapters/appendix/appendix-a.qmd
+    - chapters/appendix/appendix-b.qmd
+    - chapters/appendix/appendix-c.qmd
+    - chapters/appendix/appendix-d.qmd
+    - chapters/appendix/appendix-e.qmd
+    - chapters/appendix/notation.qmd
+
+
+format:
+  html:
+    include-in-header:
+      - text: |
+          <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    # Loader des widgets interactifs unifies (scripts/geostat-js/).
+    # - loader.js est un module ES (import ...) : charge a la demande chaque
+    #   widget .geostat-widget via IntersectionObserver, verifie les golden
+    #   vectors, et bascule sur la figure statique en cas d'erreur.
+    # - notebook-button.js injecte les boutons de telechargement par chapitre.
+    include-after-body:
+      - text: |
+          <script type="module" src="/scripts/geostat-js/loader.js"></script>
+          <script src="/scripts/geostat-js/notebook-button.js" defer></script>
+    theme:
+      light: cosmo
+      dark: darkly
+    css:
+      - styles/site-polish.css
+      - styles/callouts.css
+      - styles/exercice.css
+      - styles/chapter-downloads.css
+      - scripts/geostat-js/style.css
+    toc: true
+    toc-depth: 3
+    toc-title: "Table des matières"
+    number-sections: true
+    number-equations: true
+    number-depth: 2
+    code-fold: false
+    code-tools:
+      source: true
+      toggle: true
+      caption: "Code"
+    code-copy: true
+    html-math-method: mathjax
+    lang: fr
+
+  pdf:
+    documentclass: scrbook
+    classoption:
+      - twoside
+      - open=any
+      - headings=big
+    papersize: a4
+    fontsize: 11pt
+    mainfont: "TeX Gyre Termes"
+    monofont: "Latin Modern Mono"
+    fontdir: fonts
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    number-depth: 2
+    colorlinks: true
+    linkcolor: navyblue
+    urlcolor: navyblue
+    citecolor: navyblue
+    lang: fr
+    header-includes: |
+      \usepackage[top=2.5cm, bottom=3cm, inner=3cm, outer=2.5cm, footskip=1cm]{geometry}
+      \usepackage{microtype}
+      \usepackage[automark]{scrlayer-scrpage}
+      \clearpairofpagestyles
+      \ohead{\headmark}
+      \ofoot[\pagemark]{\pagemark}
+      \setkomafont{pageheadfoot}{\normalfont\sffamily\small}
+      \addtokomafont{chapter}{\rmfamily\bfseries}
+      \definecolor{navyblue}{RGB}{0,0,128}
+
+  docx:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    lang: fr
+    reference-doc: styles/quarto-academic-template.docx
+
+engine: jupyter
+jupyter: python3
+
+execute:
+  enabled: true
+  freeze: auto

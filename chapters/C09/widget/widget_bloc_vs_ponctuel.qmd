@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c09_bloc_vs_ponctuel">
+  <div class="gw-placeholder">Chargement du widget (bloc vs ponctuel)…</div>
+</div>
+```

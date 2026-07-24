@@ -1,0 +1,267 @@
+## Teneurs de coupure d'équilibre
+
+La teneur de coupure d'équilibre est définie de manière à ce que deux composantes du système (mine, concentrateur ou marché) atteignent simultanément leur pleine capacité. Elle se distingue des teneurs de coupure limites, qui ne considèrent qu'une seule contrainte active à la fois.
+
+Elle identifie ainsi les situations où le choix de la teneur de coupure équilibre deux contraintes opérationnelles ou économiques.
+
+Par exemple, on peut choisir une teneur de coupure de façon à équilibrer la mine et le concentrateur. La mine extrait alors tout le volume qu'elle est capable d'extraire, et la teneur de coupure est ajustée pour que la quantité de minerai envoyée au concentrateur corresponde à sa capacité de traitement. Dans ce cas, la mine et le concentrateur sont tous les deux utilisés à leur pleine capacité.
+
+Trois situations d'équilibre peuvent être distinguées :
+
+- **équilibre mine–concentrateur** : la quantité extraite par la mine permet d'alimenter exactement le concentrateur à pleine capacité;
+- **équilibre mine–marché** : la quantité extraite par la mine permet de produire exactement la quantité de métal que le marché peut absorber;
+- **équilibre concentrateur–marché** : la quantité traitée par le concentrateur permet de produire exactement la quantité de métal que le marché peut absorber.
+
+### Teneur de coupure d'équilibre : mine–concentrateur
+
+La teneur de coupure d'équilibre entre la mine et le concentrateur est définie de manière à utiliser simultanément la capacité maximale de ces deux composantes.
+
+La mine peut extraire $M$ tonnes de matériau minéralisé. Parmi ce matériau, seule une proportion $x_c$ est envoyée au concentrateur, soit les blocs dont la teneur est supérieure ou égale à la teneur de coupure $c$. La quantité de minerai envoyée au concentrateur est donc $x_c M$.
+
+Si le concentrateur a une capacité maximale de $H$ tonnes de minerai, l'équilibre mine–concentrateur est atteint lorsque :
+
+$$
+x_c M = H.
+$$ {#eq-c12}
+
+Autrement dit, la teneur de coupure est choisie de manière à sélectionner exactement la quantité de minerai nécessaire pour alimenter le concentrateur à pleine capacité, sans surplus ni sous-utilisation.
+
+La teneur de coupure qui satisfait cette égalité est appelée teneur de coupure d'équilibre mine–concentrateur et notée $c_{12}$.
+
+Pour déterminer $c_{12}$, il faut connaître la relation entre la teneur de coupure $c$ et la proportion de matériau envoyé au traitement $x_c$. Cette relation dépend directement de la distribution statistique des teneurs dans le gisement. Nous verrons plus loin comment construire la courbe reliant $x_c$ à $c$. Pour le moment, nous supposerons que cette relation est connue.
+
+### Teneur de coupure d'équilibre : mine–marché
+
+La teneur de coupure d'équilibre entre la mine et le marché est définie de manière à ce que la quantité de métal récupéré à partir du matériau extrait corresponde exactement à la capacité du marché.
+
+La mine extrait $M$ tonnes de matériau minéralisé. Après la sélection des blocs, une proportion $x_c$ de ce matériau est envoyée au traitement. Ce minerai a une teneur moyenne $g_c$, et seule une fraction $y$ du métal contenu est récupérée lors du traitement. La quantité de métal récupéré est donc $x_c \, g_c \, y \, M$.
+
+Si le marché peut absorber $K$ tonnes de métal, l'équilibre mine–marché est atteint lorsque :
+
+$$
+x_c \, g_c \, y \, M = K.
+$$ {#eq-c13}
+
+La teneur de coupure est donc choisie de manière à ce que l'exploitation de la mine produise exactement la quantité de métal pouvant être vendue sur le marché.
+
+La teneur de coupure qui satisfait cette égalité est appelée teneur de coupure d'équilibre mine–marché et est notée $c_{13}$.
+
+Pour déterminer $c_{13}$, il faut connaître à la fois la relation entre la teneur de coupure $c$ et la proportion de matériau traité $x_c$, ainsi que la relation entre $c$ et la teneur moyenne du minerai traité $g_c$. Ces deux quantités dépendent de la distribution des teneurs du gisement.
+
+### Teneur de coupure d'équilibre : concentrateur–marché
+
+La teneur de coupure d'équilibre entre le concentrateur et le marché est définie de manière à ce que la quantité de métal produite par le concentrateur corresponde exactement à la capacité du marché.
+
+Le concentrateur traite $H$ tonnes de minerai. Si la teneur moyenne de ce minerai est $g_c$ et que le taux de récupération métallurgique est $y$, la quantité de métal récupéré est $g_c \, y \, H$.
+
+Si le marché peut absorber $K$ tonnes de métal, l'équilibre concentrateur–marché est atteint lorsque :
+
+$$
+g_c \, y \, H = K.
+$$ {#eq-c23}
+
+Ici, la teneur de coupure est choisie de manière à ce que le minerai traité par le concentrateur produise exactement la quantité de métal pouvant être vendue sur le marché.
+
+La teneur de coupure qui satisfait cette égalité est appelée teneur de coupure d'équilibre concentrateur–marché et est notée $c_{23}$.
+
+Contrairement aux deux équilibres précédents, cette relation ne dépend pas directement de $x_c$. Elle dépend principalement de la relation entre la teneur de coupure $c$ et la teneur moyenne du minerai traité $g_c$.
+
+### Distribution des teneurs
+
+Les teneurs limites $c_1$, $c_2$ et $c_3$ sont relativement directes à calculer, puisqu'elles dépendent seulement des coûts et des capacités du système. Les teneurs d'équilibre sont différentes : elles dépendent aussi de la quantité de minerai sélectionnée et de sa teneur moyenne. Or, ces deux valeurs varient avec la teneur de coupure. Il faut donc tenir compte de la distribution des teneurs dans le gisement.
+
+Pour chaque teneur de coupure $c$, on calcule la proportion de matériau sélectionné, $x_c$, ainsi que sa teneur moyenne, $g_c$. Lorsque $c$ augmente, $x_c$ diminue généralement, car une plus petite partie du gisement dépasse le seuil de sélection. À l'inverse, $g_c$ augmente, puisque les blocs conservés sont en moyenne plus riches.
+
+Les courbes $x(c)$ et $g(c)$ permettent ensuite d'identifier les teneurs de coupure qui respectent les équilibres entre la mine, le concentrateur et le marché.
+
+Dans ce chapitre, nous supposerons que les teneurs suivent une loi log-normale. Cette hypothèse est fréquente en contexte minier, car les teneurs sont positives et souvent asymétriques, avec quelques valeurs très élevées. Avec une autre distribution, la démarche resterait la même : seules les expressions de $x_c$ et de $g_c$ changeraient en fonction de la distribution statistique des données, notamment de la fonction de densité et de la fonction de répartition associées aux teneurs du gisement.
+
+::: {.callout-note}
+
+## Généralisation à toute distribution
+
+La théorie de Lane n'impose pas de distribution particulière pour les teneurs. On peut donc travailler avec la distribution observée dans le modèle de blocs. Si $Z$ désigne la teneur d'un bloc, ou plus généralement d'une unité de sélection, alors :
+
+
+$$
+x_c = \mathbb{P}(Z \geq c)
+$$
+
+et
+
+$$
+g_c = \mathbb{E}[Z \mid Z \geq c].
+$$
+
+La démarche consiste donc à calculer, pour chaque valeur de $c$, la proportion du matériau sélectionné et la teneur moyenne de ce matériau.
+:::
+
+#### Loi log-normale
+
+Avant d'utiliser la loi log-normale, rappelons brièvement la loi normale. Une variable aléatoire $Y$ suit une loi normale de moyenne $\mu$ et de variance $\sigma^2$ si :
+
+$$
+Y \sim \mathcal{N}(\mu, \sigma^2).
+$$
+
+En centrant et en réduisant cette variable, on obtient une variable normale standard :
+
+$$
+\frac{Y-\mu}{\sigma} \sim \mathcal{N}(0,1).
+$$
+
+Cette transformation permet d'utiliser la loi normale standard $\mathcal{N}(0,1)$ pour calculer les probabilités associées à toute loi normale.
+
+Une variable aléatoire positive $Z$ suit une **loi log-normale** si son logarithme suit une loi normale :
+
+$$
+\ln(Z) \sim \mathcal{N}(\mu, \sigma^2).
+$$
+
+Dans ce chapitre :
+
+- $m$ désigne la moyenne de la teneur $Z$;
+- $s^2$ désigne la variance de la teneur $Z$;
+- $\mu$ désigne la moyenne de $\ln(Z)$;
+- $\sigma^2$ désigne la variance de $\ln(Z)$.
+
+Les paramètres de la loi normale associée à $\ln(Z)$ peuvent être obtenus à partir de $m$ et $s^2$ :
+
+$$
+\sigma^2 = \ln\left(1+\frac{s^2}{m^2}\right),
+$$
+
+puis :
+
+$$
+\mu = \ln(m) - \frac{\sigma^2}{2}.
+$$
+
+Dans la notation de Lane, on utilise le paramètre $\beta$, défini comme l'écart-type du logarithme des teneurs :
+
+$$
+\beta = \sqrt{\ln\left(1+\frac{s^2}{m^2}\right)}.
+$$
+
+Ainsi, $\beta = \sigma$. Plus $\beta$ est élevé, plus les teneurs sont dispersées sur l'échelle logarithmique. Dans les formules qui suivent, nous utiliserons $\beta$ afin de conserver la notation de Lane.
+
+#### Construction des courbes
+
+Dans le cas d'une loi log-normale de moyenne $m$ et de variance $s^2$, les fonctions $x_c(c)$ et $g_c(c)$ peuvent être exprimées à partir de la loi normale standard.
+
+La proportion de matériau sélectionné est donnée par :
+
+$$
+x_c =
+\Phi\left[
+\frac{1}{\beta}\ln\left(\frac{m}{c}\right)
+-
+\frac{\beta}{2}
+\right],
+$$
+
+où $\Phi$ désigne la fonction de répartition de la loi normale standard.
+
+La teneur moyenne du matériau sélectionné est donnée par :
+
+$$
+g_c =
+\frac{
+m\,\Phi\left[
+\frac{1}{\beta}\ln\left(\frac{m}{c}\right)
++
+\frac{\beta}{2}
+\right]
+}{
+\Phi\left[
+\frac{1}{\beta}\ln\left(\frac{m}{c}\right)
+-
+\frac{\beta}{2}
+\right]
+}.
+$$
+
+Ces deux expressions permettent de calculer $x_c$ et $g_c$ pour toute teneur de coupure $c$. Elles servent ensuite à construire les courbes nécessaires au calcul des teneurs de coupure d'équilibre.
+
+#### Calcul à partir de la Table de la loi normale
+
+La Table de la Loi Normale fournit des valeurs de la fonction de
+répartition $\Phi(z)$ pour des valeurs de $z$ qui suivent une loi normale
+$\mathcal{N}(0, 1)$.
+
+Cependant, la table est généralement construite pour des valeurs de $z$
+positives, car la fonction de répartition $\Phi(z)$ d'une loi normale est symétrique par
+rapport à 0. En effet, si $Z$ suit une loi normale de moyenne 0 et de
+variance 1, et si $z$ est négatif, on peut exploiter cette symétrie pour
+déterminer $\Phi(z)$. Ainsi, pour un $z$ négatif, il suffit d'utiliser la
+relation suivante :
+
+$$
+\Phi(-z) = 1 - \Phi(z)
+$$
+
+Cela permet de calculer la probabilité qu'une valeur de $Z$ soit
+inférieure à un seuil, même si ce seuil est négatif. Par exemple,
+pour $z = -1{,}5$, on peut chercher la valeur de $\Phi(1{,}5)$ dans la table et
+utiliser la relation $\Phi(-1{,}5) = 1 - \Phi(1{,}5)$.
+
+Pour obtenir la probabilité que $Z$ soit inférieur à une certaine
+valeur, il suffit de chercher la valeur de $z$ dans la table et de lire
+la probabilité correspondante. Par exemple, si $z = 1{,}23$, on peut lire
+directement $\Phi(1{,}23) \approx 0{,}8907$. Pour $z = -1{,}23$, on utilise la
+relation $\Phi(-1{,}23) = 1 - \Phi(1{,}23) = 1 - 0{,}8907 = 0{,}1093$.
+
+La table de la loi normale est fournie en Annexe.
+
+#### Exemple numérique
+
+La distribution des teneurs en cuivre (Cu) d'un gisement suit une loi
+log-normale avec une moyenne $m = 1{,}3\%$ et une variance 
+$s^2 = 3\%^2$. Nous souhaitons calculer les valeurs de $x_c$ et $g_c$
+pour une teneur de coupure de $c = 1\%$.
+
+##### 1. Calcul de $x_c$
+
+La teneur de coupure $c$ est donnée par $c = 1\%$. L'écart-type du logarithme des teneurs $\beta$ est calculé comme suit :
+
+$$
+\beta = \sqrt{\ln\left(\frac{s^2}{m^2}+1\right)} = \sqrt{\ln\left(\frac{3}{1{,}3^2}+1\right)} = 1{,}0103
+$$
+
+Ensuite, la fonction de répartition de la loi normale standard est
+utilisée pour calculer $x_c$, qui est donné par :
+
+$$
+x_c = \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) - \frac{\beta}{2} \right) = \Phi\left( \frac{1}{1{,}0103} \ln\left( \frac{1{,}3}{1} \right) - \frac{1{,}0103}{2} \right) = \Phi(-0{,}2455) = 0{,}4030
+$$
+
+##### 2. Calcul de $g_c$
+
+La teneur moyenne $g_c$, qui représente la teneur moyenne des minerais
+sélectionnés, est donnée par la formule suivante :
+
+$$
+g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \frac{\beta}{2} \right)}{\Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) - \frac{\beta}{2} \right)}= \frac{1{,}3 \, \Phi\left( \frac{1}{1{,}0103} \ln\left( \frac{1{,}3}{1} \right) + \frac{1{,}0103}{2} \right)}{\Phi\left( \frac{1}{1{,}0103} \ln\left( \frac{1{,}3}{1} \right) - \frac{1{,}0103}{2} \right)} = \frac{1{,}3\,\Phi(0{,}7648)}{\Phi(-0{,}2455)} = 2{,}5088
+$$
+
+### Exemple du calcul des teneurs d'équilibre
+
+À partir d'une distribution log-normale, il est possible de construire les fonctions $x_c$, $g_c$ et $x_c g_c$ en fonction de $c$, soit analytiquement, soit numériquement. 
+
+L'atelier interactif ci-dessous permet de visualiser directement ces relations et de mieux en comprendre le rôle dans la détermination des teneurs d'équilibre.
+
+## 🧮 Atelier interactif 2.3 — Calcul des teneurs d'équilibre {.unnumbered}
+
+Dans cet atelier, on regarde comment la teneur de coupure influence directement les variables utilisées dans la théorie de Lane. En faisant varier $c$, on peut suivre l'évolution de la proportion de minerai sélectionnée $x_c$, de la teneur moyenne $g_c$ et de la quantité de métal contenue dans le minerai sélectionné, soit $x_c g_c$.
+
+L'atelier permet aussi de modifier les paramètres d'une distribution log-normale. On peut alors voir comment un gisement plus ou moins variable change la forme des courbes $x(c)$ et $g(c)$, et comment ces courbes interviennent dans le calcul des teneurs d'équilibre.
+
+L'interactivité complète de cet atelier n'est accessible que dans la version web de ce document.
+
+{{< include widget/widget_reserves_lognormale.qmd >}}
+
+
+### Teneur de coupure d'équilibre et teneur de coupure limite
+
+Contrairement à la teneur de coupure limite, la teneur de coupure d'équilibre dépend uniquement de la distribution des teneurs du gisement. Elle ne dépend donc ni des infrastructures ni des coûts d'exploitation. Ainsi, la teneur de coupure limite tient compte des contraintes économiques et techniques, tandis que la teneur de coupure d'équilibre ne reflète que les caractéristiques statistiques du gisement.
+

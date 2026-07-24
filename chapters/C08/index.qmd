@@ -1,0 +1,49 @@
+---
+title: "Variance de blocs, de dispersion et d’estimation"
+abstract: |
+  Ce chapitre présente la variance de bloc, la variance de dispersion et la variance d’estimation. Il vise à montrer comment la variabilité des teneurs évolue lorsque l’analyse porte non plus uniquement sur des échantillons ponctuels, mais également sur des blocs, des panneaux ou des volumes de plus grande taille. À partir du variogramme, cette variabilité peut être reliée à la continuité spatiale du gisement et quantifiée au moyen de différents calculs, parfois réalisés à l’aide d’abaques. Ces notions sont ensuite mobilisées pour examiner des problèmes plus pratiques, notamment l’homogénéisation du minerai, la variabilité du matériau envoyé au concentrateur et l’effet de la configuration de l’échantillonnage.
+---
+
+::: {.callout-important}
+## Objectifs d'apprentissage
+-   Comprendre les notions de variance de bloc et de variance de dispersion et décrire le lien avec le variogramme et la continuité spatiale qu'il exprime;
+
+-   Calculer les variances de bloc et variances de dispersion avec les abaques ;
+
+-   Effectuer la sélection de la meilleure alternative pour homogénéiser le minerai ;
+
+-   Recommander un sens de déplacement d'une pelle dans une mine pour minimiser la variabilité au concentrateur ;
+
+-   Prévoir l'impact sur la variabilité au concentrateur d'exploiter simultanément différentes portions du gisement ;
+
+-   Comprendre la notion de variance d'estimation;
+
+-   Calculer des variances d'estimation pour une configuration d'estimation et le modèle de variogramme;
+
+-   Identifier le lien entre patron d'échantillonnage et l'anisotropie du variogramme.
+:::
+
+::: {.callout-note}
+## Références
+
+Ce chapitre s’appuie principalement sur les ouvrages suivants :
+
+Chilès, J., & Delfiner, P. (2012). *Geostatistics: Modeling Spatial Uncertainty*. John Wiley & Sons.
+
+Journel, A. G., & Huijbregts, C. J. (1978). *Mining Geostatistics*. Academic Press.
+
+:::
+
+{{< include 08-01.qmd >}}
+
+{{< include 08-02.qmd >}}
+
+{{< include 08-03.qmd >}}
+
+{{< include 08-04.qmd >}}
+
+{{< include 08-05.qmd >}}
+
+
+
+

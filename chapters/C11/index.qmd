@@ -1,0 +1,49 @@
+---
+title: "Krigeage d'indicatrices"
+abstract: |
+  Ce chapitre présente le krigeage d'indicatrices (KI), une méthode géostatistique non linéaire qui estime directement la fonction de répartition locale de la variable à chaque emplacement non échantillonné. Le KI convient aux phénomènes non gaussiens, fortement asymétriques ou dont la continuité spatiale varie selon les classes de valeurs. La méthode est fort utilse pour estimer des probabilités de dépassement d'un seuil, il sert notamment en géologie minière, en hydrogéologie et en génie de l'environnement. Des ateliers interactifs permettent de manipuler le codage, la construction de la fonction de répartition, la correction des relations d'ordre et le changement de support.
+---
+
+::: {.callout-important}
+## Objectifs d'apprentissage
+
+À la fin de ce chapitre, vous serez en mesure de :
+
+- Décrire la différence entre une méthode de krigeage linéaire (KS, KO, KU, KED) et une méthode non linéaire (KI);
+
+- Expliquer les hypothèses à la base du KI;
+
+- Coder les indicatrices et construire une fonction de répartition conditionnelle locale;
+
+- Corriger les problèmes de relations d'ordre (monotonie et bornage);
+
+- Appliquer la correction affine pour le changement de support;
+
+- Intégrer des données incertaines (inégalités) dans le KI;
+
+- Extraire des résultats du KI les grandeurs utiles : probabilités de dépassement, quantiles, espérance et variance conditionnelles.
+:::
+
+::: {.callout-note}
+## Références
+
+Ce chapitre s'appuie principalement sur :
+
+:::
+
+{{< include widget/_ch11_utils.qmd >}}
+
+{{< include 11-01.qmd >}}
+
+{{< include 11-02.qmd >}}
+
+{{< include 11-03.qmd >}}
+
+{{< include 11-04.qmd >}}
+
+{{< include 11-05.qmd >}}
+
+{{< include 11-06.qmd >}}
+
+{{< include 11-07.qmd >}}
+

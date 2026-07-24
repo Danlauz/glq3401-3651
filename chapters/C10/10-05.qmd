@@ -1,0 +1,69 @@
+## Cokrigeage universel
+
+Le cokrigeage universel généralise le cokrigeage ordinaire au cas où les moyennes ne sont plus constantes, mais suivent des tendances (dérives) modélisées dans l'espace.
+
+### Modèle avec dérives
+
+On décompose chaque variable en une dérive déterministe et un résidu stationnaire :
+
+$$
+Z(\mathbf{x}) = m_Z(\mathbf{x}) + R_Z(\mathbf{x}), \quad Y(\mathbf{x}) = m_Y(\mathbf{x}) + R_Y(\mathbf{x})
+$$
+
+Les dérives sont des combinaisons linéaires de fonctions de base connues :
+
+$$
+m_Z(\mathbf{x}) = \sum_{\ell=0}^{L_Z} a_\ell^Z f_\ell^Z(\mathbf{x}), \quad m_Y(\mathbf{x}) = \sum_{\ell=0}^{L_Y} a_\ell^Y f_\ell^Y(\mathbf{x})
+$$
+
+où les fonctions $f_\ell^Z$ et $f_\ell^Y$ sont connues (par exemple $1, x, y, x^2, \dots$) et les coefficients $a_\ell^Z$ et $a_\ell^Y$ inconnus. Les résidus $R_Z$ et $R_Y$ sont des fonctions aléatoires stationnaires de moyenne nulle, décrites par les covariances directes et croisées.
+
+### Conditions de non-biais
+
+L'estimateur reste une combinaison linéaire :
+
+$$
+Z_0^* = \sum_{i=1}^{n_Z} \lambda_i \, Z_i + \sum_{j=1}^{n_Y} \alpha_j \, Y_j
+$$
+
+La condition de non-biais $\mathbb{E}[Z_0^* - Z_0] = 0$ force les poids à reproduire exactement les dérives. En substituant leurs expressions et en identifiant les coefficients inconnus $a_\ell^Z$ et $a_\ell^Y$, on obtient les **conditions d'universalité** :
+
+$$
+\sum_{i=1}^{n_Z} \lambda_i \, f_\ell^Z(\mathbf{x}_i^Z) = f_\ell^Z(\mathbf{x}_0), \quad \ell = 0, \dots, L_Z
+$$
+
+$$
+\sum_{j=1}^{n_Y} \alpha_j \, f_\ell^Y(\mathbf{x}_j^Y) = 0, \quad \ell = 0, \dots, L_Y
+$$
+
+Le premier jeu de contraintes assure que la dérive de $Z$ est bien reproduite. Le second annule la contribution de la dérive de $Y$ : c'est la généralisation de $\sum \alpha_j = 0$ au cas non constant.
+
+### Système de cokrigeage universel
+
+La minimisation sous contraintes, avec les multiplicateurs de Lagrange $\nu_\ell^Z$ ($\ell = 0, \dots, L_Z$) et $\nu_\ell^Y$ ($\ell = 0, \dots, L_Y$), conduit au système :
+
+$$
+\begin{cases}
+\displaystyle\sum_{j=1}^{n_Z} \lambda_j \, C_{ZZ}(\mathbf{x}_i^Z - \mathbf{x}_j^Z) + \sum_{j=1}^{n_Y} \alpha_j \, C_{ZY}(\mathbf{x}_i^Z - \mathbf{x}_j^Y) + \sum_{\ell=0}^{L_Z} \nu_\ell^Z f_\ell^Z(\mathbf{x}_i^Z) = C_{ZZ}(\mathbf{x}_i^Z - \mathbf{x}_0), & i = 1, \dots, n_Z \\[8pt]
+\displaystyle\sum_{j=1}^{n_Z} \lambda_j \, C_{YZ}(\mathbf{x}_i^Y - \mathbf{x}_j^Z) + \sum_{j=1}^{n_Y} \alpha_j \, C_{YY}(\mathbf{x}_i^Y - \mathbf{x}_j^Y) + \sum_{\ell=0}^{L_Y} \nu_\ell^Y f_\ell^Y(\mathbf{x}_i^Y) = C_{YZ}(\mathbf{x}_i^Y - \mathbf{x}_0), & i = 1, \dots, n_Y \\[8pt]
+\displaystyle\sum_{i=1}^{n_Z} \lambda_i \, f_\ell^Z(\mathbf{x}_i^Z) = f_\ell^Z(\mathbf{x}_0), & \ell = 0, \dots, L_Z \\[6pt]
+\displaystyle\sum_{j=1}^{n_Y} \alpha_j \, f_\ell^Y(\mathbf{x}_j^Y) = 0, & \ell = 0, \dots, L_Y
+\end{cases}
+$$
+
+Ce système comporte $n_Z + n_Y + L_Z + L_Y + 2$ équations. On retrouve le cokrigeage ordinaire comme cas particulier, avec $L_Z = L_Y = 0$ et $f_0^Z = f_0^Y = 1$.
+
+### Considérations pratiques
+
+Le cokrigeage universel est rarement utilisé tel quel. Il cumule les difficultés des deux méthodes dont il descend : la circularité du krigeage universel (il faut le variogramme des résidus pour estimer la dérive, et la dérive pour estimer le variogramme) et la lourdeur du cokrigeage (ajustement des covariances croisées, vérification de l'admissibilité). On lui préfère souvent une approche en deux temps : retirer d'abord une tendance par régression, puis faire un cokrigeage simple ou ordinaire sur les résidus.
+
+## 🧮 Atelier interactif 10.4 — Cokrigeage universel (CU) {.unnumbered}
+
+::: {.content-visible when-format="html"}
+Pendant du KU, mais à deux variables. La principale $Z$ (rare) et la secondaire $Y$ (dense) sont tracées sur deux axes distincts (variances différentes). Chaque variable a sa propre dérive polynomiale (ordre 1 ou 2). Placez le point à estimer au-delà des données pour voir le CU extrapoler la tendance, et comparez au krigeage de $Z$ seul. La matrice $\mathbf{B}$ du modèle de corégionalisation est réglable ($\rho = b_{ZY}/\sqrt{b_{ZZ} b_{YY}}$).
+{{< include widget/widget_cokrigeage_cu.qmd >}}
+:::
+
+::: {.content-visible unless-format="html"}
+Cet atelier interactif n'est disponible que dans la version web du chapitre.
+:::

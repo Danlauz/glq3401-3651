@@ -1,0 +1,140 @@
+/* =============================================================================
+   Boutons de telechargement par chapitre (PDF / DOCX)
+   Desktop : bandeau compact dans une bande reservee en haut a droite du
+             bloc-titre (padding-top sur le header) -> ne chevauche plus le
+             titre H1 ni le resume du chapitre.
+   Mobile  : bandeau pleine largeur, sous le titre (inchange).
+   ============================================================================= */
+
+.geostat-downloads {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: .4rem;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.geostat-downloads__label {
+  font-size: .65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: #6e7681;
+  white-space: nowrap;
+}
+
+.geostat-dl-btn {
+  position: relative;   /* ancre l'indicateur « non genere » sous CE bouton */
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  padding: .25rem .55rem;
+  font-size: .75rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: #24292f;
+  background: #fff;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
+  transition: all .12s ease;
+  white-space: nowrap;
+}
+.geostat-dl-btn:hover:not(.is-disabled) {
+  background: #f6f8fa;
+  border-color: #0d4d92;
+  color: #0d4d92;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(13, 77, 146, .15);
+}
+.geostat-dl-btn:focus-visible:not(.is-disabled) {
+  outline: 2px solid #0969da;
+  outline-offset: 2px;
+}
+
+.geostat-dl-btn__icon {
+  font-size: .95rem;
+  line-height: 1;
+}
+
+.geostat-dl-btn__text {
+  flex: none;
+}
+
+.geostat-dl-btn__size {
+  font-size: .65rem;
+  color: #57606a;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Etat desactive (fichier introuvable) */
+.geostat-dl-btn.is-disabled {
+  cursor: not-allowed;
+  color: #8b949e;
+  background: #f6f8fa;
+  opacity: .65;
+}
+.geostat-dl-btn.is-disabled .geostat-dl-btn__icon {
+  filter: grayscale(1);
+}
+
+/* Indicateur "fichier a generer" sous le bouton desactive */
+.geostat-dl-btn.is-disabled::after {
+  content: "non genere";
+  position: absolute;
+  left: 0;
+  top: 100%;
+  margin-top: .15rem;
+  font-size: .62rem;
+  color: #8b949e;
+  font-style: italic;
+  white-space: nowrap;
+}
+
+/* === Adaptation au theme sombre Quarto === */
+[data-bs-theme="dark"] .geostat-dl-btn {
+  color: #c9d1d9;
+  background: #161b22;
+  border-color: #30363d;
+}
+[data-bs-theme="dark"] .geostat-dl-btn:hover:not(.is-disabled) {
+  background: #21262d;
+  border-color: #58a6ff;
+  color: #58a6ff;
+}
+[data-bs-theme="dark"] .geostat-dl-btn.is-disabled {
+  background: #161b22;
+  color: #6e7681;
+}
+[data-bs-theme="dark"] .geostat-downloads__label {
+  color: #8b949e;
+}
+
+/* === Desktop : bande reservee en haut du bloc-titre, alignee a droite ===
+   #title-block-header porte deja la classe .quarto-title-block dans Quarto ;
+   on lui ajoute un padding-top qui repousse breadcrumb/titre/resume vers le
+   bas et libere une bande ou placer le bandeau de telechargement, sans
+   toucher a la largeur du texte (donc plus de chevauchement horizontal). */
+@media (min-width: 769px) {
+  #title-block-header.quarto-title-block {
+    position: relative;
+    padding-top: 2.6rem;
+  }
+  #title-block-header.quarto-title-block > .geostat-downloads {
+    position: absolute;
+    top: .3rem;
+    right: 1rem;
+  }
+}
+
+/* === Mobile : bandeau pleine largeur, sous le titre === */
+@media (max-width: 768px) {
+  .geostat-downloads {
+    flex-wrap: wrap;
+    margin: 1rem 0;
+    gap: .4rem;
+  }
+  .geostat-downloads__label { width: 100%; text-align: left; }
+  .geostat-dl-btn { flex: 1 1 auto; min-width: 130px; }
+}

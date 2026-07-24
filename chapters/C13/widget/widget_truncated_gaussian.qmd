@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c13_truncated_gaussian">
+  <div class="gw-placeholder">Chargement (gaussien tronqué)…</div>
+</div>
+```

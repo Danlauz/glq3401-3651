@@ -1,0 +1,119 @@
+## Cokrigeage ordinaire
+
+Le cokrigeage ordinaire s'applique quand les moyennes $m_Z$ et $m_Y$ sont inconnues. On ne peut plus centrer les données sur une moyenne connue : le non-biais est alors imposé par des contraintes sur les poids.
+
+### Conditions de non-biais
+
+L'estimateur garde la forme du krigeage ordinaire, avec les données de la variable secondaire en plus :
+
+$$
+Z_0^* = \sum_{i=1}^{n_Z} \lambda_i \, Z_i + \sum_{j=1}^{n_Y} \alpha_j \, Y_j
+$$
+
+Pour qu'il soit sans biais, son espérance doit valoir la moyenne de la variable principale, $m_Z$ :
+
+$$
+\mathbb{E}[Z_0^*] = m_Z \sum_{i=1}^{n_Z} \lambda_i + m_Y \sum_{j=1}^{n_Y} \alpha_j
+$$
+
+Comme $m_Z$ et $m_Y$ sont inconnues, et pas forcément égales, on impose deux contraintes :
+
+$$
+\sum_{i=1}^{n_Z} \lambda_i = 1 \quad \text{et} \quad \sum_{j=1}^{n_Y} \alpha_j = 0
+$$
+
+La première est celle du krigeage ordinaire : elle force les poids de la variable principale à restituer la moyenne de $Z$. La seconde empêche la moyenne inconnue de $Y$ d'entrer dans l'estimation : la variable secondaire aide donc par ses variations spatiales et sa corrélation avec $Z$, jamais par son niveau moyen. C'est une vraie limite du cokrigeage ordinaire, surtout face au cokrigeage simple.
+
+### Système de cokrigeage ordinaire
+
+On minimise la variance d'estimation sous les deux contraintes, par les multiplicateurs de Lagrange $\nu_Z$ et $\nu_Y$. On obtient le système :
+
+$$
+\begin{cases}
+\displaystyle\sum_{j=1}^{n_Z} \lambda_j \, C_{ZZ}(\mathbf{x}_i - \mathbf{x}_j) + \sum_{j=1}^{n_Y} \alpha_j \, C_{ZY}(\mathbf{x}_i - \mathbf{x}_j) + \nu_Z = C_{ZZ}(\mathbf{x}_i - \mathbf{x}_0), & i = 1, \dots, n_Z \\[8pt]
+\displaystyle\sum_{j=1}^{n_Z} \lambda_j \, C_{YZ}(\mathbf{x}_i - \mathbf{x}_j) + \sum_{j=1}^{n_Y} \alpha_j \, C_{YY}(\mathbf{x}_i - \mathbf{x}_j) + \nu_Y = C_{YZ}(\mathbf{x}_i - \mathbf{x}_0), & i = 1, \dots, n_Y \\[8pt]
+\displaystyle\sum_{i=1}^{n_Z} \lambda_i = 1 \\[6pt]
+\displaystyle\sum_{j=1}^{n_Y} \alpha_j = 0
+\end{cases}
+$$
+
+Le système compte $n_Z + n_Y + 2$ équations et autant d'inconnues. Sa structure décalque celle du krigeage ordinaire, à deux ajouts près : les termes de covariance croisée liés à la variable secondaire et la contrainte de non-biais qui pèse sur elle.
+
+### Forme matricielle
+
+Le système de cokrigeage ordinaire s'écrit sous forme matricielle :
+
+$$
+\begin{bmatrix}
+\mathbf{K}_{ZZ} & \mathbf{K}_{ZY} & \mathbf{1} & \mathbf{0} \\
+\mathbf{K}_{YZ} & \mathbf{K}_{YY} & \mathbf{0} & \mathbf{1} \\
+\mathbf{1}^\top & \mathbf{0}^\top & 0 & 0 \\
+\mathbf{0}^\top & \mathbf{1}^\top & 0 & 0
+\end{bmatrix}
+\begin{bmatrix}
+\boldsymbol{\lambda} \\
+\boldsymbol{\alpha} \\
+\nu_Z \\
+\nu_Y
+\end{bmatrix}
+=
+\begin{bmatrix}
+\mathbf{k}_{ZZ_0} \\
+\mathbf{k}_{YZ_0} \\
+1 \\
+0
+\end{bmatrix}
+$$
+
+où $\mathbf{K}_{ZZ}$ et $\mathbf{K}_{YY}$ sont les matrices de covariances directes de $Z$ et de $Y$, $\mathbf{K}_{ZY} = \mathbf{K}_{YZ}^\top$ la matrice des covariances croisées, et $\mathbf{1}$, $\mathbf{0}$ des vecteurs de 1 et de 0 qui imposent les contraintes de non-biais. Les vecteurs $\mathbf{k}_{ZZ_0}$ et $\mathbf{k}_{YZ_0}$ contiennent les covariances entre les observations et le point à estimer $Z_0$; $\nu_Z$ et $\nu_Y$ sont les multiplicateurs de Lagrange associés aux deux contraintes.
+
+### Variance de cokrigeage ordinaire
+
+$$
+\sigma_{CO}^2 = C_{ZZ}(\mathbf{0}) - \sum_{i=1}^{n_Z} \lambda_i \, C_{ZZ}(\mathbf{x}_i - \mathbf{x}_0) - \sum_{j=1}^{n_Y} \alpha_j \, C_{YZ}(\mathbf{x}_j - \mathbf{x}_0) - \nu_Z
+$$
+
+Seul $\nu_Z$ apparaît : le terme en $\nu_Y$ est multiplié par la valeur de la contrainte sur $Y$, qui est nulle.
+
+> **Note.** Un cokrigeage ordinaire demande au moins une observation de $Z$ (pour satisfaire $\sum \lambda_i = 1$) et au moins deux observations de $Y$ (pour satisfaire $\sum \alpha_j = 0$ sans tout annuler). Avec une seule observation de $Y$, son poids serait forcément nul et le système se ramènerait au krigeage ordinaire classique.
+
+### Cas particulier : une moyenne connue, l'autre inconnue
+
+En pratique, il arrive que la moyenne de la variable secondaire soit connue — $Y$ vient d'un modèle physique ou d'une mesure exhaustive déjà centrée — alors que celle de la variable principale reste inconnue. On centre alors les observations de $Y$ sur $m_Y$ et on n'impose plus qu'une seule contrainte, sur les poids de $Z$ :
+
+$$
+Z_0^* = \sum_{i=1}^{n_Z} \lambda_i \, Z_i + \sum_{j=1}^{n_Y} \alpha_j \, (Y_j - m_Y), \qquad \sum_{i=1}^{n_Z} \lambda_i = 1.
+$$
+
+Le système correspondant n'a plus qu'un seul multiplicateur de Lagrange, $\nu_Z$ :
+
+$$
+\begin{cases}
+\displaystyle\sum_{j=1}^{n_Z} \lambda_j \, C_{ZZ}(\mathbf{x}_i - \mathbf{x}_j) + \sum_{j=1}^{n_Y} \alpha_j \, C_{ZY}(\mathbf{x}_i - \mathbf{x}_j) + \nu_Z = C_{ZZ}(\mathbf{x}_i - \mathbf{x}_0), & i = 1, \dots, n_Z \\[8pt]
+\displaystyle\sum_{j=1}^{n_Z} \lambda_j \, C_{YZ}(\mathbf{x}_i - \mathbf{x}_j) + \sum_{j=1}^{n_Y} \alpha_j \, C_{YY}(\mathbf{x}_i - \mathbf{x}_j) = C_{YZ}(\mathbf{x}_i - \mathbf{x}_0), & i = 1, \dots, n_Y \\[8pt]
+\displaystyle\sum_{i=1}^{n_Z} \lambda_i = 1
+\end{cases}
+$$
+
+Ce cas intermédiaire est fréquent et commode : il libère les poids de $Y$ de la contrainte $\sum \alpha_j = 0$, donc laisse passer plus d'information, sans exiger de connaître $m_Z$. C'est exactement le cadre du cokrigeage colocalisé, vu plus loin, où la variable secondaire est dense et sa moyenne bien estimée.
+
+### Changement de paradigme par rapport au krigeage
+
+En krigeage univarié, on privilégie le krigeage ordinaire : il ne demande pas la moyenne et s'accommode bien de la quasi-stationnarité locale, avec le variogramme pour outil de base. En cokrigeage, la logique s'inverse. On utilise souvent le cokrigeage simple, pour trois raisons :
+
+- la contrainte $\sum \alpha_j = 0$ du cokrigeage ordinaire bride le transfert d'information de la variable secondaire, donc rogne le gain sur le krigeage seul;
+- la covariance — et non le variogramme — devient l'outil de base : elle seule décrit les relations potentiellement asymétriques entre variables, ce que le variogramme croisé ne sait pas faire;
+- la covariance croisée exploite les données non colocalisées, là où le variogramme croisé exige les deux variables aux deux bouts de chaque paire.
+
+En pratique, quand la corrélation entre variables est forte et que la secondaire est dense, le cokrigeage simple procure un gain substantiel.
+
+## 🧮 Atelier interactif 10.2 — Cokrigeage ordinaire (CO) {.unnumbered}
+
+::: {.content-visible when-format="html"}
+Pendant du KO, mais à deux variables, moyennes inconnues (contraintes de non-biais par variable). La principale $Z$ (rare) et la secondaire $Y$ (dense) sont sur deux axes distincts (variances différentes). Réglez la matrice de corégionalisation $\mathbf{B} = \begin{bmatrix} b_{ZZ} & b_{ZY} \\ b_{ZY} & b_{YY} \end{bmatrix}$, avec $\rho = b_{ZY}/\sqrt{b_{ZZ} b_{YY}}$, et comparez le cokrigeage de $Z$ au krigeage de $Z$ seul : là où $Z$ manque, le cokrigeage emprunte l'information de $Y$ et réduit la variance.
+{{< include widget/widget_cokrigeage_co.qmd >}}
+:::
+
+::: {.content-visible unless-format="html"}
+Cet atelier interactif n'est disponible que dans la version web du chapitre.
+:::

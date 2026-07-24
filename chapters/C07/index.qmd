@@ -1,0 +1,49 @@
+---
+title: "Variogramme"
+abstract: |
+  Ce chapitre introduit le variogramme, l’un des outils fondamentaux de la géostatistique. Il permet de décrire la manière dont une variable évolue dans l’espace à partir des données observées. Le calcul du variogramme expérimental est d’abord présenté, suivi de l’ajustement d’un modèle théorique. Cette étape est essentielle, puisque ce modèle est ensuite utilisé dans les méthodes d’estimation et de simulation. Le chapitre aborde également l’anisotropie ainsi que la relation entre le variogramme et la covariance.
+
+---
+
+::: {.callout-important}
+## Objectifs d'apprentissage
+-   Définir ce qu’est un variogramme et expliquer son rôle dans la mesure de la continuité spatiale d’une variable régionalisée ;
+
+-   Distinguer le variogramme expérimental du modèle théorique et justifier l’utilisation d’un modèle ajusté ;
+
+-   Calculer un variogramme expérimental à partir de données spatiales ;
+
+-   Ajuster un modèle théorique à un variogramme expérimental ;
+
+-   Intégrer les effets d’anisotropie dans le calcul du variogramme et de la covariance ;
+
+-   Utiliser un modèle de variogramme pour calculer la covariance entre deux points ;
+
+-   Identifier et décrire les principales familles de modèles de variogrammes utilisés en pratique.
+:::
+
+::: {.callout-note}
+## Référence
+
+Ce chapitre s’appuie principalement sur le livre suivant :
+
+Chilès, J., & Delfiner, P. (2012). Geostatistics: Modeling Spatial Uncertainty. John Wiley & Sons.
+
+:::
+
+
+{{< include 07-01.qmd >}}
+
+{{< include 07-02.qmd >}}
+
+{{< include 07-03.qmd >}}
+
+{{< include 07-04.qmd >}}
+
+{{< include 07-05.qmd >}}
+
+{{< include 07-06.qmd >}}
+
+{{< include 07-07.qmd >}}
+
+{{< include 07-08.qmd >}}

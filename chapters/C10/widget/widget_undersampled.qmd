@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c10_undersampled">
+  <div class="gw-placeholder">Chargement du widget (variable rare + variable dense)…</div>
+</div>
+```

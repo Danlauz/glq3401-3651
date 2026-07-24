@@ -1,0 +1,159 @@
+/* =============================================================================
+   Squelette CSS unifié pour les widgets interactifs de geostat_polymtl.
+   Chargé globalement via _quarto.yml. Conçu pour rester cohérent avec le thème
+   Quarto (cosmo en clair, darkly en sombre).
+   ============================================================================= */
+
+.geostat-widget-wrap {
+  margin: 1.5rem 0;
+}
+
+.geostat-widget {
+  --gw-border:    #d0d7de;
+  --gw-bg:        #fafbfc;
+  --gw-header-bg: #eef2f5;
+  --gw-text:      #24292f;
+  --gw-muted:     #6e7681;
+  --gw-accent:    #0d4d92;       /* bleu Polymtl */
+  --gw-accent-2:  #e87722;       /* orange Polymtl */
+  --gw-warn-bg:   #fff8c5;
+  --gw-warn-fg:   #6c3a00;
+
+  border: 1px solid var(--gw-border);
+  border-radius: 8px;
+  background: var(--gw-bg);
+  color: var(--gw-text);
+  overflow: hidden;
+  min-height: 280px;             /* réserve l'espace pour éviter le layout shift */
+}
+
+.gw-header {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .65rem 1rem;
+  background: var(--gw-header-bg);
+  border-bottom: 1px solid var(--gw-border);
+}
+
+.gw-title  { margin: 0; font-size: 1rem; font-weight: 600; flex: 1; }
+.gw-icon   { font-size: 1.2rem; line-height: 1; }
+.gw-badge  {
+  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-size: .72rem;
+  padding: .15rem .5rem;
+  background: white;
+  border: 1px solid var(--gw-border);
+  border-radius: 12px;
+  color: var(--gw-muted);
+}
+
+.gw-placeholder {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  min-height: 260px;
+  color: var(--gw-muted);
+  font-size: .9rem;
+}
+
+.gw-spinner {
+  width: 32px; height: 32px;
+  border: 3px solid var(--gw-border);
+  border-top-color: var(--gw-accent);
+  border-radius: 50%;
+  animation: gw-spin .9s linear infinite;
+  margin-bottom: .8rem;
+}
+@keyframes gw-spin { to { transform: rotate(360deg); } }
+
+.gw-controls {
+  display: flex; flex-wrap: wrap; gap: .6rem 1rem;
+  padding: .65rem 1rem;
+  background: white;
+  border-bottom: 1px solid var(--gw-border);
+}
+.gw-controls label {
+  display: flex; flex-direction: column; gap: .15rem;
+  font-size: .8rem;
+  color: var(--gw-muted);
+}
+.gw-controls input[type="range"] { width: 140px; }
+.gw-controls input[type="number"],
+.gw-controls select {
+  font-size: .85rem;
+  padding: .2rem .4rem;
+  border: 1px solid var(--gw-border);
+  border-radius: 4px;
+  background: white;
+}
+.gw-controls button {
+  font-size: .85rem;
+  padding: .25rem .7rem;
+  border: 1px solid var(--gw-border);
+  border-radius: 4px;
+  background: var(--gw-accent);
+  color: white;
+  cursor: pointer;
+}
+.gw-controls button:hover { background: #093b6e; }
+
+.gw-error {
+  display: flex; gap: .5rem; align-items: flex-start;
+  padding: 1rem;
+  color: var(--gw-warn-fg);
+  background: var(--gw-warn-bg);
+  border-top: 1px solid #d4a72c;
+  font-size: .9rem;
+}
+
+.gw-heavy-warning {
+  padding: .75rem 1rem;
+  background: var(--gw-warn-bg);
+  color: var(--gw-warn-fg);
+  border-top: 1px solid #d4a72c;
+  font-size: .85rem;
+}
+
+.gw-fallback-img {
+  max-width: 100%; height: auto;
+  display: block; margin: 0 auto;
+}
+.gw-fallback-note {
+  padding: .5rem 1rem;
+  background: var(--gw-warn-bg);
+  color: var(--gw-warn-fg);
+  font-size: .85rem;
+  text-align: center;
+}
+
+/* === Adaptations pour le thème sombre Quarto (darkly) === */
+[data-bs-theme="dark"] .geostat-widget {
+  --gw-border:    #30363d;
+  --gw-bg:        #161b22;
+  --gw-header-bg: #21262d;
+  --gw-text:      #c9d1d9;
+  --gw-muted:     #8b949e;
+}
+[data-bs-theme="dark"] .gw-controls {
+  background: #0d1117;
+}
+[data-bs-theme="dark"] .gw-controls input[type="number"],
+[data-bs-theme="dark"] .gw-controls select {
+  background: #161b22;
+  color: var(--gw-text);
+  border-color: var(--gw-border);
+}
+[data-bs-theme="dark"] .gw-badge {
+  background: #161b22;
+  color: var(--gw-muted);
+}
+
+/* --- Style uniforme des curseurs et de leur valeur (tous les ateliers) ------ */
+.geostat-widget input[type="range"] {
+  accent-color: #2563eb;
+  vertical-align: middle;
+}
+/* La valeur affichée juste après un curseur : bleu foncé, gras, chiffres alignés. */
+.geostat-widget input[type="range"] + span {
+  color: #1d4ed8;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}

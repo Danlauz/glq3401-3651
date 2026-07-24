@@ -1,0 +1,46 @@
+---
+title: "Krigeage"
+abstract: |
+  Ce chapitre est consacré au krigeage, une méthode permettant d’estimer une teneur inconnue à partir des données disponibles, en tenant compte non seulement de la distance entre les points, mais aussi de leur corrélation et leur redondance. Le krigeage simple et le krigeage ordinaire sont d’abord présentés, puis le krigeage de bloc. Le choix du voisinage est également abordé, puisqu’il peut avoir un effet important sur les estimations. Enfin, le krigeage universel et le krigeage avec dérive externe sont présentés pour traiter les situations où la moyenne varie dans l’espace. Des ateliers interactifs sont proposés pour illustrer les différentes méthodes de krigeage et leurs propriétés.
+---
+
+::: {.callout-important}
+## Objectifs d'apprentissage
+- Expliquer les différences entre krigeage simple, krigeage ordinaire et krigeage universel ;
+
+- Dériver les équations du krigeage à partir du principe de minimisation de la variance d'estimation ;
+
+- Construire et résoudre les systèmes de krigeage simple et ordinaire, calculer l'estimation et la variance de krigeage ;
+
+- Formuler le krigeage de bloc et comprendre l'effet de régression ;
+
+- Expliquer les principales propriétés du krigeage (interpolation exacte, effet d'écran, lissage, biais conditionnel) ;
+
+- Utiliser et interpréter la validation croisée par krigeage pour évaluer la qualité du modèle de variogramme.
+:::
+
+::: {.callout-note}
+## Référence
+
+Ce chapitre s’appuie principalement sur le livre suivant :
+
+Chilès, J., & Delfiner, P. (2012). Geostatistics: Modeling Spatial Uncertainty. John Wiley & Sons.
+:::
+
+
+{{< include 09-01.qmd >}}
+
+{{< include 09-02.qmd >}}
+
+{{< include 09-03.qmd >}}
+
+{{< include 09-04.qmd >}}
+
+{{< include 09-05.qmd >}}
+
+{{< include 09-06.qmd >}}
+
+{{< include 09-07.qmd >}}
+
+{{< include 09-08.qmd >}}
+

@@ -1,0 +1,17 @@
+# À propos de l'auteur {#auteur .unnumbered}
+
+::: {style="text-align: center;"}
+
+![](dany_lauzon.jpg){width="220px" style="border-radius:50%;" fig-alt="Dany Lauzon"}
+
+## **Dany Lauzon**
+
+:::
+
+[**Dany Lauzon**](https://www.polymtl.ca/expertises/lauzon-dany) est professeur adjoint au [Département des génies civil, géologique et des mines](https://www.polymtl.ca/cgm/) de [Polytechnique Montréal](https://www.polymtl.ca/). Il enseigne principalement dans les programmes de génie géologique et de génie des mines, notamment les cours *Géostatistique et géologie minière* ([GLQ3401](https://www.polymtl.ca/programmes/cours/geostatistique-et-geologie-minieres)) et *Géologie minière* ([GLQ3651](https://www.polymtl.ca/programmes/cours/geologie-miniere)), ainsi qu’aux cycles supérieurs le cours *Géostatistique* ([GML6402A](https://www.polymtl.ca/programmes/cours/geostatistique)).
+
+Bachelier en ingénierie géologique et titulaire d’un doctorat en génie minéral, il s’intéresse à la modélisation des phénomènes spatialisés et incertains en sciences de la Terre. Ses travaux de recherche portent notamment sur la géostatistique appliquée aux ressources en eau et aux systèmes géologiques, la modélisation hydrogéologique, les problèmes inverses, l’apprentissage profond appliqué aux géosciences ainsi que l’analyse, la quantification et la propagation des incertitudes dans les modèles géologiques et environnementaux.
+
+Ses travaux ont mené à plusieurs publications scientifiques dans des revues internationales, portant entre autres sur les méthodes de simulation géostatistique, l’intégration de données hétérogènes, les problèmes inverses en hydrogéologie et le développement de méthodes d’intelligence artificielle pour l’analyse et la prévision de phénomènes géoscientifiques.
+
+À travers son enseignement, il cherche à rendre la géostatistique accessible, concrète et directement liée aux problématiques rencontrées en géologie minière, en hydrogéologie et en ingénierie des ressources. Ce livre s’inscrit dans cette démarche pédagogique : offrir aux étudiantes et étudiants un cadre progressif pour comprendre les concepts, interpréter les modèles et développer un regard critique sur l’utilisation des données spatiales en sciences de la Terre.

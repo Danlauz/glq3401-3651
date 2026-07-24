@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c07_quantites">
+  <div class="gw-placeholder">Chargement du widget (impact du nombre de données)…</div>
+</div>
+```

@@ -1,0 +1,79 @@
+## Cokrigeage simple
+
+Le cokrigeage simple s'applique quand les moyennes $m_Z$ et $m_Y$ sont connues. Comme au krigeage simple, on travaille alors sur les écarts à la moyenne : les poids combinent ces écarts, sans qu'il faille ajouter de contrainte de non-biais.
+
+### Construction de l'estimateur
+
+En centrant les observations sur leurs moyennes respectives, l'estimateur du cokrigeage simple s'écrit :
+
+$$
+Z_0^* = m_Z + \sum_{i=1}^{n_Z} \lambda_i \, (Z_i - m_Z) + \sum_{j=1}^{n_Y} \alpha_j \, (Y_j - m_Y)
+$$
+
+### Condition de non-biais
+
+La vérification est immédiate. Comme $\mathbb{E}[Z_i - m_Z] = 0$ et $\mathbb{E}[Y_j - m_Y] = 0$ :
+
+$$
+\mathbb{E}[Z_0^*] = m_Z + \sum_{i=1}^{n_Z} \lambda_i \underbrace{\mathbb{E}[Z_i - m_Z]}_{=\,0} + \sum_{j=1}^{n_Y} \alpha_j \underbrace{\mathbb{E}[Y_j - m_Y]}_{=\,0} = m_Z = \mathbb{E}[Z_0]
+$$
+
+L'estimateur est donc sans biais quels que soient les poids, exactement comme au krigeage simple. On n'impose rien sur $\lambda_i$ ni sur $\alpha_j$.
+
+### Système de cokrigeage simple
+
+On minimise la variance d'estimation sans contrainte. En annulant les dérivées partielles par rapport à chaque poids $\lambda_k$ et $\alpha_k$, on obtient le système :
+
+$$
+\begin{cases}
+\displaystyle\sum_{j=1}^{n_Z} \lambda_j \, C_{ZZ}(\mathbf{x}_i - \mathbf{x}_j) + \sum_{j=1}^{n_Y} \alpha_j \, C_{ZY}(\mathbf{x}_i - \mathbf{x}_j) = C_{ZZ}(\mathbf{x}_i - \mathbf{x}_0), & i = 1, \dots, n_Z \\[8pt]
+\displaystyle\sum_{j=1}^{n_Z} \lambda_j \, C_{YZ}(\mathbf{x}_i - \mathbf{x}_j) + \sum_{j=1}^{n_Y} \alpha_j \, C_{YY}(\mathbf{x}_i - \mathbf{x}_j) = C_{YZ}(\mathbf{x}_i - \mathbf{x}_0), & i = 1, \dots, n_Y
+\end{cases}
+$$
+
+Le premier bloc de $n_Z$ équations vient de la dérivation par rapport aux poids $\lambda_i$ de la variable principale, le second de $n_Y$ équations par rapport aux poids $\alpha_j$ de la variable secondaire. Le second membre fait intervenir les covariances entre chaque observation et la quantité à estimer $Z_0$.
+
+### Forme matricielle
+
+Le système se met sous la forme compacte $\mathbf{K}\, \boldsymbol{w} = \mathbf{k}$ :
+
+$$
+\underbrace{\begin{bmatrix}
+\mathbf{K}_{ZZ} & \mathbf{K}_{ZY} \\
+\mathbf{K}_{YZ} & \mathbf{K}_{YY}
+\end{bmatrix}}_{\mathbf{K}}
+\underbrace{\begin{bmatrix}
+\boldsymbol{\lambda} \\
+\boldsymbol{\alpha}
+\end{bmatrix}}_{\boldsymbol{w}}
+=
+\underbrace{\begin{bmatrix}
+\mathbf{k}_{ZZ_0} \\
+\mathbf{k}_{YZ_0}
+\end{bmatrix}}_{\mathbf{k}}
+$$
+
+où $\mathbf{K}_{ZZ}$ ($n_Z \times n_Z$) rassemble les covariances entre les observations de $Z$, $\mathbf{K}_{YY}$ ($n_Y \times n_Y$) celles entre les observations de $Y$, et $\mathbf{K}_{ZY} = \mathbf{K}_{YZ}^\top$ ($n_Z \times n_Y$) les covariances croisées. Les vecteurs $\mathbf{k}_{ZZ_0}$ et $\mathbf{k}_{YZ_0}$ contiennent les covariances entre les observations, respectivement de $Z$ et de $Y$, et le point à estimer $Z_0$. Le système est de taille $(n_Z + n_Y) \times (n_Z + n_Y)$, plus grand que celui du krigeage simple ($n_Z \times n_Z$).
+
+### Variance de cokrigeage simple
+
+La variance d'estimation optimale est :
+
+$$
+\sigma_{CS}^2 = C_{ZZ}(\mathbf{0}) - \sum_{i=1}^{n_Z} \lambda_i \, C_{ZZ}(\mathbf{x}_i - \mathbf{x}_0) - \sum_{j=1}^{n_Y} \alpha_j \, C_{YZ}(\mathbf{x}_j - \mathbf{x}_0)
+$$
+
+ou, sous forme matricielle, $\sigma_{CS}^2 = C_{ZZ}(\mathbf{0}) - \boldsymbol{w}^\top \mathbf{k}$. Cette variance est toujours inférieure ou égale à celle du krigeage simple de $Z$ seul : ajouter les observations de $Y$ ne peut qu'améliorer l'estimation, ou la laisser inchangée.
+
+> **Remarque.** Le cokrigeage simple peut estimer $Z_0$ même sans aucune donnée de la variable principale $Z$. Il suffit d'avoir au moins une donnée de la variable secondaire $Y$ et un lien non nul entre $Z$ et $Y$. Sans donnée de $Y$, on retombe simplement sur le krigeage simple de la principale. On verra que le cokrigeage ordinaire, lui, exige de connaître $Z$.
+
+## 🧮 Atelier interactif 10.1 — Cokrigeage simple (CS) {.unnumbered}
+
+::: {.content-visible when-format="html"}
+Pendant du KS, mais à deux variables, avec moyennes connues ($m_Z$, $m_Y$). La principale $Z$ (rare) et la secondaire $Y$ (dense) sont sur deux axes distincts (échelles différentes). Le modèle de corégionalisation est réglé par la matrice de paliers $\mathbf{B} = \begin{bmatrix} b_{ZZ} & b_{ZY} \\ b_{ZY} & b_{YY} \end{bmatrix}$, avec $\rho = b_{ZY}/\sqrt{b_{ZZ} b_{YY}}$. Là où $Z$ manque, le cokrigeage exploite $Y$ par l'intermédiaire de $b_{ZY}$; comparez au krigeage de $Z$ seul et augmentez $|\rho|$ pour voir l'apport.
+{{< include widget/widget_cokrigeage_cs.qmd >}}
+:::
+
+::: {.content-visible unless-format="html"}
+Cet atelier interactif n'est disponible que dans la version web du chapitre.
+:::

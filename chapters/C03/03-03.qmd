@@ -1,0 +1,146 @@
+## Contrôle de qualité et assurance de qualité
+
+Le contrôle de qualité et l'assurance qualité (**QA/QC**, *Quality Assurance / Quality Control*) regroupent les procédures qui vérifient toute la chaîne d'échantillonnage, du prélèvement à la validation des résultats. Elles garantissent que les teneurs obtenues sont fiables et peuvent appuyer une estimation des ressources ou une décision minière.
+
+Bre-X est un bon rappel de l'importance du QA/QC. Dans ce projet, des échantillons de carottes avaient été enrichis avec de la poussière d'or, ce qui a complètement faussé l'estimation des ressources. Ce scandale a poussé plusieurs pays miniers à renforcer leurs règles de divulgation.
+
+
+| Pays | Réglementation |
+|---|---|
+| Canada | Règlement NI 43-101 |
+| Australie | JORC Code |
+| Afrique du Sud | SAMREC |
+| Royaume-Uni | IMM |
+| États-Unis | SME |
+
+: Principales réglementations relatives à la divulgation des ressources et des réserves minérales.
+
+Ces réglementations exigent que les données utilisées pour estimer les ressources soient appuyées par des procédures rigoureuses d'échantillonnage, de préparation, d'analyse et de validation. Le QA/QC permet donc de faire le lien entre les notions vues précédemment — biais, précision, justesse, traçabilité et erreur analytique — et leur application concrète dans un projet minier.
+
+Dans un rapport NI 43-101, le QA/QC doit être présenté clairement. Il faut montrer comment les échantillons ont été suivis, préparés et vérifiés avant d'utiliser les résultats dans l'estimation. Le rapport doit notamment expliquer :
+
+- les méthodes d'échantillonnage utilisées;
+- les procédures de préparation et d'entreposage;
+- la traçabilité des échantillons;
+- les mesures de sécurité et de protection des accès;
+- les contrôles utilisés pour détecter les erreurs, les contaminations, les dérives analytiques ou d'éventuelles irrégularités;
+- l'utilisation de blancs, de standards, de duplicatas et de réanalyses.
+
+### Définitions
+
+Le contrôle de qualité repose sur l'insertion d'échantillons de contrôle dans la séquence normale d'échantillons envoyés au laboratoire. Ces contrôles servent à vérifier différentes sources d'erreur : la précision, la justesse, la contamination et la reproductibilité des résultats.
+
+On distingue généralement quatre types principaux de contrôles QA/QC.
+
+1. **Analyse par un tiers**
+
+   Une partie du rejet ou de la pulpe est envoyée à un second laboratoire pour une analyse indépendante. Cette comparaison permet de vérifier si les résultats du laboratoire principal sont cohérents avec ceux d'un autre laboratoire. Elle sert surtout à détecter un problème de justesse, mais peut aussi révéler un problème de précision ou de méthode analytique.
+
+2. **Duplicatas**
+
+   Un duplicata consiste à refaire une analyse à partir du même matériau, par exemple à partir du rejet, de la pulpe ou d'un second sous-échantillon. Lorsqu'il est analysé par le même laboratoire, il permet surtout d'évaluer la précision, c'est-à-dire la capacité du processus analytique à reproduire un résultat similaire. Lorsqu'il est envoyé à un autre laboratoire, on parle plutôt de duplicata externe, ainsi une analyse par un tiers.
+
+3. **Blancs**
+
+   Un blanc est un matériau stérile, connu pour ne contenir aucune trace de l'élément analysé, que l'on insère dans la séquence d'échantillons afin de détecter une contamination. Sa teneur devant être nulle, toute valeur anormalement élevée trahit un apport de matière étranger — le plus souvent un résidu laissé par un échantillon riche traité juste avant, dans le concasseur, le broyeur ou l'appareil d'analyse. On distingue le **blanc grossier**, introduit avant la préparation pour tester la contamination lors du concassage et du broyage, et le **blanc fin** (ou de pulpe), inséré au moment de l'analyse pour isoler la contamination survenue en laboratoire.
+
+4. **Échantillons de référence, ou standards**
+
+   Un standard est un échantillon préparé à l'avance, dont on connaît déjà la teneur. On l'envoie au laboratoire avec les autres échantillons, sans qu'il serve à estimer le gisement. Il sert plutôt à vérifier si le laboratoire retrouve la valeur qu'il devrait trouver. Si le résultat est trop loin de la valeur attendue, il peut y avoir un problème dans l'analyse.
+
+
+### Outils statistiques pour le contrôle qualité
+
+Selon @Abzalov2011, la statistique la plus utile est le coefficient de variation (CV), défini par :
+
+$$\text{CV} = \frac{s}{m}$$
+
+Pour une paire de duplicatas ($z_1, z_2$), l'écart-type expérimental est $s = \frac{|z_1 - z_2|}{\sqrt{2}}$ et la moyenne est $m = \frac{z_1 + z_2}{2}$. En substituant, on obtient :
+
+$$\text{CV} = \frac{\sqrt{2} \, |z_1 - z_2|}{z_1 + z_2}$$
+
+D'autres mesures équivalentes existent, telles que le **HARD** ($\frac{|z_1 - z_2|}{z_1 + z_2}$) ou le **AMPD** ($\frac{2 |z_1 - z_2|}{z_1 + z_2} \times 100\%$). Comme ces statistiques sont proportionnelles, l'usage direct du CV est recommandé.
+
+
+### Exemple synthétique de résultats QA/QC
+
+#### Visualisation des Blancs
+
+La manière traditionnelle de présenter les résultats des blancs consiste à les représenter sous forme de série temporelle. Chaque point correspond alors à un blanc analysé, placé dans l'ordre d'insertion de la séquence d'échantillons. Cette représentation permet de repérer rapidement des valeurs anormales, mais aussi d'identifier si les dépassements sont isolés ou s'ils se répètent dans une portion de la séquence.
+
+Pour interpréter un blanc, on compare souvent le résultat à la limite de détection de l'appareil, notée LD. Si la valeur mesurée est inférieure à 3 × LD, le résultat est généralement acceptable. Entre 3 × LD et 5 × LD, il peut y avoir une petite anomalie à surveiller. Lorsque la valeur dépasse 5 × LD, la possibilité d'une contamination devient plus sérieuse. Au-delà de 10 × LD, le résultat est suspect et il faut vérifier la séquence d'analyse.
+
+
+L'atelier interactif ci-dessous met cette logique en pratique : la limite de détection, le niveau de bruit analytique, le pourcentage de contamination et le nombre d'échantillons peuvent y être ajustés pour voir comment ils influencent la distribution des blancs, le nombre de dépassements et l'interprétation globale de la qualité analytique.
+
+## 🧮 Atelier interactif 3.3 — Blancs et détection de contamination {.unnumbered}
+
+Ajustez la limite de détection, le bruit analytique, le taux de contamination et le nombre d'échantillons, puis observez la série temporelle des blancs et le nombre de dépassements des seuils ($3\times$, $5\times$, $10\times$ LD).
+
+Cet atelier est pleinement interactif dans la version web de ce document.
+
+{{< include widget/widget_blancs.qmd >}}
+
+À retenir : un blanc qui dépasse les seuils signale une contamination introduite par la chaîne de préparation ou d'analyse, et non par le gisement lui-même. La forme de la série aide au diagnostic : des dépassements isolés évoquent un incident ponctuel, tandis que des dépassements groupés trahissent un problème systématique sur une portion de la séquence.
+
+#### Échantillons de référence
+
+Les standards sont des échantillons dont la teneur est déjà connue. On les insère dans la séquence d'analyse pour vérifier si le laboratoire retrouve bien la valeur attendue. Contrairement aux blancs, on ne s'attend donc pas à une teneur nulle. On s'attend plutôt à retrouver une valeur précise, avec une certaine tolérance autour de cette valeur.
+
+Les résultats des standards sont souvent présentés dans un graphique, selon l'ordre où ils ont été analysés. Chaque point représente un standard. La ligne centrale correspond à la teneur attendue, et les lignes autour montrent les limites de contrôle, généralement à $\pm 1\sigma$, $\pm 2\sigma$ et $\pm 3\sigma$.
+
+Si les points restent près de la valeur attendue, le laboratoire semble bien mesurer le standard. Si un résultat dépasse $\pm 2\sigma$, on commence à porter attention. Si un résultat dépasse $\pm 3\sigma$, il faut généralement vérifier ce qui s'est passé dans la séquence d'analyse.
+
+Au-delà des points isolés très éloignés, il faut regarder la forme de la série. Si plusieurs résultats sont toujours un peu trop élevés, ou toujours un peu trop faibles, cela peut indiquer un biais. Si les résultats se déplacent lentement dans une direction, on peut soupçonner une dérive du laboratoire. En principe, les résultats des standards devraient varier autour de la valeur attendue, sans tendance claire dans le temps.
+
+Ainsi, si plusieurs standards consécutifs sont mesurés au-dessus de la valeur attendue, cela peut indiquer que le laboratoire surestime systématiquement les teneurs. Comme la distribution attendue des standards est connue, il est possible de calculer la probabilité qu'une telle séquence se produise simplement par hasard. L'atelier interactif ci-dessous permet de calculer cette probabilité en faisant varier la moyenne attendue, l'écart-type certifié, le nombre d'échantillons, le biais et la dérive, afin de voir comment ces paramètres influencent la distribution des résultats, les dépassements des seuils de contrôle et l'interprétation globale de la qualité analytique.
+
+## 🧮 Atelier interactif 3.4 — Standards : justesse et dérive analytique {.unnumbered}
+
+Faites varier la teneur certifiée, l'écart-type, le biais et la dérive du laboratoire, puis observez la série temporelle des standards par rapport aux seuils de contrôle ($\pm 1\sigma$, $\pm 2\sigma$, $\pm 3\sigma$) et la probabilité d'obtenir une telle séquence par hasard.
+
+Cet atelier est pleinement interactif dans la version web de ce document.
+
+{{< include widget/widget_standards.qmd >}}
+
+À retenir : les standards mesurent la justesse. Des écarts isolés au-delà de $\pm 2\sigma$ restent attendus de temps à autre, mais des dépassements répétés du même côté de la valeur certifiée — ou une tendance progressive — trahissent un biais ou une dérive du laboratoire, bien plus préoccupants qu'un écart ponctuel.
+
+#### Duplicatas
+
+La manière traditionnelle de présenter les duplicatas consiste d'abord à tracer un nuage de points où chaque paire est représentée par deux valeurs : l'échantillon original sur un axe et son duplicata sur l'autre. Lorsque les résultats sont très reproductibles, les points se placent près de la droite 1:1. Plus les points s'éloignent de cette droite, plus l'écart entre l'original et le duplicata est important.
+
+Un deuxième graphique permet de visualiser la différence relative entre les deux analyses. Cette différence est souvent exprimée en pourcentage par rapport à la moyenne de la paire. Elle permet d'identifier les paires problématiques, par exemple celles qui dépassent le seuil de 10 %. Des écarts élevés peuvent indiquer une mauvaise homogénéisation, un sous-échantillonnage insuffisant, une contamination, une erreur analytique ou une forte hétérogénéité du matériau.
+
+L'indicateur **HARD** (*Half Absolute Relative Difference*) est souvent utilisé pour comparer les duplicatas. Il donne une mesure de l'écart entre deux résultats, par rapport à leur moyenne. Plus la valeur de HARD est faible, plus les deux analyses sont proches. On peut ensuite représenter les valeurs de HARD sous forme de courbe cumulative. Cette courbe permet de voir quelle proportion des duplicatas respecte un seuil donné. Par exemple, on peut vérifier si 90 % des paires ont un HARD inférieur à 10 %.
+
+Le seuil retenu dépend toutefois du type de duplicata. La tolérance de 10 % vise les duplicatas de pulpe, les plus reproductibles; on accepte généralement un écart plus élevé pour les duplicatas grossiers, de l'ordre de 20 %, et pour les duplicatas de terrain, de l'ordre de 25 %, car l'hétérogénéité du matériau y est plus grande. Les paires dont les deux valeurs sont très proches de la limite de détection sont par ailleurs souvent écartées de l'analyse, car l'écart relatif y devient peu significatif.
+
+La médiane des teneurs, le coefficient de variation et le nombre de paires de duplicatas peuvent être ajustés dans l'atelier interactif ci-dessous, pour observer comment la dispersion analytique influence le nuage de points, les écarts relatifs, la courbe HARD et les indicateurs synthétiques comme le $R^2$, le HARD(90) et le coefficient de variation moyen.
+
+## 🧮 Atelier interactif 3.5 — Duplicatas : précision analytique {.unnumbered}
+
+Réglez la médiane des teneurs, le coefficient de variation et le nombre de paires, puis comparez le nuage original-duplicata à la droite 1:1, les écarts relatifs et la courbe cumulative du HARD.
+
+Cet atelier est pleinement interactif dans la version web de ce document.
+
+{{< include widget/widget_duplicatas.qmd >}}
+
+À retenir : les duplicatas mesurent la précision. Un nuage de points serré le long de la droite 1:1 et une courbe HARD montrant au moins 90 % des paires sous 10 % indiquent une bonne reproductibilité; les paires qui s'en écartent signalent une hétérogénéité du matériau, un sous-échantillonnage insuffisant ou une erreur analytique.
+
+### Exemples réels de protocoles QA/QC
+
+Les protocoles QA/QC décrits dans les rapports techniques NI 43-101 montrent comment les blancs, les standards, les duplicatas et la traçabilité s'appliquent dans des projets miniers réels. Pour respecter les droits d'auteur, les graphiques originaux ne sont pas reproduits ici : le lecteur est invité à consulter les rapports sur SEDAR+ pour visualiser les résultats détaillés. Les deux cas ci-dessous en sont décrits en mots.
+
+#### Exemple 1 : Windfall — Osisko
+
+Le rapport technique du projet Windfall décrit un protocole QA/QC structuré autour de l'insertion systématique d'échantillons de contrôle dans la séquence d'analyse. Les blancs, constitués de gravier calcaire stérile, servent à détecter une contamination lors de la préparation ou de l'analyse. Les standards (matériaux de référence certifiés) sont insérés environ un tous les 20 échantillons pour vérifier la justesse et la précision; surtout, leur identifiant est effacé avant l'insertion, précisément pour que le laboratoire ne puisse pas les reconnaître et les traiter différemment. La traçabilité repose sur des étiquettes numérotées en triplicata (sac d'échantillon, boîte de carottes, carnet de terrain), qui permettent de suivre chaque échantillon tout au long de la chaîne.
+
+L'ampleur du programme — de l'ordre de 96 858 blancs, 87 029 standards et 5 922 duplicatas — illustre le volume de contrôle nécessaire dans un projet d'exploration avancé. On notera toutefois que des blancs de gravier calcaire, visuellement distincts de la roche, restent en principe repérables par le laboratoire.
+
+#### Exemple 2 : Mine Dumont — Royal Nickel
+
+Le rapport de la propriété Dumont présente un protocole plus large, couvrant aussi la sécurité et la préparation. Les accès à la carothèque sont protégés par un système d'alarme zoné, les sacs sont scellés dès la récolte, et les laboratoires sont certifiés ISO 9001:2000. Un blanc de sable (0 à 80 ppm de nickel) est inséré tous les 25 échantillons; la préparation comprend un concassage à 2 mm (70 % passant), la sélection d'une fraction de 100 g et une pulvérisation à 106 µm. Des duplicatas (quarts de carottes) sont envoyés à la même fréquence, et quatre matériaux de référence certifiés vérifient la justesse.
+
+Décrits en mots, les résultats se lisent ainsi. Les blancs et les duplicatas ne révèlent rien d'anormal — mais ce constat rassurant est à nuancer : un blanc de sable et un duplicata en quart de carotte sont tous deux facilement identifiables par le laboratoire, si bien que ces deux contrôles ne testent pas vraiment la procédure à l'aveugle. Le signal le plus important vient des standards : l'un d'eux (Standard 1) présente un biais marqué, et pour les deux laboratoires — exactement le type d'écart systématique que le QA/QC doit détecter avant que les données ne servent à estimer les ressources. Des contrôles trop reconnaissables perdent ainsi de leur valeur, tandis qu'un standard bien suivi peut révéler un biais réel.
+
+

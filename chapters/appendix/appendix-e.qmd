@@ -1,0 +1,18 @@
+---
+title: "Abaques - Variances d’estimation"
+number-sections: false
+---
+
+![Variance d’estimation d’un support (segment ou carré) estimé par son point central, pour un variogramme sphérique.](images/Ae_Im1.png){#fig-A1_est}
+
+
+![Variance d’estimation d’un rectangle estimé par le point central, pour un variogramme sphérique.](images/Ae_Im2.png){#fig-A2_est}
+
+
+![Variance d’estimation d’un rectangle estimé par le segment central parallèle à la direction $L_y$ ($a_y$).](images/Ae_Im3.png){#fig-A3_est}
+
+
+![Variance d’estimation d’un bloc estimé par sa section centrale carrée ($L_y = a_y$, $L_z = a_z$).](images/Ae_Im4.png){#fig-A4_est}
+
+
+![Variance d’estimation d’un bloc dont la section est carrée ($L_x = a_x$, $L_y = a_y$), lorsque l’estimation est réalisée à partir du segment central parallèle à $L_z = a_z$.](images/Ae_Im5.png){#fig-A5_est}

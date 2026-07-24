@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c12_SGS_pasapas">
+  <div class="gw-placeholder">Chargement (SGS pas-à-pas)…</div>
+</div>
+```

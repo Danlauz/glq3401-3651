@@ -1,0 +1,22 @@
+```{=html}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+```
+
+<div class="geostat-widget-wrap">
+
+<div class="geostat-widget"
+     id="w-c01-ressources-v2"
+     data-widget="c01_ressources"
+     data-version="0.2.0">
+
+  <div class="gw-placeholder">
+    <div class="gw-spinner"></div>
+    <p>Chargement du modèle de blocs et de la classification (≈ 40 ko)…</p>
+  </div>
+
+  <noscript>
+    <img class="gw-fallback-img" src="/_assets/c01/ressources_fallback.png" alt="Classification des ressources minérales — version statique" />
+  </noscript>
+</div>
+
+</div>

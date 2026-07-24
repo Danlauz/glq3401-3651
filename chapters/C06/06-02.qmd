@@ -1,0 +1,48 @@
+## Effet de support
+
+Le support correspond au domaine physique sur lequel une variable régionalisée est mesurée ou définie. Il se caractérise par sa taille, sa géométrie et son orientation. Un petit support fournit une information plus locale et moins moyennée, tandis qu’un grand support intègre les variations présentes sur un volume plus important.
+
+::: {.callout-note title="Définition — Support"}
+Le support est le domaine physique, défini par sa taille, sa géométrie et son orientation, sur lequel une variable régionalisée est mesurée, estimée ou moyennée.
+:::
+
+Un échantillon de carotte, analysé sur une longueur donnée, présente un volume relativement faible par rapport à celui d’un bloc minier de plsuieurs mètres cubes. La teneur de l’échantillon est mesurée sur le matériau prélevé, tandis que la teneur du bloc minier ne peut être mesurée qu’une fois celui-ci exploité. Il est donc estimée à partir des données disponibles et du modèle spatial retenu.
+
+La valeur estimée d’un bloc constitue donc une représentation imparfaite de sa teneur moyenne réelle. Les données de contrôle de teneur et de production permettent de mieux caractériser cette teneur au moment de l’exploitation, sans toutefois la connaître exactement en raison de l’échantillonnage, de la dilution, des pertes et du mélange des matériaux.
+
+Le passage d’un petit support à un support plus grand modifie la distribution statistique de la variable. Ce phénomène est appelé **effet de support**. Lorsque le support augmente, les valeurs locales sont moyennées sur des volumes plus étendus. La distribution des teneurs se resserre alors généralement autour de sa moyenne : sa variance diminue et les valeurs extrêmes s’atténuent.
+
+::: {.callout-note title="Définition — Effet de support"}
+L’effet de support désigne la modification de la distribution statistique d’une variable régionalisée lorsque la taille, la géométrie ou l’orientation de son support change. Pour un support plus grand, la variance est généralement plus faible en raison de la moyenne des valeurs à l’intérieur du volume.
+:::
+
+L’importance de cet effet dépend non seulement de la taille du support, mais également de la continuité spatiale du phénomène. Deux gisements peuvent présenter la même moyenne et la même variance à l’échelle des échantillons, mais des distributions différentes à l’échelle des blocs si leur organisation spatiale diffère (@fig-c6-effet-support).
+
+Lorsque les teneurs présentent une forte continuité spatiale, les valeurs regroupées dans un même bloc tendent à être semblables. Leur moyenne entraîne alors une réduction relativement limitée de la variance. À l’inverse, lorsque les fortes et les faibles teneurs sont étroitement entremêlées, leur regroupement dans de grands blocs produit un lissage plus important.
+
+![Effet de la continuité spatiale sur l’effet de support : deux gisements de même distribution ponctuelle mais de continuités différentes (courte vs longue portée) donnent des distributions par bloc différentes ; la variance de bloc est plus faible pour le gisement à forte continuité.](images/c6_04_effet_support.png){#fig-c6-effet-support fig-align="center" width="100%"}
+
+Le changement de support ne peut donc pas être étudié indépendamment de la structure spatiale. Celle-ci est notamment décrite par le variogramme, qui sera présenté au prochain chapitre. De manière générale, l’effet de support dépend de la variabilité des teneurs à l’intérieur du bloc et de la relation spatiale entre les valeurs qui y sont regroupées[^krige].
+
+![Effet du support sur la distribution des teneurs. À mesure que le support augmente, les teneurs sont moyennées : la distribution se resserre autour de la moyenne et les valeurs extrêmes s'atténuent. La moyenne du gisement, elle, reste inchangée. Pour une teneur de coupure donnée, la proportion de blocs sélectionnés — et donc le tonnage et la teneur récupérés — dépend du support (zones colorées : sous $z_{c1}$ et au-dessus de $z_{c2}$).](images/C6_EffetSupport.png){#fig-support fig-align="center" width="80%"}
+
+## 🧮 Atelier interactif 6.1 — Effet du support {.unnumbered}
+
+::: {.content-visible when-format="html"}
+En faisant varier la taille des blocs, observez l’évolution des statistiques de deux gisements 2D présentant des continuités spatiales différentes (faible à gauche, forte à droite), mais ayant la même distribution des teneurs à l’échelle ponctuelle (les statistiques sont identiques pour une taille de bloc de 1 m × 1 m). Les cartes, les histogrammes et les fonctions de répartition cumulées se mettent à jour pour refléter l’impact du changement de support sur la distribution des teneurs.
+
+{{< include widget/widget_support.qmd >}}
+:::
+
+::: {.content-visible unless-format="html"}
+Cet atelier interactif n'est disponible que dans la version web du chapitre.
+:::
+
+Un support plus petit peut permettre une sélection plus fine du minerai et du stérile, à condition que les données disponibles soient suffisamment nombreuses pour représenter cette échelle. Toutefois, réduire la taille des blocs du modèle ne suffit pas à améliorer la précision de l’estimation ni à accroître la sélectivité réellement applicable lors de l’exploitation.
+
+Il faut donc distinguer la taille des blocs du modèle, qui correspond à une discrétisation numérique, du support réel de la sélection minière. Ce dernier dépend notamment des méthodes d’exploitation, des équipements, du patron de forage et de sautage, de la dilution, des contraintes de stabilité et des coûts.
+
+L’effet de support influence ainsi la comparaison entre les données d’échantillonnage, les estimations du modèle et les unités effectivement exploitées. La géostatistique fournit les outils nécessaires pour représenter ce changement d’échelle et en évaluer les conséquences sur la distribution des teneurs, le tonnage sélectionné et la quantité de métal estimée.
+
+
+[^krige]: Cette propriété peut être exprimée par la relation de Krige : $D^2(v,G)=D^2(v,V)+D^2(V,G)$, où $v$, $V$ et $G$ représentent des supports ou des domaines emboîtés. La variabilité à l’échelle fine peut ainsi être décomposée entre la variabilité à l’intérieur des blocs et celle entre les blocs. Lorsque le support $V$ augmente, la moyenne effectuée à l’intérieur des blocs réduit généralement leur variance. Cette relation sera approfondie au chapitre 8.

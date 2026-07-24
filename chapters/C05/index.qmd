@@ -1,0 +1,31 @@
+---
+title: "Méthodes déterministes d'estimation des ressources"
+abstract: |
+  Ce chapitre présente les principales méthodes déterministes, dites conventionnelles, utilisées pour estimer les ressources à partir d’un échantillonnage limité. Toutes reposent sur le principe d’une moyenne pondérée, mais se distinguent par la manière dont les poids sont attribués aux observations. Les méthodes des polygones, ou du plus proche voisin, des triangles, fondée sur une interpolation par triangulation, de l’inverse de la distance et des sections sont successivement étudiées. Pour chacune, le principe, les formulations mathématiques, les avantages et les limites sont présentés. Des ateliers interactifs permettent de visualiser l’application de ces méthodes à des jeux de données synthétiques en deux dimensions.
+
+---
+
+::: {.callout-important}
+## Objectifs d'apprentissage
+- Comprendre le cadre général de l'estimation par moyenne pondérée et le rôle des poids $\lambda_i$;
+
+- Construire des polygones de Voronoï et expliquer leur lien avec la triangulation de Delaunay;
+
+- Appliquer la méthode des triangles selon différentes hypothèses de variation de la teneur et de l'épaisseur;
+
+- Estimer une teneur par la méthode de l'inverse de la distance et analyser l'effet de l'exposant $b$;
+
+- Utiliser la validation croisée pour comparer et calibrer les méthodes d'estimation;
+
+- Appliquer la méthode des sections pour estimer le volume et la teneur d'un gisement.
+:::
+
+{{< include 05-01.qmd >}}
+
+{{< include 05-02.qmd >}}
+
+{{< include 05-03.qmd >}}
+
+{{< include 05-04.qmd >}}
+
+{{< include 05-05.qmd >}}

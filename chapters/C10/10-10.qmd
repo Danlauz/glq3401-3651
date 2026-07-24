@@ -1,0 +1,86 @@
+## Modèles spatio-temporels
+
+La géostatistique spatio-temporelle étend le cadre classique aux variables qui dépendent à la fois de la position et du temps, comme les niveaux piézométriques, les concentrations de contaminants, les températures ou les précipitations. Elle traite conjointement la dépendance spatiale et la dépendance temporelle.
+
+### Cadre général
+
+On considère une variable régionalisée $Z(\mathbf{x}, t)$, où $\mathbf{x} \in \mathbb{R}^d$ est la position et $t \in \mathbb{R}$ le temps. Sous stationnarité spatio-temporelle, la covariance ne dépend que de la séparation spatiale $\mathbf{h}$ et de la séparation temporelle $\tau$ :
+
+$$
+C(\mathbf{h}, \tau) = \operatorname{Cov}\big(Z(\mathbf{x}, t),\, Z(\mathbf{x} + \mathbf{h}, t + \tau)\big)
+$$
+
+Le variogramme spatio-temporel s'écrit de même :
+
+$$
+\gamma(\mathbf{h}, \tau) = \frac{1}{2} \operatorname{Var}\big[Z(\mathbf{x} + \mathbf{h}, t + \tau) - Z(\mathbf{x}, t)\big]
+$$
+
+Le krigeage spatio-temporel se formule exactement comme le krigeage spatial : on remplace les covariances spatiales par les covariances spatio-temporelles. Toute la difficulté est dans la modélisation de $C(\mathbf{h}, \tau)$.
+
+### Modèles séparables
+
+Le modèle le plus simple suppose l'espace et le temps indépendants :
+
+$$
+C(\mathbf{h}, \tau) = C_S(\mathbf{h}) \cdot C_T(\tau)
+$$
+
+où $C_S$ est une covariance spatiale et $C_T$ une covariance temporelle. Il est facile à ajuster — chaque composante se modélise à part — et l'admissibilité est automatique. Son défaut : il impose la même structure spatiale à tous les instants, et réciproquement, ce qui est souvent trop rigide.
+
+### Modèles somme
+
+Un peu plus souple, ce modèle décompose la covariance en une part purement spatiale et une part purement temporelle :
+
+$$
+C(\mathbf{h}, \tau) = C_S(\mathbf{h}) + C_T(\tau)
+$$
+
+Il est admissible et facile à ajuster, mais il ne modélise aucune interaction entre l'espace et le temps.
+
+### Modèles produit-somme
+
+Pour introduire une interaction espace-temps sans perdre en simplicité, on utilise le modèle produit-somme :
+
+$$
+C(\mathbf{h}, \tau) = k_1 \, C_S(\mathbf{h}) \cdot C_T(\tau) + k_2 \, C_S(\mathbf{h}) + k_3 \, C_T(\tau)
+$$
+
+avec $k_1 > 0$ et des conditions sur $k_2$, $k_3$ pour l'admissibilité. Il combine les avantages des modèles séparables et somme, et fait un bon compromis pour de nombreuses applications.
+
+Introduit par De Cesare, Myers et Posa, puis généralisé par De Iaco, Myers et Posa [@deiaco2001; @deiaco2002], ce modèle a deux atouts décisifs. D'abord, il s'ajuste à partir des variogrammes marginaux (purement spatial et purement temporel), ce qui allège beaucoup l'estimation. Ensuite, comme tout modèle spatio-temporel admissible, il permet d'estimer à des positions non échantillonnées, mais aussi de prédire à des instants futurs : un usage central pour le suivi de la pollution de l'air, de la météo ou des nappes. Autre particularité, les coefficients $k_2$ et $k_3$ peuvent être négatifs (dans des bornes assurant l'admissibilité) tout en gardant le caractère défini positif, ce qui autorise des covariances oscillantes. De Iaco, Myers et Posa ont d'ailleurs montré le lien étroit entre ce modèle et le modèle linéaire de corégionalisation vu plus haut [@deiaco2003], en traitant chaque instant comme une variable du système multivariable.
+
+### Modèles non séparables
+
+Parfois, la dépendance spatiale change avec la séparation temporelle, et inversement : la portée spatiale d'un phénomène de diffusion croît avec le temps, par exemple. Des modèles non séparables, comme celui de Cressie-Huang ou celui de Gneiting, traitent ces cas. Leur formulation repose sur la théorie spectrale et dépasse le cadre de ce cours; on se contente d'en signaler l'existence.
+
+### Anisotropie espace-temps
+
+Une distance de 10 mètres et un intervalle de 10 jours n'ont pas la même signification physique : les dimensions spatiales et temporelle ne sont pas directement comparables. Le rapport entre portée spatiale et portée temporelle, le rapport d'anisotropie spatio-temporel, est un paramètre clé du modèle. On l'estime empiriquement à partir des variogrammes expérimentaux calculés dans les directions spatiales et temporelle.
+
+### Lien avec le cokrigeage
+
+Il existe une analogie formelle entre géostatistique spatio-temporelle et cokrigeage. Si l'on dispose d'une même variable à plusieurs instants ($Z(\mathbf{x}, t_1), Z(\mathbf{x}, t_2), \dots$), on peut voir chaque instant comme une « variable » distincte et faire un cokrigeage spatial. La covariance croisée entre deux « variables » $Z(\cdot, t_i)$ et $Z(\cdot, t_j)$ est alors la covariance spatio-temporelle au décalage $\tau = t_j - t_i$. La reformulation rend parfois service numériquement, surtout quand les instants sont peu nombreux.
+
+### Considérations pratiques
+
+Ajuster un modèle spatio-temporel demande une couverture suffisante dans l'espace et dans le temps. On calcule les variogrammes expérimentaux dans les deux dimensions séparément, puis conjointement, pour repérer la structure de dépendance. La validation croisée spatio-temporelle en évalue la qualité prédictive : on retire des observations à certains instants et on vérifie que le krigeage spatio-temporel les retrouve.
+
+### Applications et travaux de référence
+
+La géostatistique spatio-temporelle est aujourd'hui un domaine de recherche très actif, avec des applications en hydrogéologie, en climatologie et en surveillance environnementale. Les travaux de S. De Iaco et de ses collaborateurs (D. Posa, D. E. Myers) ont fortement structuré le champ : ils ont développé et analysé les modèles produit-somme et leurs familles non séparables [@deiaco2001; @deiaco2002], et établi le pont formel entre ces modèles et le modèle linéaire de corégionalisation [@deiaco2003].
+
+Du côté hydrologique, les travaux d'E. A. Varouchakis illustrent l'usage opérationnel de ces méthodes pour le suivi des niveaux de nappes phréatiques : estimer et prédire dans le temps à partir d'observations éparses, au moyen de covariances spatio-temporelles flexibles (famille Spartan) et d'un cadre bayésien intégrant l'information physique [@varouchakis2019; @varouchakis2022]. Ces études montrent que le choix du modèle de covariance espace-temps et du rapport d'anisotropie pèse directement sur la qualité des cartes prédictives, surtout dans les zones et aux instants peu échantillonnés.
+
+Le lecteur qui veut approfondir consultera ces références ainsi que les ouvrages généraux de géostatistique cités en bibliographie, qui détaillent la construction et l'admissibilité des covariances espace-temps.
+
+## 🧮 Atelier interactif 10.7 — Krigeage spatio-temporel (précipitations) {.unnumbered}
+
+::: {.content-visible when-format="html"}
+Un système pluvieux traverse la carte au fil du temps, mais n'est mesuré qu'à quelques stations fixes, à chaque pas de temps. À chaque instant, le champ de pluie est reconstruit partout par krigeage spatio-temporel : le temps est traité comme un troisième axe, doté de sa propre portée temporelle $a_t$ (anisotropie géométrique espace-temps). Lancez l'animation (bouton Lecture) pour voir la cellule de pluie apparaître, se déplacer et s'atténuer, reconstruite à partir des seules stations. Faites varier la portée spatiale $a_s$ et la portée temporelle $a_t$ : une grande $a_t$ lisse le champ dans le temps (les averses « persistent »), une petite $a_t$ le fait coller aux mesures de chaque instant.
+{{< include widget/widget_spatiotemporel.qmd >}}
+:::
+
+::: {.content-visible unless-format="html"}
+Cet atelier interactif n'est disponible que dans la version web du chapitre.
+:::

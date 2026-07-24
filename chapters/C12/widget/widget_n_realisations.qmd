@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c12_n_realisations">
+  <div class="gw-placeholder">Chargement (effet du nombre de réalisations)…</div>
+</div>
+```

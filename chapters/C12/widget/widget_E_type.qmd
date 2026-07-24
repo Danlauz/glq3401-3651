@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c12_E_type">
+  <div class="gw-placeholder">Chargement (E-type et écart-type)…</div>
+</div>
+```

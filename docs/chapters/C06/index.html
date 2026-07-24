@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>6&nbsp; Introduction à la géostatistique – Géostatistique et géologie minière</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../chapters/C07/index.html" rel="next">
+<link href="../../chapters/C05/index.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-f2c6d6e2b784ddc5de38779acc06f37d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-74c88ba48ad0bebf983f0ffd06dd1671.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f2c6d6e2b784ddc5de38779acc06f37d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents correspondants",
+    "search-copy-link-title": "Copier le lien",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "Rechercher",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles/site-polish.css">
+<link rel="stylesheet" href="../../styles/callouts.css">
+<link rel="stylesheet" href="../../styles/exercice.css">
+<link rel="stylesheet" href="../../styles/chapter-downloads.css">
+<link rel="stylesheet" href="../../scripts/geostat-js/style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/C06/index.html">Partie II: Géostatistique linéaire</a></li><li class="breadcrumb-item"><a href="../../chapters/C06/index.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction à la géostatistique</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Géostatistique et géologie minière</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/Danlauz/glq3401-3651" title="Code source" class="quarto-navigation-tool px-1" aria-label="Code source"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Basculer le mode sombre"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Préface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">À propos de l’auteur</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie I: Géologie minière</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C01/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Rapport Technique NI 43-101 et Loi sur les mines</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C02/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aspect économique</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C03/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Théorie de Gy et contrôle qualité</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C04/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Traitement et analyse statistique des données de forage</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C05/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Méthodes déterministes d’estimation des ressources</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Partie II: Géostatistique linéaire</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C06/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction à la géostatistique</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C07/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Variogramme</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C08/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Variance de blocs, de dispersion et d’estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C09/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Krigeage</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie III: Géostatistique non-linéaire</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C10/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Géostatistique multivariable</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C11/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Krigeage d’indicatrices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C12/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable continue</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/C13/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulations géostatistiques de variable catégorielle</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Partie IV: Exercices et examens</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/exercices/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Recueil d’exercices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/examens/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Anciens examens</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Références</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Annexes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Algèbre linéaire : vecteurs et plans</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Probabilités &amp; statistiques</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-c.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Table de la loi normale centrée-réduite</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Abaques - Variances de dispersion</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/appendix-e.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Abaques - Variances d’estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Notation mathématique</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#pourquoi-la-géostatistique" id="toc-pourquoi-la-géostatistique" class="nav-link active" data-scroll-target="#pourquoi-la-géostatistique"><span class="header-section-number">6.1</span> Pourquoi la géostatistique ?</a>
+  <ul class="collapse">
+  <li><a href="#variable-régionalisée-et-dépendance-spatiale" id="toc-variable-régionalisée-et-dépendance-spatiale" class="nav-link" data-scroll-target="#variable-régionalisée-et-dépendance-spatiale">Variable régionalisée et dépendance spatiale</a></li>
+  <li><a href="#fonction-aléatoire" id="toc-fonction-aléatoire" class="nav-link" data-scroll-target="#fonction-aléatoire">Fonction aléatoire</a></li>
+  <li><a href="#applications" id="toc-applications" class="nav-link" data-scroll-target="#applications">Applications</a></li>
+  <li><a href="#origines-effet-de-support-et-effet-dinformation" id="toc-origines-effet-de-support-et-effet-dinformation" class="nav-link" data-scroll-target="#origines-effet-de-support-et-effet-dinformation">Origines : effet de support et effet d’information</a></li>
+  </ul></li>
+  <li><a href="#effet-de-support" id="toc-effet-de-support" class="nav-link" data-scroll-target="#effet-de-support"><span class="header-section-number">6.2</span> Effet de support</a></li>
+  <li><a href="#atelier-interactif-6.1-effet-du-support" id="toc-atelier-interactif-6.1-effet-du-support" class="nav-link" data-scroll-target="#atelier-interactif-6.1-effet-du-support">🧮 Atelier interactif 6.1 — Effet du support</a></li>
+  <li><a href="#effet-dinformation" id="toc-effet-dinformation" class="nav-link" data-scroll-target="#effet-dinformation"><span class="header-section-number">6.3</span> Effet d’information</a>
+  <ul class="collapse">
+  <li><a href="#information-limitée-erreurs-et-biais" id="toc-information-limitée-erreurs-et-biais" class="nav-link" data-scroll-target="#information-limitée-erreurs-et-biais">Information limitée, erreurs et biais</a></li>
+  <li><a href="#erreurs-de-classification" id="toc-erreurs-de-classification" class="nav-link" data-scroll-target="#erreurs-de-classification">Erreurs de classification</a></li>
+  </ul></li>
+  <li><a href="#atelier-interactif-6.2-effet-dinformation" id="toc-atelier-interactif-6.2-effet-dinformation" class="nav-link" data-scroll-target="#atelier-interactif-6.2-effet-dinformation">🧮 Atelier interactif 6.2 — Effet d’information</a></li>
+  <li><a href="#incertitude-risque-et-prise-de-décision" id="toc-incertitude-risque-et-prise-de-décision" class="nav-link" data-scroll-target="#incertitude-risque-et-prise-de-décision"><span class="header-section-number">6.4</span> Incertitude, risque et prise de décision</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Danlauz/glq3401-3651/edit/main/chapters/C06/index.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/Danlauz/glq3401-3651/issues/new" class="toc-action"><i class="bi empty"></i>Signaler un problème ou<br>formuler une suggestion</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/C06/index.html">Partie II: Géostatistique linéaire</a></li><li class="breadcrumb-item"><a href="../../chapters/C06/index.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction à la géostatistique</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction à la géostatistique</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Résumé</div>
+    <p>Ce chapitre présente les deux concepts fondamentaux à l’origine du développement théorique de la géostatistique : l’effet de support et l’effet d’information. En contexte minier, le nombre de données disponibles demeure presque toujours faible par rapport au volume réel du gisement. Il est donc essentiel de comprendre la variabilité spatiale des teneurs, la portée de l’information fournie par les données et l’incertitude qui subsiste dans le modèle. La variable régionalisée et la fonction aléatoire sont d’abord introduites, puis la corrélation spatiale qui les caractérise. L’effet de support est ensuite étudié de même que l’effet d’information. Ces notions conduisent finalement à l’étude de l’incertitude, du risque et de la prise de décision dans l’estimation des ressources. Des ateliers interactifs permettent de manipuler ces concepts.</p>
+  </div>
+</div>
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Objectifs d’apprentissage
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Expliquer l’utilité de la géostatistique pour l’estimation des ressources en géologie minière ;</p></li>
+<li><p>Définir une variable régionalisée et une fonction aléatoire, et reconnaître le rôle de la corrélation spatiale ;</p></li>
+<li><p>Comprendre l’effet de support et ses conséquences sur la distribution des teneurs ;</p></li>
+<li><p>Comprendre l’effet d’information et ses conséquences sur la classification minerai/stérile ;</p></li>
+<li><p>Expliquer les notions d’incertitude, de risque et de prise de décision en contexte minier.</p></li>
+</ul>
+</div>
+</div>
+<section id="pourquoi-la-géostatistique" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="pourquoi-la-géostatistique"><span class="header-section-number">6.1</span> Pourquoi la géostatistique ?</h2>
+<p>Les méthodes d’interpolation déterministes attribuent une valeur aux positions non échantillonnées selon une règle mathématique ou géométrique. Plusieurs d’entre elles utilisent la distance aux observations, mais elles ne reposent pas sur un modèle probabiliste de la variabilité spatiale.</p>
+<p>Elles ne permettent donc pas, à elles seules, de quantifier l’incertitude associée à une estimation. Elles ne décrivent pas non plus explicitement la dépendance entre les observations ni la redondance de l’information lorsque plusieurs données sont rapprochées ou présentent une organisation spatiale similaire.</p>
+<p>La géostatistique aborde le problème dans un cadre probabiliste. Elle cherche d’abord à caractériser la structure spatiale du phénomène, puis à utiliser cette structure pour estimer les valeurs inconnues et quantifier l’incertitude associée à ces estimations. Cette incertitude demeure conditionnelle aux données disponibles, au modèle spatial retenu et aux hypothèses sur lesquelles repose l’analyse.</p>
+<p>Le passage de la variable régionalisée à la fonction aléatoire constitue le principal changement de perspective introduit dans ce chapitre.</p>
+<section id="variable-régionalisée-et-dépendance-spatiale" class="level3">
+<h3 class="anchored" data-anchor-id="variable-régionalisée-et-dépendance-spatiale">Variable régionalisée et dépendance spatiale</h3>
+<p>Un phénomène est dit régionalisé lorsqu’il se déploie dans un domaine spatial et que ses propriétés varient selon la position. La teneur d’un gisement, l’altitude d’une surface ou la conductivité hydraulique d’un aquifère sont des exemples de phénomènes régionalisés.</p>
+<p>Une variable régionalisée est une fonction numérique qui décrit l’une des propriétés de ce phénomène.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Définition — Variable régionalisée">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Définition — Variable régionalisée
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Une variable régionalisée, notée <span class="math inline">\(z(\mathbf{x})\)</span>, est une fonction définie dans un domaine spatial (<span class="math inline">\(D\)</span>), qui associe une valeur à chaque position (<span class="math inline">\(\mathbf{x}\)</span>). Elle représente le phénomène réel étudié, dont seule une partie est généralement observée<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+</div>
+</div>
+<p>La variable régionalisée peut présenter une organisation spatiale : ses valeurs peuvent varier progressivement, présenter des discontinuités, des anisotropies ou plusieurs échelles de variabilité (<a href="#fig-c6-formes-organisation" class="quarto-xref">Figure&nbsp;<span>6.1</span></a>). La proximité entre deux observations n’implique donc pas nécessairement qu’elles soient semblables, même si cette propriété est fréquente pour de nombreux phénomènes naturels.</p>
+<div id="fig-c6-formes-organisation" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c6-formes-organisation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c6_02_formes_organisation.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c6-formes-organisation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.1: Quatre formes d’organisation spatiale&nbsp;: variation progressive, discontinuités en faciès, anisotropie et échelles emboîtées.
+</figcaption>
+</figure>
+</div>
+<p>Pour représenter cette organisation dans un cadre probabiliste, la géostatistique introduit la notion de dépendance spatiale.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Définition — Dépendance spatiale">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Définition — Dépendance spatiale
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La dépendance spatiale désigne la relation statistique entre les valeurs du phénomène à différentes positions. Elle décrit la manière dont cette relation évolue en fonction du vecteur de séparation entre les positions, notamment de sa distance et de son orientation.</p>
+</div>
+</div>
+<p>Selon les hypothèses retenues, cette dépendance peut être caractérisée par la covariance, la corrélation ou le variogramme (<a href="#fig-c6-correlation-distance" class="quarto-xref">Figure&nbsp;<span>6.2</span></a>). Dans la suite de cet ouvrage, le variogramme sera principalement utilisé pour décrire l’évolution de la variabilité en fonction de la séparation spatiale.</p>
+<div id="fig-c6-correlation-distance" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c6-correlation-distance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c6_03_correlation_distance.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c6-correlation-distance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.2: Corrélation spatiale&nbsp;: nuages de <span class="math inline">\(Z(\mathbf{x})\)</span> vs <span class="math inline">\(Z(\mathbf{x}+\mathbf{h})\)</span> pour un petit <span class="math inline">\(\mathbf{h}\)</span> (corrélés) et un grand <span class="math inline">\(\mathbf{h}\)</span> (décorrélés).
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="fonction-aléatoire" class="level3">
+<h3 class="anchored" data-anchor-id="fonction-aléatoire">Fonction aléatoire</h3>
+<p>La variable régionalisée <span class="math inline">\(z(\mathbf{x})\)</span> représente une réalité unique, mais seulement partiellement connue. Dans un gisement, par exemple, les teneurs existent dans l’ensemble du volume, mais elles ne sont observées qu’aux emplacements échantillonnés. Les données disponibles ne permettent donc pas de déterminer de manière unique les valeurs situées entre les forages.</p>
+<p>Pour représenter cette information incomplète, la variable régionalisée est considérée comme une réalisation d’une fonction aléatoire <span class="math inline">\(Z(\mathbf{x})\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Définition — Fonction aléatoire">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Définition — Fonction aléatoire
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Une fonction aléatoire, notée <span class="math inline">\({Z(\mathbf{x}), \mathbf{x}\in D}\)</span>, est une famille de variables aléatoires indexées par la position. À chaque position <span class="math inline">\(\mathbf{x}\)</span> correspond une variable aléatoire <span class="math inline">\(Z(\mathbf{x})\)</span>, tandis que les relations entre les différentes positions sont décrites par leurs lois de probabilité conjointes.</p>
+</div>
+</div>
+<p>Une réalisation de cette fonction aléatoire correspond à une fonction spatiale particulière <span class="math inline">\(z(\mathbf{x})\)</span>. Dans le cadre géostatistique, le phénomène réel est considéré comme l’une de ces réalisations, tandis que les autres représentent les configurations permises par le modèle probabiliste.</p>
+<p>Lorsqu’elles sont conditionnées aux observations, ces réalisations doivent reproduire les données disponibles et respecter la structure spatiale retenue. Leur dispersion permet alors de caractériser l’incertitude dans les secteurs non échantillonnés (<a href="#fig-c6-fonction-aleatoire" class="quarto-xref">Figure&nbsp;<span>6.3</span></a>).</p>
+<div id="fig-c6-fonction-aleatoire" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c6-fonction-aleatoire-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c6_01_fonction_aleatoire.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c6-fonction-aleatoire-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.3: Réalisation d’une fonction aléatoire vue par le krigeage&nbsp;: moyenne conditionnelle, intervalle de confiance à 95&nbsp;% et loi de <span class="math inline">\(Z(\mathbf{x}_0)\)</span> à une position non échantillonnée.
+</figcaption>
+</figure>
+</div>
+<p>Cette approche ne signifie pas que le gisement est aléatoire dans la réalité. La fonction aléatoire constitue plutôt un modèle probabiliste de l’information incomplète dont on dispose. Comme une seule réalisation du phénomène est observable, l’inférence de ses propriétés nécessite des hypothèses supplémentaires, notamment des hypothèses de stationnarité, qui seront introduites au prochain chapitre.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Définition — Géostatistique">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Définition — Géostatistique
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La géostatistique est un ensemble de méthodes probabilistes fondées sur la théorie des fonctions aléatoires. Elle vise à caractériser la variabilité spatiale, à estimer ou à simuler des variables régionalisées et à quantifier l’incertitude associée aux valeurs non observées<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+</div>
+</div>
+</section>
+<section id="applications" class="level3">
+<h3 class="anchored" data-anchor-id="applications">Applications</h3>
+<p>Dans de nombreux domaines, la géostatistique répond à une même problématique : caractériser un phénomène spatial à partir d’un nombre limité d’observations localisées.</p>
+<p>En géologie minière, elle permet d’estimer la distribution des teneurs entre les forages, de quantifier les ressources et d’évaluer l’incertitude associée au modèle. Les mêmes principes sont appliqués en hydrogéologie pour modéliser les propriétés des aquifères, en géotechnique pour représenter les propriétés des sols et des roches, en géophysique pour interpréter la structure du sous-sol à partir de mesures indirectes, et en environnement pour délimiter les zones contaminées.</p>
+<p>Dans tous ces domaines, la géostatistique vise à représenter la variabilité spatiale, à estimer les valeurs non observées et à quantifier l’incertitude associée aux résultats.</p>
+</section>
+<section id="origines-effet-de-support-et-effet-dinformation" class="level3">
+<h3 class="anchored" data-anchor-id="origines-effet-de-support-et-effet-dinformation">Origines : effet de support et effet d’information</h3>
+<p>Le cadre théorique de la géostatistique a été développé par Georges Matheron à partir des travaux réalisés dans les mines d’or sud-africaines, notamment ceux de l’ingénieur minier Daniel Krige. Ces travaux ont mis en évidence plusieurs difficultés propres à l’estimation des ressources, dont deux demeurent centrales : l’effet de support et l’effet d’information.</p>
+<ul>
+<li>Comment la distribution des teneurs se modifie-t-elle lorsque celles-ci sont définies sur des volumes de tailles différentes?</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="Définition — Effet de support">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Définition — Effet de support
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’effet de support désigne la modification de la distribution statistique d’une variable lorsque la taille ou la géométrie du volume sur lequel elle est définie varie. L’augmentation du support entraîne généralement une diminution de la variance et une atténuation des valeurs extrêmes.</p>
+</div>
+</div>
+<p>Une teneur mesurée sur un petit échantillon peut ainsi être très élevée ou très faible, tandis que la teneur moyenne d’un grand bloc varie généralement moins. Ce changement influence directement les quantités de matériau situées au-dessus d’une teneur de coupure.</p>
+<ul>
+<li>Comment l’information disponible au moment de la sélection influence-t-elle les quantités de minerai effectivement récupérables?</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="Définition — Effet d'information">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Définition — Effet d’information
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’effet d’information désigne l’écart entre une sélection fondée sur la teneur réelle des unités minières et une sélection fondée sur des teneurs estimées à partir d’une information limitée. Les erreurs d’estimation peuvent entraîner le classement de minerai comme stérile, ou de stérile comme minerai, particulièrement pour les blocs dont la teneur est proche de la teneur de coupure.</p>
+</div>
+</div>
+<p>L’effet d’information dépend notamment de la quantité et de la qualité des données disponibles, de leur configuration spatiale et de la méthode d’estimation employée. Une information plus précise améliore la sélection des unités minières et réduit les erreurs de classification.</p>
+<p>La suite de ce chapitre présente ces deux effets dans le contexte de l’estimation des ressources minières. Les principes introduits demeurent toutefois applicables à d’autres problèmes de modélisation spatiale.</p>
+</section>
+</section>
+<section id="effet-de-support" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="effet-de-support"><span class="header-section-number">6.2</span> Effet de support</h2>
+<p>Le support correspond au domaine physique sur lequel une variable régionalisée est mesurée ou définie. Il se caractérise par sa taille, sa géométrie et son orientation. Un petit support fournit une information plus locale et moins moyennée, tandis qu’un grand support intègre les variations présentes sur un volume plus important.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Définition — Support">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Définition — Support
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le support est le domaine physique, défini par sa taille, sa géométrie et son orientation, sur lequel une variable régionalisée est mesurée, estimée ou moyennée.</p>
+</div>
+</div>
+<p>Un échantillon de carotte, analysé sur une longueur donnée, présente un volume relativement faible par rapport à celui d’un bloc minier de plsuieurs mètres cubes. La teneur de l’échantillon est mesurée sur le matériau prélevé, tandis que la teneur du bloc minier ne peut être mesurée qu’une fois celui-ci exploité. Il est donc estimée à partir des données disponibles et du modèle spatial retenu.</p>
+<p>La valeur estimée d’un bloc constitue donc une représentation imparfaite de sa teneur moyenne réelle. Les données de contrôle de teneur et de production permettent de mieux caractériser cette teneur au moment de l’exploitation, sans toutefois la connaître exactement en raison de l’échantillonnage, de la dilution, des pertes et du mélange des matériaux.</p>
+<p>Le passage d’un petit support à un support plus grand modifie la distribution statistique de la variable. Ce phénomène est appelé <strong>effet de support</strong>. Lorsque le support augmente, les valeurs locales sont moyennées sur des volumes plus étendus. La distribution des teneurs se resserre alors généralement autour de sa moyenne : sa variance diminue et les valeurs extrêmes s’atténuent.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Définition — Effet de support">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Définition — Effet de support
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’effet de support désigne la modification de la distribution statistique d’une variable régionalisée lorsque la taille, la géométrie ou l’orientation de son support change. Pour un support plus grand, la variance est généralement plus faible en raison de la moyenne des valeurs à l’intérieur du volume.</p>
+</div>
+</div>
+<p>L’importance de cet effet dépend non seulement de la taille du support, mais également de la continuité spatiale du phénomène. Deux gisements peuvent présenter la même moyenne et la même variance à l’échelle des échantillons, mais des distributions différentes à l’échelle des blocs si leur organisation spatiale diffère (<a href="#fig-c6-effet-support" class="quarto-xref">Figure&nbsp;<span>6.4</span></a>).</p>
+<p>Lorsque les teneurs présentent une forte continuité spatiale, les valeurs regroupées dans un même bloc tendent à être semblables. Leur moyenne entraîne alors une réduction relativement limitée de la variance. À l’inverse, lorsque les fortes et les faibles teneurs sont étroitement entremêlées, leur regroupement dans de grands blocs produit un lissage plus important.</p>
+<div id="fig-c6-effet-support" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c6-effet-support-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c6_04_effet_support.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c6-effet-support-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.4: Effet de la continuité spatiale sur l’effet de support : deux gisements de même distribution ponctuelle mais de continuités différentes (courte vs longue portée) donnent des distributions par bloc différentes ; la variance de bloc est plus faible pour le gisement à forte continuité.
+</figcaption>
+</figure>
+</div>
+<p>Le changement de support ne peut donc pas être étudié indépendamment de la structure spatiale. Celle-ci est notamment décrite par le variogramme, qui sera présenté au prochain chapitre. De manière générale, l’effet de support dépend de la variabilité des teneurs à l’intérieur du bloc et de la relation spatiale entre les valeurs qui y sont regroupées<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<div id="fig-support" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-support-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C6_EffetSupport.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-support-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.5: Effet du support sur la distribution des teneurs. À mesure que le support augmente, les teneurs sont moyennées : la distribution se resserre autour de la moyenne et les valeurs extrêmes s’atténuent. La moyenne du gisement, elle, reste inchangée. Pour une teneur de coupure donnée, la proportion de blocs sélectionnés — et donc le tonnage et la teneur récupérés — dépend du support (zones colorées : sous <span class="math inline">\(z_{c1}\)</span> et au-dessus de <span class="math inline">\(z_{c2}\)</span>).
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="atelier-interactif-6.1-effet-du-support" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-6.1-effet-du-support">🧮 Atelier interactif 6.1 — Effet du support</h2>
+<p>En faisant varier la taille des blocs, observez l’évolution des statistiques de deux gisements 2D présentant des continuités spatiales différentes (faible à gauche, forte à droite), mais ayant la même distribution des teneurs à l’échelle ponctuelle (les statistiques sont identiques pour une taille de bloc de 1 m × 1 m). Les cartes, les histogrammes et les fonctions de répartition cumulées se mettent à jour pour refléter l’impact du changement de support sur la distribution des teneurs.</p>
+<div class="geostat-widget" data-widget="c06_effet_support">
+  <div class="gw-placeholder">Chargement de l'atelier (effet du support)…</div>
+</div>
+<p>Un support plus petit peut permettre une sélection plus fine du minerai et du stérile, à condition que les données disponibles soient suffisamment nombreuses pour représenter cette échelle. Toutefois, réduire la taille des blocs du modèle ne suffit pas à améliorer la précision de l’estimation ni à accroître la sélectivité réellement applicable lors de l’exploitation.</p>
+<p>Il faut donc distinguer la taille des blocs du modèle, qui correspond à une discrétisation numérique, du support réel de la sélection minière. Ce dernier dépend notamment des méthodes d’exploitation, des équipements, du patron de forage et de sautage, de la dilution, des contraintes de stabilité et des coûts.</p>
+<p>L’effet de support influence ainsi la comparaison entre les données d’échantillonnage, les estimations du modèle et les unités effectivement exploitées. La géostatistique fournit les outils nécessaires pour représenter ce changement d’échelle et en évaluer les conséquences sur la distribution des teneurs, le tonnage sélectionné et la quantité de métal estimée.</p>
+</section>
+<section id="effet-dinformation" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="effet-dinformation"><span class="header-section-number">6.3</span> Effet d’information</h2>
+<p>Dans un gisement, la teneur réelle de chaque unité minière n’est pas connue au moment de planifier l’exploitation. La sélection du minerai et du stérile repose donc sur des teneurs estimées à partir des forages et du modèle géostatistique.</p>
+<p>Si les teneurs réelles de tous les blocs étaient connues, la sélection pourrait être effectuée directement en fonction de la teneur de coupure. En pratique, l’information disponible est limitée et les estimations comportent une incertitude. Certains blocs sont alors classés du mauvais côté de la teneur de coupure. Cette différence entre une sélection fondée sur une information parfaite et une sélection fondée sur les estimations disponibles constitue l’effet d’information.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Définition — Effet d’information">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Définition — Effet d’information
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’effet d’information désigne la modification des résultats de la sélection du minerai lorsque celle-ci est fondée sur des teneurs estimées plutôt que sur les teneurs réelles des unités minières. Il se manifeste notamment par des erreurs de classification entre le minerai et le stérile.</p>
+</div>
+</div>
+<p>L’importance de cet effet dépend de la quantité de données, mais également de leur qualité, de leur répartition spatiale, de la continuité des teneurs et de la méthode d’estimation employée. Deux campagnes comprenant le même nombre de forages ne fournissent donc pas nécessairement le même niveau d’information. Des forages regroupés dans un secteur déjà bien connu peuvent être largement redondants, tandis que quelques forages bien positionnés peuvent réduire davantage l’incertitude.</p>
+<p>L’objectif d’une campagne de forage n’est donc pas uniquement d’accumuler des observations, mais d’améliorer la connaissance du gisement aux endroits où cette information influence le plus l’estimation et les décisions minières. Le choix de l’emplacement des nouveaux forages doit toutefois tenir compte de leur coût, de leur accessibilité et des objectifs du projet.</p>
+<section id="information-limitée-erreurs-et-biais" class="level3">
+<h3 class="anchored" data-anchor-id="information-limitée-erreurs-et-biais">Information limitée, erreurs et biais</h3>
+<p>Même lorsque les analyses sont réalisées correctement, les forages ne donnent accès qu’à une partie du gisement. Une incertitude subsiste entre les observations parce que les teneurs ne sont pas connues partout. Cette incertitude d’estimation suffit à produire un effet d’information.</p>
+<p>D’autres sources d’incertitude peuvent s’y ajouter, notamment :</p>
+<ul>
+<li>les erreurs de localisation;</li>
+<li>les erreurs d’échantillonnage et de préparation des carottes;</li>
+<li>les erreurs analytiques en laboratoire;</li>
+<li>les incertitudes liées à l’interprétation géologique;</li>
+<li>les approximations introduites par le modèle et la méthode d’estimation.</li>
+</ul>
+<p>Ces différentes sources ne produisent pas nécessairement un biais systématique. Une erreur correspond à l’écart entre une valeur observée ou estimée et la valeur réelle. Un biais apparaît lorsque cet écart présente une tendance systématique, par exemple lorsque les teneurs sont généralement surestimées.</p>
+<p>Il faut également distinguer le biais global du biais conditionnel. Une méthode peut préserver correctement la teneur moyenne du gisement tout en surestimant les fortes teneurs et en sous-estimant les faibles teneurs, ou inversement. Les estimations peuvent donc être globalement non biaisées, sans reproduire fidèlement la variabilité locale (<a href="#fig-c6-biais" class="quarto-xref">Figure&nbsp;<span>6.6</span></a>).</p>
+<div id="fig-c6-biais" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-c6-biais-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/c6_06_biais.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c6-biais-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.6: Biais global et biais conditionnel&nbsp;: le cas globalement non biaisé peut rester conditionnellement biaisé (pente de régression &lt; 1).
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="erreurs-de-classification" class="level3">
+<h3 class="anchored" data-anchor-id="erreurs-de-classification">Erreurs de classification</h3>
+<p>Supposons que la teneur de coupure soit fixée à 2 ppm. Les blocs dont la teneur estimée dépasse 2 ppm sont sélectionnés pour le traitement, tandis que les autres sont classés comme stériles ou dirigés vers une autre destination.</p>
+<p>Deux erreurs de classification peuvent alors se produire :</p>
+<ul>
+<li>un bloc dont la teneur estimée dépasse 2 ppm peut avoir une teneur réelle inférieure à ce seuil; du matériau non rentable est alors traité;</li>
+<li>un bloc dont la teneur estimée est inférieure à 2 ppm peut avoir une teneur réelle supérieure à ce seuil; du minerai potentiellement valorisable est alors rejeté ou laissé en place.</li>
+</ul>
+<p>Ces situations correspondent respectivement à des faux positifs et à des faux négatifs. Elles réduisent l’efficacité de la sélection par rapport à une situation théorique où les teneurs réelles seraient parfaitement connues.</p>
+<p>Comme le montre la <a href="#fig-information" class="quarto-xref">Figure&nbsp;<span>6.7</span></a>, les teneurs estimées sont comparées aux teneurs réelles. La droite 1:1 représente une correspondance parfaite entre les deux valeurs. Un point situé sous cette droite correspond à une surestimation de la teneur, tandis qu’un point situé au-dessus correspond à une sous-estimation.</p>
+<p>La dispersion autour de la droite 1:1 représente l’incertitude d’estimation. Une droite de régression différente de la droite 1:1 peut également indiquer un biais conditionnel ou un lissage des estimations. Elle ne suffit toutefois pas, à elle seule, à démontrer l’existence d’un biais sur la teneur moyenne du gisement.</p>
+<div id="fig-information" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-information-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/C6_Information.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-information-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.7: L’effet d’information. Les décisions de sélection reposent sur les teneurs estimées, alors que la classification correcte dépend des teneurs réelles. Les points bleus représentent des blocs sélectionnés pour le traitement dont la teneur réelle est inférieure à la teneur de coupure. Les points rouges représentent des blocs rejetés dont la teneur réelle dépasse cette teneur. La droite 1:1 correspond à une estimation parfaite; la dispersion autour de cette droite illustre l’incertitude d’estimation. Un écart entre la droite de régression et la droite 1:1 peut traduire un biais conditionnel ou un effet de lissage, sans nécessairement indiquer un biais sur la moyenne globale. Dans un monde idéal, la régression serait de la forme <span class="math inline">\(Y = aX + b\)</span> avec <span class="math inline">\(a = 1\)</span> et <span class="math inline">\(b = 0\)</span> (c’est-à-dire <span class="math inline">\(\mathbb{E}[Z^*] = \mathbb{E}[Z_{\text{vrai}}]\)</span>). En pratique, la pente <span class="math inline">\(a\)</span> est inférieure à 1 et <span class="math inline">\(b\)</span> est non nul : il existe généralement toujours un biais.
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="atelier-interactif-6.2-effet-dinformation" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-6.2-effet-dinformation">🧮 Atelier interactif 6.2 — Effet d’information</h2>
+<p>Dans cet atelier, vous pouvez modifier le biais, le bruit ajouté aux estimations et la teneur de coupure. Observez comment ces paramètres modifient le champ estimé, la relation entre les teneurs réelles et estimées ainsi que la classification des blocs.</p>
+<p>Les points bleus représentent les blocs qui seraient traités alors que leur teneur réelle est inférieure à la teneur de coupure. Les points rouges représentent les blocs qui seraient rejetés alors que leur teneur réelle dépasse cette teneur. La droite 1:1 permet de visualiser une correspondance parfaite, tandis que la dispersion des points et la droite de régression renseignent sur les erreurs d’estimation et les éventuels biais conditionnels.</p>
+<div class="geostat-widget" data-widget="c06_effet_information">
+  <div class="gw-placeholder">Chargement de l'atelier (effet d'information)…</div>
+</div>
+</section>
+<section id="incertitude-risque-et-prise-de-décision" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="incertitude-risque-et-prise-de-décision"><span class="header-section-number">6.4</span> Incertitude, risque et prise de décision</h2>
+<p>Les sections précédentes ont montré que les données disponibles ne permettent qu’une connaissance partielle du gisement. Il faut maintenant distinguer trois notions liées, mais différentes : l’incertitude, le risque et la prise de décision.</p>
+<p>L’incertitude représente ce qui demeure inconnu ou imparfaitement connu compte tenu des données et des hypothèses retenues. Elle peut concerner la teneur d’un bloc, la géométrie d’une unité géologique, la continuité de la minéralisation ou les paramètres du modèle.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Définition — Incertitude">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Définition — Incertitude
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’incertitude désigne le manque de connaissance concernant une valeur, une propriété ou un état du système. En géostatistique, elle représente l’ensemble des valeurs ou des configurations qui demeurent plausibles compte tenu des données et du modèle retenu.</p>
+</div>
+</div>
+<p>L’incertitude devient un risque lorsqu’elle peut influencer les conséquences d’une décision. Le risque dépend donc à la fois de la probabilité d’un résultat défavorable et de l’importance de ses conséquences.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Définition — Risque">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Définition — Risque
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le risque résulte de la combinaison de la probabilité qu’un événement survienne et de l’ampleur de ses conséquences sur les objectifs du projet.</p>
+</div>
+</div>
+<p>La prise de décision consiste à choisir une action parmi plusieurs possibilités en fonction des objectifs du projet, de l’information disponible et des risques associés.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Définition — Prise de décision">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Définition — Prise de décision
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La prise de décision est le processus par lequel une action est sélectionnée parmi plusieurs options en tenant compte des objectifs, de l’information disponible, de l’incertitude et des conséquences possibles.</p>
+</div>
+</div>
+<p>Une zone peut ainsi être très incertaine sans représenter un risque important si elle influence peu le projet. À l’inverse, une incertitude modérée peut devenir critique lorsqu’elle concerne un secteur situé près de la teneur de coupure ou déterminant pour la planification minière.</p>
+<p>La géostatistique ne supprime pas l’incertitude. Elle permet de la caractériser et d’évaluer ses conséquences afin de mieux soutenir la prise de décision.</p>
+<p><strong>Exemples d’incertitude :</strong></p>
+<ul>
+<li>Teneur réelle entre deux forages;</li>
+<li>Géométrie et limites d’un corps minéralisé;</li>
+<li>Continuité spatiale des zones à forte teneur, notamment la présence ou l’absence de lentilles minéralisées;</li>
+<li>Position des transitions entre les unités géologiques;</li>
+<li>Interprétation des failles, des plis et des fractures ainsi que de leur influence sur la minéralisation;</li>
+<li>Épaisseur d’une zone minéralisée entre les points d’observation;</li>
+<li>Variabilité à petite échelle non résolue par l’échantillonnage;</li>
+<li>Présence et étendue de zones d’altération ou de lessivage;</li>
+<li>Erreurs de localisation, d’échantillonnage, de préparation ou d’analyse en laboratoire;</li>
+<li>Interprétation géologique fondée sur les connaissances et les données disponibles.</li>
+</ul>
+<p><strong>Exemples de risque :</strong></p>
+<ul>
+<li>Envoyer à l’usine un matériau dont la teneur réelle est inférieure à la teneur de coupure;</li>
+<li>Diriger vers la halde à stérile ou laisser en place du minerai économiquement exploitable;</li>
+<li>Mal planifier les séquences d’exploitation en raison d’une géométrie incorrectement définie;</li>
+<li>Surdimensionner ou sous-dimensionner les infrastructures de traitement;</li>
+<li>Rencontrer des problèmes de stabilité en raison d’une caractérisation insuffisante des structures géologiques;</li>
+<li>Accroître la dilution en raison d’une mauvaise délimitation des zones minéralisées;</li>
+<li>Gérer inadéquatement les stériles ou les rejets, avec des conséquences environnementales;</li>
+<li>Surestimer le tonnage ou la teneur en raison d’une continuité spatiale mal évaluée;</li>
+<li>Obtenir une production différente des prévisions en raison d’une variabilité sous-estimée;</li>
+<li>Rencontrer des conditions de terrain différentes de celles anticipées, notamment en matière de dureté ou de fragmentation.</li>
+</ul>
+<p><strong>Exemples de prise de décision :</strong></p>
+<ul>
+<li>Déterminer la teneur de coupure du gisement;</li>
+<li>Classifier les ressources comme mesurées, indiquées ou présumées;</li>
+<li>Choisir l’emplacement de nouveaux forages d’exploration ou intercalaires;</li>
+<li>Délimiter les zones de minerai et de stérile;</li>
+<li>Planifier la séquence d’extraction des blocs;</li>
+<li>Définir le support d’estimation et l’unité de sélection minière;</li>
+<li>Décider de poursuivre, de modifier ou d’interrompre le développement d’un projet;</li>
+<li>Définir les hypothèses de dilution, de pertes minières et de récupération;</li>
+<li>Prioriser certaines zones du gisement selon leur valeur et leur niveau d’incertitude;</li>
+<li>Mettre à jour le modèle et adapter la stratégie d’exploitation à mesure que de nouvelles données deviennent disponibles.</li>
+</ul>
+
+
+<!-- -->
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>La géostatistique s’applique également aux séries temporelles. La variable régionalisée peut alors représenter, par exemple, la teneur du minerai alimentant un concentrateur au fil du temps, dont on étudie la variabilité afin d’optimiser le traitement chimique au concentrateur.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>La discipline permet aussi l’estimation, la simulation et la modélisation conjointe de plusieurs variables régionalisées : c’est le cas multivarié.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Cette propriété peut être exprimée par la relation de Krige : <span class="math inline">\(D^2(v,G)=D^2(v,V)+D^2(V,G)\)</span>, où <span class="math inline">\(v\)</span>, <span class="math inline">\(V\)</span> et <span class="math inline">\(G\)</span> représentent des supports ou des domaines emboîtés. La variabilité à l’échelle fine peut ainsi être décomposée entre la variabilité à l’intérieur des blocs et celle entre les blocs. Lorsque le support <span class="math inline">\(V\)</span> augmente, la moyenne effectuée à l’intérieur des blocs réduit généralement leur variance. Cette relation sera approfondie au chapitre 8.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copié");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copié");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../chapters/C05/index.html" class="pagination-link" aria-label="Méthodes déterministes d'estimation des ressources">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Méthodes déterministes d’estimation des ressources</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../chapters/C07/index.html" class="pagination-link" aria-label="Variogramme">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Variogramme</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Code source</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Introduction à la géostatistique"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">abstract:</span><span class="co"> |</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">  Ce chapitre présente les deux concepts fondamentaux à l’origine du développement théorique de la géostatistique : l’effet de support et l’effet d’information. En contexte minier, le nombre de données disponibles demeure presque toujours faible par rapport au volume réel du gisement. Il est donc essentiel de comprendre la variabilité spatiale des teneurs, la portée de l’information fournie par les données et l’incertitude qui subsiste dans le modèle. La variable régionalisée et la fonction aléatoire sont d’abord introduites, puis la corrélation spatiale qui les caractérise. L’effet de support est ensuite étudié de même que l’effet d’information. Ces notions conduisent finalement à l’étude de l’incertitude, du risque et de la prise de décision dans l’estimation des ressources. Des ateliers interactifs permettent de manipuler ces concepts.</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Objectifs d'apprentissage</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Expliquer l'utilité de la géostatistique pour l'estimation des ressources en géologie minière ;</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Définir une variable régionalisée et une fonction aléatoire, et reconnaître le rôle de la corrélation spatiale ;</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Comprendre l'effet de support et ses conséquences sur la distribution des teneurs ;</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Comprendre l'effet d'information et ses conséquences sur la classification minerai/stérile ;</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Expliquer les notions d'incertitude, de risque et de prise de décision en contexte minier.</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>{{&lt; include 06-01.qmd &gt;}}</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>{{&lt; include 06-02.qmd &gt;}}</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>{{&lt; include 06-03.qmd &gt;}}</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>{{&lt; include 06-04.qmd &gt;}}</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Géostatistique et géologie minière</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Danlauz/glq3401-3651/edit/main/chapters/C06/index.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/Danlauz/glq3401-3651/issues/new" class="toc-action"><i class="bi empty"></i>Signaler un problème ou<br>formuler une suggestion</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Ce livre a été réalisé avec <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+<script type="module" src="../../scripts/geostat-js/loader.js"></script>
+<script src="../../scripts/geostat-js/notebook-button.js" defer=""></script>
+
+
+
+
+</body></html>

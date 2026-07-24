@@ -1,0 +1,74 @@
+# === Caches Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+*.egg-info/
+pytest-cache-files-*/
+
+# === Caches et builds Quarto ===
+.quarto/
+_freeze/
+# docs/   <-- NE PAS ignorer : c'est le site publié (GitHub Pages sert main/docs)
+exports/
+
+# === IDE & système ===
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# === Notebooks checkpoints ===
+.ipynb_checkpoints/
+
+# === Misc ===
+*.log
+*.tmp
+
+/.quarto/
+**/*.quarto_ipynb
+
+# === Config d'outils locale / traces (ne jamais publier) ===
+.claude/
+
+# === Sauvegardes et fichiers temporaires d'édition ===
+*.bak
+*.bak2
+*.orig
+
+# === Artefacts LaTeX (rendu PDF local à la racine) ===
+/index.tex
+/index.aux
+/index.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# === Archives / paquets ===
+*.tgz
+
+# === Matériel de travail NON publié sur le site (garde local) ===
+#     (aucun n'est référencé par le livre Quarto ; contient examens/corrigés)
+/Exercices_Examens/
+/Book/
+/Feuilles_de_notes/
+
+# backup interne du nettoyage
+*.beforecleanup
+
+# === Documents sources d'exercices/examens (contiennent des CORRIGÉS) ===
+#     Non liés par le site ; exclure pour ne pas publier les solutions.
+#     -> Retire ces lignes si tu veux rendre certains énoncés téléchargeables.
+chapters/exercices/fichiers/
+
+# Corbeille de nettoyage (vider puis retirer cette ligne)
+_A_SUPPRIMER/
+
+# === Documents de travail internes (NE PAS publier) ===
+/AUDIT_ATELIERS.md
+/DEPLOIEMENT.md
+
+# === HTML rendu qui traîne dans les dossiers SOURCES (vestiges d'un ancien build ;
+#     le vrai site est publié dans docs/, jamais à côté des .qmd) ===
+chapters/*/index.html

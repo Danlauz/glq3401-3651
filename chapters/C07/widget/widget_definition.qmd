@@ -1,0 +1,3 @@
+<div class="geostat-widget" data-widget="c07_definition">
+  <div class="gw-placeholder">Chargement de l'atelier (lien nuage–covariance–variogramme)…</div>
+</div>

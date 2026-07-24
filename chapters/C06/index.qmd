@@ -1,0 +1,27 @@
+---
+title: "Introduction à la géostatistique"
+abstract: |
+  Ce chapitre présente les deux concepts fondamentaux à l’origine du développement théorique de la géostatistique : l’effet de support et l’effet d’information. En contexte minier, le nombre de données disponibles demeure presque toujours faible par rapport au volume réel du gisement. Il est donc essentiel de comprendre la variabilité spatiale des teneurs, la portée de l’information fournie par les données et l’incertitude qui subsiste dans le modèle. La variable régionalisée et la fonction aléatoire sont d’abord introduites, puis la corrélation spatiale qui les caractérise. L’effet de support est ensuite étudié de même que l’effet d’information. Ces notions conduisent finalement à l’étude de l’incertitude, du risque et de la prise de décision dans l’estimation des ressources. Des ateliers interactifs permettent de manipuler ces concepts.
+---
+
+::: {.callout-important}
+## Objectifs d'apprentissage
+- Expliquer l'utilité de la géostatistique pour l'estimation des ressources en géologie minière ;
+
+- Définir une variable régionalisée et une fonction aléatoire, et reconnaître le rôle de la corrélation spatiale ;
+
+- Comprendre l'effet de support et ses conséquences sur la distribution des teneurs ;
+
+- Comprendre l'effet d'information et ses conséquences sur la classification minerai/stérile ;
+
+- Expliquer les notions d'incertitude, de risque et de prise de décision en contexte minier.
+:::
+
+
+{{< include 06-01.qmd >}}
+
+{{< include 06-02.qmd >}}
+
+{{< include 06-03.qmd >}}
+
+{{< include 06-04.qmd >}}

@@ -1,0 +1,22 @@
+```{=html}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+```
+
+<div class="geostat-widget-wrap">
+
+<div class="geostat-widget"
+     id="w-c02-cutoff-bloc"
+     data-widget="c02_cutoff_bloc"
+     data-version="0.1.0">
+
+  <div class="gw-placeholder">
+    <div class="gw-spinner"></div>
+    <p>Chargement du modèle de blocs…</p>
+  </div>
+
+  <noscript>
+    <p class="gw-fallback-note">JavaScript désactivé : cet atelier interactif nécessite JavaScript.</p>
+  </noscript>
+</div>
+
+</div>

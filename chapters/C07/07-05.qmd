@@ -1,0 +1,413 @@
+## Ajustement d’un modèle théorique
+
+L’ajustement d’un modèle de variogramme combine généralement deux approches : l’interprétation visuelle et l’optimisation automatique.
+
+L’ajustement visuel permet de tenir compte de la forme générale du variogramme expérimental, de la géologie, des directions de continuité et de la qualité des différentes classes de distance. L’ajustement automatique permet ensuite d’estimer les paramètres de manière reproductible à partir d’un critère numérique.
+
+Ces deux approches sont donc complémentaires. L’ajustement automatique est particulièrement utile lorsque le type de modèle et la structure générale sont déjà connus, par exemple lorsqu’on souhaite estimer l’effet de pépite, le palier et la portée d’un modèle sphérique isotrope. Il est également utile dans les études de simulation, lorsque les données sont générées à partir d’un modèle connu.
+
+Lorsque le nombre de données est faible, le variogramme expérimental devient instable, car chaque classe contient peu de paires. Une méthode automatique ne crée toutefois pas d’information supplémentaire. La validation croisée ou les méthodes fondées directement sur les données peuvent aider à comparer des modèles, mais leurs résultats demeurent eux aussi incertains lorsque l’échantillon est limité.
+
+::: {.callout-important}
+L’ajustement d’un variogramme ne doit pas être traité comme une procédure entièrement automatique. Le type de modèle, le nombre de structures, les anisotropies et les directions principales doivent rester cohérents avec les données et avec la compréhension du phénomène étudié.
+:::
+
+### Deux étapes distinctes
+
+La modélisation d’un variogramme comprend deux problèmes différents :
+
+1. déterminer la structure du modèle;
+2. estimer les paramètres de cette structure.
+
+La première étape consiste notamment à choisir :
+
+- le type de modèle, par exemple sphérique, exponentiel ou gaussien;
+- le nombre de structures;
+- la présence d’un effet de pépite;
+- la présence d’une anisotropie;
+- les directions principales de continuité.
+
+Cette étape est difficile à automatiser complètement. Elle repose sur le variogramme expérimental, mais aussi sur des informations extérieures aux données : géologie, stratification, processus de dépôt, précision analytique, support des échantillons et résultats obtenus sur des cas comparables.
+
+La seconde étape consiste à estimer les paramètres du modèle retenu, par exemple :
+
+- l’effet de pépite $C_0$;
+- les paliers partiels $C_i$;
+- les portées $a_i$;
+- les rapports d’anisotropie;
+- les angles d’orientation.
+
+Cette estimation peut être réalisée visuellement, par moindres carrés, par maximum de vraisemblance ou à l’aide de critères de validation croisée.
+
+### Estimateurs robustes de la structure spatiale
+
+Le variogramme expérimental classique repose sur des différences au carré :
+
+$$
+\widehat{\gamma}(\mathbf{h})
+=
+\frac{1}{2N(\mathbf{h})}
+\sum_{(i,j)\in\mathcal{P}(\mathbf{h})}
+\left[
+z(\mathbf{x}_j)-z(\mathbf{x}_i)
+\right]^2.
+$$
+
+Cet estimateur est sensible aux valeurs extrêmes. Pour une variable fortement asymétrique, comme certaines teneurs en métaux précieux, une seule valeur élevée peut produire de très grandes contributions et dominer une classe de distance.
+
+Des estimateurs robustes peuvent alors être utilisés comme outils de diagnostic afin de mieux faire ressortir la structure spatiale générale.
+
+#### Estimateur de Cressie–Hawkins
+
+L’estimateur robuste de Cressie–Hawkins s’écrit :
+
+$$
+\widehat{\gamma}_{\mathrm{CH}}(\mathbf{h})
+=
+\frac{1}{2}
+\frac{
+\left[
+\dfrac{1}{N(\mathbf{h})}
+\displaystyle\sum_{(i,j)\in\mathcal{P}(\mathbf{h})}
+\left|
+z(\mathbf{x}_j)-z(\mathbf{x}_i)
+\right|^{1/2}
+\right]^4
+}{
+0{,}457+\dfrac{0{,}494}{N(\mathbf{h})}
+}.
+$$
+
+La racine carrée appliquée aux différences réduit l’influence des écarts très élevés. La puissance quatre remet ensuite l’estimateur à l’échelle du variogramme, tandis que le dénominateur corrige approximativement le biais associé à cette transformation.
+
+Cet estimateur peut être utile lorsque quelques valeurs très fortes masquent la structure générale. Il ne supprime toutefois pas la nécessité d’examiner les données, les paires responsables des grandes contributions et la pertinence d’une transformation de la variable.
+
+#### Madogramme
+
+Le madogramme, aussi appelé variogramme d’ordre un, est défini par :
+
+$$
+\widehat{\gamma}_1(\mathbf{h})
+=
+\frac{1}{2N(\mathbf{h})}
+\sum_{(i,j)\in\mathcal{P}(\mathbf{h})}
+\left|
+z(\mathbf{x}_j)-z(\mathbf{x}_i)
+\right|.
+$$
+
+Comme les écarts ne sont pas élevés au carré, les valeurs extrêmes ont moins d’influence que dans le variogramme classique.
+
+Le madogramme ne possède toutefois pas les mêmes unités que le variogramme :
+
+- le variogramme s’exprime dans les unités de la variable au carré;
+- le madogramme s’exprime dans les unités de la variable.
+
+Il ne se relie donc pas directement à la covariance et ne permet pas d’interpréter son palier comme une variance. Il est surtout utilisé pour repérer une échelle de continuité, comparer des directions ou vérifier si la structure apparente du variogramme classique est dominée par quelques valeurs extrêmes.
+
+::: {.callout-note}
+Un estimateur robuste ne remplace pas automatiquement le variogramme classique dans le krigeage. Il sert principalement à diagnostiquer la structure spatiale et à guider le choix du modèle.
+:::
+
+### Méthodes automatiques d’ajustement
+
+#### 1. Moindres carrés
+
+L’ajustement par moindres carrés consiste à choisir les paramètres du modèle afin de réduire l’écart entre le variogramme expérimental et le modèle théorique.
+
+Un critère général s’écrit :
+
+$$
+f(\boldsymbol{\theta})
+=
+\sum_{k=1}^{K}
+w_k
+\left[
+\widehat{\gamma}(h_k)
+-
+\gamma(h_k;\boldsymbol{\theta})
+\right]^2,
+$$
+
+où :
+
+- $K$ est le nombre de classes de distance;
+- $\widehat{\gamma}(h_k)$ est le variogramme expérimental;
+- $\gamma(h_k;\boldsymbol{\theta})$ est le modèle défini par les paramètres $\boldsymbol{\theta}$;
+- $w_k$ est le poids attribué à la classe $k$.
+
+##### Moindres carrés ordinaires
+
+Avec des poids identiques,
+
+$$
+w_k=1,
+$$
+
+toutes les classes contribuent également au critère. Cette approche est simple, mais elle ne tient pas compte du fait que certaines classes contiennent davantage de paires ou sont estimées avec plus de stabilité.
+
+##### Moindres carrés pondérés
+
+Les poids peuvent être choisis pour accorder davantage d’importance aux classes contenant beaucoup de paires ou aux faibles distances, qui influencent fortement les estimations locales.
+
+Un critère fréquemment utilisé est :
+
+$$
+f(\boldsymbol{\theta})
+=
+\sum_{k=1}^{K}
+\frac{N(h_k)}
+{\gamma(h_k;\boldsymbol{\theta})^2}
+\left[
+\widehat{\gamma}(h_k)
+-
+\gamma(h_k;\boldsymbol{\theta})
+\right]^2.
+$$
+
+Le poids de la classe $k$ est alors :
+
+$$
+w_k
+=
+\frac{N(h_k)}
+{\gamma(h_k;\boldsymbol{\theta})^2}.
+$$
+
+Le nombre de paires $N(h_k)$ favorise les classes mieux échantillonnées. La division par le carré du modèle donne généralement davantage de poids aux classes où le variogramme est faible, souvent situées aux petites distances.
+
+Le critère peut aussi être écrit sous forme matricielle :
+
+$$
+f(\boldsymbol{\theta})
+=
+\left(
+\widehat{\boldsymbol{\gamma}}
+-
+\boldsymbol{\gamma}(\boldsymbol{\theta})
+\right)^{\mathsf{T}}
+\mathbf{W}
+\left(
+\widehat{\boldsymbol{\gamma}}
+-
+\boldsymbol{\gamma}(\boldsymbol{\theta})
+\right),
+$$
+
+où $\mathbf{W}$ est une matrice de poids généralement diagonale.
+
+L’ajustement par moindres carrés est rapide et facile à appliquer. Il dépend toutefois :
+
+- du choix des classes de distance;
+- du nombre maximal de distances retenues;
+- du choix des poids;
+- du modèle initial;
+- des contraintes imposées aux paramètres;
+- de la présence de classes atypiques.
+
+Les valeurs du variogramme expérimental ne sont ni indépendantes ni de variance constante. Les moindres carrés doivent donc être considérés comme une méthode d’ajustement pratique, et non comme une régression classique dont toutes les hypothèses seraient respectées.
+
+#### 2. Maximum de vraisemblance
+
+Les méthodes de maximum de vraisemblance ajustent directement les paramètres du modèle de covariance à partir des données, sans passer par les classes du variogramme expérimental.
+
+Sous une hypothèse gaussienne, le vecteur des observations $\mathbf{z}$ est modélisé par :
+
+$$
+\mathbf{z}
+\sim
+\mathcal{N}
+\left(
+\mathbf{X}\boldsymbol{\beta},
+\mathbf{C}_{\boldsymbol{\theta}}
+\right),
+$$
+
+où :
+
+- $\mathbf{X}\boldsymbol{\beta}$ représente la moyenne ou la tendance;
+- $\mathbf{C}_{\boldsymbol{\theta}}$ est la matrice de covariance;
+- $\boldsymbol{\theta}$ contient les paramètres du modèle spatial.
+
+La log-vraisemblance, à une constante additive près, s’écrit :
+
+$$
+\ell
+\left(
+\boldsymbol{\beta},
+\boldsymbol{\theta}
+\right)
+=
+-\frac{1}{2}
+\left[
+\log
+\left|
+\mathbf{C}_{\boldsymbol{\theta}}
+\right|
++
+\left(
+\mathbf{z}
+-
+\mathbf{X}\boldsymbol{\beta}
+\right)^{\mathsf{T}}
+\mathbf{C}_{\boldsymbol{\theta}}^{-1}
+\left(
+\mathbf{z}
+-
+\mathbf{X}\boldsymbol{\beta}
+\right)
+\right].
+$$
+
+Les paramètres sont choisis afin de maximiser cette fonction.
+
+La vraisemblance restreinte, ou REML, ajuste les paramètres de covariance à partir de contrastes qui éliminent les effets fixes. Elle réduit ainsi une partie du biais lié à l’estimation simultanée de la moyenne ou de la tendance.
+
+Ces méthodes présentent plusieurs avantages :
+
+- elles utilisent directement les positions et les observations;
+- elles ne dépendent pas du choix des classes de distance;
+- elles fournissent un cadre statistique pour comparer certains modèles;
+- elles permettent, sous les hypothèses retenues, d’estimer l’incertitude associée aux paramètres.
+
+Elles présentent aussi des limites :
+
+- leur coût augmente rapidement avec le nombre de données;
+- l’optimisation peut être sensible aux valeurs initiales et aux contraintes;
+- les résultats peuvent être affectés par les valeurs extrêmes, l’asymétrie et une mauvaise spécification de la moyenne;
+- une anisotropie ou une structure mal choisie ne sera pas corrigée par l’optimisation.
+
+L’hypothèse gaussienne concerne la distribution conjointe des données. Lorsqu’elle est mal adaptée, l’estimation des paramètres et surtout l’interprétation de leur incertitude peuvent devenir moins fiables. Une transformation des données ou une méthode plus robuste peut alors être envisagée.
+
+#### 3. Validation croisée
+
+La validation croisée permet d’évaluer les conséquences du modèle de variogramme sur les estimations.
+
+Dans une validation croisée par retrait d’un point, chaque observation est retirée à tour de rôle, puis estimée à partir des autres données :
+
+$$
+e_i
+=
+z(\mathbf{x}_i)
+-
+\widehat{z}^{(-i)}(\mathbf{x}_i),
+$$
+
+où $\widehat{z}^{(-i)}(\mathbf{x}_i)$ est l’estimation obtenue sans utiliser l’observation $i$.
+
+Plusieurs statistiques peuvent être calculées.
+
+##### Erreur moyenne
+
+$$
+\operatorname{ME}
+=
+\frac{1}{n}
+\sum_{i=1}^{n}
+e_i.
+$$
+
+Une erreur moyenne proche de zéro indique l’absence de biais global important.
+
+##### Racine de l’erreur quadratique moyenne
+
+$$
+\operatorname{RMSE}
+=
+\sqrt{
+\frac{1}{n}
+\sum_{i=1}^{n}
+e_i^2
+}.
+$$
+
+La RMSE mesure l’amplitude générale des erreurs de prédiction.
+
+##### Erreur standardisée
+
+Si $\sigma_{K,i}^2$ est la variance de krigeage associée à l’estimation du point $i$, l’erreur standardisée est :
+
+$$
+e_i^\ast
+=
+\frac{e_i}{\sigma_{K,i}}.
+$$
+
+La moyenne des erreurs standardisées devrait être proche de zéro :
+
+$$
+\frac{1}{n}
+\sum_{i=1}^{n}
+e_i^\ast
+\approx
+0.
+$$
+
+La racine de leur moyenne quadratique devrait être proche de un :
+
+$$
+\sqrt{
+\frac{1}{n}
+\sum_{i=1}^{n}
+\left(
+e_i^\ast
+\right)^2
+}
+\approx
+1.
+$$
+
+Une valeur nettement supérieure à un indique généralement que les incertitudes sont sous-estimées. Une valeur nettement inférieure à un indique qu’elles sont surestimées.
+
+La validation croisée est utile pour :
+
+- détecter un biais;
+- comparer des modèles proches;
+- vérifier la cohérence des variances de krigeage;
+- comparer des voisinages de recherche;
+- repérer certaines observations influentes.
+
+Elle ne doit toutefois pas être utilisée comme seul critère de sélection. Plusieurs modèles différents peuvent produire des erreurs de validation croisée semblables, particulièrement lorsque les données sont peu nombreuses ou regroupées. Un modèle peut aussi être performant en prédiction tout en étant difficile à interpréter géologiquement.
+
+### Démarche recommandée
+
+Une démarche pratique d’ajustement peut suivre les étapes suivantes :
+
+1. examiner les données, leur distribution, leur support et les valeurs extrêmes;
+2. calculer des variogrammes expérimentaux omnidirectionnels et directionnels;
+3. comparer, au besoin, le variogramme classique à des estimateurs robustes;
+4. déterminer le nombre de structures et les anisotropies à partir des données et de la géologie;
+5. effectuer un premier ajustement visuel;
+6. optimiser les paramètres avec une méthode automatique appropriée;
+7. vérifier l’admissibilité, la stabilité et la cohérence géologique du modèle;
+8. utiliser la validation croisée pour comparer les modèles retenus et évaluer leur comportement prédictif.
+
+L’objectif n’est pas d’obtenir la courbe qui passe exactement par tous les points expérimentaux. Il faut plutôt construire un modèle simple, admissible et cohérent avec les principales échelles de continuité du phénomène.
+
+## 🧮 Atelier interactif 7.5 — Ajustement manuel 1D {.unnumbered}
+
+::: {.content-visible when-format="html"}
+Ajustez manuellement le type de modèle, la portée, le palier et l’effet de pépite d’un variogramme théorique sur des données simulées. Le RMSE indique l’écart entre le modèle et les points expérimentaux. Utilisez ensuite la fonction « Révéler la vérité » pour comparer votre ajustement au modèle ayant servi à produire les données.
+
+{{< include widget/widget_ajustement.qmd >}}
+:::
+
+::: {.content-visible unless-format="html"}
+Cet atelier interactif est disponible uniquement dans la version web du chapitre.
+:::
+
+L’atelier précédent suppose une continuité identique dans toutes les directions. En présence d’une anisotropie, il faut également ajuster les portées directionnelles et l’orientation des axes principaux.
+
+## 🧮 Atelier interactif 7.6 — Ajustement 2D anisotrope {.unnumbered}
+
+::: {.content-visible when-format="html"}
+Ajustez la portée majeure $a_{\mathrm{maj}}$, la portée mineure $a_{\mathrm{min}}$ et l’angle d’orientation $\theta$. Le widget présente les variogrammes calculés le long des deux axes principaux ainsi que l’ellipse d’anisotropie correspondante.
+
+{{< include widget/widget_anisotropie.qmd >}}
+:::
+
+::: {.content-visible unless-format="html"}
+Cet atelier interactif est disponible uniquement dans la version web du chapitre.
+:::
+
+Ces méthodes permettent d’ajuster une première structure spatiale. Plusieurs phénomènes présentent toutefois plus d’une échelle de continuité. Leur représentation nécessite alors des modèles emboîtés.

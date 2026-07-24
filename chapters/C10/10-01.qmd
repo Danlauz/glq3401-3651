@@ -1,0 +1,113 @@
+## Notations et hypothèses
+
+Le cokrigeage étend le krigeage à l'estimation multivariable. Lorsque plusieurs variables régionalisées corrélées sont disponibles, on estime la variable principale en exploitant aussi l'information des variables secondaires. Les liens entre variables sont décrits par les covariances croisées, qui s'ajoutent aux covariances directes dans le système d'estimation; la variance de cokrigeage qui en résulte est inférieure ou égale à celle du krigeage univarié.
+
+Ce cadre recouvre plusieurs configurations d'échantillonnage : variables mesurées aux mêmes points (teneurs en cuivre et en nickel sur les mêmes forages), ou en des points distincts (charge hydraulique et transmissivité en hydrogéologie). Le cas le plus favorable au cokrigeage est celui d'une variable principale peu échantillonnée, complétée par une variable secondaire dense telle qu'un levé sismique ou géophysique. Ce chapitre établit les systèmes d'estimation associés, la modélisation des covariances directes et croisées, et les conditions sous lesquelles le cokrigeage apporte un gain sur le krigeage.
+
+### Cadre général
+
+On note $Z(\mathbf{x})$ la variable régionalisée principale, celle qu'on cherche à estimer, et $Y(\mathbf{x})$ une variable régionalisée secondaire dont on veut exploiter l'information. Tout ce qui suit se généralise sans peine à plusieurs variables secondaires; on s'en tient à une seule pour garder les équations lisibles.
+
+Les observations de $Z$ sont disponibles en $n_Z$ points, $Z_1 = Z(\mathbf{x}_1^Z), \dots, Z_{n_Z} = Z(\mathbf{x}_{n_Z}^Z)$, et celles de $Y$ en $n_Y$ points, $Y_1 = Y(\mathbf{x}_1^Y), \dots, Y_{n_Y} = Y(\mathbf{x}_{n_Y}^Y)$. Les points d'échantillonnage de $Z$ et de $Y$ peuvent différer, en nombre comme en position. Les données sont alors :
+
+- **colocalisées** : chaque point de mesure porte à la fois une observation de $Z$ et de $Y$;
+- **non colocalisées** : aucune observation des deux variables n'est disponible au même emplacement;
+- **partiellement colocalisées** : certaines positions portent les deux variables, d'autres une seule.
+
+Le cas le plus intéressant est celui où la variable secondaire est bien plus dense que la principale. C'est là que le cokrigeage a le plus à offrir.
+
+### Estimateur de cokrigeage
+
+L'estimateur de cokrigeage est une combinaison linéaire des observations des deux variables :
+
+$$
+Z_0^* = \sum_{i=1}^{n_Z} \lambda_i \, Z_i + \sum_{j=1}^{n_Y} \alpha_j \, Y_j
+$$
+
+où $Z_0 = Z(\mathbf{x}_0)$ est la valeur à estimer au point $\mathbf{x}_0$, $\lambda_i$ les poids des observations de $Z$ et $\alpha_j$ ceux des observations de $Y$. On cherche ces poids de façon à minimiser la variance de l'erreur d'estimation, sous d'éventuelles contraintes de non-biais.
+
+Pour monter le système, il faut deux covariances directes et une covariance croisée :
+
+- $C_{ZZ}(\mathbf{h})$, la covariance directe de la variable principale;
+- $C_{YY}(\mathbf{h})$, la covariance directe de la variable secondaire;
+- $C_{ZY}(\mathbf{h})$, la covariance croisée entre $Z$ et $Y$.
+
+Les deux covariances directes sont celles du krigeage univarié. La covariance croisée, elle, décrit la dépendance spatiale entre les deux variables : c'est par elle que l'information passe de la secondaire vers la principale.
+
+### Covariance croisée
+
+La covariance croisée entre $Z(\mathbf{x})$ et $Y(\mathbf{x})$ est définie par :
+
+$$
+C_{ZY}(\mathbf{h}) = \operatorname{Cov}\big[Z(\mathbf{x}),\, Y(\mathbf{x} + \mathbf{h})\big] = \mathbb{E}\big[(Z(\mathbf{x}) - m_Z)(Y(\mathbf{x} + \mathbf{h}) - m_Y)\big]
+$$
+
+où $m_Z = \mathbb{E}[Z(\mathbf{x})]$ et $m_Y = \mathbb{E}[Y(\mathbf{x})]$ sont les moyennes, supposées constantes sous stationnarité. Elle mesure l'intensité de la corrélation entre $Z$ et $Y$ à une séparation $\mathbf{h}$ : positive, les deux variables augmentent ou diminuent ensemble; négative, elles varient en sens inverse; nulle, elles sont décorrélées à cette distance.
+
+Contrairement à la covariance directe, la covariance croisée n'est pas forcément symétrique : en général, $C_{ZY}(\mathbf{h}) \neq C_{ZY}(-\mathbf{h})$. Cette asymétrie traduit souvent un **effet de retard** (*delay effect*), quand une variable réagit avec un décalage spatial sur l'autre; le maximum de corrélation n'est alors pas à l'origine, mais à un certain décalage $\mathbf{h}$. Sous stationnarité d'ordre deux, on a par ailleurs
+
+$$
+C_{ZY}(\mathbf{h}) = C_{YZ}(-\mathbf{h}).
+$$
+
+La valeur à l'origine $C_{ZY}(\mathbf{0})$ est la covariance entre $Z$ et $Y$ au même point; on la normalise pour obtenir le coefficient de corrélation :
+
+$$
+\rho_{ZY} = \frac{C_{ZY}(\mathbf{0})}{\sqrt{C_{ZZ}(\mathbf{0}) \, C_{YY}(\mathbf{0})}}.
+$$
+
+### Variogramme croisé
+
+Le variogramme croisé est défini par :
+
+$$
+\gamma_{ZY}(\mathbf{h}) = \frac{1}{2} \, \mathbb{E}\big[(Z(\mathbf{x}+\mathbf{h}) - Z(\mathbf{x}))(Y(\mathbf{x}+\mathbf{h}) - Y(\mathbf{x}))\big]
+$$
+
+Sous stationnarité d'ordre deux, il se relie à la covariance croisée par :
+
+$$
+\gamma_{ZY}(\mathbf{h}) = C_{ZY}(\mathbf{0}) - \frac{1}{2}\big(C_{ZY}(\mathbf{h}) + C_{ZY}(-\mathbf{h})\big)
+$$
+
+Le variogramme croisé est toujours symétrique, $\gamma_{ZY}(\mathbf{h}) = \gamma_{ZY}(-\mathbf{h})$. Il ne peut donc pas rendre compte des asymétries de la covariance croisée : celle-ci est en ce sens plus générale.
+
+### Calcul expérimental
+
+La covariance croisée expérimentale, pour une classe de distance centrée sur $h$, est :
+
+$$
+\hat{C}_{ZY}(h) = \frac{1}{N(h)} \sum_{(i,j) \in N(h)} \big(Z(\mathbf{x}_i) - m_Z\big)\big(Y(\mathbf{x}_j) - m_Y\big)
+$$
+
+où la somme porte sur les paires $(\mathbf{x}_i, \mathbf{x}_j)$ telles que $\|\mathbf{x}_j - \mathbf{x}_i\| \approx h$, avec $Z$ observé en $\mathbf{x}_i$ et $Y$ en $\mathbf{x}_j$. Le variogramme croisé expérimental est :
+
+$$
+\hat{\gamma}_{ZY}(h) = \frac{1}{2N(h)} \sum_{(i,j) \in N(h)} \big(Z(\mathbf{x}_i) - Z(\mathbf{x}_j)\big)\big(Y(\mathbf{x}_i) - Y(\mathbf{x}_j)\big)
+$$
+
+La différence entre les deux est décisive en pratique. Pour la covariance croisée, il suffit d'avoir $Z$ à un point et $Y$ à un autre, à la distance $h$ : chaque paire $(Z(\mathbf{x}_i), Y(\mathbf{x}_j))$ compte. Le variogramme croisé, lui, exige les deux variables aux deux extrémités de chaque paire, soit quatre observations $Z(\mathbf{x}_i), Z(\mathbf{x}_j), Y(\mathbf{x}_i), Y(\mathbf{x}_j)$ : toutes les données non colocalisées sont donc perdues.
+
+Quand les variables ne sont que partiellement colocalisées, la covariance croisée exploite bien plus de données. Et si elles sont entièrement hétérotopes (aucun point commun), le variogramme croisé n'est plus estimable : on lui substitue le **variogramme pseudo-croisé**, construit sur des paires où chaque variable n'est observée qu'à une extrémité. Comme au chapitre précédent, ces fonctions se déclinent par direction pour tenir compte de l'anisotropie, les classes étant définies par distance et par direction, chacune avec sa tolérance.
+
+### Variance d'estimation
+
+La variance de l'erreur d'estimation du cokrigeage s'écrit, dans le cas général :
+
+$$
+\begin{aligned}
+\sigma_e^2 = \operatorname{Var}(Z_0 - Z_0^*)
+&= C_{ZZ}(\mathbf{0}) \\
+&\quad + \sum_{i=1}^{n_Z} \sum_{j=1}^{n_Z} \lambda_i \lambda_j \, C_{ZZ}(\mathbf{x}_i - \mathbf{x}_j)
++ 2 \sum_{i=1}^{n_Z} \sum_{j=1}^{n_Y} \lambda_i \alpha_j \, C_{ZY}(\mathbf{x}_i - \mathbf{x}_j)
++ \sum_{i=1}^{n_Y} \sum_{j=1}^{n_Y} \alpha_i \alpha_j \, C_{YY}(\mathbf{x}_i - \mathbf{x}_j) \\
+&\quad - 2 \sum_{i=1}^{n_Z} \lambda_i \, C_{ZZ}(\mathbf{x}_i - \mathbf{x}_0)
+- 2 \sum_{j=1}^{n_Y} \alpha_j \, C_{YZ}(\mathbf{x}_j - \mathbf{x}_0)
+\end{aligned}
+$$
+
+Les covariances croisées $C_{ZY}$ sont au cœur de cette expression : ce sont elles qui font gagner en précision. On minimise cette variance sous les contraintes de non-biais appropriées, et on obtient les différents systèmes de cokrigeage des sections suivantes.
+
+On retrouve les trois phénomènes de la variance d'estimation en krigeage : 1) la variabilité du phénomène ; 2) la redondance entre observations ; et 3) leur position par rapport au point à estimer. Le cokrigeage les étend aux interactions entre variables ; redondance entre données principales, entre principale et secondaire, entre secondaires, et position des données secondaires par rapport au point à estimer.
+
+Le modèle linéaire de corégionalisation, qui rend ces covariances directes et croisées admissibles, est détaillé plus loin (section « Fonctions aléatoires multivariées »). Deux facteurs commandent l'apport du cokrigeage : l'intensité du lien entre variables et la configuration des données. On commence par le cas le plus simple, celui où les moyennes sont connues : le cokrigeage simple.

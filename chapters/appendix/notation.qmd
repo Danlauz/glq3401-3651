@@ -1,0 +1,166 @@
+---
+title: "Notation mathématique"
+---
+
+Cette annexe regroupe la notation mathématique utilisée dans l'ensemble
+du livre. Les conventions retenues s'inspirent des standards établis en
+géostatistique (Matheron 1971, Journel et Huijbregts 1978, Chilès et
+Delfiner 2012) tout en restant compatibles avec les habitudes
+francophones d'ingénierie minière.
+
+## Conventions typographiques
+
+| Type d'objet | Notation | Exemple |
+|:---|:---|:---|
+| Scalaire (variable réelle, paramètre) | italique minuscule | $a$, $c$, $h$, $\sigma^2$ |
+| Constante scalaire | italique majuscule | $C$, $C_0$, $N$, $V$ |
+| Vecteur (incluant point spatial) | gras minuscule | $\mathbf{x}$, $\mathbf{h}$, $\boldsymbol{\lambda}$ |
+| Matrice | gras majuscule | $\mathbf{K}$, $\mathbf{C}$, $\mathbf{A}$ |
+| Ensemble (domaine, voisinage) | calligraphique | $\mathcal{D}$, $\mathcal{N}(\mathbf{x}_0)$ |
+| Espace standard | doubled-struck | $\mathbb{R}$, $\mathbb{R}^d$, $\mathbb{N}$ |
+| Opérateur probabiliste | doubled-struck | $\mathbb{E}$, $\mathbb{P}$ |
+| Opérateur textuel | italique sans gras | $\operatorname{Var}$, $\operatorname{Cov}$ |
+| Unité physique | romain droit (`\text`) | $\text{m}$, $\text{ppm}$, $\text{\$/t}$ |
+| Estimateur statistique | accent chapeau | $\hat{m}$, $\hat{\gamma}$, $\hat{\sigma}^2$ |
+| Estimateur par krigeage | étoile | $Z^*(\mathbf{x}_0)$ |
+| Moyenne sur volume | barre | $\bar{Z}_v$, $\bar{\gamma}(v, V)$ |
+| Multiplicateur de Lagrange | $\nu$ ou $\nu_\ell$ | krigeage ordinaire et universel |
+
+## Variables aléatoires et coordonnées
+
+| Symbole | Sens | Exemple d'usage |
+|:---|:---|:---|
+| $Z(\mathbf{x})$ | variable régionalisée principale (continue) | teneur, épaisseur |
+| $Y(\mathbf{x})$ | variable auxiliaire ou transformée gaussienne | cokrigeage, simulation |
+| $I(\mathbf{x}; z_c)$ | indicatrice au seuil $z_c$ | krigeage d'indicatrices |
+| $\mathbf{x}, \mathbf{x}_0, \mathbf{x}_i$ | point dans $\mathbb{R}^d$ | coordonnée spatiale |
+| $\mathbf{h}$ | vecteur de séparation | $\gamma(\mathbf{h})$ |
+| $h = \lVert \mathbf{h} \rVert$ | norme du vecteur (modèle isotrope) | $\gamma(h)$ |
+| $v, V$ | support fin / gros support (bloc) | $Z_v$, $Z_V$ |
+| $\mathcal{D}$ | domaine d'étude | $\mathbf{x} \in \mathcal{D}$ |
+| $\mathcal{N}(\mathbf{x}_0)$ | voisinage de krigeage de $\mathbf{x}_0$ | krigeage glissant |
+| $N$ | nombre total d'observations | données |
+| $n$ | nombre local d'observations / indice | $1, \ldots, n$ |
+
+## Statistiques descriptives et inférentielles
+
+| Symbole | Sens |
+|:---|:---|
+| $m$ | espérance théorique de $Z$ (moyenne du processus) |
+| $\bar{z}$ | moyenne empirique des observations |
+| $\sigma^2$ | variance théorique : $\sigma^2 = \operatorname{Var}(Z)$ |
+| $\hat{\sigma}^2$ | variance empirique des observations |
+| $\mathbb{E}[X]$ | espérance |
+| $\mathbb{P}(A)$ | probabilité |
+| $\operatorname{Var}(X)$ | variance d'une variable aléatoire |
+| $\operatorname{Cov}(X, Y)$ | covariance |
+| $\operatorname{Corr}(X, Y)$ | corrélation |
+| $\mathcal{N}(\mu, \sigma^2)$ | loi normale (Gaussienne) |
+| $\mathcal{LN}(\mu, \sigma^2)$ | loi lognormale |
+| $\Phi, \Phi^{-1}$ | fonction de répartition de la loi normale standard et son inverse (quantile) |
+
+## Variogramme et covariance
+
+| Symbole | Sens |
+|:---|:---|
+| $\gamma(\mathbf{h})$ | variogramme théorique |
+| $\hat{\gamma}(\mathbf{h})$ | variogramme expérimental |
+| $C(\mathbf{h})$ | covariance théorique |
+| $C_0$ | effet de pépite (nugget) |
+| $C$ | palier structurel (sill, sans pépite) |
+| $C(0) = C_0 + C$ | palier total |
+| $a$ | portée (range) |
+| $\bar{\gamma}(v, V)$ | variogramme moyen entre supports $v$ et $V$ |
+| $\delta(\mathbf{h})$ | indicatrice de Dirac/Kronecker (effet de pépite) |
+
+## Krigeage
+
+| Symbole | Sens |
+|:---|:---|
+| $Z^*(\mathbf{x}_0)$ | estimateur par krigeage en $\mathbf{x}_0$ |
+| $\lambda_i$ | poids de krigeage associé à la donnée $i$ |
+| $\boldsymbol{\lambda}$ | vecteur des poids |
+| $\alpha_j$ | poids de krigeage (variable auxiliaire en cokrigeage) |
+| $\nu$ | multiplicateur de Lagrange (krigeage ordinaire) |
+| $\nu_0, \nu_\ell$ | multiplicateurs de Lagrange du krigeage universel |
+| $\sigma_K^2$ | variance de krigeage générique |
+| $\sigma_{SK}^2$ | variance de krigeage simple |
+| $\sigma_{OK}^2$ | variance de krigeage ordinaire |
+| $\sigma_{UK}^2$ | variance de krigeage universel |
+| $\sigma_{KED}^2$ | variance du krigeage avec dérive externe |
+| $\sigma_{OK,v}^2$ | variance de krigeage ordinaire de bloc $v$ |
+| $\beta_k$ | coefficient de dérive (krigeage universel) |
+| $f_k(\mathbf{x})$ | fonction de base de dérive |
+
+## Économie minière (théorie de Lane)
+
+| Symbole | Sens | Unité |
+|:---|:---|:---|
+| $p$ | prix du métal | \$/t métal |
+| $k$ | coût de fonderie | \$/t métal |
+| $m$ | coût de minage par tonne minéralisée | \$/t |
+| $h$ | coût de traitement par tonne de minerai | \$/t |
+| $f$ | frais fixes | M\$/an |
+| $F$ | coûts d'opportunité | M\$ |
+| $M$ | capacité minage | Mt/an |
+| $H$ | capacité traitement | Mt/an |
+| $K$ | capacité marché | Mt/an |
+| $y$ | taux de récupération du concentrateur | — |
+| $c$ | teneur de coupure | % |
+| $c_1, c_2, c_3$ | t.c. limites mine, concentrateur, marché | % |
+| $c_{12}, c_{13}, c_{23}$ | t.c. d'équilibre | % |
+| $T(c), Q(c), m(c), P(c)$ | tonnage, métal récupérable, teneur moyenne, profit | — |
+
+## Échantillonnage (théorie de Pierre Gy)
+
+| Symbole | Sens |
+|:---|:---|
+| $s_r$ | écart-type relatif d'échantillonnage |
+| $K$ | constante de Gy |
+| $d$ | taille du plus gros fragment |
+| $d_0$ | taille de libération |
+| $\mu \cdot \delta$ | facteur composition × densité |
+| $M_L, M_e$ | masse du lot, masse de l'échantillon |
+| $M_s, M_\text{imm}$ | masse sèche, masse immergée (densité par immersion) |
+
+## Variance de bloc et de dispersion
+
+| Symbole | Sens |
+|:---|:---|
+| $\sigma^2_v$ | variance ponctuelle dans un bloc $v$ |
+| $\sigma^2_V$ | variance d'un bloc $V$ |
+| $D^2(v \mid V)$ | variance de dispersion de $v$ dans $V$ |
+| $\bar{C}(v, V)$ | covariance moyenne entre supports $v$ et $V$ |
+| $C_{iv}$ | covariance point-bloc (point $i$ vers bloc $v$) |
+| $C_{vv}$ | covariance bloc-bloc |
+
+## Simulation
+
+| Symbole | Sens |
+|:---|:---|
+| $Z^{(s)}(\mathbf{x})$ | $s$-ième réalisation simulée |
+| $S$ | nombre total de réalisations |
+| $\mathcal{T}$ | image d'entraînement (multipoints) |
+| $T$ | température (recuit simulé) |
+| $\mathbf{K}, \mathbf{L}$ | matrices de Cholesky en simulation gaussienne |
+
+## Abréviations courantes
+
+| Abréviation | Sens |
+|:---:|:---|
+| KS | Krigeage Simple |
+| KO | Krigeage Ordinaire |
+| KU | Krigeage Universel |
+| KED | Krigeage avec Dérive Externe (*Kriging with External Drift*) |
+| CK | Cokrigeage |
+| KI | Krigeage d'Indicatrices |
+| KIO, KIS | Krigeage d'Indicatrices Ordinaire / Simple |
+| SGS | Simulation Séquentielle Gaussienne |
+| SIS | Simulation Séquentielle d'Indicatrices |
+| TGS | Simulation Gaussienne Tronquée (*Truncated Gaussian Simulation*) |
+| PGS | Simulation Plurigaussienne (*PluriGaussian Simulation*) |
+| MPS | Simulation Multipoints (*Multi-Point Statistics*) |
+| FFT-MA | Fast Fourier Transform — Moving Average |
+| MLC | Modèle Linéaire de Corégionalisation |
+| NI 43-101 | Norme canadienne d'information sur les projets miniers |
+| QA/QC | Quality Assurance / Quality Control |

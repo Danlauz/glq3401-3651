@@ -1,0 +1,5 @@
+```{=html}
+<div class="geostat-widget" data-widget="c13_objets">
+  <div class="gw-placeholder">Chargement (modélisation par objets)…</div>
+</div>
+```

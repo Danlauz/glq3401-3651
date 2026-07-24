@@ -1,0 +1,198 @@
+## Aspect économique {#sec-ex-ch02 .recueil}
+### Exercice 1 — Lecture de courbes de Lane
+
+On vous présente une série de courbes obtenues en appliquant la théorie de Lane avec divers paramètres. Pour chacune des questions ci-dessous, identifiez le ou les cas correspondants.
+
+![Courbes de Lane (mine, traitement, marché) de quatre opérations minières A à D opérant chacune à sa teneur de coupure optimale : profit par tonne minéralisée en fonction de la teneur de coupure, avec les teneurs limites $c_1$, $c_2$, $c_3$ et d'équilibre $c_{12}$, $c_{13}$, $c_{23}$.](images/c02_lane_interpretation.png){#fig-c02-interpretation fig-align="center" width="80%"}
+
+1. Quels cas montrent une exploitation utilisant la pleine capacité de la mine ?
+2. Quels cas montrent une exploitation utilisant la pleine capacité du concentrateur ?
+3. Quels cas montrent un marché saturé (pleine capacité du marché) ?
+4. Quels cas montrent une exploitation à l’équilibre mine–concentrateur ?
+5. Quels cas montrent une exploitation à l’équilibre mine–marché ?
+6. Quels cas montrent une exploitation à l’équilibre concentrateur–marché ?
+7. Quels cas montrent une exploitation opérant à la teneur de coupure limite de la mine ?
+8. Quels cas montrent une exploitation opérant à la teneur de coupure limite du concentrateur ?
+9. Quels cas montrent une exploitation opérant à la teneur de coupure limite du marché ?
+10. Quels cas montrent une exploitation déficitaire ?
+11. Quel cas montre l’exploitation la plus rentable (par tonne minéralisée) ?
+
+::: {.callout-note collapse="true"}
+## Solution
+
+1. BCEGH
+2. ACFGH
+3. DEF
+4. CGH
+5. E
+6. F
+7. B
+8. A
+9. D
+10. G
+11. A
+:::
+
+### Exercice 2 — Fonctions de récupération à un seuil
+
+Gisement de Cu dont la teneur est distribuée suivant une loi log-normale de moyenne $m = 0{,}9\%$ et de variance $s^2 = 2\%^2$. La teneur de coupure est fixée à $c = 0{,}6\%$.
+
+Calculez $T(c)$, $Q(c)$, $m(c) = Q(c)/T(c)$ et $P(c) = T(c)\,\{m(c) - c\}$ à $c = 0{,}6\%$. Calculez ensuite $P(c)$ en dollars si le prix du Cu est de $6000\ \text{\$/t}$ Cu.
+
+Les fonctions de récupération pour la loi log-normale s’expriment à partir de la loi normale standard $\mathcal{N}(0,1)$ et de sa fonction de répartition $\Phi$, où $\beta$ est l’écart-type logarithmique des teneurs.
+
+::: {.callout-note collapse="true"}
+## Solution
+
+On calcule (selon la table $\mathcal{N}(0,1)$) :
+
+- $T(c) = 0{,}42$
+- $m(c) = Q(c)/T(c) = 1{,}76\%$
+- $P(c) = T(c)\,\{m(c) - c\} = 0{,}42\,(1{,}76 - 0{,}6) = 0{,}487\%$
+
+Ainsi, à $6000\ \text{\$/t}$ Cu :
+
+Une tonne de roche minéralisée contient $0{,}42$ t de minerai, et $0{,}739\%$ de tonne de métal Cu, dont la valeur brute représente $0{,}00739 \times 6000\ \text{\$} = 44{,}34\ \text{\$}$.
+
+Le profit conventionnel est $0{,}487\% \times 6000\ \text{\$} = 29{,}22\ \text{\$}$ (soit aussi $44{,}34\ \text{\$} - 0{,}42 \times 0{,}6\% \times 6000\ \text{\$}$).
+:::
+
+### Exercice 3 — Calcul complet de teneur de coupure optimale (Cu)
+
+Une mine de Cu présente les caractéristiques suivantes :
+
+| Paramètre | Symbole | Valeur |
+|---|---|---|
+| Taux de récupération du concentrateur | $y$ | $0{,}9$ |
+| Prix d’une tonne de métal | $p$ | $3000\ \text{\$/t}$ Cu |
+| Coût de mise en marché d’une tonne de métal | $k$ | $200\ \text{\$/t}$ Cu |
+| Frais variables de minage (par t de matériau minéralisé) | $m$ | $17\ \text{\$/t}$ |
+| Frais variables de traitement (par t de minerai) | $h$ | $10\ \text{\$/t}$ minerai |
+| Frais fixes | $f$ | $12\ \text{M\$/an}$ |
+| Coûts d’opportunité | $F$ | $0\ \text{\$}$ |
+| Capacité de minage (matériau minéralisé) | $M$ | $3\ \text{Mt}$ |
+| Capacité de traitement (minerai sélectionné) | $H$ | $2\ \text{Mt}$ |
+| Capacité du marché (métal) | $K$ | infinie |
+
+De plus, la distribution des teneurs de Cu est log-normale, de moyenne $m = 1{,}3\%$ et de variance $s^2 = 3\%^2$.
+
+1. Calculez les teneurs de coupure limites (mine, concentrateur, marché).
+2. Calculez les teneurs de coupure d’équilibre.
+3. Déterminez la teneur de coupure optimale.
+4. Quelle est la valeur de la mine par tonne minéralisée à la teneur de coupure optimale ?
+5. La mine opère plutôt à la teneur de coupure $c = 0{,}9\%$ Cu. Quelle perte encourt-elle par rapport à une exploitation optimale (par tonne minéralisée) ?
+
+::: {.callout-note collapse="true"}
+## Solution
+
+1. $c_1 = 0{,}397\%$, $c_2 = 0{,}635\%$, $c_3 = 0{,}397\%$.
+2. $c_{12} = 0{,}505\%$ ; $c_{13}$ et $c_{23}$ n’existent pas, car la capacité du marché est infinie.
+3. $c_{12} = 0{,}505\%$.
+4. $g(0{,}505) = 1{,}80\%$ $\Rightarrow$ $v_1 = v_2 = 2{,}64\ \text{\$/t}$ minéralisée.
+5. La mine est le facteur limitatif. $x(0{,}9\%) = 0{,}444$ ; $g(0{,}9\%) = 2{,}365\%$ $\Rightarrow$ $v_1 = 1{,}02\ \text{\$/t}$ minéralisée $\Rightarrow$ perte de $1{,}62\ \text{\$/t}$ minéralisée (soit $4{,}86\ \text{M\$/an}$).
+:::
+
+### Exercice 4 — Application graphique de la théorie de Lane
+
+Soit le graphe suivant montrant les trois fonctions profit/tonne minéralisée en fonction de la teneur de coupure lorsque la mine, le concentrateur ou le marché sont limitatifs.
+
+![Application graphique du modèle de Lane : courbes profit par tonne minéralisée pour la mine, le traitement et le marché, avec les teneurs de coupure limites $c_1$, $c_2$, $c_3$, les teneurs d'équilibre $c_{12}$, $c_{13}$ et le repère de la teneur de coupure optimale $c_{opt}$.](images/c02_lane_application.png){#fig-c02-application fig-align="center" width="80%"}
+
+1. Identifiez et donnez les valeurs de toutes les teneurs de coupure limites et d’équilibre sur ce graphe.
+2. Quelle est la teneur de coupure optimale ?
+3. Quel profit par tonne minéralisée espère-t-on obtenir à la teneur de coupure optimale ?
+4. Combien la mine perd-t-elle d’argent (par tonne minéralisée) si elle exploite le gisement à la teneur de coupure $c = 0{,}4$ plutôt qu’à la teneur de coupure optimale ?
+5. Après un échantillonnage supplémentaire, on se rend compte que la moyenne du gisement est $m = 0{,}75$ au lieu de $m = 0{,}7$.
+   a. En termes qualitatifs, comment ceci affecte-t-il les teneurs limites mine, concentrateur et marché ?
+   b. Comment ceci affecte-t-il la teneur d’équilibre mine–concentrateur ?
+6. Un investissement permet d’accroître la capacité de traitement de $H = 15\ \text{Mt}$ à $H = 17\ \text{Mt}$. La teneur de coupure optimale augmente-t-elle ou diminue-t-elle ?
+7. Un investissement permet d’accroître la capacité de minage de $M = 24$ à $M = 26$. Quel est l’impact sur la teneur de coupure ?
+
+::: {.callout-note collapse="true"}
+## Solution
+
+1. Teneurs de coupure limites — mine : $c_1 = 0{,}28\%$ ; concentrateur : $c_2 = 0{,}40\%$ ; marché : $c_3 = 0{,}3\%$.
+   Teneurs de coupure d’équilibre — mine–concentrateur : $c_{12} = 0{,}29\%$ ; concentrateur–marché : $c_{23} = 0{,}69\%$.
+2. $c_{12} = 0{,}29\%$.
+3. $v_{\text{mine}}(0{,}29) = v_{\text{conc}}(0{,}29) = 2{,}91\ \text{\$/t}$ minéralisée.
+4. À $c = 0{,}4\%$, le profit maximum possible est donné par la courbe « mine ». On lit : $v(0{,}4) = 2{,}83\ \text{\$/t}$.
+5. a. Les teneurs limites ne dépendent pas de la distribution des teneurs, donc aucune influence.
+   b. Comme la distribution se déplace vers la droite, on fournira la même quantité de minerai au concentrateur (équilibre) en augmentant la teneur de coupure ; donc la teneur de coupure d’équilibre augmente : $c_{12} = 0{,}33\%$ au lieu de $0{,}29\%$.
+6. Comme l’optimum est à l’équilibre, augmenter $H$ implique augmenter $x_c$, ce qui implique diminuer $c$. De plus, la courbe concentrateur sera déplacée vers le haut, la teneur de coupure optimale va diminuer jusqu’à ce qu’elle atteigne la teneur de coupure limite de la mine : teneur de coupure optimale = teneur de coupure limite mine = $0{,}28\%$.
+7. Comme l’optimum est à l’équilibre, augmenter $M$ implique diminuer $x_c$, ce qui implique augmenter $c$. La courbe mine sera translatée vers le haut, la teneur de coupure d’équilibre va augmenter. La teneur de coupure optimale sera cette teneur de coupure d’équilibre jusqu’à ce que cette dernière dépasse la teneur de coupure limite du concentrateur. Ici, la teneur de coupure optimale est = teneur de coupure d’équilibre = $0{,}33\%$.
+:::
+
+### Exercice 5 — Théorie de Taylor et Lane : analyses qualitatives et calcul
+
+On considère plusieurs scénarios d’application de la théorie de Taylor et Lane.
+
+**1. Effet de l’information.** Paramètres : $y = 0{,}9$ ; $p = 1800$ ; $k = 0$ ; $h = 10$ ; $m = 5$ ; $f = 20$ ; $F = 0$ ; $M = 5$ ; $H = 3$ ; $K = 0{,}2$ ; loi log-normale de moyenne $1{,}5$. Qu’est-ce qui a changé en augmentant la quantité d’information ?
+
+**2. Augmenter la capacité de traitement $H$.** Paramètres : $y = 0{,}9$ ; $p = 1800$ ; $k = 0$ ; $h = 10$ ; $m = 5$ ; $f = 20$ ; $F = 0$ ; $M = 5$ ; $K = 0{,}2$ ; loi log-normale de moyenne $1{,}5$ et variance $1{,}6\%^2$. Qu’est-ce qui a changé ?
+
+**3. Effet du temps.** Au fil de l’exploitation, comme on sélectionne les blocs riches préférentiellement, la mine résiduelle s’appauvrit. Paramètres : $y = 0{,}9$ ; $p = 1800$ ; $k = 0$ ; $h = 10$ ; $m = 5$ ; $f = 20$ ; $F = 0$ ; $M = 5$ ; $K = 0{,}2$ ; loi log-normale de variance $1{,}6\%^2$. Qu’observe-t-on ?
+
+**4. Les coûts de traitement ($h$) augmentent.** Paramètres : $y = 0{,}9$ ; $p = 1800$ ; $k = 0$ ; $m = 5$ ; $f = 20$ ; $F = 0$ ; $M = 5$ ; $H = 3$ ; $K = 0{,}2$ ; loi log-normale de moyenne $1{,}5$ et variance $1{,}6\%^2$. Qu’est-ce qui a changé ?
+
+**5. Fonctions de récupération.** Voici les fonctions de récupération d’une mine dont la distribution est log-normale de moyenne $1{,}5$ et de variance $2$. La capacité de la mine $M$ est $5\ \text{Mt}$ de matériau minéralisé. La capacité de traitement $H$ est de $2\ \text{Mt}$ de minerai. Les autres paramètres sont : $y = 0{,}9$ ; $p = 1800$ ; $k = 0$ ; $m = 5$ ; $h = 10$ ; $f = 30$ ; $F = 0$ ; $K = 20$.
+
+![Fonctions de récupération en fonction de la teneur de coupure : proportion de minerai récupéré $x_c$ (gauche), quantité de métal récupérée $q_c = x_c\,g_c$ (centre) et teneur du minerai sélectionné $g_c$ (droite), pour une distribution log-normale des teneurs.](images/c02_lane_recuperation.png){#fig-c02-recuperation fig-align="center" width="80%"}
+
+Calculez la teneur de coupure limite de la mine ($c_1$), celle du traitement ($c_2$) et la teneur de coupure d’équilibre mine–traitement.
+
+   a. Quelle est la teneur de coupure optimale ?
+   b. Quelle est la teneur du minerai correspondant à cette teneur de coupure optimale ?
+   c. Quelle est la valeur par tonne minéralisée ?
+
+::: {.callout-note collapse="true"}
+## Solution
+
+1. La teneur de coupure d’équilibre (aussi teneur de coupure optimale) a diminué légèrement de $0{,}95\%$ à $0{,}92\%$ ; la valeur par tonne minéralisée a augmenté de $5{,}36\ \text{\$/t}$ à $5{,}56\ \text{\$}$. C’est le montant que l’on serait prêt à payer pour une meilleure information.
+2. La teneur de coupure d’équilibre a baissé à $0{,}78\%$ ; la valeur optimale par tonne minéralisée a augmenté à $5{,}76\ \text{\$/t}$.
+3. La teneur de coupure optimale diminue avec la moyenne. Lorsque la moyenne vaut $1{,}1$, la teneur de coupure optimale est la teneur de coupure limite de la mine (teneur « breakeven »). Pour revenir en zone profitable, il faudrait accroître la capacité de la mine.
+4. La teneur de coupure optimale étant à l’équilibre, elle ne change pas. Seule la valeur est modifiée, passant de $5{,}36$ à $3{,}56\ \text{\$/t}$ minéralisée.
+5. a. On calcule $c_1 = 10 / [0{,}9 \times 1800] = 0{,}0062$, soit $0{,}62\%$. On calcule $c_2 = [10 + 30/2] / [0{,}9 \times 1800] = 0{,}0154$, soit $1{,}54\%$. Des figures, on trouve $x_c = H/M = 0{,}4$ $\Rightarrow$ la teneur de coupure d’équilibre est $1{,}33\%$. Comme elle est comprise entre les deux teneurs limites, c’est la teneur de coupure optimale.
+   b. On lit approximativement $2{,}65\%$.
+   c. $v = (0{,}4 \times 2{,}65 \times 0{,}9)/100 \times 1800 - 5 - 10 \times 0{,}4 - 30/5 = 2{,}17\ \text{\$/t}$.
+:::
+
+### Exercice 6 — Théorie de Lane et Taylor (examen)
+
+Une mine présente un tonnage total de $200\ \text{Mt}$ de matériaux minéralisés. Les paramètres d’exploitation, ainsi que les prix et les coûts associés selon la théorie de Lane et Taylor, sont fournis.
+
+![Courbes de Lane et Taylor de l’exploitation : profit par tonne minéralisée (mine, traitement, marché) en fonction de la teneur de coupure, pour la distribution initiale (gauche) et après cinq ans d’exploitation (droite), illustrant la baisse de la teneur de coupure optimale au fil de la vie de la mine.](images/ex02_lane_exo.png){#fig-ex02-lane_exo fig-align="center" width="80%"}
+
+La figure ci-dessus illustre les courbes de Lane et Taylor calculées avec ces paramètres. On suppose qu’un excellent estimateur, à la fois très précis et sans biais conditionnel, est disponible. On suppose également que le minerai initialement délaissé demeure accessible pour une exploitation future.
+
+**A.** Quelle est la teneur de coupure optimale ? Et à quoi correspond-elle (teneur de coupure limite ou d’équilibre) ?
+
+**B.** Quel profit annuel est généré par cette mine ?
+
+**C.** Quelle option d’investissement semble présentement, à première vue, la plus profitable pour la mine : augmenter sa capacité de minage ($M$) ou augmenter sa capacité de traitement ($H$) ? Justifiez, sans faire de calcul.
+
+**D.** Sur l’ensemble de la durée de vie de la mine, combien sommes-nous prêts à investir pour augmenter la capacité identifiée à la question C ? Supposez que la nature identifiée en A demeure inchangée tout au long de l’exploitation.
+
+Après 5 ans d’exploitation, on met à jour la distribution des teneurs en tenant compte du minerai déjà extrait. On trouve une moyenne de $1{,}4\%$ (initialement $1{,}8\%$) et une variance de $1{,}8\%^2$ (initialement $2{,}6\%^2$). Toujours sous hypothèse log-normale, on obtient de nouvelles fonctions de récupération.
+
+**E.** Avec cette nouvelle distribution, quelle sera la nouvelle teneur de coupure optimale et quel profit, par tonne minéralisée, la mine peut-elle espérer ? (Note : la nouvelle teneur de coupure optimale est ici de la même nature que dans la question A.)
+
+**F.** Un suivi des teneurs des blocs minés a permis d’établir une équation de régression entre teneurs vraies et estimées. Que peut-on conclure ?
+
+::: {.callout-note collapse="true"}
+## Solution
+
+**A.** La nature est de type équilibre mine–concentrateur. La teneur de coupure optimale est de $1{,}23\%$.
+
+**B.** Il suffit de multiplier le profit $v_1$ par $M$, car nous sommes à la limite mine–concentrateur : $2{,}32 \times 11 = 25{,}52\ \text{M\$/an}$.
+
+**C.** On note que $c_1$ fournit des profits de $2{,}64\ \text{\$/t}$ et que $c_2$ fournit des profits de $2{,}33\ \text{\$/t}$. Ainsi, il semble évident que l’on doit augmenter la capacité de traitement ($H$) afin que le limitant soit la mine, car celle-ci donne plus de profit.
+
+**D.** On doit faire la soustraction $c_1 - c_{12}$, soit $2{,}64 - 2{,}32 = 0{,}32\ \text{\$/t}$. Le tonnage de la mine est de $200\ \text{Mt}$, donc on aura $0{,}32\ \text{\$/t} \times 200\ \text{Mt} = 64\ \text{M\$}$ de profit supplémentaire. Si l’augmentation de la capacité de traitement coûte moins de $64\ \text{M\$}$, nous sommes prêts à faire l’investissement.
+
+**E.** Comme la nature reste la même, on a $x_c = H/M = 6/11 = 0{,}5454$. Lecture graphique : pour $c = 1{,}075$, on a $g_c = 2{,}38$. Donc :
+$$
+v_1 = (p - k)\, x_c\, g_c\, y - m - x_c h - \frac{f + F}{M} = (3000 - 2000) \times 0{,}5454 \times \frac{2{,}38}{100} \times 0{,}85 - 4 - 0{,}5454 \times 7 - \frac{25}{11} = 0{,}94\ \text{\$/t} \pm 0{,}05\ \text{\$/t}.
+$$
+
+**F.** Il y a un léger biais conditionnel. Celui-ci est négligeable et ne devrait pas créer de problème significatif dans la théorie de Lane et Taylor.
+:::

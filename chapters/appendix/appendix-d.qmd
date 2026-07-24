@@ -1,0 +1,17 @@
+---
+title: "Abaques - Variances de dispersion"
+number-sections: false
+---
+
+![Variance d’un point dans un segment pour un variogramme sphérique de palier $C=1$. Pour $L=a$, $F(L=a)=D^{2}(\cdot \mid L)=\sigma^{2}(L;L)=1-\bar{C}(L;L)$.](images/Ad_Im1.png){#fig-A1_dis}
+
+
+
+![Variance d’un point dans un rectangle pour un variogramme sphérique de palier $C = 1$. $F(L_x=a_x, L_y=a_y) = D^{2}(\cdot \mid v) = 1 - \bar{C}(v; v)$.](images/Ad_Im2.png){#fig-A2_dis}
+
+
+![Variance d’un point dans un bloc à section carrée pour un variogramme sphérique de palier $C = 1$. $F(L_1=a_1, L_2=a_2, L_3=a_3) = D^{2}(\cdot \mid v) = 1 - \bar{C}(v; v)$.](images/Ad_Im3.png){#fig-A3_dis}
+
+
+
+
