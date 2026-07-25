@@ -6,6 +6,7 @@ project:
   # Python (_assets/CXX/). Sans cette directive, Quarto ne sert que les CSS/JS
   # explicitement reference dans `include-*-body`.
   resources:
+    - ".nojekyll"   # desactive Jekyll -> sert les fichiers _ (indispensable)
     - "scripts/**/*"
     - "_assets/**/*"
     - "exports/**/*"
