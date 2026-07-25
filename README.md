@@ -1,19 +1,17 @@
-# Livre Quarto
+# Dany Lauzon - Academic Website
 
-## Installation
+👉 **Website:** <https://danlauz.github.io/website/>
 
-1. Installer Quarto : https://quarto.org
-2. Installer Python :
-   ```bash
-   pip install jupyter numpy matplotlib pandas scipy
-   ```
+## 📧 Contact
 
-## Utilisation
+Dany Lauzon  
+Polytechnique Montréal  
+Email: [dany.lauzon@polymtl.ca](mailto:dany.lauzon@polymtl.ca)
 
-```bash
-quarto preview
-```
+## 📄 License
 
-## Déploiement
+This website template is open source. Feel free to use it for your own academic website.
 
-Pousser sur GitHub et activer GitHub Pages.
+---
+
+*Website created June 2026*
