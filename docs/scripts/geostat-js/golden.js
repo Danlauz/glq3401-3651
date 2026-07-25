@@ -26,7 +26,7 @@
 //   }
 // -----------------------------------------------------------------------------
 
-const URL_GOLDEN = '/scripts/geostat-js/golden_vectors.json';
+const URL_GOLDEN = new URL('./golden_vectors.json', import.meta.url).href;
 
 // Registre des implémentations JS à vérifier. Chaque entrée :
 //   "namespace.fonction": (entrees) => sorties

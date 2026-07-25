@@ -164,10 +164,11 @@ async function initialiserPyodide() {
   // à toujours récupérer la VERSION À JOUR des fichiers .py de la librairie
   // (sinon un .py en cache périmé fait échouer l'import et casse TOUS les
   // widgets Pyodide). Les fichiers sont petits ; le surcoût est négligeable.
+  const _BASE = new URL('../../', import.meta.url).href.replace(/[/]$/, '');
   const _CB = Date.now();
   const telechargements = FICHIERS_LIB.map(async f => {
-    const r = await fetch(f.src + (f.src.includes('?') ? '&' : '?') + 'cb=' + _CB);
-    if (!r.ok) throw new Error(`Telechargement ${f.src} : HTTP ${r.status}`);
+    const r = await fetch(_BASE + f.src + (f.src.includes('?') ? '&' : '?') + 'cb=' + _CB);
+    if (!r.ok) throw new Error(`Telechargement ${_BASE + f.src} : HTTP ${r.status}`);
     py.FS.writeFile(f.dst, await r.text(), { encoding: 'utf8' });
   });
   await Promise.all(telechargements);

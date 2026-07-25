@@ -2,6 +2,12 @@
 \renewcommand{\partname}{} % Réinitialiser partie
 ```
 
+::: {.callout-warning title="Version bêta"}
+Ce livre est actuellement offert en version bêta. Il constitue un recueil évolutif de notes de cours sur la géostatistique.
+
+Le contenu peut encore contenir des erreurs, des imprécisions ou des éléments à améliorer. Tout commentaire, signalement de problème ou suggestion est grandement apprécié et contribuera à bonifier les prochaines versions.
+:::
+
 **Résumé :** Ce livre présente les concepts fondamentaux et les applications pratiques de la géostatistique en géologie minière. Il a été rédigé intégralement avec Quarto et intègre des exemples pratiques ainsi qu’une bibliothèque de code en Python. Le contenu est conçu pour être accessible aux étudiants en génie géologique et en génie des mines. Ceux et celles qui souhaitent approfondir leur compréhension de l'estimation des ressources minérales trouveront dans cet ouvrage les éléments théoriques et pratiques nécessaires. La philosophie de ce livre est de fournir toutes les clés pour comprendre et mettre en œuvre les méthodes géostatistiques. La présentation des méthodes repose sur une approche à la fois compréhensive et intuitive plutôt que sur une approche purement mathématique.
 
 **Remerciements :** Ce manuel a été réalisé avec le soutien de la fabriqueREL. Fondée en 2019, la fabriqueREL est portée par divers établissements d'enseignement supérieur du Québec et agit en collaboration avec les services de soutien pédagogique et les bibliothèques. Son but est de faire des ressources éducatives libres (REL) le matériel privilégié dans l’enseignement supérieur au Québec.
