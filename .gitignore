@@ -11,7 +11,7 @@ pytest-cache-files-*/
 .quarto/
 _freeze/
 # docs/   <-- NE PAS ignorer : c'est le site publié (GitHub Pages sert main/docs)
-exports/
+/exports/          # racine seulement (source de build) ; NE PAS ignorer docs/exports/ (copie publiee)
 
 # === IDE & système ===
 .vscode/

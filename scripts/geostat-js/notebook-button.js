@@ -100,6 +100,7 @@
   async function inject() {
     const slug = getChapterSlug();
     if (!slug) return;
+    const base = location.pathname.replace(/[/]chapters[/].*$/, '');   // prefixe du site (GitHub Pages)
 
     const host = findInsertionPoint();
     if (!host) return;
@@ -112,14 +113,14 @@
     wrap.innerHTML = '<div class="geostat-downloads__label">Telecharger</div>';
 
     const btnPdf = buildButton({
-      href: `/exports/${slug}/${slug}_${titre}.pdf`,
+      href: `${base}/exports/${slug}/${slug}_${titre}.pdf`,
       icon: '📄',
       label: 'PDF chapitre',
       fileName: `${slug}_${titre}.pdf`,
       tooltip: 'Telecharger ce chapitre en PDF',
     });
     const btnDocx = buildButton({
-      href: `/exports/${slug}/${slug}_${titre}.docx`,
+      href: `${base}/exports/${slug}/${slug}_${titre}.docx`,
       icon: '📝',
       label: 'DOCX chapitre',
       fileName: `${slug}_${titre}.docx`,
