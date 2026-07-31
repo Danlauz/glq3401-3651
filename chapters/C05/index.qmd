@@ -7,6 +7,9 @@ abstract: |
 
 ::: {.callout-important}
 ## Objectifs d'apprentissage
+
+À la fin de ce chapitre, vous serez en mesure de :
+
 - Comprendre le cadre général de l'estimation par moyenne pondérée et le rôle des poids $\lambda_i$;
 
 - Construire des polygones de Voronoï et expliquer leur lien avec la triangulation de Delaunay;
