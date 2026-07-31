@@ -6,6 +6,9 @@ abstract: |
 
 ::: {.callout-important}
 ## Objectifs d'apprentissage
+
+À la fin de ce chapitre, vous serez en mesure de :
+
 - Expliquer les différences entre krigeage simple, krigeage ordinaire et krigeage universel ;
 
 - Dériver les équations du krigeage à partir du principe de minimisation de la variance d'estimation ;

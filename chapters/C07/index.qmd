@@ -7,6 +7,9 @@ abstract: |
 
 ::: {.callout-important}
 ## Objectifs d'apprentissage
+
+À la fin de ce chapitre, vous serez en mesure de :
+
 -   Définir ce qu’est un variogramme et expliquer son rôle dans la mesure de la continuité spatiale d’une variable régionalisée ;
 
 -   Distinguer le variogramme expérimental du modèle théorique et justifier l’utilisation d’un modèle ajusté ;

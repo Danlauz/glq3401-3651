@@ -6,6 +6,9 @@ abstract: |
 
 ::: {.callout-important}
 ## Objectifs d'apprentissage
+
+À la fin de ce chapitre, vous serez en mesure de :
+
 - Expliquer l'utilité de la géostatistique pour l'estimation des ressources en géologie minière ;
 
 - Définir une variable régionalisée et une fonction aléatoire, et reconnaître le rôle de la corrélation spatiale ;

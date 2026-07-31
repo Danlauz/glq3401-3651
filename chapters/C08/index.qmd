@@ -6,6 +6,9 @@ abstract: |
 
 ::: {.callout-important}
 ## Objectifs d'apprentissage
+
+À la fin de ce chapitre, vous serez en mesure de :
+
 -   Comprendre les notions de variance de bloc et de variance de dispersion et décrire le lien avec le variogramme et la continuité spatiale qu'il exprime;
 
 -   Calculer les variances de bloc et variances de dispersion avec les abaques ;

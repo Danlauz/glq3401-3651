@@ -15,7 +15,7 @@
 -->
 
 <script type="module">
-import { gpoly, afficherChargementJusquaPret } from '/scripts/geostat-js/pyodide_setup.js';
+import { gpoly, afficherChargementJusquaPret } from '../../scripts/geostat-js/pyodide_setup.js';
 
 if (!window.LaneUtils) {
   // Defaults qui correspondent aux paramètres de ParametresLane (Python).
