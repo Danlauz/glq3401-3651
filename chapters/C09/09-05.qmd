@@ -20,7 +20,7 @@ Les paramètres suivants définissent le voisinage utilisé pour chaque estimati
 
 **Rayon de recherche**. Le poids attribué à une donnée dépend de sa continuité spatiale avec le point à estimer. Pour un modèle à portée finie, les données situées au-delà de la portée ne sont plus corrélées avec la cible et apportent donc peu ou pas d’information. Le rayon de recherche délimite cette zone, généralement sous la forme d’un ellipsoïde centré sur le point à estimer. Ses dimensions sont souvent fixées à partir des portées du variogramme et peuvent être augmentées, par exemple jusqu’à deux fois la portée, dans les zones moins bien échantillonnées (@fig-c9-voisinage).
 
-![Effet du voisinage de krigeage (deux forages verticaux) : voisinage global, petit rayon (lacunes), grand rayon, et ellipse alignée sur l'anisotropie.](images/c9_04_voisinage.png){#fig-c9-voisinage fig-align="center" width="100%"}
+![Effet du voisinage de krigeage (deux forages verticaux espacés de 50 m) : voisinage global, petit rayon de 26 m — soit la demi-distance entre forages plus un mètre, qui laisse des lacunes en bordure et crée une discontinuité à mi-chemin entre les deux forages —, rayon de 50 m, et ellipse alignée sur l'anisotropie.](images/c9_04_voisinage.png){#fig-c9-voisinage fig-align="center" width="100%"}
 
 **Nombre de données**. Un nombre minimal de données est imposé afin d’éviter les estimations reposant sur une information trop limitée. Lorsque ce seuil, souvent fixé autour de huit données, n’est pas atteint, le point peut être laissé sans estimation. Un nombre maximal est également fixé, généralement autour de 30 données. Au-delà, les données supplémentaires apportent souvent peu d’information en raison de l’effet d’écran, tandis que la résolution du système de krigeage devient plus coûteuse.
 
@@ -50,12 +50,12 @@ Cet atelier interactif n'est disponible que dans la version web du chapitre.
 
 ### Validation croisée
 
-La validation croisée (*cross-validation*) évalue la qualité du modèle de variogramme et des paramètres de voisinage. Le principe : on retire temporairement chaque donnée de l'échantillonnage, puis on l'estime par krigeage à partir des données restantes. On obtient ainsi, pour chaque point $\mathbf{x}_i$ :
+La validation croisée (*cross-validation*) évalue la qualité du modèle de variogramme et des paramètres de voisinage. Le principe : on retire temporairement chaque donnée de l'échantillonnage, puis on l'estime par krigeage à partir des données restantes. Dans tout ce qui suit, $Z^*$ et $\sigma_K$ désignent donc l'estimation et l'écart-type de krigeage obtenus **sans** la donnée que l'on cherche à retrouver. On obtient ainsi, pour chaque point $\mathbf{x}_i$ :
 
-- l'estimation par krigeage : $Z^*_{-i}(\mathbf{x}_i)$
-- la variance de krigeage : $\sigma^2_{K,-i}(\mathbf{x}_i)$
-- l'erreur de validation croisée : $e_i = Z(\mathbf{x}_i) - Z^*_{-i}(\mathbf{x}_i)$
-- l'erreur standardisée : $e_i^s = e_i / \sigma_{K,-i}(\mathbf{x}_i)$
+- l'estimation par krigeage : $Z^*(\mathbf{x}_i)$
+- la variance de krigeage : $\sigma^2_K(\mathbf{x}_i)$
+- l'erreur de validation croisée : $e_i = Z(\mathbf{x}_i) - Z^*(\mathbf{x}_i)$
+- l'erreur standardisée : $e_i^s = e_i / \sigma_K(\mathbf{x}_i)$
 
 Un modèle bien calibré doit produire des erreurs sans biais systématique et compatibles avec l’incertitude annoncée par le krigeage. On examine notamment les critères suivants :
 

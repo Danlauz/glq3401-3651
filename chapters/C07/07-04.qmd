@@ -402,9 +402,9 @@ La forme du variogramme à l’origine contrôle la régularité du champ modél
 - avec une croissance linéaire à l’origine, comme pour les modèles sphérique et exponentiel, le champ est continu en moyenne quadratique mais présente une variabilité marquée à courte distance;
 - avec une croissance parabolique, comme pour le modèle gaussien, le champ est beaucoup plus lisse.
 
-La @fig-simulations illustre l’effet du choix du modèle sur les champs simulés.
+La @fig-simulations illustre l’effet du choix du modèle sur les champs simulés. Le dernier panneau ajoute une réalisation du modèle à effet de trou : le champ y alterne régulièrement des valeurs fortes et faibles, avec une pseudo-période voisine de $2\pi a$. Contrairement aux modèles à palier, cette alternance persiste sur toute l’étendue du domaine, ce qui traduit une organisation répétitive du phénomène plutôt qu’une simple perte de corrélation avec la distance.
 
-![Comparaison de simulations produites à partir de différents modèles de variogramme.](images/C7_simulations.PNG){#fig-simulations fig-align="center"}
+![Comparaison de simulations produites à partir de différents modèles de variogramme, y compris le modèle à effet de trou.](images/C7_simulations.PNG){#fig-simulations fig-align="center"}
 
 ## 🧮 Atelier interactif 7.3 — Modèles théoriques de variogramme {.unnumbered}
 

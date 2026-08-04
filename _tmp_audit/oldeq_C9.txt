@@ -1,0 +1,684 @@
+===== SLIDE 1  [images:0 tableaux:0 equations:0]
+  GLQ3401 : Troisième partie
+  Cours 9 : Géostatistique multivariables
+===== SLIDE 2  [images:0 tableaux:0 equations:0]
+  Comprendre la mécanique du cokrigeage (généralisation du krigeage au cas multivariable) ;
+  Analyser et expliquer les situations où le cokrigeage peut être utile ;
+  Calculer des variogrammes croisés et covariances croisées ;
+  Définir les paramètres d'un modèle linéaire de corégionalisation et vérifier l'admissibilité du modèle ;
+  Interpréter les résultats d'un cokrigeage et de différentes formes de validation croisées.
+  Objectifs
+===== SLIDE 3  [images:0 tableaux:0 equations:0]
+  Rappels Krigeage
+  Mise en contexte
+  Cokrigeage simple et ordinaire
+  2.1. Cokrigeage simple
+  2.2. Cokrigeage ordinaire
+  2.3. Forme matricielle
+  Covariance croisée et variogramme croisé
+  3.1. Covariance croisée
+  3.2. Variogramme croisé
+  Modèles admissibles
+  Cas où le cokrigeage peut être utile
+  Plan de cours
+===== SLIDE 4  [images:0 tableaux:0 equations:2]
+  4
+  Améliorer les estimations obtenues par krigeage en utilisant l’information fournie par d’autres variables (données secondaires) que la variable principale.
+  Variable principale : Ce que l’on cherche à estimer (noté 𝑍)
+  Variable(s) secondaire(s) :
+  Données de terrain corrélées avec la variable principale. Ajoute une information supplémentaire sur la structure spatiale de la variable principale (noté 𝑌1, …, 𝑌𝑛).
+  Objectif :
+  Obtenir une estimation qui respecte à la fois les données principales et toutes les données secondaires.
+  Idée :
+  1. Mise en contexte
+===== SLIDE 5  [images:0 tableaux:0 equations:0]
+  5
+  Avez-vous des idées de données multivariables en géologie ?
+  1. Mise en contexte
+===== SLIDE 6  [images:1 tableaux:0 equations:0]
+  6
+  Exemples :
+  MAE :                                    Krigeage 4.13                           Cokrigeage : 1.24
+  1. Mise en contexte
+===== SLIDE 7  [images:0 tableaux:0 equations:1]
+  7
+  Exemples :
+  On mesure la base (B), le sommet (S) et l’épaisseur (E) d’une même formation en quelques forages ;
+  On modélise les variogrammes de ces 3 variables ;
+  On effectue le krigeage de ces 3 variables → B*(x), S*(x), E*(x).
+  Aura-t-on : E*(x) = S*(x)-B*(x) ?
+  Pour le krigeage :
+  Pour le cokrigeage :
+  1. Mise en contexte
+===== SLIDE 8  [images:1 tableaux:0 equations:6]
+  8
+  Exemples :
+  𝐸∗, 𝑆∗−𝐵∗
+  𝑆∗
+  𝐵∗
+  𝑆∗
+  𝐵∗
+  𝐸∗
+  Réponse :
+  Pour le krigeage : NON
+  Pour le cokrigeage :  OUI
+  1. Mise en contexte
+===== SLIDE 9  [images:0 tableaux:0 equations:6]
+  9
+  On va étudier seulement le cas avec une variable principale et une variable secondaire.
+  Posons 𝑍(𝑥), la variable principale, et 𝑌(𝑥), la variable secondaire, avec respectivement 𝑛𝑧 et 𝑛𝑦 observations et de moyenne 𝑚𝑧 et 𝑚𝑦.
+  La généralisation à plusieurs variables secondaires est identique à la méthodologie à deux variables. Seulement plus lourd mathématiquement, sans pour autant être plus complexes.
+  Cas à deux variables :
+  2. Cokrigeage simple et ordinaire
+===== SLIDE 10  [images:0 tableaux:0 equations:8]
+  10
+  𝑍0∗=𝑚𝑧+𝑖=1 𝑛𝑧𝜆𝑖𝑍𝑖−𝑚𝑧+𝑖=1𝑛𝑦𝛼𝑖𝑌𝑖−𝑚𝑦
+  Les moyennes 𝑚𝑧 et 𝑚𝑦 sont connues. L’estimateur de 𝑍 est alors :
+  La variance d’estimation :
+  𝑉𝑎𝑟𝑒=𝑉𝑎𝑟𝑍0−𝑍0∗=
+  𝑉𝑎𝑟𝑍0+
+  𝑖=1𝑛𝑧𝑗=1 𝑛𝑦𝜆𝑖𝜆𝑗𝐶𝑜𝑣(𝑍𝑖,𝑍𝑗)+𝑖=1𝑛𝑧𝑗=1𝑛𝑦𝛼𝑖𝛼𝑗𝐶𝑜𝑣𝑌𝑖,𝑌𝑗+2𝑖=1𝑛𝑧𝑗=1𝑛𝑦𝐶𝑜𝑣𝑍𝑖,𝑌𝑗+
+  −2𝑖=1𝑛𝑧𝜆𝑖𝐶𝑜𝑣𝑍0,𝑍𝑖−2𝑖=1𝑛𝑦𝛼𝑖𝐶𝑜𝑣𝑍0,𝑌𝑖
+  Terme du haut : Variance de ce que l’on estime
+  Terme du milieu : Variance de l’estimateur
+  Terme du bas : Covariance de l’estimateur et ce que l’on estime
+  2.1. Cokrigeage simple
+  2. Cokrigeage simple et ordinaire
+===== SLIDE 11  [images:0 tableaux:0 equations:7]
+  11
+  Minimisation de 𝑉𝑎𝑟𝑒. Système de 𝑛𝑧+𝑛𝑦 équations et inconnues.
+  𝜕𝑉𝑎𝑟(𝑒)𝜕𝜆𝑖=0 →
+  𝑗=1𝑛𝑧𝜆𝑗𝐶𝑜𝑣𝑍𝑖,𝑍𝑗+𝑗=1𝑛𝑦𝛼𝑗𝐶𝑜𝑣𝑍𝑖,𝑌𝑗=𝐶𝑜𝑣𝑍0,𝑍𝑖,   ∀𝑖=1,…, 𝑛𝑧
+  𝑗=1𝑛𝑧𝜆𝑗𝐶𝑜𝑣𝑌𝑖,𝑍𝑗+𝑗=1𝑛𝑦𝛼𝑗𝐶𝑜𝑣𝑌𝑖,𝑌𝑗=𝐶𝑜𝑣𝑍0,𝑌𝑖,   ∀𝑖=1,…, 𝑛𝑦
+  𝜕𝑉𝑎𝑟(𝑒)𝜕𝛼𝑖=0 →
+  Variance de cokrigeage simple :
+  𝜎𝐶𝑆2=𝑉𝑎𝑟𝑍0−𝑖=1𝑛𝑧𝜆𝑖𝐶𝑜𝑣𝑍0,𝑍𝑖−𝑖=1𝑛𝑦𝛼𝑖𝐶𝑜𝑣𝑍0,𝑌𝑖≤ 𝜎𝐾𝑆2
+  2.1. Cokrigeage simple
+  2. Cokrigeage simple et ordinaire
+===== SLIDE 12  [images:0 tableaux:0 equations:5]
+  12
+  𝑍0∗=𝑖=1 𝑛𝑧𝜆𝑖𝑍𝑖+𝑖=1𝑛𝑦𝛼𝑖𝑌𝑖,  𝑖=1𝑛𝑧𝜆𝑖=1,  𝑖=1𝑛𝑦𝛼𝑖=0
+  Les moyennes 𝑚𝑧 et 𝑚𝑦 sont inconnues. L’estimateur de 𝑍 est alors :
+  Lagrangien :
+  𝐿𝜆𝑖,𝛼𝑖,𝜇𝑧,𝜇𝑦=𝑉𝑎𝑟𝑒−2𝜇𝑧𝑖=1𝑛𝑧𝜆𝑖−1−2𝜇𝑦𝑖=1𝑛𝑦𝛼𝑖
+  2.2. Cokrigeage ordinaire
+  Méthode de Lagrange :
+  2. Cokrigeage simple et ordinaire
+===== SLIDE 13  [images:0 tableaux:0 equations:11]
+  13
+  Minimisation de 𝑉𝑎𝑟𝑒. Système de 𝑛𝑧+𝑛𝑦+2 équations et inconnues.
+  𝜕𝐿𝜕𝜆𝑖=0 →
+  𝑗=1𝑛𝑧𝜆𝑗𝐶𝑜𝑣𝑍𝑖,𝑍𝑗+𝑗=1𝑛𝑦𝛼𝑗𝐶𝑜𝑣𝑍𝑖,𝑌𝑗+𝜇𝑧=𝐶𝑜𝑣𝑍0,𝑍𝑖,   ∀𝑖=1,…, 𝑛𝑧
+  𝑗=1𝑛𝑧𝜆𝑗𝐶𝑜𝑣𝑌𝑖,𝑍𝑗+𝑗=1𝑛𝑦𝛼𝑗𝐶𝑜𝑣𝑌𝑖,𝑌𝑗+𝜇𝑦=𝐶𝑜𝑣𝑍0,𝑌𝑖,   ∀𝑖=1,…, 𝑛𝑦
+  𝜕𝐿𝜕𝛼𝑖=0 →
+  Variance de cokrigeage ordinaire :
+  𝜎𝐶𝑂2=𝑉𝑎𝑟𝑍0−𝑖=1𝑛𝑧𝜆𝑖𝐶𝑜𝑣𝑍0,𝑍𝑖−𝑖=1𝑛𝑦𝛼𝑖𝐶𝑜𝑣𝑍0,𝑌𝑖− 𝜇𝑧
+  𝜕𝐿𝜕𝜇𝑧=0 →
+  𝜕𝐿𝜕𝜇𝑦=0 →
+  𝑖=1𝑛𝑧𝜆𝑖=1
+  𝑖=1𝑛𝑧𝛼𝑖=0
+  2.2. Cokrigeage ordinaire
+  2. Cokrigeage simple et ordinaire
+===== SLIDE 14  [images:2 tableaux:0 equations:4]
+  14
+  K𝜆=𝑘 et 𝜎𝑐𝑘2=𝑉𝑎𝑟𝑍0−𝜆′𝑘
+  Cokrigeage simple :
+  Cokrigeage ordinaire :
+  𝐾𝑧𝑧→𝑛𝑧×𝑛𝑧 ;𝐾𝑧𝑦→𝑛𝑧×𝑛𝑦 ;  𝐾𝑦𝑧→𝑛𝑦×𝑛𝑧 ; 𝐾𝑦𝑦→𝑛𝑦×𝑛𝑦
+  𝑘𝑧𝑧→𝑛𝑧×1  ;𝑘𝑦𝑧→𝑛𝑦×1
+  2.3. Forme matricielle
+  2. Cokrigeage simple et ordinaire
+===== SLIDE 15  [images:0 tableaux:0 equations:7]
+  15
+  Souvent le CS est préférable
+  CS  → ne nécessite pas d’observations de 𝑍
+  CO → dans certaines configurations symétriques, la
+  contrainte sur les poids empêche de tenir compte de l’information de la variable secondaire
+  𝑌4
+  𝑌3
+  𝑌2
+  𝑌1
+  𝑍0=?
+  𝑖=14𝛼𝑖=0 →𝛼𝑖=0 ∀𝑖=1,...,4
+  Cokrigeage simple (CS) vs cokrigeage ordinaire (CO)
+  2. Cokrigeage simple et ordinaire
+===== SLIDE 16  [images:0 tableaux:0 equations:3]
+  3. Covariance croisée et variogramme croisé
+  Il existe 3 fonctions de structure croisées décrites dans la littérature :
+  Covariogramme croisé :
+  Variogramme croisé :
+  Pseudo-variogramme croisé :
+  𝑪𝟏𝟐(𝒉)= 𝑪𝒐𝒗(𝒁𝟏(𝒙),𝒁𝟐(𝒙+𝒉))
+  𝟏𝟐(𝒉)=𝟏𝟐  𝑬𝒁𝟏𝒙−𝒁𝟏𝒙+𝒉 𝒁𝟐𝒙−𝒁𝟐𝒙+𝒉
+  𝒑𝟏𝟐𝒉=𝟏𝟐 𝑬𝒁𝟏𝒙−𝒁𝟐𝒙+𝒉𝟐
+  Avantages :
+  permet d’utiliser des variables mesurées à des localisations ne coïncidant pas pour chaque variable
+  permet de tenir compte d’asymétrie de corrélations
+  Désavantage :
+  requiert d’estimer les moyennes de chaque variable
+  Avantage :
+  ne nécessite pas l’estimation des moyennes
+  Désavantages :
+  requiert des variables mesurées aux mêmes localisations
+  ne permet pas de modéliser des corrélations asymétriques
+  Avantages :
+  permet d’utiliser des variables mesurées à des localisations ne coïncidant pas pour chaque variable
+  permet de tenir compte d’asymétrie de corrélations
+  Désavantages :
+  ne permet pas de modéliser des corrélations négatives
+  nécessite un ajustement pour les unités (habituellement normalisation) qui peut demander d’estimer les moyenne et écart-type de chaque variable
+===== SLIDE 17  [images:0 tableaux:0 equations:7]
+  17
+  Covariance croisée :
+  Variogramme croisé :
+  𝐶𝑍𝑌h=𝐶𝑜𝑣𝑍𝑥,𝑌𝑥+h
+  𝛾𝑍𝑌h=0.5 𝐸𝑍𝑥−𝑍𝑥+h𝑌𝑥−𝑌𝑥+h
+  =0.5 𝐶𝑜𝑣𝑍𝑥−𝑍𝑥+h,𝑌𝑥−𝑌𝑥+h
+  Le variogramme croisé est toujours symétrique
+  𝛾𝑍𝑌h=𝐶𝑍𝑌0−0.5(𝐶𝑍𝑌h+𝐶𝑍𝑌−h)
+  𝛾𝑍𝑌h= 𝛾𝑍𝑌−h
+  ↓
+  La covariance croisée ne peut être déduite du variogramme croisé que si elle est symétrique !
+  La covariance croisée est plus générale que le variogramme croisé
+  Définitions :
+  3. Covariance croisée et variogramme croisé
+===== SLIDE 18  [images:0 tableaux:0 equations:0]
+  18
+  Exercice en classe : Calcul du variogramme croisé et covariance croisée
+  3. Covariance croisée et variogramme croisé
+===== SLIDE 19  [images:1 tableaux:0 equations:1]
+  19
+  𝑌𝑥=𝑍𝑥−50
+  Le variogramme croisé (bleu) ne détecte aucune structure.
+  La covariance croisée (rouge) détecte une forte structure
+  Asymétrique
+  Reconnais le décalage
+  Comparaison :
+  3. Covariance croisée et variogramme croisé
+===== SLIDE 20  [images:1 tableaux:0 equations:0]
+  20
+  Comparaison :
+  3. Covariance croisée et variogramme croisé
+===== SLIDE 21  [images:0 tableaux:0 equations:4]
+  21
+  Notes:
+  a)
+  Krigeage → plus souvent krigeage ordinaire
+  Cokrigeage → cokrigeage simple est souvent plus indiqué (p. ex. cas où la variable principale n’est pas observée)
+  b)
+  Krigeage → variogramme est l’outil de base
+  Cokrigeage → covariance est l’outil de base
+  3. Covariance croisée et variogramme croisé
+===== SLIDE 22  [images:0 tableaux:0 equations:4]
+  22
+  Les matrices de cokrigeage sont toujours symétriques → 𝐾𝑧𝑦 = 𝐾’𝑦𝑧
+  Toutefois, les fonctions de covariances croisées, elles, ne sont pas nécessairement symétriques, en effet :
+  𝐶𝑧𝑦h=𝐶𝑜𝑣𝑍𝑥,𝑌𝑥+h=𝐶𝑜𝑣𝑌𝑥+h,𝑍𝑥=𝐶𝑦𝑧−h
+  Mais, en général
+  𝐶𝑧𝑦h=𝐶𝑜𝑣𝑍𝑥,𝑌𝑥+h≠𝐶𝑜𝑣𝑌𝑥,𝑍𝑥+h=𝐶𝑦𝑧h=𝐶𝑧𝑦−h
+  Symétrie :
+  3. Covariance croisée et variogramme croisé
+===== SLIDE 23  [images:2 tableaux:0 equations:3]
+  23
+  𝐶𝑧𝑧                                       𝐶𝑧𝑦                                      𝐶𝑦𝑦
+  𝐶𝑧𝑦h≠𝐶𝑧𝑦−h
+  Élévation
+  Pente
+  h
+  Exemple visuel :
+  3. Covariance croisée et variogramme croisé
+===== SLIDE 24  [images:0 tableaux:0 equations:2]
+  24
+  Vérification délicate, non triviale, complexe mathématiquement.
+  On va se limiter aux modèles admissibles par construction.
+  But :
+  Assurer que toute combinaison linéaire de 𝑍 et 𝑌 présente une variance théorique positive.
+  4. Modèles admissibles
+  Note :
+  Wackernagel(1995) recommande d’utiliser le covariogramme croisé dans le cas multivariable. J’adhère à cette recommandation.
+  La vérification de l’admissibilité des modèles de covariogrammes multivariables est plus complexe dans le cas général que pour le cas univariable.
+===== SLIDE 25  [images:0 tableaux:0 equations:0]
+  25
+  Conditions d’admissibilité pour les covariogrammes croisés
+  4. Modèles admissibles
+  Cas 2 variables
+  Cas de p variables, modèle intrinsèque
+  Cas de p variables, modèle de corégionalisation linéaire
+  Cas de p variables, cas général
+  Variables avec relations détermines
+===== SLIDE 26  [images:0 tableaux:0 equations:2]
+  26
+  a) Cas de deux variables :
+  4. Modèles admissibles
+  Condition de Cauchy-Schwartz sur les variogrammes croisés :
+  Cette condition est nécessaire avec 𝑝 variables.
+  Avec deux variables et un modèle intrinsèque (i.e. tous les variogrammes et variogrammes croisés sont proportionnels entre eux) de corégionalisation, elle est nécessaire et suffisante.
+  𝛾12h2≤ 𝛾11h𝛾22h
+===== SLIDE 27  [images:3 tableaux:0 equations:3]
+  27
+  4. Modèles admissibles
+  a) Cas de deux variables :
+  Condition de Cauchy-Schwartz sur les covariogrammes croisés :
+  Utilisant la relation suivante entre variogrammes et covariogrammes :
+  On peut définir une condition équivalente pour les covariogrammes.
+  On notera le cas plus simple où les covariances sont symétriques :
+  qui permet de réécrire la condition de Cauchy-Schwartz :
+  où
+  𝐶11(h), 𝐶12(h) et 𝐶22(h) soient tous trois des modèles admissibles individuellement.
+===== SLIDE 28  [images:1 tableaux:0 equations:1]
+  28
+  Définis une enveloppe où doit se retrouver entièrement le modèle de variogramme croisé
+  𝛾𝑍𝑌(h)≤ 𝛾𝑍𝑍(h)𝛾𝑌𝑌(h)
+  Condition nécessaire, mais non suffisante !
+  Cette condition permet de s’assurer que la corrélation est toujours comprise entre -1 et 1.
+  Condition de Cauchy-Schwartz
+  4. Modèles admissibles
+  a) Cas de deux variables :
+===== SLIDE 29  [images:0 tableaux:0 equations:3]
+  29
+  4. Modèles admissibles
+  b) Cas de p variables, modèle intrinsèque:
+  Lorsque tous les covariogrammes simples et croisés sont proportionnels entre eux, alors on peut écrire
+  est une matrice 𝑝 𝑥 𝑝 de coefficients qui doit (la matrice) être positive définie.
+  Pour vérifier cette condition, il suffit de vérifier que toutes les valeurs propres sont positives (il existe plusieurs autres méthodes également).
+  Note : Dans ce modèle, les covariances sont nécessairement symétriques.
+  𝐵=𝑏11𝑏12…𝑏1𝑝𝑏21…………………𝑏𝑝1……𝑏𝑝𝑝
+  𝐶𝑖𝑗h=𝐵∗𝐶h,
+===== SLIDE 30  [images:0 tableaux:6 equations:18]
+  30
+  Très fréquent
+  Toutes les covariances et covariances croisées peuvent s’exprimer comme une combinaison linéaire de quelques structures de base ( de palier 1, arbitrairement)
+  𝐶𝑍𝑍(h)
+  𝐶𝑍𝑌(h)
+  𝐶𝑌𝑍(h)
+  𝐶𝑌𝑌(h)
+  𝐵1,𝑍𝑍
+  𝐵1,𝑍𝑌
+  𝐵1,𝑌𝑍
+  𝐵1,𝑌𝑌
+  𝐵2,𝑍𝑍
+  𝐵2,𝑍𝑌
+  𝐵2,𝑌𝑍
+  𝐵2,𝑌𝑌
+  𝐶1h+
+  𝐶2h+ …
+  =
+  =
+  𝐵1𝐶1h+𝐵2𝐶2h+…+𝐵𝑛𝐶𝑛h
+  Les matrices 𝐵𝑖 sont des matrices de coefficients
+  c) Cas de p variables, modèle de corégionalisation linéaire :
+  4. Modèles admissibles
+===== SLIDE 31  [images:0 tableaux:4 equations:11]
+  31
+  𝐶𝑍𝑍(h)
+  𝐶𝑍𝑌(h)
+  𝐶𝑌𝑍(h)
+  𝐶𝑌𝑌(h)
+  𝐵𝑍𝑍
+  𝐵𝑍𝑌
+  𝐵𝑌𝑍
+  𝐵𝑌𝑌
+  𝐶h=𝐵𝐶(h)
+  =
+  Si chaque matrice B est positive semi-définie (c.-à-d. avec 2 variables  det𝐵≥0) alors le modèle est admissible.
+  Si l’une des matrices n’est pas positive semi-définie, alors on ne peut rien dire sur l’admissibilité du modèle.
+  Si la matrice B associée à l’effet de pépite n’est pas positive semi-définie, on est certain que le modèle est non admissible.
+  Note : lorsque toutes les matrices B sont proportionnelles, on peut réécrire le modèle linéaire de corégionalisation comme:
+  Ce modèle est admissible si et seulement si B est positive semi-définie.
+  4. Modèles admissibles
+  c) Cas de p variables, modèle de corégionalisation linéaire :
+===== SLIDE 32  [images:1 tableaux:4 equations:12]
+  32
+  c) Modèle de corégionalisation linéaire :
+  Exemples :
+  3
+  −4
+  −4
+  5
+  𝛿h
+  5
+  10
+  10
+  25
+  𝑠𝑝hé𝑟𝑖𝑞𝑢𝑒 (𝑎=15,𝐶=1)
+  Effet de pépite
+  Modèle sphérique :
+  Admissibilité :
+  det𝛿h=15−16=−1≱0
+  det𝑠𝑝hh=125−100=25
+  4. Modèles admissibles
+===== SLIDE 33  [images:0 tableaux:0 equations:0]
+  33
+  Exercice en classe : Modèles linéaires de corégionalisation
+  4. Modèles admissibles
+===== SLIDE 34  [images:0 tableaux:0 equations:5]
+  34
+  d) Cas de 𝒑 variables, cas général.
+  4. Modèles admissibles
+  On doit évaluer la transformée de Fourier de chaque covariogramme (simple et croisé). Dans le domaine de Fourier 𝑐𝑖𝑗(𝑤). Ensuite, pour chaque « 𝑤 », on doit vérifier que la matrice [𝑐𝑖𝑗(𝑤)] est positive définie pour tout « 𝑤 ».
+  En pratique on n’utilise pas cet algorithme normalement.
+===== SLIDE 35  [images:0 tableaux:0 equations:0]
+  35
+  e) Variables avec relations déterministes.
+  4. Modèles admissibles
+  Parfois le cokrigeage implique des variables liées par des équations déterministes (ex. une propriété et sa dérivée selon une direction donnée, une équation différentielle liant des variables, un champ de potentiel, etc.).
+  Lorsque l’on peut déduire à partir d’une variable quel est le modèle  de covariogramme croisé et le modèle de covariogramme simple de l’autre variable, alors on est assuré que le modèle est admissible.
+  Malheureusement, la dérivation de ces fonctions de covariance est souvent très difficile à réaliser au plan mathématique. De plus, souvent les variables liées n’ont pas le même niveau de stationnarité, ce qui complique l’estimation.
+===== SLIDE 36  [images:0 tableaux:0 equations:11]
+  36
+  Si on connaît 𝐶𝑍𝑍, on peut déduire 𝐶𝑍𝑌 et 𝐶𝑌𝑌
+  Exemple 1D : 𝑌(𝑥) est la dérivée de 𝑍(𝑥)
+  𝑌𝑥=𝑑𝑍(𝑥)𝑑𝑥
+  𝐶𝑍𝑌=𝐶𝑜𝑣𝑍𝑥,𝑌𝑥+h=𝑑𝑑h𝐶𝑜𝑣𝑍𝑥,𝑍𝑥+h=𝑑𝐶𝑧𝑧𝑑h
+  𝐶𝑌𝑌=𝐶𝑜𝑣𝑌𝑥,𝑌𝑥+h=−𝑑2𝑑h2𝐶𝑜𝑣𝑍𝑥,𝑍𝑥+h=−𝑑2𝐶𝑍𝑍𝑑h2
+  Modèle découlant de relations physiques ou mathématique entre 𝒁 et 𝒀.
+  𝐶𝑌𝑍=−𝐶𝑍𝑌
+  4. Modèles admissibles
+  e) Variables avec relations déterministes.
+===== SLIDE 37  [images:0 tableaux:0 equations:0]
+  37
+  Exercice en classe : Modèle physique
+  4. Modèles admissibles
+===== SLIDE 38  [images:1 tableaux:0 equations:0]
+  38
+  4. Modèles admissibles
+  En résumé
+===== SLIDE 39  [images:1 tableaux:0 equations:1]
+  39
+  4. Modèles admissibles
+  Programme informatique : TASC3D
+  Marcotte, D. (2015). TASC3D: A program to test the admissibility in 3D of non-linear models of coregionalization. In Computers &amp; Geosciences (Vol. 83, pp. 168–175). Elsevier BV. https://doi.org/10.1016/j.cageo.2015.07.012
+  Dans TASC3D, la stratégie suivante est suivie :
+  La condition CS est vérifiée en premier. Si elle n'est pas respectée, le modèle n'est pas admissible.
+  La matrice d'effet pépite est vérifiée pour la définition positive. Si elle n'est pas définie positive, le modèle n'est pas admissible.
+  L'utilisateur spécifie les fréquences où le test d'admissibilité est effectué.
+  Toutes les plages sont normalisées à la plage maximale globale trouvée sur toutes les composantes de toutes les paires de variables.
+  La plus petite valeur propre de toute la matrice spectrale est considérée comme négative uniquement lorsque 𝜆𝑚𝑖𝑛&lt;−10−9. Dès qu'une valeur propre négative est trouvée, le modèle est identifié comme non admissible.
+===== SLIDE 40  [images:1 tableaux:0 equations:7]
+  40
+  Exemple de calcul : Modèle linéaire de corégionalisation
+  h=5
+  h=5
+  𝑍2
+  𝑍0 ?
+  𝑍1
+  𝑌0
+  𝑌1
+  4. Modèles admissibles
+===== SLIDE 41  [images:2 tableaux:0 equations:7]
+  41
+  Exemple de calcul : cokrigeage simple
+  h=5
+  h=5
+  𝑍2
+  𝑍0 ?
+  𝑍1
+  𝑌0
+  𝑌1
+  ?
+  ?
+  ?
+  ?
+  ?
+  ?
+  ?
+  ?
+  ?
+  ?
+  ?
+  ?
+  ?
+  ?
+  ?
+  ?
+  ?
+  ?
+  ?
+  ?
+  4. Modèles admissibles
+===== SLIDE 42  [images:2 tableaux:0 equations:7]
+  42
+  Exemple de calcul : cokrigeage simple
+  h=5
+  h=5
+  𝑍2
+  𝑍0 ?
+  𝑍1
+  𝑌0
+  𝑌1
+  3
+  1.04
+  2.4
+  1.81
+  1.04
+  3
+  1.24
+  1.81
+  2.4
+  1.24
+  5
+  3.01
+  1.81
+  1.81
+  3.01
+  5
+  1.50
+  1.50
+  1.81
+  2.4
+  4. Modèles admissibles
+===== SLIDE 43  [images:3 tableaux:0 equations:7]
+  43
+  Exemple de calcul : cokrigeage simple
+  h=5
+  h=5
+  𝑍2
+  𝑍0 ?
+  𝑍1
+  𝑌0
+  𝑌1
+  Note ) Variance de krigeage simple : 1.88
+  4. Modèles admissibles
+===== SLIDE 44  [images:1 tableaux:0 equations:7]
+  44
+  Exemple de calcul : cokrigeage ordinaire
+  h=5
+  h=5
+  𝑍2
+  𝑍0 ?
+  𝑍1
+  𝑌0
+  𝑌1
+  Note ) Variance de krigeage ordinaire : 2.01
+  4. Modèles admissibles
+===== SLIDE 45  [images:0 tableaux:0 equations:0]
+  45
+  Exercice en classe : Construire un système de cokrigeage simple et ordinaire
+  4. Modèles admissibles
+===== SLIDE 46  [images:1 tableaux:0 equations:2]
+  46
+  Données d’élévation estimées par géoradar (𝑌) et quelques observations de l’élévation aux forages (𝑍)
+  Géophysique
+  5. Cas où le cokrigeage peut être utile
+===== SLIDE 47  [images:4 tableaux:0 equations:5]
+  47
+  Données régionales lisses estimées par géophysique (𝑌) et quelques observations de la propriété estimée (𝑍)
+  Géophysique
+  𝑍
+  𝑌
+  𝐾𝑆
+  CS
+  Krigeage :     MAE = 26.3 ; ρ=0.73
+  Cokrigeage : MAE = 22.1 ; ρ=0.81
+  5. Cas où le cokrigeage peut être utile
+===== SLIDE 48  [images:1 tableaux:0 equations:1]
+  48
+  Inversion de données gravimétrique
+  𝑔𝑖=𝐺𝑖𝑗×𝜌𝑗
+  5. Cas où le cokrigeage peut être utile
+===== SLIDE 49  [images:0 tableaux:0 equations:7]
+  49
+  Inversion de données gravimétrique
+  Sous forme matricielle :
+  𝑔=𝐺𝜌
+  g : vecteur des anomalies gravimétriques (n x 1)
+  G : matrice géométrique (n x m)
+  𝜌 : vecteur des contrastes de densité de blocs (m x 1)
+  On peut déduire les covariances à partir de l’équation ci-haut :
+  𝐶𝑔𝑔=𝐺𝐶𝜌𝜌𝐺𝑇
+  𝐶𝑔𝜌=𝐺𝐶𝜌𝜌
+  𝐶𝑔𝑔 : matrice des covariances gravité-gravité (n x n)
+  𝐶𝜌𝜌 : matrice des covariances densité-densité (m x m)
+  𝐶𝑔𝜌 : matrice des covariances gravité-densité (n x m)
+  G : matrice géométrique (n x m)
+  5. Cas où le cokrigeage peut être utile
+===== SLIDE 50  [images:0 tableaux:0 equations:4]
+  50
+  Inversion de données gravimétrique
+  𝜌∗=Λ′𝑔
+  Λ=𝐶𝑔𝑔−1𝐶𝑔𝜌
+  Lorsque l’on résout le système de cokrigeage, on obtient
+  Λ : matrice contenant les poids de cokrigeage (n x m)
+  Reproduis exactement l’anomalie gravimétrique observée :
+  𝑔∗=𝐺𝜌∗=𝐺Λ′𝑔=𝐺𝐶𝜌𝜌𝐺′𝐺𝐶𝜌𝜌𝐺′−1𝑔=𝑔
+  Vrai, s’il n’y a pas d’effet de pépite
+  5. Cas où le cokrigeage peut être utile
+===== SLIDE 51  [images:1 tableaux:0 equations:0]
+  51
+  Inversion de données gravimétrique
+  5. Cas où le cokrigeage peut être utile
+===== SLIDE 52  [images:1 tableaux:0 equations:0]
+  52
+  Inversion de données gravimétrique
+  5. Cas où le cokrigeage peut être utile
+===== SLIDE 53  [images:1 tableaux:0 equations:0]
+  53
+  Inversion de données gravimétrique
+  5. Cas où le cokrigeage peut être utile
+===== SLIDE 54  [images:1 tableaux:0 equations:0]
+  54
+  Hydrogéologie
+  Étang
+  Un étang au coin nord-ouest recharge l'aquifère de surface. On s'attendrait à ce que les lignes d'écoulement (bleu et rouge) soient perpendiculaires au bord de l'étang.
+  Plusieurs lignes d'écoulement convergent, ce qui implique un fort débit à cet endroit, ce qui est perçu comme peu réaliste
+  5. Cas où le cokrigeage peut être utile
+===== SLIDE 55  [images:2 tableaux:0 equations:0]
+  55
+  Hydrogéologie
+  Utilisation de points doublons : forcer localement une direction d’écoulement
+  Les deux problèmes soulevés sur la diapo précédente sont disparus
+  5. Cas où le cokrigeage peut être utile
+===== SLIDE 56  [images:0 tableaux:0 equations:0]
+  56
+  Hydrogéologie
+  Utilisation de points doublons : forcer localement une direction d’écoulement
+  En forçant des valeurs égales de charge sur des points rapprochés (sans spécifier les charges, juste dire qu'elles sont égales), on force l'écoulement perpendiculairement au segment liant les deux points.
+  On peut voir le doublon comme une variable auxiliaire et le traiter en cokrigeage.
+  Il suffit de connaître la covariance des charges pour déduire la covariance simple des doublons et la covariance croisée charge-doublon (modèle déterministe)
+  5. Cas où le cokrigeage peut être utile
+===== SLIDE 57  [images:2 tableaux:0 equations:0]
+  57
+  Hydrogéologie : deux domaines
+  Modèle géologique
+  Vert : frontières imperméables
+  Orange : Charges constantes
+  Solution par éléments finis
+  Solution cokrigeage sans doublons et sans informations sur le domaine
+  Solution cokrigeage avec doublons et les informations sur le domaine
+  5. Cas où le cokrigeage peut être utile
+===== SLIDE 58  [images:1 tableaux:0 equations:0]
+  58
+  Hydrogéologie : pompage
+  A)
+  B)
+  C)
+  D)
+  Modèle géologique
+  Vert : frontières imperméables
+  A et C : sans pompage
+  B et D : avec pompage
+  A et B : sans doublons
+  C et D : avec doublons
+  Problématique
+  Frontières imperméables mal représentées
+  Une source n’est même pas alimentée par le réseau
+  La source est approvisionnée lorsque le pompage n'est pas actif.
+  5. Cas où le cokrigeage peut être utile
+===== SLIDE 59  [images:1 tableaux:0 equations:0]
+  59
+  1) Estimer la position du sommet d’un réservoir pétrolier ou gazier
+  Variable principale :
+  Variable(s) secondaire(s) :
+  Position du sommet observé dans quelques forages
+  Positions interprétées par sismiques
+  Contact(s) géologique(s) estimé(s) par géophysique
+  Attitude du contact dans les forages
+  Exemples :
+  Tiré de :  K.-A. Lie. An Introduction to Reservoir Simulation Using MATLAB/GNU Octave:  User Guide for the MATLAB Reservoir Simulation Toolbox (MRST). Cambridge University Press, 2019.
+  5. Cas où le cokrigeage peut être utile
+===== SLIDE 60  [images:1 tableaux:0 equations:0]
+  60
+  2) Produire une carte de charges hydraulique qui soit réaliste
+  Variable principale :
+  Variable(s) secondaire(s) :
+  Surface piézométrique dans quelques puits
+  Surface topographique (aquifère à nappe libre)
+  Frontières imperméables connues
+  Vecteurs gradients connus (sens de l’écoulement)
+  Mesures géoradar (contacts géologiques)
+  Exemples :
+  5. Cas où le cokrigeage peut être utile
+===== SLIDE 61  [images:1 tableaux:0 equations:0]
+  61
+  3) Modélisation de la transmissivité d’un aquifère
+  Variable principale :
+  Variable(s) secondaire(s) :
+  Transmissivités dans un modèle d’éléments finis ou de différences finies
+  La transmissivité (ou conductivités hydrauliques) obtenue par slug-test, test de pompage, courbes granulométriques, capacité spécifique de puits
+  Frontières hydrauliques connues
+  Charges hydrauliques connues (permanent et transitoire)
+  Ici, les variables secondaires reflètent la variable principale à des échelles différentes (ponctuelle, local, radial, régional).
+  Exemples :
+  5. Cas où le cokrigeage peut être utile
+===== SLIDE 62  [images:1 tableaux:0 equations:0]
+  62
+  4) Inversion de données gravimétriques
+  Variable principale :
+  Variable(s) secondaire(s) :
+  Densité pour un modèle de blocs du sous-sol
+  Anomalie gravimétrique mesurée au sol
+  Anomalie gravimétrique aéroportée
+  Quelques mesures de densité en forage
+  Note : on n’a souvent aucune observation de la variable principale pour ce cas.
+  Exemples :
+  5. Cas où le cokrigeage peut être utile
+===== SLIDE 63  [images:0 tableaux:0 equations:0]
+  63
+  5) Inversion de tomographies radar
+  Variable principale :
+  Variable(s) secondaire(s) :
+  Modèle de ‘lenteurs’ pour un modèle de blocs du sous-sol dans le plan défini par 2 forages coplanaires
+  Temps de parcours émetteur-récepteur
+  Note : on n’a souvent aucune observation de la variable principale pour ce cas.
+  Exemples :
+  5. Cas où le cokrigeage peut être utile
+===== SLIDE 64  [images:0 tableaux:0 equations:0]
+  64
+  6) Cartographie de la température de l’eau en surface
+  Variable principale :
+  Variable(s) secondaire(s) :
+  Température de l’eau mesurée directement
+  Températures obtenues par interprétation du signal spectral d’un satellite
+  7) Cartographie de la bathymétrie
+  Variable principale :
+  Variable(s) secondaire(s) :
+  Mesures directes (bateau)
+  Interprétation d’un levé hydroacoustique
+  8) Cartographie de la contamination
+  Variable principale :
+  Variable(s) secondaire(s) :
+  Teneurs d’un polluant
+  Topographie
+  Surface piézométrique
+  Exemples :
+  5. Cas où le cokrigeage peut être utile
