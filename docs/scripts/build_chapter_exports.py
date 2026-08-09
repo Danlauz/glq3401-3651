@@ -84,12 +84,14 @@ def _quarto_yml_standalone(numero: int) -> str:
     chapitre. On le retablit en redefinissant ``\\thesection`` = ``N.<section>``
     (cette redefinition se propage a ``\\thesubsection`` = ``N.1.1`` et
     ``\\thesubsubsection`` = ``N.1.1.1``, car chaque niveau prefixe le precedent).
-    ``secnumdepth = 3`` fait numeroter jusqu'au niveau sous-sous-section (4 nombres,
-    ex. 1.2.2.1) ; ``number-depth: 4`` fait de meme pour la TdM et les renvois.
+    ``secnumdepth = 1`` ne numerote QUE les sections (ex. 5.1, 5.2), comme le
+    site (number-depth: 2). Les sous-sections restent listees dans la TdM mais
+    sans numero : cela evite qu'un atelier {.unnumbered} pose au milieu d'une
+    section remette le compteur de sous-sections a zero.
     """
     entete = (
         _PDF_HEADER
-        + "\n      \\setcounter{secnumdepth}{3}"
+        + "\n      \\setcounter{secnumdepth}{1}"
         + f"\n      \\renewcommand{{\\thesection}}{{{numero}.\\arabic{{section}}}}"
     )
     return (
@@ -108,7 +110,7 @@ def _quarto_yml_standalone(numero: int) -> str:
         "    toc: true\n"
         "    toc-depth: 4\n"
         "    number-sections: true\n"
-        "    number-depth: 4\n"
+        "    number-depth: 2\n"
         "    colorlinks: true\n"
         "    linkcolor: navyblue\n"
         "    urlcolor: navyblue\n"
@@ -119,7 +121,7 @@ def _quarto_yml_standalone(numero: int) -> str:
         "    toc: true\n"
         "    toc-depth: 4\n"
         "    number-sections: true\n"
-        "    number-depth: 4\n"
+        "    number-depth: 2\n"
         "    reference-doc: styles/quarto-academic-template.docx\n"
         "execute:\n"
         "  enabled: false\n"

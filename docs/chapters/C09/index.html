@@ -1232,7 +1232,7 @@ Z_V^* = \frac{1}{|V|} \sum_k |v_k| \, Z_{v_k}^*.
 <img src="images/c9_04_voisinage.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c9-voisinage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.3: Effet du voisinage de krigeage (deux forages verticaux) : voisinage global, petit rayon (lacunes), grand rayon, et ellipse alignée sur l’anisotropie.
+Figure&nbsp;9.3: Effet du voisinage de krigeage (deux forages verticaux espacés de 50 m) : voisinage global, petit rayon de 26 m — soit la demi-distance entre forages plus un mètre, qui laisse des lacunes en bordure et crée une discontinuité à mi-chemin entre les deux forages —, rayon de 50 m, et ellipse alignée sur l’anisotropie.
 </figcaption>
 </figure>
 </div>
@@ -1257,12 +1257,12 @@ Figure&nbsp;9.3: Effet du voisinage de krigeage (deux forages verticaux) : voisi
 </div>
 <section id="validation-croisée" class="level3">
 <h3 class="anchored" data-anchor-id="validation-croisée">Validation croisée</h3>
-<p>La validation croisée (<em>cross-validation</em>) évalue la qualité du modèle de variogramme et des paramètres de voisinage. Le principe : on retire temporairement chaque donnée de l’échantillonnage, puis on l’estime par krigeage à partir des données restantes. On obtient ainsi, pour chaque point <span class="math inline">\(\mathbf{x}_i\)</span> :</p>
+<p>La validation croisée (<em>cross-validation</em>) évalue la qualité du modèle de variogramme et des paramètres de voisinage. Le principe : on retire temporairement chaque donnée de l’échantillonnage, puis on l’estime par krigeage à partir des données restantes. Dans tout ce qui suit, <span class="math inline">\(Z^*\)</span> et <span class="math inline">\(\sigma_K\)</span> désignent donc l’estimation et l’écart-type de krigeage obtenus <strong>sans</strong> la donnée que l’on cherche à retrouver. On obtient ainsi, pour chaque point <span class="math inline">\(\mathbf{x}_i\)</span> :</p>
 <ul>
-<li>l’estimation par krigeage : <span class="math inline">\(Z^*_{-i}(\mathbf{x}_i)\)</span></li>
-<li>la variance de krigeage : <span class="math inline">\(\sigma^2_{K,-i}(\mathbf{x}_i)\)</span></li>
-<li>l’erreur de validation croisée : <span class="math inline">\(e_i = Z(\mathbf{x}_i) - Z^*_{-i}(\mathbf{x}_i)\)</span></li>
-<li>l’erreur standardisée : <span class="math inline">\(e_i^s = e_i / \sigma_{K,-i}(\mathbf{x}_i)\)</span></li>
+<li>l’estimation par krigeage : <span class="math inline">\(Z^*(\mathbf{x}_i)\)</span></li>
+<li>la variance de krigeage : <span class="math inline">\(\sigma^2_K(\mathbf{x}_i)\)</span></li>
+<li>l’erreur de validation croisée : <span class="math inline">\(e_i = Z(\mathbf{x}_i) - Z^*(\mathbf{x}_i)\)</span></li>
+<li>l’erreur standardisée : <span class="math inline">\(e_i^s = e_i / \sigma_K(\mathbf{x}_i)\)</span></li>
 </ul>
 <p>Un modèle bien calibré doit produire des erreurs sans biais systématique et compatibles avec l’incertitude annoncée par le krigeage. On examine notamment les critères suivants :</p>
 <ol type="1">

@@ -1,0 +1,798 @@
+===== SLIDE 1  [images:2 tableaux:0 equations:0]
+  GLQ3401 / GLQ3651
+  Simulations géostatistiques de variable catégorielle
+  Cours 12
+  Partie II — Géostatistique · Chapitre 13 du livre en ligne
+  Dany Lauzon
+  Département des génies civil, géologique et des mines, Polytechnique Montréal
+===== SLIDE 2  [images:6 tableaux:0 equations:0]
+  COURS 12 · CHAPITRE 13
+  Objectifs d’apprentissage
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  2
+  Expliquer les principes des principales méthodes de simulation de faciès : pixels, objets et statistiques multipoints
+  Distinguer leurs fondements, avantages, limites et domaines d’application
+  Décrire le rôle des indicatrices, des covariances associées et des règles de codage (méthodes indicatrices et tronquées)
+  Interpréter des réalisations à partir de leurs paramètres, règles de codage ou images d’entraînement
+  Mettre en œuvre le conditionnement des simulations de faciès aux observations de forage
+  Comparer des applications de la littérature pour choisir la méthode adaptée au contexte
+  Référence principale : Pyrcz, M. J. et Deutsch, C. V. (2014). Geostatistical Reservoir Modeling. Oxford University Press.
+===== SLIDE 3  [images:0 tableaux:0 equations:0]
+  COURS 12
+  Plan du cours
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  3
+  01
+  Faciès et simulation par cellules : la SIS
+  coder chaque faciès en indicatrice et simuler séquentiellement
+  02
+  Les simulations tronquées : TGS et PGS
+  découper des champs gaussiens en catégories ; seuils, patrons et Gibbs
+  03
+  La modélisation par objets
+  chenaux, lentilles et germes de Poisson : le modèle booléen
+  04
+  Les statistiques multipoints (MPS)
+  reproduire les motifs d’une image d’entraînement ; synthèse comparative
+  05
+  Conditionner aux faciès observés
+  échantillonneur de Gibbs et calage par S-STBM
+  L’architecture des faciès conditionne écoulements, transport, stabilité et réactions : elle se simule AVANT les propriétés continues.
+===== SLIDE 4  [images:1 tableaux:0 equations:0]
+  01
+  SECTION 1
+  Faciès et simulation par cellules
+  La SIS : l’équivalent catégoriel de la SGS, un faciès tiré à chaque pixel.
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+===== SLIDE 5  [images:1 tableaux:0 equations:0]
+  1 · FACIÈS
+  Avant les teneurs, l’architecture : pourquoi simuler des catégories
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  5
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Lithologies : la variable catégorielle qui structure le sous-sol (livre, chap. 13).
+  Perméabilité, porosité, densité de fractures, potentiel de drainage acide : toutes ces propriétés sont contrôlées par la géologie, décrite par des variables CATÉGORIELLES (lithologie, stratigraphie, faciès, altération).
+  Un faciès regroupe des matériaux aux caractéristiques communes ; la classification dépend de l’objectif (hydrofaciès, unités mécaniques…).
+  La distribution des catégories définit l’architecture dans laquelle les propriétés continues sont ensuite simulées : proportions, géométrie et CONNECTIVITÉ pèsent directement sur les écoulements et la stabilité.
+===== SLIDE 6  [images:1 tableaux:0 equations:0]
+  1 · MISE EN CONTEXTE
+  Deux industries, un même besoin : un modèle maillé de faciès
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  6
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Réservoir pétrolier ou gazier
+  Chaque cellule reçoit un faciès, puis SES propriétés : porosité, perméabilités horizontale et verticale, courbe de pression capillaire, saturation irréductible. Le faciès conditionne tout le reste — deux cellules de même porosité mais de faciès différents ne s’écoulent pas pareil.
+  Gisement minéral
+  Le faciès porte la minéralogie, l’intensité de fracturation, le potentiel de génération d’acide et les paramètres géométallurgiques (broyabilité, récupération). La teneur seule ne suffit pas à décider si un bloc est du minerai.
+  Aquifère
+  Hydrofaciès, conductivité hydraulique, porosité efficace, coefficient de dispersivité. La connectivité des faciès perméables gouverne les temps de transit — bien davantage que la valeur moyenne de la conductivité.
+  À RETENIR
+  La séquence est toujours la même : simuler d’ABORD les faciès, puis simuler les propriétés À L’INTÉRIEUR de chaque faciès, avec un modèle statistique propre à chacun. Simuler directement la propriété reviendrait à mélanger des populations qui n’ont rien à voir.
+===== SLIDE 7  [images:0 tableaux:1 equations:0]
+  1 · MISE EN CONTEXTE
+  Trois finalités, et une carte des quatre familles de méthodes
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  7
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Représenter l’hétérogénéité
+  reproduire une architecture géologique plausible, avec ses contacts et sa connectivité
+  Alimenter un simulateur
+  fournir des champs de propriétés cohérents à un modèle d’écoulement ou de transport
+  Quantifier le risque géologique
+  produire N scénarios et en déduire une distribution de réponses, pas un chiffre unique
+  Famille
+  Principe
+  Ce qu’elle contrôle
+  Section
+  Basée sur le krigeage séquentiel
+  SIS : kriger les indicatrices, tirer un faciès
+  proportions et variogrammes d’indicatrices
+  1
+  Par troncation
+  TGS et PGS : seuiller un ou deux champs gaussiens
+  contacts autorisés ET textures, séparément
+  2
+  Par objets
+  Modèle booléen : déposer des formes paramétrées
+  la géométrie explicite des corps
+  3
+  Par image d’entraînement
+  MPS : apprendre les motifs d’une image de référence
+  des structures que le variogramme ne capte pas
+  4
+  À quoi s’ajoute une cinquième question, transversale : comment CONDITIONNER aux faciès observés en forage ? C’est l’objet de la section 5, et c’est là que se trouve la vraie difficulté.
+===== SLIDE 8  [images:3 tableaux:0 equations:0]
+  1 · SIS
+  La SIS : kriger les indicatrices, normaliser, tirer un faciès
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  8
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Chaque faciès s_k reçoit son indicatrice, et sa probabilité locale vient du krigeage d’indicatrices :
+  Comme en SGS : chemin aléatoire, voisinage mobile, et chaque faciès simulé devient aussitôt donnée conditionnante. Seule la loi de tirage change : catégorielle au lieu de gaussienne.
+  Les K probabilités krigées sont corrigées (relations d’ordre) puis normalisées avant le tirage de Monte-Carlo :
+===== SLIDE 9  [images:3 tableaux:0 equations:0]
+  1 · SIS
+  L’algorithme SIS, en cinq étapes
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  9
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  1
+  Définir un chemin aléatoire sur les n nœuds à simuler.  Comme en SGS : l’ordre change à chaque réalisation.
+  2
+  Au nœud courant, kriger CHAQUE indicatrice de faciès.  k krigeages, un par faciès, avec le variogramme d’indicatrices propre à ce faciès.
+  3
+  Corriger et normaliser les probabilités.  Tronquer les valeurs négatives à zéro, puis diviser par la somme : on obtient des p_i valides.
+  4
+  Tirer le faciès.  Un tirage u dans U(0,1) et lecture dans la fonction de répartition cumulée des p_i.
+  5
+  Ajouter le faciès simulé aux données conditionnantes, puis boucler.  Sans cette étape, aucune structure spatiale ne se propage.
+===== SLIDE 10  [images:1 tableaux:0 equations:0]
+  1 · SIS
+  La construction séquentielle, image par image
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  10
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Deux faciès (40 % rouge, 60 % vert), sphérique isotrope de portée 10 : champ simulé (gauche) et probabilités conditionnelles (droite) (livre, chap. 13).
+  À chaque cellule du chemin aléatoire : krigeage des indicatrices des voisins, correction et normalisation, tirage U[0, 1] dans la fonction de répartition locale, mise à jour.
+  L’animation complète est disponible dans le livre en ligne (chapitre 13).
+===== SLIDE 11  [images:1 tableaux:0 equations:0]
+  1 · SIS
+  Ce que la SIS reproduit, et ce qu’elle ignore
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  11
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Toutes les transitions entre faciès sont permises : aucune règle géologique n’interdit un contact. Des faciès incompatibles peuvent se retrouver côte à côte.
+  Les covariances croisées entre indicatrices sont ignorées :
+  Les relations asymétriques (dépôt préférentiel, intrusion dans un encaissant) lui échappent ; les frontières entre unités restent irrégulières.
+  La correction des relations d’ordre altère la structure imposée : les covariances d’indicatrices ne sont pas fidèlement reproduites (exceptions : pépite pure, exponentiel 1D). Le modèle gaussien est proscrit.
+  Malgré tout, un STANDARD pour les géométries incertaines et les données rares.
+===== SLIDE 12  [images:3 tableaux:0 equations:0]
+  1 · SIS
+  Isotrope, anisotrope, 3D : la SIS en images
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  12
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Isotrope (a = 50)
+  Anisotrope (a_x = 200, a_y = 10)
+  Réservoir 3D, forages en noir
+  Trois faciès (p = 1/3, 1/2, 1/6) : l’anisotropie étire les formes vers des unités sédimentaires réalistes ; en 3D, la méthode brille là où les forages sont rares et la géométrie incertaine.
+===== SLIDE 13  [images:2 tableaux:0 equations:0]
+  1 · SIS
+  La SIS en action : un faciès tiré à chaque pixel
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  13
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Champ 40 × 40, modèle sphérique isotrope de portée 10, deux faciès en proportions 0,6 et 0,4.
+  Probabilités conditionnelles au nœud courant, et le tirage uniforme qui décide.
+  ANIMATION
+  Au premier nœud, les probabilités valent exactement les proportions globales 0,60 et 0,40 : sans voisin, le krigeage d’indicatrices retourne la moyenne.
+  Puis elles se déforment : dès qu’un nœud est entouré de faciès 1, sa probabilité d’être faciès 1 monte fortement. C’est ainsi que les amas se forment.
+  Le trait vert est le tirage uniforme. Notez qu’une probabilité de 0,9 laisse quand même une chance sur dix au faciès minoritaire — d’où le grain résiduel de la réalisation.
+===== SLIDE 14  [images:2 tableaux:0 equations:0]
+  ATELIER INTERACTIF — LIVRE EN LIGNE
+  Animation SIS
+  ATELIER 13.1
+  Animation SIS
+  La grille se remplit pixel par pixel le long d’un chemin aléatoire, chaque pixel tiré de la loi locale krigée.
+  Les proportions réalisées convergent vers les cibles au fil du remplissage.
+  Accès : livre en ligne, chapitre 13 — section « Modélisation basée sur des cellules »   ·   danlauz.github.io/glq3401-3651
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  14
+===== SLIDE 15  [images:1 tableaux:0 equations:0]
+  02
+  SECTION 2
+  Les simulations tronquées
+  Découper un champ gaussien en faciès : les seuils dictent contacts et proportions.
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+===== SLIDE 16  [images:3 tableaux:0 equations:0]
+  2 · TGS
+  La gaussienne tronquée : des seuils qui fixent proportions ET contacts
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  16
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Seuils de codage pour p₁ = 1/3, p₂ = 1/2, p₃ = 1/6 (livre, chap. 13).
+  1) Ordonner les faciès (F₁ &lt; F₂ &lt; F₃) : seuls les faciès successifs peuvent se toucher. 2) Calculer les seuils comme quantiles de N(0,1). 3) Simuler un champ gaussien et le coder.
+  Le champ latent (moyenne 0, variance 1) se simule par LU, SGS, FFT-MA ou bandes tournantes : toute la boîte à outils du cours 11 s’applique.
+===== SLIDE 17  [images:2 tableaux:1 equations:0]
+  2 · TGS
+  Les seuils : rien d’autre que les quantiles cumulés
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  17
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Pour obtenir les proportions p₁, …, p_K, on découpe la loi normale centrée réduite aux quantiles de leurs cumuls :
+  Exemple à trois faciès, dans les proportions 1/3, 1/2 et 1/6 :
+  Faciès
+  Proportion
+  Cumul
+  Intervalle gaussien
+  F₁
+  1/3 = 0,333
+  0,333
+  ] −∞ ; −0,4307 ]
+  F₂
+  1/2 = 0,500
+  0,833
+  ] −0,4307 ; +0,9674 ]
+  F₃
+  1/6 = 0,167
+  1,000
+  ] +0,9674 ; +∞ [
+  Conséquence immédiate et fondamentale : l’ORDRE des faciès sur l’axe gaussien détermine quels contacts sont possibles. F₁ et F₃ ne partagent aucune frontière commune sur l’axe — le champ gaussien étant continu, il doit traverser F₂ pour aller de l’un à l’autre.
+  On ne CHOISIT donc pas seulement des proportions : on choisit aussi, sans toujours s’en rendre compte, une séquence de contacts autorisés. C’est le premier paramètre à discuter avec le géologue.
+===== SLIDE 18  [images:1 tableaux:0 equations:0]
+  2 · TGS
+  Résultat : F₁ et F₃ ne se touchent jamais
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  18
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  TGS sur un champ gaussien de portée 50, grille 250 × 250 (livre, chap. 13).
+  Toute valeur latente sous s₁ devient F₁ (bleu), entre s₁ et s₂ devient F₂ (vert), au-delà F₃ (rouge).
+  La transition F₁ → F₃ passe OBLIGATOIREMENT par F₂ : l’ordre des faciès encode une règle géologique (séquence de dépôt, auréole d’altération).
+  L’ordre choisi doit donc respecter les relations observées sur le terrain.
+===== SLIDE 19  [images:0 tableaux:0 equations:0]
+  2 · TGS
+  Deux questions, et tout le reste en découle
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  19
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  1
+  Quel variogramme pour la variable gaussienne latente ?
+  On observe des FACIÈS, pas le champ gaussien. Le variogramme de Z n’est donc jamais mesurable directement. Il faut le déduire de ce que l’on voit — c’est-à-dire des probabilités de transition entre faciès.
+  2
+  Quelles valeurs gaussiennes aux points échantillonnés ?
+  Un forage indique « faciès F₂ ici ». Cela ne donne pas une valeur de Z, seulement un INTERVALLE. Il faudra tirer une valeur compatible dans cet intervalle — c’est l’objet de la section 5.
+  Ces deux questions sont l’ossature de tout ce qui suit. La première occupe les cinq prochaines diapositives ; la seconde, toute la section 5.
+===== SLIDE 20  [images:3 tableaux:0 equations:0]
+  2 · TGS
+  Le variogramme latent se calibre sur les probabilités conjointes
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  20
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Probabilités p_ij(h) du modèle : diagonale décroissante, hors-diagonale croissante (livre, chap. 13).
+  On n’observe que des faciès, jamais le champ latent : son variogramme n’est pas directement estimable.
+  La calibration passe par les probabilités conjointes, simples fréquences observées :
+  Chaque p_ij(h) est une intégrale de la loi binormale définie par la covariance latente C(h) : on ajuste C(h) pour que les probabilités théoriques collent aux fréquences expérimentales.
+===== SLIDE 21  [images:2 tableaux:0 equations:0]
+  2 · TGS
+  Les probabilités conjointes : le développement complet
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  21
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  On part de la quantité qui relie les faciès observés au champ latent : la probabilité que deux points distants de h appartiennent respectivement aux faciès i et j.
+  Lisez la chaîne de gauche à droite : une espérance de produit d’indicatrices, qui est une probabilité d’intersection, qui devient enfin une probabilité portant sur le CHAMP GAUSSIEN et ses seuils. C’est le pivot de toute la méthode.
+  La dernière ligne ne contient plus aucun faciès : seulement Z, les seuils s, et le vecteur h. Or les seuils sont connus (ce sont les quantiles de la diapositive précédente). Il ne reste donc qu’une seule inconnue : la covariance C(h) du champ latent.
+===== SLIDE 22  [images:3 tableaux:0 equations:0]
+  2 · TGS
+  Deux voies pour la même quantité, et le critère d’ajustement
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  22
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Voie EMPIRIQUE — ce que les données disent
+  On compte les paires. Aucun modèle n’intervient : c’est une statistique brute sur les faciès observés le long des forages.
+  Voie THÉORIQUE — ce que le modèle prédit
+  On intègre la densité binormale sur le rectangle défini par les quatre seuils. La corrélation ρ vaut exactement C(h), puisque le champ latent est réduit.
+  À RETENIR
+  Le critère d’ajustement : on cherche le modèle de covariance C(h) tel que les DEUX quantités soient presque égales, pour TOUS les couples (i, j) et pour TOUTES les distances h. C’est un ajustement simultané sur k² courbes — d’où l’intérêt de disposer d’un outil automatique.
+===== SLIDE 23  [images:1 tableaux:0 equations:0]
+  2 · TGS
+  Trois propriétés limites qui valident l’ajustement
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  23
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  À distance nulle, entre faciès DIFFÉRENTS : zéro
+  Un point ne peut pas appartenir à deux faciès à la fois. Si votre courbe empirique ne part pas de zéro, il y a une erreur de codage ou des données contradictoires en forage.
+  À distance nulle, pour le MÊME faciès : la proportion
+  p_ii(0) = p_i. C’est un test direct de cohérence entre les proportions annoncées et les données.
+  À grande distance : le produit des proportions
+  Les deux points deviennent indépendants, donc la probabilité conjointe tend vers le produit des probabilités marginales. Si la courbe ne s’y stabilise pas, la stationnarité est en défaut — souvent une dérive de proportions.
+===== SLIDE 24  [images:2 tableaux:0 equations:0]
+  2 · PGS
+  Plurigaussienne : deux champs latents, un patron 2D de codage
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  24
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Patron de codage dans le plan (Z₁, Z₂)
+  Réalisation PGS : F₄ contenu dans F₃, F₁-F₂-F₃ baignent dans F₀
+  Deux champs gaussiens (corrélés ou non), chacun avec son variogramme ; chaque faciès occupe une zone du plan (Z₁, Z₂) : exclusions, inclusions et transitions imposées se dessinent littéralement.
+  Les proportions se lisent comme l’intégrale de la densité binormale sur chaque zone ; le conditionnement passe par un Gibbs à base de cokrigeage.
+===== SLIDE 25  [images:2 tableaux:0 equations:0]
+  2 · PGS
+  Lire le drapeau : un cas chiffré
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  25
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  On lit le patron comme une carte : l’abscisse porte la valeur du premier champ latent, l’ordonnée celle du second. Le couple (−1 ; +1) tombe dans la région du patron affectée au faciès F₁.
+  Toute la richesse de la plurigaussienne tient là : le patron est un objet à DEUX dimensions, donc il autorise des règles de contact impossibles avec une seule gaussienne. Un faciès peut par exemple entourer complètement un autre, ou n’être en contact qu’avec deux des trois autres.
+  Le codage est déterministe : deux valeurs latentes donnent toujours le même faciès. Toute l’aléa est dans les deux champs gaussiens.
+  En pratique, on prend presque toujours les deux champs INDÉPENDANTS (C₁₂ ≡ 0) : cela suffit dans la plupart des cas et évite d’avoir à ajuster une covariance croisée admissible — tout le cours 9 s’appliquerait sinon, multiplié par le nombre de faciès.
+===== SLIDE 26  [images:0 tableaux:0 equations:0]
+  2 · PGS
+  Patron et variogrammes : deux leviers orthogonaux
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  26
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Le patron et les seuils gouvernent les CONTACTS
+  Quels faciès peuvent se toucher, dans quelles proportions, avec quelle géométrie de voisinage. Changer le patron en gardant les mêmes variogrammes modifie l’architecture des contacts sans toucher à la taille des corps.
+  Les variogrammes latents gouvernent la TEXTURE
+  La taille, la continuité et la régularité des corps. Changer les variogrammes en gardant le même patron modifie l’aspect — corps plus gros, plus lisses, plus allongés — sans changer un seul contact autorisé.
+  C’est la propriété la plus utile de toute la famille tronquée : les deux leviers agissent SÉPARÉMENT. On peut donc caler les contacts avec le géologue, puis ajuster la texture sur les variogrammes, sans jamais défaire le travail précédent.
+  Aucune autre méthode du cours n’offre cette séparation. En SIS, tout est mélangé dans les variogrammes d’indicatrices ; en MPS, tout est dans l’image d’entraînement.
+  Vérification classique en classe : à drapeau et seuils CONSTANTS, faire varier les variogrammes latents (sphérique a = 150 contre gaussien a = 260) — les contacts restent identiques, la texture change du tout au tout. Puis l’inverse.
+===== SLIDE 27  [images:1 tableaux:0 equations:0]
+  2 · PGS
+  Laquelle est la vraie ? Le test du grès aux rayons X
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  27
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Une image réelle de pores d’un grès et trois réalisations PGS ; la vraie est en haut à gauche (livre, chap. 13).
+  Les réalisations sont assez fidèles pour rendre la distinction difficile : la PGS capture les textures fines quand le patron et les variogrammes latents sont bien calibrés.
+===== SLIDE 28  [images:2 tableaux:0 equations:0]
+  EXERCICE EN ÉQUIPE 1
+  Des seuils aux proportions, et des proportions aux seuils
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  28
+  Dans une simulation gaussienne tronquée, les seuils appliqués au champ gaussien latent déterminent entièrement les proportions de faciès. Il faut utiliser la table de la loi normale.
+  A) Calculez la proportion des faciès F₁ à F₃. Le seuil rouge est à −0,75 et le seuil vert est à 1.
+  B) On veut maintenant simuler trois faciès (F₁, F₂, F₃) avec des probabilités de 25 %, 40 % et 35 % respectivement. Déterminez les seuils à utiliser.
+===== SLIDE 29  [images:7 tableaux:0 equations:0]
+  EXERCICE 1 · SOLUTION
+  La table de la loi normale suffit, dans les deux sens
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  29
+  A) Des seuils vers les proportions
+  B) Des proportions vers les seuils — on lit la table en sens inverse, sur les probabilités CUMULÉES
+  À NOTER
+  On lit la table à 75 % et on prend l’opposé pour −0,6745 ; puis à 65 % directement pour 0,3853. Attention à l’ORDRE des faciès : la troncature les range forcément selon l’axe du gaussien, donc F₁ et F₃ ne se toucheront jamais.
+===== SLIDE 30  [images:2 tableaux:0 equations:0]
+  EXERCICE EN ÉQUIPE 2
+  Associer drapeaux de codage, réalisations et variogrammes d’indicatrices
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  30
+  Les deux champs gaussiens ci-dessous alimentent six patrons de codage différents. Sur les drapeaux, l’axe horizontal est F(Z₁) et l’axe vertical F(Z₂). Chaque drapeau est conçu pour produire des transitions de faciès différentes.
+  A) Associez chaque réalisation et chaque variogramme d’indicatrices au drapeau qui lui correspond. Indice : commencez par identifier les transitions IMPOSSIBLES de chaque patron de codage, puis repérez-les sur les simulations et sur les variogrammes croisés.
+  B) Identifiez la ou les réalisations qui auraient pu être obtenues par gaussienne tronquée, c’est-à-dire avec un seul champ gaussien.
+  C) Expliquez pourquoi ces champs ne peuvent pas être simulés par simulation d’indicatrices. Il y a deux raisons majeures : l’une liée à la continuité spatiale, l’autre aux transitions.
+===== SLIDE 31  [images:1 tableaux:0 equations:0]
+  EXERCICE 2 · ÉNONCÉ
+  Les six patrons de codage (A à F)
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  31
+  Axe horizontal : F(Z₁) · axe vertical : F(Z₂). Deux faciès qui ne partagent aucune frontière dans le drapeau ne peuvent jamais être en contact dans la réalisation.
+===== SLIDE 32  [images:1 tableaux:0 equations:0]
+  EXERCICE 2 · ÉNONCÉ
+  Les six réalisations de faciès (1 à 6)
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  32
+  Quatre faciès codés du plus foncé (F₁) au plus clair (F₄). Cherchez les contacts qui n’apparaissent jamais.
+===== SLIDE 33  [images:1 tableaux:0 equations:0]
+  EXERCICE 2 · ÉNONCÉ
+  Les six matrices de variogrammes d’indicatrices (i à vi)
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  33
+  Un variogramme croisé Fᵢ–Fⱼ identiquement nul signale une transition impossible entre ces deux faciès.
+===== SLIDE 34  [images:0 tableaux:1 equations:0]
+  EXERCICE 2 · SOLUTION
+  A) Les transitions impossibles font toute l’association
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  34
+  Patron de codage
+  Transitions impossibles
+  Simulation
+  Variogramme d’indicatrices
+  A
+  F₁–F₃
+  3
+  v
+  B
+  F₁–F₄ , F₁–F₃
+  5
+  iv
+  C
+  F₁–F₂ , F₁–F₃ , F₂–F₃
+  1
+  vi
+  D
+  F₁–F₄ , F₂–F₄
+  2
+  i
+  E
+  F₁–F₃ , F₁–F₄ , F₂–F₄
+  6
+  ii
+  F
+  F₁–F₄
+  4
+  iii
+  Méthode : sur le drapeau, deux faciès sont en contact possible s’ils partagent une frontière. Sur la réalisation, on cherche visuellement les paires de couleurs qui ne se touchent jamais. Sur la matrice de variogrammes, une case croisée plate à zéro dénonce la même chose.
+  Le patron C est le plus contraint : F₁ ne peut toucher ni F₂ ni F₃, et F₂ ne peut toucher F₃. Sa réalisation (1) montre des faciès nettement séparés par des auréoles.
+===== SLIDE 35  [images:0 tableaux:0 equations:0]
+  EXERCICE 2 · SOLUTION
+  B et C) Pourquoi une seule gaussienne, et pourquoi jamais d’indicatrices
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  35
+  B) La réalisation E
+  Le patron E est le seul dont le découpage est ORDONNÉ le long d’un seul axe : ses faciès se succèdent en bandes, exactement comme le ferait une troncature à seuils sur un champ gaussien unique.
+  Signature : F₁ ne touche ni F₃ ni F₄, et F₂ ne touche pas F₄ — c’est la séquence F₁ &lt; F₂ &lt; F₃ &lt; F₄ d’une gaussienne tronquée.
+  C) Deux raisons de rejeter la simulation d’indicatrices
+  Les transitions
+  La simulation d’indicatrices ne peut pas interdire une transition : toutes les transitions y sont possibles, puisque chaque pixel est tiré indépendamment dans la loi des proportions locales. Or ces champs comportent justement des contacts strictement interdits.
+  La continuité spatiale
+  Les frontières lisses et régulières visibles ici correspondent à un variogramme de type GAUSSIEN, or ce modèle n’est pas admissible pour une indicatrice : une indicatrice ne peut pas être infiniment dérivable à l’origine.
+===== SLIDE 36  [images:2 tableaux:0 equations:0]
+  ATELIER INTERACTIF — LIVRE EN LIGNE
+  Simulations tronquées : TGS et PGS
+  ATELIER 13.2
+  Simulations tronquées : TGS et PGS
+  En TGS, le patron se réduit à des bandes sur Y₁ ; en PGS, dessinez le patron 2D à la main et le champ se recode instantanément.
+  Vérifiez qu’en TGS deux faciès non adjacents ne se touchent jamais, et qu’en PGS un faciès peut en envelopper un autre.
+  Accès : livre en ligne, chapitre 13 — section « Méthode par simulations tronquées »   ·   danlauz.github.io/glq3401-3651
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  36
+===== SLIDE 37  [images:1 tableaux:0 equations:0]
+  03
+  SECTION 3
+  La modélisation par objets
+  Des chenaux et des lentilles déposés sur un fond : la géométrie d’abord.
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+===== SLIDE 38  [images:2 tableaux:0 equations:0]
+  3 · OBJETS
+  Le modèle booléen : germes de Poisson et objets paramétrés
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  38
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des objets
+  Germes de Poisson, objets paramétrés (chenaux, lentilles) et réalisation finale (livre, chap. 13).
+  Deux jeux de paramètres : l’intensité λ (nombre d’objets, donc proportion du fond) et la loi des objets (formes, tailles, orientations), calibrée sur les analogues d’affleurement et le paléocourant.
+  Les objets récents recoupent les anciens : superpositions et érosions réalistes ; limites nettes et formes curvilignes impossibles à obtenir avec des statistiques à deux points.
+===== SLIDE 39  [images:0 tableaux:0 equations:0]
+  3 · OBJETS
+  Le talon d’Achille : conditionner aux forages
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  39
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des objets
+  Conditionnement par acceptation-rejet : on génère des réalisations libres et on ne garde que celles qui respectent les faciès observés.
+  Tant que peu d’objets sont contraints, cela fonctionne. Dès qu’un objet doit recouper plusieurs points imposés, ou que la densité de forages augmente, le taux de rejet explose et la convergence devient très lente, voire impossible.
+  Le réalisme visuel ne garantit pas l’adéquation statistique : tout dépend des familles d’objets, de leurs paramètres et des règles d’interaction.
+  Domaine de prédilection : corps aux formes bien identifiées et données rares, p. ex. un réservoir fluviatile reconnu par quelques puits.
+===== SLIDE 40  [images:2 tableaux:0 equations:0]
+  ATELIER INTERACTIF — LIVRE EN LIGNE
+  Modélisation par objets : chenaux et lentilles
+  ATELIER 13.3
+  Modélisation par objets : chenaux et lentilles
+  Déposez chenaux sinueux et lentilles sur un fond argileux ; réglez nombre, largeur, sinuosité, pente et tailles.
+  Des formes réalistes que les méthodes pixel (SIS, TGS/PGS) reproduisent difficilement.
+  Accès : livre en ligne, chapitre 13 — section « Modélisation basée sur des objets »   ·   danlauz.github.io/glq3401-3651
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  40
+===== SLIDE 41  [images:1 tableaux:0 equations:0]
+  04
+  SECTION 4
+  Les statistiques multipoints
+  Quand le variogramme ne suffit plus : apprendre les motifs d’une image d’entraînement.
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+===== SLIDE 42  [images:1 tableaux:0 equations:0]
+  4 · MPS
+  Trois géologies différentes, trois variogrammes identiques
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  42
+  Livre en ligne · chap. 13 — § Modélisation de faciès par simulation multipoints
+  Trois champs de faciès aux géométries distinctes produisent des variogrammes très semblables (livre, chap. 13).
+  Le variogramme mesure la dépendance entre DEUX points : portée, anisotropie, intensité. Il ne dit rien de la connectivité, des formes curvilignes, des bifurcations ni des relations entre plusieurs unités.
+  Les MPS décrivent plutôt la fréquence des CONFIGURATIONS de plusieurs cellules, extraite d’une image d’entraînement (TI) : un modèle conceptuel de l’organisation attendue.
+===== SLIDE 43  [images:1 tableaux:0 equations:0]
+  4 · MPS
+  Point par point : chercher le motif dans l’image d’entraînement
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  43
+  Livre en ligne · chap. 13 — § Modélisation de faciès par simulation multipoints
+  Le motif des voisins apparaît 7 fois dans la TI : p̂(bleu) = 2/7, p̂(jaune) = 5/7 (livre, chap. 13).
+  Pour chaque cellule d’un chemin aléatoire : relever la configuration déjà simulée autour, chercher ses occurrences dans la TI, construire la loi empirique des centres, tirer un faciès.
+  SNESIM stocke les configurations dans un arbre de recherche ; le Direct Sampling parcourt la TI au hasard et s’arrête au premier motif assez proche : plus rapide sur les grandes TI.
+  Motif introuvable ? Réduire le voisinage, ou tolérer une correspondance approximative.
+===== SLIDE 44  [images:1 tableaux:0 equations:0]
+  4 · MPS
+  Par morceaux : copier-coller des patchs avec une couture propre
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  44
+  Livre en ligne · chap. 13 — § Modélisation de faciès par simulation multipoints
+  Simulation par patchs : la réalisation assemble des blocs de l’image d’entraînement (livre, chap. 13).
+  FilterSim décrit chaque patch par des filtres avant comparaison ; l’image quilting cherche un chemin de coupure optimal sur le recouvrement.
+  Atouts : reproduction fidèle des structures à grande échelle, textures complexes et non stationnaires. Limite : des « coutures » visibles si la fusion des patchs est mal gérée.
+===== SLIDE 45  [images:3 tableaux:0 equations:0]
+  4 · MPS
+  Une TI, mille possibilités : chenaux, fractures, textures
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  45
+  Livre en ligne · chap. 13 — § Modélisation de faciès par simulation multipoints
+  Lentilles et barres en pendage : la réalisation garde l’inclinaison
+  Réseau de fractures : orientation et connectivité conservées
+  MPS non stationnaire : cartes d’affinité et de rotation imposent des motifs en éventail (livre, chap. 13).
+  La grille simulée peut dépasser la taille de la TI, et chaque réalisation est différente mais statistiquement équivalente. Tout repose sur la représentativité de l’image d’entraînement.
+===== SLIDE 46  [images:2 tableaux:0 equations:0]
+  ATELIER INTERACTIF — LIVRE EN LIGNE
+  Animation MPS : DeeSse et FilterSim
+  ATELIER 13.4
+  Animation MPS : DeeSse et FilterSim
+  DeeSse (par point) recopie la valeur centrale du premier motif compatible ; FilterSim (par patch) raccorde des morceaux.
+  Plusieurs images d’entraînement au choix : chenaux de Strebelle, méandres, lentilles, fractures, strates plissées.
+  Accès : livre en ligne, chapitre 13 — section « Simulation multipoints »   ·   danlauz.github.io/glq3401-3651
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  46
+===== SLIDE 47  [images:0 tableaux:1 equations:0]
+  4 · SYNTHÈSE
+  Aucune méthode ne gagne partout : le tableau des compromis
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  47
+  Livre en ligne · chap. 13 — § Modélisation de faciès par simulation multipoints
+  Critère
+  SIS
+  TGS
+  PGS
+  Objets
+  MPS
+  Statistiques exploitées
+  variogrammes d’indicatrices
+  variogramme latent
+  deux champs latents
+  formes d’objets
+  image d’entraînement
+  Contacts entre faciès
+  tous permis
+  ordre imposé
+  règles 2D (patron)
+  géométrie des objets
+  motifs de la TI
+  Conditionnement
+  direct (séquentiel)
+  Gibbs (latent)
+  Gibbs (cokrigeage)
+  acceptation-rejet
+  direct (séquentiel)
+  Réalisme géométrique
+  faible
+  modéré
+  bon
+  élevé
+  élevé
+  Données requises
+  variogrammes
+  proportions + variogramme
+  proportions + patron
+  loi des objets
+  TI représentative
+  Le choix dépend des relations spatiales à reproduire, de la disponibilité d’une TI représentative, et du compromis entre simplicité et richesse géologique.
+===== SLIDE 48  [images:1 tableaux:0 equations:0]
+  05
+  SECTION 5
+  Conditionner aux faciès observés
+  Gibbs ou calage : deux façons de forcer une simulation à respecter les forages.
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+===== SLIDE 49  [images:1 tableaux:0 equations:0]
+  5 · CONDITIONNEMENT
+  Deux stratégies exactement duales
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  49
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Le problème : une réalisation libre ne passe pas par les faciès observés. Deux façons de la contraindre, et elles sont l’exacte image l’une de l’autre.
+  Gibbs — les contraintes d’abord, la corrélation ensuite
+  On part de valeurs gaussiennes qui respectent DÉJÀ les intervalles imposés par les faciès observés, mais qui n’ont aucune structure spatiale. On itère ensuite jusqu’à ce que la corrélation s’installe, en veillant à ne jamais sortir des intervalles.
+  Exact, mais très lent : chaque itération ne déplace presque rien.
+  Calage — la corrélation d’abord, les contraintes ensuite
+  On part d’une réalisation qui a DÉJÀ la bonne structure spatiale, mais qui viole les intervalles. On la déforme ensuite, en minimisant une fonction objectif, jusqu’à ce que les contraintes soient satisfaites.
+  Rapide, mais approché : il faut surveiller que la variance ne s’écrase pas.
+  À RETENIR
+  Gardez cette grille en tête pour les six diapositives qui suivent : à chaque instant, demandez-vous si la méthode dont on parle satisfait déjà les contraintes ou déjà la corrélation. Tout le reste en découle — y compris la différence de coût de deux ordres de grandeur.
+===== SLIDE 50  [images:1 tableaux:0 equations:0]
+  5 · GIBBS
+  Conditionner aux forages : le principe de l’échantillonneur de Gibbs
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  50
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Les faciès observés n’imposent pas une valeur latente, seulement un INTERVALLE : W(xᵢ) = k implique s_{k−1} &lt; Z(xᵢ) ≤ s_k.
+  Le Gibbs (MCMC) échantillonne des valeurs latentes compatibles à la fois avec la covariance C(h) et avec ces contraintes de troncature.
+  À chaque itération : retirer un point, kriger sa loi conditionnelle, tirer dans la normale tronquée à l’intervalle du faciès observé :
+  On répète jusqu’à convergence (stabilité des moments), puis on lance la simulation gaussienne conditionnelle complète et on code en faciès.
+  Le résultat respecte à la fois la structure spatiale du variogramme et les faciès observés aux forages.
+===== SLIDE 51  [images:1 tableaux:0 equations:0]
+  5 · GIBBS
+  L’échantillonneur de Gibbs : exact, simple… et très lent
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  51
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Principe : comme pour la SGS, tirer dans la distribution CONDITIONNELLE garantit qu’on génère un champ gaussien ayant la bonne structure spatiale — mais ici on itère sur des points déjà tous initialisés.
+  Critère d’arrêt et raisons de la lenteur
+  Il faut visiter un très grand nombre de fois TOUS les points — parfois des milliers de fois chacun.
+  À chaque itération, les valeurs ne sont modifiées que d’une toute petite quantité : la variance conditionnelle est la variance de krigeage, et les données observées sont proches.
+  La perturbation du champ est donc lente. Il faut plusieurs modifications par point pour s’approcher de l’état stationnaire souhaité.
+  IMPORTANT
+  Ordre de grandeur mesuré sur une simulation 31 × 50 conditionnée à deux forages : la convergence n’est atteinte qu’aux environs de 72 000 000 d’itérations, soit 40 000 à 100 000 visites par point. Après seulement 100 visites par point, la corrélation spatiale désirée n’est toujours pas atteinte.
+===== SLIDE 52  [images:2 tableaux:0 equations:0]
+  5 · GIBBS
+  L’échantillonneur de Gibbs, étape par étape
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  52
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Initialisation — chaque point observé reçoit une valeur gaussienne tirée DANS l’intervalle de son faciès :
+  1
+  Choisir un point observé, au hasard ou selon un patron balayé.  Le patron de visite ne change pas le résultat, seulement la vitesse.
+  2
+  Retirer TEMPORAIREMENT sa valeur courante du jeu de données.  Sans ce retrait, le point se conditionnerait sur lui-même et rien ne bougerait.
+  3
+  Kriger en ce point à partir de TOUS les autres points observés.  Krigeage SIMPLE, puisque le champ latent est centré réduit par construction. On obtient Ẑ et σ².
+  4
+  Tirer une valeur dans la loi normale TRONQUÉE à l’intervalle du faciès.  C’est ici que la contrainte est appliquée — et elle l’est exactement, jamais approximativement.
+  5
+  Remettre la valeur en place, puis passer au point suivant.  Arrêt quand les statistiques du champ (variogramme, histogramme) se stabilisent.
+===== SLIDE 53  [images:1 tableaux:0 equations:0]
+  5 · GIBBS
+  Pourquoi c’est si lent : le diagnostic chiffré
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  53
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Quand un point est retiré puis krigé à partir de ses voisins immédiats, sa variance de krigeage est TRÈS FAIBLE — les voisins sont proches et fortement corrélés. La loi tronquée dans laquelle on tire est donc très étroite.
+  Conséquence : la nouvelle valeur diffère à peine de l’ancienne. Chaque itération ne déplace le champ que d’un cheveu, et il faut des dizaines de milliers de visites par point pour que l’information se propage d’un bout à l’autre du domaine.
+  Ordre de grandeur mesuré sur un cas d’école de 31 × 50 nœuds avec deux forages : environ 40 000 à 100 000 visites par point, soit près de 72 millions d’itérations pour UNE seule réalisation. Le calage, sur le même cas, converge en environ 1,55 million d’itérations.
+  Deux à trois ordres de grandeur d’écart. C’est cela, et rien d’autre, qui motive les méthodes de calage.
+  À NOTER
+  Le Gibbs reste la référence THÉORIQUE : il échantillonne exactement la bonne loi conditionnelle. Quand on veut valider une méthode de calage, c’est à lui qu’on la compare — sur un cas assez petit pour qu’il puisse tourner.
+===== SLIDE 54  [images:2 tableaux:0 equations:0]
+  5 · GIBBS
+  Le Gibbs en action : deux forages, 31 × 50 nœuds
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  54
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Le champ gaussien latent ; les deux traits noirs sont les forages à honorer.
+  Les faciès qui en découlent par troncation, à chaque itération.
+  ANIMATION
+  Regardez les deux forages : les valeurs gaussiennes y restent DANS l’intervalle imposé par le faciès observé, du premier au dernier pas. La contrainte n’est jamais violée.
+  Regardez maintenant la vitesse : entre deux images, le champ bouge à peine. C’est le diagnostic de la diapositive précédente rendu visible — la variance de krigeage est minuscule, donc chaque tirage tronqué déplace très peu la valeur.
+  Il faut des dizaines de milliers de visites par point pour que l’information des forages atteigne les bords du domaine.
+===== SLIDE 55  [images:1 tableaux:0 equations:0]
+  5 · CALAGE S-STBM
+  Renverser le problème : la corrélation d’abord, les faciès ensuite
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  55
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  L’échantillonneur de Gibbs assure PAR CONSTRUCTION l’observation des faciès, et introduit itérativement la corrélation spatiale. D’où sa lenteur.
+  Une alternative : assurer la CORRÉLATION SPATIALE par construction, puis perturber les valeurs gaussiennes pour qu’elles correspondent au patron de codage désiré.
+  Il existe aujourd’hui plusieurs alternatives beaucoup plus rapides que le Gibbs classique pour contraindre un champ à des faciès observés : Emery (2007), Arroyo et al. (2012), Lauzon et Marcotte (2020), Madani et Bazarbekov (2021).
+  Le calage est particulièrement rapide quand il est combiné à la méthode des bandes tournantes spectrales séquentielles — le S-STBM.
+  À NOTER
+  Soit le faciès jaune observé au point xᵢ. On veut perturber la valeur gaussienne Z(xᵢ) afin de la déplacer vers l’intervalle correspondant à ce faciès. Il suffit alors de mesurer la distance entre cet intervalle [αᵢ ; βᵢ] et Z(xᵢ) : c’est cette distance que la fonction objectif minimise.
+===== SLIDE 56  [images:1 tableaux:1 equations:0]
+  5 · CALAGE S-STBM
+  La distance à l’intervalle : la brique de la fonction objectif
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  56
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Chaque point observé impose un intervalle [α_i ; β_i] sur la valeur gaussienne, déduit de son faciès. On mesure de combien la réalisation courante en sort :
+  Situation
+  Intervalle imposé
+  Z(x_i) courant
+  d(Z)
+  Faciès du dernier intervalle (F₃)
+  ] +0,967 ; +∞ [
+  −1,50
+  2,467
+  Faciès du premier intervalle (F₁)
+  ] −∞ ; −0,431 ]
+  −1,50
+  0  (satisfait)
+  Faciès intermédiaire (F₂)
+  ] −0,431 ; +0,967 ]
+  −1,50
+  1,069
+  La fonction est nulle dès que la valeur est DANS l’intervalle : on ne pénalise pas une contrainte déjà satisfaite, et l’on ne privilégie aucune position particulière à l’intérieur. C’est ce qui préserve la variabilité.
+  Elle est continue et linéaire par morceaux : dérivable presque partout, donc utilisable par un optimiseur classique. C’est la différence essentielle avec un critère binaire « respecté / violé », qui ne donnerait aucune direction de descente.
+  Les bornes infinies ne posent aucun problème : le terme correspondant est simplement toujours nul.
+===== SLIDE 57  [images:1 tableaux:0 equations:0]
+  5 · CALAGE S-STBM
+  La fonction objectif du calage : respecter les faciès sans écraser la variance
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  57
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  αᵢ et βᵢ : bornes inférieure et supérieure de l’intervalle gaussien associé au faciès observé au point xᵢ.
+  Premier terme : chaque point observé dont la valeur gaussienne sort de son intervalle est pénalisé, proportionnellement à l’écart. Un point déjà dans le bon intervalle ne coûte rien — les deux max valent zéro.
+  Second terme : il empêche l’algorithme de « tricher » en écrasant la variance de la simulation pour satisfaire plus facilement les contraintes.
+  λ arbitre entre les deux objectifs. Contrairement au recuit simulé, il n’est pas nécessaire d’ajouter le variogramme à la fonction objectif : le S-STBM le garantit par construction.
+  Lauzon, D. &amp; Marcotte, D. (2020). The sequential spectral turning band simulator as an alternative to Gibbs sampler in large truncated- or pluri-Gaussian simulations. SERRA, 34, 1939-1951.
+===== SLIDE 58  [images:2 tableaux:0 equations:0]
+  5 · CALAGE S-STBM
+  Le calage en action : la structure d’abord, les faciès ensuite
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  58
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Le champ gaussien, déjà correctement structuré dès la première image.
+  Les faciès : ils convergent vers ceux des forages sans que la texture se dégrade.
+  ANIMATION
+  Contrairement au Gibbs, le champ part avec la BONNE structure spatiale : c’est une réalisation par bandes tournantes séquentielles. Ce qui manque, ce sont les contraintes.
+  La déformation est globale, pas point par point : chaque itération perturbe tout le champ à la fois, en direction de la satisfaction des contraintes. D’où la convergence en 1,55 million d’itérations au lieu de 72 millions.
+  Surveillez tout de même la texture en fin d’animation : si la variance s’écrasait autour des forages, ce serait le signe que le poids λ de la fonction objectif est trop fort.
+===== SLIDE 59  [images:1 tableaux:1 equations:0]
+  5 · CALAGE S-STBM
+  Gibbs ou calage : deux à trois ordres de grandeur d’écart
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  59
+  Livre en ligne · chap. 13 — § Modélisation de faciès basée sur des cellules
+  Critère
+  Échantillonneur de Gibbs
+  Calage (avec S-STBM)
+  Exactitude
+  Exact
+  Approximatif (recours au T-SGS pour rendre exact)
+  Programmation
+  Simple
+  Complexe
+  Mode de perturbation
+  Séquentielle, point par point
+  Globale : tous les points à chaque itération
+  Vitesse
+  Très lent à introduire la corrélation spatiale
+  Très rapide
+  Exemple 31 × 50, deux forages
+  ≈ 72 000 000 itérations
+  ≈ 1 550 000 perturbations
+  À RETENIR
+  On aurait pu arrêter le calage après 1 000 itérations. Comme il perturbe TOUS les points à chaque itération, cela représente environ 1 550 000 perturbations, contre les 72 000 000 requises par le Gibbs. Selon la corrélation spatiale, le gain en temps de calcul est de deux à trois ordres de grandeur.
+===== SLIDE 60  [images:1 tableaux:0 equations:0]
+  EXERCICE EN ÉQUIPE 3
+  Aire de protection d’un puits : concevoir toute la chaîne
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  60
+  Vous devez déterminer l’aire de protection d’un futur captage d’eau potable, situé près d’une zone agricole (risques bactériologiques et virologiques). Au Québec, l’aire bactériologique correspond à 200 jours de migration, l’aire virologique à 550 jours.
+  Données disponibles : 40 analyses granulométriques ponctuelles sur grille régulière (d’où nature du sol, porosité et conductivité hydraulique estimée par méthode empirique) ; 16 piézomètres et un puits central ; charges hydrauliques au repos et rabattements lors d’un essai de pompage à charge constante. Aquifère confiné, recharge négligeable. Vous disposez d’un simulateur d’écoulement en milieu hétérogène.
+  A) Pourquoi le krigeage/cokrigeage n’est-il pas une méthodologie adéquate pour ce mandat ?
+  B) Pourquoi le recuit simulé n’est-il pas un algorithme adéquat pour réaliser le calage de ce problème ?
+  C) Quelles sont les données secondaires (indirectes) du site ? Proposez une fonction objectif pour le calage.
+  D) Proposez une méthodologie pour obtenir les aires de protection ET la probabilité en tout point qu’un contaminant non réactif soit capté.
+===== SLIDE 61  [images:2 tableaux:0 equations:0]
+  EXERCICE 3 · SOLUTION
+  A à C) Non-linéarité, coût de calcul, et la bonne fonction objectif
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  61
+  A) Pourquoi pas le krigeage ?
+  La problématique implique une relation NON LINÉAIRE entre les variables simulées (conductivité) et l’estimation des aires de captage : il faut résoudre les équations d’écoulement. Les simulations géostatistiques sont donc préférables au krigeage/cokrigeage.
+  B) Pourquoi pas le recuit simulé ?
+  Le recuit simulé est SÉQUENTIEL et implique des temps de calcul prohibitifs. De plus, certaines formes de recuit obligent à ajouter le variogramme à la fonction objectif, ce qui alourdit encore le problème.
+  C) Données secondaires et fonction objectif
+  Les données secondaires sont les 16 (voire 17, avec le puits) charges hydrauliques au repos et les 16 rabattements de l’essai de pompage. On minimise l’écart entre valeurs mesurées et simulées.
+  À NOTER
+  On peut utiliser l’erreur absolue moyenne ou la racine de l’erreur quadratique moyenne. Les poids peuvent être égaux : les deux mesures ont les mêmes unités et la même plage d’erreur. Prendre les moyennes n’est même pas obligatoire, pour la même raison.
+===== SLIDE 62  [images:1 tableaux:0 equations:0]
+  EXERCICE 3 · SOLUTION
+  D) Une méthodologie en cinq temps
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  62
+  1
+  Caler les simulations géostatistiques CONDITIONNELLES aux données de terrain (les 40 conductivités estimées), en minimisant la fonction objectif sur les charges et les rabattements.
+  2
+  Pour chaque simulation calée, faire tourner le simulateur d’écoulement et déterminer les deux aires de captage : celle à 200 jours et celle à 550 jours.
+  3
+  La MOYENNE des aires obtenues sur l’ensemble des réalisations donne l’aire de captage à utiliser.
+  4
+  Sélectionner le 5ᵉ et le 95ᵉ percentile des aires de captage — par exemple par sélection radiale autour du puits — pour en déduire l’intervalle de confiance : 95 % des particules tombant dans cette zone seront captées par le puits.
+  5
+  Vérifier si cet intervalle de confiance est en contact avec la zone agricole, pour les bactéries (200 j) et pour les virus (550 j). S’il l’est, il y a un problème de contamination probable ; sinon, il semble n’y avoir aucun problème.
+  À RETENIR
+  C’est la chaîne complète de ce cours : simuler (avec calage aux données secondaires) → appliquer la fonction de transfert (le modèle d’écoulement) → analyser la distribution des réponses. Aucune étape ne peut être remplacée par une carte krigée.
+===== SLIDE 63  [images:6 tableaux:0 equations:0]
+  SYNTHÈSE
+  À retenir du cours 12
+  GLQ3401 / GLQ3651 — Cours 12 · Simulation de faciès
+  63
+  L’architecture avant les propriétés
+  proportions, géométrie et connectivité des faciès conditionnent écoulements et stabilité ; on les simule d’abord.
+  SIS : simple et permissive
+  krigeage d’indicatrices + tirage séquentiel ; toutes les transitions permises, covariances croisées ignorées.
+  TGS/PGS : les contacts se dessinent
+  seuils sur un champ latent (ordre) ou patron 2D sur deux champs (règles riches) ; Gibbs pour conditionner.
+  Objets : la géométrie d’abord
+  germes de Poisson + formes paramétrées : réalisme élevé, mais conditionnement par rejet difficile.
+  MPS : au-delà de deux points
+  l’image d’entraînement fournit les motifs ; SNESIM et Direct Sampling par point, FilterSim et quilting par patch.
+  Choisir selon le contexte
+  données rares et géométrie incertaine : SIS ; règles de contact : TGS/PGS ; formes nettes : objets ; motifs complexes : MPS.
+===== SLIDE 64  [images:1 tableaux:0 equations:0]
+  FIN DU COURS
+  Merci, et bonne révision !
+  Douze cours, de l’économie minière aux simulations de faciès : toute la chaîne géostatistique est entre vos mains. Les ateliers interactifs et les anciens examens restent disponibles pour préparer l’examen final.
+  Livre en ligne, ateliers et anciens examens : danlauz.github.io/glq3401-3651

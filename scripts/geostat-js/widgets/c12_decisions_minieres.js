@@ -1,24 +1,24 @@
 // scripts/geostat-js/widgets/c12_decisions_minieres.js
 // -----------------------------------------------------------------------------
-// Widget C12 — Ressources minières : KRIGEAGE vs SIMULATIONS (courbe teneur-tonnage).
+// Widget C12 — Ressources minières : KRIGEAGE vs SIMULATIONS.
 //
-// Gisement de teneurs (loi log-normale), quelques sondages. Pour une coupure z_c :
-//   T(z_c) = tonnage relatif (proportion de blocs > z_c)
-//   Q(z_c) = métal récupérable = T(z_c) · teneur moyenne au-dessus de z_c
+// Cartes (même échelle de couleurs) : la RÉALITÉ (vérité), le KRIGEAGE (lissé,
+// sans hautes teneurs) et plusieurs SIMULATIONS conditionnelles (texturées comme
+// la réalité, honorant les mêmes sondages). Courbes teneur-tonnage T(z_c), Q(z_c)
+// et distribution du métal récupérable pour décider sous incertitude.
 //
-// Le KRIGEAGE lisse les teneurs → il déforme la courbe teneur-tonnage (sous-estime
-// le tonnage/métal aux hautes coupures : effet de lissage). Les SIMULATIONS
-// conditionnelles reproduisent l'histogramme réel → courbe non biaisée + une
-// DISTRIBUTION de ressources (intervalle de confiance) pour décider sous risque.
-// (Inspiré du cours : ressources estimées différentes par réalisation, p.18-19.)
-//
-// Simulations conditionnelles par anamorphose gaussienne + post-conditionnement.
+// Conditionnement par krigeage (résidus) dans l'espace gaussien :
+//   Y_cond = Y_sim − krig(Y_sim aux données) + krig(Y_obs)
+// Les poids de krigeage (identiques pour toutes les réalisations) sont construits
+// UNE fois via des vecteurs unitaires (le wrapper ne renvoyant que les poids d'une
+// cible), puis appliqués à chaque réalisation.
 // -----------------------------------------------------------------------------
 import { Widget } from '../widget-base.js';
 import { gpoly, afficherChargementJusquaPret } from '../pyodide_setup.js';
 const debounce = (fn, ms = 500) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
 const N = 36, NDATA = 16, NC = 26;
 const pctile = (sorted, p) => sorted[Math.max(0, Math.min(sorted.length - 1, Math.floor(p * sorted.length)))];
+const STRUCT = a => [{ modele: 'spherique', palier: 1, portee: a }];
 
 export default class C12DecisionsMinieres extends Widget {
   render() {
@@ -26,66 +26,80 @@ export default class C12DecisionsMinieres extends Widget {
     this.seed = 5;
     this.el.insertAdjacentHTML('beforeend', `
       <style>#${id} .gw-controls label{display:inline-flex !important;flex-direction:row !important;align-items:center;gap:5px;}</style>
-      <div class="gw-controls" style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;padding:8px 12px;background:#fafafa;border:1px solid #ddd;border-radius:8px;font-size:.82rem;">
-        <label>Portée a <input type="range" class="js-a" min="6" max="24" value="13" step="1" style="width:110px"><span class="js-av">13</span></label>
-        <label>Coupure z<sub>c</sub> <input type="range" class="js-zc" min="0" max="10" value="3" step="0.1" style="width:140px"><span class="js-zcv">3.0</span></label>
-        <label>Simulations <input type="range" class="js-nb" min="10" max="100" value="50" step="10" style="width:120px"><span class="js-nbv">50</span></label>
+      <div class="gw-controls" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:8px 12px;background:#fafafa;border:1px solid #ddd;border-radius:8px;font-size:.8rem;">
+        <label>Portée a <input type="range" class="js-a" min="6" max="24" value="13" step="1" style="width:95px"><span class="js-av">13</span></label>
+        <label>Coupure z<sub>c</sub> <input type="range" class="js-zc" min="0" max="10" value="3" step="0.1" style="width:115px"><span class="js-zcv">3.0</span></label>
+        <label>Réalisations (calcul) <input type="range" class="js-nb" min="20" max="100" value="50" step="10" style="width:95px"><span class="js-nbv">50</span></label>
+        <label>Cartes de simulation <input type="range" class="js-nmap" min="1" max="6" value="3" step="1" style="width:85px"><span class="js-nmapv">3</span></label>
         <button class="js-regen" type="button" style="font-size:.78rem;padding:4px 10px;background:#3a3632;color:#fff;border:none;border-radius:5px;cursor:pointer;">Nouveau gisement</button>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:6px;">
-        <div class="js-p-T" style="height:280px"></div>
-        <div class="js-p-Q" style="height:280px"></div>
-        <div class="js-p-hist" style="height:280px"></div>
+      <div class="js-maps" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;justify-content:center;"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px;">
+        <div class="js-p-T" style="height:265px"></div>
+        <div class="js-p-Q" style="height:265px"></div>
+        <div class="js-p-hist" style="height:265px"></div>
       </div>
       <div class="js-info" style="padding:.5rem 1rem;font-size:.84rem;color:#333;text-align:center;background:#eef2e8;border:1px solid #b8c8a8;border-radius:6px;margin-top:6px;">—</div>
       <p style="margin:4px 1rem;font-size:11px;color:#666;">
-        Courbes teneur-tonnage : <b>vérité</b> (noir), <b style="color:#0d4d92">krigeage</b> (bleu, lissé → biaisé aux hautes coupures), <b style="color:#1f8a4c">simulations</b> (médiane + bande P10–P90). À droite : distribution du <b>métal récupérable</b> à la coupure choisie — les simulations donnent un <b>intervalle de confiance</b>, le krigeage un seul chiffre (biaisé).</p>
+        <b>Cartes</b> (même échelle de teneur) : <b>réalité</b>, <b style="color:#0d4d92">krigeage</b> (lissé → pas de hautes teneurs) et <b style="color:#1f8a4c">simulations</b> (texturées comme la réalité, honorant les mêmes sondages ●). <b>Courbes teneur-tonnage</b> : vérité (noir), krigeage (bleu tireté, biaisé aux hautes coupures par lissage), simulations (médiane + bande P10–P90). À droite : distribution du métal récupérable — les simulations donnent un <b>intervalle de confiance</b>, le krigeage un seul chiffre biaisé.</p>
     `);
     this.P = { T: this.el.querySelector('.js-p-T'), Q: this.el.querySelector('.js-p-Q'), hist: this.el.querySelector('.js-p-hist') };
+    this.mapsEl = this.el.querySelector('.js-maps');
     this.infoEl = this.el.querySelector('.js-info');
-    this.ctrl = { a: this.el.querySelector('.js-a'), zc: this.el.querySelector('.js-zc'), nb: this.el.querySelector('.js-nb') };
+    this.ctrl = { a: this.el.querySelector('.js-a'), zc: this.el.querySelector('.js-zc'), nb: this.el.querySelector('.js-nb'), nmap: this.el.querySelector('.js-nmap') };
     const heavy = debounce(() => this.refresh(), 500);
     this.on(this.ctrl.a, 'input', e => { this.el.querySelector('.js-av').textContent = e.target.value; this.dirty = true; heavy(); });
     this.on(this.ctrl.nb, 'input', e => { this.el.querySelector('.js-nbv').textContent = e.target.value; heavy(); });
-    this.on(this.ctrl.zc, 'input', e => { this.el.querySelector('.js-zcv').textContent = parseFloat(e.target.value).toFixed(1); this._draw(); });
+    this.on(this.ctrl.zc, 'input', e => { this.el.querySelector('.js-zcv').textContent = parseFloat(e.target.value).toFixed(1); this._drawCurves(); });
+    this.on(this.ctrl.nmap, 'input', e => { this.el.querySelector('.js-nmapv').textContent = e.target.value; this._drawMaps(); });
     this.on(this.el.querySelector('.js-regen'), 'click', () => { this.seed = 5 + Math.floor(Math.random() * 1e5); this.dirty = true; this.refresh(); });
     this.dirty = true;
     afficherChargementJusquaPret(this.el).then(() => this.refresh());
   }
 
   async _setup() {
-    const a = parseFloat(this.ctrl.a.value);
+    const a = parseFloat(this.ctrl.a.value), M = N * N, nd = NDATA;
     const mean = 2.5, varr = 9.0, s2 = Math.log(1 + varr / (mean * mean)), mu = Math.log(mean) - 0.5 * s2, sig = Math.sqrt(s2);
     this.anam = { fwd: z => (Math.log(Math.max(1e-6, z)) - mu) / sig, inv: y => Math.exp(mu + sig * y) };
     let flat;
     try { flat = await gpoly.simulerChamp('spherique', a, 0, this.seed, N, 'lognormal', mean, varr); }
-    catch (e) { this.afficherAvertissement('Erreur simulation : ' + e.message); return; }
+    catch (e) { this.afficherAvertissement('Erreur simulation : ' + e.message); return false; }
     this.Ztrue = Array.from(flat);
     let s = (this.seed ^ 0x9e3779b9) >>> 0; const rng = () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
     const vus = new Set(); this.dIdx = [];
-    while (this.dIdx.length < NDATA) { const k = Math.floor(rng() * N * N); if (!vus.has(k)) { vus.add(k); this.dIdx.push(k); } }
-    const xdata = this.dIdx.map(k => [(k % N) + 0.5, Math.floor(k / N) + 0.5]);
+    while (this.dIdx.length < nd) { const k = Math.floor(rng() * M); if (!vus.has(k)) { vus.add(k); this.dIdx.push(k); } }
+    this.xdata = this.dIdx.map(k => [(k % N) + 0.5, Math.floor(k / N) + 0.5]);
     this.Yobs = this.dIdx.map(k => this.anam.fwd(this.Ztrue[k]));
-    const cibles = []; for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) cibles.push([i + 0.5, j + 0.5]);
-    const ks = await gpoly.krigeageSimple(xdata, this.Yobs, cibles, [{ modele: 'spherique', palier: 1, portee: a }], 0, 0);
-    this.Ystar = ks.estimations; this.Zkrig = this.Ystar.map(y => this.anam.inv(y));
-    const M = N * N, nd = NDATA, lam = ks.lambda;
-    let W = (lam.length === M && lam[0].length === nd) ? lam : cibles.map((_, c) => lam.map(r => r[c]));
-    const t = W[(M / 2) | 0].reduce((acc, w, i) => acc + w * this.Yobs[i], 0);
-    if (Math.abs(t - this.Ystar[(M / 2) | 0]) > 1e-3 * (1 + Math.abs(this.Ystar[(M / 2) | 0]))) W = cibles.map((_, c) => lam.map(r => r[c]));
-    this.W = W;
+    this.cibles = []; for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) this.cibles.push([i + 0.5, j + 0.5]);
+    // Matrice de poids W (M×nd) : krigeage de nd vecteurs unitaires (le wrapper ne
+    // renvoie que les poids d'une cible, donc on reconstruit la matrice complète).
+    try {
+      const cols = [];
+      for (let i = 0; i < nd; i++) {
+        const e = new Array(nd).fill(0); e[i] = 1;
+        const kk = await gpoly.krigeageSimple(this.xdata, e, this.cibles, STRUCT(a), 0, 0);
+        cols.push(kk.estimations);
+      }
+      this.W = new Array(M);
+      for (let c = 0; c < M; c++) { const w = new Float64Array(nd); for (let i = 0; i < nd; i++) w[i] = cols[i][c]; this.W[c] = w; }
+    } catch (e) { this.afficherAvertissement('Erreur krigeage : ' + e.message); return false; }
+    this.Ystar = new Float64Array(M);
+    for (let c = 0; c < M; c++) { let v = 0; const w = this.W[c]; for (let i = 0; i < nd; i++) v += w[i] * this.Yobs[i]; this.Ystar[c] = v; }
+    this.Zkrig = Array.from(this.Ystar, y => this.anam.inv(y));
     const sorted = [...this.Ztrue].sort((p, q) => p - q);
     this.zmax = pctile(sorted, 0.97);
+    this.zmapMax = pctile(sorted, 0.99);
     this.dirty = false;
+    return true;
   }
 
   async refresh() {
-    const a = parseFloat(this.ctrl.a.value), nb = parseInt(this.ctrl.nb.value, 10);
+    const a = parseFloat(this.ctrl.a.value), nb = parseInt(this.ctrl.nb.value, 10), M = N * N, nd = NDATA;
     try {
-      if (this.dirty || !this.W) await this._setup();
+      if (this.dirty || !this.W) { const ok = await this._setup(); if (ok === false) return; }
       this.sim = await gpoly.simulerNRealisations('spherique', a, 1, this.seed + 1, N, nb, 'FFTMA');
     } catch (e) { this.afficherAvertissement('Erreur : ' + e.message); return; }
-    const M = N * N, nd = NDATA, flat = this.sim.realisations_flat;
+    const flat = this.sim.realisations_flat;
     this.Zsims = [];
     for (let sidx = 0; sidx < nb; sidx++) {
       const off = sidx * M, Z = new Float64Array(M);
@@ -93,14 +107,14 @@ export default class C12DecisionsMinieres extends Widget {
       for (let c = 0; c < M; c++) { let yk = 0; const w = this.W[c]; for (let i = 0; i < nd; i++) yk += w[i] * dAt[i]; Z[c] = this.anam.inv(flat[off + c] - yk + this.Ystar[c]); }
       this.Zsims.push(Z);
     }
-    // Coupures + courbes T,Q par réalisation/vérité/krigeage.
     this.coupures = []; for (let k = 0; k < NC; k++) this.coupures.push(this.zmax * (k + 0.5) / NC);
     const TQ = (Z) => { const T = [], Q = []; for (const zc of this.coupures) { let n2 = 0, sum = 0; for (let c = 0; c < M; c++) if (Z[c] > zc) { n2++; sum += Z[c]; } const tn = n2 / M; T.push(tn); Q.push(n2 ? tn * (sum / n2) : 0); } return { T, Q }; };
     this.truthC = TQ(this.Ztrue); this.krigC = TQ(this.Zkrig);
     this.simT = this.coupures.map(() => []); this.simQ = this.coupures.map(() => []);
     for (const Z of this.Zsims) { const r = TQ(Z); for (let k = 0; k < NC; k++) { this.simT[k].push(r.T[k]); this.simQ[k].push(r.Q[k]); } }
     this.bandT = this._band(this.simT); this.bandQ = this._band(this.simQ);
-    this._draw();
+    this._drawMaps();
+    this._drawCurves();
   }
 
   _band(perCut) {
@@ -110,13 +124,41 @@ export default class C12DecisionsMinieres extends Widget {
   }
 
   _metalAt(zc) {
-    const M = N * N, idx = Math.max(0, Math.min(NC - 1, Math.round(zc / this.zmax * NC - 0.5)));
+    const M = N * N;
     const metalSim = this.Zsims.map(Z => { let n2 = 0, sum = 0; for (let c = 0; c < M; c++) if (Z[c] > zc) { n2++; sum += Z[c]; } return (n2 / M) * (n2 ? sum / n2 : 0); });
     const tq = (Z) => { let n2 = 0, sum = 0; for (let c = 0; c < M; c++) if (Z[c] > zc) { n2++; sum += Z[c]; } return (n2 / M) * (n2 ? sum / n2 : 0); };
     return { metalSim, qTruth: tq(this.Ztrue), qKrig: tq(this.Zkrig) };
   }
 
-  _draw() {
+  _drawMaps() {
+    if (!window.Plotly || !this.Zsims) return;
+    const K = Math.min(parseInt(this.ctrl.nmap.value, 10), this.Zsims.length);
+    const zmin = 0, zmax = this.zmapMax;
+    const dx = this.dIdx.map(k => k % N), dy = this.dIdx.map(k => Math.floor(k / N));
+    const reshape = (f) => { const z = []; for (let j = 0; j < N; j++) { const row = new Array(N); for (let i = 0; i < N; i++) row[i] = f[j * N + i]; z.push(row); } return z; };
+    const panels = [
+      { title: 'Réalité (vérité)', Z: this.Ztrue, sc: true },
+      { title: 'Krigeage (lissé)', Z: this.Zkrig, sc: false },
+    ];
+    for (let s = 0; s < K; s++) panels.push({ title: `Simulation ${s + 1}`, Z: this.Zsims[s], sc: false });
+    Array.from(this.mapsEl.children).forEach(c => { try { window.Plotly && Plotly.purge(c); } catch (e) {} });
+    this.mapsEl.innerHTML = panels.map((p, idx) => `<div data-mi="${idx}" style="width:168px;height:188px;"></div>`).join('');
+    const cfg = { displaylogo: false, responsive: true, displayModeBar: false };
+    panels.forEach((p, idx) => {
+      const el = this.mapsEl.querySelector(`[data-mi="${idx}"]`);
+      Plotly.react(el, [
+        { type: 'heatmap', z: reshape(p.Z), zmin, zmax, colorscale: 'Viridis', showscale: p.sc, colorbar: { thickness: 7, len: 0.85, tickfont: { size: 7 } }, hoverinfo: 'skip' },
+        { type: 'scatter', x: dx, y: dy, mode: 'markers', marker: { size: 3.5, color: '#fff', line: { color: '#000', width: 0.6 } }, hoverinfo: 'skip' },
+      ], {
+        margin: { t: 20, l: 3, r: p.sc ? 26 : 3, b: 3 }, title: { text: p.title, font: { size: 10 } },
+        xaxis: { visible: false, range: [-0.5, N - 0.5], constrain: 'domain' },
+        yaxis: { visible: false, range: [-0.5, N - 0.5], scaleanchor: 'x', constrain: 'domain' },
+        showlegend: false,
+      }, cfg);
+    });
+  }
+
+  _drawCurves() {
     if (!window.Plotly || !this.Zsims) return;
     const zc = parseFloat(this.ctrl.zc.value), cfg = { displaylogo: false, responsive: true, displayModeBar: false };
     const band = (el, b, truth, krig, title, yt) => {
@@ -160,5 +202,10 @@ export default class C12DecisionsMinieres extends Widget {
       `<span style="color:#1f8a4c">simulations = <b>${mean.toFixed(3)}</b> [${lo.toFixed(3)} ; ${hi.toFixed(3)}]</span>`;
   }
 
-  cleanup() { if (window.Plotly) Object.values(this.P || {}).forEach(p => p && Plotly.purge(p)); }
+  cleanup() {
+    if (window.Plotly) {
+      Object.values(this.P || {}).forEach(p => p && Plotly.purge(p));
+      if (this.mapsEl) Array.from(this.mapsEl.children).forEach(c => { try { Plotly.purge(c); } catch (e) {} });
+    }
+  }
 }

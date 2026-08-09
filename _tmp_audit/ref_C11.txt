@@ -1,0 +1,1197 @@
+===== SLIDE 1  [images:2 tableaux:0 equations:0]
+  GLQ3401 / GLQ3651
+  Simulations géostatistiques de variable continue
+  Cours 11
+  Partie II — Géostatistique · Chapitre 12 du livre en ligne
+  Dany Lauzon
+  Département des génies civil, géologique et des mines, Polytechnique Montréal
+===== SLIDE 2  [images:6 tableaux:0 equations:0]
+  COURS 11 · CHAPITRE 12
+  Objectifs d’apprentissage
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  2
+  Identifier les problèmes pour lesquels les méthodes de simulation géostatistique sont appropriées
+  Distinguer les concepts d’estimation et de simulation, ainsi que leurs objectifs respectifs
+  Expliquer les différences entre les simulations non conditionnelles et conditionnelles
+  Appliquer les méthodes de Cholesky et de simulation séquentielle gaussienne (SGS), et en discuter les limites
+  Utiliser et interpréter les résultats de simulations dans le cadre de l’estimation des ressources
+  Expliquer les principales propriétés statistiques et spatiales des simulations
+  Références : Lantuéjoul (2002), Geostatistical Simulation ; Chilès et Delfiner (2012), Geostatistics: Modeling Spatial Uncertainty.
+===== SLIDE 3  [images:0 tableaux:0 equations:0]
+  COURS 11
+  Plan du cours
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  3
+  01
+  Estimer ou simuler ?
+  le câble d’Alfaro : quand le lissage du krigeage devient un biais
+  02
+  La simulation non conditionnelle
+  décomposition de Cholesky, validation, anamorphose gaussienne
+  03
+  La simulation conditionnelle
+  Cholesky par blocs, SGS et recuit simulé
+  04
+  Post-conditionnement et propriétés
+  rendre conditionnel après coup ; ce que valent une et plusieurs réalisations
+  05
+  Méthodes avancées et applications
+  bandes tournantes, FFT-MA, Karhunen-Loève ; contamination et ressources
+===== SLIDE 4  [images:1 tableaux:0 equations:0]
+  01
+  SECTION 1
+  Estimer ou simuler ?
+  Le krigeage donne la meilleure carte moyenne ; la simulation, des scénarios réalistes.
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+===== SLIDE 5  [images:2 tableaux:0 equations:0]
+  1 · MOTIVATION
+  Le câble sous-marin d’Alfaro : le lissage coûte 237 mètres
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  5
+  Livre en ligne · chap. 12 — § Notations et hypothèses
+  Données, profil krigé, une réalisation, et l’ensemble des simulations (livre, chap. 12).
+  945 m
+  longueur du TRONÇON krigé entre des sondes espacées de 100 m
+  1182 m
+  longueur RÉELLE du même tronçon, révélée par un levé aux 10 m
+  La longueur est une fonctionnelle NON LINÉAIRE du profil : le lissage du krigeage la biaise systématiquement.
+  La solution : simuler plusieurs profils compatibles avec les données et le modèle, calculer la longueur sur chacun, puis moyenner :
+  Ces chiffres portent sur un TRONÇON de référence relevé en détail. La diapositive suivante donne le bilan sur le tracé complet du câble, où le biais relatif est plus faible mais porte sur des kilomètres.
+===== SLIDE 6  [images:2 tableaux:0 equations:0]
+  1 · MOTIVATION
+  Deux objets différents : l’espérance conditionnelle et un tirage de la loi
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  6
+  Livre en ligne · chap. 12 — § Notations et hypothèses
+  La simulation conditionnelle tire une réalisation de la loi du champ sachant les observations :
+  Les réalisations ne minimisent pas l’erreur en chaque point : elles représentent des scénarios possibles entre les observations, et reproduisent collectivement la loi marginale et le variogramme.
+  En l’absence d’erreur de mesure, elles honorent les valeurs observées aux points de conditionnement.
+  La moyenne d’un grand nombre de réalisations converge vers le krigeage simple :
+  Le krigeage simple est la « moyenne » de toutes les réalisations possibles : voilà pourquoi il est lissé.
+===== SLIDE 7  [images:1 tableaux:1 equations:0]
+  1 · MOTIVATION
+  Deux fonctions de transfert, deux fois le même verdict
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  7
+  Livre en ligne · chap. 12 — § Notations et hypothèses
+  Sur le profil du fond marin d’Alfaro, on ne cherche pas la profondeur en un point : on cherche deux grandeurs calculées SUR le profil entier.
+  Fonction de transfert
+  Réalité
+  Krigeage
+  Simulations (moyenne ± écart-type)
+  Longueur totale du câble
+  105,6 km
+  102,6 km
+  105,2 ± 1,6 km
+  Pente maximale du fond
+  43°
+  23°
+  41,2° ± 8,5°
+  Sur la longueur, le krigeage se trompe de 3 km : on manquerait de câble en pleine mer.
+  Sur la pente maximale, il se trompe presque du simple au double (23° au lieu de 43°) : un profil lissé n’a pas de pentes fortes, par construction.
+  Les simulations retrouvent les deux grandeurs, et en prime elles fournissent l’incertitude : ± 1,6 km et ± 8,5°.
+  À RETENIR
+  Règle générale : « Simulations → fonction de transfert → moyenne », jamais « krigeage → fonction de transfert ». Dès que la grandeur cherchée est non linéaire, appliquer la fonction à une carte lissée donne une réponse fausse.
+===== SLIDE 8  [images:0 tableaux:1 equations:0]
+  1 · MOTIVATION
+  Site contaminé : le krigeage sous-estime le volume à excaver de 40 %
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  8
+  Livre en ligne · chap. 12 — § Notations et hypothèses
+  Une cinquantaine d’observations, un seuil de contamination de 250 ppm. Quel volume de sol faut-il excaver ?
+  Méthode
+  Volume contaminé estimé
+  Intervalle de confiance à 95 %
+  Réalité (connue par simulation de référence)
+  25,70 %
+  —
+  Estimation linéaire (krigeage)
+  15,75 %
+  ?
+  Simulations géostatistiques (500 réalisations)
+  25,03 %
+  [20,43 ; 29,63]
+  « Le volume au-dessus de 250 ppm » est une fonction non linéaire, et même discontinue, du champ de concentration : chaque point compte ou ne compte pas.
+  Le krigeage lisse les pics : les concentrations extrêmes disparaissent et avec elles une bonne partie du volume à excaver. On excaverait 40 % trop peu.
+  Les 500 simulations donnent non seulement la bonne valeur, mais aussi un intervalle de confiance — impossible à obtenir avec le krigeage seul.
+===== SLIDE 9  [images:2 tableaux:0 equations:0]
+  1 · MOTIVATION
+  Hydrogéologie : quelle moyenne pour mettre à l’échelle une transmissivité ?
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  9
+  Livre en ligne · chap. 12 — § Notations et hypothèses
+  Problème : on connaît la transmissivité T en quelques points, on a besoin de la T ÉQUIVALENTE d’un bloc du modèle d’écoulement.
+  Moyenne ARITHMÉTIQUE : écoulement parallèle aux couches, la couche la plus perméable domine.
+  Moyenne HARMONIQUE : écoulement en série, la couche la moins perméable domine — c’est le goulot.
+  Moyenne GÉOMÉTRIQUE : milieu 2D isotrope log-normal, le cas le plus courant en pratique.
+  IMPORTANT
+  Le krigeage donne une carte lissée : ce n’est PAS ce dont on a besoin. Le lissage supprime justement les contrastes de perméabilité qui gouvernent l’écoulement. La bonne approche est de simuler le champ de conductivité, puis de calculer la moyenne appropriée sur chaque bloc de chaque réalisation.
+===== SLIDE 10  [images:1 tableaux:1 equations:0]
+  1 · MOTIVATION
+  Mettre à l’échelle une transmissivité : les chiffres qui font mal
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  10
+  Livre en ligne · chap. 12 — § Notations et hypothèses
+  Un aquifère alterne deux faciès : sable, T = 10⁻² m²/s, et silt, T = 10⁻⁶ m²/s. Quatre ordres de grandeur d’écart, et un modèle d’écoulement qui ne peut travailler qu’à l’échelle de la maille.
+  La moyenne à utiliser dépend de la direction de l’écoulement par rapport à la stratification :
+  Configuration
+  Moyenne pertinente
+  T équivalente (m²/s)
+  Moyenne des T ponctuelles (à tort)
+  arithmétique
+  5 × 10⁻³
+  Bloc hétérogène, écoulement quelconque
+  ni l’une ni l’autre
+  1 × 10⁻⁴
+  Milieu stratifié, écoulement PARALLÈLE aux couches
+  arithmétique
+  5 × 10⁻³
+  Milieu stratifié, écoulement PERPENDICULAIRE
+  harmonique
+  2 × 10⁻⁶
+  La moyenne des transmissivités ponctuelles vaut 5 × 10⁻³ ; la transmissivité qui reproduit réellement le débit du bloc vaut 1 × 10⁻⁴. Un facteur 50, et l’erreur est du même signe partout.
+  Entre l’horizontale et la verticale, l’écart atteint trois ordres de grandeur : la mise à l’échelle crée une ANISOTROPIE qui n’existait pas dans les données ponctuelles.
+===== SLIDE 11  [images:1 tableaux:0 equations:0]
+  1 · MOTIVATION
+  Trois stratégies possibles, une seule qui tient
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  11
+  Livre en ligne · chap. 12 — § Notations et hypothèses
+  Kriger des blocs, puis alimenter le simulateur
+  Le krigeage de bloc donne la MOYENNE ARITHMÉTIQUE de la transmissivité sur le bloc. Or ce n’est pas la quantité qui gouverne l’écoulement. On calcule proprement la mauvaise grandeur.
+  Kriger au point, agréger, puis simuler l’écoulement
+  On agrège cette fois avec la bonne moyenne, mais sur un champ krigé donc LISSÉ : la variabilité qui crée les chemins préférentiels a disparu. Le variogramme du champ krigé n’est pas celui du modèle.
+  Simuler au point, agréger, puis simuler l’écoulement
+  Chaque réalisation possède la bonne variabilité ; on l’agrège avec la moyenne appropriée, on la fait tourner dans le modèle d’écoulement, et l’on obtient une DISTRIBUTION de réponses. C’est la seule voie correcte.
+  À RETENIR
+  La règle générale : SIMULER, puis appliquer la fonction de transfert à chaque réalisation, puis moyenner les RÉPONSES. Jamais l’inverse — moyenner les entrées puis appliquer la fonction de transfert donne un résultat faux dès que celle-ci n’est pas linéaire.
+===== SLIDE 12  [images:1 tableaux:0 equations:0]
+  1 · MOTIVATION
+  Aires de protection d’un puits : une chaîne complète simulation → modèle
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  12
+  Livre en ligne · chap. 12 — § Notations et hypothèses
+  1. Variables observées
+  Tests piézométriques, charges hydrauliques dans les puits d’observation, conditions frontières, recharge estimée, débit des puits.
+  2. Simulations
+  Plusieurs réalisations du champ de conductivité hydraulique, toutes compatibles avec les observations.
+  3. Fonction de transfert
+  Chaque réalisation alimente le simulateur d’écoulement : on obtient autant de champs de charges hydrauliques.
+  4. Aires de captage
+  Zones jamais captées, toujours captées, captées dans x % des cas. Idem pour les distributions de temps de transport.
+  À RETENIR
+  Bonus décisif : on se prémunit contre les mauvaises surprises. Par exemple un puits qui aurait, dans certaines réalisations seulement, une zone potentiellement contaminée dans son aire de captage. Un krigeage unique ne le montrerait jamais.
+===== SLIDE 13  [images:0 tableaux:0 equations:0]
+  1 · MOTIVATION
+  Mines : la fosse optimisée sur la carte krigée n’est pas la fosse minée
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  13
+  Livre en ligne · chap. 12 — § Notations et hypothèses
+  L’optimisation d’une fosse à ciel ouvert (algorithme de Lerchs-Grossmann) prend en entrée un modèle de blocs et en sort un contour, un tonnage, une teneur et une valeur actualisée. Alimentée par la carte krigée, elle produit UNE fosse et un seul chiffre de profit.
+  Le problème : l’optimisation contient un SEUIL — un bloc est miné ou ne l’est pas. C’est une fonction de transfert massivement non linéaire, appliquée à un champ lissé. Le lissage supprime précisément les blocs riches isolés qui font basculer une décision.
+  La bonne pratique : optimiser la fosse sur chacune des 20 (ou 100) réalisations. On obtient un HISTOGRAMME de valeurs actualisées, de tonnages et de teneurs — et l’on découvre souvent que la fosse « optimale » du krigeage se situe dans la queue optimiste de cette distribution.
+  La généralisation vaut pour tout problème comportant un seuil de sélection : teneur de coupure en mine, seuil réglementaire en environnement, seuil d’habitat en écologie. Dès qu’il y a un seuil, il faut simuler.
+===== SLIDE 14  [images:0 tableaux:1 equations:0]
+  1 · MOTIVATION
+  Krigeage ou simulation : le face-à-face
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  14
+  Livre en ligne · chap. 12 — § Notations et hypothèses
+  Propriété
+  Krigeage Z*
+  Simulation Z⁽ˢ⁾
+  Objectif
+  estimation ponctuelle optimale
+  scénarios plausibles
+  Variance spatiale
+  sous-estimée (lissage)
+  préservée
+  Variogramme
+  partiellement reproduit
+  intégralement reproduit
+  Valeurs extrêmes
+  atténuées
+  préservées
+  Erreur ponctuelle
+  minimale
+  plus élevée
+  Fonctionnelles non linéaires
+  biaisées
+  non biaisées (moyenne des réalisations)
+  Incertitude
+  variance de krigeage (locale)
+  dispersion des réalisations (globale)
+  Simulation nécessaire pour : hétérogénéité, connectivité, risque, longueur, volume ou tonnage au-delà d’un seuil, réponse d’un modèle numérique.
+===== SLIDE 15  [images:1 tableaux:0 equations:0]
+  1 · MOTIVATION
+  Une carte lissée contre des réalisations qui vivent
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  15
+  Livre en ligne · chap. 12 — § Notations et hypothèses
+  Krigeage lissé vs réalisations conditionnelles : les réalisations reproduisent l’histogramme et le variogramme du modèle, le krigeage écrase la variance (livre, chap. 12).
+===== SLIDE 16  [images:1 tableaux:0 equations:0]
+  02
+  SECTION 2
+  La simulation non conditionnelle
+  Respecter le variogramme et la loi marginale, sans passer par les données.
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+===== SLIDE 17  [images:0 tableaux:0 equations:0]
+  2 · CADRE
+  Choisir une méthode : sept critères, et pas un de moins
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  17
+  Livre en ligne · chap. 12 — § Simulation non conditionnelle d’une variable continue
+  Nature de la variable
+  continue (ce cours) ou catégorielle (cours 12)
+  Statistiques reproduites
+  bipoints (variogramme) ou multipoints (motifs)
+  Représentation
+  par pixels sur une grille, ou par objets géométriques
+  Loi marginale
+  gaussienne, ou quelconque après anamorphose
+  Conditionnement
+  direct dans l’algorithme, ou par post-conditionnement
+  Dimension
+  1D, 2D, 3D — certaines méthodes changent de nature avec la dimension
+  Type de grille
+  régulière (FFT-MA l’EXIGE) ou quelconque (SGS, LU l’acceptent)
+  Aucune méthode ne domine sur les sept critères à la fois. Le choix se fait toujours par élimination : d’abord la nature de la variable et la taille du champ, ensuite le conditionnement, enfin la grille.
+===== SLIDE 18  [images:0 tableaux:1 equations:0]
+  2 · CADRE
+  Non conditionnelle ou conditionnelle : ce que chacune reproduit
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  18
+  Livre en ligne · chap. 12 — § Simulation non conditionnelle d’une variable continue
+  Ce que la réalisation reproduit
+  Simulation NON conditionnelle
+  Simulation CONDITIONNELLE
+  Loi marginale (histogramme)
+  oui, la loi THÉORIQUE du modèle
+  oui, mais mélange de la loi théorique et de l’histogramme des données
+  Variogramme
+  oui, le modèle THÉORIQUE (en moyenne sur les réalisations)
+  oui près des données, le modèle théorique au loin
+  Valeurs observées aux forages
+  NON
+  OUI, exactement
+  Variabilité entre réalisations
+  σ² partout
+  σ²_KS : nulle aux données, croissante au loin
+  Fonction de transfert non linéaire
+  oui, mais sans lien avec le site étudié
+  oui, ET compatible avec les mesures : c’est l’objectif
+  Un point souvent mal compris : une réalisation UNIQUE ne reproduit pas exactement le variogramme du modèle — c’est la MOYENNE sur beaucoup de réalisations qui converge vers lui. La fluctuation d’une réalisation à l’autre est normale, et c’est même elle qui porte l’incertitude.
+===== SLIDE 19  [images:2 tableaux:0 equations:0]
+  2 · NON CONDITIONNELLE
+  La méthode matricielle : Cholesky en trois étapes
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  19
+  Livre en ligne · chap. 12 — § Simulation non conditionnelle d’une variable continue
+  On simule le champ gaussien sur N positions choisies (grille, centres de blocs, points quelconques) : Z_S ~ N(m, K), avec K_ij = C(xᵢ − xⱼ).
+  Factoriser la covariance, tirer des normales indépendantes, recombiner :
+  La validation tient en une ligne :
+  Limites : coût en O(n³), praticable jusqu’à environ 10 000 points ; K définie positive (pas de points confondus) ; la pépite s’ajoute à la diagonale ou comme bruit blanc séparé.
+  La réalisation respecte le variogramme et la loi gaussienne, mais ne passe PAS par les données : elle est non conditionnelle.
+===== SLIDE 20  [images:4 tableaux:0 equations:0]
+  2 · NON CONDITIONNELLE
+  Factoriser à la main : L est la « racine carrée » de K
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  20
+  Livre en ligne · chap. 12 — § Simulation non conditionnelle d’une variable continue
+  La récurrence de Cholesky : une colonne à la fois, de gauche à droite, de haut en bas.
+  Exemple : deux points, écarts-types 3 et 2, corrélation 0,8.
+  Lisez la première ligne de L : la première valeur simulée ne dépend que du premier tirage. Puis la deuxième ligne : la seconde valeur reprend 1,6 fois le premier tirage — c’est par là que la corrélation entre dans la réalisation.
+===== SLIDE 21  [images:0 tableaux:1 equations:0]
+  2 · NON CONDITIONNELLE
+  Deux tirages, deux réalisations : voir la méthode fonctionner
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  21
+  Livre en ligne · chap. 12 — § Simulation non conditionnelle d’une variable continue
+  On tire deux vecteurs de normales centrées réduites indépendantes et l’on applique z = m + L y, avec m = 0 :
+  Tirage y
+  z₁ = 3 y₁
+  z₂ = 1,6 y₁ + 1,2 y₂
+  Lecture
+  y = (−0,12 ; −0,50)
+  −0,36
+  −0,79
+  les deux valeurs baissent ensemble : corrélation positive
+  y = (1,47 ; 0,00)
+  4,41
+  2,35
+  y₂ nul, et pourtant z₂ vaut 2,35 : c’est y₁ qui l’entraîne
+  y = (0,00 ; 1,80)
+  0,00
+  2,16
+  y₁ nul : z₁ est nul, mais z₂ garde sa part propre
+  Chaque réalisation est un vecteur parfaitement admissible du modèle : elle a la bonne variance (9 et 4) et la bonne covariance (4,8). Vérifiez-le en accumulant les tirages.
+  Aucune des trois n’est « meilleure » : ce sont trois scénarios également plausibles. C’est toute la différence avec un estimateur, qui n’en produirait qu’un seul — la moyenne, ici (0 ; 0).
+  Le coût : la factorisation est en O(n³) et se fait UNE seule fois. Chaque réalisation supplémentaire ne coûte ensuite qu’un produit matrice-vecteur, en O(n²). C’est l’argument décisif de LU quand on veut des centaines de réalisations sur un champ modeste.
+===== SLIDE 22  [images:1 tableaux:0 equations:0]
+  2 · NON CONDITIONNELLE
+  Cholesky : les limites qu’il faut connaître
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  22
+  Livre en ligne · chap. 12 — § Simulation non conditionnelle d’une variable continue
+  AVANTAGES
+  Exact : la covariance du champ simulé est RIGOUREUSEMENT K, sans approximation de voisinage.
+  Réalisations supplémentaires quasi gratuites : la factorisation est faite une seule fois.
+  Positions quelconques : aucune grille régulière n’est requise.
+  Conditionnement DIRECT, par la factorisation par blocs — pas de post-traitement.
+  LIMITES
+  Coût en O(n³) et mémoire en O(n²) : au-delà d’environ 10 000 points, la matrice ne tient plus.
+  K doit être définie positive. Deux points confondus la rendent singulière — vérifier les doublons AVANT de factoriser.
+  Définie positive en théorie ne veut pas dire factorisable en pratique : sur des modèles très continus (gaussien sans pépite), l’arrondi machine fait apparaître des pivots négatifs.
+  L’ensemble des positions est figé : ajouter un point exige de tout refactoriser.
+  À NOTER
+  L’effet de pépite s’ajoute soit sur la diagonale de K — ce qui règle du même coup la plupart des problèmes numériques ci-dessus — soit après coup, comme un bruit blanc indépendant. Les deux voies sont équivalentes en non conditionnel ; en conditionnel, seule la première convient.
+===== SLIDE 23  [images:2 tableaux:0 equations:0]
+  2 · NON CONDITIONNELLE
+  Les teneurs ne sont pas gaussiennes : l’anamorphose y remédie
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  23
+  Livre en ligne · chap. 12 — § Simulation non conditionnelle d’une variable continue
+  Anamorphose z = φ(y) reliant le champ gaussien Y à la teneur brute Z (livre, chap. 12).
+  Les teneurs minières sont asymétriques, souvent log-normales. On simule le champ gaussien Y (toute la théorie s’applique), puis on transforme chaque réalisation par Z = φ(Y).
+  Le cas log-normal correspond à Z = exp(Y).
+  En pratique, φ est estimée sur l’histogramme des données : les réalisations finales reproduisent la loi marginale observée.
+===== SLIDE 24  [images:1 tableaux:0 equations:0]
+  2 · NON CONDITIONNELLE
+  L’anamorphose, en quatre étapes — et celle qu’on oublie
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  24
+  Livre en ligne · chap. 12 — § Simulation non conditionnelle d’une variable continue
+  1
+  Construire φ à partir de l’histogramme.
+  Trier les données, associer à chaque valeur z(i) le quantile gaussien correspondant à son rang. On obtient la courbe z = φ(y), point par point.
+  2
+  Transformer les données : y(i) = φ⁻¹(z(i)).
+  On travaille désormais sur les valeurs gaussiennes, pas sur les teneurs.
+  3
+  Calculer ET MODÉLISER le variogramme de Y.
+  C’est l’étape la plus souvent oubliée. Le variogramme de Z ne sert plus à rien : la simulation se fait dans l’espace gaussien, donc c’est γ_Y qu’il faut ajuster.
+  4
+  Simuler Y, puis revenir : z_s = φ(y_s).
+  Chaque réalisation gaussienne est retransformée. L’histogramme des données est alors reproduit exactement, par construction.
+  À NE PAS FAIRE
+  Piège classique : simuler Y avec le variogramme ajusté sur Z. La transformation φ n’est pas linéaire, donc elle ne conserve NI le palier NI la forme du variogramme. L’erreur est silencieuse et fausse toutes les réalisations.
+===== SLIDE 25  [images:2 tableaux:0 equations:0]
+  EXERCICE EN ÉQUIPE 1
+  Réaliser une transformation graphique (anamorphose)
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  25
+  Quand la distribution n’est pas normale, on transforme Z(x) vers Y(x) qui, lui, suit une loi normale. En pratique, la transformation gaussienne se fait graphiquement. Voici l’exemple des données ponctuelles de Dallas pour le plomb.
+  A) On a observé Pb = 665 ppm. Quelle valeur N(0,1) associer à cette teneur pour la simulation ? Et pour Pb = 90 ppm ?
+  B) On a simulé la valeur normale 0,5. Quelle teneur en plomb lui associer ? Et pour N(0,1) = −2 ?
+  C) Pour représenter la teneur d’un bloc de 30 m × 30 m, on simule 25 valeurs normales corrélées sur une grille centrée dans le bloc. Faut-il (i) moyenner les valeurs normales puis transformer, (ii) transformer chacune en ln(Pb), moyenner puis prendre l’exponentielle, ou (iii) transformer chacune, prendre l’exponentielle, puis moyenner les 25 teneurs ? Pourquoi ?
+===== SLIDE 26  [images:5 tableaux:0 equations:0]
+  EXERCICE 1 · SOLUTION
+  A et B) Lire la courbe dans les deux sens
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  26
+  A) De la teneur vers la valeur normale — on lit la fonction de répartition du plomb, puis on redescend sur la courbe N(0,1) à la même ordonnée :
+  B) De la valeur normale vers la teneur — même lecture, dans l’autre sens :
+  À NOTER
+  La transformation ne change jamais le RANG d’une valeur : c’est une correspondance quantile à quantile. Une teneur au 90ᵉ centile devient une valeur normale au 90ᵉ centile, soit 1,28.
+===== SLIDE 27  [images:1 tableaux:0 equations:0]
+  EXERCICE 1 · SOLUTION
+  C) Réponse iii : simuler, transformer, PUIS moyenner
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  27
+  i) Moyenner les valeurs normales, puis transformer
+  FAUX. La transformation n’est pas linéaire : la moyenne des transformées n’est pas la transformée de la moyenne.
+  ii) Transformer en ln(Pb), moyenner, puis exponentier
+  FAUX aussi. C’est la moyenne GÉOMÉTRIQUE des teneurs, pas la moyenne arithmétique — donc pas la teneur du bloc.
+  iii) Transformer chaque valeur, exponentier chacune, puis moyenner les 25 teneurs
+  CORRECT. La teneur d’un bloc est la moyenne arithmétique des teneurs ponctuelles qu’il contient.
+  À RETENIR
+  La règle universelle : SIMULATIONS → FONCTION DE TRANSFERT → MOYENNE. On peut d’ailleurs démontrer que dans le cas conditionnel, la moyenne des simulations conditionnelles redonne exactement l’estimation par krigeage — mais seulement pour une fonction de transfert linéaire.
+===== SLIDE 28  [images:1 tableaux:2 equations:0]
+  EXERCICE EN ÉQUIPE 2
+  Simulation par décomposition de Cholesky (méthode LU)
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  28
+  On veut simuler une variable Z en trois points distincts (cas stationnaire). On a construit la matrice de covariance K et effectué la décomposition K = L L′. On a trouvé la matrice L ci-dessous, et on tire d’une N(0,1) le vecteur y.
+  L =
+  2,8284
+  0
+  0
+  1,4142
+  2,4495
+  0
+  1,0607
+  1,4289
+  2,1985
+  y =
+  1,5248
+  −0,5896
+  0,2485
+  A) Quel est le palier du variogramme simulé ?    B) Quelle est la covariance entre Z₂ et Z₃ ?    C) Quelle est la valeur simulée pour Z₃ ?
+  D) On a observé Z₁ = 2. Que devient Y₁ pour que la simulation soit conditionnelle ?
+  E) On a observé Z₁ = 2. Que devient la covariance CONDITIONNELLE entre Z₂ et Z₃ ?
+===== SLIDE 29  [images:4 tableaux:0 equations:0]
+  EXERCICE 2 · SOLUTION
+  A à C) Tout se lit dans L
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  29
+  A) Le palier est la variance, c’est-à-dire le terme diagonal de K = L L′ :
+  B) La covariance entre Z₂ et Z₃ est le produit scalaire des lignes 2 et 3 de L :
+  C) La valeur simulée est z = L y ; pour Z₃ on prend la troisième ligne :
+  À NOTER
+  Le vecteur complet est z = [4,3129 ; 0,7122 ; 1,3212]. Remarquez que L est triangulaire inférieure : Z₁ ne dépend que de Y₁, Z₂ de Y₁ et Y₂, Z₃ des trois. C’est cette structure qui rend le conditionnement trivial.
+===== SLIDE 30  [images:2 tableaux:0 equations:0]
+  EXERCICE 2 · SOLUTION
+  D et E) Conditionner, c’est fixer les premières composantes de y
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  30
+  D) Comme L est triangulaire, Z₁ ne dépend que de Y₁. Il suffit d’inverser :
+  On force Y₁ = 0,7071 au lieu de le tirer au hasard ; Y₂ et Y₃ restent tirés librement. La réalisation honore alors exactement Z₁ = 2. C’est le conditionnement exact par la méthode LU.
+  E) Une fois Z₁ connu, le terme en Y₁ devient une constante. Il ne reste dans la covariance que les termes en Y₂ et Y₃ :
+  On utilise Cov(Y₂,Y₂) = 1 (loi normale centrée réduite) et Cov(Y₂,Y₃) = 0 (tirages indépendants).
+  La covariance passe de 5 à 3,5 : connaître Z₁ réduit la dépendance résiduelle entre Z₂ et Z₃. C’est exactement le complément de Schur.
+===== SLIDE 31  [images:2 tableaux:0 equations:0]
+  ATELIER INTERACTIF — LIVRE EN LIGNE
+  Reproduction du variogramme
+  ATELIER 12.1
+  Reproduction du variogramme
+  Chaque réalisation a un variogramme expérimental qui fluctue autour du modèle.
+  La moyenne des variogrammes expérimentaux converge vers le modèle théorique à mesure qu’on accumule les réalisations.
+  Accès : livre en ligne, chapitre 12 — section « Simulation non conditionnelle »   ·   danlauz.github.io/glq3401-3651
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  31
+===== SLIDE 32  [images:1 tableaux:0 equations:0]
+  03
+  SECTION 3
+  La simulation conditionnelle
+  Honorer les observations tout en gardant la variabilité du modèle.
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+===== SLIDE 33  [images:2 tableaux:0 equations:0]
+  3 · CONDITIONNELLE
+  Cholesky par blocs : conditionner en une seule factorisation
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  33
+  Livre en ligne · chap. 12 — § Simulation conditionnelle d’une variable continue
+  Deux ensembles : les N_d points de conditionnement (valeurs observées z_d) et les N_s points à simuler. La matrice globale K se décompose en blocs K_dd, K_ss et croisés K_ds.
+  La factorisation par blocs L (triangulaire) sépare la part expliquée par les données de la variabilité résiduelle.
+  Chaque réalisation = moyenne conditionnelle (le krigeage simple simultané) + composante aléatoire :
+  La covariance conditionnelle est le complément de Schur, restitué par L_ss :
+  La factorisation se fait UNE fois ; chaque réalisation ne coûte ensuite qu’un tirage y_s et un produit : idéal pour beaucoup de réalisations sur un champ modéré.
+===== SLIDE 34  [images:2 tableaux:0 equations:0]
+  3 · CONDITIONNELLE
+  Cholesky conditionnel : la factorisation par blocs, pas à pas
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  34
+  Livre en ligne · chap. 12 — § Simulation conditionnelle d’une variable continue
+  On range les points dans un seul vecteur : d’abord les N_d points de conditionnement, ensuite les N_s points à simuler.
+  En développant le produit L Lᵀ bloc par bloc, on identifie les trois relations :
+  Le bloc L_dd est la factorisation de Cholesky des seules données. Le bloc L_sd relie les points à simuler aux données. Le bloc L_ss porte ce qui reste — la variabilité que les données n’expliquent pas.
+  Le bloc nul en haut à droite est essentiel : il traduit que les premières composantes du vecteur y ne dépendent QUE des données. C’est ce qui va permettre de les fixer.
+  Aucune de ces trois relations n’est une astuce : elles tombent directement du produit matriciel. Il n’y a rien d’autre dans la méthode.
+===== SLIDE 35  [images:2 tableaux:0 equations:0]
+  3 · CONDITIONNELLE
+  Imposer les données : résoudre pour y_d au lieu de le tirer
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  35
+  Livre en ligne · chap. 12 — § Simulation conditionnelle d’une variable continue
+  En simulation NON conditionnelle, on tire tout le vecteur y au hasard. Ici, on impose que les N_d premières valeurs simulées soient EXACTEMENT les données observées :
+  y_d n’est donc plus tiré : il est CALCULÉ. Et comme L_dd est triangulaire inférieure, on ne l’inverse jamais — une simple descente triangulaire suffit, en O(N_d²).
+  Les N_s composantes restantes, elles, sont tirées librement. La réalisation s’écrit alors en deux parties :
+  Le terme du milieu
+  ne dépend que des données : il est IDENTIQUE d’une réalisation à l’autre. C’est la moyenne conditionnelle.
+  Le dernier terme
+  change à chaque tirage de y_s : c’est lui, et lui seul, qui fait la différence entre deux réalisations.
+===== SLIDE 36  [images:2 tableaux:0 equations:0]
+  3 · CONDITIONNELLE
+  Validation : on retrouve exactement le krigeage simple
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  36
+  Livre en ligne · chap. 12 — § Simulation conditionnelle d’une variable continue
+  Le facteur qui multiplie les données dans la formule précédente vaut, en développant les relations par blocs :
+  Autrement dit : la partie déterministe de la réalisation conditionnelle EST le krigeage simple, calculé simultanément en tous les points à simuler. La méthode n’invente rien — elle retrouve le krigeage et lui ajoute du bruit structuré.
+  Et la covariance du terme aléatoire vaut :
+  C’est le complément de Schur — c’est-à-dire, terme à terme, la matrice de covariance des erreurs de krigeage simple. Sa diagonale contient les variances de krigeage.
+  On tient là le résultat central du cours : une simulation conditionnelle, c’est le KRIGEAGE plus une erreur simulée qui a exactement la covariance de l’erreur de krigeage. Toute la section 4 en découle.
+  Limites de la méthode : mémoire en O((N_d + N_s)²), pas de points confondus sous peine de matrice singulière, et l’ensemble des positions doit être figé avant la factorisation.
+===== SLIDE 37  [images:2 tableaux:0 equations:0]
+  3 · CONDITIONNELLE
+  La SGS : construire la réalisation point par point
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  37
+  Livre en ligne · chap. 12 — § Simulation conditionnelle d’une variable continue
+  Un pas de SGS : voisinage (données + valeurs déjà simulées) et loi gaussienne conditionnelle d’où l’on tire (livre, chap. 12).
+  À chaque point du chemin aléatoire, krigeage simple puis tirage :
+  La valeur simulée devient aussitôt une donnée conditionnante pour les points suivants : la structure spatiale se propage de proche en proche.
+===== SLIDE 38  [images:0 tableaux:0 equations:0]
+  3 · CONDITIONNELLE
+  La SGS : l’algorithme, en cinq étapes
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  38
+  Livre en ligne · chap. 12 — § Simulation conditionnelle d’une variable continue
+  1
+  Définir un chemin aléatoire.
+  Une permutation aléatoire de tous les nœuds de la grille à simuler. L’ordre change à chaque réalisation.
+  2
+  Au nœud courant, rassembler le voisinage.
+  Les données originales ET toutes les valeurs déjà simulées aux nœuds précédents. C’est le point crucial.
+  3
+  Résoudre le krigeage simple.
+  On obtient la moyenne conditionnelle Z*(x) et la variance de krigeage σ²_KS(x).
+  4
+  Tirer la valeur simulée.
+  z_s(x) = Z*(x) + σ_KS(x) · y, avec y tiré dans une normale centrée réduite.
+  5
+  Ajouter cette valeur aux données conditionnantes, puis passer au nœud suivant.
+  Sans cette étape, la structure spatiale ne se propagerait pas et l’on obtiendrait un champ de bruit.
+  Notez qu’aucune matrice globale n’est jamais formée : on résout N petits systèmes au lieu d’un gros. C’est ce qui permet de simuler des millions de nœuds.
+===== SLIDE 39  [images:4 tableaux:0 equations:0]
+  3 · CONDITIONNELLE
+  Pourquoi la SGS reproduit-elle la covariance ? Démonstration par induction
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  39
+  Livre en ligne · chap. 12 — § Simulation conditionnelle d’une variable continue
+  Supposons n points déjà simulés qui reproduisent correctement la covariance. On simule le point n+1.
+  1. On réalise le krigeage simple à partir des n valeurs connues :
+  2. On ajoute l’erreur, d’écart-type égal à l’écart-type de krigeage :
+  3. On calcule alors la covariance avec un point déjà simulé xⱼ :
+  À RETENIR
+  Le terme d’erreur ε est indépendant des valeurs déjà simulées : il ne contribue pas à la covariance. Il reste la combinaison des poids de krigeage, qui satisfait précisément les équations du système de krigeage simple — donc la covariance cible. Par induction, la réalisation complète reproduit la covariance du modèle.
+===== SLIDE 40  [images:0 tableaux:1 equations:0]
+  3 · CONDITIONNELLE
+  SGS : les règles du métier
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  40
+  Livre en ligne · chap. 12 — § Simulation conditionnelle d’une variable continue
+  Chemin aléatoire
+  Un parcours systématique crée des artefacts directionnels ; passes multi-échelles (grossier vers fin) pour capturer toutes les structures.
+  Voisinage mobile
+  On se limite aux k points les plus proches : l’effet d’écran rend les points éloignés superflus. La reproduction du variogramme devient approchée, le palier reste correct.
+  Effet de pépite
+  En non conditionnel : l’ajouter APRÈS, en bruit indépendant. En conditionnel : impossible, les observations l’incluent déjà et doivent être reproduites.
+  Matricielle (Cholesky)
+  SGS
+  Taille maximale
+  ≈ 10 000 points
+  quasi illimitée
+  Coût M réalisations
+  décomposition 1 fois, puis rapide
+  O(M · n · k³)
+  Artefacts
+  aucun
+  possibles si chemin mal choisi
+===== SLIDE 41  [images:1 tableaux:0 equations:0]
+  3 · CONDITIONNELLE
+  Le squelette séquentiel accepte neuf variantes
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  41
+  Livre en ligne · chap. 12 — § Simulation conditionnelle d’une variable continue
+  À RETENIR
+  Le principe généralisateur : TOUTE méthode capable de fournir une moyenne et une variance conditionnelles en un point peut se brancher sur l’algorithme séquentiel. On remplace simplement l’étape 3.
+  Krigeage ordinaire
+  moyenne locale inconnue
+  Cokrigeage simple
+  cas multivariable complet
+  Cokrigeage colocalisé
+  secondaire dense, système allégé
+  Moyenne locale variable (LVM)
+  dérive connue imposée
+  Corrélation intrinsèque
+  modèle proportionnel
+  Mise à jour bayésienne
+  information a priori intégrée
+  Simulation directe
+  sans anamorphose gaussienne
+  Simulation d’indicatrices (SIS)
+  cas non gaussien, cours 12
+  Simulation de blocs
+  support autre que le point
+  Toutes partagent les étapes 1, 2, 4 et 5 de l’algorithme. Seule la façon d’obtenir la loi conditionnelle change. C’est pour cela que la SGS est le cheval de bataille de la géostatistique appliquée.
+===== SLIDE 42  [images:0 tableaux:0 equations:0]
+  3 · CONDITIONNELLE
+  SGS : ce qu’on gagne, ce qu’on paie
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  42
+  Livre en ligne · chap. 12 — § Simulation conditionnelle d’une variable continue
+  AVANTAGES
+  Passe à l’échelle : des millions de nœuds, parce qu’aucune matrice globale n’est jamais formée.
+  Conditionnement direct et exact aux données.
+  Positions quelconques, grille irrégulière, 2D comme 3D.
+  Extensible : neuf variantes se branchent sur le même squelette, dont le cokrigeage simple pour le cas multivariable.
+  INCONVÉNIENTS
+  La démonstration n’est exacte qu’en VOISINAGE GLOBAL. Avec un voisinage limité, la reproduction du variogramme devient approchée — les grandes portées sont systématiquement sous-représentées.
+  Chaque réalisation coûte le prix fort : rien n’est réutilisable d’une réalisation à l’autre, contrairement à LU.
+  Artefacts possibles si le chemin est mal randomisé, ou si le voisinage est trop petit.
+  La qualité dépend de réglages (taille du voisinage, passes multi-échelles) qui ne se déduisent d’aucune théorie.
+  Règle pratique : au moins 20 à 40 voisins, et une passe grossière avant la passe fine, sans quoi les structures à grande portée disparaissent.
+===== SLIDE 43  [images:2 tableaux:0 equations:0]
+  3 · CONDITIONNELLE
+  La SGS en action : la grille se remplit, point par point
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  43
+  Livre en ligne · chap. 12 — § Simulation conditionnelle d’une variable continue
+  Champ 20 × 20, modèle sphérique isotrope de portée 5 — la grille se remplit le long du chemin aléatoire.
+  Loi conditionnelle au nœud courant : Z*_KS, σ_KS, et la valeur tirée.
+  ANIMATION
+  Suivez le compteur d’itérations : au début, la loi conditionnelle est large (σ_KS proche de 1) parce qu’il n’y a presque aucun voisin. Elle se resserre à mesure que la grille se peuple.
+  Repérez le moment où un nœud tombe à côté d’un point déjà simulé fort : la moyenne conditionnelle Z*_KS bascule, et la valeur tirée suit. C’est la structure spatiale qui se propage de proche en proche.
+  Observez enfin que les premiers nœuds simulés sont, de fait, les plus « libres » : ils portent presque toute la variabilité du champ final.
+===== SLIDE 44  [images:2 tableaux:0 equations:0]
+  ATELIER INTERACTIF — LIVRE EN LIGNE
+  Animation SGS
+  ATELIER 12.2
+  Animation SGS
+  Visualisez le remplissage séquentiel : chaque pixel est tiré de sa loi conditionnelle le long d’un chemin aléatoire.
+  L’histogramme partiel reconstruit peu à peu la loi gaussienne cible.
+  Accès : livre en ligne, chapitre 12 — section « Simulation conditionnelle »   ·   danlauz.github.io/glq3401-3651
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  44
+===== SLIDE 45  [images:1 tableaux:3 equations:0]
+  EXERCICE EN ÉQUIPE 3
+  Réaliser une étape intermédiaire d’une simulation SGS
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  45
+  On simule le champ de concentration de Dallas (exercice 1). Trois points sont déjà simulés dans l’espace normal : Y(x₁) = 1,24 · Y(x₂) = 0,11 · Y(x₃) = −0,57. On cherche à simuler le quatrième.
+  Le système de krigeage simple est le suivant, et sa solution est donnée :
+  1
+  0,548
+  0,256
+  0,548
+  1
+  0,345
+  0,256
+  0,345
+  1
+  λ₁
+  λ₂
+  λ₃
+  =
+  0,347
+  0,148
+  0,412
+  Solution :  λ = [0,3433 ; −0,1725 ; 0,3836]
+  A) Expliquez pourquoi l’algorithme SGS garantit que chaque réalisation respecte les données observées.
+  B) Que valent la valeur estimée Y*(x₄) et la variance de krigeage σ²ₖₛ ?
+  C) Le générateur uniforme U(0,1) retourne 0,25. Que vaut Y(x₄) ? Que vaut Z(x₄) en ppm ? (Indice : table de la loi normale, puis lecture graphique de l’exercice 1.)
+  D) Qu’arrivera-t-il à la taille de la matrice au cinquième point ? Quelle implication sur un champ de milliers de points ?
+===== SLIDE 46  [images:3 tableaux:0 equations:0]
+  EXERCICE 3 · SOLUTION
+  A et B) Le krigeage est exact, donc les données sont honorées
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  46
+  A) Le krigeage est un interpolateur EXACT. Si le point à simuler coïncide avec une observation x₀, le poids associé à x₀ vaut 1 et tous les autres sont nuls : la variance de krigeage est nulle, l’erreur ajoutée aussi, et la valeur simulée est exactement la valeur observée.
+  B) Valeur estimée (moyenne nulle dans l’espace normal, donc pas de terme constant) :
+  Variance de krigeage simple :
+  À NOTER
+  Le poids négatif de λ₂ n’est pas une anomalie : c’est l’effet d’écran, x₂ étant masqué par x₁ qui lui est fortement corrélé. La variance résiduelle de 0,7484 (sur un palier de 1) indique qu’il reste beaucoup d’incertitude : la simulation aura donc de l’amplitude.
+===== SLIDE 47  [images:4 tableaux:0 equations:0]
+  EXERCICE 3 · SOLUTION
+  C et D) Tirer dans la loi conditionnelle, et le mur de la taille
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  47
+  C) Le tirage uniforme 0,25 se convertit en valeur normale centrée réduite par la table :
+  Puis on « décentre-réduit » vers la loi conditionnelle N(Y*, σ²ₖₛ) :
+  Enfin, on repasse dans l’espace des teneurs par lecture graphique (exercice 1) :
+  D) La matrice grossit à chaque point simulé
+  IMPORTANT
+  Elle continuera de grandir jusqu’à devenir pratiquement impossible à inverser, la taille devenant prohibitive. C’est pourquoi on impose en pratique un VOISINAGE GLISSANT : on ne conserve que les quelques dizaines de points les plus proches. La méthode reste alors applicable à des millions de nœuds.
+===== SLIDE 48  [images:0 tableaux:1 equations:0]
+  3 · CONDITIONNELLE
+  Cholesky ou SGS : lequel, et pourquoi
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  48
+  Livre en ligne · chap. 12 — § Simulation conditionnelle d’une variable continue
+  Critère
+  Cholesky (LU)
+  SGS
+  Taille maximale du champ
+  ≈ 10 000 points
+  quasi illimitée
+  Coût de M réalisations
+  une factorisation, puis M produits
+  M fois le coût complet
+  Reproduction de la covariance
+  exacte
+  approchée si voisinage limité
+  Voisinage
+  global par construction
+  glissant, à régler
+  Effet de pépite
+  sur la diagonale
+  dans le krigeage simple
+  Artefacts
+  aucun
+  possibles si le chemin est mal choisi
+  La règle tient en une phrase : beaucoup de réalisations sur un petit champ, prenez LU ; une poignée de réalisations sur un très grand champ, prenez la SGS.
+  Et si le champ est grand ET qu’il faut beaucoup de réalisations : FFT-MA ou bandes tournantes, avec post-conditionnement.
+===== SLIDE 49  [images:2 tableaux:0 equations:0]
+  3 · RECUIT SIMULÉ
+  Le recuit simulé : quand histogramme et variogramme ne suffisent plus
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  49
+  Livre en ligne · chap. 12 — § Simulation conditionnelle d’une variable continue
+  Une fonction objectif mesure l’écart aux propriétés visées :
+  On perturbe un point au hasard et on accepte selon la règle de Metropolis, avec une température décroissante :
+  La fonction objectif s’enrichit à volonté : courbes tonnage-teneur, contraintes géologiques, connectivité, statistiques d’ordre supérieur.
+  Amorcer avec une réalisation SGS ou matricielle accélère la convergence ; T décroît lentement (p. ex. ×0,95) pour échapper aux minima locaux.
+  Coûteux : la méthode de dernier recours, quand les méthodes classiques ne satisfont pas toutes les contraintes à la fois.
+===== SLIDE 50  [images:1 tableaux:0 equations:0]
+  3 · RECUIT SIMULÉ
+  La fonction objectif : dire ce que l’on veut, puis l’optimiser
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  50
+  Livre en ligne · chap. 12 — § Simulation conditionnelle d’une variable continue
+  Chaque f_i mesure l’écart entre la réalisation courante et une CARACTÉRISTIQUE visée : reproduction du variogramme, de l’histogramme, d’une connectivité, d’une somme imposée par ligne, d’une réponse d’écoulement mesurée sur le terrain.
+  Les poids ω_i arbitrent entre les objectifs. Ils doivent être calibrés sur des écarts de MÊME ordre de grandeur, sinon un seul objectif gouverne tout.
+  La force de la méthode : on peut imposer n’importe quelle contrainte que l’on sait ÉVALUER, même sans savoir la simuler directement. Aucune autre méthode du cours n’offre cela.
+  Sa faiblesse : les objectifs doivent être COMPATIBLES entre eux. Demander simultanément un variogramme très continu et un histogramme très dispersé peut n’avoir aucune solution — l’algorithme convergera alors vers un compromis dont personne ne connaît les propriétés statistiques.
+===== SLIDE 51  [images:2 tableaux:0 equations:0]
+  3 · RECUIT SIMULÉ
+  L’algorithme, et la cédule de refroidissement
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  51
+  Livre en ligne · chap. 12 — § Simulation conditionnelle d’une variable continue
+  1
+  Initialiser.  Tirer un champ Z₀ au hasard dans la distribution « mère » (souvent l’histogramme cible mélangé aléatoirement), calculer FO₀ et fixer la température t.
+  2
+  Perturber.  Choisir un nœud au hasard et remplacer sa valeur par un tirage dans la distribution mère — ou échanger deux nœuds, ce qui préserve l’histogramme exactement.
+  3
+  Recalculer FO.  Uniquement les termes affectés par le nœud modifié : c’est ce qui rend la méthode praticable.
+  4
+  Accepter ou refuser.  Toujours accepter si FO diminue ; sinon accepter avec la probabilité exp(−ΔFO / t). Accepter parfois une dégradation est ce qui permet de sortir des minima locaux.
+  5
+  Refroidir, puis boucler.  Réduire t selon une cédule (géométrique, par paliers). Arrêt quand FO passe sous un seuil, OU quand le taux d’acceptation devient négligeable.
+  Une dégradation de 10 unités est acceptée 9 fois sur 10 au début, et 7 fois sur 1000 à la fin :
+===== SLIDE 52  [images:2 tableaux:0 equations:0]
+  3 · RECUIT SIMULÉ
+  Le recuit simulé en action : la fonction objectif descend
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  52
+  Livre en ligne · chap. 12 — § Simulation conditionnelle d’une variable continue
+  Champ 25 × 25 : on cherche une somme imposée sur chaque ligne et chaque colonne.
+  À chaque itération, la valeur tirée dans la distribution mère (trait vert) et son sort.
+  ANIMATION
+  Au début, à haute température, des perturbations qui DÉGRADENT la fonction objectif sont acceptées : le champ se réorganise brutalement. C’est ce qui permet de sortir des minima locaux.
+  Vers la fin, à basse température, presque seules les améliorations passent : le champ se fige. Si vous refroidissez trop vite, il se fige sur une mauvaise solution.
+  Le taux d’acceptation qui s’effondre est le signal d’arrêt : continuer ne changerait plus rien.
+===== SLIDE 53  [images:1 tableaux:0 equations:0]
+  3 · RECUIT SIMULÉ
+  Conditionner, et ce que l’on gagne ou perd
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  53
+  Livre en ligne · chap. 12 — § Simulation conditionnelle d’une variable continue
+  À RETENIR
+  Le cas conditionnel est d’une simplicité désarmante : il suffit de NE JAMAIS perturber un nœud qui coïncide avec une donnée. Les valeurs observées restent en place du début à la fin, et sont donc honorées exactement. Aucune autre méthode du cours ne conditionne aussi facilement.
+  AVANTAGES
+  Impose n’importe quelle contrainte que l’on sait évaluer numériquement.
+  Conditionnement immédiat, sans post-traitement.
+  Reproduit l’histogramme EXACTEMENT si l’on procède par échanges.
+  Sert aussi à caler un modèle sur des données dynamiques (essais de pompage, historique de production).
+  INCONVÉNIENTS
+  Coût élevé : des millions d’itérations pour un champ de taille modeste.
+  Beaucoup de paramètres à régler (poids, cédule, critère d’arrêt) et aucun ne se déduit de la théorie.
+  On connaît MAL les propriétés statistiques de ce qui est simulé : la réalisation n’est pas un tirage d’un modèle explicite.
+  Deux jeux d’objectifs incompatibles produisent un compromis silencieux, sans message d’erreur.
+===== SLIDE 54  [images:1 tableaux:0 equations:0]
+  EXERCICE EN ÉQUIPE 4
+  Comprendre le critère d’acceptation du recuit simulé
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  54
+  À l’itération n de l’algorithme, la fonction objectif vaut FO_n = 147 et le paramètre de température vaut T = 20. Déterminez si l’on doit accepter la perturbation candidate dans chacun des cas suivants, où « rand » est un nombre aléatoire tiré d’une loi U(0,1).
+  A) FO_candidat = 135 et rand = 0,67
+  B) FO_candidat = 158 et rand = 0,67
+  C) FO_candidat = 158 et rand = 0,43
+  D) FO_candidat = 158, rand = 0,43, mais T vaut 10 au lieu de 20
+  E) En comparant C) et D), comment se comporte l’algorithme à mesure que l’on décroît le paramètre de température ?
+===== SLIDE 55  [images:5 tableaux:0 equations:0]
+  EXERCICE 4 · SOLUTION
+  Une exponentielle décide, et la température resserre l’étau
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  55
+  E) Plus la température diminue, plus on rejette de perturbations défavorables. À la fin, on n’accepte plus que les perturbations qui AMÉLIORENT le système, c’est-à-dire qui font diminuer la fonction objectif.
+  Au début (T élevé), l’algorithme accepte des dégradations : c’est ce qui lui permet de sortir des minima locaux. Le refroidissement progressif transforme peu à peu l’exploration en optimisation pure.
+===== SLIDE 56  [images:1 tableaux:0 equations:0]
+  3 · CONDITIONNELLE
+  Une question ouverte : et si la variable n’est pas gaussienne ?
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  56
+  Livre en ligne · chap. 12 — § Simulation conditionnelle d’une variable continue
+  Toute la SGS repose sur un point : en multigaussien, la loi conditionnelle en un nœud est NORMALE, entièrement décrite par sa moyenne (le krigeage simple) et sa variance (la variance de krigeage). Deux nombres suffisent.
+  Si la variable n’est pas gaussienne — et une variable CATÉGORIELLE ne peut pas l’être — cette propriété tombe. Il faut alors une autre façon d’obtenir la loi conditionnelle locale.
+  Or nous disposons déjà d’un outil qui construit une loi conditionnelle locale SANS hypothèse de loi : le krigeage d’indicatrices du cours 10. Il suffit de le brancher à l’étape 3 du squelette séquentiel.
+  C’est exactement la simulation séquentielle d’indicatrices (SIS), premier sujet du cours 12. L’algorithme est le même — seule la façon de tirer la loi conditionnelle change.
+  À RETENIR
+  Retenez le schéma : chemin aléatoire → loi conditionnelle locale → tirage → ajout aux données. Ce squelette est commun à la SGS, à la SIS et à toutes les variantes de la diapositive précédente. Ce qui change d’une méthode à l’autre tient dans une seule étape.
+===== SLIDE 57  [images:1 tableaux:0 equations:0]
+  04
+  SECTION 4
+  Post-conditionnement et propriétés
+  Corriger une réalisation libre par l’erreur de krigeage, et savoir ce qu’elle vaut.
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+===== SLIDE 58  [images:2 tableaux:0 equations:0]
+  4 · POST-CONDITIONNEMENT
+  Rendre conditionnelle une simulation qui ne l’était pas
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  58
+  Livre en ligne · chap. 12 — § Post-conditionnement par krigeage simple (ou ordinaire)
+  Principe du post-conditionnement par krigeage (livre, chap. 12).
+  Trois étapes : simuler un champ libre Z_nc ; kriger séparément les observations réelles et les valeurs simulées aux mêmes points ; ajouter la différence des deux krigeages.
+  Aux points d’observation, le krigeage est exact : Z_cond = Z_obs. Loin des données, les deux krigeages tendent vers la moyenne et Z_cond retrouve Z_nc.
+===== SLIDE 59  [images:3 tableaux:0 equations:0]
+  4 · POST-CONDITIONNEMENT
+  Les deux écritures, et ce que chacune fait comprendre
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  59
+  Livre en ligne · chap. 12 — § Post-conditionnement par krigeage simple (ou ordinaire)
+  Première écriture — « le krigeage, plus une erreur simulée » :
+  Seconde écriture, algébriquement identique — « le simulé, plus le krigeage de la différence » :
+  Notations : Z est la réalité, Z* son krigeage à partir des données réelles ; Z_s est une réalisation NON conditionnelle, Z_s* le krigeage des valeurs de cette réalisation prises aux MÊMES positions que les données ; Z_sc est le résultat conditionnel.
+  La première écriture explique la STATISTIQUE : on ajoute au krigeage une erreur qui a exactement la loi de l’erreur de krigeage. C’est elle qui donnera le facteur 2 de la diapositive suivante.
+  La seconde explique l’ALGORITHME : on part d’une réalisation libre et on la corrige. C’est celle qu’on programme, parce qu’elle rend le conditionnement applicable à N’IMPORTE QUELLE méthode non conditionnelle — bandes tournantes, FFT-MA, spectrale.
+===== SLIDE 60  [images:1 tableaux:0 equations:0]
+  4 · PROPRIÉTÉS
+  D’où vient le facteur 2 de la variance d’erreur
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  60
+  Livre en ligne · chap. 12 — § Propriétés des simulations
+  Partons de la première écriture et retranchons-la de la réalité :
+  Les deux termes ont la MÊME loi — ce sont deux erreurs de krigeage, de variance σ²_KS — et ils sont INDÉPENDANTS, puisque l’un porte sur la réalité et l’autre sur une réalisation tirée séparément. Les variances s’additionnent : d’où le facteur 2.
+  Conséquence à assumer : une réalisation conditionnelle est, en tout point, DEUX FOIS moins précise que le krigeage. Ce n’est pas un défaut de la méthode, c’est sa définition — une réalisation n’est pas un estimateur, elle est un scénario.
+  Si l’on veut la meilleure carte au sens des moindres carrés, il faut le krigeage. Si l’on veut évaluer un risque, il faut les réalisations. Les deux objets ne sont pas en concurrence.
+  Corollaire utile : la moyenne de M réalisations conditionnelles (l’E-type) converge vers le krigeage, et la dispersion entre réalisations en un point converge vers σ²_KS. C’est un bon test de votre code.
+===== SLIDE 61  [images:3 tableaux:0 equations:0]
+  4 · PROPRIÉTÉS
+  Une réalisation n’est pas un estimateur
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  61
+  Livre en ligne · chap. 12 — § Propriétés des simulations
+  MISE EN GARDE
+  La variance d’erreur d’une réalisation conditionnelle est DEUX FOIS la variance de krigeage simple. Ne jamais utiliser une seule simulation comme estimateur ponctuel : son erreur quadratique double celle du krigeage.
+  En revanche, la moyenne de S réalisations conditionnelles converge vers le krigeage simple et son incertitude :
+  Le post-conditionnement reconstitue donc l’estimation optimale ET l’incertitude, tout en offrant des réalisations qui conservent la variabilité spatiale réelle.
+===== SLIDE 62  [images:1 tableaux:0 equations:0]
+  4 · PROPRIÉTÉS
+  Non conditionnelle ou conditionnelle : espérance et variance
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  62
+  Livre en ligne · chap. 12 — § Propriétés des simulations
+  Propriétés des simulations conditionnelles et non conditionnelles (livre, chap. 12).
+  Non conditionnelle : espérance constante m, variance pleine σ², erreur de prédiction 2σ² (deux réalisations indépendantes du même processus).
+  Conditionnelle : espérance = krigeage simple (exacte aux données, m au loin), variance réduite à σ²_SK (nulle aux données, σ² au loin), erreur 2σ²_SK.
+  Le rapport σ²_SK/σ² mesure la part d’incertitude non résolue par les observations.
+===== SLIDE 63  [images:1 tableaux:0 equations:0]
+  4 · PROPRIÉTÉS
+  Accumuler les réalisations : l’E-type converge vers le krigeage
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  63
+  Livre en ligne · chap. 12 — § Propriétés des simulations
+  La moyenne (E-type) converge vers le krigeage simple et la variance des réalisations vers la variance de krigeage (livre, chap. 12).
+===== SLIDE 64  [images:1 tableaux:1 equations:0]
+  EXERCICE EN ÉQUIPE 5
+  Faire le post-conditionnement par krigeage
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  64
+  Complétez le tableau suivant, qui permet de conditionner une simulation non conditionnelle par post-conditionnement par krigeage. Les points 3 et 5 portent une observation ; les autres non.
+  Point
+  Valeur observée
+  Simulée non cond. (C₁)
+  Krigée avec les données (C₂)
+  Krigée avec les données simulées (C₃)
+  Simulée conditionnellement
+  1
+  —
+  −0,25
+  −0,47
+  −0,20
+  2
+  —
+  1,10
+  −0,98
+  0,50
+  3
+  2,10
+  0,90
+  2,10
+  0,90
+  4
+  —
+  −0,50
+  0,70
+  −0,20
+  5
+  2,40
+  1,50
+  2,40
+  1,50
+  Rappel : la simulation conditionnelle s’obtient en corrigeant la simulation libre par l’écart entre les deux krigeages.
+  Vérifiez ensuite que les points 3 et 5 retrouvent bien leur valeur observée. Pourquoi est-ce automatique ?
+===== SLIDE 65  [images:1 tableaux:1 equations:0]
+  EXERCICE 5 · SOLUTION
+  C = C₁ + C₂ − C₃, et les observations se retrouvent toutes seules
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  65
+  Point
+  Observée
+  C₁
+  C₂
+  C₃
+  C = C₁ + C₂ − C₃
+  1
+  —
+  −0,25
+  −0,47
+  −0,20
+  −0,52
+  2
+  —
+  1,10
+  −0,98
+  0,50
+  −0,38
+  3
+  2,10
+  0,90
+  2,10
+  0,90
+  2,10
+  4
+  —
+  −0,50
+  0,70
+  −0,20
+  0,40
+  5
+  2,40
+  1,50
+  2,40
+  1,50
+  2,40
+  Aux points observés (3 et 5), le krigeage est exact : C₂ vaut la valeur observée et C₃ vaut la valeur simulée non conditionnelle. Les deux termes de correction s’annulent avec C₁ et il reste exactement l’observation.
+  Ailleurs, la correction déplace la réalisation libre vers le niveau imposé par les données, sans toucher à sa texture : le variogramme est conservé.
+===== SLIDE 66  [images:2 tableaux:0 equations:0]
+  ATELIER INTERACTIF — LIVRE EN LIGNE
+  Non conditionnel ou conditionnel
+  ATELIER 12.3
+  Non conditionnel ou conditionnel
+  En 1D : la moyenne des réalisations NC converge vers 0 et la variance vers 1 ; en conditionnel, vers le krigeage simple et σ²_SK.
+  Superposez la cible de convergence et montez jusqu’à 200 réalisations.
+  Accès : livre en ligne, chapitre 12 — section « Propriétés des simulations »   ·   danlauz.github.io/glq3401-3651
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  66
+===== SLIDE 67  [images:1 tableaux:0 equations:0]
+  4 · APPLICATIONS
+  Ce que les simulations révèlent et que le krigeage écrase
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  67
+  Livre en ligne · chap. 12 — § Propriétés des simulations
+  Quantiles P10/P50/P90 et probabilité de dépassement : un halo à risque invisible sur la carte krigée seuillée (livre, chap. 12).
+  Dès qu’on cherche un volume au-delà d’un seuil, un tonnage ou un métal récupérable, les simulations donnent la réponse non biaisée ET sa fourchette (P10-P90).
+===== SLIDE 68  [images:2 tableaux:0 equations:0]
+  ATELIER INTERACTIF — LIVRE EN LIGNE
+  Site contaminé : krigeage ou simulations
+  ATELIER 12.4
+  Site contaminé : krigeage ou simulations
+  Vérité, krigeage (Z* et σ²) et simulations (E-type et variance inter-réalisations) ; forez en cliquant la carte.
+  Le bilan compare la fraction de sol contaminé : le seuillage du krigeage est biaisé, les simulations non.
+  Accès : livre en ligne, chapitre 12 — section « Propriétés des simulations »   ·   danlauz.github.io/glq3401-3651
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  68
+===== SLIDE 69  [images:2 tableaux:0 equations:0]
+  ATELIER INTERACTIF — LIVRE EN LIGNE
+  Ressources minières : krigeage ou simulations
+  ATELIER 12.5
+  Ressources minières : krigeage ou simulations
+  Tonnage T(z_c) et métal Q(z_c) récupérables : biaisés sur le champ krigé, restitués sans biais par les simulations.
+  Déplacez la coupure et comparez vérité, krigeage, et médiane avec fourchette P10-P90.
+  Accès : livre en ligne, chapitre 12 — section « Propriétés des simulations »   ·   danlauz.github.io/glq3401-3651
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  69
+===== SLIDE 70  [images:1 tableaux:0 equations:0]
+  05
+  SECTION 5
+  Méthodes avancées
+  Simuler des millions de nœuds : bandes tournantes, FFT-MA, Karhunen-Loève.
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+===== SLIDE 71  [images:3 tableaux:0 equations:0]
+  5 · MÉTHODES AVANCÉES
+  Les bandes tournantes : la 3D ramenée à des droites
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  71
+  Livre en ligne · chap. 12 — § Méthodes de simulation avancées
+  Projection sur des droites, simulation 1D par bande, recombinaison (livre, chap. 12).
+  Somme de processus 1D simulés le long de L directions :
+  En 3D isotrope, la covariance 1D se déduit de la cible :
+  Coût linéaire O(L·n) : efficace sur de grands domaines. Trop peu de droites = stries visibles ; on prend beaucoup de directions bien réparties.
+  En 2D, la relation 1D-2D est moins commode : on simule en 3D et on prend une coupe, ou on passe à la variante spectrale.
+===== SLIDE 72  [images:3 tableaux:0 equations:0]
+  5 · BANDES TOURNANTES
+  Les formules des bandes tournantes, et le lien 1D ↔ 3D
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  72
+  Livre en ligne · chap. 12 — § Méthodes de simulation avancées
+  On simule L processus UNIDIMENSIONNELS le long de L directions, puis on projette chaque point sur chaque droite :
+  Le théorème central limite fait le reste : la somme de L processus indépendants tend vers un champ gaussien, dès que L est grand (quelques centaines à un millier).
+  La variante spectrale remplace les processus 1D par des cosinus à phase aléatoire :
+  Reste à savoir quelle covariance 1D utiliser pour obtenir la covariance 3D voulue :
+  La relation s’inverse analytiquement en 3D — c’est ce qui rend la méthode praticable. En 2D, l’inversion fait intervenir une équation intégrale d’Abel, nettement moins commode : on simule donc en 3D et l’on COUPE un plan.
+  Anisotropies : on ramène le problème à l’isotropie par rotation puis contraction des axes, on simule, puis on applique la transformation inverse. Structures imbriquées : chacune se simule séparément et l’on additionne.
+  La méthode est NON conditionnelle par nature : le conditionnement se fait obligatoirement par post-conditionnement (section 4).
+===== SLIDE 73  [images:2 tableaux:0 equations:0]
+  5 · MÉTHODES AVANCÉES
+  Spectrale et FFT-MA : la covariance vue du domaine des fréquences
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  73
+  Livre en ligne · chap. 12 — § Méthodes de simulation avancées
+  Bandes tournantes spectrales : des cosinus à fréquences tirées de la densité spectrale, évaluables en tout point :
+  FFT-MA : un bruit blanc convolué par la racine de la densité spectrale, sur grille régulière :
+  FFT-MA coûte O(N log N) : des grilles de plusieurs millions de cellules. Conditions : grille régulière, rembourrage du domaine pour éviter les artefacts de périodicité.
+  Atout décisif : la graine aléatoire ε est séparée de la structure ; perturber le bruit déforme continûment la réalisation, précieux pour le calage d’historique et les problèmes inverses.
+  C’est la méthode utilisée par les ateliers du livre (GFFTMA).
+===== SLIDE 74  [images:4 tableaux:0 equations:0]
+  5 · FFT-MA
+  FFT-MA : deux idées maîtresses, et pourquoi ça marche
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  74
+  Livre en ligne · chap. 12 — § Méthodes de simulation avancées
+  Première idée : une variable régionalisée peut se voir comme une MOYENNE MOBILE pondérée d’un bruit blanc. Chaque point du champ est la somme des contributions aléatoires de son entourage, pondérées par un noyau g.
+  Seconde idée : une convolution coûte cher dans l’espace, mais devient un simple PRODUIT dans le domaine des fréquences.
+  Reste à trouver g. Sa covariance est l’autocorrélation du noyau, ce qui se résout dans Fourier :
+===== SLIDE 75  [images:0 tableaux:0 equations:0]
+  5 · FFT-MA
+  L’algorithme en six étapes, et les pièges de chacune
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  75
+  Livre en ligne · chap. 12 — § Méthodes de simulation avancées
+  1
+  Agrandir la grille.  Simuler sur (N_x + a) × (N_y + a) au lieu de N_x × N_y. La FFT suppose la PÉRIODICITÉ : sans marge d’au moins une portée, le bord gauche du champ serait corrélé au bord droit.
+  2
+  Tabuler la covariance depuis l’origine.  C(h) évaluée en (0,0) et repliée sur le tore avec des décalages SIGNÉS. Un repliement en valeur absolue détruit toute anisotropie oblique.
+  3
+  Calculer F(C).  Elle est réelle, parce que C est réelle et symétrique. Toute partie imaginaire non négligeable signale une erreur d’indexation. Tronquer les valeurs négatives résiduelles à zéro.
+  4
+  Tirer un bruit blanc Y et le transformer.  F(Y) est complexe : c’est normal, et c’est elle qui porte l’aléa.
+  5
+  Multiplier, puis FFT inverse.  Produit terme à terme de F(Y) par la racine de F(C), puis retour dans l’espace.
+  6
+  Prendre la partie réelle, puis les N_x · N_y premiers points.  On jette la marge ajoutée à l’étape 1 : elle a servi à absorber la périodicité, elle ne fait pas partie du résultat.
+  Atout propre à FFT-MA : le bruit blanc Y et le noyau g sont SÉPARÉS. On peut donc fixer l’aléa et faire varier la structure, ou l’inverse — d’où son usage en problèmes inverses et en calage d’historique (FFTMA-SA).
+===== SLIDE 76  [images:1 tableaux:0 equations:0]
+  5 · FFT-MA
+  L’atout caché de FFT-MA : perturber sans détruire
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  76
+  Livre en ligne · chap. 12 — § Méthodes de simulation avancées
+  Dans FFT-MA, deux ingrédients restent SÉPARÉS de bout en bout : le bruit blanc Y, qui porte tout l’aléa, et le noyau g, qui porte toute la structure. Aucune autre méthode du cours ne les garde distincts.
+  Conséquence 1 — fixer l’aléa, faire varier la structure. On garde le MÊME Y et on change le variogramme : on obtient des réalisations qui se ressemblent, et l’on voit l’effet propre du modèle. Idéal pour une analyse de sensibilité.
+  Conséquence 2 — fixer la structure, perturber l’aléa progressivement. On remplace Y par cos(θ)·Y + sin(θ)·Y′ : à θ petit, la nouvelle réalisation est proche de l’ancienne. C’est la DÉFORMATION GRADUELLE, et elle rend la simulation utilisable dans un algorithme d’optimisation.
+  Conséquence 3 — perturbations LOCALES. On ne modifie Y que dans une zone : seule cette zone change dans la réalisation, le reste est inchangé au bit près.
+  À RETENIR
+  C’est ce qui fonde FFTMA-SA et l’usage de la méthode en problèmes inverses et en calage d’historique : on cherche la réalisation qui reproduit une donnée dynamique (essai de pompage, historique de production) en déformant graduellement le bruit blanc, sans jamais quitter l’ensemble des réalisations valides du modèle.
+===== SLIDE 77  [images:1 tableaux:1 equations:0]
+  5 · MÉTHODES AVANCÉES
+  Karhunen-Loève, et le choix de la bonne méthode
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  77
+  Livre en ligne · chap. 12 — § Méthodes de simulation avancées
+  KL : le champ comme somme de modes propres pondérés par des coefficients aléatoires :
+  Optimale en erreur quadratique à M termes : la représentation la plus parcimonieuse. Son intérêt n’est pas la vitesse mais la PARAMÉTRISATION RÉDUITE (M ≪ N coefficients), utile en quantification d’incertitude et problèmes inverses.
+  Méthode
+  Support
+  Coût
+  Atout principal
+  Bandes tournantes
+  points ou grille
+  O(L·n)
+  rapide, tout support
+  BT spectrales
+  points ou grille
+  O(L·n)
+  continu, évaluable partout
+  FFT-MA
+  grille régulière
+  O(N log N)
+  très rapide ; découple bruit et structure
+  Karhunen-Loève
+  points ou grille
+  O(N³) ou M modes
+  paramétrisation réduite
+  Toutes produisent du NON conditionnel : on conditionne ensuite par post-conditionnement. Variable asymétrique : anamorphose avant, transformation après.
+===== SLIDE 78  [images:0 tableaux:1 equations:0]
+  5 · SYNTHÈSE
+  Quelle méthode pour quelle taille de champ ?
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  78
+  Livre en ligne · chap. 12 — § Méthodes de simulation avancées
+  Méthode
+  Coût de la 1ʳᵉ réalisation
+  Coût des suivantes
+  Taille praticable
+  Conditionnel ?
+  Cholesky (LU)
+  O(n³)
+  O(n²) — imbattable
+  ≤ 10⁴
+  DIRECT
+  SGS
+  O(n k³)
+  O(n k³) — tout à refaire
+  10⁶ à 10⁷
+  DIRECT
+  FFT-MA
+  O(n log n)
+  O(n log n)
+  10⁸ et plus
+  post-cond.
+  Bandes tournantes
+  O(n L)
+  O(n L)
+  10⁸ et plus
+  post-cond.
+  Karhunen-Loève
+  O(n³) ou Lanczos
+  O(n M)
+  ≤ 10⁴
+  post-cond.
+  Recuit simulé
+  très élevé
+  très élevé
+  10⁴ à 10⁵
+  DIRECT
+  La colonne « coût des suivantes » est celle qu’on oublie, et c’est elle qui justifie LU : la factorisation est faite une fois, puis chaque réalisation supplémentaire ne coûte qu’un produit. Pour 500 réalisations sur 5 000 points, LU bat tout le reste.
+  k est la taille du voisinage de la SGS, L le nombre de bandes, M le nombre de modes retenus en Karhunen-Loève.
+  Les deux méthodes les plus rapides, FFT-MA et bandes tournantes, sont NON conditionnelles : leur usage impose de savoir post-conditionner. C’est la raison pour laquelle la section 4 n’est pas un supplément mais un passage obligé.
+===== SLIDE 79  [images:0 tableaux:0 equations:0]
+  5 · APPLICATIONS
+  Ce que l’on tire d’un jeu de réalisations
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  79
+  Livre en ligne · chap. 12 — § Méthodes de simulation avancées
+  Les quantiles point par point
+  On trie les M valeurs simulées en chaque nœud : P10, P50, P90. Le P50 ressemble au krigeage ; l’écart P90 − P10 est la véritable incertitude locale, celle qui dépend des valeurs voisines et pas seulement de la géométrie.
+  La probabilité de dépasser un seuil
+  La proportion de réalisations au-dessus de z_c en chaque nœud. On y retrouve la carte que le krigeage d’indicatrices produisait au cours 10 — mais ici elle est cohérente entre nœuds, puisqu’elle vient de champs complets.
+  Le halo à risque
+  Les nœuds dont la probabilité est proche de 0,5 : ni clairement au-dessus, ni clairement en dessous. C’est là, et nulle part ailleurs, qu’un forage supplémentaire change une décision.
+  Tonnage et métal récupérables
+  T(z_c) et Q(z_c) calculés sur chaque réalisation, puis moyennés. On obtient la courbe tonnage-teneur ET son intervalle de confiance — impossible à partir d’une carte krigée.
+  Dans tous les cas, la règle reste la même : appliquer la fonction de transfert à CHAQUE réalisation, puis résumer les réponses. Jamais l’inverse.
+===== SLIDE 80  [images:6 tableaux:0 equations:0]
+  SYNTHÈSE
+  À retenir du cours 11
+  GLQ3401 / GLQ3651 — Cours 11 · Simulations géostatistiques
+  80
+  Estimer n’est pas simuler
+  le krigeage minimise l’erreur ponctuelle mais lisse ; la simulation reproduit histogramme, variogramme et extrêmes.
+  Fonctionnelles non linéaires : simuler
+  longueur, tonnage, volume au-delà d’un seuil : biaisés sur une carte lissée, sans biais en moyenne des réalisations.
+  Cholesky et SGS
+  matricielle exacte jusqu’à ~10 000 points ; SGS quasi illimitée avec chemin aléatoire et voisinage mobile.
+  Post-conditionnement
+  Z_cond = Z_nc + (krigeage des données − krigeage du simulé) : exact aux données, libre au loin.
+  Une réalisation ≠ un estimateur
+  Var[Z_cond − Z] = 2σ²_SK ; l’E-type de S réalisations converge vers le krigeage et son incertitude.
+  Grands domaines : spectral
+  bandes tournantes O(L·n), FFT-MA O(N log N), KL pour la paramétrisation réduite ; anamorphose pour le non-gaussien.
+===== SLIDE 81  [images:1 tableaux:0 equations:0]
+  PROCHAIN COURS
+  La simulation de faciès
+  Simuler des catégories plutôt que des teneurs : gaussiennes tronquées, plurigaussiennes et statistiques multipoints pour la géologie.
+  Questions, ateliers et anciens examens : danlauz.github.io/glq3401-3651
