@@ -109,6 +109,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Recherche"
   }
 }</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-RX555YHK9M"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-RX555YHK9M', { 'anonymize_ip': true});
+</script>
 <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
@@ -1423,7 +1432,8 @@ Figure&nbsp;12.8: Quantiles P10/P50/P90 et probabilité de dépassement : les si
 </section>
 <section id="atelier-interactif-12.5-ressources-minières-krigeage-ou-simulations" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="atelier-interactif-12.5-ressources-minières-krigeage-ou-simulations">🧮 Atelier interactif 12.5 — Ressources minières : krigeage ou simulations</h2>
-<p>On applique la même logique à un gisement. Pour une teneur de coupure <span class="math inline">\(z_c\)</span>, le tonnage récupérable <span class="math inline">\(T(z_c)\)</span> et le métal récupérable <span class="math inline">\(Q(z_c)\)</span> sont des fonctions non linéaires des teneurs. Estimés à partir du champ krigé (lissé), ils sont biaisés; estimés sur un ensemble de simulations conditionnelles, ils sont restitués sans biais et assortis d’une incertitude. L’atelier trace <span class="math inline">\(T(z_c)\)</span> et <span class="math inline">\(Q(z_c)\)</span> pour la vérité (noir), le krigeage (bleu) et les simulations (médiane et fourchette P10–P90), et donne la distribution du métal à la coupure. Déplacez la coupure et comparez les trois courbes.</p>
+<p>On applique la même logique à un gisement. Les cartes du haut comparent, sur une <strong>même échelle de teneurs</strong> et à partir des <strong>mêmes sondages</strong>, la <em>réalité</em> (le gisement complet, inconnu en pratique) et le <em>krigeage</em> : ce dernier restitue bien la position des zones riches et pauvres, mais <strong>lisse</strong> les contrastes — les fortes teneurs sont sous-estimées et les faibles surestimées. Les cartes du bas montrent plusieurs <em>simulations conditionnelles</em> : chacune honore exactement les sondages tout en reproduisant la <strong>texture</strong> et la <strong>variabilité</strong> réelles du gisement. Le sélecteur « Cartes de simulation » permet d’en afficher de 1 à 6 pour visualiser l’incertitude d’un tirage à l’autre.</p>
+<p>Pour une teneur de coupure <span class="math inline">\(z_c\)</span>, le tonnage récupérable <span class="math inline">\(T(z_c)\)</span> et le métal récupérable <span class="math inline">\(Q(z_c)\)</span> sont des fonctions non linéaires des teneurs. Estimés à partir du champ krigé (lissé), ils sont <strong>biaisés</strong>; estimés sur l’ensemble des simulations conditionnelles, ils sont restitués <strong>sans biais</strong> et assortis d’une <strong>incertitude</strong>. L’atelier trace <span class="math inline">\(T(z_c)\)</span> et <span class="math inline">\(Q(z_c)\)</span> pour la vérité (noir), le krigeage (bleu) et les simulations (médiane et fourchette P10–P90), et donne la distribution du métal à la coupure. Déplacez la coupure et comparez les trois approches.</p>
 <div class="geostat-widget" data-widget="c12_decisions_minieres">
   <div class="gw-placeholder">Chargement (décisions minières)…</div>
 </div>

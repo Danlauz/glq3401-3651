@@ -96,9 +96,6 @@ project:
   # post-render:
   #   - python scripts/build_chapter_exports.py
 
-website:
-  google-analytics: G-RX555YHK9M # Measurement ID or Tracking ID
-
 license:
   content: CC-BY-4.0
   code: MIT
@@ -124,6 +121,9 @@ language:
 book:
   title: "Géostatistique et géologie minière"
   subtitle: "Première édition"
+  # Projet de type book : les outils web (Google Analytics, etc.)
+  # se declarent sous la cle book:, PAS sous website: (sinon ignores au rendu).
+  google-analytics: G-RX555YHK9M # Measurement ID (GA4)
   search: true
   author:
     - name: Dany Lauzon
@@ -178,7 +178,6 @@ book:
 
     - references.qmd
 
-
   appendices:
     - chapters/appendix/appendix-a.qmd
     - chapters/appendix/appendix-b.qmd
@@ -186,7 +185,6 @@ book:
     - chapters/appendix/appendix-d.qmd
     - chapters/appendix/appendix-e.qmd
     - chapters/appendix/notation.qmd
-
 
 format:
   html:

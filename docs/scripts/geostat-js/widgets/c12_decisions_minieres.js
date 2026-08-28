@@ -133,29 +133,42 @@ export default class C12DecisionsMinieres extends Widget {
   _drawMaps() {
     if (!window.Plotly || !this.Zsims) return;
     const K = Math.min(parseInt(this.ctrl.nmap.value, 10), this.Zsims.length);
-    const zmin = 0, zmax = this.zmapMax;
+    const zmin = 0, zmax = this.zmapMax, MW = 168, MH = 186;
     const dx = this.dIdx.map(k => k % N), dy = this.dIdx.map(k => Math.floor(k / N));
     const reshape = (f) => { const z = []; for (let j = 0; j < N; j++) { const row = new Array(N); for (let i = 0; i < N; i++) row[i] = f[j * N + i]; z.push(row); } return z; };
-    const panels = [
-      { title: 'Réalité (vérité)', Z: this.Ztrue, sc: true },
-      { title: 'Krigeage (lissé)', Z: this.Zkrig, sc: false },
-    ];
-    for (let s = 0; s < K; s++) panels.push({ title: `Simulation ${s + 1}`, Z: this.Zsims[s], sc: false });
-    Array.from(this.mapsEl.children).forEach(c => { try { window.Plotly && Plotly.purge(c); } catch (e) {} });
-    this.mapsEl.innerHTML = panels.map((p, idx) => `<div data-mi="${idx}" style="width:168px;height:188px;"></div>`).join('');
+    Array.from(this.mapsEl.querySelectorAll('[data-mi]')).forEach(c => { try { Plotly.purge(c); } catch (e) {} });
+    const simDivs = Array.from({ length: K }, (_, s) => `<div data-mi="s${s}" style="width:${MW}px;height:${MH}px;"></div>`).join('');
+    this.mapsEl.innerHTML = `
+      <div style="width:100%;text-align:center;font-size:11.5px;color:#444;font-weight:600;margin:2px 0 3px;">La réalité et son estimation par krigeage</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;align-items:flex-start;">
+        <div data-mi="truth" style="width:${MW}px;height:${MH}px;"></div>
+        <div data-mi="krig"  style="width:${MW}px;height:${MH}px;"></div>
+        <div data-mi="cbar"  style="width:70px;height:${MH}px;"></div>
+      </div>
+      <div style="width:100%;text-align:center;font-size:11.5px;color:#1f8a4c;font-weight:600;margin:9px 0 3px;">${K} simulation${K > 1 ? 's' : ''} conditionnelle${K > 1 ? 's' : ''} — toutes honorent les mêmes sondages ●</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">${simDivs}</div>`;
     const cfg = { displaylogo: false, responsive: true, displayModeBar: false };
-    panels.forEach((p, idx) => {
-      const el = this.mapsEl.querySelector(`[data-mi="${idx}"]`);
+    const heat = (el, f, title, color) => {
+      if (!el) return;
       Plotly.react(el, [
-        { type: 'heatmap', z: reshape(p.Z), zmin, zmax, colorscale: 'Viridis', showscale: p.sc, colorbar: { thickness: 7, len: 0.85, tickfont: { size: 7 } }, hoverinfo: 'skip' },
-        { type: 'scatter', x: dx, y: dy, mode: 'markers', marker: { size: 3.5, color: '#fff', line: { color: '#000', width: 0.6 } }, hoverinfo: 'skip' },
+        { type: 'heatmap', z: reshape(f), zmin, zmax, colorscale: 'Viridis', showscale: false, hoverinfo: 'skip' },
+        { type: 'scatter', x: dx, y: dy, mode: 'markers', marker: { size: 3.2, color: '#fff', line: { color: '#000', width: 0.6 } }, hoverinfo: 'skip' },
       ], {
-        margin: { t: 20, l: 3, r: p.sc ? 26 : 3, b: 3 }, title: { text: p.title, font: { size: 10 } },
+        margin: { t: 20, l: 2, r: 2, b: 2 }, title: { text: title, font: { size: 10.5, color } },
         xaxis: { visible: false, range: [-0.5, N - 0.5], constrain: 'domain' },
         yaxis: { visible: false, range: [-0.5, N - 0.5], scaleanchor: 'x', constrain: 'domain' },
-        showlegend: false,
+        showlegend: false, plot_bgcolor: 'rgba(0,0,0,0)',
       }, cfg);
-    });
+    };
+    heat(this.mapsEl.querySelector('[data-mi="truth"]'), this.Ztrue, 'Réalité (vérité)', '#111');
+    heat(this.mapsEl.querySelector('[data-mi="krig"]'),  this.Zkrig, 'Krigeage (lissé)', '#0d4d92');
+    for (let s = 0; s < K; s++) heat(this.mapsEl.querySelector(`[data-mi="s${s}"]`), this.Zsims[s], `Simulation ${s + 1}`, '#1f8a4c');
+    // Barre de couleur partagée, dans son propre bloc (ne rétrécit aucune carte).
+    const cb = this.mapsEl.querySelector('[data-mi="cbar"]');
+    if (cb) Plotly.react(cb, [
+      { type: 'heatmap', z: [[zmin], [zmax]], zmin, zmax, colorscale: 'Viridis', showscale: true, opacity: 0,
+        colorbar: { title: { text: 'teneur', side: 'right', font: { size: 9 } }, thickness: 10, len: 0.80, y: 0.46, tickfont: { size: 8 } }, hoverinfo: 'skip' },
+    ], { margin: { t: 20, l: 0, r: 44, b: 2 }, xaxis: { visible: false }, yaxis: { visible: false }, paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)' }, cfg);
   }
 
   _drawCurves() {
@@ -170,13 +183,13 @@ export default class C12DecisionsMinieres extends Widget {
         { x: this.coupures, y: krig, mode: 'lines', line: { color: '#0d4d92', width: 2, dash: 'dash' }, name: 'krigeage' },
       ], {
         margin: { t: 26, l: 48, r: 10, b: 60 }, title: { text: title, font: { size: 11.5 } },
-        xaxis: { title: { text: 'coupure z_c', standoff: 4 } }, yaxis: { title: { text: yt, standoff: 4 }, rangemode: 'tozero' },
+        xaxis: { title: { text: 'coupure z<sub>c</sub>', standoff: 4 } }, yaxis: { title: { text: yt, standoff: 4 }, rangemode: 'tozero' },
         shapes: [{ type: 'line', x0: zc, x1: zc, y0: 0, y1: 1, yref: 'paper', line: { color: '#888', width: 1, dash: 'dot' } }],
         legend: { orientation: 'h', y: -0.22, x: 0.5, xanchor: 'center', font: { size: 8.5 } },
       }, cfg);
     };
-    band(this.P.T, this.bandT, this.truthC.T, this.krigC.T, 'Tonnage T(z_c)', 'T');
-    band(this.P.Q, this.bandQ, this.truthC.Q, this.krigC.Q, 'Métal récupérable Q(z_c)', 'Q');
+    band(this.P.T, this.bandT, this.truthC.T, this.krigC.T, 'Tonnage T(z<sub>c</sub>)', 'T');
+    band(this.P.Q, this.bandQ, this.truthC.Q, this.krigC.Q, 'Métal récupérable Q(z<sub>c</sub>)', 'Q');
 
     const { metalSim, qTruth, qKrig } = this._metalAt(zc);
     const s = [...metalSim].sort((p, q) => p - q);
@@ -184,7 +197,7 @@ export default class C12DecisionsMinieres extends Widget {
     Plotly.react(this.P.hist, [
       { x: metalSim, type: 'histogram', nbinsx: 16, marker: { color: 'rgba(31,138,76,0.55)', line: { color: '#1f8a4c', width: 1 } } },
     ], {
-      margin: { t: 26, l: 44, r: 10, b: 44 }, title: { text: `Métal à z_c = ${zc.toFixed(1)}`, font: { size: 11.5 } },
+      margin: { t: 26, l: 44, r: 10, b: 44 }, title: { text: `Métal à z<sub>c</sub> = ${zc.toFixed(1)}`, font: { size: 11.5 } },
       xaxis: { title: { text: 'Q (métal récupérable)', standoff: 4 } }, yaxis: { title: { text: 'fréquence', standoff: 4 } },
       shapes: [
         { type: 'line', x0: qTruth, x1: qTruth, y0: 0, y1: 1, yref: 'paper', line: { color: '#111', width: 2 } },
@@ -205,7 +218,7 @@ export default class C12DecisionsMinieres extends Widget {
   cleanup() {
     if (window.Plotly) {
       Object.values(this.P || {}).forEach(p => p && Plotly.purge(p));
-      if (this.mapsEl) Array.from(this.mapsEl.children).forEach(c => { try { Plotly.purge(c); } catch (e) {} });
+      if (this.mapsEl) Array.from(this.mapsEl.querySelectorAll('[data-mi]')).forEach(c => { try { Plotly.purge(c); } catch (e) {} });
     }
   }
 }

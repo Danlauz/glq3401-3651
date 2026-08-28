@@ -44,7 +44,9 @@ Cet atelier interactif n'est disponible que dans la version web du chapitre.
 ## 🧮 Atelier interactif 12.5 — Ressources minières : krigeage ou simulations {.unnumbered}
 
 ::: {.content-visible when-format="html"}
-On applique la même logique à un gisement. Pour une teneur de coupure $z_c$, le tonnage récupérable $T(z_c)$ et le métal récupérable $Q(z_c)$ sont des fonctions non linéaires des teneurs. Estimés à partir du champ krigé (lissé), ils sont biaisés; estimés sur un ensemble de simulations conditionnelles, ils sont restitués sans biais et assortis d'une incertitude. L'atelier trace $T(z_c)$ et $Q(z_c)$ pour la vérité (noir), le krigeage (bleu) et les simulations (médiane et fourchette P10–P90), et donne la distribution du métal à la coupure. Déplacez la coupure et comparez les trois courbes.
+On applique la même logique à un gisement. Les cartes du haut comparent, sur une **même échelle de teneurs** et à partir des **mêmes sondages**, la *réalité* (le gisement complet, inconnu en pratique) et le *krigeage* : ce dernier restitue bien la position des zones riches et pauvres, mais **lisse** les contrastes — les fortes teneurs sont sous-estimées et les faibles surestimées. Les cartes du bas montrent plusieurs *simulations conditionnelles* : chacune honore exactement les sondages tout en reproduisant la **texture** et la **variabilité** réelles du gisement. Le sélecteur « Cartes de simulation » permet d'en afficher de 1 à 6 pour visualiser l'incertitude d'un tirage à l'autre.
+
+Pour une teneur de coupure $z_c$, le tonnage récupérable $T(z_c)$ et le métal récupérable $Q(z_c)$ sont des fonctions non linéaires des teneurs. Estimés à partir du champ krigé (lissé), ils sont **biaisés**; estimés sur l'ensemble des simulations conditionnelles, ils sont restitués **sans biais** et assortis d'une **incertitude**. L'atelier trace $T(z_c)$ et $Q(z_c)$ pour la vérité (noir), le krigeage (bleu) et les simulations (médiane et fourchette P10–P90), et donne la distribution du métal à la coupure. Déplacez la coupure et comparez les trois approches.
 {{< include widget/widget_decisions_minieres.qmd >}}
 :::
 
