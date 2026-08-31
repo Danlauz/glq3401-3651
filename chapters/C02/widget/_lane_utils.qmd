@@ -12,7 +12,62 @@
     - analyse_complete(params)                        → analyse complète
 
   Source de vérité : geostat_polymtl/economics/economics.py et reserves.py.
+
+  Objet exposé (synchrone) : `window.NiceAxis` — graduations « rondes » pour
+  les canvas dessinés à la main (ateliers 2.2, 2.4, 2.5) :
+    - axis(min, max, {target, fixMin, fixMax}) → { min, max, step, ticks, dec, fmt }
+      plus petit pas de 1 / 2 / 2.5 / 5 × 10^k donnant au plus `target`
+      intervalles ; bornes étendues au multiple du pas (sauf si fixées) ;
+      `fmt(v)` formate avec le bon nombre de décimales.
 -->
+
+<script>
+/* Graduations « rondes » pour les axes des canvas (équivalent du MaxNLocator
+   de Matplotlib) : on prend le PLUS PETIT pas de la suite 1, 2, 2.5, 5 × 10^k
+   tel que l'axe compte au plus `target` intervalles — donc le maximum de
+   graduations lisibles, toutes à des valeurs rondes et équidistantes. */
+if (!window.NiceAxis) {
+  window.NiceAxis = (function () {
+    var EPS = 1e-9;
+    var MULT = [1, 2, 2.5, 5, 10, 20, 25, 50, 100];
+    // Nombre de décimales nécessaires pour afficher le pas sans arrondi.
+    function decimals(st) {
+      var d = 0;
+      while (d < 8 && Math.abs(Math.round(st * Math.pow(10, d)) - st * Math.pow(10, d)) > EPS) d++;
+      return d;
+    }
+    /**
+     * axis(min, max, {target, fixMin, fixMax})
+     *   → { min, max, step, ticks, dec, fmt }
+     * Bornes étendues au multiple du pas (sauf fixMin / fixMax fournis).
+     */
+    function axis(min, max, opts) {
+      opts = opts || {};
+      var target = opts.target || 8;
+      if (!isFinite(min) || !isFinite(max)) { min = 0; max = 1; }
+      if (max < min) { var t = min; min = max; max = t; }
+      if (max === min) { max = min + (min === 0 ? 1 : Math.abs(min) * 0.1); }
+      var mag = Math.pow(10, Math.floor(Math.log((max - min) / target) / Math.LN10));
+      var st, lo, hi;
+      for (var j = 0; j < MULT.length; j++) {
+        st = MULT[j] * mag;
+        lo = (opts.fixMin !== undefined) ? opts.fixMin : Math.floor(min / st + EPS) * st;
+        hi = (opts.fixMax !== undefined) ? opts.fixMax : Math.ceil(max / st - EPS) * st;
+        if ((hi - lo) / st <= target + EPS) break;
+      }
+      var dec = decimals(st);
+      lo = +lo.toFixed(Math.max(dec, 6)); hi = +hi.toFixed(Math.max(dec, 6));  // évite 0.7000000000001
+      var ticks = [];
+      for (var k = Math.ceil(lo / st - EPS); k <= Math.floor(hi / st + EPS); k++) {
+        ticks.push(+(k * st).toFixed(dec));
+      }
+      function fmt(v) { return (Math.abs(v) < EPS ? 0 : v).toFixed(dec); }
+      return { min: lo, max: hi, step: st, ticks: ticks, dec: dec, fmt: fmt };
+    }
+    return { axis: axis, decimals: decimals };
+  })();
+}
+</script>
 
 <script type="module">
 import { gpoly, afficherChargementJusquaPret } from '../../scripts/geostat-js/pyodide_setup.js';

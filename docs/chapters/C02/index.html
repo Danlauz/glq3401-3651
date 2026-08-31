@@ -690,7 +690,62 @@ window.Quarto = {
     - analyse_complete(params)                        → analyse complète
 
   Source de vérité : geostat_polymtl/economics/economics.py et reserves.py.
+
+  Objet exposé (synchrone) : `window.NiceAxis` — graduations « rondes » pour
+  les canvas dessinés à la main (ateliers 2.2, 2.4, 2.5) :
+    - axis(min, max, {target, fixMin, fixMax}) → { min, max, step, ticks, dec, fmt }
+      plus petit pas de 1 / 2 / 2.5 / 5 × 10^k donnant au plus `target`
+      intervalles ; bornes étendues au multiple du pas (sauf si fixées) ;
+      `fmt(v)` formate avec le bon nombre de décimales.
 -->
+
+<script>
+/* Graduations « rondes » pour les axes des canvas (équivalent du MaxNLocator
+   de Matplotlib) : on prend le PLUS PETIT pas de la suite 1, 2, 2.5, 5 × 10^k
+   tel que l'axe compte au plus `target` intervalles — donc le maximum de
+   graduations lisibles, toutes à des valeurs rondes et équidistantes. */
+if (!window.NiceAxis) {
+  window.NiceAxis = (function () {
+    var EPS = 1e-9;
+    var MULT = [1, 2, 2.5, 5, 10, 20, 25, 50, 100];
+    // Nombre de décimales nécessaires pour afficher le pas sans arrondi.
+    function decimals(st) {
+      var d = 0;
+      while (d < 8 && Math.abs(Math.round(st * Math.pow(10, d)) - st * Math.pow(10, d)) > EPS) d++;
+      return d;
+    }
+    /**
+     * axis(min, max, {target, fixMin, fixMax})
+     *   → { min, max, step, ticks, dec, fmt }
+     * Bornes étendues au multiple du pas (sauf fixMin / fixMax fournis).
+     */
+    function axis(min, max, opts) {
+      opts = opts || {};
+      var target = opts.target || 8;
+      if (!isFinite(min) || !isFinite(max)) { min = 0; max = 1; }
+      if (max < min) { var t = min; min = max; max = t; }
+      if (max === min) { max = min + (min === 0 ? 1 : Math.abs(min) * 0.1); }
+      var mag = Math.pow(10, Math.floor(Math.log((max - min) / target) / Math.LN10));
+      var st, lo, hi;
+      for (var j = 0; j < MULT.length; j++) {
+        st = MULT[j] * mag;
+        lo = (opts.fixMin !== undefined) ? opts.fixMin : Math.floor(min / st + EPS) * st;
+        hi = (opts.fixMax !== undefined) ? opts.fixMax : Math.ceil(max / st - EPS) * st;
+        if ((hi - lo) / st <= target + EPS) break;
+      }
+      var dec = decimals(st);
+      lo = +lo.toFixed(Math.max(dec, 6)); hi = +hi.toFixed(Math.max(dec, 6));  // évite 0.7000000000001
+      var ticks = [];
+      for (var k = Math.ceil(lo / st - EPS); k <= Math.floor(hi / st + EPS); k++) {
+        ticks.push(+(k * st).toFixed(dec));
+      }
+      function fmt(v) { return (Math.abs(v) < EPS ? 0 : v).toFixed(dec); }
+      return { min: lo, max: hi, step: st, ticks: ticks, dec: dec, fmt: fmt };
+    }
+    return { axis: axis, decimals: decimals };
+  })();
+}
+</script>
 
 <script type="module">
 import { gpoly, afficherChargementJusquaPret } from '../../scripts/geostat-js/pyodide_setup.js';
@@ -1341,7 +1396,7 @@ c_2 = \frac{h + (f + F) / H}{y (p - k)} = \frac{3{,}41 + \frac{11{,}9 + 15{,}2}{
 <section id="teneur-du-marché" class="level4">
 <h4 class="anchored" data-anchor-id="teneur-du-marché">Teneur du marché</h4>
 <p><span class="math display">\[
-c_3 = \frac{3{,}41}{0{,}87 \times \left( 60 - \frac{11{,}9 + 15{,}2}{0{,}9} \right)} = 0{,}131 \ \text{kg/t}
+c_3 = \frac{h}{\Big((p - k) - \frac{f+F}{K}\Big) y} = \frac{3{,}41}{0{,}87 \times \left( 60 - \frac{11{,}9 + 15{,}2}{0{,}9} \right)} = 0{,}131 \ \text{kg/t}
 \]</span></p>
 <p>Nous obtenons ainsi trois teneurs de coupure correspondant aux limites de la mine, du concentrateur et du marché. Chacune de ces valeurs maximise le profit lorsque seule une composante du système constitue le facteur limitant. Autrement dit, si la mine seule était contraignante, la teneur optimale serait <span class="math inline">\(c_1 = 0{,}065\)</span> kg/t; si le concentrateur seul était limitant, la teneur optimale serait <span class="math inline">\(c_2 = 0{,}198\)</span> kg/t; et si le marché seul imposait la contrainte, la teneur optimale serait <span class="math inline">\(c_3 = 0{,}131\)</span> kg/t.</p>
 <p>Cependant, dans un système réel, ces trois contraintes coexistent. Opérer la mine à la teneur <span class="math inline">\(c_1\)</span> ne garantit donc ni que le concentrateur soit en mesure de traiter tout le minerai produit, ni que le marché puisse absorber l’ensemble du métal extrait. Il est ainsi nécessaire d’introduire une notion d’équilibre entre ces différentes composantes afin d’identifier la véritable contrainte dominante du système.</p>
@@ -1710,22 +1765,27 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
   function drawChart(cvId, xs, ys, opts){
     var cv = $(cvId), ctx = cv.getContext('2d');
     var W = cv.width, H = cv.height;
-    var pad = {l:52, r:16, t:30, b:36};
+    var pad = {l:52, r:16, t:30, b:50};
     var pw = W-pad.l-pad.r, ph = H-pad.t-pad.b;
 
     ctx.clearRect(0,0,W,H);
     ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,H);
 
-    var xmin=opts.xmin, xmax=opts.xmax, ymin=opts.ymin, ymax=opts.ymax;
+    // Axes « ronds » (NiceAxis, défini dans _lane_utils.qmd) : pas dans
+    // 1/2/2.5/5×10^k, au plus 8 intervalles, bornes basses conservées (0) et bornes
+    // hautes étendues au multiple du pas ; opts.yfix garde ymax tel quel
+    // (ex. proportion bornée à 1).
+    var axX=window.NiceAxis.axis(opts.xmin, opts.xmax, {target:8, fixMin:opts.xmin});
+    var axY=window.NiceAxis.axis(opts.ymin, opts.ymax,
+      opts.yfix ? {target:8, fixMin:opts.ymin, fixMax:opts.ymax} : {target:8, fixMin:opts.ymin});
+    var xmin=axX.min, xmax=axX.max, ymin=axY.min, ymax=axY.max;
     function tx(x){return pad.l+(x-xmin)/(xmax-xmin)*pw;}
     function ty(y){return pad.t+(1-(y-ymin)/(ymax-ymin))*ph;}
 
-    // Grid
-    ctx.strokeStyle='#eee'; ctx.lineWidth=1;
-    for(var i=0;i<=4;i++){
-      var gy=ymin+i*(ymax-ymin)/4;
-      ctx.beginPath(); ctx.moveTo(pad.l,ty(gy)); ctx.lineTo(pad.l+pw,ty(gy)); ctx.stroke();
-    }
+    // Grille alignée sur les graduations
+    ctx.strokeStyle='#eceff3'; ctx.lineWidth=1;
+    axY.ticks.forEach(function(gy){ctx.beginPath(); ctx.moveTo(pad.l,ty(gy)); ctx.lineTo(pad.l+pw,ty(gy)); ctx.stroke();});
+    axX.ticks.forEach(function(gx){ctx.beginPath(); ctx.moveTo(tx(gx),pad.t); ctx.lineTo(tx(gx),pad.t+ph); ctx.stroke();});
 
     // Fill area (PDF hatch)
     if(opts.fillAfter !== undefined){
@@ -1827,11 +1887,16 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
 
     ctx.fillStyle='#333'; ctx.font='11px system-ui'; ctx.textAlign='center';
     ctx.fillText(opts.xlabel||'', pad.l+pw/2, H-4);
-    ctx.textAlign='right';
-    for(var i=0;i<=4;i++){
-      var gy=ymin+i*(ymax-ymin)/4;
-      ctx.fillText(gy.toFixed(opts.ydec||1), pad.l-5, ty(gy)+4);
-    }
+    ctx.strokeStyle='#333'; ctx.textAlign='right';
+    axY.ticks.forEach(function(gy){
+      ctx.beginPath(); ctx.moveTo(pad.l-4,ty(gy)); ctx.lineTo(pad.l,ty(gy)); ctx.stroke();
+      ctx.fillText(axY.fmt(gy), pad.l-6, ty(gy)+4);
+    });
+    ctx.textAlign='center';
+    axX.ticks.forEach(function(gx){
+      ctx.beginPath(); ctx.moveTo(tx(gx),pad.t+ph); ctx.lineTo(tx(gx),pad.t+ph+4); ctx.stroke();
+      ctx.fillText(axX.fmt(gx), tx(gx), pad.t+ph+15);
+    });
     ctx.fillStyle='#111'; ctx.font='bold 13px system-ui'; ctx.textAlign='center';
     ctx.fillText(opts.title||'', pad.l+pw/2, 16);
     if(opts.legend){
@@ -1856,7 +1921,9 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
     var K   = parseFloat($('w2-K').value)||0.1;
     $('w2-cval').textContent = 'c = '+c.toFixed(2);
 
-    var xmax = Math.max(6, moy+3*Math.sqrt(v));
+    // Borne X arrondie au multiple du pas (même règle que les axes), pour que
+    // les courbes remplissent l'axe jusqu'au bout.
+    var xmax = window.NiceAxis.axis(0, Math.max(6, moy+3*Math.sqrt(v)), {target:8, fixMin:0}).max;
     var N = 400;
     var cs=[], xs=[];
 
@@ -1887,7 +1954,7 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
 
     // Panel 1: xc vs c — c₁₂
     var r1 = drawChart('w2-cv1', cs, xcs, {
-      xmin:0,xmax:xmax,ymin:0,ymax:1,
+      xmin:0,xmax:xmax,ymin:0,ymax:1,yfix:true,
       title:'Proportion au-dessus de c',xlabel:'Teneur de coupure (c)',
       legend:'xc = P(X > c)', color:'#2563eb',
       cx:c,px:c,py:rc.xc,
@@ -1900,7 +1967,7 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
       xmin:0,xmax:xmax,ymin:0,ymax:gcYmax,
       title:'Teneur moyenne conditionnelle',xlabel:'Teneur de coupure (c)',
       legend:'gc = E[X|X>c]', color:'#059669',
-      cx:c,px:c,py:rc.gc,ydec:1,
+      cx:c,px:c,py:rc.gc,
       eqLines:[{yTarget:gc_target_23, color:'#059669', label:'c₂₃', hLabel:'100K/(yH) = '+gc_target_23.toFixed(2)}]
     });
 
@@ -1910,7 +1977,7 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
       xmin:0,xmax:xmax,ymin:0,ymax:xcgcYmax,
       title:'Teneur moyenne récupérée',xlabel:'Teneur de coupure (c)',
       legend:'xc · gc', color:'#7c3aed',
-      cx:c,px:c,py:rc.xc*rc.gc,ydec:2,
+      cx:c,px:c,py:rc.xc*rc.gc,
       eqLines:[{yTarget:xcgc_target_13, color:'#7c3aed', label:'c₁₃', hLabel:'100K/(yM) = '+xcgc_target_13.toFixed(2)}]
     });
 
@@ -1919,7 +1986,7 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
       xmin:0,xmax:xmax,ymin:0,ymax:pdfMax*1.15,
       title:'Densité lognormale',xlabel:'Teneur (c)',
       legend:'PDF', color:'#6b7280',
-      cx:c,px:c,py:pdfC,ydec:2,fillAfter:c
+      cx:c,px:c,py:pdfC,fillAfter:c
     });
 
     // Update cards
@@ -1978,6 +2045,7 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
 .w3-table td{padding:5px 10px;border-bottom:1px solid #eee}
 .w3-table tr.w3-opt{background:#e8f5e9;font-weight:700}
 .w3-eq{color:#dc2626}
+.w3-hors{margin-left:6px;font-size:11px;color:#888;font-style:italic;font-weight:400}
 @media(max-width:600px){.w3-grid{grid-template-columns:1fr 1fr}}
 </style>
 
@@ -2075,6 +2143,27 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
     }
   }
 
+  /** Marque k.far=true pour les points « trop loin » des autres sur l'axe
+   *  `dim` ('x' ou 'y'). On retire itérativement l'extrême dont l'écart au
+   *  voisin le plus proche dépasse 1,5 × l'étendue des autres ET 25 % de
+   *  l'ordre de grandeur des valeurs (pour ne pas rejeter un point proche
+   *  quand tout est groupé). Au moins 2 points sont conservés. */
+  function ecarterTropLoin(pts, dim){
+    for(var iter=0; iter<pts.length; iter++){
+      var live=pts.filter(function(k){return !k.far;});
+      if(live.length<3) return;
+      live.sort(function(a,b){return a[dim]-b[dim];});
+      var n=live.length, scale=0;
+      live.forEach(function(k){scale=Math.max(scale,Math.abs(k[dim]));});
+      var gapLo=live[1][dim]-live[0][dim],     restLo=live[n-1][dim]-live[1][dim];
+      var gapHi=live[n-1][dim]-live[n-2][dim], restHi=live[n-2][dim]-live[0][dim];
+      var minAbs=0.25*scale;
+      if(gapHi>=gapLo){ if(gapHi>1.5*restHi && gapHi>minAbs){ live[n-1].far=true; continue; } }
+      else            { if(gapLo>1.5*restLo && gapLo>minAbs){ live[0].far=true;   continue; } }
+      return;
+    }
+  }
+
   function drawCurve(res){
     var cv=$('w3-canvas'), ctx=cv.getContext('2d');
     var W=cv.width, H=cv.height;
@@ -2085,29 +2174,72 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
     ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,H);
 
     var cc=res.cc, v1=res.v1, v2=res.v2, v3=res.v3, vmin=res.vmin;
-    var xmin=0, xmax=res.cmax;
 
-    // Y range auto
-    var yAll=v1.concat(v2,v3);
-    var ymin=Infinity, ymax=-Infinity;
-    for(var i=0;i<yAll.length;i++){
-      if(isFinite(yAll[i])){
-        if(yAll[i]<ymin) ymin=yAll[i];
-        if(yAll[i]>ymax) ymax=yAll[i];
-      }
+    // --- Les 6 valeurs clés à lire sur le graphique : maxima c₁, c₂, c₃ et
+    //     équilibres c₁₂, c₁₃, c₂₃. Le cadrage des axes est construit autour
+    //     d'elles ; une valeur « trop loin » des autres (qui écraserait la
+    //     lecture graphique) n'est pas dessinée (elle reste dans le tableau,
+    //     marquée « hors graphique »).
+    var iC1=0,iC2=0,iC3=0;
+    for(var i=1;i<cc.length;i++){if(v1[i]>v1[iC1])iC1=i;if(v2[i]>v2[iC2])iC2=i;if(v3[i]>v3[iC3])iC3=i;}
+    var keys=[
+      {label:'c₁',  x:res.c1, y:v1[iC1], color:'#111'},
+      {label:'c₂',  x:res.c2, y:v2[iC2], color:'#111'},
+      {label:'c₃',  x:res.c3, y:v3[iC3], color:'#111'},
+      {label:'c₁₂', x:res.eq12.teneur, y:res.eq12.profit, color:'#dc2626', found:res.eq12.found},
+      {label:'c₁₃', x:res.eq13.teneur, y:res.eq13.profit, color:'#dc2626', found:res.eq13.found},
+      {label:'c₂₃', x:res.eq23.teneur, y:res.eq23.profit, color:'#dc2626', found:res.eq23.found}
+    ].filter(function(k){return k.found!==false && isFinite(k.x) && isFinite(k.y) && k.x>=0 && k.x<=res.cmax;});
+    ecarterTropLoin(keys,'x'); ecarterTropLoin(keys,'y');
+    var shown=keys.filter(function(k){return !k.far;});
+    res.horsGraphique=keys.filter(function(k){return k.far;}).map(function(k){return k.label;});
+
+    // Fenêtre de lecture : X de 0 jusqu'aux valeurs clés (+25 %, borné par
+    // cmax) ; Y = étendue des valeurs clés, avec 50 % de marge sous la plus
+    // basse et 35 % au-dessus de la plus haute (place des étiquettes). Sans
+    // valeur clé visible, on retombe sur l'étendue complète des courbes.
+    var xmin=0, xmax=res.cmax, yLo, yHi;
+    if(shown.length){
+      var kxMax=-Infinity, kyMin=Infinity, kyMax=-Infinity;
+      shown.forEach(function(k){ if(k.x>kxMax)kxMax=k.x; if(k.y<kyMin)kyMin=k.y; if(k.y>kyMax)kyMax=k.y; });
+      xmax=Math.min(res.cmax, Math.max(kxMax*1.25, 0.25*res.cmax));
+      var sp=Math.max(kyMax-kyMin, 0.3*Math.max(Math.abs(kyMax),Math.abs(kyMin)), 1e-6);
+      yLo=kyMin-0.5*sp; yHi=kyMax+0.35*sp;
+    } else {
+      var yAll=v1.concat(v2,v3);
+      yLo=Infinity; yHi=-Infinity;
+      for(var i=0;i<yAll.length;i++){ if(isFinite(yAll[i])){ if(yAll[i]<yLo)yLo=yAll[i]; if(yAll[i]>yHi)yHi=yAll[i]; } }
+      var yr=(yHi-yLo)||1; yLo-=0.05*yr; yHi+=0.15*yr;
     }
-    var ym = (ymax-ymin)*0.08;
-    ymin-=ym; ymax+=ym*2;
+
+    // Axes « ronds » (NiceAxis, défini dans _lane_utils.qmd) : pas choisi
+    // dans 1 / 2 / 2.5 / 5 × 10^k, bornes étendues au multiple du pas,
+    // au plus 12 intervalles en X et 8 en Y.
+    var axX=window.NiceAxis.axis(xmin, xmax, {target:12, fixMin:0});
+    var axY=window.NiceAxis.axis(yLo, yHi, {target:8});
+    xmin=axX.min; xmax=axX.max;
+    var ymin=axY.min, ymax=axY.max;
 
     function tx(x){return pad.l+(x-xmin)/(xmax-xmin)*pw;}
     function ty(y){return pad.t+(1-(y-ymin)/(ymax-ymin))*ph;}
 
-    // Grid
-    ctx.strokeStyle='#f0f0f0'; ctx.lineWidth=1;
-    for(var i=0;i<=5;i++){
-      var gy=ymin+i*(ymax-ymin)/5;
+    // Grille alignée sur les graduations (horizontale + verticale)
+    ctx.strokeStyle='#eceff3'; ctx.lineWidth=1;
+    axY.ticks.forEach(function(gy){
       ctx.beginPath();ctx.moveTo(pad.l,ty(gy));ctx.lineTo(pad.l+pw,ty(gy));ctx.stroke();
+    });
+    axX.ticks.forEach(function(gx){
+      ctx.beginPath();ctx.moveTo(tx(gx),pad.t);ctx.lineTo(tx(gx),pad.t+ph);ctx.stroke();
+    });
+    // Ligne du profit nul, un peu plus marquée
+    if(ymin<0 && ymax>0){
+      ctx.strokeStyle='#b8bcc4';
+      ctx.beginPath();ctx.moveTo(pad.l,ty(0));ctx.lineTo(pad.l+pw,ty(0));ctx.stroke();
     }
+
+    // Tout ce qui suit (zone grise, courbes) est découpé au cadre des axes :
+    // les portions de courbes hors fenêtre de lecture ne débordent pas.
+    ctx.save(); ctx.beginPath(); ctx.rect(pad.l,pad.t,pw,ph); ctx.clip();
 
     // Fill gray zone (min curve)
     ctx.fillStyle='rgba(180,180,180,0.2)';
@@ -2137,45 +2269,37 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
       }
       ctx.stroke(); ctx.setLineDash([]);
     });
+    ctx.restore();  // fin du découpage
 
     // Annotations helper
     var dy=(ymax-ymin)*0.04;
     function annotate(cx,cy,label,color){
-      if(!isFinite(cx)||!isFinite(cy)||cx<xmin||cx>xmax) return;
+      if(!isFinite(cx)||!isFinite(cy)||cx<xmin||cx>xmax||cy<ymin||cy>ymax) return;
       ctx.fillStyle=color; ctx.font='bold 12px system-ui'; ctx.textAlign='center';
       ctx.fillText(label, tx(cx), ty(cy+dy)-2);
       ctx.strokeStyle=color; ctx.lineWidth=1.5;
       ctx.beginPath(); ctx.moveTo(tx(cx),ty(cy)); ctx.lineTo(tx(cx),ty(cy+dy*0.7)); ctx.stroke();
     }
 
-    // Limites
-    var iC1=0,iC2=0,iC3=0;
-    for(var i=1;i<cc.length;i++){if(v1[i]>v1[iC1])iC1=i;if(v2[i]>v2[iC2])iC2=i;if(v3[i]>v3[iC3])iC3=i;}
-    annotate(res.c1, v1[iC1], 'c₁', '#111');
-    annotate(res.c2, v2[iC2], 'c₂', '#111');
-    annotate(res.c3, v3[iC3], 'c₃', '#111');
-
-    // Équilibres
-    if(res.eq12.found) annotate(res.eq12.teneur, res.eq12.profit, 'c₁₂', '#dc2626');
-    if(res.eq13.found) annotate(res.eq13.teneur, res.eq13.profit, 'c₁₃', '#dc2626');
-    if(res.eq23.found) annotate(res.eq23.teneur, res.eq23.profit, 'c₂₃', '#dc2626');
+    // Limites c₁, c₂, c₃ et équilibres c₁₂, c₁₃, c₂₃ (valeurs conservées)
+    shown.forEach(function(k){ annotate(k.x, k.y, k.label, k.color); });
 
     // Axes
     ctx.strokeStyle='#333'; ctx.lineWidth=1;
     ctx.beginPath();ctx.moveTo(pad.l,pad.t);ctx.lineTo(pad.l,pad.t+ph);ctx.lineTo(pad.l+pw,pad.t+ph);ctx.stroke();
 
-    // Axis ticks
-    ctx.fillStyle='#333'; ctx.font='11px system-ui';
+    // Graduations (valeurs rondes, équidistantes) + petits traits sur les axes
+    ctx.fillStyle='#333'; ctx.font='11px system-ui'; ctx.strokeStyle='#333';
     ctx.textAlign='right';
-    for(var i=0;i<=5;i++){
-      var gy=ymin+i*(ymax-ymin)/5;
-      ctx.fillText(gy.toFixed(1), pad.l-6, ty(gy)+4);
-    }
+    axY.ticks.forEach(function(gy){
+      ctx.beginPath();ctx.moveTo(pad.l-4,ty(gy));ctx.lineTo(pad.l,ty(gy));ctx.stroke();
+      ctx.fillText(axY.fmt(gy), pad.l-7, ty(gy)+4);
+    });
     ctx.textAlign='center';
-    for(var i=0;i<=5;i++){
-      var gx=xmin+i*(xmax-xmin)/5;
-      ctx.fillText(gx.toFixed(2), tx(gx), pad.t+ph+16);
-    }
+    axX.ticks.forEach(function(gx){
+      ctx.beginPath();ctx.moveTo(tx(gx),pad.t+ph);ctx.lineTo(tx(gx),pad.t+ph+4);ctx.stroke();
+      ctx.fillText(axX.fmt(gx), tx(gx), pad.t+ph+17);
+    });
 
     // Axis labels
     ctx.fillStyle='#333'; ctx.font='12px system-ui'; ctx.textAlign='center';
@@ -2189,7 +2313,8 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
     curves.forEach(function(cu,i){
       var yy=ly+i*18;
       ctx.strokeStyle=cu.color; ctx.lineWidth=2.5; ctx.setLineDash(cu.dash);
-      ctx.beginPath();ctx.moveTo(lx-60,yy);ctx.lineTo(lx-35,yy);ctx.stroke();ctx.setLineDash([]);
+      var tw=ctx.measureText(cu.label).width;
+      ctx.beginPath();ctx.moveTo(lx-tw-34,yy);ctx.lineTo(lx-tw-8,yy);ctx.stroke();ctx.setLineDash([]);
       ctx.fillStyle=cu.color; ctx.fillText(cu.label, lx, yy+4);
     });
   }
@@ -2197,17 +2322,20 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
   function drawTable(res){
     var rows = [
       {type:'<b>Optimale</b>',c:res.c_opt,v:res.profit_opt,nat:res.nature,cls:'w3-opt'},
-      {type:'Limite c₁',c:res.c1,v:Math.max.apply(null,res.v1),nat:'Mine',cls:''},
-      {type:'Limite c₂',c:res.c2,v:Math.max.apply(null,res.v2),nat:'Concentrateur',cls:''},
-      {type:'Limite c₃',c:res.c3,v:Math.max.apply(null,res.v3),nat:'Marché',cls:''}
+      {type:'Limite c₁',k:'c₁',c:res.c1,v:Math.max.apply(null,res.v1),nat:'Mine',cls:''},
+      {type:'Limite c₂',k:'c₂',c:res.c2,v:Math.max.apply(null,res.v2),nat:'Concentrateur',cls:''},
+      {type:'Limite c₃',k:'c₃',c:res.c3,v:Math.max.apply(null,res.v3),nat:'Marché',cls:''}
     ];
-    if(res.eq12.found) rows.push({type:'<span class="w3-eq">Équilibre c₁₂</span>',c:res.eq12.teneur,v:res.eq12.profit,nat:'Mine–Concentrateur',cls:''});
-    if(res.eq13.found) rows.push({type:'<span class="w3-eq">Équilibre c₁₃</span>',c:res.eq13.teneur,v:res.eq13.profit,nat:'Mine–Marché',cls:''});
-    if(res.eq23.found) rows.push({type:'<span class="w3-eq">Équilibre c₂₃</span>',c:res.eq23.teneur,v:res.eq23.profit,nat:'Concentrateur–Marché',cls:''});
+    if(res.eq12.found) rows.push({type:'<span class="w3-eq">Équilibre c₁₂</span>',k:'c₁₂',c:res.eq12.teneur,v:res.eq12.profit,nat:'Mine–Concentrateur',cls:''});
+    if(res.eq13.found) rows.push({type:'<span class="w3-eq">Équilibre c₁₃</span>',k:'c₁₃',c:res.eq13.teneur,v:res.eq13.profit,nat:'Mine–Marché',cls:''});
+    if(res.eq23.found) rows.push({type:'<span class="w3-eq">Équilibre c₂₃</span>',k:'c₂₃',c:res.eq23.teneur,v:res.eq23.profit,nat:'Concentrateur–Marché',cls:''});
 
+    // Valeurs écartées du dessin (trop loin des autres) : signalées ici
+    var hors = res.horsGraphique || [];
     var html='';
     rows.forEach(function(r){
-      html+='<tr class="'+r.cls+'"><td>'+r.type+'</td>';
+      var tag = (r.k && hors.indexOf(r.k)>=0) ? '<span class="w3-hors">hors graphique</span>' : '';
+      html+='<tr class="'+r.cls+'"><td>'+r.type+tag+'</td>';
       html+='<td>'+(isFinite(r.c)?r.c.toFixed(2):'-')+'</td>';
       html+='<td>'+(isFinite(r.v)?r.v.toFixed(2):'-')+'</td>';
       html+='<td>'+r.nat+'</td></tr>';
@@ -2337,13 +2465,25 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
     ctx.clearRect(0,0,W,H);
     ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,H);
 
-    var xmin=opts.xmin, xmax=opts.xmax, ymin=opts.ymin, ymax=opts.ymax;
+    // Axes « ronds » (NiceAxis, défini dans _lane_utils.qmd) : pas dans
+    // 1/2/2.5/5×10^k, au plus 8 intervalles. En X la borne gauche est conservée et
+    // la droite étendue au multiple du pas ; avec opts.xfix les deux bornes
+    // X sont gardées telles quelles (plage du paramètre).
+    var axX=window.NiceAxis.axis(opts.xmin, opts.xmax,
+      opts.xfix ? {target:8, fixMin:opts.xmin, fixMax:opts.xmax} : {target:8, fixMin:opts.xmin});
+    var axY=window.NiceAxis.axis(opts.ymin, opts.ymax, {target:8});
+    var xmin=axX.min, xmax=axX.max, ymin=axY.min, ymax=axY.max;
     function tx(x){return pad.l+(x-xmin)/(xmax-xmin)*pw;}
     function ty(y){return pad.t+(1-(y-ymin)/(ymax-ymin))*ph;}
 
-    // Grid
-    ctx.strokeStyle='#f0f0f0'; ctx.lineWidth=1;
-    for(var i=0;i<=4;i++){var gy=ymin+i*(ymax-ymin)/4;ctx.beginPath();ctx.moveTo(pad.l,ty(gy));ctx.lineTo(pad.l+pw,ty(gy));ctx.stroke();}
+    // Grille alignée sur les graduations
+    ctx.strokeStyle='#eceff3'; ctx.lineWidth=1;
+    axY.ticks.forEach(function(gy){ctx.beginPath();ctx.moveTo(pad.l,ty(gy));ctx.lineTo(pad.l+pw,ty(gy));ctx.stroke();});
+    axX.ticks.forEach(function(gx){ctx.beginPath();ctx.moveTo(tx(gx),pad.t);ctx.lineTo(tx(gx),pad.t+ph);ctx.stroke();});
+    if(ymin<0 && ymax>0){
+      ctx.strokeStyle='#b8bcc4';
+      ctx.beginPath();ctx.moveTo(pad.l,ty(0));ctx.lineTo(pad.l+pw,ty(0));ctx.stroke();
+    }
 
     // Fill gray zone if vmin
     if(opts.vmin){
@@ -2373,10 +2513,16 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
     // Axes
     ctx.strokeStyle='#333';ctx.lineWidth=1;
     ctx.beginPath();ctx.moveTo(pad.l,pad.t);ctx.lineTo(pad.l,pad.t+ph);ctx.lineTo(pad.l+pw,pad.t+ph);ctx.stroke();
-    ctx.fillStyle='#333';ctx.font='11px system-ui';ctx.textAlign='right';
-    for(var i=0;i<=4;i++){var gy=ymin+i*(ymax-ymin)/4;ctx.fillText(gy.toFixed(opts.ydec||1),pad.l-5,ty(gy)+4);}
+    ctx.fillStyle='#333';ctx.font='11px system-ui';ctx.strokeStyle='#333';ctx.textAlign='right';
+    axY.ticks.forEach(function(gy){
+      ctx.beginPath();ctx.moveTo(pad.l-4,ty(gy));ctx.lineTo(pad.l,ty(gy));ctx.stroke();
+      ctx.fillText(axY.fmt(gy),pad.l-6,ty(gy)+4);
+    });
     ctx.textAlign='center';
-    for(var i=0;i<=4;i++){var gx=xmin+i*(xmax-xmin)/4;ctx.fillText(gx.toFixed(opts.xdec||2),tx(gx),pad.t+ph+15);}
+    axX.ticks.forEach(function(gx){
+      ctx.beginPath();ctx.moveTo(tx(gx),pad.t+ph);ctx.lineTo(tx(gx),pad.t+ph+4);ctx.stroke();
+      ctx.fillText(axX.fmt(gx),tx(gx),pad.t+ph+16);
+    });
 
     // Labels
     ctx.fillStyle='#111';ctx.font='bold 12px system-ui';ctx.textAlign='center';
@@ -2390,7 +2536,8 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
     datasets.forEach(function(ds,i){
       var yy=ly+i*16;
       ctx.strokeStyle=ds.color;ctx.lineWidth=2;ctx.setLineDash(ds.dash||[]);
-      ctx.beginPath();ctx.moveTo(lx-55,yy);ctx.lineTo(lx-32,yy);ctx.stroke();ctx.setLineDash([]);
+      var tw=ctx.measureText(ds.label).width;
+      ctx.beginPath();ctx.moveTo(lx-tw-30,yy);ctx.lineTo(lx-tw-7,yy);ctx.stroke();ctx.setLineDash([]);
       ctx.fillStyle=ds.color;ctx.fillText(ds.label,lx,yy+4);
     });
   }
@@ -2429,13 +2576,13 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
     var yAll = res.v1.concat(res.v2, res.v3);
     var ymin=Infinity, ymax=-Infinity;
     for(var i=0;i<yAll.length;i++){if(isFinite(yAll[i])){if(yAll[i]<ymin)ymin=yAll[i];if(yAll[i]>ymax)ymax=yAll[i];}}
-    var ym=(ymax-ymin)*0.08; ymin-=ym; ymax+=ym*2;
+    var ym=(ymax-ymin)||1; ymin-=0.05*ym; ymax+=0.15*ym;
 
     drawChart('w4-cv1', cc, [
       {data:res.v1,color:'#2563eb',dash:[],label:'Mine'},
       {data:res.v2,color:'#ea580c',dash:[8,4],label:'Concentrateur'},
       {data:res.v3,color:'#16a34a',dash:[3,3],label:'Marché'}
-    ], {xmin:0,xmax:res.cmax,ymin:ymin,ymax:ymax,title:'Courbes de profit',xlabel:'Teneur de coupure (%)',vmin:res.vmin,ydec:1});
+    ], {xmin:0,xmax:res.cmax,ymin:ymin,ymax:ymax,title:'Courbes de profit',xlabel:'Teneur de coupure (%)',vmin:res.vmin});
 
     // --- Right panel: c_opt and profit_opt vs parameter value ---
     // La courbe ne dépend que de `param` (pas de currentVal) : on la calcule
@@ -2467,7 +2614,7 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
       {data:curveCache.copts,color:'#7c3aed',dash:[],label:'c_opt (%)'}
     ], {xmin:r.min,xmax:r.max,ymin:Math.max(0,curveCache.cmin-curveCache.cm),ymax:curveCache.cmax2+curveCache.cm,
         title:'Teneur optimale vs '+param,xlabel:param+' ('+r.unit+')',
-        cx:currentVal,ydec:2,xdec:r.step<0.1?2:r.step<1?1:0});
+        cx:currentVal,xfix:true});
 
     // Info cards
     $('w4-copt').textContent = isFinite(res.c_opt) ? res.c_opt.toFixed(2)+' %' : '—';

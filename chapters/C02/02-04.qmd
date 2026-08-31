@@ -183,7 +183,7 @@ $$
 #### Teneur du marché
 
 $$
-c_3 = \frac{3{,}41}{0{,}87 \times \left( 60 - \frac{11{,}9 + 15{,}2}{0{,}9} \right)} = 0{,}131 \ \text{kg/t}
+c_3 = \frac{h}{\Big((p - k) - \frac{f+F}{K}\Big) y} = \frac{3{,}41}{0{,}87 \times \left( 60 - \frac{11{,}9 + 15{,}2}{0{,}9} \right)} = 0{,}131 \ \text{kg/t}
 $$
 
 

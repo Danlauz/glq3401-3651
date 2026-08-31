@@ -106,13 +106,25 @@
     ctx.clearRect(0,0,W,H);
     ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,H);
 
-    var xmin=opts.xmin, xmax=opts.xmax, ymin=opts.ymin, ymax=opts.ymax;
+    // Axes « ronds » (NiceAxis, défini dans _lane_utils.qmd) : pas dans
+    // 1/2/2.5/5×10^k, au plus 8 intervalles. En X la borne gauche est conservée et
+    // la droite étendue au multiple du pas ; avec opts.xfix les deux bornes
+    // X sont gardées telles quelles (plage du paramètre).
+    var axX=window.NiceAxis.axis(opts.xmin, opts.xmax,
+      opts.xfix ? {target:8, fixMin:opts.xmin, fixMax:opts.xmax} : {target:8, fixMin:opts.xmin});
+    var axY=window.NiceAxis.axis(opts.ymin, opts.ymax, {target:8});
+    var xmin=axX.min, xmax=axX.max, ymin=axY.min, ymax=axY.max;
     function tx(x){return pad.l+(x-xmin)/(xmax-xmin)*pw;}
     function ty(y){return pad.t+(1-(y-ymin)/(ymax-ymin))*ph;}
 
-    // Grid
-    ctx.strokeStyle='#f0f0f0'; ctx.lineWidth=1;
-    for(var i=0;i<=4;i++){var gy=ymin+i*(ymax-ymin)/4;ctx.beginPath();ctx.moveTo(pad.l,ty(gy));ctx.lineTo(pad.l+pw,ty(gy));ctx.stroke();}
+    // Grille alignée sur les graduations
+    ctx.strokeStyle='#eceff3'; ctx.lineWidth=1;
+    axY.ticks.forEach(function(gy){ctx.beginPath();ctx.moveTo(pad.l,ty(gy));ctx.lineTo(pad.l+pw,ty(gy));ctx.stroke();});
+    axX.ticks.forEach(function(gx){ctx.beginPath();ctx.moveTo(tx(gx),pad.t);ctx.lineTo(tx(gx),pad.t+ph);ctx.stroke();});
+    if(ymin<0 && ymax>0){
+      ctx.strokeStyle='#b8bcc4';
+      ctx.beginPath();ctx.moveTo(pad.l,ty(0));ctx.lineTo(pad.l+pw,ty(0));ctx.stroke();
+    }
 
     // Fill gray zone if vmin
     if(opts.vmin){
@@ -142,10 +154,16 @@
     // Axes
     ctx.strokeStyle='#333';ctx.lineWidth=1;
     ctx.beginPath();ctx.moveTo(pad.l,pad.t);ctx.lineTo(pad.l,pad.t+ph);ctx.lineTo(pad.l+pw,pad.t+ph);ctx.stroke();
-    ctx.fillStyle='#333';ctx.font='11px system-ui';ctx.textAlign='right';
-    for(var i=0;i<=4;i++){var gy=ymin+i*(ymax-ymin)/4;ctx.fillText(gy.toFixed(opts.ydec||1),pad.l-5,ty(gy)+4);}
+    ctx.fillStyle='#333';ctx.font='11px system-ui';ctx.strokeStyle='#333';ctx.textAlign='right';
+    axY.ticks.forEach(function(gy){
+      ctx.beginPath();ctx.moveTo(pad.l-4,ty(gy));ctx.lineTo(pad.l,ty(gy));ctx.stroke();
+      ctx.fillText(axY.fmt(gy),pad.l-6,ty(gy)+4);
+    });
     ctx.textAlign='center';
-    for(var i=0;i<=4;i++){var gx=xmin+i*(xmax-xmin)/4;ctx.fillText(gx.toFixed(opts.xdec||2),tx(gx),pad.t+ph+15);}
+    axX.ticks.forEach(function(gx){
+      ctx.beginPath();ctx.moveTo(tx(gx),pad.t+ph);ctx.lineTo(tx(gx),pad.t+ph+4);ctx.stroke();
+      ctx.fillText(axX.fmt(gx),tx(gx),pad.t+ph+16);
+    });
 
     // Labels
     ctx.fillStyle='#111';ctx.font='bold 12px system-ui';ctx.textAlign='center';
@@ -159,7 +177,8 @@
     datasets.forEach(function(ds,i){
       var yy=ly+i*16;
       ctx.strokeStyle=ds.color;ctx.lineWidth=2;ctx.setLineDash(ds.dash||[]);
-      ctx.beginPath();ctx.moveTo(lx-55,yy);ctx.lineTo(lx-32,yy);ctx.stroke();ctx.setLineDash([]);
+      var tw=ctx.measureText(ds.label).width;
+      ctx.beginPath();ctx.moveTo(lx-tw-30,yy);ctx.lineTo(lx-tw-7,yy);ctx.stroke();ctx.setLineDash([]);
       ctx.fillStyle=ds.color;ctx.fillText(ds.label,lx,yy+4);
     });
   }
@@ -198,13 +217,13 @@
     var yAll = res.v1.concat(res.v2, res.v3);
     var ymin=Infinity, ymax=-Infinity;
     for(var i=0;i<yAll.length;i++){if(isFinite(yAll[i])){if(yAll[i]<ymin)ymin=yAll[i];if(yAll[i]>ymax)ymax=yAll[i];}}
-    var ym=(ymax-ymin)*0.08; ymin-=ym; ymax+=ym*2;
+    var ym=(ymax-ymin)||1; ymin-=0.05*ym; ymax+=0.15*ym;
 
     drawChart('w4-cv1', cc, [
       {data:res.v1,color:'#2563eb',dash:[],label:'Mine'},
       {data:res.v2,color:'#ea580c',dash:[8,4],label:'Concentrateur'},
       {data:res.v3,color:'#16a34a',dash:[3,3],label:'Marché'}
-    ], {xmin:0,xmax:res.cmax,ymin:ymin,ymax:ymax,title:'Courbes de profit',xlabel:'Teneur de coupure (%)',vmin:res.vmin,ydec:1});
+    ], {xmin:0,xmax:res.cmax,ymin:ymin,ymax:ymax,title:'Courbes de profit',xlabel:'Teneur de coupure (%)',vmin:res.vmin});
 
     // --- Right panel: c_opt and profit_opt vs parameter value ---
     // La courbe ne dépend que de `param` (pas de currentVal) : on la calcule
@@ -236,7 +255,7 @@
       {data:curveCache.copts,color:'#7c3aed',dash:[],label:'c_opt (%)'}
     ], {xmin:r.min,xmax:r.max,ymin:Math.max(0,curveCache.cmin-curveCache.cm),ymax:curveCache.cmax2+curveCache.cm,
         title:'Teneur optimale vs '+param,xlabel:param+' ('+r.unit+')',
-        cx:currentVal,ydec:2,xdec:r.step<0.1?2:r.step<1?1:0});
+        cx:currentVal,xfix:true});
 
     // Info cards
     $('w4-copt').textContent = isFinite(res.c_opt) ? res.c_opt.toFixed(2)+' %' : '—';
