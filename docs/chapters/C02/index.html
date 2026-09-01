@@ -2043,7 +2043,6 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
 .w3-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}
 .w3-table th{background:#f0f0f0;padding:6px 10px;text-align:left;border-bottom:2px solid #ccc;font-weight:600}
 .w3-table td{padding:5px 10px;border-bottom:1px solid #eee}
-.w3-table tr.w3-opt{background:#e8f5e9;font-weight:700}
 .w3-eq{color:#dc2626}
 .w3-hors{margin-left:6px;font-size:11px;color:#888;font-style:italic;font-weight:400}
 @media(max-width:600px){.w3-grid{grid-template-columns:1fr 1fr}}
@@ -2320,8 +2319,9 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
   }
 
   function drawTable(res){
+    // NB : pas de ligne « Optimale » ici — ce serait donner la réponse !
+    // L'étudiant lit l'optimum sur l'enveloppe inférieure du graphique.
     var rows = [
-      {type:'<b>Optimale</b>',c:res.c_opt,v:res.profit_opt,nat:res.nature,cls:'w3-opt'},
       {type:'Limite c₁',k:'c₁',c:res.c1,v:Math.max.apply(null,res.v1),nat:'Mine',cls:''},
       {type:'Limite c₂',k:'c₂',c:res.c2,v:Math.max.apply(null,res.v2),nat:'Concentrateur',cls:''},
       {type:'Limite c₃',k:'c₃',c:res.c3,v:Math.max.apply(null,res.v3),nat:'Marché',cls:''}
