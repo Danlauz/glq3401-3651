@@ -37,22 +37,26 @@ const MINERAUX = [
 // Exemples (préréglages) : minéraux, éléments, teneurs mesurées b (fraction),
 // composition de la gangue et densité de la gangue.
 const PRESETS = [
-  { nom: 'Cu-Zn', mineraux: ['Chalcopyrite', 'Sphalérite', 'Pyrite'], elements: ['Cu', 'Zn', 'S'], b: { Cu: 0.04, Zn: 0.03, S: 0.08 }, gangue: {}, gangueD: 3.0, poro: 2 },
   { nom: 'Barite', mineraux: ['Barite'], elements: ['Ba'], b: { Ba: 0.20 }, gangue: { Ba: 0.2 }, gangueD: 2.8, poro: 3 },
   { nom: 'Cu-Pb', mineraux: ['Chalcopyrite', 'Chalcocite', 'Bornite', 'Galène'], elements: ['Cu', 'Fe', 'Pb', 'S'], b: { Cu: 0.15, Fe: 0.10, Pb: 0.04, S: 0.16 }, gangue: { Fe: 0.05, S: 0.02 }, gangueD: 2.7, poro: 3 },
 ];
 
+// Exemple affiché à l'ouverture de l'atelier.
+const DEFAUT = PRESETS.find(p => p.nom === 'Cu-Pb') || PRESETS[0];
+
 export default class C03Densite extends Widget {
   render() {
-    this.selected = ['Chalcopyrite', 'Sphalérite', 'Pyrite'];
-    this.selElems = new Set(['Cu', 'Zn', 'S']);
+    // État de départ : l'exemple par défaut, pour n'avoir qu'une seule source
+    // de vérité entre les boutons d'exemples et l'affichage initial.
+    this.selected = DEFAUT.mineraux.slice();
+    this.selElems = new Set(DEFAUT.elements);
     this.Aval = {};   // {mineral: {el: fraction}}
-    this.bval = { Cu: 0.04, Zn: 0.03, S: 0.08 };
+    this.bval = { ...DEFAUT.b };
     this.dval = {};   // {mineral: densité}
-    this.gangueDensite = 3.0;
-    this.poro = 2;
+    this.gangueDensite = DEFAUT.gangueD ?? 3.0;
+    this.poro = DEFAUT.poro;
     for (const m of MINERAUX) { this.Aval[m.nom] = { ...m.composition }; this.dval[m.nom] = m.densite; }
-    this.Aval['Gangue'] = {};   // composition de la gangue (éditable, 0 par défaut)
+    this.Aval['Gangue'] = { ...(DEFAUT.gangue || {}) };   // composition de la gangue, éditable
 
     this.el.insertAdjacentHTML('beforeend', `
       <div style="padding:0 1rem 1rem">
@@ -72,7 +76,7 @@ export default class C03Densite extends Widget {
         <div style="overflow-x:auto"><table class="js-matrice" style="border-collapse:collapse;font-size:13px"></table></div>
         <div style="margin-top:6px;font-size:13px">Densités δ (g/cm³) :
           <span class="js-densites"></span>
-          · Porosité n (%) <input type="number" class="js-poro" value="2" step="0.5" min="0" max="50" style="width:54px;padding:2px 5px;border:1px solid #ccc;border-radius:5px">
+          · Porosité n (%) <input type="number" class="js-poro" value="${DEFAUT.poro}" step="0.5" min="0" max="50" style="width:54px;padding:2px 5px;border:1px solid #ccc;border-radius:5px">
         </div>
 
         <div style="margin-top:12px"><button type="button" class="js-calc" style="padding:.45rem 1.4rem;font-size:15px;font-weight:700;color:#fff;background:${COLOR};border:none;border-radius:8px;cursor:pointer">Calculer</button></div>

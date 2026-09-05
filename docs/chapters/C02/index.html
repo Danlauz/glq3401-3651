@@ -1897,8 +1897,14 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
       ctx.beginPath(); ctx.moveTo(tx(gx),pad.t+ph); ctx.lineTo(tx(gx),pad.t+ph+4); ctx.stroke();
       ctx.fillText(axX.fmt(gx), tx(gx), pad.t+ph+15);
     });
-    ctx.fillStyle='#111'; ctx.font='bold 13px system-ui'; ctx.textAlign='center';
-    ctx.fillText(opts.title||'', pad.l+pw/2, 16);
+    ctx.fillStyle='#111'; ctx.textAlign='center';
+    // le titre est tracé sur le canevas : on réduit le corps tant qu'il déborde
+    var tTitre = opts.title||'', tpx = 13;
+    ctx.font = 'bold '+tpx+'px system-ui';
+    while(tpx > 9 && ctx.measureText(tTitre).width > W-10){
+      tpx -= 0.5; ctx.font = 'bold '+tpx+'px system-ui';
+    }
+    ctx.fillText(tTitre, pad.l+pw/2, 16);
     if(opts.legend){
       ctx.fillStyle=opts.color||'#2563eb'; ctx.font='11px system-ui'; ctx.textAlign='left';
       ctx.fillText(opts.legend, pad.l+5, pad.t+14);
@@ -1955,7 +1961,7 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
     // Panel 1: xc vs c — c₁₂
     var r1 = drawChart('w2-cv1', cs, xcs, {
       xmin:0,xmax:xmax,ymin:0,ymax:1,yfix:true,
-      title:'Proportion au-dessus de c',xlabel:'Teneur de coupure (c)',
+      title:'Proportion au-dessus de c (xc)',xlabel:'Teneur de coupure (c)',
       legend:'xc = P(X > c)', color:'#2563eb',
       cx:c,px:c,py:rc.xc,
       eqLines:[{yTarget:xc_target_12, color:'#2563eb', label:'c₁₂', hLabel:'H/M = '+xc_target_12.toFixed(2)}]
@@ -1965,7 +1971,7 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
     var gcYmax = Math.max(Math.min(gcMax*1.2,20), gc_target_23*1.1);
     var r2 = drawChart('w2-cv2', cs, gcs, {
       xmin:0,xmax:xmax,ymin:0,ymax:gcYmax,
-      title:'Teneur moyenne conditionnelle',xlabel:'Teneur de coupure (c)',
+      title:'Teneur moyenne du minerai (gc)',xlabel:'Teneur de coupure (c)',
       legend:'gc = E[X|X>c]', color:'#059669',
       cx:c,px:c,py:rc.gc,
       eqLines:[{yTarget:gc_target_23, color:'#059669', label:'c₂₃', hLabel:'100K/(yH) = '+gc_target_23.toFixed(2)}]
@@ -1975,7 +1981,7 @@ g_c = \frac{m \, \Phi\left( \frac{1}{\beta} \ln\left( \frac{m}{c} \right) + \fra
     var xcgcYmax = Math.max(xcgcMax*1.15, xcgc_target_13*1.1);
     var r3 = drawChart('w2-cv3', cs, xcgcs, {
       xmin:0,xmax:xmax,ymin:0,ymax:xcgcYmax,
-      title:'Teneur moyenne récupérée',xlabel:'Teneur de coupure (c)',
+      title:'Produit proportion × teneur moyenne (xc·gc)',xlabel:'Teneur de coupure (c)',
       legend:'xc · gc', color:'#7c3aed',
       cx:c,px:c,py:rc.xc*rc.gc,
       eqLines:[{yTarget:xcgc_target_13, color:'#7c3aed', label:'c₁₃', hLabel:'100K/(yM) = '+xcgc_target_13.toFixed(2)}]

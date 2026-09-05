@@ -13,6 +13,29 @@ const SR_COL  = ['#16a34a', '#16a34a', '#059669', '#0d9488', '#2563eb', '#7c3aed
 const EX_STEPS = [{ d: 0.5, me: 5300 }, { d: 0.02, me: 100 }, { d: 0.007, me: 25 }];
 const debounce = (fn, ms = 200) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
 
+/**
+ * Bornes d'un axe logarithmique, en log10, calées sur les valeurs affichées.
+ *
+ * @param {number[]} valeurs   données à encadrer (les zéros sont ignorés)
+ * @param {number}   marge     marge ajoutée de chaque côté, en décades
+ * @param {number}   etendueMin étendue minimale de l'axe, en décades
+ * @returns {[number, number]} bornes arrondies à la décade entière
+ */
+function bornesLog(valeurs, marge = 0.35, etendueMin = 2) {
+  const v = valeurs.filter(x => isFinite(x) && x > 0);
+  if (!v.length) return [0, etendueMin];
+  let lo = Math.log10(Math.min(...v)) - marge;
+  let hi = Math.log10(Math.max(...v)) + marge;
+  if (hi - lo < etendueMin) {                 // procédure trop courte : on élargit
+    const c = (lo + hi) / 2;
+    lo = c - etendueMin / 2; hi = c + etendueMin / 2;
+  }
+  // Pas d'arrondi à la décade entière : cela ramènerait presque toujours aux
+  // bornes fixes d'avant et annulerait le cadrage. On arrondit au quart de
+  // décade, assez pour des bornes propres sans perdre le zoom.
+  return [Math.floor(lo * 4) / 4, Math.ceil(hi * 4) / 4];
+}
+
 export default class C03GyAbaque extends Widget {
   render() {
     this.steps = EX_STEPS.map(s => ({ ...s }));
@@ -105,9 +128,21 @@ export default class C03GyAbaque extends Widget {
     if (p.al <= 0 || ml0 <= 0) return;
     if (!window.Plotly) { this.afficherAvertissement('Plotly non chargé.'); return; }
 
+    // === Bornes des axes, calées sur les données affichées ===
+    // Le nomogramme est en log-log : on encadre la procédure (les d et les
+    // masses de chaque étape, la maille de libération d₀ et la masse initiale)
+    // en arrondissant à la décade, avec un minimum d'étendue pour que le
+    // graphique reste lisible même sur une procédure très courte.
+    const [lx0, lx1] = bornesLog(
+      this.steps.map(s => s.d).concat([p.d0]), 0.35, 2);
+    const [ly0, ly1] = bornesLog(
+      this.steps.map(s => s.me).concat([ml0]), 0.35, 3);
+
     // === Isocontours + evaluation procedure via la VRAIE librairie ===
+    // Les isocontours sont calculés sur l'étendue réellement affichée, avec un
+    // pas constant en nombre de points : ils traversent toujours le cadre.
     const [iso, evalProc] = await Promise.all([
-      gpoly.gyIsocontoursAbaque(p, SR_VALS, -3, 1, 0.04),
+      gpoly.gyIsocontoursAbaque(p, SR_VALS, lx0, lx1, (lx1 - lx0) / 120),
       gpoly.gyEvaluerProcedure(p, this.steps, ml0),
     ]);
 
@@ -130,13 +165,25 @@ export default class C03GyAbaque extends Widget {
       line: { color: '#000', width: 3 }, marker: { color: '#dc2626', size: 9 },
       name: 'Procédure', hovertemplate: 'd=%{x:.3g} cm<br>M=%{y:.3g} g<extra></extra>',
     });
-    const shapes = [{ type: 'line', x0: p.d0, x1: p.d0, y0: 1, y1: 1e7, line: { color: '#999', width: 1, dash: 'dot' } }];
+    const shapes = [{ type: 'line', x0: p.d0, x1: p.d0, y0: Math.pow(10, ly0),
+                      y1: Math.pow(10, ly1), line: { color: '#999', width: 1, dash: 'dot' } }];
+
+    // Maillage fin : sur une échelle logarithmique, les décades seules ne
+    // permettent pas de lire une valeur intermédiaire. On ajoute les
+    // subdivisions 2, 3, … 9 de chaque décade (dtick 'D1') sur les deux axes.
+    const AXE_LOG = {
+      type: 'log', dtick: 1, showline: true, mirror: true, linecolor: '#999',
+      ticks: 'outside', gridcolor: '#9e9e9e', gridwidth: 1, zeroline: false,
+      minor: { dtick: 'D1', showgrid: true, gridcolor: '#d8d8d8', gridwidth: 0.5,
+               ticks: 'outside', ticklen: 3 },
+    };
 
     Plotly.react(this.plot, traces, {
       margin: { t: 36, l: 65, r: 20, b: 45 },
       title: { text: 'Abaque de Gy — isocontours sᵣ et procédure', font: { size: 13 } },
-      xaxis: { title: 'Taille fragments d (cm)', type: 'log', range: [-3, 1], dtick: 1 },
-      yaxis: { title: 'Masse échantillon Mₑ (g)', type: 'log', range: [0, 7], dtick: 1 },
+      xaxis: { ...AXE_LOG, title: 'Taille fragments d (cm)', range: [lx0, lx1] },
+      yaxis: { ...AXE_LOG, title: 'Masse échantillon Mₑ (g)', range: [ly0, ly1] },
+      plot_bgcolor: '#fff',
       shapes, legend: { font: { size: 10 }, orientation: 'v', x: 1.02, y: 1 },
     }, { displaylogo: false, responsive: true });
 
