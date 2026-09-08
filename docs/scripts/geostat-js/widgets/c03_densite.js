@@ -36,13 +36,53 @@ const MINERAUX = [
 
 // Exemples (préréglages) : minéraux, éléments, teneurs mesurées b (fraction),
 // composition de la gangue et densité de la gangue.
+// Les quatre exercices repris des notes de cours.
 const PRESETS = [
-  { nom: 'Barite', mineraux: ['Barite'], elements: ['Ba'], b: { Ba: 0.20 }, gangue: { Ba: 0.2 }, gangueD: 2.8, poro: 3 },
-  { nom: 'Cu-Pb', mineraux: ['Chalcopyrite', 'Chalcocite', 'Bornite', 'Galène'], elements: ['Cu', 'Fe', 'Pb', 'S'], b: { Cu: 0.15, Fe: 0.10, Pb: 0.04, S: 0.16 }, gangue: { Fe: 0.05, S: 0.02 }, gangueD: 2.7, poro: 3 },
+  {
+    nom: 'Ex. 1 — Barite',
+    enonce: 'Un gisement est exploité pour le baryum contenu dans la barite (BaSO₄, δ = 4,5). '
+          + 'Quelle est la masse volumique théorique du minerai s’il montre une teneur de 20 % Ba, '
+          + 'que la gangue (sans baryum) a une densité de 2,8 et que la roche montre une porosité de 3 % ?',
+    mineraux: ['Barite'],
+    elements: ['Ba'],
+    b: { Ba: 0.20 },
+    gangue: {}, gangueD: 2.8, poro: 3,
+  },
+  {
+    nom: 'Ex. 2 — Cu-Pb',
+    enonce: 'Une roche contient de la chalcopyrite, de la chalcocite, de la bornite et de la galène. '
+          + 'La gangue contient 5 % Fe et 2 % S et une densité de 2,7. '
+          + 'L’analyse chimique a donné 15 % Cu, 10 % Fe, 4 % Pb et 16 % S. Porosité : 3 %.',
+    mineraux: ['Chalcopyrite', 'Chalcocite', 'Bornite', 'Galène'],
+    elements: ['Cu', 'Fe', 'Pb', 'S'],
+    b: { Cu: 0.15, Fe: 0.10, Pb: 0.04, S: 0.16 },
+    gangue: { Fe: 0.05, S: 0.02 }, gangueD: 2.7, poro: 3,
+  },
+  {
+    nom: 'Ex. 3 — Cu-Zn',
+    enonce: 'Une roche d’un gisement de Cu-Zn montre une teneur de 4 % Cu, 3 % Zn et 8 % S. '
+          + 'Le Cu est contenu uniquement dans la chalcopyrite et le Zn uniquement dans la sphalérite ; '
+          + 'on retrouve aussi de la pyrite. La gangue (δ = 3,0) ne contient ni Cu, ni Zn, ni S. Porosité : 2 %.',
+    mineraux: ['Chalcopyrite', 'Sphalérite', 'Pyrite'],
+    elements: ['Cu', 'Zn', 'S'],
+    b: { Cu: 0.04, Zn: 0.03, S: 0.08 },
+    gangue: {}, gangueD: 3.0, poro: 2,
+  },
+  {
+    nom: 'Ex. 4 — Cu-Pb-Ba',
+    enonce: 'Une roche montre 4 % Cu, 2 % Pb, 2 % Fe et 5 % S. Le Cu est contenu uniquement dans la bornite '
+          + 'et le Pb uniquement dans la galène ; on retrouve aussi de la pyrite. Le Ba n’a pas été analysé dans '
+          + 'la roche, mais l’analyse de la gangue indique la présence possible de barite. La gangue (δ = 3,2) '
+          + 'contient seulement 1 % S. Porosité : 3 %. — Noter que l’élément Ba reste décoché : il n’a pas été mesuré.',
+    mineraux: ['Pyrite', 'Bornite', 'Barite', 'Galène'],
+    elements: ['Cu', 'Fe', 'Pb', 'S'],
+    b: { Cu: 0.04, Fe: 0.02, Pb: 0.02, S: 0.05 },
+    gangue: { S: 0.01 }, gangueD: 3.2, poro: 3,
+  },
 ];
 
 // Exemple affiché à l'ouverture de l'atelier.
-const DEFAUT = PRESETS.find(p => p.nom === 'Cu-Pb') || PRESETS[0];
+const DEFAUT = PRESETS[0];
 
 export default class C03Densite extends Widget {
   render() {
@@ -64,6 +104,7 @@ export default class C03Densite extends Widget {
           <span style="font-size:12px;color:#666">Exemples :</span>
           ${PRESETS.map((p, i) => `<button type="button" class="js-preset" data-i="${i}" style="padding:.2rem .55rem;font-size:12px;cursor:pointer">${p.nom}</button>`).join('')}
         </div>
+        <p class="js-enonce" style="margin:.1rem 0 .6rem;padding:.45rem .6rem;font-size:12px;line-height:1.45;color:#333;background:#f4f7fb;border-left:3px solid ${COLOR};border-radius:0 6px 6px 0">${DEFAUT.enonce || ''}</p>
 
         <h5 style="margin:.5rem 0 .25rem">1. Minéraux présents</h5>
         <div class="js-minlist" style="display:flex;flex-wrap:wrap;gap:.35rem .9rem;font-size:13px"></div>
@@ -86,6 +127,7 @@ export default class C03Densite extends Widget {
       </div>
     `);
 
+    this.enonceEl = this.el.querySelector('.js-enonce');
     this.minlist = this.el.querySelector('.js-minlist');
     this.ellist = this.el.querySelector('.js-ellist');
     this.matrice = this.el.querySelector('.js-matrice');
@@ -127,6 +169,7 @@ export default class C03Densite extends Widget {
     this.gangueDensite = p.gangueD ?? 3.0;
     for (const m of MINERAUX) this.Aval[m.nom] = { ...m.composition };
     this.Aval['Gangue'] = { ...(p.gangue || {}) };
+    if (this.enonceEl) this.enonceEl.textContent = p.enonce || '';
     this._rebuildMin(); this._rebuildElems(); this._rebuildMatrice();
     this.resultEl.innerHTML = '';
   }
