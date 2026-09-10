@@ -233,6 +233,7 @@ from block_variance.quadrature import (
     variance_bloc_quadrature as _vbloc_quad,
     variance_bloc_calculateur as _vbloc_calc,
     variance_bloc_support as _vbloc_support,
+    variance_dispersion_courbe as _vdisp_courbe,
     points_quadrature_visu as _pts_quad,
 )
 from block_variance.empirique import (
@@ -1305,6 +1306,21 @@ def gpoly_variance_bloc_support(range_x, range_y, palier, pepite,
                                  int(block_size), float(pixel_size),
                                  float(angle_deg), str(modele), int(n_points)))
 
+def gpoly_variance_dispersion_courbe(range_x, range_y, palier, pepite,
+                                     taille_champ, taille_max, pixel_size=1.0,
+                                     angle_deg=0.0, modele='spherique',
+                                     normaliser=True):
+    """Courbe de reference de l'atelier 8.1 : variance de DISPERSION des moyennes
+    de blocs dans un champ fini (relation de Krige), et variance de bloc en
+    domaine infini, pour toutes les tailles de 1 a taille_max."""
+    tailles, dispersion, bloc = _vdisp_courbe(
+        float(range_x), float(range_y), float(palier), float(pepite),
+        int(taille_champ), int(taille_max), float(pixel_size),
+        float(angle_deg), str(modele), bool(normaliser))
+    return {'tailles': [int(t) for t in tailles],
+            'dispersion': [float(v) for v in dispersion],
+            'bloc': [float(v) for v in bloc]}
+
 def gpoly_points_quadrature_visu(geometrie, lx, ly=0.0, lz=0.0, n_points=5):
     """Coordonnees des points de quadrature (visualisation pedagogique)."""
     x, y, z = _pts_quad(str(geometrie), float(lx), float(ly), float(lz),
@@ -2169,6 +2185,13 @@ export const gpoly = {
                         modele = 'spherique', n_points = 40) =>
     _call('gpoly_variance_bloc_support', range_x, range_y, palier, pepite,
           block_size, pixel_size, angle_deg, modele, n_points),
+  // Courbe de reference de l'atelier 8.1 : variance de dispersion dans un champ
+  // fini (relation de Krige) + variance de bloc en domaine infini
+  varianceDispersionCourbe: (range_x, range_y, palier, pepite, taille_champ,
+                             taille_max, pixel_size = 1.0, angle_deg = 0.0,
+                             modele = 'spherique', normaliser = true) =>
+    _call('gpoly_variance_dispersion_courbe', range_x, range_y, palier, pepite,
+          taille_champ, taille_max, pixel_size, angle_deg, modele, normaliser),
   // Points de quadrature (visualisation pedagogique)
   pointsQuadratureVisu: (geometrie, lx, ly = 0, lz = 0, n_points = 5) =>
     _call('gpoly_points_quadrature_visu', geometrie, lx, ly, lz, n_points),

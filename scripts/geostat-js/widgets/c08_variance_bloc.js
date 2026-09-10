@@ -6,14 +6,18 @@
 //
 // Deux figures de même taille : (gauche) le champ AGRÉGÉ au support choisi
 // (Turbo, boîte carrée) ; (droite) la variance de bloc EXPÉRIMENTALE (moyennes
-// glissantes sur le champ simulé) comparée à la variance THÉORIQUE (intégrale
-// de covariance), avec une ligne rouge au support sélectionné.
+// glissantes sur le champ simulé) comparée à la courbe THÉORIQUE de référence,
+// avec une ligne rouge au support sélectionné.
+//
+// La référence théorique est la variance de DISPERSION des blocs dans le champ
+// fini, D²(v|V) = C(v,v) − C_v(D,D), et non la variance de bloc en domaine
+// infini C(v,v) : c'est cette dernière que mesure la courbe expérimentale.
 //
 // Comme dans le notebook : le bouton lance la simulation complète (lente) ; le
 // curseur « Support » ne fait que ré-agréger l'image (rapide).
 //
 // Tout passe par geostat_polymtl : champ = simulerChampAniso ; empirique =
-// varianceBlocEmpirique ; théorique = varianceBlocSupport ; agrégation =
+// varianceBlocEmpirique ; théorique = varianceDispersionCourbe ; agrégation =
 // agregerChamp. Aucun calcul géostatistique côté JS.
 // -----------------------------------------------------------------------------
 
@@ -26,7 +30,10 @@ const TURBO = [
   [0.6, 'rgb(150,233,89)'], [0.7, 'rgb(212,225,55)'], [0.8, 'rgb(248,186,56)'],
   [0.9, 'rgb(242,124,36)'], [1.0, 'rgb(122,4,3)'],
 ];
-const CONFIG = { N: 160, seed: 4263, supportMax: 40, nGauss: 40 };
+// N : cote du champ. supportMax doit rester petit devant N, sinon le plus gros
+// bloc n'entre que quelques fois dans le champ et la variance experimentale
+// devient tres bruitee (+-33 % a N=160, +-17 % a N=256, pour un support de 40).
+const CONFIG = { N: 256, seed: 4263, supportMax: 40 };
 
 export default class C08VarianceBloc extends Widget {
   render() {
@@ -122,11 +129,17 @@ export default class C08VarianceBloc extends Widget {
     try { emp = await gpoly.varianceBlocEmpirique(field, N, CONFIG.supportMax); }
     catch (e) { this.afficherAvertissement('Erreur empirique : ' + e.message); return; }
 
-    // 3) Variance théorique (intégrale de covariance) pour les mêmes tailles.
+    // 3) Courbe théorique de référence. Ce que mesure la courbe expérimentale
+    //    n'est pas la variance de bloc en domaine infini C(v,v), mais la
+    //    variance de DISPERSION des blocs à l'intérieur du champ simulé :
+    //        D²(v|V) = C(v,v) − C_v(D,D)     (additivité de Krige)
+    //    D étant le domaine balayé par les centres des fenêtres glissantes.
+    //    Sans ce terme, la théorique surestime de ~14 % au plus gros support.
     let varTheo;
     try {
-      varTheo = await Promise.all(emp.tailles.map(b =>
-        gpoly.varianceBlocSupport(ag, ap, c1, c0, b, 1.0, ang, mod, CONFIG.nGauss)));
+      const ref = await gpoly.varianceDispersionCourbe(
+        ag, ap, c1, c0, N, CONFIG.supportMax, 1.0, ang, mod, true);
+      varTheo = emp.tailles.map((b, i) => ref.dispersion[i]);
     } catch (e) { this.afficherAvertissement('Erreur théorique : ' + e.message); return; }
 
     this.cache = { field, N, total, tailles: emp.tailles, varExp: emp.variances, varTheo };
@@ -161,7 +174,7 @@ export default class C08VarianceBloc extends Widget {
     Plotly.react(this.curveEl, [
       { x: tailles, y: varExp, mode: 'lines+markers', name: 'Variance expérimentale',
         line: { color: '#1f77b4', width: 2 }, marker: { color: '#1f77b4', size: 6 } },
-      { x: tailles, y: varTheo, mode: 'lines+markers', name: 'Variance théorique',
+      { x: tailles, y: varTheo, mode: 'lines+markers', name: 'Variance théorique (champ fini)',
         line: { color: '#ea8f1e', width: 2, dash: 'dash' }, marker: { color: '#ea8f1e', size: 5, symbol: 'square' } },
       { x: [support, support], y: [0, total * 1.08], mode: 'lines', name: `Support = ${support}`,
         line: { color: '#CC0000', width: 1.5, dash: 'dot' } },
@@ -175,7 +188,10 @@ export default class C08VarianceBloc extends Widget {
 
     this.infoEl.innerHTML = `Support <b>${support}×${support}</b> — variance expérimentale = ` +
       `<b>${(varExp[support - 1] ?? NaN).toFixed(3)}</b>, théorique = <b>${(varTheo[support - 1] ?? NaN).toFixed(3)}</b> ` +
-      `(variance ponctuelle ${total.toFixed(2)}). La variance décroît avec la taille du bloc : c'est l'<b>effet de support</b>.`;
+      `(variance ponctuelle ${total.toFixed(2)}). La variance décroît avec la taille du bloc : c'est l'<b>effet de support</b>. ` +
+      `La courbe théorique est la variance de <b>dispersion</b> des blocs à l'intérieur du champ simulé ; ` +
+      `l'écart résiduel aux grands supports est la fluctuation d'une réalisation à l'autre, ` +
+      `d'autant plus forte que le bloc occupe une part importante du champ.`;
   }
 
   cleanup() {

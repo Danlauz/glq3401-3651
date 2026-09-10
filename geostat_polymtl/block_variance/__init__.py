@@ -12,7 +12,10 @@ quadrature
     anisotropie geometrique.
 empirique
     Calcul empirique par moyennage glissant sur un champ regulier
-    (variance de differents supports vs taille du bloc).
+    (variance de differents supports vs taille du bloc). La courbe de reference
+    correspondante est ``quadrature.variance_dispersion_courbe`` : dans un champ
+    fini, ce qui est mesure est une variance de DISPERSION, pas la variance de
+    bloc en domaine infini (relation d'additivite de Krige).
 imbrique
     Helpers pour les variogrammes/covariances imbriques (somme de structures).
 
@@ -26,6 +29,8 @@ de cov_func se fait dans ce package : ``a`` (spherique), ``a/3`` (exponentiel),
 from geostat_polymtl.block_variance.quadrature import (
     variance_bloc_quadrature,
     variance_bloc_calculateur,
+    variance_bloc_support,
+    variance_dispersion_courbe,
     points_quadrature_visu,
 )
 from geostat_polymtl.block_variance.empirique import (
@@ -40,6 +45,8 @@ from geostat_polymtl.block_variance.imbrique import (
 __all__ = [
     "variance_bloc_quadrature",
     "variance_bloc_calculateur",
+    "variance_bloc_support",
+    "variance_dispersion_courbe",
     "points_quadrature_visu",
     "agreger_champ",
     "variance_bloc_empirique",

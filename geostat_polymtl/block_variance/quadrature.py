@@ -315,3 +315,115 @@ def variance_bloc_support(
     mean_structured = float(np.mean(K))
     area = (block_size * pixel_size) ** 2
     return mean_structured + float(pepite) / area
+
+
+def variance_dispersion_courbe(
+    range_x: float, range_y: float,
+    palier: float, pepite: float,
+    taille_champ: int, taille_max: int,
+    pixel_size: float = 1.0,
+    angle_deg: float = 0.0,
+    modele: str = "spherique",
+    normaliser: bool = True,
+):
+    """Variance de DISPERSION des moyennes de blocs dans un champ fini (atelier 8.1).
+
+    La variance de bloc "theorique" usuelle, :math:`\\bar{C}(v, v)`, suppose un
+    domaine infini. Or la courbe experimentale de l'atelier est mesuree sur un
+    champ carre de ``taille_champ`` pixels : ce que l'on observe est une
+    **variance de dispersion**, donnee par la relation d'additivite de Krige
+
+    .. math::
+        D^2(v \\mid V) = \\bar{C}(v, v) - \\bar{C}_v(D, D)
+
+    ou :math:`D` est le domaine balaye par les centres des fenetres glissantes,
+    de taille :math:`(N - b + 1)^2`, et :math:`C_v` la covariance du champ
+    regularise sur le bloc. Le terme retranche est nul pour un domaine infini ;
+    il vaut environ 10 % du signal lorsque le bloc atteint le quart du champ.
+
+    Le calcul est fait exactement sur la grille discrete des pixels (pas de
+    quadrature) : la covariance structuree est evaluee une seule fois sur la
+    grille des decalages, puis moyennee par les autocorrelations des noyaux
+    d'agregation, au moyen de convolutions FFT. L'effet de pepite est traite
+    naturellement par le poids du decalage nul.
+
+    Parameters
+    ----------
+    range_x, range_y : float
+        Portees pratiques 95 % (grande / petite).
+    palier : float
+        Palier structurel ``c1``.
+    pepite : float
+        Effet de pepite ``c0``.
+    taille_champ : int
+        Cote du champ simule, en pixels (``N``).
+    taille_max : int
+        Plus grande taille de bloc a evaluer.
+    pixel_size : float
+        Taille d'un pixel.
+    angle_deg : float
+        Angle de l'anisotropie (degres).
+    modele : {"spherique", "exponentiel", "gaussien"}
+    normaliser : bool
+        Si vrai, la courbe est remise a l'echelle pour valoir ``palier + pepite``
+        au support 1. C'est necessaire lorsque le champ simule a ete standardise
+        (variance d'echantillon forcee au palier), ce qui est le cas des ateliers :
+        sans cela les deux courbes different de 1 a 2 % des le support 1.
+
+    Returns
+    -------
+    tailles : list of int
+    dispersion : list of float
+        :math:`D^2(v \\mid V)` — a comparer a la variance experimentale.
+    bloc : list of float
+        :math:`\\bar{C}(v, v)` — la variance de bloc en domaine infini.
+    """
+    N = int(taille_champ)
+    bmax = min(int(taille_max), N)
+    code = _CODES_MODELE[modele.lower()]
+    rx = _range_pratique_vers_interne(modele, range_x)
+    ry = _range_pratique_vers_interne(modele, range_y)
+
+    # Covariance structuree sur la grille des decalages entiers -(N-1)..(N-1).
+    pas = np.arange(-(N - 1), N) * float(pixel_size)
+    GX, GY = np.meshgrid(pas, pas, indexing="ij")
+    lags = np.column_stack([GX.ravel(), GY.ravel()])
+    model = np.array([[code, rx, ry, float(angle_deg)]], dtype=float)
+    c = np.array([[float(palier)]], dtype=float)
+    C = np.asarray(covar(lags, np.zeros((1, 2)), model, c),
+                   dtype=float).reshape(GX.shape)
+    centre = N - 1
+
+    def _autocorr(n: int) -> np.ndarray:
+        """Autocorrelation normalisee du noyau uniforme n x n, somme = 1."""
+        t = np.convolve(np.ones(n), np.ones(n)) / float(n * n)
+        return np.outer(t, t)
+
+    def _conv2(a: np.ndarray, b: np.ndarray) -> np.ndarray:
+        s = np.array(a.shape) + np.array(b.shape) - 1
+        taille = 1 << int(math.ceil(math.log2(int(s.max()))))
+        prod = np.fft.rfft2(a, (taille, taille)) * np.fft.rfft2(b, (taille, taille))
+        return np.fft.irfft2(prod, (taille, taille))[:s[0], :s[1]]
+
+    def _moyenner(K: np.ndarray) -> float:
+        """Somme ponderee de C par le noyau K, plus la pepite au decalage nul."""
+        k = (K.shape[0] - 1) // 2
+        sl = slice(centre - k, centre + k + 1)
+        return float((K * C[sl, sl]).sum()) + float(pepite) * float(K[k, k])
+
+    tailles, dispersion, bloc = [], [], []
+    for b in range(1, bmax + 1):
+        m = N - b + 1
+        if m < 2:
+            break
+        noyau_bloc = _autocorr(b)
+        c_vv = _moyenner(noyau_bloc)
+        c_vDD = _moyenner(_conv2(noyau_bloc, _autocorr(m)))
+        tailles.append(b)
+        bloc.append(c_vv)
+        dispersion.append(max(c_vv - c_vDD, 0.0))
+
+    if normaliser and dispersion and dispersion[0] > 0:
+        facteur = (float(palier) + float(pepite)) / dispersion[0]
+        dispersion = [v * facteur for v in dispersion]
+    return tailles, dispersion, bloc
