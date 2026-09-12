@@ -36,7 +36,7 @@ const MINERAUX = [
 
 // Exemples (préréglages) : minéraux, éléments, teneurs mesurées b (fraction),
 // composition de la gangue et densité de la gangue.
-// Les quatre exercices repris des notes de cours.
+// Les trois exercices repris des notes de cours.
 const PRESETS = [
   {
     nom: 'Ex. 1 — Barite',
@@ -59,17 +59,7 @@ const PRESETS = [
     gangue: { Fe: 0.05, S: 0.02 }, gangueD: 2.7, poro: 3,
   },
   {
-    nom: 'Ex. 3 — Cu-Zn',
-    enonce: 'Une roche d’un gisement de Cu-Zn montre une teneur de 4 % Cu, 3 % Zn et 8 % S. '
-          + 'Le Cu est contenu uniquement dans la chalcopyrite et le Zn uniquement dans la sphalérite ; '
-          + 'on retrouve aussi de la pyrite. La gangue (δ = 3,0) ne contient ni Cu, ni Zn, ni S. Porosité : 2 %.',
-    mineraux: ['Chalcopyrite', 'Sphalérite', 'Pyrite'],
-    elements: ['Cu', 'Zn', 'S'],
-    b: { Cu: 0.04, Zn: 0.03, S: 0.08 },
-    gangue: {}, gangueD: 3.0, poro: 2,
-  },
-  {
-    nom: 'Ex. 4 — Cu-Pb-Ba',
+    nom: 'Ex. 3 — Cu-Pb-Ba',
     enonce: 'Une roche montre 4 % Cu, 2 % Pb, 2 % Fe et 5 % S. Le Cu est contenu uniquement dans la bornite '
           + 'et le Pb uniquement dans la galène ; on retrouve aussi de la pyrite. Le Ba n’a pas été analysé dans '
           + 'la roche, mais l’analyse de la gangue indique la présence possible de barite. La gangue (δ = 3,2) '
