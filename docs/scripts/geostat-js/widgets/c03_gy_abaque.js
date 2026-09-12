@@ -9,7 +9,11 @@ import { Widget } from '../widget-base.js';
 import { gpoly, afficherChargementJusquaPret } from '../pyodide_setup.js';
 
 const SR_VALS = [0.001, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1.0];
-const SR_COL  = ['#16a34a', '#16a34a', '#059669', '#0d9488', '#2563eb', '#7c3aed', '#dc2626', '#dc2626', '#991b1b'];
+// Rampe verte -> rouge : la couleur code directement la precision. Neuf teintes
+// franchement distinctes, pour qu'on reconnaisse une courbe sans la suivre du
+// doigt jusqu'a la legende.
+const SR_COL  = ['#0b6b3a', '#15914f', '#4aa93f', '#8cb62f', '#c9a227',
+                 '#e08d2a', '#dd6327', '#cc3b28', '#96161b'];
 const EX_STEPS = [{ d: 0.5, me: 5300 }, { d: 0.02, me: 100 }, { d: 0.007, me: 25 }];
 const debounce = (fn, ms = 200) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
 
@@ -88,7 +92,8 @@ export default class C03GyAbaque extends Widget {
     }
     this.on(this.el.querySelector('.js-add'), 'click', () => {
       const last = this.steps[this.steps.length - 1] || { d: 0.1, me: 50 };
-      this.steps.push({ d: last.d / 3, me: last.me / 4 }); this.rebuildSteps(refresh); this.refresh();
+      this.steps.push({ d: +(last.d / 3).toPrecision(3), me: +(last.me / 4).toPrecision(3) });
+      this.rebuildSteps(refresh); this.refresh();
     });
     this.on(this.el.querySelector('.js-rm'), 'click', () => {
       if (this.steps.length > 1) { this.steps.pop(); this.rebuildSteps(refresh); this.refresh(); }
@@ -146,12 +151,16 @@ export default class C03GyAbaque extends Widget {
       gpoly.gyEvaluerProcedure(p, this.steps, ml0),
     ]);
 
-    // Construire les traces d'isocontours
+    // Construire les traces d'isocontours. Pas d'entree de legende : chaque
+    // courbe porte son etiquette directement sur le trace (voir plus bas), ce
+    // qui evite l'aller-retour courbe -> legende sur neuf lignes voisines.
+    const fmtSr = sr => (sr * 100).toFixed(sr < 0.01 ? 1 : 0).replace('.', ',') + ' %';
+    const fmtD  = v => (v > 0 ? String(+v.toPrecision(3)) : '0').replace('.', ',');
     const traces = iso.curves.map((c, si) => ({
       x: c.x, y: c.y, mode: 'lines',
-      line: { color: SR_COL[si], width: 1.5 },
-      name: (c.sr * 100).toFixed(c.sr < 0.01 ? 1 : 0) + ' %',
-      hovertemplate: 'sᵣ=' + (c.sr * 100).toFixed(2) + '%<br>d=%{x:.3g} cm<br>Mₑ=%{y:.3g} g<extra></extra>',
+      line: { color: SR_COL[si], width: 1.8 },
+      name: fmtSr(c.sr), showlegend: false,
+      hovertemplate: 'sᵣ=' + fmtSr(c.sr) + '<br>d=%{x:.3g} cm<br>Mₑ=%{y:.3g} g<extra></extra>',
     }));
 
     // Trace procedure (chemin du nomogramme)
@@ -163,10 +172,86 @@ export default class C03GyAbaque extends Widget {
     traces.push({
       x: px, y: py, mode: 'lines+markers',
       line: { color: '#000', width: 3 }, marker: { color: '#dc2626', size: 9 },
-      name: 'Procédure', hovertemplate: 'd=%{x:.3g} cm<br>M=%{y:.3g} g<extra></extra>',
+      name: 'Procédure (chemin suivi)',
+      hovertemplate: 'd=%{x:.3g} cm<br>M=%{y:.3g} g<extra></extra>',
     });
-    const shapes = [{ type: 'line', x0: p.d0, x1: p.d0, y0: Math.pow(10, ly0),
-                      y1: Math.pow(10, ly1), line: { color: '#999', width: 1, dash: 'dot' } }];
+    // === Reperes verticaux et etiquettes ===
+    // Les reperes sont traces comme des SERIES et non comme des `shapes` : sur un
+    // axe logarithmique, Plotly place mal les shapes lors d'un `react` successif,
+    // alors qu'une serie suit toujours les coordonnees de donnees.
+    // ATTENTION en revanche : les annotations, elles, attendent bien le LOG10.
+    const L = v => Math.log10(v);
+    const yBas = Math.pow(10, ly0), yHaut = Math.pow(10, ly1);
+    const dedans = (x, y) => L(x) >= lx0 - 1e-9 && L(x) <= lx1 + 1e-9 &&
+                             L(y) >= ly0 - 1e-9 && L(y) <= ly1 + 1e-9;
+    const annotations = [];
+
+    // Un repere vertical par etape, a la taille de fragments d choisie : on lit
+    // directement sur quel isocontour tombe chaque etape.
+    // Les etiquettes sont posees au pied du graphique. Deux etapes proches
+    // auraient des etiquettes superposees : on les decale alors d'un cran vers
+    // le haut, en alternance.
+    const posees = [];          // {lx, niveau} deja placees
+    const niveauLibre = (lx) => {
+      const proches = posees.filter(q => Math.abs(q.lx - lx) < 0.11 * (lx1 - lx0));
+      let n = 0;
+      while (proches.some(q => q.niveau === n)) n++;
+      return n;
+    };
+    this.steps.forEach((st, i) => {
+      if (!(st.d > 0) || L(st.d) < lx0 || L(st.d) > lx1) return;
+      traces.push({
+        x: [st.d, st.d], y: [yBas, yHaut], mode: 'lines',
+        line: { color: '#dc2626', width: 1.4, dash: 'dot' },
+        opacity: 0.6, showlegend: false, hoverinfo: 'skip',
+      });
+      const n = niveauLibre(L(st.d));
+      posees.push({ lx: L(st.d), niveau: n });
+      annotations.push({
+        x: L(st.d), y: ly0, xref: 'x', yref: 'y',
+        text: '<b>É' + (i + 1) + '</b><br>d = ' + fmtD(st.d),
+        showarrow: false, xanchor: 'center', yanchor: 'bottom', yshift: 5 + n * 30,
+        font: { size: 9.5, color: '#dc2626' }, align: 'center',
+        bgcolor: 'rgba(255,255,255,0.9)', borderpad: 2,
+      });
+    });
+
+    // Maille de liberation d0.
+    if (L(p.d0) >= lx0 && L(p.d0) <= lx1) {
+      traces.push({
+        x: [p.d0, p.d0], y: [yBas, yHaut], mode: 'lines',
+        line: { color: '#4b5563', width: 1.4, dash: 'dashdot' },
+        opacity: 0.75, showlegend: false, hoverinfo: 'skip',
+      });
+      const n0 = niveauLibre(L(p.d0));
+      posees.push({ lx: L(p.d0), niveau: n0 });
+      annotations.push({
+        x: L(p.d0), y: ly0, xref: 'x', yref: 'y', text: '<b>d₀</b> = ' + fmtD(p.d0),
+        showarrow: false, xanchor: 'center', yanchor: 'bottom', yshift: 5 + n0 * 30,
+        font: { size: 10, color: '#4b5563' },
+        bgcolor: 'rgba(255,255,255,0.9)', borderpad: 2,
+      });
+    }
+
+    // Etiquette de chaque isocontour, posee sur la courbe la ou elle quitte le
+    // cadre : on lit la valeur de sr sans quitter la courbe des yeux.
+    iso.curves.forEach((c, si) => {
+      let k = -1;
+      for (let j = 0; j < c.x.length; j++) if (dedans(c.x[j], c.y[j])) k = j;
+      if (k < 0) return;
+      // Sortie par le haut du cadre : l'etiquette doit basculer sous le point,
+      // sinon elle deborde au-dessus du graphique.
+      const sortHaut = L(c.y[k]) > ly1 - 0.08 * (ly1 - ly0);
+      annotations.push({
+        x: L(c.x[k]), y: L(c.y[k]), xref: 'x', yref: 'y', text: fmtSr(c.sr),
+        showarrow: false,
+        xanchor: sortHaut ? 'center' : 'right',
+        yanchor: sortHaut ? 'top' : 'bottom',
+        xshift: sortHaut ? 0 : -3, yshift: sortHaut ? -3 : 3,
+        font: { size: 10, color: SR_COL[si], family: 'system-ui, sans-serif' },
+        bgcolor: 'rgba(255,255,255,0.85)', borderpad: 1,
+      });
+    });
 
     // Maillage fin : sur une échelle logarithmique, les décades seules ne
     // permettent pas de lire une valeur intermédiaire. On ajoute les
@@ -179,12 +264,14 @@ export default class C03GyAbaque extends Widget {
     };
 
     Plotly.react(this.plot, traces, {
-      margin: { t: 36, l: 65, r: 20, b: 45 },
-      title: { text: 'Abaque de Gy — isocontours sᵣ et procédure', font: { size: 13 } },
+      margin: { t: 38, l: 65, r: 18, b: 46 },
+      title: { text: 'Abaque de Gy — isocontours de sᵣ et procédure', font: { size: 13 } },
       xaxis: { ...AXE_LOG, title: 'Taille fragments d (cm)', range: [lx0, lx1] },
       yaxis: { ...AXE_LOG, title: 'Masse échantillon Mₑ (g)', range: [ly0, ly1] },
       plot_bgcolor: '#fff',
-      shapes, legend: { font: { size: 10 }, orientation: 'v', x: 1.02, y: 1 },
+      annotations,
+      legend: { font: { size: 10 }, x: 0.012, y: 0.985, xanchor: 'left', yanchor: 'top',
+                bgcolor: 'rgba(255,255,255,0.85)', bordercolor: '#ddd', borderwidth: 1 },
     }, { displaylogo: false, responsive: true });
 
     // Tableau des etapes
