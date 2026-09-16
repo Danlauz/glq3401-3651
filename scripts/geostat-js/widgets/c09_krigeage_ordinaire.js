@@ -16,10 +16,16 @@
 // retire). « Afficher les poids » annote chaque donnée de son λ_i (effet d'écran).
 //
 // Calcul : gpoly.krigeageOrdinaire (cokri itype=2) et gpoly.krigeageSimple (itype=1).
+//
+// Le bouton « Passer en 2D » rejoue le même atelier sur une CARTE. C'est là que
+// le DÉCLUSTERING devient visible : l'amas serré en bas a gauche ne pèse pas
+// plus lourd qu'une donnée isolée, alors qu'une moyenne arithmetique lui
+// donnerait quatre fois le poids.
 // -----------------------------------------------------------------------------
 
 import { Widget } from '../widget-base.js';
 import { gpoly, afficherChargementJusquaPret } from '../pyodide_setup.js';
+import { Vue2D } from './c09_krigeage2d.js';
 
 const COL = { ko: '#0d4d92', ks: '#ea8f1e', donnee: '#222', moyenne: '#999', pos: '#0d4d92', neg: '#c0392b' };
 const debounce = (fn, ms = 200) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
@@ -29,12 +35,23 @@ const DONNEES_INIT = [
   { x: 60, z: 8 }, { x: 78, z: 3 }, { x: 88, z: 6 },
 ];
 
+// Configuration 2D : un amas serré en bas à gauche (déclustering) et des points
+// isolés ailleurs.
+const DONNEES_2D = [
+  { x: 18, y: 20, z: 6.8 }, { x: 23, y: 25, z: 7.2 }, { x: 27, y: 18, z: 6.4 }, { x: 21, y: 14, z: 7.0 },
+  { x: 60, y: 28, z: 4.2 }, { x: 82, y: 17, z: 3.4 }, { x: 75, y: 52, z: 5.1 },
+  { x: 35, y: 58, z: 5.6 }, { x: 14, y: 72, z: 4.0 }, { x: 48, y: 84, z: 6.2 },
+  { x: 85, y: 80, z: 3.1 }, { x: 62, y: 68, z: 4.8 },
+];
+
 export default class C09KrigeageOrdinaire extends Widget {
   render() {
     this.donnees = DONNEES_INIT.map(d => ({ ...d }));
     this.showWeights = false;
     this.showKS = false;
     this.clickBound = false;
+    this.mode2d = false;
+    this.vue2d = null;
     this.el.insertAdjacentHTML('beforeend', `
       <style>
         .ko-row label { display:inline-flex !important; flex-direction:row !important; align-items:center; gap:5px; }
@@ -46,27 +63,31 @@ export default class C09KrigeageOrdinaire extends Widget {
           <option value="exponentiel">Exponentiel</option>
           <option value="gaussien">Gaussien</option>
         </select></label>
+        <button class="js-mode" type="button" style="font-size:.78rem;padding:4px 12px;background:#1f6f6f;color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:600;">Passer en 2D</button>
       </div>
       <div class="gw-controls ko-row" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:6px 12px;background:#fafafa;border:1px solid #ddd;border-radius:8px;font-size:.82rem;margin-bottom:6px;">
-        <label>Moyenne m <input type="range" class="js-m" min="0" max="10" value="5" step="0.1" style="width:100px"><span class="js-mv">5.0</span></label>
-        <label>Portée a <input type="range" class="js-a" min="5" max="50" value="20" step="1" style="width:100px"><span class="js-av">20</span></label>
+        <label class="js-only1d">Moyenne m <input type="range" class="js-m" min="0" max="10" value="5" step="0.1" style="width:100px"><span class="js-mv">5.0</span></label>
+        <label class="js-only1d">Portée a <input type="range" class="js-a" min="5" max="50" value="20" step="1" style="width:100px"><span class="js-av">20</span></label>
       </div>
       <div class="gw-controls ko-row" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:6px 12px;background:#fafafa;border:1px solid #ddd;border-radius:8px;font-size:.82rem;margin-bottom:6px;">
         <label>Pépite <span>c<sub>0</sub></span> <input type="range" class="js-c0" min="0" max="1" value="0" step="0.05" style="width:100px"><span class="js-c0v">0.00</span></label>
         <label>Palier <span>c<sub>1</sub></span> <input type="range" class="js-C" min="0.2" max="4" value="1" step="0.2" style="width:100px"><span class="js-Cv">1.0</span></label>
       </div>
-      <div class="gw-controls ko-row" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:6px 12px;background:#fafafa;border:1px solid #ddd;border-radius:8px;font-size:.82rem;margin-bottom:6px;">
+      <div class="gw-controls ko-row js-only1d" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:6px 12px;background:#fafafa;border:1px solid #ddd;border-radius:8px;font-size:.82rem;margin-bottom:6px;">
         <label>Cible x₀ <input type="range" class="js-x0" min="0" max="100" value="40" step="0.5" style="width:180px"><span class="js-x0v">40</span></label>
         <button class="js-ks" type="button" style="font-size:.78rem;padding:4px 10px;background:#ea8f1e;color:#fff;border:none;border-radius:5px;cursor:pointer;">Afficher KS</button>
         <button class="js-poids" type="button" style="font-size:.78rem;padding:4px 10px;background:#0d4d92;color:#fff;border:none;border-radius:5px;cursor:pointer;">Afficher les poids</button>
         <button class="js-effacer" type="button" style="font-size:.76rem;padding:4px 9px;background:#c0392b;color:#fff;border:none;border-radius:4px;cursor:pointer;">Tout effacer</button>
         <button class="js-reset" type="button" style="font-size:.76rem;padding:4px 9px;background:#3a3632;color:#fff;border:none;border-radius:4px;cursor:pointer;">Réinitialiser</button>
       </div>
-      <div class="js-plot" style="height:340px;cursor:crosshair;"></div>
-      <div class="js-info" style="padding:.4rem 1rem;font-family:'JetBrains Mono',monospace;font-size:.82rem;color:#444;text-align:center;background:#f0f0f0;border-radius:6px;margin-top:4px;">—</div>
-      <p style="margin:4px 1rem;font-size:11px;color:#666;">
-        Cliquez le graphe pour <b>ajouter</b> une donnée · cliquez une donnée pour la <b>retirer</b>.
-        Calcul : <code>kriging.cokriging.cokri</code> (itype=2 pour KO, itype=1 pour KS).</p>
+      <div class="js-vue1d">
+        <div class="js-plot" style="height:340px;cursor:crosshair;"></div>
+        <div class="js-info" style="padding:.4rem 1rem;font-family:'JetBrains Mono',monospace;font-size:.82rem;color:#444;text-align:center;background:#f0f0f0;border-radius:6px;margin-top:4px;">—</div>
+        <p style="margin:4px 1rem;font-size:11px;color:#666;">
+          Cliquez le graphe pour <b>ajouter</b> une donnée · cliquez une donnée pour la <b>retirer</b>.
+          Calcul : <code>kriging.cokriging.cokri</code> (itype=2 pour KO, itype=1 pour KS).</p>
+      </div>
+      <div class="js-vue2d" style="display:none;"></div>
     `);
 
     this.plot = this.el.querySelector('.js-plot');
@@ -79,12 +100,13 @@ export default class C09KrigeageOrdinaire extends Widget {
       c0: this.el.querySelector('.js-c0'),
       x0: this.el.querySelector('.js-x0'),
     };
-    const update = debounce(() => this.refresh(), 200);
+    const update = debounce(() => this._maj(), 200);
     for (const [k, el] of Object.entries(this.ctrl)) {
       this.on(el, 'input', e => { const s = this.el.querySelector(`.js-${k}v`); if (s) s.textContent = e.target.value; });
       this.on(el, 'change', update);
       if (el.type === 'range') this.on(el, 'input', update);
     }
+    this.on(this.el.querySelector('.js-mode'), 'click', () => this._basculer());
     this.on(this.el.querySelector('.js-ks'), 'click', e => {
       this.showKS = !this.showKS;
       e.target.textContent = this.showKS ? 'Masquer KS' : 'Afficher KS';
@@ -102,6 +124,46 @@ export default class C09KrigeageOrdinaire extends Widget {
       this.donnees = DONNEES_INIT.map(d => ({ ...d })); this.refresh();
     });
     afficherChargementJusquaPret(this.el).then(() => this.refresh());
+  }
+
+  /** Recalcul de la vue active (1D ou 2D). */
+  _maj() { return this.mode2d ? this.vue2d.recalculer() : this.refresh(); }
+
+  /** Bascule profil 1D <-> cartes 2D. */
+  _basculer() {
+    this.mode2d = !this.mode2d;
+    const btn = this.el.querySelector('.js-mode');
+    btn.textContent = this.mode2d ? '← Revenir en 1D' : 'Passer en 2D';
+    btn.style.background = this.mode2d ? '#3a3632' : '#1f6f6f';
+    // Les feuilles de style des widgets posent « display:inline-flex !important »
+    // sur les <label> : il faut donc masquer AVEC la priorité, sinon rien ne bouge.
+    for (const n of this.el.querySelectorAll('.js-only1d')) {
+      if (this.mode2d) n.style.setProperty('display', 'none', 'important');
+      else n.style.removeProperty('display');
+    }
+    this.el.querySelector('.js-vue1d').style.display = this.mode2d ? 'none' : '';
+    const hote2d = this.el.querySelector('.js-vue2d');
+    hote2d.style.display = this.mode2d ? '' : 'none';
+    if (!this.mode2d) { this.refresh(); return; }
+    if (!this.vue2d) {
+      this.vue2d = new Vue2D({
+        hote: this,
+        methode: 'ordinaire',
+        sigle: 'KO',
+        nMin: 2,
+        donneesInit: () => DONNEES_2D.map(d => ({ ...d })),
+        lireParams: () => ({
+          mod: this.ctrl.mod.value,
+          palier: parseFloat(this.ctrl.C.value),
+          pepite: parseFloat(this.ctrl.c0.value),
+        }),
+        legende: 'La moyenne est inconnue : la carte reste pilotée par les données. ' +
+                 'Regardez l\'amas de quatre points en bas à gauche — il ne pèse pas ' +
+                 'quatre fois une donnée isolée, c\'est le déclustering.',
+      });
+      this.vue2d.monter(hote2d);
+    }
+    this.vue2d.recalculer();
   }
 
   _onClick(e) {
@@ -205,5 +267,8 @@ export default class C09KrigeageOrdinaire extends Widget {
     }
   }
 
-  cleanup() { if (this.plot && window.Plotly) Plotly.purge(this.plot); }
+  cleanup() {
+    if (this.vue2d) this.vue2d.detruire();
+    if (this.plot && window.Plotly) Plotly.purge(this.plot);
+  }
 }

@@ -16,6 +16,7 @@
 
 import { Widget } from '../widget-base.js';
 import { gpoly, afficherChargementJusquaPret } from '../pyodide_setup.js';
+import { Vue2D } from './c09_krigeage2d.js';
 
 const COL = { ked: '#0d4d92', ko: '#1f8a4c', ks: '#ea8f1e', ku: '#8e44ad', sec: '#b08968', donnee: '#222', moyenne: '#999' };
 const debounce = (fn, ms = 200) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
@@ -29,11 +30,26 @@ const X_INIT = [6, 16, 27, 38, 50, 84, 93];
 const NOISE = [0.4, -0.3, 0.25, -0.35, 0.2, 0.3, -0.25];
 const donneesInit = () => X_INIT.map((x, i) => ({ x, z: Math.max(1, Math.min(YMAX - 1, sFun(x) + NOISE[i])) }));
 
+// En 2D la variable secondaire est une SURFACE connue partout — c'est sa forme
+// naturelle (topographie, levé géophysique, épaisseur). Les données laissent un
+// grand trou au centre : le KED y reproduit le relief de s, pas une moyenne.
+const sFun2D = (x, y) =>
+  6 + 2.2 * Math.sin(2 * Math.PI * x / 72) * Math.cos(2 * Math.PI * y / 60)
+    + 0.9 * Math.sin(2 * Math.PI * (x + y) / 130);
+const XY_2D = [[8, 10], [30, 8], [55, 12], [82, 9], [92, 34], [88, 62],
+               [80, 88], [54, 92], [26, 88], [9, 66], [12, 38], [30, 30]];
+const BRUIT_2D = [0.30, -0.25, 0.20, -0.30, 0.25, -0.20,
+                  0.30, -0.25, 0.20, -0.30, 0.25, -0.20];
+const donnees2D = () => XY_2D.map(([x, y], i) =>
+  ({ x, y, z: +(sFun2D(x, y) + BRUIT_2D[i]).toFixed(2) }));
+
 export default class C09KrigeageDeriveExterne extends Widget {
   render() {
     this.donnees = donneesInit();
     this.showKO = false; this.showKS = false; this.showKU = false; this.showSec = true;
     this.clickBound = false;
+    this.mode2d = false;
+    this.vue2d = null;
     this.el.insertAdjacentHTML('beforeend', `
       <style>
         .ked-row label { display:inline-flex !important; flex-direction:row !important; align-items:center; gap:5px; }
@@ -45,12 +61,13 @@ export default class C09KrigeageDeriveExterne extends Widget {
           <option value="exponentiel">Exponentiel</option>
           <option value="gaussien">Gaussien</option>
         </select></label>
-        <label>Moyenne m (KS) <input type="range" class="js-m" min="0" max="12" value="6" step="0.1" style="width:90px"><span class="js-mv">6.0</span></label>
-        <label>Portée a <input type="range" class="js-a" min="5" max="50" value="18" step="1" style="width:90px"><span class="js-av">18</span></label>
+        <button class="js-mode" type="button" style="font-size:.78rem;padding:4px 12px;background:#1f6f6f;color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:600;">Passer en 2D</button>
+        <label class="js-only1d">Moyenne m (KS) <input type="range" class="js-m" min="0" max="12" value="6" step="0.1" style="width:90px"><span class="js-mv">6.0</span></label>
+        <label class="js-only1d">Portée a <input type="range" class="js-a" min="5" max="50" value="18" step="1" style="width:90px"><span class="js-av">18</span></label>
         <label>Pépite <span>c<sub>0</sub></span> <input type="range" class="js-c0" min="0" max="1" value="0.1" step="0.05" style="width:80px"><span class="js-c0v">0.10</span></label>
         <label>Palier <span>c<sub>1</sub></span> <input type="range" class="js-C" min="0.2" max="4" value="1" step="0.2" style="width:80px"><span class="js-Cv">1.0</span></label>
       </div>
-      <div class="gw-controls ked-row" style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:6px 12px;background:#fafafa;border:1px solid #ddd;border-radius:8px;font-size:.82rem;margin-bottom:6px;">
+      <div class="gw-controls ked-row js-only1d" style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:6px 12px;background:#fafafa;border:1px solid #ddd;border-radius:8px;font-size:.82rem;margin-bottom:6px;">
         <label>Cible x₀ <input type="range" class="js-x0" min="0" max="100" value="68" step="0.5" style="width:140px"><span class="js-x0v">68</span></label>
         <button class="js-sec" type="button" style="font-size:.78rem;padding:4px 10px;background:#3a3632;color:#fff;border:none;border-radius:5px;cursor:pointer;">Masquer s(x)</button>
         <button class="js-ko" type="button" style="font-size:.78rem;padding:4px 10px;background:#1f8a4c;color:#fff;border:none;border-radius:5px;cursor:pointer;">Afficher KO</button>
@@ -58,10 +75,13 @@ export default class C09KrigeageDeriveExterne extends Widget {
         <button class="js-ku" type="button" style="font-size:.78rem;padding:4px 10px;background:#8e44ad;color:#fff;border:none;border-radius:5px;cursor:pointer;">Afficher KU</button>
         <button class="js-reset" type="button" style="font-size:.76rem;padding:4px 9px;background:#c0392b;color:#fff;border:none;border-radius:4px;cursor:pointer;">Réinitialiser</button>
       </div>
-      <div class="js-plot" style="height:350px;cursor:crosshair;"></div>
-      <div class="js-info" style="padding:.4rem 1rem;font-family:'JetBrains Mono',monospace;font-size:.82rem;color:#444;text-align:center;background:#f0f0f0;border-radius:6px;margin-top:4px;">—</div>
-      <p style="margin:4px 1rem;font-size:11px;color:#666;">
-        Cliquez le graphe pour <b>ajouter</b> une donnée (s(x) y est connu) · cliquez une donnée pour la <b>retirer</b>. Dans le <b>trou central</b>, comparez : le KED suit s(x), le KO/KS s'aplatissent, le KU suit un polynôme.</p>
+      <div class="js-vue1d">
+        <div class="js-plot" style="height:350px;cursor:crosshair;"></div>
+        <div class="js-info" style="padding:.4rem 1rem;font-family:'JetBrains Mono',monospace;font-size:.82rem;color:#444;text-align:center;background:#f0f0f0;border-radius:6px;margin-top:4px;">—</div>
+        <p style="margin:4px 1rem;font-size:11px;color:#666;">
+          Cliquez le graphe pour <b>ajouter</b> une donnée (s(x) y est connu) · cliquez une donnée pour la <b>retirer</b>. Dans le <b>trou central</b>, comparez : le KED suit s(x), le KO/KS s'aplatissent, le KU suit un polynôme.</p>
+      </div>
+      <div class="js-vue2d" style="display:none;"></div>
     `);
 
     this.plot = this.el.querySelector('.js-plot');
@@ -71,12 +91,13 @@ export default class C09KrigeageDeriveExterne extends Widget {
       a: this.el.querySelector('.js-a'), C: this.el.querySelector('.js-C'),
       c0: this.el.querySelector('.js-c0'), x0: this.el.querySelector('.js-x0'),
     };
-    const update = debounce(() => this.refresh(), 200);
+    const update = debounce(() => this._maj(), 200);
     for (const [k, el] of Object.entries(this.ctrl)) {
       this.on(el, 'input', e => { const s = this.el.querySelector(`.js-${k}v`); if (s) s.textContent = e.target.value; });
       this.on(el, 'change', update);
       if (el.type === 'range') this.on(el, 'input', update);
     }
+    this.on(this.el.querySelector('.js-mode'), 'click', () => this._basculer());
     const toggle = (sel, key, onTxt, offTxt, onBg, offBg) => this.on(this.el.querySelector(sel), 'click', e => {
       this[key] = !this[key];
       e.target.textContent = this[key] ? onTxt : offTxt;
@@ -89,6 +110,48 @@ export default class C09KrigeageDeriveExterne extends Widget {
     toggle('.js-sec', 'showSec', 'Masquer s(x)', 'Afficher s(x)', '#1f6f6f', '#3a3632');
     this.on(this.el.querySelector('.js-reset'), 'click', () => { this.donnees = donneesInit(); this.refresh(); });
     afficherChargementJusquaPret(this.el).then(() => this.refresh());
+  }
+
+  /** Recalcul de la vue active (1D ou 2D). */
+  _maj() { return this.mode2d ? this.vue2d.recalculer() : this.refresh(); }
+
+  /** Bascule profil 1D <-> cartes 2D. */
+  _basculer() {
+    this.mode2d = !this.mode2d;
+    const btn = this.el.querySelector('.js-mode');
+    btn.textContent = this.mode2d ? '\u2190 Revenir en 1D' : 'Passer en 2D';
+    btn.style.background = this.mode2d ? '#3a3632' : '#1f6f6f';
+    // Les feuilles de style des widgets posent « display:inline-flex !important »
+    // sur les <label> : il faut donc masquer AVEC la priorité, sinon rien ne bouge.
+    for (const n of this.el.querySelectorAll('.js-only1d')) {
+      if (this.mode2d) n.style.setProperty('display', 'none', 'important');
+      else n.style.removeProperty('display');
+    }
+    this.el.querySelector('.js-vue1d').style.display = this.mode2d ? 'none' : '';
+    const hote2d = this.el.querySelector('.js-vue2d');
+    hote2d.style.display = this.mode2d ? '' : 'none';
+    if (!this.mode2d) { this.refresh(); return; }
+    if (!this.vue2d) {
+      this.vue2d = new Vue2D({
+        hote: this,
+        methode: 'derive_externe',
+        sigle: 'KED',
+        nMin: 4,
+        donneesInit: donnees2D,
+        secondaire: sFun2D,
+        contoursSecondaire: true,
+        lireParams: () => ({
+          mod: this.ctrl.mod.value,
+          palier: parseFloat(this.ctrl.C.value),
+          pepite: parseFloat(this.ctrl.c0.value),
+        }),
+        legende: 'Les courbes blanches sont les isovaleurs de la variable secondaire ' +
+                 's(x, y). Au centre, vide de données, la carte estimée épouse ces ' +
+                 'courbes : c\'est s qui porte l\'information, pas les valeurs voisines.',
+      });
+      this.vue2d.monter(hote2d);
+    }
+    this.vue2d.recalculer();
   }
 
   _onClick(e) {
@@ -177,5 +240,8 @@ export default class C09KrigeageDeriveExterne extends Widget {
     }
   }
 
-  cleanup() { if (this.plot && window.Plotly) Plotly.purge(this.plot); }
+  cleanup() {
+    if (this.vue2d) this.vue2d.detruire();
+    if (this.plot && window.Plotly) Plotly.purge(this.plot);
+  }
 }

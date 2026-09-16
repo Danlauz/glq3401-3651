@@ -17,6 +17,7 @@
 
 import { Widget } from '../widget-base.js';
 import { gpoly, afficherChargementJusquaPret } from '../pyodide_setup.js';
+import { Vue2D } from './c09_krigeage2d.js';
 
 const COL = { ku: '#0d4d92', ko: '#1f8a4c', ks: '#ea8f1e', donnee: '#222', moyenne: '#999', pos: '#0d4d92', neg: '#c0392b' };
 const debounce = (fn, ms = 200) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
@@ -28,6 +29,17 @@ const DONNEES_INIT = [
   { x: 46, z: 6.0 }, { x: 58, z: 6.6 }, { x: 70, z: 7.9 },
 ];
 
+// En 2D la dérive d'ordre 1 est un PLAN a0 + a1·x + a2·y. Les données occupent
+// les deux tiers inférieurs gauches du domaine : en amenant la cible dans le
+// coin haut-droit vide, on voit le KU prolonger le plan au lieu de s'aplatir.
+const TENDANCE_2D = (x, y) => 2.2 + 0.042 * x + 0.028 * y;
+const XY_2D = [[10, 14], [28, 10], [48, 16], [66, 12], [14, 36], [34, 40],
+               [54, 34], [72, 30], [12, 60], [30, 64], [50, 58], [22, 84]];
+const BRUIT_2D = [0.40, -0.50, 0.30, -0.35, 0.45, -0.40,
+                  0.25, -0.30, 0.35, -0.45, 0.40, -0.25];
+const donnees2D = () => XY_2D.map(([x, y], i) =>
+  ({ x, y, z: +(TENDANCE_2D(x, y) + BRUIT_2D[i]).toFixed(2) }));
+
 export default class C09KrigeageUniversel extends Widget {
   render() {
     this.donnees = DONNEES_INIT.map(d => ({ ...d }));
@@ -35,6 +47,8 @@ export default class C09KrigeageUniversel extends Widget {
     this.showKO = false;
     this.showKS = false;
     this.clickBound = false;
+    this.mode2d = false;
+    this.vue2d = null;
     this.el.insertAdjacentHTML('beforeend', `
       <style>
         .ku-row label { display:inline-flex !important; flex-direction:row !important; align-items:center; gap:5px; }
@@ -50,14 +64,15 @@ export default class C09KrigeageUniversel extends Widget {
           <option value="1">Ordre 1 (linéaire)</option>
           <option value="2">Ordre 2 (quadratique)</option>
         </select></label>
+        <button class="js-mode" type="button" style="font-size:.78rem;padding:4px 12px;background:#1f6f6f;color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:600;">Passer en 2D</button>
       </div>
       <div class="gw-controls ku-row" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:6px 12px;background:#fafafa;border:1px solid #ddd;border-radius:8px;font-size:.82rem;margin-bottom:6px;">
-        <label>Moyenne m (KS) <input type="range" class="js-m" min="0" max="12" value="5.5" step="0.1" style="width:90px"><span class="js-mv">5.5</span></label>
-        <label>Portée a <input type="range" class="js-a" min="5" max="50" value="22" step="1" style="width:90px"><span class="js-av">22</span></label>
+        <label class="js-only1d">Moyenne m (KS) <input type="range" class="js-m" min="0" max="12" value="5.5" step="0.1" style="width:90px"><span class="js-mv">5.5</span></label>
+        <label class="js-only1d">Portée a <input type="range" class="js-a" min="5" max="50" value="22" step="1" style="width:90px"><span class="js-av">22</span></label>
         <label>Pépite <span>c<sub>0</sub></span> <input type="range" class="js-c0" min="0" max="1" value="0" step="0.05" style="width:90px"><span class="js-c0v">0.00</span></label>
         <label>Palier <span>c<sub>1</sub></span> <input type="range" class="js-C" min="0.2" max="4" value="1" step="0.2" style="width:90px"><span class="js-Cv">1.0</span></label>
       </div>
-      <div class="gw-controls ku-row" style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:6px 12px;background:#fafafa;border:1px solid #ddd;border-radius:8px;font-size:.82rem;margin-bottom:6px;">
+      <div class="gw-controls ku-row js-only1d" style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:6px 12px;background:#fafafa;border:1px solid #ddd;border-radius:8px;font-size:.82rem;margin-bottom:6px;">
         <label>Cible x₀ <input type="range" class="js-x0" min="0" max="100" value="85" step="0.5" style="width:150px"><span class="js-x0v">85</span></label>
         <button class="js-ko" type="button" style="font-size:.78rem;padding:4px 10px;background:#1f8a4c;color:#fff;border:none;border-radius:5px;cursor:pointer;">Afficher KO</button>
         <button class="js-ks" type="button" style="font-size:.78rem;padding:4px 10px;background:#ea8f1e;color:#fff;border:none;border-radius:5px;cursor:pointer;">Afficher KS</button>
@@ -65,10 +80,13 @@ export default class C09KrigeageUniversel extends Widget {
         <button class="js-effacer" type="button" style="font-size:.76rem;padding:4px 9px;background:#c0392b;color:#fff;border:none;border-radius:4px;cursor:pointer;">Tout effacer</button>
         <button class="js-reset" type="button" style="font-size:.76rem;padding:4px 9px;background:#3a3632;color:#fff;border:none;border-radius:4px;cursor:pointer;">Réinitialiser</button>
       </div>
-      <div class="js-plot" style="height:340px;cursor:crosshair;"></div>
-      <div class="js-info" style="padding:.4rem 1rem;font-family:'JetBrains Mono',monospace;font-size:.82rem;color:#444;text-align:center;background:#f0f0f0;border-radius:6px;margin-top:4px;">—</div>
-      <p style="margin:4px 1rem;font-size:11px;color:#666;">
-        Cliquez le graphe pour <b>ajouter</b> une donnée · cliquez une donnée pour la <b>retirer</b>. Placez la cible x₀ au-delà des données pour voir le KU <b>extrapoler la tendance</b> (le KO revient au niveau local, le KS à m).</p>
+      <div class="js-vue1d">
+        <div class="js-plot" style="height:340px;cursor:crosshair;"></div>
+        <div class="js-info" style="padding:.4rem 1rem;font-family:'JetBrains Mono',monospace;font-size:.82rem;color:#444;text-align:center;background:#f0f0f0;border-radius:6px;margin-top:4px;">—</div>
+        <p style="margin:4px 1rem;font-size:11px;color:#666;">
+          Cliquez le graphe pour <b>ajouter</b> une donnée · cliquez une donnée pour la <b>retirer</b>. Placez la cible x₀ au-delà des données pour voir le KU <b>extrapoler la tendance</b> (le KO revient au niveau local, le KS à m).</p>
+      </div>
+      <div class="js-vue2d" style="display:none;"></div>
     `);
 
     this.plot = this.el.querySelector('.js-plot');
@@ -79,12 +97,13 @@ export default class C09KrigeageUniversel extends Widget {
       C: this.el.querySelector('.js-C'), c0: this.el.querySelector('.js-c0'),
       x0: this.el.querySelector('.js-x0'),
     };
-    const update = debounce(() => this.refresh(), 200);
+    const update = debounce(() => this._maj(), 200);
     for (const [k, el] of Object.entries(this.ctrl)) {
       this.on(el, 'input', e => { const s = this.el.querySelector(`.js-${k}v`); if (s) s.textContent = e.target.value; });
       this.on(el, 'change', update);
       if (el.type === 'range') this.on(el, 'input', update);
     }
+    this.on(this.el.querySelector('.js-mode'), 'click', () => this._basculer());
     const toggle = (sel, key, onTxt, offTxt, onBg, offBg) => this.on(this.el.querySelector(sel), 'click', e => {
       this[key] = !this[key];
       e.target.textContent = this[key] ? onTxt : offTxt;
@@ -97,6 +116,49 @@ export default class C09KrigeageUniversel extends Widget {
     this.on(this.el.querySelector('.js-effacer'), 'click', () => { this.donnees = []; this.refresh(); });
     this.on(this.el.querySelector('.js-reset'), 'click', () => { this.donnees = DONNEES_INIT.map(d => ({ ...d })); this.refresh(); });
     afficherChargementJusquaPret(this.el).then(() => this.refresh());
+  }
+
+  /** Recalcul de la vue active (1D ou 2D). */
+  _maj() { return this.mode2d ? this.vue2d.recalculer() : this.refresh(); }
+
+  /** Bascule profil 1D <-> cartes 2D. */
+  _basculer() {
+    this.mode2d = !this.mode2d;
+    const btn = this.el.querySelector('.js-mode');
+    btn.textContent = '\u2190 Revenir en 1D';
+    if (!this.mode2d) btn.textContent = 'Passer en 2D';
+    btn.style.background = this.mode2d ? '#3a3632' : '#1f6f6f';
+    // Les feuilles de style des widgets posent « display:inline-flex !important »
+    // sur les <label> : il faut donc masquer AVEC la priorité, sinon rien ne bouge.
+    for (const n of this.el.querySelectorAll('.js-only1d')) {
+      if (this.mode2d) n.style.setProperty('display', 'none', 'important');
+      else n.style.removeProperty('display');
+    }
+    this.el.querySelector('.js-vue1d').style.display = this.mode2d ? 'none' : '';
+    const hote2d = this.el.querySelector('.js-vue2d');
+    hote2d.style.display = this.mode2d ? '' : 'none';
+    if (!this.mode2d) { this.refresh(); return; }
+    if (!this.vue2d) {
+      this.vue2d = new Vue2D({
+        hote: this,
+        methode: 'universel',
+        sigle: 'KU',
+        // Ordre 1 en 2D : 3 fonctions de dérive (1, x, y) ; ordre 2 : 6.
+        nMin: () => (parseInt(this.ctrl.ordre.value, 10) === 2 ? 8 : 5),
+        donneesInit: donnees2D,
+        lireParams: () => ({
+          mod: this.ctrl.mod.value,
+          palier: parseFloat(this.ctrl.C.value),
+          pepite: parseFloat(this.ctrl.c0.value),
+          ordre: parseInt(this.ctrl.ordre.value, 10),
+        }),
+        legende: 'En 2D la dérive d\'ordre 1 est un PLAN. Amenez la croix dans le coin ' +
+                 'haut-droit, vide de données : le KU y prolonge le plan, alors que le KO ' +
+                 's\'y aplatirait au niveau local.',
+      });
+      this.vue2d.monter(hote2d);
+    }
+    this.vue2d.recalculer();
   }
 
   _onClick(e) {
@@ -203,5 +265,8 @@ export default class C09KrigeageUniversel extends Widget {
     }
   }
 
-  cleanup() { if (this.plot && window.Plotly) Plotly.purge(this.plot); }
+  cleanup() {
+    if (this.vue2d) this.vue2d.detruire();
+    if (this.plot && window.Plotly) Plotly.purge(this.plot);
+  }
 }

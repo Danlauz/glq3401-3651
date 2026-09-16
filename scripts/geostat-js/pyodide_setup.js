@@ -1491,6 +1491,105 @@ def gpoly_krigeage_grille_globale(coords_data, valeurs, coords_cible,
     return {'estimations': est.tolist(),
             'variances': np.maximum(var, 0.0).tolist()}
 
+def _derive_grille(coords, type_kriging, ordre, secondaire, centre, echelle):
+    """Matrice des fonctions de derive F (n, nf) ; colonne de 1 en premier.
+
+    KO   : F = [1]
+    KU   : F = [1, x, y, ...] (ordre 1) ou + les termes croises (ordre 2). Les
+           coordonnees sont centrees-reduites : le SOUS-ESPACE engendre est le
+           meme (donc estimations et variances identiques), mais le systeme est
+           bien mieux conditionne que si l'on gardait des x^2 de l'ordre de 1e4.
+    KED  : F = [1, s] ou s est la variable secondaire connue partout.
+    """
+    n = coords.shape[0]
+    cols = [np.ones(n)]
+    if type_kriging == 'universel':
+        u = (coords - centre) / echelle
+        for j in range(u.shape[1]):
+            cols.append(u[:, j])
+        if int(ordre) >= 2:
+            dd = u.shape[1]
+            for j in range(dd):
+                for k in range(j, dd):
+                    cols.append(u[:, j] * u[:, k])
+    elif type_kriging == 'derive_externe':
+        cols.append(np.asarray(secondaire, float).ravel())
+    return np.column_stack(cols)
+
+def gpoly_krigeage_grille_2d(coords_data, valeurs, coords_cible,
+                              structures, pepite=0.0,
+                              type_kriging='ordinaire', moyenne=0.0, ordre=1,
+                              secondaire_data=None, secondaire_cible=None,
+                              cibles_plates=None, dim=2):
+    """KS / KO / KU / KED batches : UNE factorisation, toutes les cibles.
+
+    Le systeme augmente A = [[K, F], [F.T, 0]] ne depend que des DONNEES : il
+    est factorise une seule fois et resolu pour les m seconds membres de la
+    grille d'un coup. Sur une carte 64 x 64 (4096 cibles) c'est environ 400 fois
+    plus rapide que la boucle point par point de cokri, ce qui rend la carte
+    interactive dans le navigateur.
+
+    Voisinage GLOBAL (toutes les donnees servent a chaque cible) : pas de
+    discontinuite de voisinage sur la carte. Les valeurs reproduisent cokri a la
+    precision de calcul (covar_nu travaille en simple precision, donc ~1e-7).
+
+    Le krigeage simple est le cas degenere sans contrainte :
+    K lambda = k0, Z* = m + lambda' (z - m), sigma2 = C(0) - lambda' k0.
+    """
+    from kriging.wrappers import (_construire_modele_cokri as _cmc,
+                                   _prepare_x as _px, _prepare_x0 as _px0)
+    from kriging.cokriging import _ensure_covar_format as _ecf
+    from cov_func.covar_nu import covar_nu as _cvn
+    x, d = _px(np.asarray(coords_data, float), np.asarray(valeurs, float))
+    # Une carte 64 x 64 represente 4096 couples de coordonnees. Les passer en
+    # tableau PLAT (un seul Float64Array) plutot qu'en 4096 petits tableaux JS
+    # evite le gros de la conversion JS -> Python.
+    if coords_cible is None and cibles_plates is not None:
+        cibles = np.asarray(cibles_plates, float).reshape(-1, int(dim))
+    else:
+        cibles = np.asarray(coords_cible, float)
+    x0 = _px0(cibles, d)
+    model, c = _cmc(_structs_from_js(structures), float(pepite), d)
+    cobj, nuobj, _p = _ecf(c, None, 1)
+    coords = x[:, :d]
+    z = x[:, d]
+    n = coords.shape[0]
+    K = np.asarray(_cvn(coords, coords, model, cobj, nuobj), float)
+    K0 = np.asarray(_cvn(coords, x0, model, cobj, nuobj), float)
+    sv = float(np.asarray(_cvn(np.zeros((1, d)), np.zeros((1, d)),
+                                model, cobj, nuobj)).ravel()[0])
+    tk = str(type_kriging)
+
+    if tk == 'simple':
+        try:
+            lam = np.linalg.solve(K, K0)
+        except np.linalg.LinAlgError:
+            lam = np.linalg.lstsq(K, K0, rcond=None)[0]
+        est = float(moyenne) + lam.T @ (z - float(moyenne))
+        var = sv - np.einsum('ij,ij->j', lam, K0)
+        return {'estimations': est.tolist(),
+                'variances': np.maximum(var, 0.0).tolist(),
+                'sv': sv}
+
+    centre = coords.mean(axis=0)
+    etendue = coords.max(axis=0) - coords.min(axis=0)
+    echelle = np.where(etendue > 0, etendue, 1.0)
+    F = _derive_grille(coords, tk, ordre, secondaire_data, centre, echelle)
+    F0 = _derive_grille(x0, tk, ordre, secondaire_cible, centre, echelle)
+    nf = F.shape[1]
+    A = np.block([[K, F], [F.T, np.zeros((nf, nf))]])
+    B = np.vstack([K0, F0.T])
+    try:
+        L = np.linalg.solve(A, B)
+    except np.linalg.LinAlgError:
+        L = np.linalg.lstsq(A, B, rcond=None)[0]
+    lam = L[:n, :]
+    est = lam.T @ z
+    var = sv - np.einsum('ij,ij->j', L, B)
+    return {'estimations': est.tolist(),
+            'variances': np.maximum(var, 0.0).tolist(),
+            'sv': sv}
+
 def gpoly_krigeage_bloc(coords_data, valeurs, coords_cible,
                          structures, bloc, discretisation,
                          pepite=0.0, type_kriging='ordinaire',
@@ -2252,6 +2351,23 @@ export const gpoly = {
                            structures, pepite = 0) =>
     _call('gpoly_krigeage_grille_globale', coords_data, Array.from(valeurs),
           coords_cible, structures, pepite),
+
+  // KS / KO / KU / KED batchés pour une CARTE 2D : une seule factorisation du
+  // système augmenté, tous les nœuds de la grille d'un coup (~400x plus rapide
+  // que la boucle de cokri). type_kriging : simple | ordinaire | universel |
+  // derive_externe. Renvoie { estimations, variances, sv }.
+  // coords_cible : soit un tableau [[x, y], ...], soit null accompagne de
+  // cibles_plates (Float64Array [x0, y0, x1, y1, ...]) — nettement plus rapide
+  // a convertir quand il y a quelques milliers de noeuds.
+  krigeageGrille2D: (coords_data, valeurs, coords_cible, structures,
+                      pepite = 0, type_kriging = 'ordinaire', moyenne = 0,
+                      ordre = 1, secondaire_data = null,
+                      secondaire_cible = null, cibles_plates = null, dim = 2) =>
+    _call('gpoly_krigeage_grille_2d', coords_data, Array.from(valeurs),
+          coords_cible, structures, pepite, type_kriging, moyenne, ordre,
+          secondaire_data === null ? null : Array.from(secondaire_data),
+          secondaire_cible === null ? null : Array.from(secondaire_cible),
+          cibles_plates === null ? null : Array.from(cibles_plates), dim),
 
   validationCroisee: (coords_data, valeurs, structures,
                        pepite = 0, type_kriging = 'ordinaire',
