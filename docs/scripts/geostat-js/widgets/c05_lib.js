@@ -43,10 +43,19 @@ import { gpoly } from '../pyodide_setup.js';
  *
  * Le champ retourné est normalisé dans [0, 1] (min/max sur la grille).
  */
+/**
+ * 'Sphérique' -> 'spherique'. Les listes déroulantes affichent le nom accentué ;
+ * la librairie attend le nom sans accent (sinon KeyError côté Python et le
+ * champ n'est jamais régénéré).
+ */
+export function nomModele(m) {
+  return String(m || 'exponentiel').normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase();
+}
+
 export class GRF {
   constructor(W, H, opts, grid01, N) {
     this.W = W; this.H = H;
-    this.modele = (opts.modele || 'Exponentiel').toLowerCase();
+    this.modele = nomModele(opts.modele);
     this.ax = opts.portee_x ?? 130;
     this.ay = opts.portee_y ?? 130;
     this.pepite = opts.pepite ?? 0;
@@ -58,7 +67,7 @@ export class GRF {
   static async create(W, H, opts = {}) {
     const N = opts.N ?? 128;
     const seed = (opts.seed ?? Math.floor(Math.random() * 1e9)) >>> 0;
-    const modele = (opts.modele || 'Exponentiel').toLowerCase();
+    const modele = nomModele(opts.modele);
     // Conversion pixels canvas -> cellules grille NxN
     // (la simulation se fait sur un domaine carré NxN)
     const W_ref = Math.max(W, H);

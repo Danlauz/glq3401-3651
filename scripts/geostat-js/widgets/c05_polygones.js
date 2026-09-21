@@ -47,7 +47,7 @@ export default class C05Polygones extends Widget {
       </div>
       <div class="gw-controls" style="margin-top:2px;background:#e8edf2;">
         <span style="font-weight:600;font-size:.74rem;">Champ :</span>
-        <select id="${this.el.id}_gm" style="font-size:.72rem;"><option>Exponentiel</option><option>Sphérique</option><option>Gaussien</option></select>
+        <select id="${this.el.id}_gm" style="font-size:.72rem;"><option value="exponentiel">Exponentiel</option><option value="spherique">Sphérique</option><option value="gaussien">Gaussien</option></select>
         <div class="gw-slider"><label style="font-size:.72rem;">aₓ:</label><input type="range" id="${this.el.id}_px" min="20" max="250" value="130" style="width:60px;"><span id="${this.el.id}_pxv" style="font-size:.7rem;">130</span></div>
         <div class="gw-slider"><label style="font-size:.72rem;">aᵧ:</label><input type="range" id="${this.el.id}_py" min="20" max="250" value="130" style="width:60px;"><span id="${this.el.id}_pyv" style="font-size:.7rem;">130</span></div>
         <div class="gw-slider"><label style="font-size:.72rem;">c₀:</label><input type="range" id="${this.el.id}_ng" min="0" max="50" value="0" style="width:50px;"><span id="${this.el.id}_ngv" style="font-size:.7rem;">0%</span></div>
@@ -77,6 +77,14 @@ export default class C05Polygones extends Widget {
       this.on(document.getElementById(`${id}_${suf}`), 'input', e => { document.getElementById(`${id}_${disp}`).textContent = e.target.value; });
     }
     this.on(document.getElementById(`${id}_ng`), 'input', e => { document.getElementById(`${id}_ngv`).textContent = e.target.value+'%'; });
+    // Changer le modèle, les portées ou la pépite RÉGÉNÈRE le champ avec la même
+    // graine : seule la covariance change, pas le tirage aléatoire. Les points
+    // déjà échantillonnés gardent leur position et relisent la nouvelle réalité.
+    this.seed = Math.floor(Math.random() * 1e9);
+    this.on(document.getElementById(`${id}_gm`), 'change', () => this._regenerer());
+    for (const suf of ['px', 'py', 'ng']) {
+      this.on(document.getElementById(`${id}_${suf}`), 'input', () => this._regenerer());
+    }
 
     // Attendre Pyodide puis simuler la « vraie » réalité via GFFTMA
     afficherChargementJusquaPret(this.el).then(async () => {
@@ -93,6 +101,7 @@ export default class C05Polygones extends Widget {
       portee_x: +document.getElementById(`${id}_px`).value,
       portee_y: +document.getElementById(`${id}_py`).value,
       pepite:   +document.getElementById(`${id}_ng`).value / 100,
+      seed:     this.seed,
     });
   }
 
@@ -164,9 +173,25 @@ export default class C05Polygones extends Widget {
   _addRandom(n) { for(let i=0;i<n;i++) this._addPt(30+Math.random()*(WP-60), 30+Math.random()*(HP-60)); }
 
   async _reset() {
+    this.seed = Math.floor(Math.random() * 1e9);
     this.pts = [];
     this.grf = await this._mkGrf();
     this._drawTruth();
     this._drawEstim();
+  }
+
+  /** Régénère le champ (même graine) après un changement de covariance. */
+  _regenerer() {
+    clearTimeout(this._tRegen);
+    this._tRegen = setTimeout(async () => {
+      const jeton = (this._jetonRegen = (this._jetonRegen || 0) + 1);
+      let grf;
+      try { grf = await this._mkGrf(); }
+      catch (e) { this.afficherErreur('Simulation du champ : ' + (e && e.message ? e.message : e)); return; }
+      if (jeton !== this._jetonRegen || this._destroyed) return;   // réglage plus récent, ou widget fermé
+      this.grf = grf;
+      for (const p of this.pts) p.t = grf.at(p.x, p.y);
+      this._drawTruth(); this._drawEstim();
+    }, 250);
   }
 }

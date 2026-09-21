@@ -325,8 +325,27 @@ from geostat_polymtl.economics.reserves import (
 # === Helpers internes ===
 _CODES_COV = {'spherique': 4, 'exponentiel': 2, 'gaussien': 3}
 
+def _nom_modele(modele):
+    """'Sphérique', 'SPHERIQUE', 'spherique' -> 'spherique'. Les listes
+    deroulantes affichent le nom accentue ; sans cette normalisation,
+    _CODES_COV['sphérique'] leve un KeyError et la simulation echoue."""
+    import unicodedata
+    s = unicodedata.normalize('NFD', str(modele))
+    return ''.join(ch for ch in s if unicodedata.category(ch) != 'Mn').strip().lower()
+
+def _taille_paire_gfftma(n, r):
+    """Taille a demander a GFFTMA pour que ceil(2 r) + n soit PAIR.
+
+    Le ceil est calcule en float32, exactement comme dans GFFTMA (ses portees
+    sont stockees en float32) : un calcul en float64 peut tomber de l'autre
+    cote d'un entier et donner la mauvaise parite.
+    """
+    pad = int(np.ceil(np.float32(2.0) * np.float32(r)))
+    return int(n) if (pad + int(n)) % 2 == 0 else int(n) + 1
+
 def _range_gfftma(modele, a_pratique):
     """Convertit portee pratique 95 % -> range GFFTMA selon le modele."""
+    modele = _nom_modele(modele)
     if modele == 'spherique':   return float(a_pratique)
     if modele == 'exponentiel': return float(a_pratique) / 3.0
     if modele == 'gaussien':    return float(a_pratique) / math.sqrt(3.0)
@@ -342,18 +361,34 @@ def gpoly_simuler_champ(modele, portee, pepite, seed, N,
     """Simule un champ N x N via la VRAIE GFFTMA + applique la distribution.
 
     type_champ in {'gaussien', 'lognormal'}. Pour lognormal, moyenne > 0.
+
+    portee : scalaire (isotrope) ou [a_x, a_y] (anisotrope, axes du repere).
+    Le resultat est renvoye en ordre ligne (N lignes de N colonnes) : a_x
+    s'applique le long des COLONNES (l'axe x d'une image), a_y le long des
+    LIGNES. GFFTMA, lui, oriente sa premiere portee selon le premier indice
+    du tableau (les lignes) : on lui passe donc [a_y, a_x].
     """
+    modele = _nom_modele(modele)
     code = _CODES_COV[modele]
-    r = _range_gfftma(modele, portee)
-    # Contournement cas limite Nx_extended impair
-    pad = math.ceil(2 * r)
-    nx_eff = N if (pad + N) % 2 == 0 else N + 1
-    model = [[np.array([code, r, r, 0.0], dtype=float)]]
+    if isinstance(portee, (list, tuple)) or hasattr(portee, '__len__'):
+        a = [float(v) for v in portee]
+        a_x, a_y = (a[0], a[1]) if len(a) > 1 else (a[0], a[0])
+    else:
+        a_x = a_y = float(portee)
+    r_x = _range_gfftma(modele, a_x)
+    r_y = _range_gfftma(modele, a_y)
+    # GFFTMA etend CHAQUE axe a ceil(2 r) + n points et exige un total pair,
+    # sinon sa grille de coordonnees perd un point et le reshape echoue. En
+    # anisotrope les deux axes ont des portees differentes : la parite se
+    # corrige donc axe par axe (lignes <-> r_y, colonnes <-> r_x).
+    n_lig = _taille_paire_gfftma(N, r_y)
+    n_col = _taille_paire_gfftma(N, r_x)
+    model = [[np.array([code, r_y, r_x, 0.0], dtype=float)]]
     c     = [[1.0 - float(pepite)]]
     nu    = [[None]]
     d, _, _ = GFFTMA(model, c, nu, seed=int(seed), nbsimul=1,
-                     nx=nx_eff, dx=1.0, ny=nx_eff, dy=1.0)
-    z = np.asarray(d[:, 0, 0], dtype=float).reshape(nx_eff, nx_eff)[:N, :N]
+                     nx=n_lig, dx=1.0, ny=n_col, dy=1.0)
+    z = np.asarray(d[:, 0, 0], dtype=float).reshape(n_lig, n_col)[:N, :N]
     if pepite > 0:
         rng = np.random.default_rng(int(seed) + 9973)
         z = z + math.sqrt(pepite) * rng.standard_normal(z.shape)
@@ -372,6 +407,7 @@ def gpoly_simuler_champ_3d(modele, portee, pepite, seed, n,
     Retourne une liste de longueur n**3 en ordre C : idx = (ix*n + iy)*n + iz.
     type_champ in {'gaussien', 'lognormal'} (lognormal : moyenne > 0).
     """
+    modele = _nom_modele(modele)
     code = _CODES_COV[modele]
     r = _range_gfftma(modele, portee)
     n = int(n)
