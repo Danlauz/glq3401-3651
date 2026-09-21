@@ -371,6 +371,41 @@ export function idw(x, y, pts, b = 2, radius = Infinity) {
   return den > 0 ? num / den : NaN;
 }
 
+/**
+ * IDW avec voisinage ELLIPTIQUE (IDW anisotrope).
+ *
+ * L'ellipse a pour demi-axes `rMaj` dans la direction `angDeg` (degrés, sens
+ * trigonométrique depuis +x, y canevas vers le bas) et `rMaj·rapport`
+ * perpendiculairement. Une donnée est retenue si sa distance normalisée
+ * h = √((u/a)² + (v/b)²) ≤ 1, et son poids vaut 1/h^b. Pour un cercle
+ * (rapport = 1) on retrouve exactement l'IDW isotrope : 1/(d/R)^b ∝ 1/d^b.
+ * rMaj = Infinity : pas de limite de recherche, mais les poids restent
+ * anisotropes (seule la forme compte).
+ */
+export function idwAniso(x, y, pts, b = 2, rMaj = Infinity, rapport = 1, angDeg = 0) {
+  const t = angDeg * Math.PI / 180, ct = Math.cos(t), st = Math.sin(t);
+  const fini = Number.isFinite(rMaj);
+  const A = fini ? rMaj : 1, B = (fini ? rMaj : 1) * Math.max(1e-6, rapport);
+  let num = 0, den = 0;
+  for (const p of pts) {
+    const dx = p.x - x, dy = p.y - y;
+    const u = (dx * ct + dy * st) / A, v = (-dx * st + dy * ct) / B;
+    const h2 = u * u + v * v;
+    if (fini && h2 > 1) continue;
+    if (h2 < 1e-18) return p.t;
+    const w = 1 / Math.pow(h2, b / 2);
+    num += w * p.t;
+    den += w;
+  }
+  return den > 0 ? num / den : NaN;
+}
+
+/** Trace l'ellipse de recherche (et renvoie rien) — utilitaire de dessin. */
+export function tracerEllipse(ctx, cx, cy, rMaj, rapport, angDeg) {
+  ctx.beginPath();
+  ctx.ellipse(cx, cy, rMaj, rMaj * rapport, angDeg * Math.PI / 180, 0, 2 * Math.PI);
+}
+
 // ===== Erreur (biais + RMSE) ================================================
 
 /**
