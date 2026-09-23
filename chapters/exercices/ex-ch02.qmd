@@ -3,7 +3,7 @@
 
 On vous présente une série de courbes obtenues en appliquant la théorie de Lane avec divers paramètres. Pour chacune des questions ci-dessous, identifiez le ou les cas correspondants.
 
-![Courbes de Lane (mine, traitement, marché) de quatre opérations minières A à D opérant chacune à sa teneur de coupure optimale : profit par tonne minéralisée en fonction de la teneur de coupure, avec les teneurs limites $c_1$, $c_2$, $c_3$ et d'équilibre $c_{12}$, $c_{13}$, $c_{23}$.](images/c02_lane_interpretation.png){#fig-c02-interpretation fig-align="center" width="80%"}
+![Courbes de Lane (mine, concentrateur, marché) de huit opérations minières A à H, chacune opérant à sa teneur de coupure optimale : profit par tonne minéralisée en fonction de la teneur de coupure, avec les teneurs de coupure limites $c_1$, $c_2$, $c_3$ et d'équilibre $c_{12}$, $c_{13}$, $c_{23}$.](images/c02_lane_interpretation.png){#fig-c02-interpretation fig-align="center" width="92%"}
 
 1. Quels cas montrent une exploitation utilisant la pleine capacité de la mine ?
 2. Quels cas montrent une exploitation utilisant la pleine capacité du concentrateur ?
@@ -76,6 +76,8 @@ Une mine de Cu présente les caractéristiques suivantes :
 
 De plus, la distribution des teneurs de Cu est log-normale, de moyenne $m = 1{,}3\%$ et de variance $s^2 = 3\%^2$.
 
+![Fonctions de récupération de ce gisement de Cu : proportion de matériau retenue comme minerai $x(c)$ (gauche) et teneur moyenne du minerai sélectionné $g(c)$ (droite), en fonction de la teneur de coupure $c$.](images/c02_lane_recuperation_cu.png){#fig-c02-recuperation-cu fig-align="center" width="90%"}
+
 1. Calculez les teneurs de coupure limites (mine, concentrateur, marché).
 2. Calculez les teneurs de coupure d’équilibre.
 3. Déterminez la teneur de coupure optimale.
@@ -128,11 +130,19 @@ On considère plusieurs scénarios d’application de la théorie de Taylor et L
 
 **1. Effet de l’information.** Paramètres : $y = 0{,}9$ ; $p = 1800$ ; $k = 0$ ; $h = 10$ ; $m = 5$ ; $f = 20$ ; $F = 0$ ; $M = 5$ ; $H = 3$ ; $K = 0{,}2$ ; loi log-normale de moyenne $1{,}5$. Qu’est-ce qui a changé en augmentant la quantité d’information ?
 
+![Effet de l'information : courbes de Lane pour un estimateur sans biais conditionnel de variance $1{,}6\%^2$ (gauche) et $1{,}8\%^2$ (droite).](images/c02_lane_d1_information.png){#fig-c02-d1 fig-align="center" width="92%"}
+
 **2. Augmenter la capacité de traitement $H$.** Paramètres : $y = 0{,}9$ ; $p = 1800$ ; $k = 0$ ; $h = 10$ ; $m = 5$ ; $f = 20$ ; $F = 0$ ; $M = 5$ ; $K = 0{,}2$ ; loi log-normale de moyenne $1{,}5$ et variance $1{,}6\%^2$. Qu’est-ce qui a changé ?
+
+![Effet d'une hausse de la capacité de traitement : $H = 3\ \text{Mt}$ (gauche) et $H = 3{,}5\ \text{Mt}$ (droite).](images/c02_lane_d2_capacite.png){#fig-c02-d2 fig-align="center" width="92%"}
 
 **3. Effet du temps.** Au fil de l’exploitation, comme on sélectionne les blocs riches préférentiellement, la mine résiduelle s’appauvrit. Paramètres : $y = 0{,}9$ ; $p = 1800$ ; $k = 0$ ; $h = 10$ ; $m = 5$ ; $f = 20$ ; $F = 0$ ; $M = 5$ ; $K = 0{,}2$ ; loi log-normale de variance $1{,}6\%^2$. Qu’observe-t-on ?
 
+![Effet du temps : la mine résiduelle s'appauvrit, moyenne de $1{,}5\%$ au début, puis $1{,}3\%$ et $1{,}0\%$.](images/c02_lane_d3_temps.png){#fig-c02-d3 fig-align="center" width="100%"}
+
 **4. Les coûts de traitement ($h$) augmentent.** Paramètres : $y = 0{,}9$ ; $p = 1800$ ; $k = 0$ ; $m = 5$ ; $f = 20$ ; $F = 0$ ; $M = 5$ ; $H = 3$ ; $K = 0{,}2$ ; loi log-normale de moyenne $1{,}5$ et variance $1{,}6\%^2$. Qu’est-ce qui a changé ?
+
+![Effet d'une hausse des frais de traitement : $h = 10\ \text{\$/t}$ (gauche) et $h = 13\ \text{\$/t}$ (droite).](images/c02_lane_d4_couts.png){#fig-c02-d4 fig-align="center" width="92%"}
 
 **5. Fonctions de récupération.** Voici les fonctions de récupération d’une mine dont la distribution est log-normale de moyenne $1{,}5$ et de variance $2$. La capacité de la mine $M$ est $5\ \text{Mt}$ de matériau minéralisé. La capacité de traitement $H$ est de $2\ \text{Mt}$ de minerai. Les autres paramètres sont : $y = 0{,}9$ ; $p = 1800$ ; $k = 0$ ; $m = 5$ ; $h = 10$ ; $f = 30$ ; $F = 0$ ; $K = 20$.
 
