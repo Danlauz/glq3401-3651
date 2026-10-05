@@ -323,7 +323,30 @@ from geostat_polymtl.economics.reserves import (
 )
 
 # === Helpers internes ===
-_CODES_COV = {'spherique': 4, 'exponentiel': 2, 'gaussien': 3}
+# ATTENTION : covar.py et covar_nu.py NE numerotent PAS les modeles de la meme
+# facon. covar.py sert au variogramme theorique ; covar_nu.py est ce que GFFTMA
+# utilise pour simuler. Les deux coincident pour pepite/exponentiel/gaussien/
+# spherique (1 a 4) et DIVERGENT ensuite. Deux tables sont donc necessaires :
+# prendre le code dans la mauvaise table ferait simuler un autre modele que
+# celui dont on trace la courbe.
+#
+#   modele          covar.py (gamma)   covar_nu.py (GFFTMA)
+#   spherique              4                  4
+#   exponentiel            2                  2
+#   gaussien               3                  3
+#   cubique                6                  5
+#   lineaire borne         5                 14  avec nu = 1 (Wendland 0)
+#   effet de trou (sin)   10                 11
+#
+# Le code 9 de covar_nu ('linear', C = 1 - h) n'est PAS une covariance
+# admissible : GFFTMA en sort une variance de 6,8 au lieu de 1. La version
+# bornee 1 - min(h, 1) est Wendland 0 avec nu = 1, verifiee identique au code 5
+# de covar.py.
+_CODES_COV = {'spherique': 4, 'exponentiel': 2, 'gaussien': 3,
+              'cubique': 6, 'lineaire': 5, 'trou': 10}
+_CODES_SIM = {'spherique': 4, 'exponentiel': 2, 'gaussien': 3,
+              'cubique': 5, 'lineaire': 14, 'trou': 11}
+_NU_SIM    = {'lineaire': 1.0}
 
 def _nom_modele(modele):
     """'Sphérique', 'SPHERIQUE', 'spherique' -> 'spherique'. Les listes
@@ -349,6 +372,10 @@ def _range_gfftma(modele, a_pratique):
     if modele == 'spherique':   return float(a_pratique)
     if modele == 'exponentiel': return float(a_pratique) / 3.0
     if modele == 'gaussien':    return float(a_pratique) / math.sqrt(3.0)
+    # Cubique et lineaire borne atteignent le palier EXACTEMENT en a : la portee
+    # pratique est deja le parametre du modele. Pour l'effet de trou, a est un
+    # parametre d'echelle (pseudo-periode), pas une portee : on le passe tel quel.
+    if modele in ('cubique', 'lineaire', 'trou'): return float(a_pratique)
     raise ValueError('modele inconnu : ' + modele)
 
 # =====================================================================
@@ -369,7 +396,8 @@ def gpoly_simuler_champ(modele, portee, pepite, seed, N,
     du tableau (les lignes) : on lui passe donc [a_y, a_x].
     """
     modele = _nom_modele(modele)
-    code = _CODES_COV[modele]
+    code = _CODES_SIM[modele]
+    nu_mod = _NU_SIM.get(modele)
     if isinstance(portee, (list, tuple)) or hasattr(portee, '__len__'):
         a = [float(v) for v in portee]
         a_x, a_y = (a[0], a[1]) if len(a) > 1 else (a[0], a[0])
@@ -385,7 +413,7 @@ def gpoly_simuler_champ(modele, portee, pepite, seed, N,
     n_col = _taille_paire_gfftma(N, r_x)
     model = [[np.array([code, r_y, r_x, 0.0], dtype=float)]]
     c     = [[1.0 - float(pepite)]]
-    nu    = [[None]]
+    nu    = [[nu_mod]]
     d, _, _ = GFFTMA(model, c, nu, seed=int(seed), nbsimul=1,
                      nx=n_lig, dx=1.0, ny=n_col, dy=1.0)
     z = np.asarray(d[:, 0, 0], dtype=float).reshape(n_lig, n_col)[:N, :N]
@@ -408,7 +436,8 @@ def gpoly_simuler_champ_3d(modele, portee, pepite, seed, n,
     type_champ in {'gaussien', 'lognormal'} (lognormal : moyenne > 0).
     """
     modele = _nom_modele(modele)
-    code = _CODES_COV[modele]
+    code = _CODES_SIM[modele]
+    nu_mod = _NU_SIM.get(modele)
     r = _range_gfftma(modele, portee)
     n = int(n)
     # Contournement cas limite Nx_etendu impair (idem version 2D) : la grille
@@ -419,7 +448,7 @@ def gpoly_simuler_champ_3d(modele, portee, pepite, seed, n,
     # Modele isotrope 3D : [code, range_x, range_y, range_z].
     model = [[np.array([code, r, r, r], dtype=float)]]
     c     = [[1.0 - float(pepite)]]
-    nu    = [[None]]
+    nu    = [[nu_mod]]
     d, _, _ = GFFTMA(model, c, nu, seed=int(seed), nbsimul=1,
                      nx=n_eff, dx=1.0, ny=n_eff, dy=1.0, nz=n_eff, dz=1.0)
     z = np.asarray(d[:, 0, 0], dtype=float).reshape(n_eff, n_eff, n_eff)[:n, :n, :n].ravel()
@@ -438,14 +467,16 @@ def gpoly_simuler_champ_1d(modele, portee, pepite, seed, n,
                            type_champ='gaussien', moyenne=0.0, variance=1.0):
     """Champ 1D (transect) de longueur n via GFFTMA 1D. Permet beaucoup de
     données à faible coût (variogramme expérimental lisse)."""
-    code = _CODES_COV[modele]
+    modele = _nom_modele(modele)
+    code = _CODES_SIM[modele]
+    nu_mod = _NU_SIM.get(modele)
     r = _range_gfftma(modele, portee)
     n = int(n)
     pad = math.ceil(2 * r)
     n_eff = n if (pad + n) % 2 == 0 else n + 1
     model = [[np.array([code, r], dtype=float)]]
     c     = [[1.0 - float(pepite)]]
-    nu    = [[None]]
+    nu    = [[nu_mod]]
     d, _, _ = GFFTMA(model, c, nu, seed=int(seed), nbsimul=1, nx=n_eff, dx=1.0)
     z = np.asarray(d[:, 0, 0], dtype=float).ravel()[:n]
     if pepite > 0:
@@ -520,7 +551,9 @@ def gpoly_simuler_champ_aniso(modele, portee_x, portee_y, angle, pepite, seed, N
     """Champ 2D ANISOTROPE via GFFTMA. portee_x = portée pratique le long de l'axe
     majeur (orienté par 'angle' en degrés), portee_y le long de l'axe perpendiculaire.
     Modèle de covariance [code, range_x, range_y, angle] (cf. functional.helper.trans)."""
-    code = _CODES_COV[modele]
+    modele = _nom_modele(modele)
+    code = _CODES_SIM[modele]
+    nu_mod = _NU_SIM.get(modele)
     rx = _range_gfftma(modele, portee_x)
     ry = _range_gfftma(modele, portee_y)
     N = int(N)
@@ -531,7 +564,7 @@ def gpoly_simuler_champ_aniso(modele, portee_x, portee_y, angle, pepite, seed, N
     ny = N if (pady + N) % 2 == 0 else N + 1
     model = [[np.array([code, rx, ry, float(angle)], dtype=float)]]
     c     = [[1.0 - float(pepite)]]
-    nu    = [[None]]
+    nu    = [[nu_mod]]
     d, _, _ = GFFTMA(model, c, nu, seed=int(seed), nbsimul=1,
                      nx=nx, dx=1.0, ny=ny, dy=1.0)
     z = np.asarray(d[:, 0, 0], dtype=float).reshape(nx, ny)[:N, :N]
