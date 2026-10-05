@@ -83,8 +83,19 @@ export default class C07Anisotropie3D extends Widget {
       <style>
         #${id} .a7-row label { display:inline-flex !important; flex-direction:row !important; align-items:center; gap:5px; }
         #${id} .a7-row label span { display:inline; }
-        #${id} .a7-eq { display:grid; grid-template-columns:auto 1fr; gap:2px 14px; align-items:center; }
-        #${id} .a7-eq b { font-size:.78rem; color:#555; font-weight:600; white-space:nowrap; }
+        /* Le nom de la méthode est AU-DESSUS du calcul : la formule dispose ainsi
+           de toute la largeur du widget. Sans cela, elle déborde de la colonne et
+           .geostat-widget { overflow:hidden } la coupe — elle devient invisible. */
+        #${id} .a7-eq { display:flex; flex-direction:column; gap:9px; }
+        #${id} .a7-eq > div { border-left:3px solid #c9d6e8; padding-left:10px; }
+        #${id} .a7-eq b { display:block; font-size:.76rem; color:#3f5170; font-weight:700;
+                          letter-spacing:.01em; margin-bottom:1px; }
+        /* Filet de sécurité : si une formule reste plus large que le widget, on la
+           fait défiler au lieu de la rogner. */
+        #${id} .a7-math { display:block; overflow-x:auto; overflow-y:hidden; font-size:.95em; }
+        #${id} .a7-math mjx-container[display="true"] { margin:.2em 0 !important; text-align:left !important; }
+        #${id} .a7-brut { font-family:'JetBrains Mono',ui-monospace,monospace; font-size:.8rem;
+                          color:#333; line-height:1.5; }
       </style>
       <div class="gw-controls a7-row" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:8px 12px;background:#fafafa;border:1px solid #ddd;border-radius:8px;font-size:.84rem;margin-bottom:6px;">
         <label><b style="font-size:.8rem;color:#444;">Modèle</b> <select class="js-mod" style="font-size:.82rem;padding:2px 4px;">
@@ -309,30 +320,62 @@ export default class C07Anisotropie3D extends Widget {
   _ecrireEquations(p) {
     const ecart = Math.abs(p.gammaM1 - p.gammaM2);
     const r1 = p.h / p.aTheta, r2 = p.hg / p.ag;
+    // Le nombre est écrit avec la virgule décimale ; dans une formule TeX il faut
+    // le protéger ({,}) sinon MathJax l'espace comme un séparateur de liste.
+    const tex = (v, n = 2) => fmt(v, n).replace(',', '{,}');
+    const ag = tex(p.ag, 0), ap = tex(p.ap, 0), th = tex(p.theta), hh = tex(p.h, 2);
+
+    // Chaque calcul tient sur deux lignes alignées sur le « = » : la formule
+    // littérale d'abord, l'application numérique ensuite. C'est deux fois moins
+    // large qu'une seule longue ligne, donc lisible dans la largeur du widget.
     this.eqEl.innerHTML = `
       <div class="a7-eq">
-        <b>Méthode 1 — portée directionnelle</b><span>$$
-          a_\\theta = \\frac{a_g\\,a_p}{\\sqrt{a_p^{2}\\cos^{2}\\theta + a_g^{2}\\sin^{2}\\theta}}
-          = \\frac{${fmt(p.ag, 0)}\\times${fmt(p.ap, 0)}}
-                  {\\sqrt{${fmt(p.ap, 0)}^{2}\\cos^{2}(${fmt(p.theta)}^\\circ)+${fmt(p.ag, 0)}^{2}\\sin^{2}(${fmt(p.theta)}^\\circ)}}
-          = ${fmt(p.aTheta)}
-        $$</span>
-        <b>Méthode 2 — distance équivalente</b><span>$$
-          h_g = \\sqrt{\\left[h\\cos\\theta\\right]^{2}+\\left[\\tfrac{a_g}{a_p}\\,h\\sin\\theta\\right]^{2}}
-          = \\sqrt{\\left[${fmt(p.h, 2)}\\cos(${fmt(p.theta)}^\\circ)\\right]^{2}
-                 + \\left[\\tfrac{${fmt(p.ag, 0)}}{${fmt(p.ap, 0)}}\\,${fmt(p.h, 2)}\\sin(${fmt(p.theta)}^\\circ)\\right]^{2}}
-          = ${fmt(p.hg)}
-        $$</span>
-        <b>Pourquoi c'est équivalent</b><span>$$
-          \\frac{h}{a_\\theta} = ${fmt(r1, 4)} \\;=\\; \\frac{h_g}{a_g} = ${fmt(r2, 4)}
-        $$</span>
+        <div>
+          <b>Méthode 1 — portée directionnelle a<sub>θ</sub></b>
+          <div class="a7-math">$$\\begin{aligned}
+            a_\\theta &= \\frac{a_g\\,a_p}{\\sqrt{a_p^{2}\\cos^{2}\\theta + a_g^{2}\\sin^{2}\\theta}} \\\\[2pt]
+                      &= \\frac{${ag}\\times${ap}}
+                               {\\sqrt{${ap}^{2}\\cos^{2}(${th}^\\circ)+${ag}^{2}\\sin^{2}(${th}^\\circ)}}
+                       = ${tex(p.aTheta)}
+          \\end{aligned}$$</div>
+        </div>
+        <div>
+          <b>Méthode 2 — distance équivalente h<sub>g</sub></b>
+          <div class="a7-math">$$\\begin{aligned}
+            h_g &= \\sqrt{\\left[h\\cos\\theta\\right]^{2}
+                        + \\left[\\tfrac{a_g}{a_p}\\,h\\sin\\theta\\right]^{2}} \\\\[2pt]
+                &= \\sqrt{\\left[${hh}\\cos(${th}^\\circ)\\right]^{2}
+                        + \\left[\\tfrac{${ag}}{${ap}}\\,${hh}\\sin(${th}^\\circ)\\right]^{2}}
+                 = ${tex(p.hg)}
+          \\end{aligned}$$</div>
+        </div>
+        <div>
+          <b>Pourquoi les deux méthodes coïncident</b>
+          <div class="a7-math">$$
+            \\frac{h}{a_\\theta} = \\frac{${hh}}{${tex(p.aTheta)}} = ${tex(r1, 4)}
+            \\qquad\\text{et}\\qquad
+            \\frac{h_g}{a_g} = \\frac{${tex(p.hg)}}{${ag}} = ${tex(r2, 4)}
+          $$</div>
+        </div>
       </div>
-      <div style="font-size:.79rem;color:#555;margin-top:2px;">
+      <div style="font-size:.79rem;color:#555;margin-top:4px;">
         Les deux méthodes mènent au même rapport distance / portée, donc au même
         variogramme : évaluer γ à la distance <i>h</i> avec la portée a<sub>θ</sub>,
         ou à la distance transformée <i>h</i><sub>g</sub> avec la portée a<sub>g</sub>,
         revient exactement au même.
       </div>`;
+    // Version de secours, en texte, si MathJax n'est pas disponible sur la page.
+    this._texteBrut = [
+      ['Méthode 1 — portée directionnelle a<sub>θ</sub>',
+       `a<sub>θ</sub> = a<sub>g</sub>·a<sub>p</sub> / √(a<sub>p</sub>²cos²θ + a<sub>g</sub>²sin²θ)<br>` +
+       `&nbsp;&nbsp;&nbsp;= ${fmt(p.ag, 0)}×${fmt(p.ap, 0)} / √(${fmt(p.ap, 0)}²cos²(${fmt(p.theta)}°) + ${fmt(p.ag, 0)}²sin²(${fmt(p.theta)}°)) = <b>${fmt(p.aTheta)}</b>`],
+      ['Méthode 2 — distance équivalente h<sub>g</sub>',
+       `h<sub>g</sub> = √( [h·cosθ]² + [(a<sub>g</sub>/a<sub>p</sub>)·h·sinθ]² )<br>` +
+       `&nbsp;&nbsp;&nbsp;= √( [${fmt(p.h, 2)}·cos(${fmt(p.theta)}°)]² + [(${fmt(p.ag, 0)}/${fmt(p.ap, 0)})·${fmt(p.h, 2)}·sin(${fmt(p.theta)}°)]² ) = <b>${fmt(p.hg)}</b>`],
+      ['Pourquoi les deux méthodes coïncident',
+       `h / a<sub>θ</sub> = ${fmt(p.h, 2)} / ${fmt(p.aTheta)} = ${fmt(r1, 4)}` +
+       `&nbsp;&nbsp;et&nbsp;&nbsp;h<sub>g</sub> / a<sub>g</sub> = ${fmt(p.hg)} / ${fmt(p.ag, 0)} = ${fmt(r2, 4)}`],
+    ];
 
     this.infoEl.innerHTML =
       `<div style="font-weight:600;color:#4a6a3a;margin-bottom:3px;">` +
@@ -351,10 +394,25 @@ export default class C07Anisotropie3D extends Widget {
       `a<sub>g</sub>/a<sub>p</sub>. Le bouton « Exemple du chapitre » recharge le cas travaillé ` +
       `(a<sub>g</sub> = 100 à 30°, a<sub>p</sub> = 60, C₀ = 13, C = 17) : on doit lire γ ≈ 23,63.`;
 
+    this._composerFormules();
+  }
+
+  /** Fait composer les formules par MathJax ; si la page n'en a pas (ou si la
+   *  composition échoue), on bascule sur la version texte plutôt que de laisser
+   *  du code TeX brut à l'écran. */
+  _composerFormules() {
     const MJ = window.MathJax;
-    if (MJ && typeof MJ.typesetPromise === 'function') {
-      MJ.typesetPromise([this.eqEl]).catch(() => { /* rendu brut, sans conséquence */ });
-    }
+    const secours = () => {
+      const bloc = this.eqEl.querySelector('.a7-eq');
+      if (!bloc || !this._texteBrut) return;
+      bloc.innerHTML = this._texteBrut
+        .map(([titre, corps]) => `<div><b>${titre}</b><div class="a7-brut">${corps}</div></div>`)
+        .join('');
+    };
+    if (!MJ || typeof MJ.typesetPromise !== 'function') { secours(); return; }
+    MJ.typesetPromise([this.eqEl])
+      .then(() => { if (!this.eqEl.querySelector('mjx-container')) secours(); })
+      .catch(secours);
   }
 
   // ===========================================================================
