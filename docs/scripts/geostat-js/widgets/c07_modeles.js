@@ -40,7 +40,7 @@ const H_MAX = 100;   // axe des distances du variogramme
 
 // a = portée pratique (95 %) pour les modèles bornés ; pour l'effet de trou,
 // a est un paramètre d'échelle, pas une portée.
-const MODELES = [
+export const MODELES = [
   {
     cle: 'spherique', nom: 'Sphérique', couleur: '#2563eb',
     gamma: 'C_0 + C\\left[\\tfrac{3}{2}\\tfrac{h}{a} - \\tfrac{1}{2}\\left(\\tfrac{h}{a}\\right)^{3}\\right]',
