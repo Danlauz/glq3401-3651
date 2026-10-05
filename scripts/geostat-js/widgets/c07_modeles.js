@@ -170,9 +170,17 @@ export default class C07Modeles extends Widget {
     btn.style.background = this.mode2d ? '#3a3632' : '#1f6f6f';
     // La carte 2D est contrainte carree : sans cette hauteur accrue, elle
     // n'occupe qu'une fraction de son cadre.
-    const h = this.mode2d ? '430px' : '340px';
-    this.champEl.style.height = h;
-    this.varioEl.style.height = h;
+    for (const el of [this.champEl, this.varioEl]) {
+      if (this.mode2d) {
+        el.style.height = 'auto';
+        el.style.aspectRatio = '1 / 1';
+        el.style.minHeight = '320px';
+      } else {
+        el.style.aspectRatio = '';
+        el.style.minHeight = '';
+        el.style.height = '340px';
+      }
+    }
     for (const n of this.el.querySelectorAll('.js-1d-only')) {
       if (this.mode2d) n.style.setProperty('display', 'none', 'important');
       else n.style.removeProperty('display');
@@ -255,18 +263,30 @@ export default class C07Modeles extends Widget {
       for (let i = 0; i < N_2D; i++) ligne[i] = champ[i * N_2D + j];
       z.push(ligne);
     }
+    // Coordonnées réelles : la carte est graduée dans la MÊME unité que l'axe
+    // des distances du variogramme, ce qui permet de rapporter une structure vue
+    // sur la carte à la portée lue sur la courbe.
+    const axe = Array.from({ length: N_2D }, (_, i) => i);
+    const axeCarte = {
+      zeroline: false, showgrid: false, ticks: 'outside', ticklen: 4,
+      tickfont: { size: 9 }, constrain: 'domain', fixedrange: true,
+      range: [0, N_2D - 1],
+    };
+    // Le cadre est carré et la marge droite réserve la place de la barre de
+    // couleur : l'aire de tracé est donc plus HAUTE que large, Plotly utilise
+    // tout le domaine en x et rétrécit en y. La carte touche ainsi le bord droit
+    // et la barre, posée à x = 1, se range juste à côté — jamais par-dessus,
+    // quelle que soit la largeur de l'écran.
     Plotly.react(this.champEl, [
-      { z, type: 'heatmap', colorscale: TURBO, zsmooth: 'best', zmin: -3, zmax: 3,
-        hoverinfo: 'skip',
-        // L'axe est contraint carre : son domaine se retracte vers la gauche et
-        // une barre posee a x = 1 resterait loin de la carte.
-        colorbar: { len: 0.9, thickness: 10, x: 0.87, xanchor: 'left',
+      { x: axe, y: axe, z, type: 'heatmap', colorscale: TURBO, zsmooth: 'best',
+        zmin: -3, zmax: 3, hoverinfo: 'skip',
+        colorbar: { len: 0.92, thickness: 11, x: 1.0, xanchor: 'left',
                     title: { text: 'Z', side: 'right', font: { size: 10 } }, tickfont: { size: 8 } } },
     ], {
-      margin: { t: 30, l: 24, r: 30, b: 26 }, dragmode: false,
+      margin: { t: 30, l: 52, r: 66, b: 46 }, dragmode: false,
       title: { text: `Champ simulé — ${p.m.nom}`, font: { size: 12 } },
-      xaxis: { showticklabels: false, ticks: '', zeroline: false, showgrid: false, constrain: 'domain', fixedrange: true },
-      yaxis: { showticklabels: false, ticks: '', zeroline: false, showgrid: false, scaleanchor: 'x', constrain: 'domain', fixedrange: true },
+      xaxis: { ...axeCarte, title: { text: 'x', standoff: 4 } },
+      yaxis: { ...axeCarte, title: { text: 'y', standoff: 4 }, scaleanchor: 'x' },
     }, commun);
   }
 
@@ -307,10 +327,13 @@ export default class C07Modeles extends Widget {
     for (const t of traces) for (const v of t.y) if (v > haut) haut = v * 1.06;
 
     Plotly.react(this.varioEl, traces, {
-      margin: { t: 30, l: 54, r: 16, b: this.mode2d ? 58 : 44 },
+      margin: { t: 30, l: 54, r: 16, b: this.mode2d ? 78 : 44 },
       title: { text: 'Variogramme γ(h)', font: { size: 12 } },
       showlegend: this.mode2d,
-      legend: { orientation: 'h', y: -0.2, x: 0.5, xanchor: 'center', font: { size: 9.5 } },
+      // Ancrée SOUS le cadre (yanchor 'top' sur un y négatif) : la légende ne
+      // peut pas se poser sur les courbes, quelle que soit la hauteur du panneau.
+      legend: { orientation: 'h', y: -0.16, yanchor: 'top', x: 0.5, xanchor: 'center',
+                font: { size: 9.5 }, bgcolor: 'rgba(0,0,0,0)' },
       annotations: [
         { x: H_MAX, y: sill, text: 'palier C + C₀', showarrow: false,
           font: { size: 10, color: '#777' }, xanchor: 'right', yanchor: 'bottom' },
