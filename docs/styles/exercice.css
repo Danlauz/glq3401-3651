@@ -1,0 +1,138 @@
+/* =============================================================================
+   Recueil d'exercices — présentation des exercices et des corrigés.
+
+   Portée : sections de chapitre marquées `.recueil` (voir chaque ex-chNN.qmd :
+   `## Titre {#sec-ex-chNN .recueil}`). Rien dans le corps des exercices n'est
+   modifié : toute la mise en forme est pilotée par le DOM produit par Quarto
+      section.level2.recueil        -> chapitre
+        > section.level3            -> un exercice (titre h3 « Exercice N — … »)
+          > .callout-note           -> le corrigé (repliable)
+   ============================================================================= */
+
+/* --- Variables de thème (clair) ------------------------------------------- */
+.recueil {
+  --ex-accent:  #0b6bcb;              /* bleu — exercice            */
+  --ex-bg:      #f6f9fd;
+  --ex-border:  #e2e9f2;
+  --sol-accent: #1a7f37;              /* vert — corrigé             */
+  --sol-bg:     rgba(26, 127, 55, .055);
+  --sol-head:   rgba(26, 127, 55, .12);
+  --sol-text:   #14652c;
+}
+
+/* --- En-tête de chapitre -------------------------------------------------- */
+section.recueil > h2 {
+  padding-bottom: .35rem;
+  border-bottom: 2px solid var(--ex-border);
+}
+
+/* --- Carte d'un exercice -------------------------------------------------- */
+section.recueil > section.level3 {
+  background: var(--ex-bg);
+  border: 1px solid var(--ex-border);
+  border-left: 4px solid var(--ex-accent);
+  border-radius: 0 14px 14px 0;
+  padding: 1.2rem 1.55rem 1.35rem;
+  margin: 2rem 0;
+  display: flow-root;                /* contient les figures / flottants */
+}
+
+/* Titre « Exercice N — … » avec pastille */
+section.recueil > section.level3 > h3 {
+  margin: 0 0 .95rem 0;
+  padding: 0 0 .6rem 0;
+  color: var(--ex-accent);
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  border-bottom: 1px solid var(--ex-border);
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+}
+section.recueil > section.level3 > h3::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 1.15rem;
+  height: 1.15rem;
+  background-color: var(--ex-accent);
+  -webkit-mask: var(--ex-pencil) center / contain no-repeat;
+          mask: var(--ex-pencil) center / contain no-repeat;
+}
+.recueil {
+  --ex-pencil: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5z"/></svg>');
+}
+
+/* Figures et images contenues dans la carte */
+section.recueil > section.level3 :is(img, figure, .quarto-figure, .cell-output-display) {
+  max-width: 100% !important;
+  height: auto !important;
+}
+section.recueil > section.level3 figure { margin-left: 0; margin-right: 0; }
+
+/* Blockquote « (schéma / abaque à réaliser) » : consigne discrète */
+section.recueil > section.level3 blockquote {
+  margin: .9rem 0 0;
+  border-left: 3px solid #d3a94b;
+  background: rgba(211, 169, 75, .09);
+  padding: .4rem .85rem;
+  border-radius: 0 6px 6px 0;
+  color: #6d5518;
+  font-size: .92rem;
+}
+section.recueil > section.level3 blockquote p { margin: 0; }
+
+/* --- Corrigé (callout-note replié) ---------------------------------------- */
+.recueil .callout.callout-note {
+  border: none;
+  border-left: 4px solid var(--sol-accent);
+  border-radius: 10px;
+  background: var(--sol-bg);
+  box-shadow: none;
+  margin-top: 1.1rem;
+  overflow: hidden;
+}
+.recueil .callout.callout-note .callout-header {
+  background: var(--sol-head);
+  padding: .5rem .9rem;
+  cursor: pointer;
+  align-items: center;
+  transition: background-color .15s ease;
+}
+.recueil .callout.callout-note .callout-header:hover {
+  background: rgba(26, 127, 55, .18);
+}
+.recueil .callout.callout-note .callout-title-container {
+  color: var(--sol-text);
+  font-weight: 650;
+}
+/* Icône : ampoule verte à la place du « i » de la note */
+.recueil .callout.callout-note .callout-icon::before {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="%231a7f37"><path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 14h-5a.5.5 0 0 1-.46-.302l-.761-1.77a2 2 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z"/></svg>') !important;
+}
+.recueil .callout.callout-note .callout-body-container {
+  padding: .65rem .95rem .85rem;
+}
+/* Un peu d'air dans les corrigés numérotés */
+.recueil .callout.callout-note .callout-body-container :is(ol, ul) { margin-bottom: .2rem; }
+
+/* --- Mode sombre ---------------------------------------------------------- */
+[data-bs-theme="dark"] .recueil {
+  --ex-accent:  #6cb0ff;
+  --ex-bg:      rgba(88, 166, 255, .07);
+  --ex-border:  rgba(88, 166, 255, .20);
+  --sol-accent: #3fb950;
+  --sol-bg:     rgba(63, 185, 80, .10);
+  --sol-head:   rgba(63, 185, 80, .18);
+  --sol-text:   #63d178;
+}
+[data-bs-theme="dark"] .recueil .callout.callout-note .callout-header:hover {
+  background: rgba(63, 185, 80, .26);
+}
+[data-bs-theme="dark"] .recueil .callout.callout-note .callout-icon::before {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="%233fb950"><path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 14h-5a.5.5 0 0 1-.46-.302l-.761-1.77a2 2 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z"/></svg>') !important;
+}
+[data-bs-theme="dark"] section.recueil > section.level3 blockquote {
+  color: #d8c48a;
+  background: rgba(211, 169, 75, .10);
+}

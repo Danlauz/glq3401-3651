@@ -1,0 +1,846 @@
+{
+  "version_lib": "0.1.0",
+  "vecteurs": [
+    {
+      "id": "gamma_spherique_a20_c10",
+      "fonction": "cov_func.covar.covar",
+      "entrees": {
+        "modele": {
+          "type": "spherique",
+          "palier": 10,
+          "portee": 20,
+          "pepite": 0
+        },
+        "h": [
+          0,
+          5,
+          10,
+          15,
+          20,
+          25,
+          30,
+          50,
+          100
+        ]
+      },
+      "sorties": {
+        "gamma": [
+          0.0,
+          3.671875,
+          6.875,
+          9.140625,
+          10.0,
+          10.0,
+          10.0,
+          10.0,
+          10.0
+        ]
+      },
+      "tolerance": 1e-09
+    },
+    {
+      "id": "gamma_spherique_a20_c10_c0_2",
+      "fonction": "cov_func.covar.covar",
+      "entrees": {
+        "modele": {
+          "type": "spherique",
+          "palier": 10,
+          "portee": 20,
+          "pepite": 2
+        },
+        "h": [
+          0,
+          5,
+          10,
+          15,
+          20,
+          25,
+          30,
+          50,
+          100
+        ]
+      },
+      "sorties": {
+        "gamma": [
+          0.0,
+          5.671875,
+          8.875,
+          11.140625,
+          12.0,
+          12.0,
+          12.0,
+          12.0,
+          12.0
+        ]
+      },
+      "tolerance": 1e-09
+    },
+    {
+      "id": "gamma_exponentiel_a20_c10",
+      "fonction": "cov_func.covar.covar",
+      "entrees": {
+        "modele": {
+          "type": "exponentiel",
+          "palier": 10,
+          "portee": 20,
+          "pepite": 0
+        },
+        "h": [
+          0,
+          5,
+          10,
+          15,
+          20,
+          25,
+          30,
+          50,
+          100
+        ]
+      },
+      "sorties": {
+        "gamma": [
+          0.0,
+          2.2119927406311035,
+          3.9346933364868164,
+          5.276334762573242,
+          6.321206092834473,
+          7.134952545166016,
+          7.768698692321777,
+          9.179149627685547,
+          9.932621002197266
+        ]
+      },
+      "tolerance": 1e-09
+    },
+    {
+      "id": "gamma_gaussien_a20_c10",
+      "fonction": "cov_func.covar.covar",
+      "entrees": {
+        "modele": {
+          "type": "gaussien",
+          "palier": 10,
+          "portee": 20,
+          "pepite": 0
+        },
+        "h": [
+          0,
+          5,
+          10,
+          15,
+          20,
+          25,
+          30,
+          50,
+          100
+        ]
+      },
+      "sorties": {
+        "gamma": [
+          0.0,
+          0.6058692932128906,
+          2.2119927406311035,
+          4.30217170715332,
+          6.321206092834473,
+          7.903885841369629,
+          8.94600772857666,
+          9.980695724487305,
+          10.0
+        ]
+      },
+      "tolerance": 1e-09
+    },
+    {
+      "id": "gamma_spherique_a50_c5",
+      "fonction": "cov_func.covar.covar",
+      "entrees": {
+        "modele": {
+          "type": "spherique",
+          "palier": 5,
+          "portee": 50,
+          "pepite": 0
+        },
+        "h": [
+          0,
+          5,
+          10,
+          15,
+          20,
+          25,
+          30,
+          50,
+          100
+        ]
+      },
+      "sorties": {
+        "gamma": [
+          0.0,
+          0.747499942779541,
+          1.4800000190734863,
+          2.182500123977661,
+          2.8400001525878906,
+          3.4375,
+          3.9600002765655518,
+          5.0,
+          5.0
+        ]
+      },
+      "tolerance": 1e-09
+    },
+    {
+      "id": "gy_base",
+      "fonction": "sampling.gy.ecart_type_relatif",
+      "entrees": {
+        "params": {
+          "al": 0.03,
+          "da": 5.0,
+          "dg": 2.8,
+          "d0": 0.04,
+          "f": 0.5,
+          "g": 0.25
+        },
+        "me": 100.0,
+        "ml": 10000.0,
+        "d": 0.25
+      },
+      "sorties": {
+        "sr": 0.03512670591942831
+      },
+      "tolerance": 1e-09
+    },
+    {
+      "id": "gy_grossier",
+      "fonction": "sampling.gy.ecart_type_relatif",
+      "entrees": {
+        "params": {
+          "al": 0.01,
+          "da": 4.1,
+          "dg": 2.7,
+          "d0": 0.1,
+          "f": 0.5,
+          "g": 0.25
+        },
+        "me": 1000.0,
+        "ml": 50000.0,
+        "d": 1.0
+      },
+      "sorties": {
+        "sr": 0.12517996413747912
+      },
+      "tolerance": 1e-09
+    },
+    {
+      "id": "gy_fin",
+      "fonction": "sampling.gy.ecart_type_relatif",
+      "entrees": {
+        "params": {
+          "al": 0.05,
+          "da": 7.5,
+          "dg": 2.65,
+          "d0": 0.01,
+          "f": 0.4,
+          "g": 0.5
+        },
+        "me": 30.0,
+        "ml": 2000.0,
+        "d": 0.05
+      },
+      "sorties": {
+        "sr": 0.007114679057338414
+      },
+      "tolerance": 1e-09
+    },
+    {
+      "id": "gy_mmin_5pct",
+      "fonction": "sampling.gy.masse_minimale",
+      "entrees": {
+        "params": {
+          "al": 0.03,
+          "da": 5.0,
+          "dg": 2.8,
+          "d0": 0.04,
+          "f": 0.5,
+          "g": 0.25
+        },
+        "ml": 10000.0,
+        "d": 0.25,
+        "sr_cible": 0.05
+      },
+      "sorties": {
+        "me": 49.60664954936429
+      },
+      "tolerance": 1e-06
+    },
+    {
+      "id": "gy_mmin_10pct",
+      "fonction": "sampling.gy.masse_minimale",
+      "entrees": {
+        "params": {
+          "al": 0.01,
+          "da": 4.1,
+          "dg": 2.7,
+          "d0": 0.1,
+          "f": 0.5,
+          "g": 0.25
+        },
+        "ml": 50000.0,
+        "d": 1.0,
+        "sr_cible": 0.1
+      },
+      "sorties": {
+        "me": 1549.4317139301797
+      },
+      "tolerance": 1e-06
+    },
+    {
+      "id": "densite_cuzn",
+      "fonction": "sampling.densite.masse_volumique_melange",
+      "entrees": {
+        "teneurs": [
+          8.57,
+          7.46,
+          37.09,
+          46.88
+        ],
+        "densites": [
+          4.2,
+          4.1,
+          5.0,
+          2.68
+        ],
+        "porosite": 0.0
+      },
+      "sorties": {
+        "rho": 3.475779380818478
+      },
+      "tolerance": 1e-09
+    },
+    {
+      "id": "densite_porosite",
+      "fonction": "sampling.densite.masse_volumique_melange",
+      "entrees": {
+        "teneurs": [
+          8.57,
+          7.46,
+          37.09,
+          46.88
+        ],
+        "densites": [
+          4.2,
+          4.1,
+          5.0,
+          2.68
+        ],
+        "porosite": 0.05
+      },
+      "sorties": {
+        "rho": 3.301990411777554
+      },
+      "tolerance": 1e-09
+    },
+    {
+      "id": "densite_simple",
+      "fonction": "sampling.densite.masse_volumique_melange",
+      "entrees": {
+        "teneurs": [
+          50.0,
+          50.0
+        ],
+        "densites": [
+          3.0,
+          2.0
+        ],
+        "porosite": 0.0
+      },
+      "sorties": {
+        "rho": 2.4
+      },
+      "tolerance": 1e-09
+    },
+    {
+      "id": "we_serie_mixte",
+      "fonction": "sampling.standards.detecter_anomalies",
+      "entrees": {
+        "valeurs": [
+          3.55,
+          3.6,
+          3.5,
+          3.62,
+          3.48,
+          3.9,
+          3.55,
+          3.78,
+          3.79,
+          3.66,
+          3.67,
+          3.68,
+          3.69,
+          3.4,
+          3.41,
+          3.39,
+          3.42,
+          3.4,
+          3.41,
+          3.38,
+          3.43,
+          3.55,
+          3.56
+        ],
+        "moyenne": 3.55,
+        "ecart_type": 0.086
+      },
+      "sorties": {
+        "c1": [
+          5
+        ],
+        "c2": [
+          7,
+          8
+        ],
+        "c3": [
+          10,
+          11,
+          12,
+          16,
+          17,
+          18,
+          19,
+          20
+        ],
+        "c4": [
+          20
+        ]
+      },
+      "tolerance": 0
+    },
+    {
+      "id": "dup_petit_jeu",
+      "fonction": "sampling.duplicatas.analyser_duplicatas",
+      "entrees": {
+        "dup1": [
+          2.0,
+          2.1,
+          1.95,
+          3.0,
+          0.5,
+          4.2,
+          2.5,
+          1.8
+        ],
+        "dup2": [
+          2.05,
+          1.9,
+          2.0,
+          2.7,
+          0.62,
+          4.0,
+          2.45,
+          2.1
+        ]
+      },
+      "sorties": {
+        "diff_relative": [
+          -2.4691358024691272,
+          10.000000000000009,
+          -2.531645569620255,
+          10.526315789473678,
+          -21.428571428571427,
+          4.878048780487809,
+          2.020202020202013,
+          -15.384615384615385
+        ],
+        "pct_hard_sous_10": 87.5,
+        "n_hors_10pct": 4,
+        "n_hors_20pct": 1,
+        "n_hors_30pct": 0
+      },
+      "tolerance": 1e-09
+    },
+    {
+      "id": "c04_composite_L2",
+      "fonction": "treatment.composite.calculer_composites",
+      "entrees": {
+        "echantillons": [
+          {
+            "de": 0,
+            "a": 1,
+            "teneur": 0.5
+          },
+          {
+            "de": 1,
+            "a": 2.5,
+            "teneur": 2.1
+          },
+          {
+            "de": 2.5,
+            "a": 4,
+            "teneur": 5.4
+          },
+          {
+            "de": 4,
+            "a": 5.2,
+            "teneur": 3.8
+          }
+        ],
+        "longueur": 2.0,
+        "couverture_min": 0.5
+      },
+      "sorties": {
+        "de": [
+          0,
+          2.0,
+          4.0
+        ],
+        "a": [
+          2.0,
+          4.0,
+          6.0
+        ],
+        "teneur": [
+          1.3,
+          4.575000000000001,
+          3.8
+        ],
+        "couverture": [
+          1.0,
+          1.0,
+          0.6000000000000001
+        ],
+        "valide": [
+          1,
+          1,
+          1
+        ]
+      },
+      "tolerance": 1e-09
+    },
+    {
+      "id": "c04_degrouper_c10",
+      "fonction": "treatment.degroupement.degrouper",
+      "entrees": {
+        "coordonnees": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            50,
+            50
+          ],
+          [
+            51,
+            50
+          ]
+        ],
+        "valeurs": [
+          5.0,
+          6.0,
+          5.5,
+          5.2,
+          1.0,
+          1.1
+        ],
+        "taille_cellule": 10.0
+      },
+      "sorties": {
+        "poids": [
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.25,
+          0.25
+        ],
+        "moyenne_brute": 3.966666666666667,
+        "moyenne_ponderee": 3.2375,
+        "variance_brute": 4.348888888888889,
+        "variance_ponderee": 4.85734375
+      },
+      "tolerance": 1e-09
+    },
+    {
+      "id": "c04_cosinus",
+      "fonction": "treatment.deviations.cosinus_directeurs",
+      "entrees": {
+        "mesures": [
+          {
+            "md": 0,
+            "azimut": 90,
+            "plongee": 60
+          },
+          {
+            "md": 50,
+            "azimut": 100,
+            "plongee": 50
+          },
+          {
+            "md": 100,
+            "azimut": 110,
+            "plongee": 40
+          }
+        ]
+      },
+      "sorties": {
+        "cosinus": [
+          [
+            0,
+            0.5000000000000001,
+            3.0616169978683836e-17,
+            -0.8660254037844386
+          ],
+          [
+            50,
+            0.6330222215594891,
+            -0.11161889704894963,
+            -0.766044443118978
+          ],
+          [
+            100,
+            0.7198463103929542,
+            -0.2620026302293849,
+            -0.6427876096865393
+          ]
+        ]
+      },
+      "tolerance": 1e-09
+    },
+    {
+      "id": "c04_propagation",
+      "fonction": "treatment.erreurs.propagation_tonnage",
+      "entrees": {
+        "volume": 5000,
+        "sigma_volume": 250,
+        "densite": 3.2,
+        "sigma_densite": 0.1,
+        "teneur": 2.5,
+        "sigma_teneur": 0.4
+      },
+      "sorties": {
+        "M": 400.0,
+        "sigma_M": 68.2074042901502,
+        "erreur_relative_M": 0.1705185107253755,
+        "cV": 0.08597990219786127,
+        "cd": 0.03358589929603955,
+        "ct": 0.8804341985060993
+      },
+      "tolerance": 1e-09
+    },
+    {
+      "id": "c04_stats",
+      "fonction": "treatment.exploratoire.statistiques_descriptives",
+      "entrees": {
+        "valeurs": [
+          1,
+          2,
+          2,
+          3,
+          10,
+          4,
+          5,
+          2.5,
+          1.5,
+          8
+        ]
+      },
+      "sorties": {
+        "moyenne": 3.9,
+        "mediane": 2.75,
+        "ecart_type": 2.817800560721074,
+        "variance": 7.9399999999999995,
+        "q1": 2.0,
+        "q3": 4.75,
+        "asymetrie": 1.0808848314486752,
+        "aplatissement": -0.13992855737933896
+      },
+      "tolerance": 1e-09
+    },
+    {
+      "id": "c05_idw",
+      "fonction": "conventional.idw.idw",
+      "entrees": {
+        "coordonnees": [
+          [
+            0,
+            0
+          ],
+          [
+            10,
+            0
+          ],
+          [
+            0,
+            10
+          ],
+          [
+            10,
+            10
+          ]
+        ],
+        "valeurs": [
+          1.0,
+          3.0,
+          5.0,
+          7.0
+        ],
+        "points": [
+          [
+            5,
+            5
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            9,
+            8
+          ]
+        ],
+        "puissance": 2.0,
+        "rayon": 1000000000000.0
+      },
+      "sorties": {
+        "valeurs": [
+          4.0,
+          1.5093333333333332,
+          6.459733333333333
+        ]
+      },
+      "tolerance": 1e-09
+    },
+    {
+      "id": "c05_ppv",
+      "fonction": "conventional.polygones.plus_proche_voisin",
+      "entrees": {
+        "coordonnees": [
+          [
+            0,
+            0
+          ],
+          [
+            10,
+            0
+          ],
+          [
+            0,
+            10
+          ],
+          [
+            10,
+            10
+          ]
+        ],
+        "valeurs": [
+          1.0,
+          3.0,
+          5.0,
+          7.0
+        ],
+        "points": [
+          [
+            1,
+            1
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            8,
+            8
+          ]
+        ]
+      },
+      "sorties": {
+        "valeurs": [
+          1.0,
+          3.0,
+          5.0,
+          7.0
+        ]
+      },
+      "tolerance": 1e-09
+    },
+    {
+      "id": "c05_triangle_bary",
+      "fonction": "conventional.triangles.interpolation_triangulaire",
+      "entrees": {
+        "coordonnees": [
+          [
+            0,
+            0
+          ],
+          [
+            10,
+            0
+          ],
+          [
+            0,
+            10
+          ]
+        ],
+        "valeurs": [
+          0.0,
+          10.0,
+          5.0
+        ],
+        "points": [
+          [
+            2,
+            2
+          ]
+        ],
+        "mode": "barycentrique"
+      },
+      "sorties": {
+        "valeurs": [
+          3.0
+        ]
+      },
+      "tolerance": 1e-09
+    },
+    {
+      "id": "c05_sections_moyenne",
+      "fonction": "conventional.sections.volume_entre_sections",
+      "entrees": {
+        "S1": 600,
+        "S2": 1200,
+        "L": 20,
+        "methode": "moyenne"
+      },
+      "sorties": {
+        "volume": 18000.0
+      },
+      "tolerance": 1e-09
+    },
+    {
+      "id": "c05_sections_tronc",
+      "fonction": "conventional.sections.volume_entre_sections",
+      "entrees": {
+        "S1": 600,
+        "S2": 1200,
+        "L": 20,
+        "methode": "tronc"
+      },
+      "sorties": {
+        "volume": 17656.854249492382
+      },
+      "tolerance": 1e-09
+    }
+  ]
+}

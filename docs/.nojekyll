@@ -1,0 +1,1 @@
+# Empeche Jekyll de supprimer les fichiers/dossiers commencant par _ (ex. __init__.py, _assets/, _seed.py).
