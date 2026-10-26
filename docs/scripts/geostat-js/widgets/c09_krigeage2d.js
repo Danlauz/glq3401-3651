@@ -73,8 +73,20 @@ function enMatrice(plat) {
  * La conversion se fait en un seul endroit, `angleModele()`, pour que
  * l'affichage et le calcul ne puissent pas diverger.
  */
-/** Azimut (0° au nord, horaire) -> angle trigonométrique attendu par la librairie. */
-function angleModele(azimutDeg) { return 90 - azimutDeg; }
+/** Rotation de l'ellipse -> angle trigonométrique attendu par la librairie.
+ *
+ *  CONVENTION : theta = 0 laisse le repère d'anisotropie aligné sur la carte,
+ *  a_x le long de x (est) et a_y le long de y (nord) ; theta croît dans le
+ *  sens HORAIRE. La direction de a_x est donc (cos theta, -sin theta), c'est
+ *  à dire l'angle trigonométrique -theta.
+ *
+ *  L'azimut minier de a_x (0° au nord, horaire) s'en déduit : az = 90 + theta.
+ *  Il est affiché dans la ligne d'information, pour garder la lecture usuelle
+ *  sans faire porter deux sens contradictoires au même nombre. */
+function angleModele(thetaDeg) { return -thetaDeg; }
+
+/** Azimut minier correspondant à la rotation theta. */
+function azimutDeTheta(thetaDeg) { return ((90 + thetaDeg) % 360 + 360) % 360; }
 
 function ellipse(cx, cy, ag, ap, azDeg, nb = 96) {
   const t0 = angleModele(azDeg) * Math.PI / 180;
@@ -96,7 +108,7 @@ function htmlControles(cfg) {
       <b style="font-size:.78rem;color:#555;">Anisotropie</b>
       <label title="Portée maximale, le long de l'axe principal.">Portée maximale <span>a<sub>x</sub></span> <input type="range" class="js-ag" min="5" max="70" value="45" step="1" style="width:100px"><span class="js-agv">45</span></label>
       <label title="Portée minimale, perpendiculaire à l'axe principal.">Portée minimale <span>a<sub>y</sub></span> <input type="range" class="js-ap" min="3" max="70" value="22" step="1" style="width:100px"><span class="js-apv">22</span></label>
-      <label title="Azimut de l'axe a_x : 0° vers le nord, compté dans le sens horaire (0° N, 90° E, 180° S).">Azimut de a<sub>x</sub> <span>&theta;</span> <input type="range" class="js-ang" min="0" max="175" value="30" step="5" style="width:100px"><span class="js-angv">30</span>&deg;</label>
+      <label title="Rotation du repère d'anisotropie. À 0° l'axe a_x est le long de x (est) et a_y le long de y (nord) ; l'angle croît dans le sens horaire.">Rotation <span>&theta;</span> <input type="range" class="js-ang" min="0" max="175" value="30" step="5" style="width:100px"><span class="js-angv">30</span>&deg;</label>
     </div>
     <div class="gw-controls k2-row" style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:6px 12px;background:#fafafa;border:1px solid #ddd;border-radius:8px;font-size:.82rem;margin-bottom:6px;">
       <button class="js-ajout" type="button" style="font-size:.78rem;padding:4px 10px;background:#1f8a4c;color:#fff;border:none;border-radius:5px;cursor:pointer;">+ donnée</button>
@@ -638,7 +650,7 @@ export class Vue2D {
     if (this.cfg.secondaire) html += ` · s = ${this.cfg.secondaire(this.cible.x, this.cible.y).toFixed(2)}`;
     html += `<br><span style="font-size:.78rem">${this.donnees.length} données · ` +
       `anisotropie a<sub>x</sub>/a<sub>y</sub> = ${ag}/${ap} (rapport ${rap.toFixed(1)}), ` +
-      `axe a<sub>x</sub> à l'azimut ${ang}&deg; · ` +
+      `rotation &theta; = ${ang}&deg; (a<sub>x</sub> à l'azimut ${azimutDeTheta(ang).toFixed(0)}&deg;) · ` +
       `C(0) = ${(prm.palier + prm.pepite).toFixed(2)}</span>`;
     if (this.champVrai) {
       const zv = this._zVrai(this.cible.x, this.cible.y);
