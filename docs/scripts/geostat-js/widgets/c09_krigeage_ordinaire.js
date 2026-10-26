@@ -50,6 +50,8 @@ export default class C09KrigeageOrdinaire extends Widget {
     this.showWeights = false;
     this.showKS = false;
     this.clickBound = false;
+    this.champVrai = null;   // solution de référence : la « vérité » simulée
+    this.seedVrai = 0;
     this.mode2d = false;
     this.vue2d = null;
     this.el.insertAdjacentHTML('beforeend', `
@@ -75,6 +77,7 @@ export default class C09KrigeageOrdinaire extends Widget {
       </div>
       <div class="gw-controls ko-row js-only1d" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:6px 12px;background:#fafafa;border:1px solid #ddd;border-radius:8px;font-size:.82rem;margin-bottom:6px;">
         <label>Cible x₀ <input type="range" class="js-x0" min="0" max="100" value="40" step="0.5" style="width:180px"><span class="js-x0v">40</span></label>
+        <button class="js-vrai" type="button" style="font-size:.78rem;padding:4px 10px;background:#6b7280;color:#fff;border:none;border-radius:5px;cursor:pointer;" title="Simule le champ dont les donnees seraient issues, puis y preleve les donnees. On voit alors le lissage du krigeage et si la bande ±2σ couvre la realite.">Champ réel</button>
         <button class="js-ks" type="button" style="font-size:.78rem;padding:4px 10px;background:#ea8f1e;color:#fff;border:none;border-radius:5px;cursor:pointer;">Afficher KS</button>
         <button class="js-poids" type="button" style="font-size:.78rem;padding:4px 10px;background:#0d4d92;color:#fff;border:none;border-radius:5px;cursor:pointer;">Afficher les poids</button>
         <button class="js-effacer" type="button" style="font-size:.76rem;padding:4px 9px;background:#c0392b;color:#fff;border:none;border-radius:4px;cursor:pointer;">Tout effacer</button>
@@ -119,6 +122,7 @@ export default class C09KrigeageOrdinaire extends Widget {
       e.target.style.background = this.showWeights ? '#c0392b' : '#0d4d92';
       this.refresh();
     });
+    this.on(this.el.querySelector('.js-vrai'), 'click', () => this._basculerVrai());
     this.on(this.el.querySelector('.js-effacer'), 'click', () => { this.donnees = []; this.refresh(); });
     this.on(this.el.querySelector('.js-reset'), 'click', () => {
       this.donnees = DONNEES_INIT.map(d => ({ ...d })); this.refresh();
@@ -127,7 +131,13 @@ export default class C09KrigeageOrdinaire extends Widget {
   }
 
   /** Recalcul de la vue active (1D ou 2D). */
-  _maj() { return this.mode2d ? this.vue2d.recalculer() : this.refresh(); }
+  async _majVrai() { if (this.champVrai) await this._tirerChampVrai(); }
+
+  async _maj() {
+    if (this.mode2d) return this.vue2d.recalculer();
+    await this._majVrai();        // le champ réel suit le modèle courant
+    return this.refresh();
+  }
 
   /** Bascule profil 1D <-> cartes 2D. */
   _basculer() {
@@ -150,6 +160,7 @@ export default class C09KrigeageOrdinaire extends Widget {
         hote: this,
         methode: 'ordinaire',
         sigle: 'KO',
+        ellipse: false,          // pas d'ellipse d'anisotropie dans cet atelier
         nMin: 2,
         donneesInit: () => DONNEES_2D.map(d => ({ ...d })),
         lireParams: () => ({
@@ -166,6 +177,52 @@ export default class C09KrigeageOrdinaire extends Widget {
     this.vue2d.recalculer();
   }
 
+  /** Simule la « réalité » Z(x) avec le modèle courant et y prélève les données.
+   *  C'est la solution de référence : sans elle, l'atelier montre une estimation
+   *  sans jamais dire de quoi elle est l'estimation. */
+  async _tirerChampVrai() {
+    const m = parseFloat(this.ctrl.m.value);
+    const a = parseFloat(this.ctrl.a.value);
+    const C = parseFloat(this.ctrl.C.value);
+    const c0 = parseFloat(this.ctrl.c0.value);
+    const total = Math.max(1e-6, C + c0);
+    const N = 1001;                       // meme grille que l'affichage (pas de 0,1)
+    // La portee est exprimee en MAILLES : 1 unite de x = 10 mailles.
+    try {
+      const champ = await gpoly.simulerChamp1D(this.ctrl.mod.value, a * 10,
+                                               c0 / total, this.seedVrai, N,
+                                               'gaussien', m, total);
+      this.champVrai = Array.from(champ);
+    } catch (e) {
+      this.afficherAvertissement('Erreur simulation du champ réel : ' + (e && e.message ? e.message : e));
+      this.champVrai = null; return;
+    }
+    // Les donnees deviennent des prelevements du champ : l'estimation et la
+    // verite portent alors sur la MEME realisation, seule facon de comparer.
+    this.donnees = this.donnees.map(d => ({ x: d.x, z: this._zVrai(d.x) }));
+  }
+
+  /** Valeur du champ réel à l'abscisse x (grille de pas 0,1). */
+  _zVrai(x) {
+    if (!this.champVrai) return null;
+    const i = Math.max(0, Math.min(this.champVrai.length - 1, Math.round(x * 10)));
+    return Math.round(this.champVrai[i] * 100) / 100;
+  }
+
+  /** Active/desactive le champ réel, ou le retire. */
+  async _basculerVrai() {
+    const b = this.el.querySelector('.js-vrai');
+    if (this.champVrai) {
+      this.champVrai = null;
+      b.textContent = 'Champ réel'; b.style.background = '#6b7280';
+    } else {
+      this.seedVrai = (this.seedVrai || 0) + 1;
+      await this._tirerChampVrai();
+      b.textContent = 'Nouveau champ'; b.style.background = '#1f7a3a';
+    }
+    this.refresh();
+  }
+
   _onClick(e) {
     const fl = this.plot._fullLayout;
     if (!fl || !fl.xaxis || !fl.yaxis) return;
@@ -178,7 +235,12 @@ export default class C09KrigeageOrdinaire extends Widget {
     let best = -1, bd = 0.025;
     this.donnees.forEach((d, i) => { const dist = Math.hypot((d.x - x) / 100, (d.z - z) / 10); if (dist < bd) { bd = dist; best = i; } });
     if (best >= 0 && this.donnees.length > 1) this.donnees.splice(best, 1);
-    else this.donnees.push({ x: Math.round(x * 2) / 2, z: Math.round(z * 10) / 10 });
+    else {
+      const xa = Math.round(x * 2) / 2;
+      // Avec un champ réel actif, une donnée est un PRÉLÈVEMENT : sa valeur
+      // est imposée par la réalité, pas par l'endroit où l'on a cliqué.
+      this.donnees.push({ x: xa, z: this.champVrai ? this._zVrai(xa) : Math.round(z * 10) / 10 });
+    }
     this.refresh();
   }
 
@@ -218,6 +280,13 @@ export default class C09KrigeageOrdinaire extends Widget {
 
     if (!window.Plotly) { this.afficherAvertissement('Plotly non chargé.'); return; }
     const traces = [];
+    // Solution de référence : la « vérité » dont les données sont issues.
+    // Tracée en premier pour passer SOUS l'estimation.
+    if (this.champVrai) {
+      traces.push({ x: x_grid, y: this.champVrai, mode: 'lines',
+        name: 'Z(x) réel (référence)',
+        line: { color: '#6b7280', width: 1.6, dash: 'dash' }, hoverinfo: 'skip' });
+    }
     if (estimGrid) {
       const upper = estimGrid.map((z, i) => z + 2 * Math.sqrt(Math.max(0, varGrid[i])));
       const lower = estimGrid.map((z, i) => z - 2 * Math.sqrt(Math.max(0, varGrid[i])));
@@ -265,6 +334,20 @@ export default class C09KrigeageOrdinaire extends Widget {
       html += `<br><span style="font-size:.78rem">${lambdaStr}</span>`;
       this.infoEl.innerHTML = html;
     }
+
+    // --- Solution de référence : confrontation à la vérité -------------------
+    if (this.champVrai && z_star != null) {
+      const zv = this._zVrai(x0);
+      const err = z_star - zv;
+      const sK = Math.sqrt(Math.max(0, sigma2));
+      const dans = Math.abs(err) <= 2 * sK;
+      this.infoEl.innerHTML +=
+        `<br><span style="font-size:.78rem;color:#374151">Référence : Z(${x0.toFixed(1)}) = ` +
+        `<b>${zv.toFixed(3)}</b> · erreur Z* − Z = <b>${err.toFixed(3)}</b> ` +
+        `(${(Math.abs(err) / Math.max(sK, 1e-9)).toFixed(2)} σ<sub>K</sub>) · ` +
+        `<b style="color:${dans ? '#1f7a3a' : '#b03a2e'}">${dans ? 'dans' : 'hors'} la bande ±2σ</b></span>`;
+    }
+
   }
 
   cleanup() {

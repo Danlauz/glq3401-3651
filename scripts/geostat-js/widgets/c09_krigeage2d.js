@@ -65,13 +65,19 @@ function enMatrice(plat) {
 }
 
 /**
- * Ellipse d'anisotropie : demi-axe ag dans la direction theta (degrés,
- * sens trigonométrique depuis +x — c'est la convention du modèle, où la
- * PREMIÈRE portée est celle de l'axe orienté par l'angle), demi-axe ap
- * perpendiculaire.
+ * Ellipse d'anisotropie : demi-axe ag le long de l'axe d'AZIMUT `azDeg`
+ * (0° = nord, sens horaire), demi-axe ap perpendiculaire.
+ *
+ * La librairie, elle, attend un angle TRIGONOMÉTRIQUE depuis +x (sa matrice
+ * de rotation est [[cos, -sin], [sin, cos]], cf. functional.helper.trans).
+ * La conversion se fait en un seul endroit, `angleModele()`, pour que
+ * l'affichage et le calcul ne puissent pas diverger.
  */
-function ellipse(cx, cy, ag, ap, thetaDeg, nb = 96) {
-  const t0 = thetaDeg * Math.PI / 180;
+/** Azimut (0° au nord, horaire) -> angle trigonométrique attendu par la librairie. */
+function angleModele(azimutDeg) { return 90 - azimutDeg; }
+
+function ellipse(cx, cy, ag, ap, azDeg, nb = 96) {
+  const t0 = angleModele(azDeg) * Math.PI / 180;
   const ct = Math.cos(t0), st = Math.sin(t0);
   const x = [], y = [];
   for (let k = 0; k <= nb; k++) {
@@ -88,13 +94,13 @@ function htmlControles(cfg) {
   return `
     <div class="gw-controls k2-row" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:6px 12px;background:#f3f7fb;border:1px solid #cfe0ee;border-radius:8px;font-size:.82rem;margin-bottom:6px;">
       <b style="font-size:.78rem;color:#555;">Anisotropie</b>
-      <label>Portée majeure <span>a<sub>g</sub></span> <input type="range" class="js-ag" min="5" max="70" value="45" step="1" style="width:100px"><span class="js-agv">45</span></label>
-      <label>Portée mineure <span>a<sub>p</sub></span> <input type="range" class="js-ap" min="3" max="70" value="22" step="1" style="width:100px"><span class="js-apv">22</span></label>
-      <label>Angle <span>&theta;</span> <input type="range" class="js-ang" min="0" max="175" value="30" step="5" style="width:100px"><span class="js-angv">30</span>&deg;</label>
+      <label title="Portée maximale, le long de l'axe principal.">Portée maximale <span>a<sub>x</sub></span> <input type="range" class="js-ag" min="5" max="70" value="45" step="1" style="width:100px"><span class="js-agv">45</span></label>
+      <label title="Portée minimale, perpendiculaire à l'axe principal.">Portée minimale <span>a<sub>y</sub></span> <input type="range" class="js-ap" min="3" max="70" value="22" step="1" style="width:100px"><span class="js-apv">22</span></label>
+      <label title="Azimut de l'axe a_x : 0° vers le nord, compté dans le sens horaire (0° N, 90° E, 180° S).">Azimut de a<sub>x</sub> <span>&theta;</span> <input type="range" class="js-ang" min="0" max="175" value="30" step="5" style="width:100px"><span class="js-angv">30</span>&deg;</label>
     </div>
     <div class="gw-controls k2-row" style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:6px 12px;background:#fafafa;border:1px solid #ddd;border-radius:8px;font-size:.82rem;margin-bottom:6px;">
       <button class="js-ajout" type="button" style="font-size:.78rem;padding:4px 10px;background:#1f8a4c;color:#fff;border:none;border-radius:5px;cursor:pointer;">+ donnée</button>
-      <button class="js-ell" type="button" style="font-size:.78rem;padding:4px 10px;background:#3a3632;color:#fff;border:none;border-radius:5px;cursor:pointer;">Masquer l'ellipse</button>
+      ${cfg.ellipse === false ? '' : `<button class="js-ell" type="button" style="font-size:.78rem;padding:4px 10px;background:#3a3632;color:#fff;border:none;border-radius:5px;cursor:pointer;">Masquer l'ellipse</button>`}
       ${cfg.boutonsSup || ''}
       <button class="js-reset2" type="button" style="font-size:.76rem;padding:4px 9px;background:#c0392b;color:#fff;border:none;border-radius:4px;cursor:pointer;">Réinitialiser</button>
     </div>`;
@@ -109,6 +115,8 @@ export class Vue2D {
    *   lireParams  : () => ({ mod, palier, pepite, moyenne, ordre })
    *   donneesInit : () => [{ x, y, z }]
    *   secondaire  : (x, y) => s          (KED uniquement)
+   *   ellipse     : false pour retirer l'ellipse d'anisotropie ET son bouton
+   *                 (atelier qui n'en a pas besoin) ; true ou absent sinon
    *   boutonsSup  : HTML de boutons supplémentaires (optionnel)
    *   legende     : texte sous les cartes (optionnel)
    */
@@ -117,7 +125,7 @@ export class Vue2D {
     this.hote = cfg.hote;
     this.donnees = cfg.donneesInit();
     this.cible = { x: 50, y: 50 };
-    this.montreEllipse = true;
+    this.montreEllipse = cfg.ellipse !== false;
     this.modeAjout = false;
     this.grille = construireGrille();
     this.cache = null;
@@ -164,7 +172,8 @@ export class Vue2D {
         this._planifierRecalcul();
       });
     }
-    h.on(conteneur.querySelector('.js-ell'), 'click', e => {
+    const btnEll = conteneur.querySelector('.js-ell');
+    if (btnEll) h.on(btnEll, 'click', e => {
       this.montreEllipse = !this.montreEllipse;
       e.target.textContent = this.montreEllipse ? "Masquer l'ellipse" : "Afficher l'ellipse";
       e.target.style.background = this.montreEllipse ? '#3a3632' : '#6b7d8f';
@@ -289,8 +298,10 @@ export class Vue2D {
     const ang = parseFloat(this.ctrl2.ang.value);
     return {
       prm, ag, ap, ang,
+      // `ang` est un AZIMUT côté interface ; la librairie veut un angle
+      // trigonométrique depuis +x, d'où angleModele().
       structs: [{ modele: prm.mod, palier: Math.max(0.001, prm.palier),
-                  portee: [ag, ap], angle: ang }],
+                  portee: [ag, ap], angle: angleModele(ang) }],
     };
   }
 
@@ -436,8 +447,8 @@ export class Vue2D {
     Plotly.react(this.carteEst, tracesEst, {
       margin: { t: 26, l: 34, r: 52, b: 30 }, dragmode: false,
       title: { text: `Estimation Z* (${this.cfg.sigle})`, font: { size: 12 } },
-      xaxis: { ...AXE_CARTE, fixedrange: true },
-      yaxis: { ...AXE_CARTE, fixedrange: true, scaleanchor: 'x' },
+      xaxis: { ...AXE_CARTE, fixedrange: true, title: { text: 'x (est →)', standoff: 2, font: { size: 10 } } },
+      yaxis: { ...AXE_CARTE, fixedrange: true, scaleanchor: 'x', title: { text: 'y (nord ↑)', standoff: 2, font: { size: 10 } } },
     }, commun);
 
     const tracesVar = [];
@@ -475,7 +486,8 @@ export class Vue2D {
       `&sigma;&sup2;<sub>K</sub> = <b>${v.toFixed(4)}</b> (&sigma;<sub>K</sub> = ${Math.sqrt(Math.max(0, v)).toFixed(3)})`;
     if (this.cfg.secondaire) html += ` · s = ${this.cfg.secondaire(this.cible.x, this.cible.y).toFixed(2)}`;
     html += `<br><span style="font-size:.78rem">${this.donnees.length} données · ` +
-      `anisotropie ${ag} / ${ap} (rapport ${rap.toFixed(1)}) à ${ang}&deg; · ` +
+      `anisotropie a<sub>x</sub>/a<sub>y</sub> = ${ag}/${ap} (rapport ${rap.toFixed(1)}), ` +
+      `axe a<sub>x</sub> à l'azimut ${ang}&deg; · ` +
       `C(0) = ${(prm.palier + prm.pepite).toFixed(2)}</span>`;
     this.info2.innerHTML = html;
   }
