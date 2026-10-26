@@ -455,6 +455,7 @@ export class Vue2D {
     const b = this.el.querySelector('.js-vrai2');
     if (this.champVrai) {
       this.champVrai = null; this._heatVrai = null;
+      this._heatVraiAff = null; this._heatEstAff = null; this._cleEchelle = null;
       b.textContent = 'Champ réel'; b.style.background = '#6b7280';
     } else {
       this.seedVrai++;
@@ -465,15 +466,19 @@ export class Vue2D {
     this.recalculer();
   }
 
-  /** Montre ou cache la troisième carte et réajuste la grille. */
+  /** Montre ou cache la troisième carte.
+   *
+   *  La grille reste à DEUX colonnes : passer à trois rétrécissait les panneaux
+   *  sous la largeur que la mise en page supporte (marges fixes + axes à
+   *  l'échelle), et la carte débordait de son cadre. La troisième carte passe
+   *  donc à la ligne, et `order` la place à côté de l'estimation — c'est la
+   *  comparaison qui compte — en renvoyant la variance en seconde ligne. */
   _majAffichageVrai() {
     if (!this.carteVrai) return;
     const actif = !!this.champVrai;
     this.carteVrai.style.display = actif ? '' : 'none';
-    if (this.grilleCartes) {
-      this.grilleCartes.style.gridTemplateColumns =
-        actif ? 'repeat(auto-fit, minmax(230px, 1fr))' : '1fr 1fr';
-    }
+    if (actif) { this.carteVrai.style.order = '2'; this.carteVar.style.order = '3'; }
+    else { this.carteVrai.style.removeProperty('order'); this.carteVar.style.removeProperty('order'); }
   }
 
   _dessiner() {
@@ -488,6 +493,7 @@ export class Vue2D {
     // bougent) : le redessin reste fluide.
     if (c && this._fondCourant !== c.est) {
       this._fondCourant = c.est;
+      this._cleEchelle = null;      // l'échelle commune devra être réappliquée
       this._heatEst = { x: axe, y: axe, z: enMatrice(c.est), type: 'heatmap',
         colorscale: TURBO, zsmooth: 'best', hoverinfo: 'skip',
         colorbar: { len: 0.92, thickness: 10, x: 1.0, xanchor: 'left',
@@ -523,8 +529,34 @@ export class Vue2D {
                   line: { color: '#d81b1b', width: 2.6 } } },
     ];
 
+    // --- Échelle de couleur COMMUNE à l'estimation et à la réalité ----------
+    // Sans cela chaque carte s'auto-cadre et une même couleur ne désigne pas la
+    // même valeur d'une carte à l'autre : la comparaison visuelle, qui est tout
+    // l'intérêt d'afficher la réalité, devient trompeuse.
+    let zmin = null, zmax = null;
+    if (this.champVrai && c) {
+      zmin = c.zmin; zmax = c.zmax;
+      for (const ligne of this.champVrai) {
+        for (const v of ligne) { if (v < zmin) zmin = v; if (v > zmax) zmax = v; }
+      }
+      const marge = 0.02 * (zmax - zmin || 1);
+      zmin -= marge; zmax += marge;
+    }
+    // On ne reconstruit les objets de trace que si l'échelle a changé : pendant
+    // un glissement de la cible, les références restent identiques et Plotly
+    // saute le rendu des fonds.
+    const cle = zmin == null ? 'auto' : `${zmin.toFixed(4)}|${zmax.toFixed(4)}`;
+    if (this._cleEchelle !== cle) {
+      this._cleEchelle = cle;
+      if (this._heatEst) {
+        this._heatEstAff = zmin == null ? this._heatEst
+                                        : { ...this._heatEst, zmin, zmax, zauto: false };
+      }
+      this._heatVraiAff = null;     // sera refait avec la même échelle
+    }
+
     const tracesEst = [];
-    if (this._heatEst && c) tracesEst.push(this._heatEst);
+    if (this._heatEst && c) tracesEst.push(this._heatEstAff || this._heatEst);
     if (this.cfg.contoursSecondaire && this.cfg.secondaire) {
       tracesEst.push(this._contoursSecondaire(axe));
     }
@@ -566,9 +598,14 @@ export class Vue2D {
           colorbar: { len: 0.92, thickness: 10, x: 1.0, xanchor: 'left',
                       title: { text: 'Z', side: 'right', font: { size: 10 } },
                       tickfont: { size: 8 } } };
+        this._heatVraiAff = null;
       }
-      Plotly.react(this.carteVrai, [this._heatVrai, pointsVar, ...croix()], {
-        margin: { t: 26, l: 34, r: 52, b: 30 }, dragmode: false,
+      if (!this._heatVraiAff) {
+        this._heatVraiAff = zmin == null ? this._heatVrai
+                                         : { ...this._heatVrai, zmin, zmax, zauto: false };
+      }
+      Plotly.react(this.carteVrai, [this._heatVraiAff, pointsVar, ...croix()], {
+        margin: { t: 26, l: 34, r: 56, b: 30 }, dragmode: false,
         title: { text: 'Réalité Z (référence)', font: { size: 12 } },
         xaxis: { ...AXE_CARTE, fixedrange: true },
         yaxis: { ...AXE_CARTE, fixedrange: true, scaleanchor: 'x' },
