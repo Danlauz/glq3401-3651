@@ -151,6 +151,7 @@ export default class C09KrigeageSimple extends Widget {
         methode: 'simple',
         sigle: 'KS',
         ellipse: false,          // pas d'ellipse d'anisotropie dans cet atelier
+        champReel: true,         // solution de référence : la réalité simulée
         nMin: 1,
         donneesInit: () => DONNEES_2D.map(d => ({ ...d })),
         lireParams: () => ({

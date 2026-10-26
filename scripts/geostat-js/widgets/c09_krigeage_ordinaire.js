@@ -161,6 +161,7 @@ export default class C09KrigeageOrdinaire extends Widget {
         methode: 'ordinaire',
         sigle: 'KO',
         ellipse: false,          // pas d'ellipse d'anisotropie dans cet atelier
+        champReel: true,         // solution de référence : la réalité simulée
         nMin: 2,
         donneesInit: () => DONNEES_2D.map(d => ({ ...d })),
         lireParams: () => ({

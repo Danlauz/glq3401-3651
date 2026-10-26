@@ -101,6 +101,7 @@ function htmlControles(cfg) {
     <div class="gw-controls k2-row" style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:6px 12px;background:#fafafa;border:1px solid #ddd;border-radius:8px;font-size:.82rem;margin-bottom:6px;">
       <button class="js-ajout" type="button" style="font-size:.78rem;padding:4px 10px;background:#1f8a4c;color:#fff;border:none;border-radius:5px;cursor:pointer;">+ donnée</button>
       ${cfg.ellipse === false ? '' : `<button class="js-ell" type="button" style="font-size:.78rem;padding:4px 10px;background:#3a3632;color:#fff;border:none;border-radius:5px;cursor:pointer;">Masquer l'ellipse</button>`}
+      ${cfg.champReel ? `<button class="js-vrai2" type="button" style="font-size:.78rem;padding:4px 10px;background:#6b7280;color:#fff;border:none;border-radius:5px;cursor:pointer;" title="Simule la réalité Z(x,y) avec le modèle courant et y prélève les données : on voit alors le lissage du krigeage et l'erreur réellement commise.">Champ réel</button>` : ''}
       ${cfg.boutonsSup || ''}
       <button class="js-reset2" type="button" style="font-size:.76rem;padding:4px 9px;background:#c0392b;color:#fff;border:none;border-radius:4px;cursor:pointer;">Réinitialiser</button>
     </div>`;
@@ -115,6 +116,9 @@ export class Vue2D {
    *   lireParams  : () => ({ mod, palier, pepite, moyenne, ordre })
    *   donneesInit : () => [{ x, y, z }]
    *   secondaire  : (x, y) => s          (KED uniquement)
+   *   champReel   : true pour offrir la « solution de référence » — une
+   *                 réalité simulée avec le modèle courant, dont les données
+   *                 sont des prélèvements, et une troisième carte Z(x,y)
    *   ellipse     : false pour retirer l'ellipse d'anisotropie ET son bouton
    *                 (atelier qui n'en a pas besoin) ; true ou absent sinon
    *   boutonsSup  : HTML de boutons supplémentaires (optionnel)
@@ -126,6 +130,8 @@ export class Vue2D {
     this.donnees = cfg.donneesInit();
     this.cible = { x: 50, y: 50 };
     this.montreEllipse = cfg.ellipse !== false;
+    this.champVrai = null;   // matrice N_GRILLE x N_GRILLE, ou null
+    this.seedVrai = 0;
     this.modeAjout = false;
     this.grille = construireGrille();
     this.cache = null;
@@ -147,17 +153,21 @@ export class Vue2D {
       <div class="k2-cartes" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start;">
         <div class="js-carte-est" style="aspect-ratio:1.24;min-height:300px;cursor:crosshair;touch-action:none;"></div>
         <div class="js-carte-var" style="aspect-ratio:1.24;min-height:300px;"></div>
+        <div class="js-carte-vrai" style="aspect-ratio:1.24;min-height:300px;display:none;"></div>
       </div>
       <div class="js-info2" style="padding:.4rem 1rem;font-family:'JetBrains Mono',monospace;font-size:.82rem;color:#444;text-align:center;background:#f0f0f0;border-radius:6px;margin-top:4px;">—</div>
       <p style="margin:4px 1rem;font-size:11px;color:#666;">
         <b>Glissez</b> la croix rouge sur la carte de gauche pour déplacer le point à estimer ·
         cliquez une donnée pour la <b>retirer</b> · le bouton <b>+ donnée</b> arme l'ajout d'un point
-        (sa valeur est tirée conditionnellement, Z* ± σ<sub>K</sub>).
+        (sa valeur est tirée conditionnellement, Z* ± σ<sub>K</sub> — ou prélevée
+        sur la réalité lorsque le champ réel est affiché).
         ${this.cfg.legende || ''}</p>
     `);
 
     this.carteEst = conteneur.querySelector('.js-carte-est');
     this.carteVar = conteneur.querySelector('.js-carte-var');
+    this.carteVrai = conteneur.querySelector('.js-carte-vrai');
+    this.grilleCartes = conteneur.querySelector('.k2-cartes');
     this.info2 = conteneur.querySelector('.js-info2');
     this.ctrl2 = {
       ag:  conteneur.querySelector('.js-ag'),
@@ -169,9 +179,12 @@ export class Vue2D {
     for (const k of ['ag', 'ap', 'ang']) {
       h.on(this.ctrl2[k], 'input', e => {
         conteneur.querySelector(`.js-${k}v`).textContent = e.target.value;
+        this._refaireVrai = true;          // portées/azimut : la réalité change
         this._planifierRecalcul();
       });
     }
+    const btnVrai = conteneur.querySelector('.js-vrai2');
+    if (btnVrai) h.on(btnVrai, 'click', () => this._basculerVrai());
     const btnEll = conteneur.querySelector('.js-ell');
     if (btnEll) h.on(btnEll, 'click', e => {
       this.montreEllipse = !this.montreEllipse;
@@ -272,6 +285,13 @@ export class Vue2D {
 
   /** Ajout d'un point dont la valeur est une SIMULATION conditionnelle locale. */
   async _ajouterDonnee(p) {
+    // Avec une réalité simulée, une donnée n'est pas tirée au hasard : c'est
+    // un prélèvement, sa valeur est imposée par le champ.
+    if (this.champVrai) {
+      this.donnees.push({ x: +p.x.toFixed(1), y: +p.y.toFixed(1), z: this._zVrai(p.x, p.y) });
+      this.recalculer();
+      return;
+    }
     const r = await this._krigerPoints([[p.x, p.y]]);
     let z;
     if (r) {
@@ -352,6 +372,9 @@ export class Vue2D {
   /** Recalcule les deux cartes (appelé quand un paramètre ou les données changent). */
   async recalculer() {
     if (!this.el) return;
+    // La réalité doit rester cohérente avec le modèle affiché : si un réglage
+    // a bougé, on la retire sur la même réalisation (même graine).
+    if (this.champVrai && this._refaireVrai) { this._refaireVrai = false; await this._tirerChampVrai(); }
     const r = await this._krigerPoints('grille');
     if (!r) {
       this.cache = null;
@@ -379,6 +402,80 @@ export class Vue2D {
   // ---------------------------------------------------------------------------
   // Dessin
   // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // Solution de référence : la « réalité » dont les données seraient issues
+  // ---------------------------------------------------------------------------
+  /** Simule Z(x,y) avec le modèle courant, puis y prélève les données. */
+  async _tirerChampVrai() {
+    const { ag, ap, ang, prm } = this._structures();
+    const total = Math.max(1e-6, prm.palier + (prm.pepite || 0));
+    const moy = (prm.moyenne != null) ? prm.moyenne : this._moyenneDonnees();
+    // Les portées sont en UNITÉS CARTE ; GFFTMA les attend en MAILLES.
+    const pas = ETENDUE / (N_GRILLE - 1);
+    try {
+      const plat = await gpoly.simulerChampAniso(
+        prm.mod, ag / pas, ap / pas, angleModele(ang),
+        (prm.pepite || 0) / total, this.seedVrai, N_GRILLE,
+        'gaussien', moy, total);
+      // GFFTMA range sa PREMIÈRE portée le long du premier indice du tableau,
+      // que l'image lirait comme l'axe vertical : on transpose.
+      const z = [];
+      for (let j = 0; j < N_GRILLE; j++) {
+        const ligne = new Array(N_GRILLE);
+        for (let i = 0; i < N_GRILLE; i++) ligne[i] = plat[i * N_GRILLE + j];
+        z.push(ligne);
+      }
+      this.champVrai = z;
+    } catch (e) {
+      this.hote.afficherAvertissement('Erreur simulation du champ réel : ' + (e && e.message ? e.message : e));
+      this.champVrai = null; return;
+    }
+    // Les données deviennent des PRÉLÈVEMENTS : estimation et vérité portent
+    // alors sur la même réalisation, seule façon de comparer les deux.
+    this.donnees = this.donnees.map(d => ({ ...d, z: this._zVrai(d.x, d.y) }));
+  }
+
+  /** Moyenne des données, repli quand l'atelier n'en impose pas (KO). */
+  _moyenneDonnees() {
+    if (!this.donnees.length) return 0;
+    return this.donnees.reduce((s, d) => s + d.z, 0) / this.donnees.length;
+  }
+
+  /** Valeur de la réalité au point (x, y), au nœud de grille le plus proche. */
+  _zVrai(x, y) {
+    if (!this.champVrai) return null;
+    const pas = ETENDUE / (N_GRILLE - 1);
+    const i = Math.max(0, Math.min(N_GRILLE - 1, Math.round(x / pas)));
+    const j = Math.max(0, Math.min(N_GRILLE - 1, Math.round(y / pas)));
+    return Math.round(this.champVrai[j][i] * 1000) / 1000;
+  }
+
+  /** Active, renouvelle ou retire la solution de référence. */
+  async _basculerVrai() {
+    const b = this.el.querySelector('.js-vrai2');
+    if (this.champVrai) {
+      this.champVrai = null; this._heatVrai = null;
+      b.textContent = 'Champ réel'; b.style.background = '#6b7280';
+    } else {
+      this.seedVrai++;
+      await this._tirerChampVrai();
+      b.textContent = 'Nouveau champ'; b.style.background = '#1f7a3a';
+    }
+    this._majAffichageVrai();
+    this.recalculer();
+  }
+
+  /** Montre ou cache la troisième carte et réajuste la grille. */
+  _majAffichageVrai() {
+    if (!this.carteVrai) return;
+    const actif = !!this.champVrai;
+    this.carteVrai.style.display = actif ? '' : 'none';
+    if (this.grilleCartes) {
+      this.grilleCartes.style.gridTemplateColumns =
+        actif ? 'repeat(auto-fit, minmax(230px, 1fr))' : '1fr 1fr';
+    }
+  }
+
   _dessiner() {
     if (!window.Plotly || !this.el) return;
     const { ag, ap, ang, prm } = this._structures();
@@ -461,6 +558,23 @@ export class Vue2D {
       yaxis: { ...AXE_CARTE, fixedrange: true, scaleanchor: 'x' },
     }, commun);
 
+    if (this.champVrai) {
+      if (this._fondVrai !== this.champVrai) {
+        this._fondVrai = this.champVrai;
+        this._heatVrai = { x: axe, y: axe, z: this.champVrai, type: 'heatmap',
+          colorscale: TURBO, zsmooth: 'best', hoverinfo: 'skip',
+          colorbar: { len: 0.92, thickness: 10, x: 1.0, xanchor: 'left',
+                      title: { text: 'Z', side: 'right', font: { size: 10 } },
+                      tickfont: { size: 8 } } };
+      }
+      Plotly.react(this.carteVrai, [this._heatVrai, pointsVar, ...croix()], {
+        margin: { t: 26, l: 34, r: 52, b: 30 }, dragmode: false,
+        title: { text: 'Réalité Z (référence)', font: { size: 12 } },
+        xaxis: { ...AXE_CARTE, fixedrange: true },
+        yaxis: { ...AXE_CARTE, fixedrange: true, scaleanchor: 'x' },
+      }, commun);
+    }
+
     this._ecrireInfo(prm, ag, ap, ang);
   }
 
@@ -489,6 +603,14 @@ export class Vue2D {
       `anisotropie a<sub>x</sub>/a<sub>y</sub> = ${ag}/${ap} (rapport ${rap.toFixed(1)}), ` +
       `axe a<sub>x</sub> à l'azimut ${ang}&deg; · ` +
       `C(0) = ${(prm.palier + prm.pepite).toFixed(2)}</span>`;
+    if (this.champVrai) {
+      const zv = this._zVrai(this.cible.x, this.cible.y);
+      const err = z - zv, sK = Math.sqrt(Math.max(0, v));
+      const dans = Math.abs(err) <= 2 * sK;
+      html += `<br><span style="font-size:.78rem;color:#374151">Référence : Z = <b>${zv.toFixed(3)}</b>` +
+        ` · erreur Z* − Z = <b>${err.toFixed(3)}</b> (${(Math.abs(err) / Math.max(sK, 1e-9)).toFixed(2)} σ<sub>K</sub>) · ` +
+        `<b style="color:${dans ? '#1f7a3a' : '#b03a2e'}">${dans ? 'dans' : 'hors'} la bande ±2σ</b></span>`;
+    }
     this.info2.innerHTML = html;
   }
 
